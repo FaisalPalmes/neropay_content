@@ -13,7 +13,7 @@ step, no dependencies, no framework.
 |---|---|
 | `index.html` | What social is for, the three channels, the five pillars, how the week works |
 | `social.html` | All 18 posts — final copy, creative direction, rough sketches, filters |
-| `youtube.html` | The six-video series: every shot, every Higgsfield prompt, both globals |
+| `youtube.html` | The six-video series: every shot, every Higgsfield prompt, both globals, and every on-screen graphic as a downloadable file |
 | `calendar.html` | Sixteen weeks, 7 Sept – 3 Jan, with the immovable dates marked |
 | `rails.html` | Compliance rails and how the channel is measured |
 
@@ -24,6 +24,7 @@ step, no dependencies, no framework.
 ├── app.js                 post rendering, sketches, filters, copy buttons
 ├── posts.js               the 18 social posts  ← edit this to add a post
 ├── videos.js              generated from generation-pack.md — do not hand-edit
+├── overlays.js            the video graphics drawn as SVG — overlays, title/end cards, disclosure, specimen statements
 ├── generation-pack.md     source of truth for the video series
 ├── vercel.json
 ├── README.md
@@ -104,6 +105,25 @@ The parser reads this structure:
 **Step 1 · Still** … ```(fenced prompt)```
 **Step 2 · Animation** … ```(fenced prompt)```
 ```
+
+### The generation workflow on `youtube.html`
+
+Every shot has two copy buttons. **Copy global + shot** is the one to use: it pastes the presenter
+global and the shot prompt together, which is what Higgsfield wants. **Shot only** is there for
+when the global is already in the box. Overlays work the same way — a still prompt for the image
+model, then **Copy global + animation** for the video model. **Copy every generation for B1** at
+the top of each video dumps all of it in order, divided by `=== id ===` lines.
+
+### The graphics (`overlays.js`)
+
+Every graphic the scripts put on screen is drawn as SVG in `overlays.js` and shown on
+`youtube.html` under its prompt and in the Assets tab: the 21 overlay stills, the title and end
+cards, the AI-presenter disclosure and the two specimen statements. Download as a transparent PNG
+(drop it straight on the timeline), a PNG on black (Screen/Add blend) or the SVG. Figures are
+typed by hand, so if a number changes in `generation-pack.md` it has to change in `overlays.js`
+too — search for the old value. Nothing in there is new content; each asset is one the pack
+already specifies, and the ground rules from the overlay global (black or transparent, white
+sans-serif, one yellow accent, no icons, no logos except the wordmark on the cards) are baked in.
 
 ---
 
