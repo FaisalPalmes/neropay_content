@@ -376,3 +376,12 @@ details.shot .sbody .btns .cp{margin-top:11px}
 .postasset .frame{background:#000;border:1px solid var(--rule);line-height:0;max-width:560px}
 .postasset .frame svg{width:100%;height:auto;display:block}
 .postasset .frame.tall{max-width:240px}
+
+/* overlays sit in the timeline in purple, at the point they start */
+details.shot.ov{border-left:2px solid var(--mt)}
+details.shot.ov[open]{border-color:var(--mt)}
+details.shot.ov>summary::before{border-color:var(--mt)}
+details.shot.ov .sid{color:var(--mt)}
+details.shot.ov .ssp{color:var(--ink-2)}
+.cp.pri.mt{background:var(--mt);border-color:var(--mt);color:#fff}
+.cp.pri.mt:hover{background:var(--mt);color:#fff}

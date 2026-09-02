@@ -112,7 +112,12 @@ Every shot has two copy buttons. **Copy global + shot** is the one to use: it pa
 global and the shot prompt together, which is what Higgsfield wants. **Shot only** is there for
 when the global is already in the box. Overlays work the same way — a still prompt for the image
 model, then **Copy global + animation** for the video model. **Copy every generation for B1** at
-the top of each video dumps all of it in order, divided by `=== id ===` lines.
+the top of each video dumps all of it in timeline order, divided by `=== id ===` lines.
+
+Each video is one timeline. Presenter shots are yellow; overlays are purple and sit in the
+timeline at the point they start (just before the first shot they cover), each carrying its
+still prompt, animation prompt and exact asset. That is the convention for every video, including
+any added later — the page does it from the `sits over …` line, so nothing extra is needed.
 
 ### The graphics (`overlays.js`)
 

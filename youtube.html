@@ -207,13 +207,36 @@
     h += '<p class="sec-sub">' + esc(v.series) + ' · ' + esc(v.runtime) + ' · aspect ' + esc(v.aspect) + ' · ' + np + ' presenter shots · ' + v.overlays.length + ' overlay clips</p>';
     if (placeholders.length) h += '<div class="note warn"><b>Blocked</b>' + placeholders.join(', ') + ' carries <code>[PLACEHOLDER]</code> where the partner incentive figure goes. Still with Eray. Generate everything else; leave that shot until the figure is signed off.</div>';
 
-    /* every generation for this video, in one paste-able dump */
-    var dump = [];
-    v.shots.forEach(function(s){ if (s.spoken) dump.push('=== ' + s.id + ' · presenter · ' + s.tc + ' ===\n\n' + GL + '\n\n' + s.prompt); });
+    /* Overlays live in the timeline at the point they start: each one is keyed to the
+       first shot it sits over, and rendered just before that shot. Its timecode spans
+       the shots it covers. Same rule for every video, now and for any added later. */
+    var byId = {}; v.shots.forEach(function(s){ byId[s.id] = s; });
+    var startsAt = {};
     v.overlays.forEach(function(o){
-      dump.push('=== ' + v.id + ' ' + o.id + ' · still (image gen) ===\n\n' + o.still);
-      dump.push('=== ' + v.id + ' ' + o.id + ' · animation (video gen) ===\n\n' + OGL + '\n\n' + o.anim);
+      var ids = o.over.match(/[AB]\d-\d\d/g) || [];
+      if (ids.length === 2 && /\bto\b/.test(o.over)) {        /* "B3-05 to B3-07" → fill the range */
+        var a = +ids[0].slice(3), b = +ids[1].slice(3), pre = ids[0].slice(0, 3), all = [];
+        for (var i = a; i <= b; i++) all.push(pre + (i < 10 ? '0' : '') + i);
+        ids = all;
+      }
+      var first = byId[ids[0]], last = byId[ids[ids.length - 1]];
+      o._ids = ids;
+      o._tc = first && last ? first.tc.split('–')[0] + '–' + last.tc.split('–')[1] : o.dur;
+      var k = first ? first.id : '__end';
+      (startsAt[k] = startsAt[k] || []).push(o);
     });
+
+    /* every generation for this video, in timeline order, in one paste-able dump */
+    var dump = [];
+    function dumpOverlay(o){
+      dump.push('=== ' + v.id + ' ' + o.id + ' · still (image gen) · over ' + o.over + ' ===\n\n' + o.still);
+      dump.push('=== ' + v.id + ' ' + o.id + ' · animation (video gen) · over ' + o.over + ' ===\n\n' + OGL + '\n\n' + o.anim);
+    }
+    v.shots.forEach(function(s){
+      (startsAt[s.id] || []).forEach(dumpOverlay);
+      if (s.spoken) dump.push('=== ' + s.id + ' · presenter · ' + s.tc + ' ===\n\n' + GL + '\n\n' + s.prompt);
+    });
+    (startsAt.__end || []).forEach(dumpOverlay);
     var script = v.shots.filter(function(s){ return s.spoken; }).map(function(s){ return s.spoken; }).join('\n\n');
     h += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + v.id + '</button>' +
          '<button class="cp" type="button" data-text="' + stash(script) + '">Copy full script</button>' +
@@ -222,12 +245,29 @@
     h += '<details class="shot" style="margin-top:22px"><summary><span class="sid">SCRIPT</span><span class="stc">in order</span><span class="ssp">Every spoken line, read straight through</span></summary><div class="sbody">' +
          '<div class="copy" id="scr-' + v.id + '">' + esc(script) + '</div><button class="cp" type="button" data-copy="scr-' + v.id + '">Copy full script</button></div></details>';
 
-    h += '<h3 style="margin:32px 0 10px">Presenter shots</h3>';
-    h += '<p class="sec-sub" style="margin-bottom:14px">Attach the starting frame, paste <em>global + shot</em>, generate. The character count is the whole paste.</p>';
+    /* one overlay card: still, animation, exact asset — sits in the timeline in purple */
+    function overlayCard(o){
+      var k = v.id + '-' + key(o.id), combA = OGL + '\n\n' + o.anim, aid = v.id + '/' + o.id;
+      var b = '<details class="shot ov"><summary><span class="sid">' + esc(o.id) + '</span><span class="stc">' + esc(o._tc) + '</span>' +
+              '<span class="ssp">Overlay · sits over ' + esc(o.over) + ' · ' + esc(o.dur) + '</span>' +
+              '<span class="chip d">' + esc(v.aspect) + '</span>' + chars(combA.length) + '</summary><div class="sbody">';
+      b += '<div class="mb"><span class="lbl">Step 1 · Still — image gen, becomes the END frame</span><span class="chip n">' + o.still.length + ' chars</span></div><pre class="p" id="os1-' + k + '">' + esc(o.still) + '</pre>';
+      b += '<div class="btns"><button class="cp pri mt" type="button" data-copy="os1-' + k + '">Copy still prompt</button></div>';
+      b += '<div class="mb"><span class="lbl">Step 2 · Animation — video gen, black START + still END. The overlay global goes before it</span></div><pre class="p" id="os2-' + k + '">' + esc(o.anim) + '</pre>';
+      b += '<div class="btns"><button class="cp pri mt" type="button" data-text="' + stash(combA) + '">Copy global + animation</button>' +
+           '<button class="cp" type="button" data-copy="os2-' + k + '">Animation only</button></div>';
+      if (ART.ids().indexOf(aid) > -1) b += assetInline(aid);
+      b += '</div></details>';
+      return b;
+    }
+
+    h += '<h3 style="margin:32px 0 10px">Timeline — every generation, in order</h3>';
+    h += '<p class="sec-sub" style="margin-bottom:14px">Presenter shots in yellow: attach the starting frame, paste <em>global + shot</em>, generate. Overlays in purple, placed where they start: a still, then an animation, then the exact asset. The character count is the whole paste.</p>';
     h += v.shots.map(function(s){
+      var pre = (startsAt[s.id] || []).map(overlayCard).join('');
       if (!s.spoken) {
         var aid = cardAsset[s.id] ? cardAsset[s.id](v) : null;
-        return '<div class="card-row"><span class="sid">' + esc(s.id) + '</span><span class="stc">' + esc(s.tc) + '</span>' +
+        return pre + '<div class="card-row"><span class="sid">' + esc(s.id) + '</span><span class="stc">' + esc(s.tc) + '</span>' +
           '<span class="ssp">' + esc(s.prompt).replace(/\n/g, '<br>') + '</span>' +
           (aid ? '<a href="#asset-' + key(aid) + '" data-goto="assets">card asset →</a>' : '') + '</div>';
       }
@@ -235,36 +275,19 @@
       var secs = (s.prompt.match(/ - (\d+)s/) || [])[1];
       var b = '<details class="shot"><summary><span class="sid">' + esc(s.id) + '</span><span class="stc">' + esc(s.tc) + '</span><span class="ssp">' + esc(s.spoken) + '</span>' +
               (secs ? '<span class="chip d">' + secs + 's</span>' : '') +
-              (s.ov ? '<span class="chip p">' + esc(s.ov) + '</span>' : '') + chars(comb.length) + '</summary><div class="sbody">';
+              (s.ov ? '<span class="chip mt">' + esc(s.ov) + '</span>' : '') + chars(comb.length) + '</summary><div class="sbody">';
       b += '<p class="say">“' + esc(s.spoken) + '”</p>';
       if (s.delivery) b += '<div class="mb"><span class="lbl">Delivery</span><p>' + esc(s.delivery) + '</p></div>';
       if (s.gesture)  b += '<div class="mb"><span class="lbl">Gesture</span><p>' + esc(s.gesture) + '</p></div>';
-      if (s.ov) b += '<div class="mb"><span class="lbl">Overlay in post</span><p>' + esc(s.ov) + ' sits over this shot. Prompt and exact asset under Overlay clips below.</p></div>';
+      if (s.ov) b += '<div class="mb"><span class="lbl">Overlay in post</span><p>' + esc(s.ov) + ' sits over this shot — the purple card above, where it starts.</p></div>';
       b += '<div class="mb"><span class="lbl">Shot prompt — the presenter global goes before it</span></div>';
       b += '<pre class="p" id="' + pid + '">' + esc(s.prompt) + '</pre>';
       b += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(comb) + '">Copy global + shot</button>' +
            '<button class="cp" type="button" data-copy="' + pid + '">Shot only</button></div>';
       b += '</div></details>';
-      return b;
+      return pre + b;
     }).join('');
-
-    if (v.overlays.length) {
-      h += '<h3 style="margin:32px 0 10px">Overlay clips</h3>';
-      h += '<p class="sec-sub" style="margin-bottom:14px">Generated separately and composited in post. Step 1 makes the finished still; step 2 animates from an empty black frame to it. Or take the exact asset and skip step 1.</p>';
-      h += v.overlays.map(function(o){
-        var k = v.id + '-' + key(o.id), combA = OGL + '\n\n' + o.anim, aid = v.id + '/' + o.id;
-        var b = '<details class="shot"><summary><span class="sid">' + esc(o.id) + '</span><span class="stc">' + esc(o.dur) + '</span><span class="ssp">sits over ' + esc(o.over) + '</span>' +
-                '<span class="chip d">' + esc(v.aspect) + '</span>' + chars(combA.length) + '</summary><div class="sbody">';
-        b += '<div class="mb"><span class="lbl">Step 1 · Still — image gen, becomes the END frame</span><span class="chip n">' + o.still.length + ' chars</span></div><pre class="p" id="os1-' + k + '">' + esc(o.still) + '</pre>';
-        b += '<div class="btns"><button class="cp pri" type="button" data-copy="os1-' + k + '">Copy still prompt</button></div>';
-        b += '<div class="mb"><span class="lbl">Step 2 · Animation — video gen, black START + still END. The overlay global goes before it</span></div><pre class="p" id="os2-' + k + '">' + esc(o.anim) + '</pre>';
-        b += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(combA) + '">Copy global + animation</button>' +
-             '<button class="cp" type="button" data-copy="os2-' + k + '">Animation only</button></div>';
-        if (ART.ids().indexOf(aid) > -1) b += assetInline(aid);
-        b += '</div></details>';
-        return b;
-      }).join('');
-    }
+    h += (startsAt.__end || []).map(overlayCard).join('');
     if (DESC[v.id]) h += '<div class="note" style="margin-top:28px"><b>Description + pinned comment — where the ask lives instead of in the script</b>' + esc(DESC[v.id]) +
       '<div class="btns"><button class="cp" type="button" data-text="' + stash(DESC[v.id]) + '">Copy description</button></div></div>';
     h += '</section>';

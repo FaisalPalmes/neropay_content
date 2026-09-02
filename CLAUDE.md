@@ -76,7 +76,11 @@ from here, and folder uploads silently fail there.
 | `generation-pack.md` | Source of truth for the video series | Yes, then regenerate videos.js |
 | `style.css`, `app.js` | One stylesheet, one script (sketches, filters, motion) | Only for design changes |
 | `*.html` | Five pages | Rarely |
+| `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
+
+On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
+where they start. Keep that for any new video — don't split overlays into their own list.
 
 ## Adding a post
 
