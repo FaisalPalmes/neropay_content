@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<title>Social posts — NeroPay Content</title>
+</head>
+<body>
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
+  <a class="n" href="index.html">Overview</a>
+  <a class="n" href="social.html">Social posts</a>
+  <a class="n" href="youtube.html">YouTube series</a>
+  <a class="n" href="calendar.html">Calendar</a>
+  <a class="n" href="rails.html">Rails</a>
+</div></div>
+<div class="wrap">
+<div class="hero">
+  <span class="kicker">18 posts · written and dated</span>
+  <h1>Social posts</h1>
+  <p class="lede">Every post below is final copy, posted as NeroPay. Creative direction sits alongside each, with a rough sketch showing composition — not a finished design, just where the subject sits and what the eye hits first.</p>
+</div>
+
+<section id="all">
+  <div class="bar">
+    <button class="f" data-filter="ch" data-value="linkedin" data-exclusive="true" aria-pressed="false" type="button">LinkedIn</button>
+    <button class="f" data-filter="ch" data-value="meta" data-exclusive="true" aria-pressed="false" type="button">Instagram + Facebook</button>
+    <button class="f" data-filter="pillar" data-value="Statement" aria-pressed="false" type="button">Statement</button>
+    <button class="f" data-filter="pillar" data-value="Street" aria-pressed="false" type="button">Street</button>
+    <button class="f" data-filter="pillar" data-value="Product" aria-pressed="false" type="button">Product</button>
+    <button class="f" data-filter="pillar" data-value="Merchant" aria-pressed="false" type="button">Merchant</button>
+    <button class="f" data-filter="pillar" data-value="Partner" aria-pressed="false" type="button">Partner</button>
+    <button class="f" data-filter="status" data-value="blocked" aria-pressed="false" type="button">Blocked only</button>
+    <span class="sp"></span>
+    <span class="count" data-count></span>
+  </div>
+  <div class="posts" id="postlist"></div>
+</section>
+
+<div class="foot">
+  <p>Copy is final. Creative direction is a brief, not a spec — the sketches show composition and hierarchy, and anything that improves on them is welcome as long as it stays inside the brand rules and the rails.</p>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="data/posts.js"></script>
+<script src="assets/app.js"></script>
+<script>NP.mount('#postlist', window.POSTS); NP.wireFilters('#all');</script>
+</body>
+</html>

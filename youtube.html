@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Schibsted+Grotesk:wght@500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<title>YouTube series — NeroPay Content</title>
+</head>
+<body>
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
+  <a class="n" href="index.html">Overview</a>
+  <a class="n" href="social.html">Social posts</a>
+  <a class="n" href="youtube.html">YouTube series</a>
+  <a class="n" href="calendar.html">Calendar</a>
+  <a class="n" href="rails.html">Rails</a>
+</div></div>
+<div class="wrap">
+
+<div class="hero">
+  <span class="kicker">Explained by NeroPay · generation pack v6</span>
+  <h1>Six videos.<br>Every shot, every prompt.</h1>
+  <p class="lede">Three business-owner explainers and three partner videos, generated in Higgsfield. Each video below opens into its shot list — the spoken line, the delivery note and the full generation prompt, ready to paste. Overlays are generated separately and composited in post.</p>
+  <div class="facts" id="stats"></div>
+</div>
+
+<section>
+  <div class="sec-head"><span class="lbl">01</span><h2>The series</h2></div>
+  <p class="sec-sub">Business-owner videos lead because they're the shareable ones. Partner videos interleave so there's always a recent one to forward after a wholesaler meeting.</p>
+  <div class="vgrid" id="grid"></div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="lbl">02</span><h2>The two global prompts</h2></div>
+  <p class="sec-sub">Prepended to every generation. Freeze the winning presenter prompt verbatim and reuse it across all shots so the series reads as one show.</p>
+  <div class="two">
+    <div>
+      <h3 style="margin-bottom:8px">Presenter global</h3>
+      <pre class="p" id="pg"></pre>
+      <button class="cp" type="button" data-copy="pg">Copy presenter global</button>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">Overlay global</h3>
+      <pre class="p" id="og"></pre>
+      <button class="cp" type="button" data-copy="og">Copy overlay global</button>
+    </div>
+  </div>
+</section>
+
+<div id="videos"></div>
+
+<section>
+  <div class="sec-head"><span class="lbl">99</span><h2>Specimen statements</h2></div>
+  <p class="sec-sub">Two fictional documents built for the videos. Both carry a specimen banner and must never be presented as real.</p>
+  <div class="scroller"><table class="t">
+    <thead><tr><th>File</th><th>What it is</th><th>Key figures</th></tr></thead>
+    <tbody>
+      <tr><td>statement-tiered</td><td>Northwick Payment Services — fictional provider, rate advertised <em>from 0.50%</em></td><td>£28,400.00 turnover · 780 txns · total £308.46 · effective 1.09%</td></tr>
+      <tr><td>statement-flat</td><td>NeroPay-branded — one flat 0.70% across every card type</td><td>£28,400.00 turnover · 780 txns · total £198.81 · effective 0.70%</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="lbl">—</span><h2>Still to settle</h2></div>
+  <p class="sec-sub">Carried from the generation pack. These are open questions, not decisions.</p>
+  <div class="prose">
+    <ul class="plain">
+      <li><strong>Does the 0.70% flat rate genuinely include American Express?</strong> Amex scheme costs typically run above 0.70%. If it's carved out, the flat statement and shot B1-13 both change, and "flat across every card" stops being true.</li>
+      <li><strong>What is NeroPay's real pricing story?</strong> Internal documents carry 1.30% + 15p standard and 0.80% as a bespoke floor. These videos use 0.70% flat with no per-transaction fee. Three different products; only one can be the answer on screen.</li>
+      <li><strong>B2 uses 0.40% + 8p as its second option.</strong> A realistic market shape, presented neutrally with no provider named — but it isn't a NeroPay product.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="foot">
+  <p>Source of truth is <code>data/generation-pack.md</code>, preserved verbatim. <code>data/videos.js</code> is generated from it — regenerate rather than editing by hand, so the two never drift apart.</p>
+</div>
+
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="data/videos.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function(){
+  var V = window.VIDEOS, esc = NP.esc;
+  var shots = 0, ovs = 0;
+  V.videos.forEach(function(v){ shots += v.shots.filter(function(s){return s.spoken;}).length; ovs += v.overlays.length; });
+
+  document.getElementById('stats').innerHTML =
+    '<div><b>'+V.videos.length+'</b><span>videos</span></div>'+
+    '<div><b>'+shots+'</b><span>presenter shots</span></div>'+
+    '<div><b>'+ovs+'</b><span>overlay clips</span></div>'+
+    '<div><b>'+(shots+ovs)+'</b><span>generations</span></div>'+
+    '<div><b>13s</b><span>longest shot</span></div>';
+
+  document.getElementById('pg').textContent = V.presenterGlobal;
+  document.getElementById('og').textContent = V.overlayGlobal;
+
+  document.getElementById('grid').innerHTML = V.videos.map(function(v){
+    return '<a href="#'+v.id+'"><span class="vt">'+v.id+' — '+esc(v.title)+'</span>'+
+      '<span class="vm">'+esc(v.series)+'</span>'+
+      '<span class="vm">'+esc(v.runtime)+' · '+v.shots.filter(function(s){return s.spoken;}).length+' shots · '+v.overlays.length+' overlays · '+esc(v.aspect)+'</span></a>';
+  }).join('');
+
+  document.getElementById('videos').innerHTML = V.videos.map(function(v){
+    var h = '<section id="'+v.id+'"><div class="sec-head"><span class="lbl">'+v.id+'</span><h2>'+esc(v.title)+'</h2></div>';
+    h += '<p class="sec-sub">'+esc(v.series)+' · '+esc(v.runtime)+' · aspect '+esc(v.aspect)+'</p>';
+
+    h += '<h3 style="margin:24px 0 10px">Script, in order</h3>';
+    h += '<div class="copy" id="scr-'+v.id+'">'+esc(v.shots.filter(function(s){return s.spoken;}).map(function(s){return s.spoken;}).join('\n\n'))+'</div>';
+    h += '<button class="cp" type="button" data-copy="scr-'+v.id+'">Copy full script</button>';
+
+    h += '<h3 style="margin:28px 0 10px">Presenter shots</h3>';
+    h += v.shots.map(function(s){
+      var lead = s.spoken ? esc(s.spoken) : '<em style="color:var(--muted)">'+esc(s.id)+' card</em>';
+      var b = '<details class="shot"><summary><span class="sid">'+esc(s.id)+'</span><span class="stc">'+esc(s.tc)+'</span><span class="ssp">'+lead+'</span>'+
+              (s.ov ? '<span class="chip d">'+esc(s.ov)+'</span>' : '')+'</summary><div class="sbody">';
+      if (s.delivery) b += '<div class="mb"><span class="lbl">Delivery</span><p>'+esc(s.delivery)+'</p></div>';
+      if (s.gesture)  b += '<div class="mb"><span class="lbl">Gesture</span><p>'+esc(s.gesture)+'</p></div>';
+      b += '<div class="mb"><span class="lbl">Prompt — paste after the presenter global</span></div>';
+      b += '<pre class="p" id="pr-'+v.id+'-'+s.id.replace(/[^\w-]/g,'')+'">'+esc(s.prompt)+'</pre>';
+      b += '<button class="cp" type="button" data-copy="pr-'+v.id+'-'+s.id.replace(/[^\w-]/g,'')+'">Copy prompt</button>';
+      b += '</div></details>';
+      return b;
+    }).join('');
+
+    if (v.overlays.length) {
+      h += '<h3 style="margin:28px 0 10px">Overlay clips</h3>';
+      h += '<p class="sec-sub">Generated separately and composited in post. Step 1 makes the finished still; step 2 animates from an empty black frame to it.</p>';
+      h += v.overlays.map(function(o){
+        var key = v.id+'-'+o.id;
+        var b = '<details class="shot"><summary><span class="sid">'+esc(o.id)+'</span><span class="stc">'+esc(o.dur)+'</span><span class="ssp">sits over '+esc(o.over)+'</span></summary><div class="sbody">';
+        b += '<div class="mb"><span class="lbl">Step 1 — still</span></div><pre class="p" id="os1-'+key+'">'+esc(o.still)+'</pre>';
+        b += '<button class="cp" type="button" data-copy="os1-'+key+'">Copy still prompt</button>';
+        b += '<div class="mb"><span class="lbl">Step 2 — animation</span></div><pre class="p" id="os2-'+key+'">'+esc(o.anim)+'</pre>';
+        b += '<button class="cp" type="button" data-copy="os2-'+key+'">Copy animation prompt</button>';
+        b += '</div></details>';
+        return b;
+      }).join('');
+    }
+    h += '</section>';
+    return h;
+  }).join('');
+})();
+</script>
+</body>
+</html>
