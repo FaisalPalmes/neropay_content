@@ -20,22 +20,26 @@ step, no dependencies, no framework.
 ```
 .
 ├── index.html · social.html · youtube.html · calendar.html · rails.html
-├── assets/
-│   ├── style.css        one stylesheet, light + dark, CSS variables at the top
-│   └── app.js           post rendering, sketches, filters, copy buttons
-├── data/
-│   ├── posts.js         the 18 social posts  ← edit this to add a post
-│   ├── videos.js        generated from generation-pack.md — do not hand-edit
-│   └── generation-pack.md   source of truth for the video series
+├── style.css              one stylesheet, light + dark, CSS variables at the top
+├── app.js                 post rendering, sketches, filters, copy buttons
+├── posts.js               the 18 social posts  ← edit this to add a post
+├── videos.js              generated from generation-pack.md — do not hand-edit
+├── generation-pack.md     source of truth for the video series
 ├── vercel.json
-└── README.md
+├── README.md
+└── CLAUDE.md              rules Claude Code reads automatically — rails, voice, brand, what's blocked
 ```
+
+**Everything is at the top level on purpose.** No subfolders. GitHub's web uploader silently skips
+folders when files are picked through the file-chooser dialog rather than dragged, which breaks the
+site in a way that's hard to spot — the HTML loads and the styling just vanishes. Flat means every
+upload works, whatever route you take.
 
 ---
 
 ## Adding a social post
 
-Open `data/posts.js`, copy any object, change the fields. It appears on `social.html`
+Open `posts.js`, copy any object, change the fields. It appears on `social.html`
 automatically, filters and all.
 
 ```js
@@ -80,7 +84,7 @@ what the eye hits first — not finished design. Replace with real creative when
 
 ## Adding or changing a video
 
-`data/generation-pack.md` is the source of truth. `data/videos.js` is generated from it, so edit the
+`generation-pack.md` is the source of truth. `videos.js` is generated from it, so edit the
 markdown and regenerate rather than editing the JS by hand — otherwise the two drift apart and
 nobody knows which is right.
 
