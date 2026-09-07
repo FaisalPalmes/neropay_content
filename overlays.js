@@ -451,6 +451,73 @@ window.OVERLAY_ART = (function () {
   def('STATEMENT/TIERED', { vid: 'ALL', title: 'Specimen statement · tiered (Northwick)', use: 'cut alongside B1 OV-2 and OV-3 — fictional provider, advertised from 0.50%, effective 1.09%', frame: F16, opaque: true, draw: statement(false) });
   def('STATEMENT/FLAT', { vid: 'ALL', title: 'Specimen statement · flat (NeroPay)', use: 'cut alongside B1 OV-6 — one 0.70% rate on every card, no other charges (rate still to settle with Eray)', frame: F16, opaque: true, draw: statement(true) });
 
+  /* ---------- Behind the Counter (series C) ---------- */
+  var CALLCAST = [['sam', 'Sam', 'Takeaway · Rusholme'], ['priya', 'Priya', 'Café · Levenshulme'], ['tomasz', 'Tomasz', 'Barber · Longsight'],
+    ['dilek', 'Dilek', 'Restaurant · Stretford'], ['marcus', 'Marcus', 'Corner shop · Cheetham Hill'], ['aisha', 'Aisha', 'Dessert lounge · Wilmslow Road']];
+
+  def('CALL/TITLE', { vid: 'CALL', title: 'Series title card', use: 'every [TITLE] on C1–C6, 16:9', frame: F16, opaque: true,
+    draw: function (F) {
+      return '<rect width="' + F.w + '" height="' + F.h + '" fill="' + K + '"/>' + stack([
+        { k: 'text', s: 'A NEROPAY SERIES', size: 32, fill: D, mono: true, ls: '0.38em', gap: 44 },
+        { k: 'text', s: [{ s: 'Behind the ', fill: W }, { s: 'Counter', fill: Y }], size: 150, w: 900, ls: '-0.04em', gap: 40 },
+        { k: 'text', s: 'One question. Six counters.', size: 40, fill: '#D6D6D6' }], F, { align: 'center' });
+    } });
+
+  def('CALL/END', { vid: 'CALL', title: 'Series end card', use: 'every [END] on C1–C6, 16:9', frame: F16, opaque: true,
+    draw: function (F) {
+      return '<rect width="' + F.w + '" height="' + F.h + '" fill="#141416"/>' + stack([
+        { k: 'text', s: wordmark(), size: 130, w: 900, ls: '-0.04em', gap: 40 },
+        { k: 'text', s: 'Behind the Counter', size: 48, w: 700, gap: 18 },
+        { k: 'text', s: 'New episode every other Thursday  ·  Subscribe for more', size: 36, fill: '#D6D6D6', gap: 80 },
+        { k: 'text', s: 'Dramatised with AI-generated characters; not customer testimony. NeroPay is a trading name of Nero Panda Ltd.', size: 26, fill: D }
+      ], F, { align: 'center', avail: 1500 });
+    } });
+
+  def('CALL/DISCLOSURE', { vid: 'CALL', title: 'Dramatised · AI disclosure', use: 'first three seconds of every episode — lower third, transparent', frame: F16,
+    draw: function (F) {
+      var x = F.m, y = F.h - F.m - 40, o = '';
+      o += '<rect x="' + (x - 28) + '" y="' + (y - 84) + '" width="1180" height="128" fill="' + K + '" opacity="0.62"/>';
+      o += '<rect x="' + x + '" y="' + (y - 50) + '" width="22" height="22" fill="' + Y + '"/>';
+      o += t(x + 44, y - 30, 'Dramatised · everyone in this video is AI-generated', { size: 40, w: 700 });
+      o += t(x + 44, y + 16, 'The owners are composite characters, not customers. Nothing here is a testimonial.', { size: 26, fill: '#D6D6D6' });
+      return o;
+    } });
+
+  def('CALL/FRAME', { vid: 'CALL', title: 'Call layout · host box', use: 'the top-right box the host listening loop sits in, plus its NeroPay plate — transparent, every episode', frame: F16,
+    draw: function (F) {
+      var x = 1440, y = 80, w = 400, h = 225, o = '';
+      o += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="none" stroke="' + W + '" stroke-width="3"/>';
+      o += '<rect x="' + x + '" y="' + (y + h + 8) + '" width="150" height="44" fill="' + K + '" opacity="0.62"/>';
+      o += t(x + 16, y + h + 39, wordmark(), { size: 26, w: 800, ls: '-0.02em' });
+      o += t(x + w, y + h + 39, 'listening', { size: 20, fill: D, anchor: 'end', mono: true });
+      return o;
+    } });
+
+  CALLCAST.forEach(function (c) {
+    def('CALL/NAME-' + c[0].toUpperCase(), { vid: 'CALL', title: 'Name plate · ' + c[1], use: 'bottom left, under every ' + c[1] + ' bite — transparent', frame: F16,
+      draw: function (F) {
+        var x = F.m, y = F.h - F.m - 40, o = '';
+        o += '<rect x="' + (x - 28) + '" y="' + (y - 84) + '" width="640" height="128" fill="' + K + '" opacity="0.62"/>';
+        o += t(x, y - 30, c[1], { size: 44, w: 700 });
+        o += t(x, y + 16, [{ s: c[2] + '   ·   ' }, { s: 'AI CHARACTER', fill: Y }], { size: 24, fill: '#D6D6D6' });
+        return o;
+      } });
+  });
+
+  if (window.CALLS) {
+    window.CALLS.episodes.forEach(function (e) {
+      def(e.id + '/Q', { vid: e.id, title: 'Question card · episode ' + e.ep, use: 'after the title card, before the first bite — the question the owners are answering', frame: F16, opaque: true,
+        draw: function (F) {
+          return '<rect width="' + F.w + '" height="' + F.h + '" fill="' + K + '"/>' + stack([
+            { k: 'text', s: 'EPISODE ' + e.ep, size: 32, fill: D, mono: true, ls: '0.38em', gap: 40 },
+            { k: 'rule', x1: 0.47, x2: 0.53, h: 5, fill: Y, gap: 44 },
+            { k: 'text', s: e.question, size: 72, w: 700, gap: 56, gly: 0.5 },
+            { k: 'text', s: 'BEHIND THE COUNTER', size: 26, fill: D, mono: true, ls: '0.3em' }
+          ], F, { align: 'center', avail: 1400 });
+        } });
+    });
+  }
+
   /* ---------- output ---------- */
   function svg(id, o) {
     o = o || {};

@@ -13,7 +13,7 @@ step, no dependencies, no framework.
 |---|---|
 | `index.html` | What social is for, the three channels, the five pillars, how the week works |
 | `social.html` | All 18 posts — final copy, creative direction, rough sketches, filters |
-| `youtube.html` | The six-video series: every shot, every Higgsfield prompt, both globals, and every on-screen graphic as a downloadable file |
+| `youtube.html` | Three YouTube series — Explained by NeroPay (owners, partners) and Behind the Counter — every shot, every prompt, every on-screen graphic as a downloadable file |
 | `calendar.html` | Sixteen weeks, 7 Sept – 3 Jan, with the immovable dates marked |
 | `rails.html` | Compliance rails and how the channel is measured |
 
@@ -24,7 +24,8 @@ step, no dependencies, no framework.
 ├── app.js                 post rendering, sketches, filters, copy buttons
 ├── posts.js               the 18 social posts  ← edit this to add a post
 ├── videos.js              generated from generation-pack.md — do not hand-edit
-├── overlays.js            the video graphics drawn as SVG — overlays, title/end cards, disclosure, specimen statements
+├── calls.js               Behind the Counter series  ← hand-edited, copy an episode to add one
+├── overlays.js            the video graphics drawn as SVG — overlays, cards, plates, disclosure, specimen statements
 ├── generation-pack.md     source of truth for the video series
 ├── vercel.json
 ├── README.md
@@ -118,6 +119,21 @@ Each video is one timeline. Presenter shots are yellow; overlays are purple and 
 timeline at the point they start (just before the first shot they cover), each carrying its
 still prompt, animation prompt and exact asset. That is the convention for every video, including
 any added later — the page does it from the `sits over …` line, so nothing extra is needed.
+
+### Behind the Counter (`calls.js`)
+
+The second YouTube series: a fortnightly video-call montage. One question from the NeroPay side,
+answered by six AI-generated owners in their own premises, cut together from short bites. Unlike the
+Explained pack there is no markdown source — `calls.js` is hand-edited data, like `posts.js`. To add
+an episode, copy one, give it the next `C#` id, date and question, and write the shots: `kind` is
+`host`, `bite`, `title` or `end`; `who` is a cast key; `secs` drives the timecodes; the paste-able
+prompt is built for you. The cast and the two globals live at the top of the same file.
+
+Rules that keep the series legal: everyone is AI-generated and the disclosure runs over the first
+three seconds; the owners are composite characters with first names only, they describe situations
+and never endorse NeroPay; the host carries the product facts and the concession; no rate, no price,
+no competitor named. On the page, host shots are yellow, owner bites blue, and the question card
+purple at the point it sits.
 
 ### The graphics (`overlays.js`)
 

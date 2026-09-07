@@ -76,11 +76,21 @@ from here, and folder uploads silently fail there.
 | `generation-pack.md` | Source of truth for the video series | Yes, then regenerate videos.js |
 | `style.css`, `app.js` | One stylesheet, one script (sketches, filters, motion) | Only for design changes |
 | `*.html` | Five pages | Rarely |
+| `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes | **Yes — hand-edited, copy an episode to add one** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 
 On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
 where they start. Keep that for any new video — don't split overlays into their own list.
+
+**Behind the Counter (series C, `calls.js`) is a dramatised explainer, not testimony.** Every person in
+it is AI-generated and the disclosure runs over the first three seconds. The owners are composite
+characters — first names only, no business named — who describe situations and never say they use
+NeroPay. The host carries the product facts and the concession. Fabricated testimonials breach the
+CAP Code (3.45–3.47) and the DMCC Act 2024 fake-review ban; real customers belong in the Merchant
+pillar with signed consent. New episodes follow the same shape: host question → title → question card
+→ four bites → host question → four bites → host close with a concession → end card. Fortnightly,
+Thursdays, skipping the dead week and the dark period.
 
 ## Adding a post
 

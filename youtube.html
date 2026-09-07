@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;800;900&family=Martian+Mono:wght@300;400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
 <link rel="stylesheet" href="style.css">
 <title>YouTube series — NeroPay Content</title>
-<style>html{scroll-padding-top:150px}section{scroll-margin-top:150px}</style>
+<style>html{scroll-padding-top:190px}section{scroll-margin-top:190px}</style>
 </head>
 <body>
 <div class="nav"><div class="wrap">
@@ -24,106 +24,126 @@
 <div class="wrap">
 
 <div class="hero">
-  <span class="kicker">Explained by NeroPay · generation pack v6 · 18 Aug 2026</span>
-  <h1>Six videos.<br>Every shot, every prompt.</h1>
-  <p class="lede">Three business-owner explainers and three partner videos, generated in Higgsfield. Paste the global first, then each shot's prompt — or copy both together in one click. Overlays are generated separately and composited in post, and every graphic the scripts call for is drawn below as an exact file you can download.</p>
+  <span class="kicker">YouTube · Explained by NeroPay v6 · Behind the Counter v1</span>
+  <h1>Three series.<br>Every shot, every prompt.</h1>
+  <p class="lede">Everything NeroPay puts on YouTube, generated in Higgsfield. Two runs of <em>Explained by NeroPay</em> — three explainers for business owners, three for partners — and <em>Behind the Counter</em>, a fortnightly video-call montage with six owners in their own premises. Paste the global first, then each shot, or copy both together. Every graphic the scripts call for is drawn below as an exact file.</p>
   <div class="facts" id="stats"></div>
 </div>
 
 </div>
-<div class="subbar"><div class="wrap"><div class="row" id="tabs" role="tablist" aria-label="Jump to"></div></div></div>
+<div class="subbar"><div class="wrap"><div class="row" id="tabs" role="tablist" aria-label="Jump to"></div><div class="row2" id="tabs2" hidden></div></div></div>
 <div class="wrap">
 
 <section id="how" data-tab="how">
   <div class="sec-head"><span class="lbl">01</span><h2>How to use this</h2></div>
-  <p class="sec-sub">Three kinds of generation. Every one starts with a global prompt, then the piece that's specific to the shot.</p>
+  <p class="sec-sub">Every generation starts with a global prompt, then the piece that's specific to the shot. The buttons below fold the global in for you.</p>
   <div class="scroller"><table class="t">
-    <thead><tr><th>Type</th><th>Tool</th><th>What you attach</th><th>What you paste</th></tr></thead>
+    <thead><tr><th>Series</th><th>Type</th><th>Tool</th><th>What you attach</th><th>What you paste</th></tr></thead>
     <tbody>
-      <tr><td>Presenter shot</td><td>Video gen</td><td>The presenter starting frame from the prompt kit (not in this repo)</td><td><em>Copy global + shot</em> — the presenter global and the shot prompt, together</td></tr>
-      <tr><td>Overlay still</td><td>Image gen — Nano Banana Pro, 2K</td><td>Nothing. Text to image. This becomes the END frame</td><td><em>Copy still prompt</em></td></tr>
-      <tr><td>Overlay animation</td><td>Video gen</td><td>A plain black frame as START, the still as END</td><td><em>Copy global + animation</em> — the overlay global and the animation prompt</td></tr>
+      <tr><td>Explained</td><td>Presenter shot</td><td>Video gen</td><td>The presenter starting frame from the prompt kit (not in this repo)</td><td><em>Copy global + shot</em></td></tr>
+      <tr><td>Explained</td><td>Overlay still</td><td>Image gen — Nano Banana Pro, 2K</td><td>Nothing. Text to image. Becomes the END frame</td><td><em>Copy still prompt</em> — or skip it and use the exact asset</td></tr>
+      <tr><td>Explained</td><td>Overlay animation</td><td>Video gen</td><td>A plain black frame as START, the still as END</td><td><em>Copy global + animation</em></td></tr>
+      <tr><td>Behind the Counter</td><td>Starting frame</td><td>Image gen — Nano Banana Pro, 2K</td><td>Nothing. One per cast member, made once, reused every episode</td><td><em>Copy frame prompt</em></td></tr>
+      <tr><td>Behind the Counter</td><td>Owner bite</td><td>Video gen</td><td>That owner's starting frame</td><td><em>Copy global + bite</em> — the owner global and the bite</td></tr>
+      <tr><td>Behind the Counter</td><td>Host shot</td><td>Video gen</td><td>The host starting frame</td><td><em>Copy global + shot</em> — the host global and the shot</td></tr>
+      <tr><td>Behind the Counter</td><td>Host listening loop</td><td>Video gen</td><td>The host starting frame</td><td><em>Copy global + loop</em> — three loops, made once, cut into the top-right box</td></tr>
     </tbody>
   </table></div>
   <div class="note ok"><b>Why the still comes first</b>Video models mangle text and numbers; image models render them reliably. Generate the graphic as a still, hand it to the video model as the end frame, and the final frame is pixel-correct even if the middle wobbles. Never let a video model invent a figure — every number in these overlays is a substantiated claim.</div>
-  <div class="note yl"><b>Or skip the image model entirely</b>Every overlay still is also drawn on this page as an exact SVG, under its prompt and in the Assets tab. Download it as a transparent PNG and drop it straight on the timeline, or use it as the END frame for the animation step. Same figures, same layout, no spelling roulette.</div>
-  <div class="note warn"><b>Compositing — read before you generate</b>Higgsfield does not output an alpha channel, so every generated overlay is built on pure black. Composite with a Screen or Add blend mode and the black drops out. If the black comes back lit, greyish or gradient-y, regenerate — a muddy black keys badly and you will see a grey box. The PNGs from this page don't have that problem: the transparent version needs no keying.</div>
-  <div class="note"><b>The specimen statement</b>The redacted statement footage slots in alongside OV-2 on B1, which is the itemised table. Both specimen statements are in the Assets tab at 1920×1080. Shoot or screen-record at the same aspect and cut between them and the overlay rather than stacking them.</div>
+  <div class="note yl"><b>Or skip the image model entirely</b>Every overlay still, card, plate and question card is drawn on this page as an exact SVG. Download it as a transparent PNG and drop it on the timeline, or use it as the END frame for the animation step. Same figures, same layout, no spelling roulette.</div>
+  <div class="note warn"><b>Compositing — read before you generate</b>Higgsfield does not output an alpha channel, so every generated overlay is built on pure black. Composite with a Screen or Add blend mode and the black drops out. If the black comes back lit, greyish or gradient-y, regenerate — a muddy black keys badly. The PNGs from this page don't have that problem: the transparent version needs no keying.</div>
+  <div class="note"><b>The call layout</b>Behind the Counter is assembled in post: the owner's bite full-frame, the host listening loop scaled into the box top right (the <em>Call layout</em> asset marks the box and its NeroPay plate), the owner's name plate bottom left, and the disclosure over the first three seconds. Cut host question → title → question card → bites → host question → bites → host close → end card.</div>
   <h3 style="margin:28px 0 10px">Numbers</h3>
   <div class="scroller"><table class="t" id="numbers"><tbody></tbody></table></div>
 </section>
 
 <section id="globals" data-tab="globals">
-  <div class="sec-head"><span class="lbl">02</span><h2>The two global prompts</h2></div>
-  <p class="sec-sub">Paste first, every time. Freeze the winning presenter prompt verbatim and reuse it across all shots so the series reads as one show. Both are already folded into every "Copy global + …" button below.</p>
+  <div class="sec-head"><span class="lbl">02</span><h2>The four global prompts</h2></div>
+  <p class="sec-sub">Paste first, every time. Freeze the winning version verbatim and reuse it across every shot so each series reads as one show. All four are already folded into every "Copy global + …" button.</p>
+  <h3 style="margin:0 0 12px">Explained by NeroPay</h3>
   <div class="two">
-    <div>
-      <div class="btns" style="margin-bottom:8px"><h3>Presenter global</h3><span class="chip n" id="pgc"></span></div>
-      <pre class="p" id="pg"></pre>
-      <button class="cp" type="button" data-copy="pg">Copy presenter global</button>
-    </div>
-    <div>
-      <div class="btns" style="margin-bottom:8px"><h3>Overlay global</h3><span class="chip n" id="ogc"></span></div>
-      <pre class="p" id="og"></pre>
-      <button class="cp" type="button" data-copy="og">Copy overlay global</button>
-    </div>
+    <div><div class="btns" style="margin-bottom:8px"><h4>Presenter global</h4><span class="chip n" id="pgc"></span></div><pre class="p" id="pg"></pre><button class="cp" type="button" data-copy="pg">Copy presenter global</button></div>
+    <div><div class="btns" style="margin-bottom:8px"><h4>Overlay global</h4><span class="chip n" id="ogc"></span></div><pre class="p" id="og"></pre><button class="cp" type="button" data-copy="og">Copy overlay global</button></div>
+  </div>
+  <h3 style="margin:36px 0 12px">Behind the Counter</h3>
+  <div class="two">
+    <div><div class="btns" style="margin-bottom:8px"><h4>Owner global</h4><span class="chip n" id="mgc"></span></div><pre class="p" id="mg"></pre><button class="cp" type="button" data-copy="mg">Copy owner global</button></div>
+    <div><div class="btns" style="margin-bottom:8px"><h4>Host global</h4><span class="chip n" id="hgc"></span></div><pre class="p" id="hg"></pre><button class="cp" type="button" data-copy="hg">Copy host global</button></div>
   </div>
 </section>
 
-<section id="series" data-tab="all">
-  <div class="sec-head"><span class="lbl">03</span><h2>The series</h2></div>
-  <p class="sec-sub">Business-owner videos lead because they're the shareable ones. Partner videos interleave so there's always a recent one to forward after a wholesaler meeting.</p>
-  <div class="vgrid" id="grid"></div>
-</section>
-
-<div id="videos"></div>
+<div id="series"></div>
 
 <section id="assets" data-tab="assets">
-  <div class="sec-head"><span class="lbl">04</span><h2>Post-production assets</h2></div>
-  <p class="sec-sub">Everything the scripts put on screen, drawn as exact files. Overlays export transparent by default (no keying) or on black (for Screen/Add). Cards and statements are full-frame. Nothing here is invented — each one is a graphic the pack already specifies.</p>
-  <h3 style="margin:0 0 12px">Shared — every video</h3>
+  <div class="sec-head"><span class="lbl">06</span><h2>Post-production assets</h2></div>
+  <p class="sec-sub">Everything the scripts put on screen, drawn as exact files. Overlays and plates export transparent by default (no keying) or on black (for Screen/Add). Cards and statements are full-frame. Nothing here is invented — each one is a graphic the pack already specifies.</p>
+  <h3 style="margin:0 0 12px">Explained by NeroPay — shared</h3>
   <div class="assets" id="assets-shared"></div>
-  <h3 style="margin:36px 0 12px">Overlays — by video</h3>
+  <h3 style="margin:36px 0 12px">Explained by NeroPay — overlays, by video</h3>
   <div class="assets" id="assets-ov"></div>
-  <div class="note yl" style="margin-top:28px"><b>Two brand calls to check</b>The pack says the end card is a white screen. Brand says yellow only ever sits on dark, so the end card here is charcoal — flip it if you'd rather keep the pack literal. And the NeroPay specimen statement carries the pack's 0.70% flat rate, which is still an open question for Eray; it's here because the video needs it, not because the rate is settled.</div>
+  <h3 style="margin:36px 0 12px">Behind the Counter — shared</h3>
+  <div class="assets" id="assets-call"></div>
+  <h3 style="margin:36px 0 12px">Behind the Counter — question cards, by episode</h3>
+  <div class="assets" id="assets-q"></div>
+  <div class="note yl" style="margin-top:28px"><b>Two brand calls to check</b>The Explained pack says the end card is a white screen. Brand says yellow only ever sits on dark, so every end card here is charcoal — flip it if you'd rather keep the pack literal. And the NeroPay specimen statement carries the pack's 0.70% flat rate, which is still an open question for Eray; it's here because the video needs it, not because the rate is settled.</div>
 </section>
 
-<section id="settle" data-tab="all">
+<section id="settle" data-tab="settle">
   <div class="sec-head"><span class="lbl">—</span><h2>Still to settle</h2></div>
-  <p class="sec-sub">Carried from the generation pack. These are open questions, not decisions.</p>
+  <p class="sec-sub">Open questions, not decisions.</p>
   <div class="prose">
     <ul class="plain">
       <li><strong>Does the 0.70% flat rate genuinely include American Express?</strong> Amex scheme costs typically run above 0.70%. If it's carved out, the flat statement and shot B1-13 both change, and "flat across every card" stops being true.</li>
-      <li><strong>What is NeroPay's real pricing story?</strong> Internal documents carry 1.30% + 15p standard and 0.80% as a bespoke floor. These videos use 0.70% flat with no per-transaction fee. Three different products; only one can be the answer on screen.</li>
+      <li><strong>What is NeroPay's real pricing story?</strong> Internal documents carry 1.30% + 15p standard and 0.80% as a bespoke floor. The Explained videos use 0.70% flat with no per-transaction fee. Three different products; only one can be the answer on screen. Behind the Counter states no rate at all.</li>
       <li><strong>B2 uses 0.40% + 8p as its second option.</strong> A realistic market shape, presented neutrally with no provider named — but it isn't a NeroPay product.</li>
       <li><strong>A2-06 carries a placeholder.</strong> The partner incentive figure is still with Eray. The video is blocked until it lands.</li>
+      <li><strong>Behind the Counter's host needs choosing and freezing.</strong> One presenter, the same in every episode, never Faisal. The Explained presenter would work.</li>
+      <li><strong>Check the cast against the field list.</strong> The six owners are invented — first names only, no business named — but before the first episode, confirm none of the name-and-trade pairs matches a real merchant NeroPay has visited.</li>
     </ul>
   </div>
 </section>
 
 <div class="foot">
-  <p>Source of truth is <code>generation-pack.md</code>, preserved verbatim. <code>videos.js</code> is generated from it — regenerate rather than editing by hand, so the two never drift apart. The graphics are drawn in <code>overlays.js</code>; change a figure there only after changing it in the pack.</p>
+  <p>Explained by NeroPay: source of truth is <code>generation-pack.md</code>, preserved verbatim; <code>videos.js</code> is generated from it. Behind the Counter: <code>calls.js</code> is hand-edited data, like the posts — copy an episode to add one. The graphics are drawn in <code>overlays.js</code>; change a figure there only after changing it in the source.</p>
 </div>
 
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="videos.js"></script>
+<script src="calls.js"></script>
 <script src="overlays.js"></script>
 <script src="app.js"></script>
 <script>
 (function(){
-  var V = window.VIDEOS, ART = window.OVERLAY_ART, esc = NP.esc;
-  var LIMIT = 2500, GL = V.presenterGlobal, OGL = V.overlayGlobal;
+  var V = window.VIDEOS, C = window.CALLS, ART = window.OVERLAY_ART, esc = NP.esc;
+  var LIMIT = 2500, GL = V.presenterGlobal, OGL = V.overlayGlobal, MG = C.merchantGlobal, HG = C.hostGlobal;
+  var STORE = {}, n = 0;
+  function stash(txt){ var k = 't' + (n++); STORE[k] = txt; return k; }
+  function key(s){ return String(s).replace(/[^\w-]/g, ''); }
+  function chars(c){ return '<span class="chip n' + (c > LIMIT ? ' over' : '') + '">' + c + ' / ' + LIMIT + '</span>'; }
+  function has(id){ return ART.ids().indexOf(id) > -1; }
+
   /* "Description + pinned comment" from generation-pack.md — the parser doesn't carry it into videos.js */
   var DESC = {
     B1: "Want to know your real effective rate? Send us last month's statement and we'll work it out and tell you what it says - including if the answer is that you're already on a good deal. neropay.app",
     B2: "Not sure which side of £26.67 you're on? Send us last month's statement and we'll work out your average sale and tell you which shape of pricing actually suits you. neropay.app",
     B3: "Want a second pair of eyes before you sign? Send us the agreement and your last statement and we'll tell you what it says. neropay.app"
   };
-  var STORE = {}, n = 0;
-  function stash(txt){ var k = 't' + (n++); STORE[k] = txt; return k; }
-  function key(s){ return String(s).replace(/[^\w-]/g, ''); }
-  function chars(c){ return '<span class="chip n' + (c > LIMIT ? ' over' : '') + '">' + c + ' / ' + LIMIT + '</span>'; }
+
+  /* ---------- the three series ---------- */
+  var GROUPS = [
+    { id: 'EB', n: '03', short: 'Explained · owners', name: 'Explained by NeroPay — for business owners',
+      sub: 'Series B. Weekly from 7 September, 16:9. Reading a statement, choosing a pricing shape, signing a contract. The shareable ones, and the raw material for most of the Statement-pillar posts.',
+      vids: V.videos.filter(function(v){ return v.id.charAt(0) === 'B'; }) },
+    { id: 'EA', n: '04', short: 'Explained · partners', name: 'Explained by NeroPay — for partners',
+      sub: 'Series A. Vertical 9:16, interleaved with the B videos so there is always a recent one to forward after a wholesaler meeting. A2 is blocked until the incentive figure lands.',
+      vids: V.videos.filter(function(v){ return v.id.charAt(0) === 'A'; }) },
+    { id: 'BC', n: '05', short: 'Behind the Counter', name: 'Behind the Counter — for merchants', call: true,
+      sub: C.series.strap + ' A video-call montage: one question from the NeroPay side, answered by six owners in their own premises, cut together from short bites. ' + C.series.premise,
+      vids: C.episodes }
+  ];
+  var GROUP_OF = {};
+  GROUPS.forEach(function(g){ g.vids.forEach(function(v){ GROUP_OF[v.id] = g.id; }); });
 
   /* ---------- numbers ---------- */
   var spoken = 0, ovs = 0, distinct = {}, worstP = 0, worstA = 0, longest = 0;
@@ -136,39 +156,56 @@
     });
     v.overlays.forEach(function(o){ ovs++; worstA = Math.max(worstA, (OGL + '\n\n' + o.anim).length); });
   });
-  var actual = Object.keys(distinct).length, gens = actual + ovs * 2, nAssets = ART.ids().length;
+  var actual = Object.keys(distinct).length;
+  var hosts = 0, bites = 0, worstH = 0, worstB = 0, longestC = 0;
+  C.episodes.forEach(function(e){ e.shots.forEach(function(s){
+    if (s.kind === 'host') { hosts++; worstH = Math.max(worstH, (HG + '\n\n' + s.prompt).length); }
+    if (s.kind === 'bite') { bites++; worstB = Math.max(worstB, (MG + '\n\n' + s.prompt).length); }
+    if (s.spoken) longestC = Math.max(longestC, s.secs);
+  }); });
+  var frames = C.cast.length + 1, loops = C.listen.length;
+  var gensE = actual + ovs * 2, gensC = frames + loops + hosts + bites, nAssets = ART.ids().length;
 
   document.getElementById('stats').innerHTML =
-    '<div><b>' + V.videos.length + '</b><span>videos</span></div>' +
-    '<div><b>' + spoken + '</b><span>presenter shots</span></div>' +
+    '<div><b>' + (V.videos.length + C.episodes.length) + '</b><span>videos, 3 series</span></div>' +
+    '<div><b>' + (spoken + hosts) + '</b><span>presenter + host shots</span></div>' +
+    '<div><b>' + bites + '</b><span>owner bites</span></div>' +
     '<div><b>' + ovs + '</b><span>overlay clips</span></div>' +
-    '<div><b>' + gens + '</b><span>generations</span></div>' +
+    '<div><b>' + (gensE + gensC) + '</b><span>generations</span></div>' +
     '<div><b>' + nAssets + '</b><span>post assets</span></div>';
 
   document.querySelector('#numbers tbody').innerHTML = [
-    ['Presenter global', GL.length + ' characters'],
-    ['Overlay global', OGL.length + ' characters'],
-    ['Worst presenter prompt, global included', worstP + ' / ' + LIMIT],
-    ['Worst overlay animation, global included', worstA + ' / ' + LIMIT],
-    ['Presenter shots', spoken + ' (' + actual + ' actual — the outro is identical in all six)'],
-    ['Overlay clips', ovs + ' (each = 1 still + 1 animation)'],
-    ['Total generations', gens],
-    ['Longest shot', longest + ' seconds'],
+    ['Explained · presenter global', GL.length + ' characters'],
+    ['Explained · overlay global', OGL.length + ' characters'],
+    ['Explained · worst presenter prompt, global included', worstP + ' / ' + LIMIT],
+    ['Explained · worst overlay animation, global included', worstA + ' / ' + LIMIT],
+    ['Explained · presenter shots', spoken + ' (' + actual + ' actual — the outro is identical in all six)'],
+    ['Explained · overlay clips', ovs + ' (each = 1 still + 1 animation)'],
+    ['Explained · longest shot', longest + ' seconds'],
+    ['Explained · generations', gensE],
+    ['Counter · owner global', MG.length + ' characters'],
+    ['Counter · host global', HG.length + ' characters'],
+    ['Counter · worst owner bite, global included', worstB + ' / ' + LIMIT],
+    ['Counter · worst host shot, global included', worstH + ' / ' + LIMIT],
+    ['Counter · starting frames + listening loops', frames + ' + ' + loops + ' (made once, reused every episode)'],
+    ['Counter · host shots + owner bites', hosts + ' + ' + bites],
+    ['Counter · longest shot', longestC + ' seconds'],
+    ['Counter · generations', gensC],
     ['Post-production assets on this page', nAssets]
   ].map(function(r){ return '<tr><td>' + r[0] + '</td><td class="num">' + r[1] + '</td></tr>'; }).join('');
 
-  document.getElementById('pg').textContent = GL;  document.getElementById('pgc').textContent = GL.length + ' chars';
-  document.getElementById('og').textContent = OGL; document.getElementById('ogc').textContent = OGL.length + ' chars';
+  [['pg', GL], ['og', OGL], ['mg', MG], ['hg', HG]].forEach(function(p){
+    document.getElementById(p[0]).textContent = p[1];
+    document.getElementById(p[0] + 'c').textContent = p[1].length + ' chars';
+  });
 
   /* ---------- assets ---------- */
   function assetButtons(id){
-    var m = ART.meta(id);
-    var b = '<div class="btns">';
+    var m = ART.meta(id), b = '<div class="btns">';
     if (!m.opaque) b += '<button class="cp pri" type="button" data-png="' + id + '" data-tr="1">PNG · transparent</button>' +
                         '<button class="cp" type="button" data-png="' + id + '">PNG · on black</button>';
     else b += '<button class="cp pri" type="button" data-png="' + id + '">PNG · ' + m.w + '×' + m.h + '</button>';
-    b += '<button class="cp" type="button" data-svg="' + id + '">SVG</button></div>';
-    return b;
+    return b + '<button class="cp" type="button" data-svg="' + id + '">SVG</button></div>';
   }
   function assetCard(id){
     var m = ART.meta(id);
@@ -176,57 +213,71 @@
       '<div class="frame">' + ART.svg(id) + '</div>' +
       '<div class="meta"><span class="sid">' + esc(id) + ' · ' + m.ar + '</span><h4>' + esc(m.title) + '</h4><p>' + esc(m.use) + '</p>' + assetButtons(id) + '</div></div>';
   }
-  function assetInline(id){
+  function assetInline(id, label){
     var m = ART.meta(id);
-    return '<div class="postasset"><span class="lbl">Post asset — exact version of the still, ' + m.ar + '</span>' +
+    return '<div class="postasset"><span class="lbl">' + esc(label || 'Post asset — exact version of the still') + ', ' + m.ar + '</span>' +
       '<div class="frame' + (m.ar === '9:16' ? ' tall' : '') + '">' + ART.svg(id) + '</div>' + assetButtons(id) +
       '<p class="small">Also in the <a href="#asset-' + key(id) + '" data-goto="assets">Assets</a> tab.</p></div>';
   }
-  var shared = ART.ids().filter(function(id){ return ART.meta(id).vid === 'ALL'; });
-  var perVid = ART.ids().filter(function(id){ return ART.meta(id).vid !== 'ALL'; });
-  document.getElementById('assets-shared').innerHTML = shared.map(assetCard).join('');
-  document.getElementById('assets-ov').innerHTML = perVid.map(assetCard).join('');
+  var ids = ART.ids();
+  document.getElementById('assets-shared').innerHTML = ids.filter(function(id){ return ART.meta(id).vid === 'ALL'; }).map(assetCard).join('');
+  document.getElementById('assets-ov').innerHTML = ids.filter(function(id){ return /^[AB]\d\//.test(id); }).map(assetCard).join('');
+  document.getElementById('assets-call').innerHTML = ids.filter(function(id){ return ART.meta(id).vid === 'CALL'; }).map(assetCard).join('');
+  document.getElementById('assets-q').innerHTML = ids.filter(function(id){ return /^C\d\//.test(id); }).map(assetCard).join('');
 
-  /* ---------- series grid ---------- */
-  document.getElementById('grid').innerHTML = V.videos.map(function(v){
-    var np = v.shots.filter(function(s){ return s.spoken; }).length;
-    var blocked = v.shots.some(function(s){ return /PLACEHOLDER/.test(s.prompt); });
-    return '<a href="#' + v.id + '" data-goto="' + v.id + '"><span class="vt">' + v.id + ' — ' + esc(v.title) + '</span>' +
-      '<span class="vm">' + esc(v.series) + (blocked ? ' · <span class="chip blocked">blocked</span>' : '') + '</span>' +
-      '<span class="vm">' + esc(v.runtime) + ' · ' + np + ' shots · ' + v.overlays.length + ' overlays · ' + esc(v.aspect) + '</span></a>';
-  }).join('');
+  /* ---------- shared pieces ---------- */
+  function cardRow(id, tc, text, aid){
+    return '<div class="card-row"><span class="sid">' + esc(id) + '</span><span class="stc">' + esc(tc) + '</span>' +
+      '<span class="ssp">' + esc(text).replace(/\n/g, '<br>') + '</span>' +
+      (aid && has(aid) ? '<a href="#asset-' + key(aid) + '" data-goto="assets">card asset →</a>' : '') + '</div>';
+  }
+  function shotCard(o){ /* o: {cls, id, tc, spoken, chips, delivery, gesture, note, prompt, pid, comb, primary, who} */
+    var b = '<details class="shot' + (o.cls ? ' ' + o.cls : '') + '"><summary><span class="sid">' + esc(o.id) + '</span><span class="stc">' + esc(o.tc) + '</span>' +
+      (o.who ? '<span class="who">' + esc(o.who) + '</span>' : '') +
+      '<span class="ssp">' + esc(o.spoken) + '</span>' + (o.chips || '') + chars(o.comb.length) + '</summary><div class="sbody">';
+    b += '<p class="say">“' + esc(o.spoken) + '”</p>';
+    if (o.delivery) b += '<div class="mb"><span class="lbl">Delivery</span><p>' + esc(o.delivery) + '</p></div>';
+    if (o.gesture)  b += '<div class="mb"><span class="lbl">Gesture</span><p>' + esc(o.gesture) + '</p></div>';
+    if (o.note)     b += '<div class="mb"><span class="lbl">' + esc(o.note[0]) + '</span><p>' + esc(o.note[1]) + '</p></div>';
+    b += '<div class="mb"><span class="lbl">' + esc(o.label) + '</span></div><pre class="p" id="' + o.pid + '">' + esc(o.prompt) + '</pre>';
+    b += '<div class="btns"><button class="cp pri' + (o.btn ? ' ' + o.btn : '') + '" type="button" data-text="' + stash(o.comb) + '">' + esc(o.primary) + '</button>' +
+         '<button class="cp" type="button" data-copy="' + o.pid + '">' + esc(o.secondary || 'Shot only') + '</button></div></div></details>';
+    return b;
+  }
+  function scriptBlock(vid, script){
+    return '<details class="shot" style="margin-top:22px"><summary><span class="sid">SCRIPT</span><span class="stc">in order</span><span class="ssp">Every spoken line, read straight through</span></summary><div class="sbody">' +
+      '<div class="copy" id="scr-' + vid + '">' + esc(script) + '</div><button class="cp" type="button" data-copy="scr-' + vid + '">Copy full script</button></div></details>';
+  }
+  function descNote(vid, text){
+    return '<div class="note" style="margin-top:28px"><b>Description + pinned comment — where the ask lives instead of in the script</b>' + esc(text) +
+      '<div class="btns"><button class="cp" type="button" data-text="' + stash(text) + '">Copy description</button></div></div>';
+  }
 
-  /* ---------- one section per video ---------- */
+  /* ---------- Explained: one timeline per video, overlays in purple where they start ---------- */
   var cardAsset = { '[TITLE]': function(v){ return v.aspect === '9:16' ? 'TITLE/9x16' : 'TITLE/16x9'; },
                     '[END]':   function(v){ return v.id.charAt(0) === 'A' ? 'END/A' : 'END/B'; } };
-
-  document.getElementById('videos').innerHTML = V.videos.map(function(v){
+  function explainedSection(v){
     var np = v.shots.filter(function(s){ return s.spoken; }).length;
     var placeholders = v.shots.filter(function(s){ return /PLACEHOLDER/.test(s.prompt); }).map(function(s){ return s.id; });
-    var h = '<section id="' + v.id + '" data-tab="' + v.id + '"><div class="sec-head"><span class="lbl">' + v.id + '</span><h2>' + esc(v.title) + '</h2></div>';
+    var h = '<section id="' + v.id + '" data-tab="' + v.id + '" data-group="' + GROUP_OF[v.id] + '"><div class="sec-head"><span class="lbl">' + v.id + '</span><h2>' + esc(v.title) + '</h2></div>';
     h += '<p class="sec-sub">' + esc(v.series) + ' · ' + esc(v.runtime) + ' · aspect ' + esc(v.aspect) + ' · ' + np + ' presenter shots · ' + v.overlays.length + ' overlay clips</p>';
     if (placeholders.length) h += '<div class="note warn"><b>Blocked</b>' + placeholders.join(', ') + ' carries <code>[PLACEHOLDER]</code> where the partner incentive figure goes. Still with Eray. Generate everything else; leave that shot until the figure is signed off.</div>';
 
-    /* Overlays live in the timeline at the point they start: each one is keyed to the
-       first shot it sits over, and rendered just before that shot. Its timecode spans
-       the shots it covers. Same rule for every video, now and for any added later. */
     var byId = {}; v.shots.forEach(function(s){ byId[s.id] = s; });
     var startsAt = {};
     v.overlays.forEach(function(o){
       var ids = o.over.match(/[AB]\d-\d\d/g) || [];
-      if (ids.length === 2 && /\bto\b/.test(o.over)) {        /* "B3-05 to B3-07" → fill the range */
+      if (ids.length === 2 && /\bto\b/.test(o.over)) {
         var a = +ids[0].slice(3), b = +ids[1].slice(3), pre = ids[0].slice(0, 3), all = [];
         for (var i = a; i <= b; i++) all.push(pre + (i < 10 ? '0' : '') + i);
         ids = all;
       }
       var first = byId[ids[0]], last = byId[ids[ids.length - 1]];
-      o._ids = ids;
       o._tc = first && last ? first.tc.split('–')[0] + '–' + last.tc.split('–')[1] : o.dur;
       var k = first ? first.id : '__end';
       (startsAt[k] = startsAt[k] || []).push(o);
     });
 
-    /* every generation for this video, in timeline order, in one paste-able dump */
     var dump = [];
     function dumpOverlay(o){
       dump.push('=== ' + v.id + ' ' + o.id + ' · still (image gen) · over ' + o.over + ' ===\n\n' + o.still);
@@ -239,92 +290,162 @@
     (startsAt.__end || []).forEach(dumpOverlay);
     var script = v.shots.filter(function(s){ return s.spoken; }).map(function(s){ return s.spoken; }).join('\n\n');
     h += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + v.id + '</button>' +
-         '<button class="cp" type="button" data-text="' + stash(script) + '">Copy full script</button>' +
-         '<span class="chip n">' + dump.length + ' prompts</span></div>';
+         '<button class="cp" type="button" data-text="' + stash(script) + '">Copy full script</button><span class="chip n">' + dump.length + ' prompts</span></div>';
+    h += scriptBlock(v.id, script);
 
-    h += '<details class="shot" style="margin-top:22px"><summary><span class="sid">SCRIPT</span><span class="stc">in order</span><span class="ssp">Every spoken line, read straight through</span></summary><div class="sbody">' +
-         '<div class="copy" id="scr-' + v.id + '">' + esc(script) + '</div><button class="cp" type="button" data-copy="scr-' + v.id + '">Copy full script</button></div></details>';
-
-    /* one overlay card: still, animation, exact asset — sits in the timeline in purple */
     function overlayCard(o){
       var k = v.id + '-' + key(o.id), combA = OGL + '\n\n' + o.anim, aid = v.id + '/' + o.id;
       var b = '<details class="shot ov"><summary><span class="sid">' + esc(o.id) + '</span><span class="stc">' + esc(o._tc) + '</span>' +
-              '<span class="ssp">Overlay · sits over ' + esc(o.over) + ' · ' + esc(o.dur) + '</span>' +
-              '<span class="chip d">' + esc(v.aspect) + '</span>' + chars(combA.length) + '</summary><div class="sbody">';
+              '<span class="ssp">Overlay · sits over ' + esc(o.over) + ' · ' + esc(o.dur) + '</span><span class="chip d">' + esc(v.aspect) + '</span>' + chars(combA.length) + '</summary><div class="sbody">';
       b += '<div class="mb"><span class="lbl">Step 1 · Still — image gen, becomes the END frame</span><span class="chip n">' + o.still.length + ' chars</span></div><pre class="p" id="os1-' + k + '">' + esc(o.still) + '</pre>';
       b += '<div class="btns"><button class="cp pri mt" type="button" data-copy="os1-' + k + '">Copy still prompt</button></div>';
       b += '<div class="mb"><span class="lbl">Step 2 · Animation — video gen, black START + still END. The overlay global goes before it</span></div><pre class="p" id="os2-' + k + '">' + esc(o.anim) + '</pre>';
-      b += '<div class="btns"><button class="cp pri mt" type="button" data-text="' + stash(combA) + '">Copy global + animation</button>' +
-           '<button class="cp" type="button" data-copy="os2-' + k + '">Animation only</button></div>';
-      if (ART.ids().indexOf(aid) > -1) b += assetInline(aid);
-      b += '</div></details>';
-      return b;
+      b += '<div class="btns"><button class="cp pri mt" type="button" data-text="' + stash(combA) + '">Copy global + animation</button><button class="cp" type="button" data-copy="os2-' + k + '">Animation only</button></div>';
+      if (has(aid)) b += assetInline(aid);
+      return b + '</div></details>';
     }
 
     h += '<h3 style="margin:32px 0 10px">Timeline — every generation, in order</h3>';
     h += '<p class="sec-sub" style="margin-bottom:14px">Presenter shots in yellow: attach the starting frame, paste <em>global + shot</em>, generate. Overlays in purple, placed where they start: a still, then an animation, then the exact asset. The character count is the whole paste.</p>';
     h += v.shots.map(function(s){
       var pre = (startsAt[s.id] || []).map(overlayCard).join('');
-      if (!s.spoken) {
-        var aid = cardAsset[s.id] ? cardAsset[s.id](v) : null;
-        return pre + '<div class="card-row"><span class="sid">' + esc(s.id) + '</span><span class="stc">' + esc(s.tc) + '</span>' +
-          '<span class="ssp">' + esc(s.prompt).replace(/\n/g, '<br>') + '</span>' +
-          (aid ? '<a href="#asset-' + key(aid) + '" data-goto="assets">card asset →</a>' : '') + '</div>';
-      }
-      var comb = GL + '\n\n' + s.prompt, pid = 'pr-' + v.id + '-' + key(s.id);
+      if (!s.spoken) return pre + cardRow(s.id, s.tc, s.prompt, cardAsset[s.id] ? cardAsset[s.id](v) : null);
       var secs = (s.prompt.match(/ - (\d+)s/) || [])[1];
-      var b = '<details class="shot"><summary><span class="sid">' + esc(s.id) + '</span><span class="stc">' + esc(s.tc) + '</span><span class="ssp">' + esc(s.spoken) + '</span>' +
-              (secs ? '<span class="chip d">' + secs + 's</span>' : '') +
-              (s.ov ? '<span class="chip mt">' + esc(s.ov) + '</span>' : '') + chars(comb.length) + '</summary><div class="sbody">';
-      b += '<p class="say">“' + esc(s.spoken) + '”</p>';
-      if (s.delivery) b += '<div class="mb"><span class="lbl">Delivery</span><p>' + esc(s.delivery) + '</p></div>';
-      if (s.gesture)  b += '<div class="mb"><span class="lbl">Gesture</span><p>' + esc(s.gesture) + '</p></div>';
-      if (s.ov) b += '<div class="mb"><span class="lbl">Overlay in post</span><p>' + esc(s.ov) + ' sits over this shot — the purple card above, where it starts.</p></div>';
-      b += '<div class="mb"><span class="lbl">Shot prompt — the presenter global goes before it</span></div>';
-      b += '<pre class="p" id="' + pid + '">' + esc(s.prompt) + '</pre>';
-      b += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(comb) + '">Copy global + shot</button>' +
-           '<button class="cp" type="button" data-copy="' + pid + '">Shot only</button></div>';
-      b += '</div></details>';
-      return pre + b;
+      return pre + shotCard({ id: s.id, tc: s.tc, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture,
+        chips: (secs ? '<span class="chip d">' + secs + 's</span>' : '') + (s.ov ? '<span class="chip mt">' + esc(s.ov) + '</span>' : ''),
+        note: s.ov ? ['Overlay in post', s.ov + ' sits over this shot — the purple card above, where it starts.'] : null,
+        label: 'Shot prompt — the presenter global goes before it', prompt: s.prompt, pid: 'pr-' + v.id + '-' + key(s.id),
+        comb: GL + '\n\n' + s.prompt, primary: 'Copy global + shot' });
     }).join('');
     h += (startsAt.__end || []).map(overlayCard).join('');
-    if (DESC[v.id]) h += '<div class="note" style="margin-top:28px"><b>Description + pinned comment — where the ask lives instead of in the script</b>' + esc(DESC[v.id]) +
-      '<div class="btns"><button class="cp" type="button" data-text="' + stash(DESC[v.id]) + '">Copy description</button></div></div>';
-    h += '</section>';
-    return h;
-  }).join('');
+    if (DESC[v.id]) h += descNote(v.id, DESC[v.id]);
+    return h + '</section>';
+  }
 
-  /* ---------- tabs ---------- */
-  var TABS = [['all', 'All'], ['how', 'How to use'], ['globals', 'Globals'], ['assets', 'Assets']].concat(V.videos.map(function(v){
-    var blocked = v.shots.some(function(s){ return /PLACEHOLDER/.test(s.prompt); });
-    return [v.id, v.id + (blocked ? ' (blocked)' : '')];
-  }));
-  var tabs = document.getElementById('tabs');
-  tabs.innerHTML = TABS.map(function(t){ return '<button class="f" type="button" role="tab" data-tab-go="' + t[0] + '" aria-pressed="' + (t[0] === 'all' ? 'true' : 'false') + '">' + t[1] + '</button>'; }).join('');
-  function show(tab){
-    tabs.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.tabGo === tab ? 'true' : 'false'); });
-    document.querySelectorAll('section[data-tab]').forEach(function(s){
-      var k = s.dataset.tab;
-      s.hidden = !(tab === 'all' || k === tab || (k === 'all' && tab !== 'how' && tab !== 'globals' && tab !== 'assets'));
+  /* ---------- Behind the Counter: cast once, then one timeline per episode ---------- */
+  var castByKey = {}; C.cast.forEach(function(c){ castByKey[c.key] = c; });
+  function castCard(c, isHost){
+    var plate = isHost ? 'CALL/FRAME' : 'CALL/NAME-' + c.key.toUpperCase();
+    return '<div><span class="tr">' + esc(isHost ? 'Host · the NeroPay side' : c.trade + ' · ' + c.area) + '</span><span class="nm">' + esc(c.name) + '</span>' +
+      '<p>' + esc(c.look) + '. Frame: ' + esc(c.where) + '.</p>' +
+      '<details><summary>Starting frame prompt · ' + c.framePrompt.length + ' chars</summary><pre class="p">' + esc(c.framePrompt) + '</pre></details>' +
+      '<div class="btns"><button class="cp pri li" type="button" data-text="' + stash(c.framePrompt) + '">Copy frame prompt</button>' +
+      (has(plate) ? '<a class="cp" href="#asset-' + key(plate) + '" data-goto="assets" style="text-decoration:none;display:inline-block">' + (isHost ? 'Call layout asset' : 'Name plate asset') + '</a>' : '') + '</div></div>';
+  }
+  function callIntro(g){
+    var h = '<section id="BC-intro" data-group="BC" data-tab="BC"><div class="sec-head"><span class="lbl">' + g.n + '</span><h2>' + esc(g.name) + '</h2></div>';
+    h += '<p class="sec-sub">' + esc(g.sub) + '</p>';
+    h += '<div class="note warn"><b>Why the owners never endorse NeroPay</b>Everyone in this series is AI-generated, and every episode says so on screen in the first three seconds. The owners are composite characters: they describe situations every merchant recognises, they never say they use NeroPay, and the host carries the product facts and the concession. That is what keeps this a dramatised explainer rather than a fabricated testimonial — the CAP Code wants documentary evidence for any testimonial, and the DMCC Act 2024 bans fake reviews outright. Real customers saying real things belong in the Merchant pillar, with signed consent.</div>';
+    h += '<div class="note"><b>Layout</b>' + esc(C.series.layout) + ' Cadence: ' + esc(C.series.cadence) + '</div>';
+
+    h += '<h3 style="margin:32px 0 10px">Schedule</h3>';
+    h += '<div class="scroller"><table class="t"><thead><tr><th>Ep</th><th>Out</th><th>Title</th><th>The question</th><th>Runtime</th></tr></thead><tbody>' +
+      C.episodes.map(function(e){ return '<tr><td>' + e.id + '</td><td>' + esc(e.date) + '</td><td><a href="#' + e.id + '" data-goto="' + e.id + '">' + esc(e.title) + '</a></td><td>' + esc(e.question) + '</td><td class="num">' + esc(e.runtime) + '</td></tr>'; }).join('') +
+      '</tbody></table></div>';
+
+    h += '<h3 style="margin:36px 0 4px">The cast — generate the starting frames once</h3>';
+    h += '<p class="sec-sub" style="margin-bottom:0">Six owners and the host. Image gen, nothing attached, one frame each. Every bite in every episode is generated from the same frame, so the cast stays consistent across the series. First names only; no real business is named or shown.</p>';
+    var allFrames = C.cast.map(function(c){ return c.framePrompt; }).concat([C.host.framePrompt]).join('\n\n\n');
+    h += '<div class="btns"><button class="cp pri li" type="button" data-text="' + stash(allFrames) + '">Copy all seven frame prompts</button></div>';
+    h += '<div class="cast">' + C.cast.map(function(c){ return castCard(c, false); }).join('') + castCard(C.host, true) + '</div>';
+
+    h += '<h3 style="margin:36px 0 10px">Host listening loops — generate once, reuse in every episode</h3>';
+    h += '<p class="sec-sub" style="margin-bottom:14px">Three ten-second loops from the host frame. They sit in the top-right box while an owner is talking; alternate them so the nods don\'t repeat on a beat.</p>';
+    var loopDump = C.listen.map(function(l){ return '=== ' + l.id + ' · host listening loop ===\n\n' + HG + '\n\n' + l.prompt; }).join('\n\n\n');
+    h += '<div class="btns" style="margin-bottom:12px"><button class="cp pri" type="button" data-text="' + stash(loopDump) + '">Copy all three loops with the host global</button></div>';
+    h += C.listen.map(function(l){
+      return shotCard({ id: l.id, tc: l.secs + 's', spoken: l.prompt.split('\n')[1].slice(0, 100) + '…', chips: '<span class="chip d">loop</span>',
+        label: 'Loop prompt — the host global goes before it', prompt: l.prompt, pid: 'lp-' + key(l.id), comb: HG + '\n\n' + l.prompt, primary: 'Copy global + loop', secondary: 'Loop only' });
+    }).join('');
+    return h + '</section>';
+  }
+  function callSection(e){
+    var h = '<section id="' + e.id + '" data-tab="' + e.id + '" data-group="BC"><div class="sec-head"><span class="lbl">' + e.id + '</span><h2>' + esc(e.title) + '</h2></div>';
+    var nh = e.shots.filter(function(s){ return s.kind === 'host'; }).length, nb = e.shots.filter(function(s){ return s.kind === 'bite'; }).length;
+    h += '<p class="sec-sub">Behind the Counter · episode ' + e.ep + ' · out ' + esc(e.date) + ' · ' + esc(e.runtime) + ' · 16:9 · ' + nh + ' host shots · ' + nb + ' owner bites</p>';
+    var dump = [], script = [];
+    e.shots.forEach(function(s){
+      if (s.kind === 'host') { dump.push('=== ' + s.id + ' · host · ' + s.tc + ' ===\n\n' + HG + '\n\n' + s.prompt); script.push('NEROPAY: ' + s.spoken); }
+      if (s.kind === 'bite') { var c = castByKey[s.who]; dump.push('=== ' + s.id + ' · ' + c.name + ' · ' + s.tc + ' ===\n\n' + MG + '\n\n' + s.prompt); script.push(c.name.toUpperCase() + ': ' + s.spoken); }
     });
+    script = script.join('\n\n');
+    h += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + e.id + '</button>' +
+         '<button class="cp" type="button" data-text="' + stash(script) + '">Copy full script</button><span class="chip n">' + dump.length + ' prompts</span>' +
+         '<span class="chip d">frames + loops are in the series section</span></div>';
+    h += scriptBlock(e.id, script);
+    h += '<h3 style="margin:32px 0 10px">Timeline — every generation, in order</h3>';
+    h += '<p class="sec-sub" style="margin-bottom:14px">Host in yellow, owner bites in blue, the question card in purple where it sits. Each bite is generated from that owner\'s starting frame with the owner global in front. The host listening loop runs top right over every bite.</p>';
+    h += e.shots.map(function(s){
+      if (s.kind === 'title') {
+        var q = e.id + '/Q', row = cardRow(s.id, s.tc, s.prompt, 'CALL/TITLE');
+        if (has(q)) row += '<details class="shot ov"><summary><span class="sid">Q CARD</span><span class="stc">' + esc(s.tc.split('–')[1]) + '</span><span class="ssp">Question card · post only · after the title, before the first bite</span><span class="chip d">16:9</span></summary><div class="sbody">' +
+          assetInline(q, 'Post asset — the question the owners are answering') + '</div></details>';
+        return row;
+      }
+      if (s.kind === 'end') return cardRow(s.id, s.tc, s.prompt, 'CALL/END');
+      if (s.kind === 'host') return shotCard({ id: s.id, tc: s.tc, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture, chips: '<span class="chip d">' + s.secs + 's</span><span class="chip p">host</span>',
+        label: 'Host shot — the host global goes before it', prompt: s.prompt, pid: 'pr-' + key(s.id), comb: HG + '\n\n' + s.prompt, primary: 'Copy global + shot' });
+      var c = castByKey[s.who];
+      return shotCard({ cls: 'mc', id: s.id, tc: s.tc, who: c.name, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture,
+        chips: '<span class="chip d">' + s.secs + 's</span><span class="chip li">' + esc(c.trade) + '</span>',
+        note: ['In post', 'Name plate for ' + c.name + ' bottom left; host listening loop top right; the owner global goes before this prompt.'],
+        label: 'Bite prompt — attach ' + c.name + '\'s starting frame; the owner global goes before it', prompt: s.prompt, pid: 'pr-' + key(s.id),
+        comb: MG + '\n\n' + s.prompt, primary: 'Copy global + bite', secondary: 'Bite only', btn: 'li' });
+    }).join('');
+    if (e.desc) h += descNote(e.id, e.desc);
+    return h + '</section>';
+  }
+
+  /* ---------- assemble ---------- */
+  var out = '';
+  GROUPS.forEach(function(g){
+    if (g.call) { out += callIntro(g); out += g.vids.map(callSection).join(''); return; }
+    out += '<section id="' + g.id + '-intro" data-group="' + g.id + '" data-tab="' + g.id + '"><div class="sec-head"><span class="lbl">' + g.n + '</span><h2>' + esc(g.name) + '</h2></div><p class="sec-sub">' + esc(g.sub) + '</p><div class="vgrid">' +
+      g.vids.map(function(v){
+        var np = v.shots.filter(function(s){ return s.spoken; }).length, blocked = v.shots.some(function(s){ return /PLACEHOLDER/.test(s.prompt); });
+        return '<a href="#' + v.id + '" data-goto="' + v.id + '"><span class="vt">' + v.id + ' — ' + esc(v.title) + '</span><span class="vm">' + esc(v.series) + (blocked ? ' · <span class="chip blocked">blocked</span>' : '') + '</span>' +
+          '<span class="vm">' + esc(v.runtime) + ' · ' + np + ' shots · ' + v.overlays.length + ' overlays · ' + esc(v.aspect) + '</span></a>';
+      }).join('') + '</div></section>';
+    out += g.vids.map(explainedSection).join('');
+  });
+  document.getElementById('series').innerHTML = out;
+
+  /* ---------- tabs: series on the first row, that series' videos on the second ---------- */
+  var tabs = document.getElementById('tabs'), tabs2 = document.getElementById('tabs2');
+  var TOP = [['all', 'All'], ['how', 'How to use'], ['globals', 'Globals'], ['assets', 'Assets']].concat(GROUPS.map(function(g){ return [g.id, g.short]; }));
+  tabs.innerHTML = TOP.map(function(t){ return '<button class="f" type="button" role="tab" data-tab-go="' + t[0] + '" aria-pressed="false">' + t[1] + '</button>'; }).join('');
+  function groupOf(tab){ return GROUP_OF[tab] || (GROUPS.some(function(g){ return g.id === tab; }) ? tab : null); }
+  function show(tab){
+    var g = groupOf(tab);
+    tabs.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', (b.dataset.tabGo === tab || b.dataset.tabGo === g) ? 'true' : 'false'); });
+    document.querySelectorAll('section[data-tab]').forEach(function(s){
+      var st = s.dataset.tab, sg = s.dataset.group;
+      s.hidden = !(tab === 'all' || st === tab || (g && sg === g && tab === g));
+    });
+    if (g) {
+      var grp = GROUPS.filter(function(x){ return x.id === g; })[0];
+      tabs2.innerHTML = [['' + g, 'All of ' + grp.short]].concat(grp.vids.map(function(v){
+        var blocked = v.shots && v.shots.some(function(s){ return /PLACEHOLDER/.test(s.prompt || ''); });
+        return [v.id, v.id + (blocked ? ' (blocked)' : '')];
+      })).map(function(t){ return '<button class="f" type="button" data-tab-go="' + t[0] + '" aria-pressed="' + (t[0] === tab ? 'true' : 'false') + '">' + t[1] + '</button>'; }).join('');
+      tabs2.hidden = false;
+    } else tabs2.hidden = true;
     document.querySelectorAll('[data-rv]').forEach(function(el){ el.classList.add('in'); });
   }
-  tabs.addEventListener('click', function(e){
+  document.querySelector('.subbar').addEventListener('click', function(e){
     var b = e.target.closest('button[data-tab-go]'); if (!b) return;
     show(b.dataset.tabGo);
-    window.scrollTo({ top: document.getElementById('tabs').getBoundingClientRect().top + window.scrollY - 60, behavior: 'auto' });
+    window.scrollTo({ top: document.querySelector('.subbar').getBoundingClientRect().top + window.scrollY - 60, behavior: 'auto' });
   });
   document.addEventListener('click', function(e){
     var a = e.target.closest('a[data-goto]'); if (!a) return;
     show(a.dataset.goto);
   });
-  /* sub-bar sits directly under the nav, whatever height the nav ends up */
   function navh(){ var nv = document.querySelector('.nav'); if (nv) document.documentElement.style.setProperty('--navh', nv.offsetHeight + 'px'); }
   navh(); window.addEventListener('resize', navh);
-  if (location.hash) {
-    var id = location.hash.slice(1), m = id.match(/^(B\d|A\d)$/);
-    if (m) show(m[1]); else if (id.indexOf('asset-') === 0) show('assets');
-  }
+  var start = 'all', hash = location.hash.slice(1);
+  if (GROUP_OF[hash] || groupOf(hash)) start = hash; else if (hash.indexOf('asset-') === 0) start = 'assets';
+  show(start);
 
   /* ---------- copy + download ---------- */
   function copyText(txt){
