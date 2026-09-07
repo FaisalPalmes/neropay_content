@@ -14,6 +14,7 @@ step, no dependencies, no framework.
 | `index.html` | What social is for, the three channels, the five pillars, how the week works |
 | `social.html` | All 18 posts — final copy, creative direction, rough sketches, filters |
 | `youtube.html` | Three YouTube series — Explained by NeroPay (owners, partners) and Behind the Counter — every shot, every prompt, every on-screen graphic as a downloadable file |
+| `ideas.html` | The backlog: series proposed, one-offs tied to dates, the next Behind the Counter episodes — each judged by the engine rule |
 | `calendar.html` | Sixteen weeks, 7 Sept – 3 Jan, with the immovable dates marked |
 | `rails.html` | Compliance rails and how the channel is measured |
 
@@ -25,6 +26,7 @@ step, no dependencies, no framework.
 ├── posts.js               the 18 social posts  ← edit this to add a post
 ├── videos.js              generated from generation-pack.md — do not hand-edit
 ├── calls.js               Behind the Counter series  ← hand-edited, copy an episode to add one
+├── ideas.js               the video backlog — proposed series and one-offs  ← hand-edited
 ├── overlays.js            the video graphics drawn as SVG — overlays, cards, plates, disclosure, specimen statements
 ├── generation-pack.md     source of truth for the video series
 ├── vercel.json
@@ -56,9 +58,18 @@ automatically, filters and all.
   copy: "The post itself.\n\nUse \\n\\n for paragraph breaks.",
   creative: "What to shoot or make, in words.",
   why: "Why this post works. Optional.",
-  sketch: { type: "none", cap: "One line under the sketch." }
+  sketch: { type: "none", cap: "One line under the sketch." },
+  assets: [                       // the creative, drawn and downloadable under the post
+    { t: "stat", size: "sq", big: "42%", line: "…", src: "Correct as of …" }
+  ]
 }
 ```
+
+**Asset types** — `stat` (one figure), `quote` (a pull line, optional on text-only posts), `cards`
+(a carousel: `cards:[{n, h, b}]`, one file per card), `cover` (a Reel opening frame, `ai:true` adds
+the presenter disclosure), `ref` (an asset that already exists on `youtube.html`, by id). Sizes:
+`sq` 1080×1080, `pt` 1080×1350, `st` 1080×1920. Charcoal ground, white type, yellow accent, wordmark
+bottom-left. No money figure ever dominates an image — that is the rule that got the profile restricted.
 
 **Sketch types** — `reel`, `carousel`, `statcard`, `photo`, `none`.
 

@@ -142,7 +142,12 @@
     if (p.why) h += '<div class="mb"><span class="lbl">Why it works</span><p>' + esc(p.why) + '</p></div>';
     if (p.blocked) h += '<div class="flag"><b>Blocked</b>' + esc(p.blocked) + '</div>';
     h += '</div><div><div class="sk">' + sk + '<p class="cap">' + esc(p.sketch.cap || 'Rough sketch — composition only.') + '</p></div></div>';
-    h += '</div></article>';
+    h += '</div>';
+    if (window.OVERLAY_ART && window.OVERLAY_ART.postAssets) {
+      var ids = window.OVERLAY_ART.postAssets(p.id);
+      if (ids.length) h += '<div class="post-a">' + assetStrip(ids, 'Creative for ' + p.id + ' — drawn, ready to download') + '</div>';
+    }
+    h += '</article>';
     return h;
   }
 
@@ -204,18 +209,11 @@
     t.textContent = msg; t.classList.add('on');
     clearTimeout(t._h); t._h = setTimeout(function () { t.classList.remove('on'); }, 1500);
   }
-  document.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-copy]');
-    if (!b) return;
-    var src = document.getElementById(b.dataset.copy);
-    if (!src) return;
-    var txt = src.innerText;
+  /* text stashed by a page for a button to copy: <button data-text="key"> */
+  var STORE = {}, sn = 0;
+  function stash(txt) { var k = 't' + (sn++); STORE[k] = txt; return k; }
+  function copyText(txt, src) {
     var done = function () { toast('Copied'); };
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(done, fallback);
-      } else { fallback(); }
-    } catch (err) { fallback(); }
     function fallback() {
       try {
         var ta = document.createElement('textarea');
@@ -223,12 +221,61 @@
         document.body.appendChild(ta); ta.select();
         document.execCommand('copy'); document.body.removeChild(ta); done();
       } catch (e2) {
-        var r = document.createRange(); r.selectNodeContents(src);
-        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-        toast('Selected — press Ctrl/Cmd+C');
+        if (src) {
+          var r = document.createRange(); r.selectNodeContents(src);
+          var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+          toast('Selected — press Ctrl/Cmd+C');
+        } else toast('Copy failed');
       }
     }
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fallback);
+      else fallback();
+    } catch (err) { fallback(); }
+  }
+  /* one handler for every copy and download button on every page */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-copy],[data-text],[data-png],[data-svg]');
+    if (!b) return;
+    if (b.dataset.text != null) { var tx = STORE[b.dataset.text]; if (tx != null) copyText(tx); return; }
+    if (b.dataset.copy != null) { var src = document.getElementById(b.dataset.copy); if (src) copyText(src.innerText, src); return; }
+    var ART = window.OVERLAY_ART;
+    if (!ART) return;
+    if (b.dataset.png != null) {
+      var id = b.dataset.png, tr = !!b.dataset.tr, old = b.textContent;
+      b.textContent = 'Rendering…'; b.disabled = true;
+      ART.toPng(id, { transparent: tr }).then(function (blob) {
+        ART.download(blob, ART.fileName(id, tr ? '.png' : (ART.meta(id).opaque ? '.png' : '-black.png')));
+        toast('Downloaded');
+      }).catch(function () { toast('PNG export failed — use the SVG'); })
+        .then(function () { b.textContent = old; b.disabled = false; });
+      return;
+    }
+    if (b.dataset.svg != null) {
+      var sid = b.dataset.svg;
+      ART.download(new Blob([ART.svg(sid, { transparent: !ART.meta(sid).opaque })], { type: 'image/svg+xml' }), ART.fileName(sid, '.svg'));
+      toast('Downloaded');
+    }
   });
+
+  /* ---------- asset cards — the same card on every page ---------- */
+  function assetButtons(id) {
+    var ART = window.OVERLAY_ART, m = ART.meta(id), b = '<div class="btns">';
+    if (!m.opaque) b += '<button class="cp pri" type="button" data-png="' + id + '" data-tr="1">PNG · transparent</button><button class="cp" type="button" data-png="' + id + '">PNG · on black</button>';
+    else b += '<button class="cp pri" type="button" data-png="' + id + '">PNG · ' + m.w + '×' + m.h + '</button>';
+    return b + '<button class="cp" type="button" data-svg="' + id + '">SVG</button></div>';
+  }
+  function assetCard(id, anchor) {
+    var ART = window.OVERLAY_ART, m = ART.meta(id);
+    return '<div class="asset' + (m.ar === '9:16' ? ' tall' : '') + '"' + (anchor ? ' id="asset-' + id.replace(/[^\w-]/g, '') + '"' : '') + '>' +
+      '<div class="frame">' + ART.svg(id) + '</div>' +
+      '<div class="meta"><span class="sid">' + esc(id) + ' · ' + m.ar + '</span><h4>' + esc(m.title) + '</h4><p>' + esc(m.use) + '</p>' + assetButtons(id) + '</div></div>';
+  }
+  function assetStrip(ids, label) {
+    if (!window.OVERLAY_ART || !ids || !ids.length) return '';
+    return '<div class="strip"><span class="lbl">' + esc(label || 'Creative — drawn, ready to download') + '</span><div class="assets small">' +
+      ids.map(function (id) { return assetCard(id, false); }).join('') + '</div></div>';
+  }
 
   /* ---------- nav current ---------- */
   function markNav() {
@@ -242,7 +289,8 @@
     });
   }
 
-  window.NP = { SK: SK, mount: mount, wireFilters: wireFilters, esc: esc, toast: toast };
+  window.NP = { SK: SK, mount: mount, wireFilters: wireFilters, esc: esc, toast: toast, stash: stash, copyText: copyText,
+    assetCard: assetCard, assetButtons: assetButtons, assetStrip: assetStrip };
   document.addEventListener('DOMContentLoaded', markNav);
 })();
 

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;800;900&family=Martian+Mono:wght@300;400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="style.css">
+<title>Ideas — NeroPay Content</title>
+<style>html{scroll-padding-top:130px}section{scroll-margin-top:130px}</style>
+</head>
+<body>
+<div class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
+  <a class="n" href="index.html">Overview</a>
+  <a class="n" href="social.html">Social posts</a>
+  <a class="n" href="youtube.html">YouTube series</a>
+  <a class="n" href="ideas.html">Ideas</a>
+  <a class="n" href="calendar.html">Calendar</a>
+  <a class="n" href="rails.html">Rails</a>
+</div></div>
+<div class="wrap">
+<div class="hero">
+  <span class="kicker" id="kick">The backlog</span>
+  <h1>What's next,<br>and what it would cost.</h1>
+  <p class="lede">Every series NeroPay runs or could run, and the one-offs tied to a date. Each idea is judged by the engine rule: is it a by-product of the weekly video or a field day? Where it isn't, it says so, and it says "needs shoot" rather than pretending. Nothing here quotes a price or a rate.</p>
+  <div class="facts" id="stats"></div>
+</div>
+</div>
+
+<div class="subbar"><div class="wrap"><div class="row" id="tabs">
+  <button class="f" type="button" data-go="all" aria-pressed="true">All</button>
+  <button class="f" type="button" data-go="series">Series</button>
+  <button class="f" type="button" data-go="next">Behind the Counter · next</button>
+  <button class="f" type="button" data-go="loose">One-offs</button>
+  <span class="sep"></span>
+  <button class="f" type="button" data-status="production" aria-pressed="false">In production</button>
+  <button class="f" type="button" data-status="ready" aria-pressed="false">Ready</button>
+  <button class="f" type="button" data-status="brief" aria-pressed="false">Brief</button>
+  <button class="f" type="button" data-status="needs shoot" aria-pressed="false">Needs shoot</button>
+  <button class="f" type="button" data-status="blocked" aria-pressed="false">Blocked</button>
+</div></div></div>
+
+<div class="wrap">
+<section id="series" data-tab="series">
+  <div class="sec-head"><span class="lbl">01</span><h2>Series</h2></div>
+  <p class="sec-sub">Three exist. Six are proposed. The first three are in production and don't change; everything after them is a decision for you.</p>
+  <div id="series-list"></div>
+</section>
+
+<section id="next" data-tab="next">
+  <div class="sec-head"><span class="lbl">02</span><h2>Behind the Counter — the next four</h2></div>
+  <p class="sec-sub">Briefed, not scripted. Same shape as C1–C6: a question, four owners, a host close with a fact and a concession. Written when the first episodes have run and we know which owners land.</p>
+  <div class="ideas" id="next-list"></div>
+</section>
+
+<section id="loose" data-tab="loose">
+  <div class="sec-head"><span class="lbl">03</span><h2>One-offs</h2></div>
+  <p class="sec-sub">Single videos tied to a date or a moment. Most are re-cuts of things already being made.</p>
+  <div class="ideas" id="loose-list"></div>
+</section>
+
+<div class="foot">
+  <p>Ideas live in <code>ideas.js</code>; the next Behind the Counter briefs live with the series in <code>calls.js</code>. To propose more: three at a time, with the pillar, the channel, the hook, the creative, and which existing input it comes from. If it needs its own shoot, say so.</p>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="calls.js"></script>
+<script src="ideas.js"></script>
+<script src="app.js"></script>
+<script>
+(function(){
+  var I = window.IDEAS, C = window.CALLS, esc = NP.esc;
+  function st(s){ var k = { production: 'ready', ready: 'ready', brief: 'd', 'needs shoot': 'p', blocked: 'blocked' }[s] || 'd'; return '<span class="chip ' + k + '">' + esc(s) + '</span>'; }
+
+  var live = I.series.filter(function(s){ return s.status === 'production' || s.status === 'ready'; }).length, proposed = I.series.length - live;
+  document.getElementById('stats').innerHTML =
+    '<div><b>' + live + '</b><span>series scripted</span></div>' +
+    '<div><b>' + proposed + '</b><span>series proposed</span></div>' +
+    '<div><b>' + I.series.reduce(function(a, s){ return a + (s.episodes ? s.episodes.length : 0); }, 0) + '</b><span>episodes briefed</span></div>' +
+    '<div><b>' + C.ideas.length + '</b><span>counter episodes next</span></div>' +
+    '<div><b>' + I.loose.length + '</b><span>one-offs</span></div>';
+  document.getElementById('kick').textContent = 'The backlog · ' + (I.series.length + I.loose.length + C.ideas.length) + ' ideas · every one judged by the engine rule';
+
+  document.getElementById('series-list').innerHTML = I.series.map(function(s){
+    var h = '<div class="idea big" data-status="' + esc(s.status) + '"><div class="ih"><span class="sid">' + esc(s.code) + ' · ' + esc(s.id) + '</span><h3>' + esc(s.name) + '</h3>' + st(s.status) +
+      '<span class="chip p">' + esc(s.pillar) + '</span><span class="chip d">' + esc(s.channel) + '</span>' + (s.link ? '<a class="cp" href="' + s.link + '">Open</a>' : '') + '</div>';
+    h += '<p class="prem">' + esc(s.premise) + '</p>';
+    h += '<div class="kv"><div><span class="lbl">Cadence</span><p>' + esc(s.cadence) + '</p></div><div><span class="lbl">By-product of</span><p>' + esc(s.input) + '</p></div>' +
+      (s.unique ? '<div><span class="lbl">Why only NeroPay can</span><p>' + esc(s.unique) + '</p></div>' : '') + '</div>';
+    if (s.blocked) h += '<div class="note warn"><b>Blocked</b>' + esc(s.blocked) + '</div>';
+    if (s.episodes) {
+      h += '<div class="scroller"><table class="t"><thead><tr><th>Episode</th><th>Hook</th><th>On screen</th></tr></thead><tbody>' +
+        s.episodes.map(function(e){ return '<tr><td>' + esc(e.title) + '</td><td>' + esc(e.hook) + '</td><td>' + esc(e.screen) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+    }
+    if (s.script) {
+      var sc = s.script, txt = sc.shots.map(function(x){ return x.id + ' · ' + x.secs + 's\nSCREEN: ' + x.screen + (x.voice ? '\nVOICE: "' + x.voice + '"' : ''); }).join('\n\n');
+      h += '<details class="shot" style="margin-top:14px"><summary><span class="sid">SCRIPT</span><span class="stc">' + sc.shots.reduce(function(a, x){ return a + x.secs; }, 0) + 's</span><span class="ssp">' + esc(sc.title) + ' — written in full, to show the shape</span></summary><div class="sbody">' +
+        '<p class="say" style="font-size:.95rem;color:var(--ink-2)">' + esc(sc.note) + '</p>' +
+        '<div class="scroller"><table class="t"><thead><tr><th>Shot</th><th>Secs</th><th>On screen</th><th>Voice</th></tr></thead><tbody>' +
+        sc.shots.map(function(x){ return '<tr><td>' + esc(x.id) + '</td><td class="num">' + x.secs + '</td><td>' + esc(x.screen) + '</td><td>' + (x.voice ? '“' + esc(x.voice) + '”' : '<em style="color:var(--muted)">—</em>') + '</td></tr>'; }).join('') +
+        '</tbody></table></div><div class="btns"><button class="cp" type="button" data-text="' + NP.stash(txt) + '">Copy the script</button></div></div></details>';
+    }
+    return h + '</div>';
+  }).join('');
+
+  document.getElementById('next-list').innerHTML = C.ideas.map(function(e){
+    return '<div class="idea" data-status="brief"><div class="ih"><span class="sid">' + esc(e.id) + '</span><h3>' + esc(e.title) + '</h3>' + st('brief') + '<span class="chip d">' + esc(e.when) + '</span></div>' +
+      '<p class="prem">“' + esc(e.question) + '”</p>' +
+      '<div class="kv"><div><span class="lbl">The owners</span><p>' + esc(e.owners) + '</p></div><div><span class="lbl">The host closes with</span><p>' + esc(e.host) + '</p></div><div><span class="lbl">Why</span><p>' + esc(e.why) + '</p></div></div></div>';
+  }).join('');
+
+  document.getElementById('loose-list').innerHTML = I.loose.map(function(e){
+    return '<div class="idea" data-status="' + esc(e.status) + '"><div class="ih"><h3>' + esc(e.title) + '</h3>' + st(e.status) + '<span class="chip p">' + esc(e.pillar) + '</span><span class="chip d">' + esc(e.channel) + '</span><span class="chip d">' + esc(e.when) + '</span></div>' +
+      '<p class="prem">' + esc(e.hook) + '</p>' +
+      '<div class="kv"><div><span class="lbl">Creative</span><p>' + esc(e.creative) + '</p></div><div><span class="lbl">By-product of</span><p>' + esc(e.input) + '</p></div></div></div>';
+  }).join('');
+
+  /* tabs + status filter */
+  var tabs = document.getElementById('tabs'), go = 'all', status = null;
+  function apply(){
+    document.querySelectorAll('section[data-tab]').forEach(function(s){ s.hidden = !(go === 'all' || s.dataset.tab === go); });
+    document.querySelectorAll('.idea').forEach(function(c){ c.hidden = !!(status && c.dataset.status !== status); });
+    tabs.querySelectorAll('[data-go]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.go === go ? 'true' : 'false'); });
+    tabs.querySelectorAll('[data-status]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.status === status ? 'true' : 'false'); });
+    document.querySelectorAll('[data-rv]').forEach(function(el){ el.classList.add('in'); });
+  }
+  tabs.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.go) go = b.dataset.go; else if (b.dataset.status) status = status === b.dataset.status ? null : b.dataset.status;
+    apply();
+  });
+  apply();
+  function navh(){ var nv = document.querySelector('.nav'); if (nv) document.documentElement.style.setProperty('--navh', nv.offsetHeight + 'px'); }
+  navh(); window.addEventListener('resize', navh);
+})();
+</script>
+</body>
+</html>

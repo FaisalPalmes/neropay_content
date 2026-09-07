@@ -75,8 +75,9 @@ from here, and folder uploads silently fail there.
 | `videos.js` | Six videos, every shot prompt | No — generated from `generation-pack.md` |
 | `generation-pack.md` | Source of truth for the video series | Yes, then regenerate videos.js |
 | `style.css`, `app.js` | One stylesheet, one script (sketches, filters, motion) | Only for design changes |
-| `*.html` | Five pages | Rarely |
-| `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes | **Yes — hand-edited, copy an episode to add one** |
+| `*.html` | Six pages — overview, social, youtube, ideas, calendar, rails | Rarely |
+| `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes, next briefs | **Yes — hand-edited, copy an episode to add one** |
+| `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 
@@ -99,6 +100,9 @@ automatically. Required fields: `id` (L# for LinkedIn, M# for Meta — keep uniq
 `pillar` (Statement · Street · Product · Merchant · Partner), `format`, `date`, `blocked`
 (`false` or a string saying what must happen first), `title`, `copy`, `creative`, `sketch`.
 `why` is optional. Sketch types: `reel`, `carousel`, `statcard`, `photo`, `none` — parameters in README.
+`assets` draws the creative under the post (`stat`, `quote`, `cards`, `cover`, `ref` — README has the shapes).
+Keep copy short and plain: no cringe, no LinkedIn cadence, no AI-sounding lists of adjectives. Cut the
+first sentence of every draft and see if it still works. Concede something in every educational post.
 
 Pillar weights per week: Statement 2× · Street 1× · Product 1× · Merchant 1× per fortnight ·
 Partner 1×. If a week is short, cut Product first, never Street.

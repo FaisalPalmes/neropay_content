@@ -18,6 +18,7 @@
   <a class="n" href="index.html">Overview</a>
   <a class="n" href="social.html">Social posts</a>
   <a class="n" href="youtube.html">YouTube series</a>
+  <a class="n" href="ideas.html">Ideas</a>
   <a class="n" href="calendar.html">Calendar</a>
   <a class="n" href="rails.html">Rails</a>
 </div></div>
@@ -117,8 +118,7 @@
 (function(){
   var V = window.VIDEOS, C = window.CALLS, ART = window.OVERLAY_ART, esc = NP.esc;
   var LIMIT = 2500, GL = V.presenterGlobal, OGL = V.overlayGlobal, MG = C.merchantGlobal, HG = C.hostGlobal;
-  var STORE = {}, n = 0;
-  function stash(txt){ var k = 't' + (n++); STORE[k] = txt; return k; }
+  var stash = NP.stash;
   function key(s){ return String(s).replace(/[^\w-]/g, ''); }
   function chars(c){ return '<span class="chip n' + (c > LIMIT ? ' over' : '') + '">' + c + ' / ' + LIMIT + '</span>'; }
   function has(id){ return ART.ids().indexOf(id) > -1; }
@@ -318,6 +318,11 @@
         comb: GL + '\n\n' + s.prompt, primary: 'Copy global + shot' });
     }).join('');
     h += (startsAt.__end || []).map(overlayCard).join('');
+    var used = v.overlays.map(function(o){ return v.id + '/' + o.id; }).filter(has)
+      .concat([cardAsset['[TITLE]'](v), cardAsset['[END]'](v), v.aspect === '9:16' ? 'AI/9x16' : 'AI/16x9']);
+    if (v.id === 'B1') used = used.concat(['STATEMENT/TIERED', 'STATEMENT/FLAT']);
+    h += '<h3 style="margin:36px 0 4px">Everything drawn for ' + v.id + '</h3>';
+    h += NP.assetStrip(used, 'Overlays, cards and the disclosure this video uses — one place, ready to download');
     if (DESC[v.id]) h += descNote(v.id, DESC[v.id]);
     return h + '</section>';
   }
@@ -363,6 +368,7 @@
     var h = '<section id="' + e.id + '" data-tab="' + e.id + '" data-group="BC"><div class="sec-head"><span class="lbl">' + e.id + '</span><h2>' + esc(e.title) + '</h2></div>';
     var nh = e.shots.filter(function(s){ return s.kind === 'host'; }).length, nb = e.shots.filter(function(s){ return s.kind === 'bite'; }).length;
     h += '<p class="sec-sub">Behind the Counter · episode ' + e.ep + ' · out ' + esc(e.date) + ' · ' + esc(e.runtime) + ' · 16:9 · ' + nh + ' host shots · ' + nb + ' owner bites</p>';
+    if (e.cold) h += '<div class="note yl"><b>Cold open · 0:00–0:03</b>The last three seconds of ' + esc(e.cold.id) + ', ' + esc(castByKey[e.cold.who].name) + ': “' + esc(e.cold.spoken) + '” No plate, no host box. Then the question.</div>';
     var dump = [], script = [];
     e.shots.forEach(function(s){
       if (s.kind === 'host') { dump.push('=== ' + s.id + ' · host · ' + s.tc + ' ===\n\n' + HG + '\n\n' + s.prompt); script.push('NEROPAY: ' + s.spoken); }
@@ -387,11 +393,15 @@
         label: 'Host shot — the host global goes before it', prompt: s.prompt, pid: 'pr-' + key(s.id), comb: HG + '\n\n' + s.prompt, primary: 'Copy global + shot' });
       var c = castByKey[s.who];
       return shotCard({ cls: 'mc', id: s.id, tc: s.tc, who: c.name, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture,
-        chips: '<span class="chip d">' + s.secs + 's</span><span class="chip li">' + esc(c.trade) + '</span>',
+        chips: '<span class="chip d">' + s.secs + 's</span><span class="chip li">' + esc(c.trade) + '</span>' + (s.cold ? '<span class="chip p">cold open</span>' : ''),
         note: ['In post', 'Name plate for ' + c.name + ' bottom left; host listening loop top right; the owner global goes before this prompt.'],
         label: 'Bite prompt — attach ' + c.name + '\'s starting frame; the owner global goes before it', prompt: s.prompt, pid: 'pr-' + key(s.id),
         comb: MG + '\n\n' + s.prompt, primary: 'Copy global + bite', secondary: 'Bite only', btn: 'li' });
     }).join('');
+    var who = {}; e.shots.forEach(function(s){ if (s.kind === 'bite') who[s.who] = 1; });
+    var used = [e.id + '/Q', 'CALL/TITLE', 'CALL/DISCLOSURE', 'CALL/FRAME'].concat(Object.keys(who).map(function(k){ return 'CALL/NAME-' + k.toUpperCase(); })).concat(['CALL/END']).filter(has);
+    h += '<h3 style="margin:36px 0 4px">Everything drawn for ' + e.id + '</h3>';
+    h += NP.assetStrip(used, 'Question card, plates, layout, disclosure and cards this episode uses — one place, ready to download');
     if (e.desc) h += descNote(e.id, e.desc);
     return h + '</section>';
   }
@@ -447,40 +457,6 @@
   if (GROUP_OF[hash] || groupOf(hash)) start = hash; else if (hash.indexOf('asset-') === 0) start = 'assets';
   show(start);
 
-  /* ---------- copy + download ---------- */
-  function copyText(txt){
-    var done = function(){ NP.toast('Copied'); };
-    function fallback(){
-      try {
-        var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done();
-      } catch (e) { NP.toast('Copy failed — select the text instead'); }
-    }
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fallback);
-      else fallback();
-    } catch (err) { fallback(); }
-  }
-  document.addEventListener('click', function(e){
-    var b = e.target.closest('button[data-text]'); if (b) { copyText(STORE[b.dataset.text]); return; }
-    var p = e.target.closest('button[data-png]');
-    if (p) {
-      var id = p.dataset.png, tr = !!p.dataset.tr, old = p.textContent;
-      p.textContent = 'Rendering…'; p.disabled = true;
-      ART.toPng(id, { transparent: tr }).then(function(blob){
-        ART.download(blob, ART.fileName(id, tr ? '.png' : (ART.meta(id).opaque ? '.png' : '-black.png')));
-        NP.toast('Downloaded');
-      }).catch(function(){ NP.toast('PNG export failed — use the SVG'); })
-        .then(function(){ p.textContent = old; p.disabled = false; });
-      return;
-    }
-    var s = e.target.closest('button[data-svg]');
-    if (s) {
-      var sid = s.dataset.svg;
-      ART.download(new Blob([ART.svg(sid, { transparent: !ART.meta(sid).opaque })], { type: 'image/svg+xml' }), ART.fileName(sid, '.svg'));
-      NP.toast('Downloaded');
-    }
-  });
 })();
 </script>
 </body>

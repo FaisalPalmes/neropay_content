@@ -408,3 +408,48 @@ details.shot .who{font-family:"Chivo",sans-serif;font-size:.72rem;font-weight:70
 .cast details{margin-top:6px}
 .cast details summary{cursor:pointer;font-family:"Martian Mono",monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .cast pre.p{margin-top:8px;font-size:.64rem}
+
+/* ---------- site organisation: hub, subbar links, strips ---------- */
+.subbar .row a.f{text-decoration:none;display:inline-block}
+.subbar .sep{width:1px;height:22px;background:var(--rule-2);flex:none;margin:0 4px}
+.hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:26px}
+.hub a{display:flex;flex-direction:column;gap:8px;padding:22px 22px 24px;border:1px solid var(--rule);background:var(--surface);
+  text-decoration:none;position:relative;transition:border-color .4s var(--e),transform .4s var(--e),box-shadow .4s var(--e)}
+.hub a::before{content:"";position:absolute;left:0;top:-1px;width:0;height:2px;background:var(--yl);transition:width .55s var(--e)}
+.hub a:hover{border-color:var(--rule-2);transform:translateY(-3px);box-shadow:var(--shadow-lift)}
+.hub a:hover::before{width:100%}
+.hub .ht{font-family:"Chivo",sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:-.02em}
+.hub .hd{font-size:.92rem;color:var(--ink-2);line-height:1.55;flex:1}
+.hub .hm{font-family:"Martian Mono",monospace;font-size:.58rem;letter-spacing:.08em;color:var(--yl-ink);text-transform:uppercase;margin-top:6px}
+.strip .lbl{display:block;margin:0 0 10px}
+.assets.small{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px}
+.assets.small .meta{padding:10px 12px 12px}
+.assets.small .meta h4{font-size:.78rem}
+.assets.small .meta p{font-size:.72rem}
+.assets.small .meta .sid{font-size:.52rem}
+.assets.small .btns .cp{padding:6px 8px;font-size:.54rem;margin-top:8px}
+.assets.small .asset.tall .frame svg{max-width:160px}
+.post-a{padding:18px 22px 22px;border-top:1px solid var(--rule);background:var(--surface-2)}
+.post[hidden]{display:none}
+.wk-group{margin-bottom:34px}
+.wk{display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:12px 0;border-bottom:1px solid var(--rule-2);font-size:1.15rem}
+.wk .lbl{font-size:.55rem}
+.wk .chip{margin-left:auto}
+/* ideas */
+.ideas{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.idea{border:1px solid var(--rule);background:var(--surface);padding:20px 22px 22px;transition:border-color .35s var(--e)}
+.idea:hover{border-color:var(--rule-2)}
+.idea.big{margin-bottom:16px}
+.idea .ih{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:12px}
+.idea .ih h3{flex:1 1 200px;font-size:1.05rem}
+.idea .ih .sid{font-family:"Martian Mono",monospace;font-size:.6rem;color:var(--yl-ink);letter-spacing:.08em}
+.idea .ih .cp{margin-top:0;text-decoration:none}
+.idea .prem{font-size:.98rem;color:var(--ink);line-height:1.6;max-width:72ch}
+.idea .kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.idea .kv .lbl{display:block;margin-bottom:5px}
+.idea .kv p{font-size:.86rem;color:var(--ink-2);line-height:1.55}
+.idea .scroller{margin-top:16px}
+.idea[hidden]{display:none}
+
+/* long chips in idea headers wrap instead of pushing the page wide */
+.idea .ih .chip{white-space:normal;text-align:left;line-height:1.4}

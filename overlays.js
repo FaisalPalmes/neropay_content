@@ -518,6 +518,71 @@ window.OVERLAY_ART = (function () {
     });
   }
 
+  /* ---------- social creatives, drawn from the `assets` field on each post ---------- */
+  var SZ = { sq: { w: 1080, h: 1080, m: 90, ar: '1:1' }, pt: { w: 1080, h: 1350, m: 90, ar: '4:5' }, st: { w: 1080, h: 1920, m: 100, ar: '9:16' } };
+  var CH = '#141416', SOFT = '#D6D6D6';
+  function short(F) { return { k: 'rule', x1: F.m / F.w, x2: (F.m + 140) / F.w, h: 6, fill: Y }; }
+  function chrome(F, o) { /* charcoal ground, wordmark bottom-left, optional corner labels and AI tag */
+    o = o || {};
+    var s = '<rect width="' + F.w + '" height="' + F.h + '" fill="' + CH + '"/>';
+    s += t(F.m, F.h - F.m + 12, wordmark(), { size: 40, w: 900, ls: '-0.03em' });
+    if (o.tr) s += t(F.w - F.m, F.m + 22, o.tr, { size: 22, fill: D, mono: true, anchor: 'end', ls: '0.14em' });
+    if (o.tl) s += t(F.m, F.m + 22, o.tl, { size: 22, fill: Y, mono: true, ls: '0.14em' });
+    if (o.ai) s += '<rect x="' + F.m + '" y="' + (F.h - F.m - 100) + '" width="16" height="16" fill="' + Y + '"/>' + t(F.m + 30, F.h - F.m - 85, 'AI-generated presenter', { size: 24, fill: SOFT });
+    return s;
+  }
+  function socialStat(a, F) {
+    var big = String(a.big), size = big.length <= 3 ? 320 : big.length <= 6 ? 220 : big.length <= 12 ? 150 : 110, r = short(F); r.gap = 34;
+    return chrome(F) + stack([
+      { k: 'text', s: big, size: size, w: 900, fill: Y, ls: '-0.04em', gap: 28, gly: 0.6 }, r,
+      { k: 'text', s: a.line, size: 44, w: 500, gap: 30, gly: 0.5 },
+      { k: 'text', s: a.src || '', size: 26, fill: D, mono: true, gly: 0.62 }], F);
+  }
+  function socialQuote(a, F) {
+    var r = short(F); r.gap = 40;
+    return chrome(F) + stack([r,
+      { k: 'text', s: a.text, size: 76, w: 800, ls: '-0.02em', gap: 30, gly: 0.52 },
+      { k: 'text', s: a.sub || '', size: 30, fill: D, mono: true, gly: 0.62 }], F);
+  }
+  function socialCard(c, i, n, F) {
+    var first = i === 0, r = short(F); r.gap = 34;
+    return chrome(F, { tr: (i + 1) + ' / ' + n, tl: c.n ? String(c.n).toUpperCase() : '' }) + stack([
+      { k: 'text', s: c.h, size: first ? 84 : 68, w: 800, ls: '-0.02em', gap: 30, gly: 0.52 }, r,
+      { k: 'text', s: c.b || '', size: 38, fill: SOFT, gly: 0.5 }], F);
+  }
+  function socialCover(a, F) {
+    var r = short(F); r.gap = 44;
+    return chrome(F, { ai: !!a.ai }) + stack([r,
+      { k: 'text', s: a.title, size: 88, w: 900, ls: '-0.03em', gap: 34, gly: 0.52 },
+      { k: 'text', s: a.sub || '', size: 34, fill: SOFT, gly: 0.5 }], F);
+  }
+  var POSTASSETS = {};
+  if (window.POSTS) {
+    window.POSTS.forEach(function (p) {
+      var list = [];
+      (p.assets || []).forEach(function (a, i) {
+        var n = i + 1, F = SZ[a.size] || SZ.sq;
+        if (a.t === 'ref') { if (A[a.id]) list.push(a.id); return; }
+        if (a.t === 'cards') {
+          a.cards.forEach(function (c, j) {
+            var id = 'S/' + p.id + '/' + n + '-' + (j + 1);
+            def(id, { vid: 'S:' + p.id, title: p.title + ' · card ' + (j + 1) + ' of ' + a.cards.length, use: p.id + ' carousel, ' + F.ar, frame: F, opaque: true,
+              draw: function (FF) { return socialCard(c, j, a.cards.length, FF); } });
+            list.push(id);
+          });
+          return;
+        }
+        var id = 'S/' + p.id + '/' + n;
+        var kind = a.t === 'stat' ? 'stat card' : a.t === 'quote' ? 'quote card' : 'cover';
+        var use = a.t === 'cover' ? 'opening frame' : a.t === 'quote' ? 'optional image — the post is text first' : 'the image';
+        def(id, { vid: 'S:' + p.id, title: p.title + ' · ' + kind, use: p.id + ' · ' + use + ', ' + F.ar, frame: F, opaque: true,
+          draw: function (FF) { return a.t === 'stat' ? socialStat(a, FF) : a.t === 'quote' ? socialQuote(a, FF) : socialCover(a, FF); } });
+        list.push(id);
+      });
+      POSTASSETS[p.id] = list;
+    });
+  }
+
   /* ---------- output ---------- */
   function svg(id, o) {
     o = o || {};
@@ -584,6 +649,7 @@ window.OVERLAY_ART = (function () {
 
   return {
     ids: function () { return ORDER.slice(); },
+    postAssets: function (postId) { return (POSTASSETS[postId] || []).slice(); },
     meta: function (id) { var a = A[id]; return { id: id, vid: a.vid, title: a.title, use: a.use, ar: a.frame.ar, w: a.frame.w, h: a.frame.h, opaque: !!a.opaque }; },
     svg: svg,
     toPng: toPng,
