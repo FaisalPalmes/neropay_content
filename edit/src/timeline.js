@@ -87,7 +87,10 @@ export function buildTimeline({ VIDEOS, CALLS }, vid, probe, opts = {}) {
   const v = VIDEOS.videos.find((x) => x.id === vid);
   if (!v) throw new Error('No video ' + vid);
   const A = assets(series, v.aspect);
-  const byId = {}; v.shots.forEach((s) => { byId[s.id] = s; });
+  /* once the clips have been probed, a shot with no render is left out of the cut rather
+     than breaking it — so a partial batch still produces a watchable video */
+  const present = (id) => !probe || !probe.clips || !!probe.clips[id];
+  const byId = {}; v.shots.forEach((s) => { if (!s.spoken || present(s.id)) byId[s.id] = s; });
   const cover = (o) => {
     let ids = o.over.match(/[AB]\d-\d\d/g) || [];
     if (ids.length === 2 && /\bto\b/.test(o.over)) {
@@ -110,13 +113,14 @@ export function buildTimeline({ VIDEOS, CALLS }, vid, probe, opts = {}) {
       push({ kind: 'intro', asset: A.intro, dur: f(SECS.intro) }); return;
     }
     if (s.id === '[END]') { push({ kind: 'outro', asset: A.outro, dur: f(SECS.outro) }); return; }
+    if (!present(s.id)) return;
     const dur = clipDur(s.id, plannedSecs(s));
     push({ kind: 'clip', id: s.id, src: 'clips/' + s.id + '.mp4', dur: f(dur), startFrom: 0, spoken: s.spoken,
       words: wordsFor(probe, s.id, s.spoken, dur), delivery: s.delivery, ov: s.ov, who: 'presenter', hook: segments.every((x) => x.kind !== 'intro') });
   });
   const segById = {}; segments.forEach((s) => { if (s.id) segById[s.id] = s; });
   v.overlays.forEach((o) => {
-    const ids = cover(o); if (!ids.length) return;
+    const ids = cover(o).filter((id) => segById[id]); if (!ids.length) return;
     const first = segById[ids[0]], last = segById[ids[ids.length - 1]];
     if (!first || !last) return;
     overlays.push({ id: o.id, asset: vid + '/' + o.id, from: first.from, dur: last.from + last.dur - first.from, over: ids });
