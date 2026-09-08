@@ -2,7 +2,8 @@
    NeroPay Content Warehouse
    Design language: the merchant statement. Hairline rules,
    monospace figures, a ledger spine, yellow as the only accent.
-   Dark-first. Light is a designed alternate, not an inversion.
+   Light-first: off-white paper, black and grey type, yellow as the only accent.
+   Dark is an opt-in alternate (data-theme="dark"), not the default.
    =========================================================== */
 
 :root{
@@ -21,20 +22,7 @@
   --shadow-lift:0 2px 4px rgba(19,19,22,.06), 0 18px 40px -16px rgba(19,19,22,.22);
   --e:cubic-bezier(.16,1,.3,1); --e2:cubic-bezier(.22,.61,.36,1);
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0E0E10; --surface:#16161A; --surface-2:#1C1C21; --elev:#1F1F25; --sunk:#0A0A0C;
-  --ink:#F4F3F0; --ink-2:#B8B6B1; --muted:#7D7B84;
-  --rule:#24242A; --rule-2:#3A3A44;
-  --yl:#F5C518; --yl-ink:#F5C518; --yl-soft:rgba(245,197,24,.11); --yl-line:rgba(245,197,24,.34);
-  --grid:rgba(255,255,255,.013);
-  --stop:#E8837A; --stop-soft:rgba(232,131,122,.12);
-  --ok:#6FC098; --ok-soft:rgba(111,192,152,.12);
-  --li:#7FA9D4; --li-soft:rgba(127,169,212,.13);
-  --mt:#BE92D8; --mt-soft:rgba(190,146,216,.13);
-  --sk-line:#4C4A45; --sk-fill:#232320;
-  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px -14px rgba(0,0,0,.8);
-  --shadow-lift:0 2px 6px rgba(0,0,0,.55), 0 22px 50px -18px rgba(0,0,0,.9);
-}}
+/* Light is the default everywhere. Dark stays available by setting data-theme="dark" on <html>, but the site no longer follows the operating system. */
 :root[data-theme="dark"]{
   --bg:#0E0E10; --surface:#16161A; --surface-2:#1C1C21; --elev:#1F1F25; --sunk:#0A0A0C;
   --ink:#F4F3F0; --ink-2:#B8B6B1; --muted:#7D7B84;

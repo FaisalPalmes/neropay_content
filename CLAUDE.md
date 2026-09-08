@@ -167,7 +167,7 @@ each year.
 
 Run `node --check app.js posts.js videos.js` at minimum. If Playwright is available, load each
 page and confirm no console errors, `.post` count matches `POSTS.length` on social.html, and
-nothing overflows at 390px. Both colour schemes must paint their own background.
+nothing overflows at 390px. The site is light by default (off-white ground, black and grey type); dark is opt-in via `data-theme="dark"` and must still paint its own background.
 
 ## What lives elsewhere
 
