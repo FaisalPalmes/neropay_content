@@ -47,9 +47,18 @@ can be exercised. They never overwrite a real file.
 
 Word timing is estimated from the script and the clip length, which is close for eight-second
 shots. For frame-tight highlighting, transcribe with Whisper and drop the result in
-`captions/B1.words.json`; `scripts/transcribe.py` does that when you have a model directory
-(`pip install faster-whisper`, then `python scripts/transcribe.py B1 --model /path/to/model`).
-The model host is blocked from the remote environment, so the model has to be uploaded once.
+`captions/B1.words.json`; `scripts/transcribe.py` does that (`pip install faster-whisper`,
+then `python scripts/transcribe.py B1`, which fetches the `small.en` model on first use, or
+`--model /path/to/model` where downloads are blocked).
+
+Trims: to drop a stumble or a long pause at the head or tail of a clip, add
+`captions/B1.trims.json` with seconds to skip, e.g. `{ "B1-05": { "in": 1.55 } }`, then run
+`npm run captions -- B1` again. The word timings shift with it.
+
+Overlays hover as a translucent panel on the right of frame, clear of the presenter; each graphic
+is measured and fitted once at render time. When the presenter says a figure that is on the
+panel (`src/focus.js` lists the trigger words and where the figure sits), the whole picture pushes
+in on it for a beat and eases back.
 
 Emphasis: every number, percentage and pound figure goes yellow and larger; a short list of
 words per series in `src/emphasis.js` does too. Keep that list short.

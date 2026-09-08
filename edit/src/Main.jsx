@@ -117,6 +117,8 @@ function phrases(words) {
     const end = /[.!?]["”]?$/.test(w.w) || /[,;:]["”]?$/.test(w.w) && cur.length >= 3 || cur.length >= 5;
     if (end || i === words.length - 1) { out.push(cur); cur = []; }
   });
+  /* a lone word at the end of a sentence ("cent.") reads better attached to the group before it */
+  for (let i = out.length - 1; i > 0; i--) if (out[i].length === 1 && out[i - 1].length <= 5) { out[i - 1] = out[i - 1].concat(out[i]); out.splice(i, 1); }
   return out.map((p) => ({ words: p, s: p[0].s, e: p[p.length - 1].e }));
 }
 function Captions({ seg, series, tall, hook }) {

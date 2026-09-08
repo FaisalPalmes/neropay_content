@@ -39,9 +39,9 @@ export function estimateWords(text, dur, lead = 0.35, tail = 0.3) {
 /* Words for one clip, relative to the frames we actually show (after startFrom). */
 function wordsFor(probe, id, spoken, dur, startFrom = 0) {
   const real = probe && probe.words && probe.words[id];
-  const words = real && real.length ? real : estimateWords(spoken, dur);
+  /* an estimate is already spread over the part we show; real timings are shifted by the trim */
+  const words = real && real.length ? real.map((x) => ({ w: x.w, s: x.s - startFrom, e: x.e - startFrom })) : estimateWords(spoken, dur);
   return words
-    .map((x) => ({ w: x.w, s: x.s - startFrom, e: x.e - startFrom }))
     .filter((x) => x.e > 0)
     .map((x) => ({ w: x.w, s: Math.max(0, x.s), e: x.e }));
 }
@@ -55,6 +55,9 @@ function assets(series, aspect) {
 export function buildTimeline({ VIDEOS, CALLS }, vid, probe, opts = {}) {
   const series = vid.charAt(0);
   const clipDur = (id, planned) => (probe && probe.clips && probe.clips[id] && probe.clips[id].dur) || planned;
+  /* hand trims from captions/<VID>.trims.json, carried in the probe: seconds cut from the head / tail */
+  const trimIn = (id) => (probe && probe.clips && probe.clips[id] && probe.clips[id].in) || 0;
+  const trimOut = (id) => (probe && probe.clips && probe.clips[id] && probe.clips[id].out) || 0;
   const segments = [], overlays = [];
   let t = 0;
   const push = (seg) => { seg.from = t; t += seg.dur; segments.push(seg); return seg; };
@@ -106,17 +109,17 @@ export function buildTimeline({ VIDEOS, CALLS }, vid, probe, opts = {}) {
   v.shots.forEach((s) => {
     if (s.id === '[TITLE]') {
       if (hasIntro) {
-        const dur = probe.clips[introId].dur, line = INTRO_LINE;
-        push({ kind: 'clip', id: introId, src: 'clips/' + introId + '.mp4', dur: f(dur), startFrom: 0, spoken: line,
-          words: wordsFor(probe, introId, line, dur), who: 'presenter', hook: true, intro: true });
+        const inn = trimIn(introId), dur = probe.clips[introId].dur - inn - trimOut(introId), line = INTRO_LINE;
+        push({ kind: 'clip', id: introId, src: 'clips/' + introId + '.mp4', dur: f(dur), startFrom: f(inn), spoken: line,
+          words: wordsFor(probe, introId, line, dur, inn), who: 'presenter', hook: true, intro: true });
       }
       push({ kind: 'intro', asset: A.intro, dur: f(SECS.intro) }); return;
     }
     if (s.id === '[END]') { push({ kind: 'outro', asset: A.outro, dur: f(SECS.outro) }); return; }
     if (!present(s.id)) return;
-    const dur = clipDur(s.id, plannedSecs(s));
-    push({ kind: 'clip', id: s.id, src: 'clips/' + s.id + '.mp4', dur: f(dur), startFrom: 0, spoken: s.spoken,
-      words: wordsFor(probe, s.id, s.spoken, dur), delivery: s.delivery, ov: s.ov, who: 'presenter', hook: segments.every((x) => x.kind !== 'intro') });
+    const inn = trimIn(s.id), dur = clipDur(s.id, plannedSecs(s)) - inn - trimOut(s.id);
+    push({ kind: 'clip', id: s.id, src: 'clips/' + s.id + '.mp4', dur: f(dur), startFrom: f(inn), spoken: s.spoken,
+      words: wordsFor(probe, s.id, s.spoken, dur, inn), delivery: s.delivery, ov: s.ov, who: 'presenter', hook: segments.every((x) => x.kind !== 'intro') });
   });
   const segById = {}; segments.forEach((s) => { if (s.id) segById[s.id] = s; });
   v.overlays.forEach((o) => {

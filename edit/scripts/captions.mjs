@@ -24,6 +24,10 @@ const DATA = { VIDEOS: window.VIDEOS, CALLS: window.CALLS };
 const ids = clipIds(DATA, vid);
 const wordsFile = path.join(here, '..', 'captions', vid + '.words.json');
 const real = fs.existsSync(wordsFile) ? JSON.parse(fs.readFileSync(wordsFile, 'utf8')) : {};
+/* optional hand trims, seconds to drop from the head or tail of a clip (a stumble, a long
+   pause before the line): captions/<VID>.trims.json → { "B1-05": { "in": 1.5 }, "B1-02": { "out": 0.4 } } */
+const trimsFile = path.join(here, '..', 'captions', vid + '.trims.json');
+const trims = fs.existsSync(trimsFile) ? JSON.parse(fs.readFileSync(trimsFile, 'utf8')) : {};
 
 const probe = { vid, generatedAt: new Date().toISOString(), clips: {}, words: {}, missing: [], estimated: [] };
 for (const c of ids) {
@@ -31,6 +35,7 @@ for (const c of ids) {
   if (!fs.existsSync(file)) { if (!c.optional) probe.missing.push(c.id); continue; }
   const { durationInSeconds } = await parseMedia({ src: file, fields: { durationInSeconds: true }, reader: nodeReader, acknowledgeRemotionLicense: true });
   probe.clips[c.id] = { dur: +durationInSeconds.toFixed(3), planned: c.secs };
+  if (trims[c.id]) { const t = trims[c.id]; if (t.in) probe.clips[c.id].in = t.in; if (t.out) probe.clips[c.id].out = t.out; }
   if (c.spoken) {
     if (real[c.id] && real[c.id].length) probe.words[c.id] = real[c.id];
     else { probe.words[c.id] = estimateWords(c.spoken, durationInSeconds); probe.estimated.push(c.id); }
@@ -40,3 +45,4 @@ fs.writeFileSync(path.join(capDir, vid + '.json'), JSON.stringify(probe, null, 1
 console.log(vid + ': ' + Object.keys(probe.clips).length + ' clips probed, ' + probe.missing.length + ' missing' + (probe.missing.length ? ' (' + probe.missing.join(', ') + ')' : '') +
   ', word timing ' + (probe.estimated.length ? 'estimated for ' + probe.estimated.length : 'from Whisper') + '.');
 Object.keys(probe.clips).forEach((id) => { const p = probe.clips[id]; if (Math.abs(p.dur - p.planned) > 1.5) console.log('  note: ' + id + ' runs ' + p.dur + 's, planned ' + p.planned + 's'); });
+Object.keys(probe.clips).forEach((id) => { const p = probe.clips[id]; if (p.in || p.out) console.log('  trim: ' + id + (p.in ? ' skips the first ' + p.in + 's' : '') + (p.out ? ' drops the last ' + p.out + 's' : '')); });
