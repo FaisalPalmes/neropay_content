@@ -1,10 +1,10 @@
 """Word timings from the real clips with faster-whisper, for frame-tight captions.
 
-The model host is blocked from the remote environment, so a model directory has to be
-uploaded once (a CTranslate2 Whisper model, e.g. "small.en"). Then:
+Needs faster-whisper and a model: a name such as "small.en" (downloaded on first use where
+the network allows it) or the path to a CTranslate2 Whisper model directory uploaded by hand.
 
     pip install faster-whisper
-    python scripts/transcribe.py B1 --model /path/to/whisper-small.en
+    python scripts/transcribe.py B1 --model small.en
 
 Writes captions/<VID>.words.json in the shape captions.mjs reads:
     { "B1-01": [ { "w": "You", "s": 0.31, "e": 0.52 }, ... ] }
@@ -16,7 +16,7 @@ import argparse, json, os, subprocess, sys
 
 ap = argparse.ArgumentParser()
 ap.add_argument('vid')
-ap.add_argument('--model', required=True, help='path to a CTranslate2 Whisper model directory')
+ap.add_argument('--model', default='small.en', help='Whisper model name or path to a CTranslate2 model directory')
 ap.add_argument('--clips', default=os.path.join(os.path.dirname(__file__), '..', 'public', 'clips'))
 a = ap.parse_args()
 
@@ -26,9 +26,9 @@ except ImportError:
     sys.exit('pip install faster-whisper first')
 
 # the shot list and lines come from the repo data, via node, so there is one source of truth
-node = subprocess.run(['node', '-e', """
+node = subprocess.run(['node', '--input-type=module', '-e', """
 globalThis.window = globalThis;
-await import('../videos.js'); await import('../calls.js');
+await import('./videos.js'); await import('./calls.js');
 const {clipIds} = await import('./edit/src/timeline.js');
 console.log(JSON.stringify(clipIds({VIDEOS: window.VIDEOS, CALLS: window.CALLS}, process.argv[1])));
 """, a.vid], cwd=os.path.join(os.path.dirname(__file__), '..', '..'), capture_output=True, text=True, check=True)
