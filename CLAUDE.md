@@ -80,7 +80,11 @@ from here, and folder uploads silently fail there.
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
-| `edit/` | The video editor: a Remotion project that assembles a finished YouTube video from Higgsfield renders using the data above. The one deliberate subfolder — run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the edit needs to change |
+| `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
+| `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/CLAUDE.md` is HyperFrames' own guide | Yes — one folder per piece inside it |
+| `.claude/` | Skills (the HyperFrames pack, committed so every session has it) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
+
+The two subfolders are deliberate; everything else stays flat.
 
 On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
 where they start. Keep that for any new video — don't split overlays into their own list.
@@ -163,6 +167,32 @@ dead (Budget + half term). CPMs double Oct–Dec but organic doesn't care. Chris
 ~6 Nov — Flex angle from mid-October. 18 Dec – 3 Jan is dark. January is the sprint, but the
 window for Muslim-owned merchants closes ~5 Feb for Ramadan, and Ramadan moves ~11 days earlier
 each year.
+
+## Editing video
+
+Two toolchains, chosen by the job:
+
+- **`edit/` (Remotion)** is the fixed edit for the series videos — B1–B6 and Behind the Counter. Clips in,
+  captions, hover overlays, intro, outro, loudness, out. Don't rebuild that in HyperFrames.
+- **`video/` (HyperFrames)** is for everything else Faisal asks to have edited: captions or graphic
+  overlays on a talking-head clip, a Reel cut, a stat card or motion graphic, a promo, a deck.
+  Start every such request with the `/hyperframes` skill — it routes to the right workflow
+  (`/embedded-captions`, `/talking-head-recut`, `/motion-graphics`, `/general-video`, …). Scaffold each
+  piece as its own folder inside `video/` with `npx hyperframes init <name> --non-interactive --example blank`,
+  run `npx hyperframes check` before any render, and render draft for review, high for delivery.
+
+Rules that come from this environment, not from HyperFrames:
+
+- **No CDN scripts.** The web container blocks jsdelivr, unpkg and the like, so a composition that loads
+  GSAP or a font from a CDN renders black. Vendor the file: `video/vendor/gsap.min.js` is already there;
+  copy it (or `npm install` the library and copy from `node_modules`) and use a relative `src`. Fonts:
+  `@fontsource/*` packages or a local `.woff2`.
+- Rendered MP4s go to Faisal via the Higgsfield media upload (or chat attachment); the Drive
+  connector cannot carry files over a few MB. `out/` is git-ignored.
+- Brand rules above apply to every frame: Nero white, Pay yellow (`#F5C518`) as an accent on charcoal,
+  Poppins, tight letter-spacing, no bokeh, no props, no price or rate on screen.
+- The session-start hook (`.claude/hooks/session-start.sh`) installs node modules for both folders, puts
+  ffmpeg on PATH and fetches HyperFrames' Chrome. If `npx hyperframes doctor` complains, run the hook.
 
 ## Verification before pushing
 
