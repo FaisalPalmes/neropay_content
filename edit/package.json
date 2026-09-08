@@ -10,7 +10,8 @@
     "sfx": "node scripts/make-sfx.mjs",
     "placeholders": "node scripts/make-placeholders.mjs",
     "render": "node scripts/render.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "ingest": "node scripts/ingest.mjs"
   },
   "dependencies": {
     "@fontsource/poppins": "^5.3.0",

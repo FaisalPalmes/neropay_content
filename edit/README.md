@@ -22,6 +22,13 @@ public/clips/C1-H1.mp4  C1-01.mp4 … LISTEN-1.mp4 …    Behind the Counter hos
 
 Overlays are not clips — they are drawn from `overlays.js` at render time, exact and transparent.
 
+Higgsfield names its downloads its own way, so you don't have to rename anything. Put the whole
+download folder somewhere and run `npm run ingest -- B1 /path/to/folder`: it reads each file's
+length, matches files to shots (by the shot id if it appears in the filename, otherwise in the order
+they were generated, checked against the planned length) and writes `ingest/B1.csv` for you to look
+over. Anything doubtful is marked with a `?`. Fix any line, then `npm run ingest -- B1 /path/to/folder --apply`
+copies them into `public/clips/` under the right names.
+
 ## Run
 
 ```
