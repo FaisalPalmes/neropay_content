@@ -28,7 +28,7 @@ const real = fs.existsSync(wordsFile) ? JSON.parse(fs.readFileSync(wordsFile, 'u
 const probe = { vid, generatedAt: new Date().toISOString(), clips: {}, words: {}, missing: [], estimated: [] };
 for (const c of ids) {
   const file = path.join(clipsDir, c.id + '.mp4');
-  if (!fs.existsSync(file)) { probe.missing.push(c.id); continue; }
+  if (!fs.existsSync(file)) { if (!c.optional) probe.missing.push(c.id); continue; }
   const { durationInSeconds } = await parseMedia({ src: file, fields: { durationInSeconds: true }, reader: nodeReader, acknowledgeRemotionLicense: true });
   probe.clips[c.id] = { dur: +durationInSeconds.toFixed(3), planned: c.secs };
   if (c.spoken) {

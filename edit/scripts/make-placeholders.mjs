@@ -15,7 +15,7 @@ const vid = process.argv[2];
 if (!vid) { console.error('usage: node scripts/make-placeholders.mjs <VID>'); process.exit(1); }
 const dir = ensure(path.join(PUBLIC, 'clips'));
 const ids = clipIds({ VIDEOS: window.VIDEOS, CALLS: window.CALLS }, vid);
-const todo = ids.filter((c) => !fs.existsSync(path.join(dir, c.id + '.mp4')));
+const todo = ids.filter((c) => !c.optional && !fs.existsSync(path.join(dir, c.id + '.mp4')));
 console.log(vid + ': ' + ids.length + ' clips, ' + todo.length + ' to render as placeholders');
 if (!todo.length) process.exit(0);
 

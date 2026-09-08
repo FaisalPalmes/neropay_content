@@ -8,6 +8,8 @@
 
 export const FPS = 30;
 export const SECS = { intro: 3, outro: 6, qcard: 3, cold: 3, plate: 4, disclosure: 3 };
+/* the presenter's own intro line, when a <VID>-INTRO clip is supplied */
+export const INTRO_LINE = "Hi, I'm Ava, and this is Explained by NeroPay.";
 
 const f = (s) => Math.round(s * FPS);
 
@@ -95,8 +97,18 @@ export function buildTimeline({ VIDEOS, CALLS }, vid, probe, opts = {}) {
     }
     return ids.filter((id) => byId[id]);
   };
+  /* an optional presenter intro ("Hi, I'm Ava, this is Explained by NeroPay") sits just
+     before the title card, if a clip called <VID>-INTRO.mp4 was supplied */
+  const introId = vid + '-INTRO', hasIntro = probe && probe.clips && probe.clips[introId];
   v.shots.forEach((s) => {
-    if (s.id === '[TITLE]') { push({ kind: 'intro', asset: A.intro, dur: f(SECS.intro) }); return; }
+    if (s.id === '[TITLE]') {
+      if (hasIntro) {
+        const dur = probe.clips[introId].dur, line = INTRO_LINE;
+        push({ kind: 'clip', id: introId, src: 'clips/' + introId + '.mp4', dur: f(dur), startFrom: 0, spoken: line,
+          words: wordsFor(probe, introId, line, dur), who: 'presenter', hook: true, intro: true });
+      }
+      push({ kind: 'intro', asset: A.intro, dur: f(SECS.intro) }); return;
+    }
     if (s.id === '[END]') { push({ kind: 'outro', asset: A.outro, dur: f(SECS.outro) }); return; }
     const dur = clipDur(s.id, plannedSecs(s));
     push({ kind: 'clip', id: s.id, src: 'clips/' + s.id + '.mp4', dur: f(dur), startFrom: 0, spoken: s.spoken,
@@ -121,5 +133,6 @@ export function clipIds({ VIDEOS, CALLS }, vid) {
       .concat(CALLS.listen.map((l) => ({ id: l.id, secs: l.secs, spoken: '' })));
   }
   const v = VIDEOS.videos.find((x) => x.id === vid);
-  return v.shots.filter((s) => s.spoken).map((s) => ({ id: s.id, secs: plannedSecs(s), spoken: s.spoken }));
+  return v.shots.filter((s) => s.spoken).map((s) => ({ id: s.id, secs: plannedSecs(s), spoken: s.spoken }))
+    .concat([{ id: vid + '-INTRO', secs: 4, spoken: INTRO_LINE, optional: true }]);
 }

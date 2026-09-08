@@ -58,15 +58,16 @@ for (const f of files) {
   probed.push({ f, dur: +durationInSeconds.toFixed(2) });
 }
 
-/* pass 1: ids named in the filename */
+/* pass 1: ids named in the filename; "intro" anywhere in the name means the presenter's intro */
 const taken = new Set(), rows = [];
 probed.forEach((p) => {
-  const hit = shots.find((s) => new RegExp('(^|[^A-Z0-9])' + s.id.replace('-', '[-_ ]') + '([^0-9]|$)', 'i').test(p.f));
+  let hit = shots.find((s) => new RegExp('(^|[^A-Z0-9])' + s.id.replace(/-/g, '[-_ ]') + '([^0-9]|$)', 'i').test(p.f));
+  if (!hit && /intro/i.test(p.f)) hit = shots.find((s) => s.optional);
   if (hit && !taken.has(hit.id)) { taken.add(hit.id); rows.push({ ...p, id: hit.id, how: 'named', planned: hit.secs }); }
   else rows.push({ ...p, id: null });
 });
-/* pass 2: the rest in creation order, against the shots not yet taken */
-const rest = shots.filter((s) => !taken.has(s.id));
+/* pass 2: the rest in creation order, against the required shots not yet taken */
+const rest = shots.filter((s) => !taken.has(s.id) && !s.optional);
 let k = 0;
 rows.forEach((r) => {
   if (r.id) return;
