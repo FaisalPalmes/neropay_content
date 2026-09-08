@@ -1,0 +1,25 @@
+{
+  "name": "neropay-edit",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Assembles finished NeroPay videos from Higgsfield renders: cuts, captions, overlays, intro, outro, sound.",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.jsx",
+    "captions": "node scripts/captions.mjs",
+    "sfx": "node scripts/make-sfx.mjs",
+    "placeholders": "node scripts/make-placeholders.mjs",
+    "render": "node scripts/render.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "@remotion/bundler": "^4.0.522",
+    "@remotion/cli": "^4.0.522",
+    "@remotion/media-utils": "^4.0.522",
+    "@remotion/renderer": "^4.0.522",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "remotion": "^4.0.522"
+  }
+}

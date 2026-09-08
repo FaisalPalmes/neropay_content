@@ -80,6 +80,7 @@ from here, and folder uploads silently fail there.
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
+| `edit/` | The video editor: a Remotion project that assembles a finished YouTube video from Higgsfield renders using the data above. The one deliberate subfolder — run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the edit needs to change |
 
 On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
 where they start. Keep that for any new video — don't split overlays into their own list.

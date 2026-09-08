@@ -1,0 +1,5 @@
+node_modules/
+public/clips/
+public/captions/
+out/
+.remotion/
