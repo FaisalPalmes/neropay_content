@@ -63,6 +63,13 @@ in on it for a beat and eases back.
 Emphasis: every number, percentage and pound figure goes yellow and larger; a short list of
 words per series in `src/emphasis.js` does too. Keep that list short.
 
+## Rendering somewhere else
+
+The editor is plain Node: clone the repo, `npm install` in `edit/`, and Remotion fetches its own
+Chromium unless the pre-installed one is present. The B1 demo was rendered this way in the
+Higgsfield sandbox, because that machine can reach both the Higgsfield CDN (for the clips) and
+Whisper's model host. Renders come back through Higgsfield's media upload.
+
 ## Where things are decided
 
 - `src/timeline.js` — the edit: shot order, cold open, intro/outro lengths, overlay spans.
