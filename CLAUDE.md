@@ -193,6 +193,15 @@ Rules that come from this environment, not from HyperFrames:
   Poppins, tight letter-spacing, no bokeh, no props, no price or rate on screen.
 - The session-start hook (`.claude/hooks/session-start.sh`) installs node modules for both folders, puts
   ffmpeg on PATH and fetches HyperFrames' Chrome. If `npx hyperframes doctor` complains, run the hook.
+- **Real clips are not in this container.** They live on the Higgsfield CDN, which the web container
+  cannot reach, so the pattern that works: build and check here against placeholder clips, push, then
+  render in the Higgsfield sandbox (`sandbox_exec`: clone the public repo, `npm i node@22 -g --prefix`,
+  `npm install` in `video/`, curl the clips into `assets/clips/`, `node build.mjs`, `npx hyperframes render`),
+  loudnorm to -14 LUFS with ffmpeg, PUT to a `media_upload` URL, `media_confirm`. Identify a clip from a
+  Higgsfield generation by matching Content-Length to the file size Faisal uploaded.
+- `video/b1-rate-you-were-quoted/` is the reference build: `build.mjs` generates `index.html` from
+  `data/words.json` (Whisper timings), `data/edit.json` (trims) and the clips on disk. Copy its
+  patterns — liquid-glass panels, the clamped virtual camera, per-word captions — for the next piece.
 
 ## Verification before pushing
 
