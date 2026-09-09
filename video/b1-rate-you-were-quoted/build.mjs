@@ -169,13 +169,16 @@ function sfx(role, start, vol, maxLen) {
 }
 
 /* ---------- cards ----------
-   A card is a small glass slab in a real 3D space (.space > .orbit preserve-3d): eight thin layers behind
-   the face give it a body you see on the rotated side, the face carries its own blurred copy of the
-   footage under a dense frost, a metal chip, a band and one static highlight. No drop shadow. */
-function cardHtml(id, i, start, end, wx, wy) {
-  const edges = [1, 2, 3, 4, 5, 6, 7, 8].map((k) => `<i class="edge" style="transform:translateZ(${-2 * k}px)"></i>`).join('');
-  return `<div class="card c${i} cue">${edges}<div class="face">${bgFor(id + 'c' + i, start, end, wx, wy)}<i class="ctint"></i><i class="cband"></i><i class="cchip"></i><i class="cshine"></i><i class="crim"></i></div></div>`;
+   A card is a solid object in a real 3D space (.space > .orbit preserve-3d): six thin layers behind the
+   face give it a body you see on the turned side, the face is a coloured gradient with a metal chip, a
+   band, one static highlight and a soft drop shadow. Four colours: charcoal, yellow, slate, off-white.
+   Opacity only ever moves on the leaves (.face, .edge): opacity below 1 on a preserve-3d element
+   flattens it for that frame, which reads as the cards jumping (LESSONS.md #32). */
+function cardHtml(i) {
+  const edges = [1, 2, 3, 4, 5, 6].map((k) => `<i class="edge" style="transform:translateZ(${-2 * k}px)"></i>`).join('');
+  return `<div class="card k${i} cue">${edges}<div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div>`;
 }
+const leaves = (sel) => `${sel} .face, ${sel} .edge`;
 
 /* ---------- camera ---------- */
 /* One world wrapper carries the camera (viewport-change): screen = S·offset + T, so to centre a point
@@ -226,14 +229,16 @@ for (const s of segs) {
 }
 
 const PX = 1110, PW = 760;   // right column, clear of Ava
+const PLATE = { x: 1160, y: 440 };   // name plate, just right of her face (measured on a real frame)
 const LX = 50;               // left column — where she points
 
 /* ---------- 1 · hook: 0.5%? --- B1-01 ---------- */
 {
   const s = S['B1-01'], a = s.start, b = endOf('B1-01');
-  glass('plate', { start: a, dur: 3.2, x: 72, y: 72, w: 300, h: 92, lean: 0, quiet: true, radius: 24,
+  /* name plate beside her head, small and quiet (PLATE is set from a real frame) */
+  glass('plate', { start: a + 0.2, dur: 3.0, x: PLATE.x, y: PLATE.y, w: 268, h: 80, lean: 0, quiet: true, radius: 22,
     inner: `<div class="plate cue"><b></b><div><strong>Ava</strong><span>NeroPay</span></div></div>` });
-  rise('#plate .plate', a + 0.15, 10);
+  rise('#plate .plate', a + 0.4, 8);
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
   const cx = 1200, cy = 220, cw = 460, ch = 210;
   glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: -7,
@@ -253,20 +258,28 @@ const LX = 50;               // left column — where she points
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
   const FX = 1120, FY = 120;
-  const cards = [0, 1, 2, 3].map((i) => cardHtml('fan', i, tOne, b, FX + 60, FY + 220)).join('');
-  html.push(`<div id="fan" class="space" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${cards}</div></div>`);
-  /* the first card lands from depth; three more slide out behind it into their own 3D space */
-  js.push(`tl.fromTo("#fan .c0", { autoAlpha: 0, z: -420, rotationY: 44, rotationX: 12, y: 40 }, { autoAlpha: 1, z: 0, rotationY: -14, rotationX: 6, y: 0, duration: 0.9, ease: "power3.out", immediateRender: false }, ${tOne});`);
+  html.push(`<div id="fan" class="space" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
+  /* the first card lands from depth; three more slide out behind it, each deeper than the last, so the
+     slow turn of the group gives them parallax */
+  js.push(`tl.set("#fan .k0", { autoAlpha: 1 }, ${tOne});`);
+  js.push(`tl.fromTo("${leaves('#fan .k0')}", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, ${tOne});`);
+  js.push(`tl.fromTo("#fan .k0", { z: -420, rotationY: 44, rotationX: 12, y: 40 }, { z: 0, rotationY: -14, rotationX: 6, y: 0, duration: 0.9, ease: "power3.out", immediateRender: false }, ${tOne});`);
   [1, 2, 3].forEach((i) => {
-    js.push(`tl.fromTo("#fan .c${i}", { autoAlpha: 0, x: 0, y: 0, z: -60, rotationY: -14, rotationX: 6, rotationZ: 0 }, { autoAlpha: 1, x: ${i * 92}, y: ${-i * 54}, z: ${-i * 90}, rotationY: -14, rotationX: 6, rotationZ: ${i * 4}, duration: 0.75, ease: "power3.out", immediateRender: false }, ${r3(tMore + (i - 1) * 0.12)});`);
+    const t0 = r3(tMore + (i - 1) * 0.07);
+    js.push(`tl.set("#fan .k${i}", { autoAlpha: 1 }, ${t0});`);
+    js.push(`tl.fromTo("${leaves('#fan .k' + i)}", { opacity: 0 }, { opacity: 1, duration: 0.35, immediateRender: false }, ${t0});`);
+    js.push(`tl.fromTo("#fan .k${i}", { x: 0, y: 0, z: -60, rotationY: -14, rotationX: 6, rotationZ: 0 }, { x: ${i * 96}, y: ${-i * 58}, z: ${-i * 140}, rotationY: -14, rotationX: 6, rotationZ: ${i * 4}, duration: 0.55, ease: "power3.out", immediateRender: false }, ${t0});`);
   });
-  js.push(`tl.fromTo("#fan .orbit", { rotationY: -5 }, { rotationY: 5, duration: ${r3(b - tOne)}, ease: "sine.inOut", immediateRender: false }, ${tOne});`);
-  /* ease out: the fan fades as one thing while it drifts up a touch — no sink, no jump */
-  js.push(`tl.fromTo("#fan .orbit", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -18, duration: 0.55, ease: "power2.inOut", immediateRender: false }, ${r3(b - 0.55)});`);
-  js.push(`tl.set("#fan .orbit", { autoAlpha: 0 }, ${b});`);
+  js.push(`tl.fromTo("#fan .orbit", { rotationY: -8 }, { rotationY: 8, duration: ${r3(b - tOne)}, ease: "sine.inOut", immediateRender: false }, ${tOne});`);
+  /* out: the faces fade (never the group), a small drift on the group's transform only */
+  const out = r3(b - 0.36);
+  js.push(`tl.fromTo("${leaves('#fan .card')}", { opacity: 1 }, { opacity: 0, duration: 0.36, ease: "power2.in", immediateRender: false }, ${out});`);
+  js.push(`tl.fromTo("#fan .orbit", { y: 0 }, { y: -14, duration: 0.36, ease: "power2.in", immediateRender: false }, ${out});`);
+  js.push(`tl.set("${leaves('#fan .card')}", { opacity: 0 }, ${b});`);
+  js.push(`tl.set("#fan .card", { autoAlpha: 0 }, ${b});`);
   sfx('pop', tOne, 0.16); sfx('whoosh', r3(tMore - 0.05), 0.15);
   const f1 = focus(1.12, 1420, 400);
-  chain('B1-02', [{ t: a, c: flat(1.06, 40, 0) }, { t: tOne, c: flat(1.04, 20, 0) }, { t: tMore + 0.7, c: f1, ease: 'power3.out' }, hold(b - 0.55, f1), { t: b, c: flat(1.05, -30, 0) }]);
+  chain('B1-02', [{ t: a, c: flat(1.06, 40, 0) }, { t: tOne, c: flat(1.04, 20, 0) }, { t: tMore + 0.7, c: f1, ease: 'power3.out' }, hold(b, f1)]);
 }
 
 /* ---------- 3 · Ava's line --- B1-INTRO ---------- */
@@ -333,26 +346,36 @@ const LX = 50;               // left column — where she points
     hold(b4 - 0.9, c4b), { t: b4, c: flat(1.06, -50, 0) }]);
 }
 
-/* ---------- 6 · their card, your rate --- B1-05 ---------- */
+/* ---------- 6 · their card, your rate --- B1-05 (cards, then two big lines of type, no glass) ---------- */
 {
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
-  const HX = 1120, HY = 80, c0 = r3(Math.max(a, tWhat - 0.3));
-  const cards = [0, 1, 2, 3].map((i) => cardHtml('hand', i, c0, b, HX + 60, HY + 220)).join('');
-  const TX = HX + 60, TY = HY + 505;
-  html.push(`<div id="hand" class="space" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${cards}<div class="tagwrap cue"><div class="glass tag" style="width:500px;height:110px;border-radius:28px">${bgFor('tag', c0, b, TX, TY)}<i class="tint"></i><i class="sheen"></i><div class="body"><span>their card.</span><em>your rate.</em></div><i class="rim"></i></div></div></div></div>`);
-  [0, 1, 2, 3].forEach((i) => js.push(`tl.fromTo("#hand .c${i}", { autoAlpha: 0, y: 140, z: -340, rotationY: 34, rotationX: 10, rotationZ: 0, x: 0 }, { autoAlpha: 1, y: ${-i * 40}, x: ${i * 86}, z: ${-i * 70}, rotationY: -12, rotationX: 8, rotationZ: ${-10 + i * 7}, duration: 0.8, ease: "power3.out", immediateRender: false }, ${r3(c0 + i * 0.1)});`));
-  /* on "pocket" the fourth card comes forward, upright, in front; the rest sink back */
-  js.push(`tl.fromTo("#hand .c3", { x: 258, y: -120, z: -210, rotationZ: 11, rotationY: -12, rotationX: 8, scale: 1 }, { x: 150, y: 40, z: 160, rotationZ: 0, rotationY: -4, rotationX: 4, scale: 1.25, duration: 0.8, ease: "power3.inOut", immediateRender: false }, ${tPocket});`);
-  [0, 1, 2].forEach((i) => js.push(`tl.fromTo("#hand .c${i}", { autoAlpha: 1 }, { autoAlpha: 0.45, duration: 0.5, ease: "power2.inOut", immediateRender: false }, ${tPocket});`));
-  js.push(`tl.fromTo("#hand .tagwrap", { autoAlpha: 0, y: 30, scale: 0.94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, ${r3(tRate - 0.1)});`);
-  js.push(`tl.fromTo("#hand .tag .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.0, ease: "power2.inOut", immediateRender: false }, ${r3(tRate + 0.2)});`);
-  js.push(`tl.fromTo("#hand .orbit", { rotationY: 4 }, { rotationY: -4, duration: ${r3(b - c0)}, ease: "sine.inOut", immediateRender: false }, ${c0});`);
-  js.push(`tl.fromTo("#hand .orbit", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -18, duration: 0.55, ease: "power2.inOut", immediateRender: false }, ${r3(b - 0.55)});`);
-  js.push(`tl.set("#hand .orbit", { autoAlpha: 0 }, ${b});`);
-  sfx('whoosh', c0, 0.15); sfx('pop', tPocket, 0.16); sfx('tick', r3(tRate - 0.1), 0.2);
-  const f1 = focus(1.1, 1480, 420), f2 = focus(1.2, 1500, 400);
-  chain('B1-05', [{ t: a, c: flat(1.0) }, { t: c0 + 0.8, c: f1, ease: 'power2.out' }, { t: tPocket + 0.6, c: f2, ease: 'power3.out' }, hold(b - 0.55, f2), { t: b, c: flat(1.04) }]);
+  const HX = 1120, HY = 60, c0 = r3(Math.max(a, tWhat - 0.3));
+  html.push(`<div id="hand" class="space" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
+  <div id="bigline" class="bigline"><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
+  [0, 1, 2, 3].forEach((i) => {
+    const t0 = r3(c0 + i * 0.1);
+    js.push(`tl.set("#hand .k${i}", { autoAlpha: 1 }, ${t0});`);
+    js.push(`tl.fromTo("${leaves('#hand .k' + i)}", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, ${t0});`);
+    js.push(`tl.fromTo("#hand .k${i}", { y: 160, z: -380, rotationY: 34, rotationX: 10, rotationZ: 0, x: 0 }, { y: ${-i * 44}, x: ${i * 88}, z: ${-i * 110}, rotationY: -12, rotationX: 8, rotationZ: ${-10 + i * 7}, duration: 0.8, ease: "power3.out", immediateRender: false }, ${t0});`);
+  });
+  /* on "pocket" the fourth card comes forward, upright, in front; the rest sink back and dim */
+  js.push(`tl.fromTo("#hand .k3", { x: 264, y: -132, z: -330, rotationZ: 11, rotationY: -12, rotationX: 8, scale: 1 }, { x: 150, y: 60, z: 160, rotationZ: 0, rotationY: -4, rotationX: 4, scale: 1.22, duration: 0.8, ease: "power3.inOut", immediateRender: false }, ${tPocket});`);
+  [0, 1, 2].forEach((i) => js.push(`tl.fromTo("${leaves('#hand .k' + i)}", { opacity: 1 }, { opacity: 0.45, duration: 0.5, ease: "power2.inOut", immediateRender: false }, ${tPocket});`));
+  js.push(`tl.fromTo("#hand .orbit", { rotationY: 6 }, { rotationY: -6, duration: ${r3(b - c0)}, ease: "sine.inOut", immediateRender: false }, ${c0});`);
+  /* the two lines, big, on her words */
+  const big = (sel, when) => js.push(`tl.fromTo("${sel}", { autoAlpha: 0, y: 40, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: false }, ${r3(when)});`);
+  big('#bigline .b1', tPocket + 0.15); big('#bigline .b2', tRate - 0.05);
+  sfx('whoosh', c0, 0.15); sfx('pop', tPocket, 0.16); sfx('tick', tPocket + 0.15, 0.18); sfx('bounce', r3(tRate - 0.05), 0.16);
+  const out = r3(b - 0.36);
+  js.push(`tl.fromTo("${leaves('#hand .card')}", { opacity: 1 }, { opacity: 0, duration: 0.36, ease: "power2.in", immediateRender: false }, ${out});`);
+  js.push(`tl.fromTo("#hand .orbit", { y: 0 }, { y: -14, duration: 0.36, ease: "power2.in", immediateRender: false }, ${out});`);
+  js.push(`tl.fromTo("#bigline .b1, #bigline .b2", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.36, ease: "power2.in", immediateRender: false }, ${out});`);
+  js.push(`tl.set("${leaves('#hand .card')}", { opacity: 0 }, ${b});`);
+  js.push(`tl.set("#bigline .b1, #bigline .b2", { autoAlpha: 0 }, ${b});`);
+  js.push(`tl.set("#hand .card", { autoAlpha: 0 }, ${b});`);
+  const f1 = focus(1.1, 1480, 420), f2 = focus(1.18, 1500, 460);
+  chain('B1-05', [{ t: a, c: flat(1.0) }, { t: c0 + 0.8, c: f1, ease: 'power2.out' }, { t: tPocket + 0.6, c: f2, ease: 'power3.out' }, hold(b, f2)]);
 }
 
 /* ---------- 7 · a made-up month --- B1-06 + the statement --- B1-07 (one panel, on the left where she points) ---------- */
@@ -409,17 +432,25 @@ const LX = 50;               // left column — where she points
 {
   const s = S['B1-10'], a = s.start, b = endOf('B1-10');
   const tAdd = findWord('B1-10', 'add'), tDivide = findWord('B1-10', 'divide'), tMultiply = findWord('B1-10', 'multiply'), tHundred = findWord('B1-10', 'hundred');
-  const fx = LX, fy = 190, fw = 900, fh = 560, st = r3(Math.max(a, tAdd - 0.7));
+  const fx = LX, fy = 170, fw = 920, fh = 600, st = r3(Math.max(a, tAdd - 0.7));
   glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: 8,
     inner: `<div class="pad formula"><span class="th cue">your effective rate</span>
-      <div class="frac"><div class="num cue">every charge on the statement</div><i class="line"></i><div class="den cue">total card turnover</div></div>
-      <div class="ops"><span class="x100 cue">× 100</span><span class="eq cue">=</span><b class="res cue">effective rate</b></div></div>` });
+      <div class="frac">
+        <div class="row num cue"><i class="badge">£</i><span>every charge on the statement</span></div>
+        <i class="line"></i>
+        <div class="row den cue"><i class="badge">÷</i><span>total card turnover</span></div>
+      </div>
+      <div class="ops"><span class="x100 cue">× 100</span><span class="eq cue">=</span><b class="res cue">effective rate<i class="under"></i></b></div></div>` });
   rise('#formula .num', tAdd + 0.15); sfx('tick', tAdd, 0.18);
   js.push(`tl.set("#formula .line", { scaleX: 0 }, ${st});`);
-  js.push(`tl.fromTo("#formula .line", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, ${tDivide});`);
-  rise('#formula .den', tDivide + 0.1); sfx('swish', tDivide, 0.14);
-  rise('#formula .x100', tMultiply); rise('#formula .eq', tMultiply + 0.25); rise('#formula .res', tMultiply + 0.4); sfx('tick', tMultiply, 0.18);
-  js.push(`tl.fromTo("#formula .res", { scale: 1 }, { scale: 1.12, duration: 0.35, ease: "back.out(2)", yoyo: true, repeat: 1, immediateRender: false }, ${tHundred});`);
+  js.push(`tl.fromTo("#formula .line", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${tDivide});`);
+  rise('#formula .den', tDivide + 0.12); sfx('swish', tDivide, 0.14);
+  js.push(`tl.fromTo("#formula .x100", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(2)", immediateRender: false }, ${tMultiply});`);
+  rise('#formula .eq', tMultiply + 0.25); sfx('tick', tMultiply, 0.18);
+  js.push(`tl.fromTo("#formula .res", { autoAlpha: 0, x: 30 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, ${r3(tMultiply + 0.4)});`);
+  js.push(`tl.set("#formula .under", { scaleX: 0 }, ${st});`);
+  js.push(`tl.fromTo("#formula .under", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, ${tHundred});`);
+  js.push(`tl.fromTo("#formula .res", { scale: 1 }, { scale: 1.08, duration: 0.35, ease: "back.out(2)", yoyo: true, repeat: 1, immediateRender: false }, ${tHundred});`);
   sfx('pop', tHundred, 0.14);
   const f0 = pf('formula', 1.14, fx + fw / 2, fy + fh / 2 + 40), f1 = pf('formula', 1.2, fx + fw / 2, fy + fh / 2 + 40);
   chain('B1-10', [{ t: a, c: flat(1.0) }, { t: tAdd - 0.1, c: flat(1.02) }, { t: tAdd + 0.9, c: f0, ease: 'power3.out' }, hold(tDivide, f0), { t: tDivide + 0.7, c: f1, ease: 'power3.out' }, hold(b - 0.5, f1), { t: b, c: flat(1.06, 40, 0) }]);
@@ -429,7 +460,7 @@ const LX = 50;               // left column — where she points
 {
   const a11 = S['B1-11'].start, b11 = endOf('B1-11'), a12 = S['B1-12'].start, b12 = endOf('B1-12');
   const tHere = findWord('B1-11', 'here'), tThree = findWord('B1-11', 'three'), tTwenty = findWord('B1-11', 'twenty'), tOne = findWord('B1-11', 'one');
-  const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tDouble = findWord('B1-12', 'double'), tStatement = findWord('B1-12', 'statement');
+  const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tDouble = findWord('B1-12', 'double');
   const sx = 1040, sy = 50, sw = 840, sh = 740;
   glass('sum', { start: a11, dur: r3(b12 - a11), x: sx, y: sy, w: sw, h: sh, cueAt: tHere, lean: -6,
     inner: `<div class="pad sum"><span class="th cue">what that month really cost</span>
@@ -467,8 +498,7 @@ const LX = 50;               // left column — where she points
   const q0 = pf('sum', 1.3, sx + 190, vsY), q1 = pf('sum', 1.3, sx + 640, vsY), qb = pf('sum', 1.22, sx + 480, vsY + 40);
   chain('B1-12', [
     { t: a12, c: s2 }, { t: tQuoted + 0.2, c: q0 }, hold(tArrow, q0),
-    { t: tArrow + 0.85, c: q1 }, hold(tDouble, q1), { t: tDouble + 0.6, c: qb, ease: 'power3.out' },
-    hold(b12 - 0.6, qb), { t: b12, c: flat(1.06, -50, 0) }]);
+    { t: tArrow + 0.85, c: q1 }, hold(tDouble, q1), { t: tDouble + 0.6, c: qb, ease: 'power3.out' }, hold(b12, qb)]);
 }
 
 /* ---------- 11 · 0.70% flat costs less --- B1-13 + B1-14 (one panel) ---------- */
@@ -521,24 +551,50 @@ const LX = 50;               // left column — where she points
   chain('B1-16', [{ t: a16, c: bump(k1) }, { t: tPci + 0.6, c: k2 }, hold(tEffective, k2), { t: tEffective + 0.6, c: k3, ease: 'power3.out' }, hold(b16 - 0.6, k3), { t: b16, c: flat(1.06, -50, 0) }]);
 }
 
-/* ---------- 13 · two minutes with a statement --- B1-17 ---------- */
+/* ---------- 13 · two minutes with a statement --- B1-17 (each piece on its word) ---------- */
 {
   const s = S['B1-17'], a = s.start, b = endOf('B1-17');
-  const tTwo = findWord('B1-17', 'two'), tCalc = findWord('B1-17', 'calculator');
-  glass('two', { start: a, dur: r3(b - a), x: PX + 120, y: 200, w: 640, h: 230, cueAt: tTwo + 0.05, lean: -6,
-    inner: `<div class="pad twomin"><b class="cue">2 min</b><div><span class="c1 cue">last month's statement</span><span class="c2 cue">+ a calculator</span></div></div>` });
-  rise('#two b', tTwo + 0.05, 16); rise('#two .c1', tTwo + 0.3, 12); rise('#two .c2', tCalc); sfx('tick', tCalc, 0.18);
-  chain('B1-17', [{ t: a, c: flat(1.06, -30, 0) }, { t: tTwo + 0.9, c: flat(1.1, -60, 0), ease: 'power3.out' }, hold(b - 1.0, flat(1.1, -60, 0)), { t: b, c: flat(1.0) }]);
+  const tTwo = findWord('B1-17', 'two'), tStatement = findWord('B1-17', 'statement'), tCalc = findWord('B1-17', 'calculator');
+  const tx = PX - 20, ty = 170, tw = 800, th = 300;
+  glass('two', { start: a, dur: r3(b - a), x: tx, y: ty, w: tw, h: th, cueAt: tTwo + 0.05, lean: -6,
+    inner: `<div class="pad twomin"><b class="n cue">2 min</b><div class="lines"><span class="l1 cue"><i></i>last month's statement</span><span class="l2 cue"><i></i>+ a calculator</span></div></div>` });
+  js.push(`tl.fromTo("#two .n", { autoAlpha: 0, scale: 0.5, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, ${r3(tTwo + 0.05)});`);
+  sfx('pop', tTwo + 0.05, 0.18);
+  arrive('#two .l1', tStatement, 40); sfx('tick', tStatement, 0.18);
+  arrive('#two .l2', tCalc, 40); sfx('tick', tCalc, 0.18);
+  const f1 = pf('two', 1.12, tx + tw / 2, ty + th / 2 + 60);
+  chain('B1-17', [{ t: a, c: flat(1.04, -30, 0) }, { t: tTwo + 0.9, c: f1, ease: 'power3.out' }, hold(b - 0.8, f1), { t: b, c: flat(1.0) }]);
 }
 
-/* ---------- 14 · follow --- B1-18 ---------- */
+/* ---------- 14 · follow --- B1-18: the wordmark wipes in, four social tiles pop, all of it goes ---------- */
 {
   const s = S['B1-18'], a = s.start, b = endOf('B1-18');
-  const tFollow = findWord('B1-18', 'follow'), st = r3(Math.max(a, tFollow - 0.6));
-  glass('follow', { start: st, dur: r3(b - st), x: PX + 100, y: 220, w: 660, h: 170, cueAt: tFollow, lean: -6,
-    inner: `<div class="pad follow"><span class="mark cue"><b>Nero</b><em>Pay</em></span><span class="sub cue">more like this on the channel</span></div>` });
-  rise('#follow .mark', tFollow, 16); rise('#follow .sub', tFollow + 0.25, 12);
-  chain('B1-18', [{ t: a, c: flat(1.0) }, { t: tFollow + 0.9, c: flat(1.06, -20, 0), ease: 'power2.out' }, { t: b, c: flat(1.05, -20, 0), ease: 'none' }]);
+  const tFollow = findWord('B1-18', 'follow');
+  const ICON = {
+    ig: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.4" cy="6.6" r="1.3" fill="#fff"/></svg>',
+    li: '<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4.5" fill="#fff"/><text x="12" y="17.2" font-size="12.5" font-weight="800" text-anchor="middle" fill="#141416" font-family="Poppins,Arial,sans-serif">in</text></svg>',
+    yt: '<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="21" height="14" rx="4.5" fill="#fff"/><path d="M10 8.8l5.2 3.2L10 15.2z" fill="#141416"/></svg>',
+    tt: '<svg viewBox="0 0 24 24"><path d="M13.3 3h3.2a4.2 4.2 0 0 0 4.2 4.1v3.2a7.4 7.4 0 0 1-4.2-1.4v6.2a5.6 5.6 0 1 1-5.6-5.6h.6v3.3h-.6a2.3 2.3 0 1 0 2.4 2.3z" fill="#fff"/></svg>',
+  };
+  html.push(`<div id="social" class="social" style="left:${PX + 20}px;top:250px;width:760px;height:260px">
+    <span class="smark"><b>Nero</b><em>Pay</em></span><i class="wipe"></i>
+    <div class="icons">${['ig', 'li', 'yt', 'tt'].map((k) => `<i class="ic ${k} cue">${ICON[k]}</i>`).join('')}</div></div>`);
+  const t0 = r3(tFollow - 0.1);
+  js.push(`tl.set("#social", { autoAlpha: 1 }, ${t0});`);
+  js.push(`tl.fromTo("#social .smark", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
+  js.push(`tl.fromTo("#social .wipe", { autoAlpha: 1, x: 0 }, { x: 520, duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
+  js.push(`tl.fromTo("#social .wipe", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.15, immediateRender: false }, ${r3(t0 + 0.5)});`);
+  ['ig', 'li', 'yt', 'tt'].forEach((k, i) => {
+    const t = r3(t0 + 0.45 + i * 0.14);
+    js.push(`tl.fromTo("#social .ic.${k}", { autoAlpha: 0, scale: 0.3, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.45, ease: "back.out(2.4)", immediateRender: false }, ${t});`);
+    sfx('pop', t, 0.13);
+  });
+  sfx('swish', t0, 0.15);
+  const tOut = r3(Math.min(t0 + 3.2, b - 0.5));
+  js.push(`tl.fromTo("#social", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -24, duration: 0.4, ease: "power2.in", immediateRender: false }, ${tOut});`);
+  js.push(`tl.set("#social", { autoAlpha: 0 }, ${r3(tOut + 0.4)});`);
+  sfx('whoosh', tOut, 0.1);
+  chain('B1-18', [{ t: a, c: flat(1.0) }, { t: t0 + 0.9, c: flat(1.06, -30, 0), ease: 'power2.out' }, hold(tOut, flat(1.06, -30, 0)), { t: b, c: flat(1.0) }]);
 }
 
 /* ---------- 15 · end card (light, on the beat): NeroPay → subscribe → six plain lines → NeroPay, subscribe, legal ----------
@@ -553,7 +609,7 @@ const LX = 50;               // left column — where she points
     <div class="body estage">
       <div class="layer brand"><span class="wordmark cue"><b>Nero</b><em>Pay</em></span><span class="sub cue">Subscribe for more</span></div>
       <div class="layer items"><span class="kicker cue">WHAT COMES WITH NEROPAY</span><div class="grid">${offer.map((t, i) => `<div class="tile t${i} cue"><i></i><span>${esc(t)}</span></div>`).join('')}</div></div>
-      <div class="layer final"><span class="wordmark cue"><b>Nero</b><em>Pay</em></span><span class="sub cue">Subscribe</span><span class="legal cue">Illustrative figures. No saving is guaranteed. NeroPay is a trading name of Nero Panda Ltd.</span></div>
+      <div class="layer final"><span class="wordmark cue"><b>Nero</b><em>Pay</em></span><span class="sub cue">Subscribe for more</span></div>
     </div><i class="rim"></i></div></div></div></div>`);
   const land = r3(a + 0.25 + 0.6);
   js.push(`tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power2.inOut", immediateRender: false }, ${a});`);
@@ -577,7 +633,6 @@ const LX = 50;               // left column — where she points
   offer.forEach((_, i) => leave(`#end .items .t${i}`, fin - 0.5 + i * 0.03));
   rise('#end .final .wordmark', fin, 34); sfx('pop', fin, 0.18);
   rise('#end .final .sub', g(4 + offer.length), 24); sfx('tick', g(4 + offer.length), 0.2);
-  rise('#end .final .legal', g(4 + offer.length) + 0.5, 12);
   sfx('music-outro', a, 0.42);
   /* the camera pans across the lines as they fill in, a gentle lean on the glass */
   move(a, g(3), flat(1.04, 20, 0), flat(1.02, 0, 0), 'power1.inOut');
@@ -638,55 +693,50 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
   background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.04) 35%,rgba(255,255,255,.16) 50%,rgba(255,255,255,.04) 65%,transparent 100%)}
 .glass .body{position:absolute;inset:0;z-index:3}
 .glass .rim{position:absolute;inset:0;z-index:4;display:block;border-radius:inherit;pointer-events:none;
-  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.66),inset 0 -1px 0 rgba(255,255,255,.14),inset 1px 0 0 rgba(255,255,255,.24),inset -1px 0 0 rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.18)}
-.glass .rim::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:26px;
-  background:linear-gradient(160deg,rgba(255,255,255,.30),rgba(255,255,255,.05) 38%,rgba(255,255,255,.02) 62%,rgba(245,197,24,.20));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.10),inset 1px 0 0 rgba(255,255,255,.18),inset -1px 0 0 rgba(255,255,255,.10)}
 /* light glass for the cards on white: a frosted white slab, the same rim */
 .lglass{background:linear-gradient(135deg,rgba(255,255,255,.80) 0%,rgba(255,255,255,.62) 50%,rgba(255,255,255,.74) 100%);color:${INK};
   box-shadow:0 40px 90px rgba(20,20,22,.10),0 8px 24px rgba(20,20,22,.06)}
 .lglass .tint{background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.7),transparent 55%),radial-gradient(70% 60% at 100% 100%,rgba(245,197,24,.16),transparent 60%)}
 .lglass .rim{box-shadow:inset 0 2px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.9)}
-.lglass .rim::before{background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(255,255,255,.2) 38%,rgba(255,255,255,.1) 62%,rgba(245,197,24,.18))}
 .lglass .sheen{background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.1) 65%,transparent 100%)}
 .pad{height:100%;padding:38px 46px 34px;display:flex;flex-direction:column}
 .th{display:block;font-size:24px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.72);margin-bottom:16px}
 b.y,.y{color:${Y}}
 /* name plate */
-.plate{display:flex;align-items:center;gap:16px;padding:0 26px;height:100%}
-.plate b{display:block;width:14px;height:14px;background:${Y};border-radius:4px;flex:none}
-.plate strong{display:block;font-size:30px;font-weight:700;line-height:1.05}
-.plate span{display:block;font-size:17px;font-weight:500;color:rgba(255,255,255,.85);margin-top:3px;letter-spacing:0}
+.plate{display:flex;align-items:center;gap:14px;padding:0 24px;height:100%}
+.plate b{display:block;width:12px;height:12px;background:${Y};border-radius:4px;flex:none}
+.plate strong{display:block;font-size:27px;font-weight:700;line-height:1.05}
+.plate span{display:block;font-size:16px;font-weight:500;color:rgba(255,255,255,.85);margin-top:2px;letter-spacing:0}
 /* hook chip */
 .chip{display:flex;align-items:center;justify-content:center;gap:12px;height:100%}
 .chip .big{display:block;font-size:118px;font-weight:800;letter-spacing:-0.05em;line-height:1}
 .chip .q{display:block;font-size:118px;font-weight:800;font-style:italic;color:${Y};line-height:1;transform-origin:50% 60%}
 .chip .strike{position:absolute;left:62px;top:50%;width:340px;height:11px;margin-top:-6px;display:block;background:${Y};border-radius:6px;transform-origin:0 50%}
-/* cards: a real 3D space; each card is a frosted glass slab with a body (eight layers behind the face),
-   its own blurred copy of the footage, a metal chip, a band, one static highlight, no drop shadow */
+/* cards: solid objects in a real 3D space — a coloured face, six layers of body behind it, chip, band,
+   one highlight, a soft shadow. Opacity is only ever animated on .face and .edge (LESSONS.md #32). */
 .space{position:absolute;perspective:1500px;overflow:visible}
 .orbit{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 55%}
 .card{position:absolute;left:60px;top:220px;width:330px;height:208px;display:block;transform-style:preserve-3d;transform-origin:50% 50%}
-.card .edge{position:absolute;inset:0;display:block;border-radius:26px;background:linear-gradient(135deg,rgba(150,150,160,.98),rgba(92,92,102,.98))}
-.card .face{position:absolute;inset:0;border-radius:26px;overflow:hidden;isolation:isolate;background:rgba(255,255,255,.12)}
-.card .face .bg{position:absolute;width:${W}px;height:${H}px;z-index:0}
-.card .face .bgv{filter:blur(7px) saturate(1.2) brightness(1.05)}
-.card .face .bgv.hi{filter:blur(30px) saturate(1.2) brightness(1.05)}
-.card .ctint{position:absolute;inset:0;z-index:1;display:block;background:linear-gradient(135deg,rgba(255,255,255,.74) 0%,rgba(255,255,255,.50) 50%,rgba(214,214,222,.60) 100%)}
-.card .cshine{position:absolute;left:-30%;top:-40%;width:70%;height:180%;z-index:2;display:block;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.30),transparent)}
-.card .cchip{position:absolute;left:30px;top:30px;width:60px;height:44px;border-radius:9px;z-index:3;display:block;background:linear-gradient(135deg,#ffe38a 0%,${Y} 45%,#c99a0a 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.12)}
-.card .cchip::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:rgba(0,0,0,.18);box-shadow:0 8px 0 rgba(0,0,0,.18)}
-.card .cband{position:absolute;left:0;right:0;bottom:52px;height:28px;z-index:3;display:block;background:rgba(20,20,22,.36)}
-.card .crim{position:absolute;inset:0;z-index:4;display:block;border-radius:26px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.10),inset 0 -14px 30px rgba(255,255,255,.10)}
-.card .crim::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:14px;background:linear-gradient(160deg,rgba(255,255,255,.9),rgba(255,255,255,.15) 40%,rgba(255,255,255,.05) 60%,rgba(245,197,24,.18));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
-.card.c1 .cchip{background:linear-gradient(135deg,#ffffff,#d6d6dc 55%,#b8b8c0)}
-.card.c2 .cchip{background:linear-gradient(135deg,#bfe2ff,#7fb4e8 50%,#4b86c6)}
-.card.c3 .cchip{background:linear-gradient(135deg,#fff0bf,#ffd27a 50%,${Y})}
-#hand .tagwrap{position:absolute;left:60px;top:505px;width:500px;height:110px}
-#hand .tag{font-size:40px;font-weight:600}
-#hand .tag .body{display:flex;align-items:center;justify-content:center;gap:14px}
-#hand .tag em{font-style:italic;font-weight:800;color:${Y}}
+.card .edge{position:absolute;inset:0;display:block;border-radius:26px;opacity:0}
+.card .face{position:absolute;inset:0;border-radius:26px;overflow:hidden;opacity:0;box-shadow:0 26px 44px rgba(0,0,0,.34),0 6px 14px rgba(0,0,0,.18)}
+.card.k0 .face{background:linear-gradient(135deg,#3a3a41 0%,#232327 55%,#2c2c31 100%)} .card.k0 .edge{background:#121214}
+.card.k1 .face{background:linear-gradient(135deg,#ffdc63 0%,${Y} 50%,#d9a90f 100%)} .card.k1 .edge{background:#a37d0a}
+.card.k2 .face{background:linear-gradient(135deg,#55698d 0%,#33425c 55%,#3d4d6a 100%)} .card.k2 .edge{background:#1b2332}
+.card.k3 .face{background:linear-gradient(135deg,#faf8f3 0%,#e4e1d9 55%,#efece5 100%)} .card.k3 .edge{background:#b5b2a9}
+.card .cshine{position:absolute;left:-30%;top:-40%;width:70%;height:180%;display:block;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+.card .cchip{position:absolute;left:30px;top:30px;width:60px;height:44px;border-radius:9px;display:block;background:linear-gradient(135deg,#ffe38a 0%,${Y} 45%,#c99a0a 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.2)}
+.card .cchip::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:rgba(0,0,0,.2);box-shadow:0 8px 0 rgba(0,0,0,.2)}
+.card.k1 .cchip{background:linear-gradient(135deg,#ffffff,#d6d6dc 55%,#b8b8c0)}
+.card .cband{position:absolute;left:0;right:0;bottom:52px;height:28px;display:block;background:rgba(20,20,22,.34)}
+.card.k0 .cband,.card.k2 .cband{background:rgba(0,0,0,.42)}
+.card .crim{position:absolute;inset:0;display:block;border-radius:26px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.12)}
+.card.k3 .crim{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(0,0,0,.08)}
+/* two big lines of type beside the cards, no glass */
+.bigline{position:absolute;left:1150px;top:640px;width:740px;display:flex;flex-direction:column;gap:6px}
+.bigline span{display:block;font-size:76px;font-weight:800;letter-spacing:-0.045em;line-height:1.05;text-shadow:0 10px 34px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.35);transform-origin:0 50%}
+.bigline .b2{color:${Y};font-style:italic}
 /* ladder: one bar per card, the named one yellow, the rest grey */
 .bars{position:absolute;left:46px;right:46px;top:104px;bottom:34px;display:flex;align-items:flex-end;justify-content:space-between;gap:22px}
 .bar{position:relative;flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:46px}
@@ -718,13 +768,17 @@ b.y,.y{color:${Y}}
 .ftotal span{font-size:24px;font-weight:500;color:rgba(255,255,255,.8)}
 .ftotal b{font-size:50px;font-weight:800;color:${Y};letter-spacing:-0.04em}
 .ftotal em{font-size:22px;font-style:italic;font-weight:700;color:rgba(255,255,255,.85);margin-left:auto}
-/* formula — big, on the left */
+/* formula — big, on the left: two rows with a badge each, a glowing line between, then × 100 = result */
 .formula{justify-content:center}
-.frac{display:flex;flex-direction:column;align-items:center;gap:16px;margin:6px 0 30px}
-.frac .num,.frac .den{display:block;font-size:46px;font-weight:700;letter-spacing:-0.02em;text-align:center}
-.frac .line{display:block;width:760px;height:6px;background:#fff;border-radius:3px;transform-origin:50% 50%}
-.ops{display:flex;align-items:center;justify-content:center;gap:28px;font-size:54px;font-weight:600}
-.ops .res{font-size:62px;font-weight:800;color:${Y};font-style:italic;transform-origin:50% 50%}
+.frac{display:flex;flex-direction:column;align-items:stretch;gap:14px;margin:4px 0 30px;padding:0 20px}
+.frac .row{display:flex;align-items:center;gap:22px;font-size:44px;font-weight:700;letter-spacing:-0.02em}
+.frac .badge{display:flex;align-items:center;justify-content:center;flex:none;width:58px;height:58px;border-radius:50%;background:${Y};color:#141416;font-style:normal;font-size:32px;font-weight:800}
+.frac .den{color:rgba(255,255,255,.88)}
+.frac .line{display:block;height:5px;margin:2px 0;background:${Y};border-radius:3px;transform-origin:50% 50%;box-shadow:0 0 14px rgba(245,197,24,.55)}
+.ops{display:flex;align-items:center;justify-content:center;gap:26px;font-size:50px;font-weight:600}
+.ops .x100{display:inline-block;padding:6px 26px;border-radius:18px;background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.35);transform-origin:50% 50%}
+.ops .res{position:relative;display:inline-block;font-size:66px;font-weight:800;color:${Y};font-style:italic;transform-origin:50% 50%;padding-bottom:6px}
+.ops .res .under{position:absolute;left:0;right:0;bottom:-4px;height:6px;display:block;border-radius:3px;background:${Y};transform-origin:0 50%;box-shadow:0 0 12px rgba(245,197,24,.6)}
 /* sum — the headline of the video */
 .sline{display:flex;justify-content:space-between;align-items:baseline;font-size:32px;font-weight:600;padding:8px 0}
 .sline b{font-size:44px;font-weight:800;color:${Y};letter-spacing:-0.04em}
@@ -758,16 +812,23 @@ b.y,.y{color:${Y}}
 .qrow i{display:block;flex:none;width:38px;height:38px;border-radius:50%;background:${Y};position:relative;transform-origin:50% 50%}
 .qrow i::after{content:"";position:absolute;left:13px;top:7px;width:9px;height:18px;border-right:4px solid #141416;border-bottom:4px solid #141416;transform:rotate(45deg)}
 .qrow.last span{color:${Y};font-weight:800;font-style:italic;display:inline-block;transform-origin:0 50%}
-/* two minutes + follow */
-.twomin{flex-direction:row;align-items:center;gap:26px}
-.twomin b{white-space:nowrap;font-size:84px;font-weight:800;color:${Y};letter-spacing:-0.05em;line-height:1}
-.twomin div{display:flex;flex-direction:column;gap:4px}
-.twomin span{display:block;font-size:28px;font-weight:600}
-.twomin .c2{color:rgba(255,255,255,.85)}
-.follow{flex-direction:row;align-items:center;gap:26px;padding:0 40px}
+/* two minutes: the number big, the two lines on their words */
+.twomin{flex-direction:row;align-items:center;gap:28px;padding:0 40px}
+.twomin .n{display:block;flex:none;font-size:108px;font-weight:800;color:${Y};letter-spacing:-0.06em;line-height:1;white-space:nowrap;transform-origin:50% 60%}
+.twomin .lines{display:flex;flex-direction:column;gap:14px}
+.twomin .lines span{display:flex;align-items:center;gap:14px;font-size:28px;font-weight:600;white-space:nowrap}
+.twomin .lines i{display:block;flex:none;width:14px;height:14px;border-radius:4px;background:${Y}}
+.twomin .l2{color:rgba(255,255,255,.88)}
+/* follow: wordmark wipe, four tiles */
+.social{position:absolute;opacity:0;visibility:hidden}
+.social .smark{display:block;font-size:104px;font-weight:800;letter-spacing:-0.05em;line-height:1;text-shadow:0 10px 34px rgba(0,0,0,.5)}
+.social .smark em{font-style:normal;color:${Y}}
+.social .wipe{position:absolute;left:0;top:6px;width:10px;height:100px;display:block;border-radius:5px;background:${Y};box-shadow:0 0 18px rgba(245,197,24,.8);opacity:0}
+.social .icons{display:flex;gap:22px;margin-top:26px}
+.social .ic{display:flex;align-items:center;justify-content:center;width:92px;height:92px;border-radius:26px;background:rgba(255,255,255,.14);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.45),0 18px 40px rgba(0,0,0,.35);transform-origin:50% 50%}
+.social .ic svg{width:52px;height:52px;display:block}
 .mark{display:block;font-size:64px;font-weight:800;letter-spacing:-0.05em;line-height:1}
 .mark em,.wordmark em{font-style:normal;color:${Y}}
-.follow .sub{display:block;font-size:26px;font-weight:500;color:rgba(255,255,255,.85);padding-left:24px;border-left:2px solid rgba(255,255,255,.3);letter-spacing:0}
 /* title + end cards: white ground, soft yellow blooms (static — a blurred element must not move) */
 .card-full{left:0;top:0;width:${W}px;height:${H}px;background:#141416;overflow:hidden}
 .card-full.light{background:#f7f6f2;color:${INK}}

@@ -43,8 +43,14 @@ for (const id of Object.keys(WORDS)) {
      so every cue the build asks for still resolves */
   const words = WORDS[id].map((w) => (w.s < full - 0.1 ? w : { w: w.w, s: r3(full - 0.1), e: r3(full - 0.05) }));
   const inn = Math.max((EDIT[id] && EDIT[id].in) || 0, words[0].s - LEAD, 0);
+  /* endAtWord in edit.json drops everything after that word (the line Faisal cut from B1-12) */
+  if (EDIT[id] && EDIT[id].endAtWord) {
+    const k = words.findIndex((w) => w.w === EDIT[id].endAtWord);
+    if (k < 0) throw new Error(id + ': endAtWord "' + EDIT[id].endAtWord + '" not found');
+    words.splice(k + 1);
+  }
   const last = words[words.length - 1];
-  const tail = Math.min(full, last.e + (id === LAST ? TAIL_LAST : TAIL), full - ((EDIT[id] && EDIT[id].out) || 0));
+  const tail = Math.min(full, last.e + (id === LAST ? TAIL_LAST : EDIT[id] && EDIT[id].endAtWord ? 0.45 : TAIL), full - ((EDIT[id] && EDIT[id].out) || 0));
   const keep = []; let a = r3(inn);
   for (let i = 0; i < words.length - 1; i++) {
     const gap = words[i + 1].s - words[i].e;
