@@ -199,6 +199,8 @@ Rules that come from this environment, not from HyperFrames:
   `npm install` in `video/`, curl the clips into `assets/clips/`, `node build.mjs`, `npx hyperframes render`),
   loudnorm to -14 LUFS with ffmpeg, PUT to a `media_upload` URL, `media_confirm`. Identify a clip from a
   Higgsfield generation by matching Content-Length to the file size Faisal uploaded.
+- **Read `video/LESSONS.md` before any edit and add to it after every review.** It is the log of faults
+  Faisal has caught and the rule that prevents each one.
 - `video/b1-rate-you-were-quoted/` is the reference build: `build.mjs` generates `index.html` from
   `data/words.json` (Whisper timings), `data/edit.json` (trims) and the clips on disk. Copy its
   patterns — liquid-glass panels, the clamped virtual camera, per-word captions — for the next piece.

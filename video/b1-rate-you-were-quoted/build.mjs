@@ -76,14 +76,15 @@ const WORDLIST = [];   // [globalStart, globalEnd] per word, in DOM order
 /* glass panel with 3D wrapper: <div class="clip p3d"><div class="float"><div class="glass">…<i class="sheen"></i></div></div></div> */
 function glass(id, { start, dur, x, y, w, h, inner, cls = '', enterFrom = 22, track = 2 }) {
   html.push(`<div id="${id}" class="clip p3d ${cls}" data-start="${start}" data-duration="${dur}" data-track-index="${track}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px">
-  <div class="float"><div class="glass" style="width:${w}px;height:${h}px">${inner}<i class="sheen"></i></div></div></div>`);
-  /* entrance: tilt in from the side, settle flat; exit: drift down and out */
-  js.push(`tl.fromTo("#${id} .glass", { autoAlpha: 0, rotationY: ${enterFrom}, x: ${enterFrom > 0 ? 60 : -60}, z: -160, transformPerspective: 1600 }, { autoAlpha: 1, rotationY: 0, x: 0, z: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, ${start});`);
-  js.push(`tl.fromTo("#${id} .glass", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 26, duration: 0.3, ease: "power2.in", immediateRender: false }, ${r3(start + dur - 0.3)});`);
-  js.push(`tl.set("#${id} .glass", { autoAlpha: 0 }, ${r3(start + dur)});`);
-  /* idle float on the wrapper, finite repeats sized to the panel's life */
-  const cycle = 2.6, reps = Math.max(0, Math.floor(dur / cycle) - 1);
-  js.push(`tl.fromTo("#${id} .float", { rotationY: -1.6, rotationX: 1.2, y: 0, transformPerspective: 1600 }, { rotationY: 1.6, rotationX: -1.2, y: -6, duration: ${cycle / 2}, ease: "sine.inOut", yoyo: true, repeat: ${reps * 2 + 1}, immediateRender: false }, ${start});`);
+  <div class="float"><div class="idle"><div class="glass" style="width:${w}px;height:${h}px"><div class="body">${inner}</div><i class="sheen"></i></div></div></div></div>`);
+  /* entrance on the 3D wrapper (never on the blurred element itself — Chrome drops frames when
+     backdrop-filter and a 3D transform share an element); settle flat; exit: sink and fade */
+  js.push(`tl.fromTo("#${id} .float", { autoAlpha: 0, rotationY: ${enterFrom}, x: ${enterFrom > 0 ? 50 : -50}, z: -140, transformPerspective: 1600 }, { autoAlpha: 1, rotationY: 0, x: 0, z: 0, duration: 0.75, ease: "power3.out", immediateRender: false }, ${start});`);
+  js.push(`tl.fromTo("#${id} .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 22, duration: 0.35, ease: "power2.in", immediateRender: false }, ${r3(start + dur - 0.35)});`);
+  js.push(`tl.set("#${id} .float", { autoAlpha: 0 }, ${r3(start + dur)});`);
+  /* idle: a slow 2D bob, finite repeats sized to the panel's life */
+  const cycle = 3.2, reps = Math.max(0, Math.floor(dur / cycle) - 1);
+  js.push(`tl.fromTo("#${id} .idle", { y: 0 }, { y: -7, duration: ${cycle / 2}, ease: "sine.inOut", yoyo: true, repeat: ${reps * 2 + 1}, immediateRender: false }, ${start});`);
   /* travelling sheen: once on arrival, again every three seconds */
   const sreps = Math.max(0, Math.floor((dur - 1.4) / 3));
   js.push(`tl.fromTo("#${id} .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.4, ease: "power2.inOut", repeat: ${sreps}, repeatDelay: 1.6, immediateRender: false }, ${r3(start + 0.25)});`);
@@ -127,9 +128,7 @@ for (const s of segs) {
       }).join(' ');
       const pid = 'cap-' + s.id + '-' + Math.round(p[0].s * 100);
       html.push(`<div id="${pid}" class="clip cap" data-start="${ps}" data-duration="${pd}" data-track-index="6"><div class="line">${spans}</div></div>`);
-      js.push(`tl.fromTo("#${pid} .line", { opacity: 0, y: 16, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "power3.out", immediateRender: false }, ${ps});`);
-      const pend = r3(ps + pd);
-      if (pd > 0.5) { js.push(`tl.fromTo("#${pid} .line", { opacity: 1 }, { opacity: 0, duration: 0.15, ease: "power1.in", immediateRender: false }, ${r3(pend - 0.15)});`); js.push(`tl.set("#${pid} .line", { opacity: 0 }, ${pend});`); }
+      /* phrases hard-cut: the only motion in a caption is the word turning yellow */
     });
   }
 }
@@ -137,11 +136,12 @@ for (const s of segs) {
 /* --- Frame 1: hook --- */
 {
   const s = S['B1-01'], a = s.start, b = r3(s.start + s.dur);
-  html.push(`<div id="disc" class="clip p3d" data-start="${a}" data-duration="3" data-track-index="8" style="left:80px;top:80px;width:560px;height:118px">
-  <div class="float"><div class="glass" style="width:560px;height:118px;border-radius:30px"><div class="disc"><b></b><div><strong>AI-generated presenter</strong><span>This presenter is not a real person</span></div></div><i class="sheen"></i></div></div></div>`);
-  js.push(`tl.fromTo("#disc .glass", { autoAlpha: 0, x: -80, rotationY: -18, transformPerspective: 1600 }, { autoAlpha: 1, x: 0, rotationY: 0, duration: 0.6, ease: "power3.out" }, ${a});`);
-  js.push(`tl.fromTo("#disc .glass", { autoAlpha: 1, x: 0 }, { autoAlpha: 0, x: -60, duration: 0.35, ease: "power2.in", immediateRender: false }, ${r3(a + 2.65)});`);
-  js.push(`tl.set("#disc .glass", { autoAlpha: 0 }, ${r3(a + 3)});`);
+  /* name plate for the first three seconds; the AI line is the on-screen disclosure the rails require */
+  html.push(`<div id="disc" class="clip p3d" data-start="${a}" data-duration="3" data-track-index="8" style="left:72px;top:72px;width:340px;height:92px">
+  <div class="float"><div class="idle"><div class="glass" style="width:340px;height:92px;border-radius:24px"><div class="body disc"><b></b><div><strong>Ava</strong><span>NeroPay · AI presenter</span></div></div><i class="sheen"></i></div></div></div></div>`);
+  js.push(`tl.fromTo("#disc .float", { autoAlpha: 0, x: -40 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: "power3.out" }, ${a});`);
+  js.push(`tl.fromTo("#disc .float", { autoAlpha: 1, x: 0 }, { autoAlpha: 0, x: -30, duration: 0.35, ease: "power2.in", immediateRender: false }, ${r3(a + 2.65)});`);
+  js.push(`tl.set("#disc .float", { autoAlpha: 0 }, ${r3(a + 3)});`);
   js.push(`tl.fromTo("#disc .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.2, ease: "power2.inOut", immediateRender: false }, ${r3(a + 0.3)});`);
   /* the "0.5%?" chip */
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
@@ -166,9 +166,9 @@ for (const s of segs) {
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
   const cards = [0, 1, 2, 3].map((i) => `<div class="card c${i}"><i class="cchip"></i><i class="cstripe"></i></div>`).join('');
   html.push(`<div id="fan" class="clip p3d" data-start="${tOne}" data-duration="${r3(b - tOne)}" data-track-index="2" style="left:1180px;top:170px;width:560px;height:420px"><div class="float">${cards}</div></div>`);
-  js.push(`tl.fromTo("#fan .c0", { autoAlpha: 0, y: 60, rotationY: 30, transformPerspective: 1400 }, { autoAlpha: 1, y: 0, rotationY: -8, duration: 0.6, ease: "power3.out" }, ${tOne});`);
+  js.push(`tl.fromTo("#fan .c0", { autoAlpha: 0, y: 50, scale: 0.94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, ${tOne});`);
   [1, 2, 3].forEach((i) => {
-    js.push(`tl.fromTo("#fan .c${i}", { autoAlpha: 0, x: 0, y: 0, rotation: 0, rotationY: -8, transformPerspective: 1400 }, { autoAlpha: 1, x: ${i * 96}, y: ${-i * 42}, rotation: ${i * 7}, rotationY: -8, duration: 0.55, ease: "back.out(1.6)", immediateRender: false }, ${r3(tMore + (i - 1) * 0.1)});`);
+    js.push(`tl.fromTo("#fan .c${i}", { autoAlpha: 0, x: 0, y: 0, rotation: 0 }, { autoAlpha: 1, x: ${i * 96}, y: ${-i * 42}, rotation: ${i * 7}, duration: 0.55, ease: "back.out(1.4)", immediateRender: false }, ${r3(tMore + (i - 1) * 0.1)});`);
   });
   js.push(`tl.fromTo("#fan .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: 30, duration: 0.3, ease: "power2.in", immediateRender: false }, ${r3(b - 0.3)});`);
   js.push(`tl.set("#fan .float", { autoAlpha: 0 }, ${b});`);
@@ -182,9 +182,6 @@ for (const s of segs) {
 /* --- Frame 3: Ava's intro line --- */
 {
   const s = S['B1-INTRO'], a = s.start, b = r3(s.start + s.dur);
-  const tExp = findWord('B1-INTRO', 'explained');
-  glass('lower', { start: tExp, dur: r3(b - tExp + XF), x: 80, y: 640, w: 700, h: 110, enterFrom: -20, track: 3,
-    inner: `<div class="lower"><span class="mark"><b>Nero</b><em>Pay</em></span><span class="sub">Explained by NeroPay</span></div>` });
   move(a, r3(b - XF), flat(1.0), flat(1.06), 'power1.inOut');
 }
 
@@ -193,13 +190,13 @@ for (const s of segs) {
   const s = S['[TITLE]'], a = r3(s.start - XF), d = r3(s.dur + 2 * XF);
   html.push(`<div id="title" class="clip card-full" data-start="${a}" data-duration="${d}" data-track-index="4">
   <div class="glow g1"></div><div class="glow g2"></div>
-  <div class="p3d" style="left:${(W - 1240) / 2}px;top:${(H - 560) / 2}px;width:1240px;height:560px"><div class="float"><div class="glass tglass" style="width:1240px;height:560px">
-    <div class="tstack"><span class="kicker">EXPLAINED BY</span><span class="wordmark"><b>Nero</b><em>Pay</em></span><span class="ep">The rate you were quoted</span></div><i class="sheen"></i></div></div></div></div>`);
+  <div class="p3d" style="left:${(W - 1240) / 2}px;top:${(H - 560) / 2}px;width:1240px;height:560px"><div class="float"><div class="idle"><div class="glass tglass" style="width:1240px;height:560px">
+    <div class="body tstack"><span class="kicker">EXPLAINED BY</span><span class="wordmark"><b>Nero</b><em>Pay</em></span><span class="ep">The rate you were quoted</span></div><i class="sheen"></i></div></div></div></div></div>`);
   js.push(`tl.fromTo("#title", { autoAlpha: 0 }, { autoAlpha: 1, duration: ${XF}, ease: "power2.inOut" }, ${a});`);
   js.push(`tl.fromTo("#title", { autoAlpha: 1 }, { autoAlpha: 0, duration: ${XF}, ease: "power2.inOut", immediateRender: false }, ${r3(a + d - XF)});`);
   js.push(`tl.set("#title", { autoAlpha: 0 }, ${r3(a + d)});`);
-  js.push(`tl.fromTo("#title .tglass", { autoAlpha: 0, rotationY: -26, rotationX: 8, z: -300, scale: 0.9, transformPerspective: 1800 }, { autoAlpha: 1, rotationY: 0, rotationX: 0, z: 0, scale: 1, duration: 0.9, ease: "power4.out", immediateRender: false }, ${r3(a + XF)});`);
-  js.push(`tl.fromTo("#title .float", { rotationY: -1.5, rotationX: 1, transformPerspective: 1800 }, { rotationY: 1.5, rotationX: -1, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, ${r3(a + XF)});`);
+  js.push(`tl.fromTo("#title .float", { autoAlpha: 0, rotationY: -16, rotationX: 5, z: -220, scale: 0.94, transformPerspective: 1800 }, { autoAlpha: 1, rotationY: 0, rotationX: 0, z: 0, scale: 1, duration: 1.0, ease: "power4.out", immediateRender: false }, ${r3(a + XF * 0.5)});`);
+  js.push(`tl.fromTo("#title .idle", { y: 0 }, { y: -6, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, ${r3(a + XF)});`);
   js.push(`tl.fromTo("#title .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.5, ease: "power2.inOut", immediateRender: false }, ${r3(a + XF + 0.5)});`);
   js.push(`tl.fromTo("#title .kicker", { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, ${r3(a + XF + 0.45)});`);
   js.push(`tl.fromTo("#title .wordmark", { autoAlpha: 0, y: 30, scale: 0.94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out", immediateRender: false }, ${r3(a + XF + 0.55)});`);
@@ -259,12 +256,12 @@ for (const s of segs) {
   const s = S['B1-05'], a = s.start, b = r3(s.start + s.dur);
   const tChoose = findWord('B1-05', 'choose'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
   const cards = [0, 1, 2, 3].map((i) => `<div class="card c${i}"><i class="cchip"></i><i class="cstripe"></i></div>`).join('');
-  html.push(`<div id="hand" class="clip p3d" data-start="${a}" data-duration="${s.dur}" data-track-index="2" style="left:1200px;top:110px;width:600px;height:560px"><div class="float">${cards}<div class="tag glass"><span>their card.</span><em>your rate.</em><i class="sheen"></i></div></div></div>`);
+  html.push(`<div id="hand" class="clip p3d" data-start="${a}" data-duration="${s.dur}" data-track-index="2" style="left:1200px;top:110px;width:600px;height:560px"><div class="float">${cards}<div class="tagwrap"><div class="tag glass"><div class="body"><span>their card.</span><em>your rate.</em></div><i class="sheen"></i></div></div></div></div>`);
   [0, 1, 2, 3].forEach((i) => js.push(`tl.fromTo("#hand .c${i}", { autoAlpha: 0, y: 90, rotation: 0, x: 0, rotationY: 24, transformPerspective: 1400 }, { autoAlpha: 1, y: ${-i * 30}, x: ${i * 84}, rotation: ${-12 + i * 9}, rotationY: -6, duration: 0.55, ease: "back.out(1.4)", immediateRender: false }, ${r3(a + 0.1 + i * 0.08)});`));
   /* on "pocket" the last card comes forward and grows; the others sink */
   js.push(`tl.fromTo("#hand .c3", { x: 252, y: -90, rotation: 15, scale: 1, rotationY: -6 }, { x: 130, y: 30, rotation: 0, scale: 1.35, rotationY: 0, z: 120, duration: 0.6, ease: "power3.out", immediateRender: false }, ${tPocket});`);
   [0, 1, 2].forEach((i) => js.push(`tl.fromTo("#hand .c${i}", { autoAlpha: 1, y: ${-i * 30} }, { autoAlpha: 0.35, y: ${-i * 30 + 40}, duration: 0.5, ease: "power2.inOut", immediateRender: false }, ${tPocket});`));
-  js.push(`tl.fromTo("#hand .tag", { autoAlpha: 0, y: 30, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)", immediateRender: false }, ${r3(tRate - 0.1)});`);
+  js.push(`tl.fromTo("#hand .tagwrap", { autoAlpha: 0, y: 30, scale: 0.92 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.4)", immediateRender: false }, ${r3(tRate - 0.1)});`);
   js.push(`tl.fromTo("#hand .tag .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.0, ease: "power2.inOut", immediateRender: false }, ${r3(tRate + 0.2)});`);
   js.push(`tl.fromTo("#hand .float", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, ${r3(b - 0.3)});`);
   js.push(`tl.set("#hand .float", { autoAlpha: 0 }, ${b});`);
@@ -282,11 +279,11 @@ for (const s of segs) {
   const s = S['[END]'], a = s.start, d = s.dur;
   html.push(`<div id="end" class="clip card-full" data-start="${a}" data-duration="${d}" data-track-index="4">
   <div class="glow g1"></div><div class="glow g2"></div>
-  <div class="p3d" style="left:${(W - 1100) / 2}px;top:${(H - 520) / 2}px;width:1100px;height:520px"><div class="float"><div class="glass tglass" style="width:1100px;height:520px">
-    <div class="tstack end"><span class="wordmark"><b>Nero</b><em>Pay</em></span><span class="sub">Subscribe for more</span><span class="legal">Illustrative figures. No saving is guaranteed. NeroPay is a trading name of Nero Panda Ltd.</span></div><i class="sheen"></i></div></div></div></div>`);
+  <div class="p3d" style="left:${(W - 1100) / 2}px;top:${(H - 520) / 2}px;width:1100px;height:520px"><div class="float"><div class="idle"><div class="glass tglass" style="width:1100px;height:520px">
+    <div class="body tstack end"><span class="wordmark"><b>Nero</b><em>Pay</em></span><span class="sub">Subscribe for more</span><span class="legal">Illustrative figures. No saving is guaranteed. NeroPay is a trading name of Nero Panda Ltd.</span></div><i class="sheen"></i></div></div></div></div></div>`);
   js.push(`tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, ${a});`);
-  js.push(`tl.fromTo("#end .tglass", { autoAlpha: 0, rotationY: 22, z: -260, scale: 0.92, transformPerspective: 1800 }, { autoAlpha: 1, rotationY: 0, z: 0, scale: 1, duration: 0.9, ease: "power4.out", immediateRender: false }, ${r3(a + 0.25)});`);
-  js.push(`tl.fromTo("#end .float", { rotationY: 1.5, rotationX: -1, transformPerspective: 1800 }, { rotationY: -1.5, rotationX: 1, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 3, immediateRender: false }, ${r3(a + 0.25)});`);
+  js.push(`tl.fromTo("#end .float", { autoAlpha: 0, rotationY: 14, z: -200, scale: 0.94, transformPerspective: 1800 }, { autoAlpha: 1, rotationY: 0, z: 0, scale: 1, duration: 1.0, ease: "power4.out", immediateRender: false }, ${r3(a + 0.25)});`);
+  js.push(`tl.fromTo("#end .idle", { y: 0 }, { y: -6, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 3, immediateRender: false }, ${r3(a + 0.25)});`);
   js.push(`tl.fromTo("#end .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.5, ease: "power2.inOut", repeat: 1, repeatDelay: 2, immediateRender: false }, ${r3(a + 0.8)});`);
   js.push(`tl.fromTo("#end .wordmark", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, ${r3(a + 0.6)});`);
   js.push(`tl.fromTo("#end .sub", { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, ${r3(a + 0.85)});`);
@@ -323,30 +320,33 @@ const page = `<!doctype html>
 html,body{width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 body{font-family:Poppins,"Helvetica Neue",Arial,sans-serif;color:#fff;letter-spacing:-0.03em}
 #root{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:#141416}
-#world{position:absolute;inset:0;transform-origin:50% 50%;will-change:transform}
+#world{position:absolute;inset:0;transform-origin:50% 50%}
 video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:cover}
 .clip{position:absolute}
-.p3d{perspective:1600px}
-.float{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
-/* liquid glass */
-.glass{position:absolute;left:0;top:0;border-radius:34px;overflow:hidden;
-  background:linear-gradient(135deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.06) 40%,rgba(255,255,255,.04) 60%,rgba(255,255,255,.14) 100%);
-  -webkit-backdrop-filter:blur(26px) saturate(180%) brightness(1.06);backdrop-filter:blur(26px) saturate(180%) brightness(1.06);
-  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.62),inset 0 -1px 0 rgba(255,255,255,.14),inset 1px 0 0 rgba(255,255,255,.22),inset -1px 0 0 rgba(255,255,255,.10),0 40px 80px rgba(0,0,0,.42),0 6px 18px rgba(0,0,0,.28);
-  transform-style:preserve-3d;will-change:transform,opacity}
-.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 0 30px rgba(255,255,255,.06);
-  background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.22),transparent 55%),radial-gradient(80% 60% at 100% 100%,rgba(245,197,24,.10),transparent 60%)}
-.sheen{position:absolute;top:-20%;left:0;width:45%;height:140%;display:block;pointer-events:none;
-  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.05) 35%,rgba(255,255,255,.30) 50%,rgba(255,255,255,.05) 65%,transparent 100%);
-  mix-blend-mode:screen;will-change:transform}
+.p3d{position:absolute;perspective:1600px}
+.float{position:absolute;inset:0;transform-style:preserve-3d}
+.idle{position:absolute;inset:0}
+/* liquid glass — the blur sits on an oversized ::before (clipped by the panel) so the backdrop
+   dissolves at the edges instead of ending in a hard block; the tint is even so no patch of the
+   footage stays saturated; nothing on this element is ever transformed */
+.glass{position:absolute;left:0;top:0;border-radius:34px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.18) 45%,rgba(255,255,255,.16) 60%,rgba(255,255,255,.26) 100%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(255,255,255,.18),inset 1px 0 0 rgba(255,255,255,.26),inset -1px 0 0 rgba(255,255,255,.14),0 40px 80px rgba(0,0,0,.40),0 6px 18px rgba(0,0,0,.24)}
+.glass::before{content:"";position:absolute;inset:-60px;z-index:0;
+  -webkit-backdrop-filter:blur(34px) saturate(135%) brightness(1.02);backdrop-filter:blur(34px) saturate(135%) brightness(1.02)}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 0 30px rgba(255,255,255,.06);
+  background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.22),transparent 55%),radial-gradient(80% 60% at 100% 100%,rgba(245,197,24,.08),transparent 60%)}
+.glass .body{position:absolute;inset:0;z-index:3}
+.sheen{position:absolute;top:-20%;left:0;width:45%;height:140%;display:block;pointer-events:none;z-index:1;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.04) 35%,rgba(255,255,255,.20) 50%,rgba(255,255,255,.04) 65%,transparent 100%)}
 /* disclosure */
-.disc{position:absolute;inset:0;display:flex;align-items:center;gap:22px;padding:0 34px}
-.disc b{display:block;width:20px;height:20px;background:${Y};border-radius:5px;flex:none}
-.disc strong{display:block;font-size:34px;font-weight:700;line-height:1.05}
-.disc span{display:block;font-size:20px;font-weight:500;color:rgba(255,255,255,.92);margin-top:4px}
+.disc{display:flex;align-items:center;gap:18px;padding:0 28px}
+.disc b{display:block;width:14px;height:14px;background:${Y};border-radius:4px;flex:none}
+.disc strong{display:block;font-size:30px;font-weight:700;line-height:1.05}
+.disc span{display:block;font-size:17px;font-weight:500;color:rgba(255,255,255,.88);margin-top:3px;letter-spacing:0}
 /* hook chip */
-.chip{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px}
+.chip{display:flex;align-items:center;justify-content:center;gap:10px;height:100%}
 .chip .big{display:block;font-size:104px;font-weight:800;letter-spacing:-0.05em;line-height:1}
 .chip .q{display:block;font-size:104px;font-weight:800;font-style:italic;color:${Y};line-height:1;transform-origin:50% 60%}
 .chip .strike{position:absolute;left:52px;top:50%;width:296px;height:10px;margin-top:-5px;display:block;background:${Y};border-radius:5px;transform-origin:0 50%}
@@ -354,7 +354,7 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
 .card{position:absolute;left:40px;top:180px;width:300px;height:190px;border-radius:26px;display:block;transform-origin:50% 100%;
   background:linear-gradient(135deg,rgba(255,255,255,.26),rgba(255,255,255,.08) 45%,rgba(255,255,255,.16));
   -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
-  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.18),0 30px 60px rgba(0,0,0,.4);will-change:transform,opacity}
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.18),0 30px 60px rgba(0,0,0,.4)}
 .card .cchip{position:absolute;left:28px;top:28px;width:56px;height:42px;border-radius:9px;display:block;background:linear-gradient(135deg,${Y},#c99a0a)}
 .card .cstripe{position:absolute;left:0;right:0;bottom:44px;height:26px;display:block;background:rgba(20,20,22,.55)}
 .card.c1 .cchip{background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,.5))}
@@ -362,20 +362,15 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
 .card.c3 .cchip{background:linear-gradient(135deg,#ffd27a,${Y})}
 #hand .tag{left:60px;top:440px;width:470px;height:104px;border-radius:26px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:38px;font-weight:600}
 #hand .tag em{font-style:italic;font-weight:800;color:${Y}}
-/* lower third */
-.lower{position:absolute;inset:0;display:flex;align-items:center;gap:26px;padding:0 36px}
-.mark{display:block;font-size:52px;font-weight:800;letter-spacing:-0.05em;line-height:1}
-.mark b{font-weight:800}.mark em,.wordmark em{font-style:normal;color:${Y}}
-.lower .sub{display:block;font-size:26px;font-weight:500;color:rgba(255,255,255,.82);padding-left:26px;border-left:2px solid rgba(255,255,255,.28)}
 /* table */
-.table{position:absolute;inset:0;padding:36px 44px;display:flex;flex-direction:column;gap:8px}
+.table{height:100%;padding:36px 44px;display:flex;flex-direction:column;gap:8px}
 .th{display:block;font-size:24px;font-weight:500;letter-spacing:0.02em;color:rgba(255,255,255,.88);margin-bottom:12px}
 .table .row{display:flex;align-items:center;justify-content:space-between;height:84px;padding:0 24px;border-radius:18px;font-size:36px;font-weight:600}
 .table .row span{display:block}
 .table .row b{display:block;font-size:42px;font-weight:800;letter-spacing:-0.04em;transform-origin:100% 50%}
 .table .row.debit b{color:${Y}}
 /* ladder */
-.ladder{position:absolute;inset:0;padding:36px 44px 30px}
+.ladder{position:relative;height:100%;padding:36px 44px 30px}
 .bars{position:absolute;left:44px;right:44px;top:100px;bottom:30px;display:flex;align-items:flex-end;justify-content:space-between;gap:22px}
 .bar{position:relative;flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
 .bar i{display:block;width:100%;background:rgba(255,255,255,.6);border-radius:16px 16px 8px 8px;transform-origin:50% 100%;box-shadow:inset 0 2px 0 rgba(255,255,255,.7)}
@@ -390,8 +385,8 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
 .glow{position:absolute;width:1200px;height:1200px;border-radius:50%;display:block;filter:blur(40px);pointer-events:none}
 .glow.g1{left:-300px;top:-450px;background:radial-gradient(circle,rgba(245,197,24,.28),transparent 62%)}
 .glow.g2{right:-400px;bottom:-500px;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 62%)}
-.tglass{display:flex;align-items:center;justify-content:center}
-.tstack{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+
+.tstack{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
 .kicker{display:block;font-size:30px;font-weight:500;letter-spacing:0.38em;color:rgba(255,255,255,.7);padding-left:0.38em}
 .wordmark{display:block;font-size:210px;font-weight:800;letter-spacing:-0.05em;line-height:1}
 .tstack .ep{display:block;font-size:54px;font-weight:600;font-style:italic;letter-spacing:-0.03em;color:rgba(255,255,255,.92)}
@@ -401,7 +396,7 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
 /* captions: no plate, tight Poppins, yellow on the spoken word */
 .cap{left:0;right:0;width:${W}px;bottom:118px;display:flex;justify-content:center;pointer-events:none}
 .cap .line{max-width:1500px;text-align:center;font-size:56px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;
-  text-shadow:0 2px 6px rgba(0,0,0,.7),0 0 2px rgba(0,0,0,.5),0 12px 34px rgba(0,0,0,.55);will-change:transform,opacity;text-wrap:balance}
+  text-wrap:balance}
 .cap .w{display:inline-block;color:rgba(255,255,255,.8);transform-origin:50% 60%;margin:0 0.03em}
 .cap .w.em{font-style:italic;font-weight:800;font-size:1.06em}
 </style>
