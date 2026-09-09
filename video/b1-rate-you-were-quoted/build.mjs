@@ -215,7 +215,7 @@ for (const s of segs) {
   const s = S['B1-03'], a = s.start, b = r3(s.start + s.dur);
   const tAdv = findWord('B1-03', 'advertised'), tDebit = findWord('B1-03', 'debit'), tCheap = findWord('B1-03', 'cheapest');
   const rows = [['Consumer debit', '0.50%', 'debit'], ['Consumer credit', '1.20%'], ['Business / commercial', '2.60%'], ['American Express', '1.75%'], ['International / non-UK', '2.90%']];
-  const tx = 1080, ty = 150, tw = 760, th = 560;
+  const tx = 1130, ty = 150, tw = 720, th = 560;
   glass('table', { start: r3(tAdv - 0.2), dur: r3(b - tAdv + 0.2), x: tx, y: ty, w: tw, h: th, enterFrom: 24,
     inner: `<div class="table"><span class="th">the advertised rate</span>${rows.map(([n, v, c]) => `<div class="row${c ? ' ' + c : ''}"><span>${n}</span><b>${v}</b></div>`).join('')}</div>` });
   rows.forEach((_, i) => js.push(`tl.fromTo("#table .row:nth-of-type(${i + 1})", { autoAlpha: 0, x: 40 }, { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out", immediateRender: false }, ${r3(tAdv + 0.25 + i * 0.09)});`));
@@ -237,7 +237,7 @@ for (const s of segs) {
   const s = S['B1-04'], a = s.start, b = r3(s.start + s.dur);
   const tCredit = findWord('B1-04', 'credit'), tCompany = findWord('B1-04', 'company'), tAmex = findWord('B1-04', 'amex'), tOver = findWord('B1-04', 'overseas'), tMost = findWord('B1-04', 'most');
   const bars = [['Debit', '0.50%', 0.18, a + 0.05], ['Credit', '1.20%', 0.42, tCredit + 0.15], ['Business', '2.60%', 0.86, tCompany + 0.1], ['Amex', '1.75%', 0.6, tAmex + 0.1], ['Overseas', '2.90%', 0.96, tOver + 0.1]];
-  const lx = 1060, ly = 130, lw = 790, lh = 640;
+  const lx = 1110, ly = 130, lw = 750, lh = 640;
   glass('ladder', { start: a, dur: s.dur, x: lx, y: ly, w: lw, h: lh, enterFrom: 24,
     inner: `<div class="ladder"><span class="th">what each card costs</span><div class="bars">${bars.map(([n, v, h], i) => `<div class="bar b${i}"><b style="bottom:calc(${Math.round(h * 100)}% + 58px)">${v}</b><i style="height:${Math.round(h * 100)}%"></i><span>${n}</span></div>`).join('')}</div></div>` });
   bars.forEach(([, , , when], i) => {
