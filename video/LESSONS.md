@@ -3,6 +3,26 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 9 Sep 2026 — rendering the full B1 edit on the real clips
+
+16. **4K source clips crash the check and the snapshot.** Higgsfield exports are 3840×2160; with nineteen of
+    them on the page the Chrome capture dies ("video frame injection failed … Target closed") and
+    `hyperframes check` reports one runtime error with no message. Rule: transcode every clip to a 1080p
+    proxy (`scale=1920:1080`, 24 fps, crf 16, audio kept) before build, check, snapshot or render. The
+    composition renders at 1080p, so nothing is lost.
+17. **The sandbox is ephemeral — keep the rebuild in the repo.** The Higgsfield sandbox was recycled between
+    the check and the render and everything in it went (clips, node, hyperframes, transcripts). Rule: the
+    clip-to-CDN mapping lives in `data/sources.json` and `sandbox.sh` rebuilds the whole environment from a
+    clean box in one run. Never keep state only in the sandbox.
+18. **Warm footage needs darker glass.** On Ava's set (wood, lamps) the panels at brightness .6 left small
+    labels below 3:1. Rule: the blur layer runs `brightness(.52)`; check the contrast report on real
+    footage, not on the grey placeholders.
+19. **Long sandbox work runs with `background:true`, never `nohup`.** The sandbox is discarded about ten
+    seconds after a foreground call returns; only a background call holds a 15-minute lease (renew it with
+    another background call before it lapses). The tool call times out at 60 s and its output truncates
+    around 20K characters, so stills come back as ≤14.5K-character base64 chunks decoded locally from the
+    session log.
+
 ## 9 Sep 2026 — full B1 edit, Faisal's notes on v2
 
 11. **No on-screen "AI" wording.** Faisal's decision, given after the risk was explained: the name plate reads
