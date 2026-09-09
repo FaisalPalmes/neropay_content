@@ -350,7 +350,7 @@ const LX = 50;               // left column — where she points
 {
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
-  const HX = 1120, HY = 60, c0 = r3(Math.max(a, tWhat - 0.3));
+  const HX = 1120, HY = 20, c0 = r3(Math.max(a, tWhat - 0.3));
   html.push(`<div id="hand" class="space" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
   <div id="bigline" class="bigline"><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
   [0, 1, 2, 3].forEach((i) => {
@@ -374,7 +374,7 @@ const LX = 50;               // left column — where she points
   js.push(`tl.set("${leaves('#hand .card')}", { opacity: 0 }, ${b});`);
   js.push(`tl.set("#bigline .b1, #bigline .b2", { autoAlpha: 0 }, ${b});`);
   js.push(`tl.set("#hand .card", { autoAlpha: 0 }, ${b});`);
-  const f1 = focus(1.1, 1480, 420), f2 = focus(1.18, 1500, 460);
+  const f1 = focus(1.08, 1480, 420), f2 = focus(1.12, 1500, 420);
   chain('B1-05', [{ t: a, c: flat(1.0) }, { t: c0 + 0.8, c: f1, ease: 'power2.out' }, { t: tPocket + 0.6, c: f2, ease: 'power3.out' }, hold(b, f2)]);
 }
 
@@ -734,7 +734,7 @@ b.y,.y{color:${Y}}
 .card .crim{position:absolute;inset:0;display:block;border-radius:26px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.12)}
 .card.k3 .crim{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(0,0,0,.08)}
 /* two big lines of type beside the cards, no glass */
-.bigline{position:absolute;left:1150px;top:640px;width:740px;display:flex;flex-direction:column;gap:6px}
+.bigline{position:absolute;left:1150px;top:500px;width:740px;display:flex;flex-direction:column;gap:6px}
 .bigline span{display:block;font-size:76px;font-weight:800;letter-spacing:-0.045em;line-height:1.05;text-shadow:0 10px 34px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.35);transform-origin:0 50%}
 .bigline .b2{color:${Y};font-style:italic}
 /* ladder: one bar per card, the named one yellow, the rest grey */
