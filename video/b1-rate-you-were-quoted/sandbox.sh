@@ -39,6 +39,6 @@ node build.mjs | tail -3
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json
 mkdir -p renders
 "$HF" render -q "${QUALITY:-high}" -o renders/b1-high.mp4 --quiet
-ffmpeg -y -v error -i renders/b1-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:v copy -c:a aac -b:a 192k renders/b1-final.mp4
+ffmpeg -y -v error -i renders/b1-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k renders/b1-final.mp4
 ffprobe -v error -show_entries format=duration,size -of csv=p=0 renders/b1-final.mp4
 echo BOOT_DONE
