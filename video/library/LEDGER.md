@@ -24,7 +24,8 @@ before it goes into a build.
 
 1. Download it from a source whose licence you can quote (Pixabay: no attribution; Freesound: check the
    file's own Creative Commons licence, CC0 is the safe one). `resolve-freesound.mjs` in this folder does
-   the Freesound search and download with a token and writes the ledger line for you.
+   the Freesound search and download and writes the ledger line for you. It reads the token from
+   `library/.env` (`FREESOUND_TOKEN=...`), which is git-ignored — Faisal holds the key.
 2. Drop the file in `sfx/` or `bgm/`, add a line here with the source URL and licence.
 3. Copy it into the project's `assets/` folder and reference it from the build. Never load it from
    the network in a composition.

@@ -2,3 +2,7 @@
 node_modules/
 .vercel
 *.log
+
+# local secrets (API tokens for the sound library) — never committed
+video/library/.env
+.env
