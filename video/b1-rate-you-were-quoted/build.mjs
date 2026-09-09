@@ -114,11 +114,17 @@ function countUp(sel, to, when, { from = 0, dur: d = 0.9, prefix = '', suffix = 
   ${v}f();
   tl.fromTo(${v}, { n: ${from} }, { n: ${to}, duration: ${d}, ease: "power2.out", onUpdate: ${v}f, immediateRender: false }, ${r3(when)});`);
 }
+/* Sound effects come from video/library/sfx (Pixabay Content Licence, see library/LEDGER.md); the files
+   used are copied into assets/sfx so the project stays self-contained. Names here are the cue's role. */
+const SFXFILE = { whoosh: 'whoosh-short.mp3', pop: 'pop.mp3', rise: 'sparkle.mp3', tick: 'click-soft.mp3' };
+const SFXGAIN = { pop: 1.5, tick: 1.6 };   // the pack's pop and click sit ~10 dB under the old tones
 const SFXDUR = {}; let sfxN = 0;
 function sfx(name, start, vol) {
+  const file = SFXFILE[name]; if (!file) throw new Error('no sfx mapped for ' + name);
   const id = 'sfx-' + name + '-' + Math.round(start * 100);
-  if (!SFXDUR[name]) SFXDUR[name] = dur(path.join(HERE, 'assets/sfx', name + '.wav'));
-  audio.push(`<audio id="${id}" src="assets/sfx/${name}.wav" data-start="${r3(start)}" data-duration="${SFXDUR[name]}" data-track-index="${12 + (sfxN++)}" data-volume="${vol}"></audio>`);
+  if (!SFXDUR[name]) SFXDUR[name] = dur(path.join(HERE, 'assets/sfx', file));
+  const v = Math.min(1, +(vol * (SFXGAIN[name] || 1)).toFixed(3));
+  audio.push(`<audio id="${id}" src="assets/sfx/${file}" data-start="${r3(start)}" data-duration="${SFXDUR[name]}" data-track-index="${12 + (sfxN++)}" data-volume="${v}"></audio>`);
 }
 
 /* ---------- camera ---------- */

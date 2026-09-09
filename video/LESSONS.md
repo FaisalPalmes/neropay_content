@@ -3,6 +3,16 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 9 Sep 2026 — sound
+
+20. **Sound effects come from `video/library/`, never synthesised on the fly.** B1's first cut used five
+    tones generated with ffmpeg because nothing else was to hand. Rule: every effect or music bed is a
+    file in `video/library/` with a line in `library/LEDGER.md` (source URL, licence, attribution if
+    any). The bundled Pixabay pack is the default palette; Freesound through `resolve-freesound.mjs`
+    when the pack misses (CC0 only unless told otherwise). Copy the file into the project's `assets/`
+    and reference it locally. Pixabay's API has no audio endpoint, so its music and effects are
+    downloaded by hand from the site.
+
 ## 9 Sep 2026 — rendering the full B1 edit on the real clips
 
 16. **4K source clips crash the check and the snapshot.** Higgsfield exports are 3840×2160; with nineteen of
