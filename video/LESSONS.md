@@ -3,6 +3,34 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 9 Sep 2026 — v5, Faisal's third review (flicker, the hard line, the blur edge, the yellow flash)
+
+27. **The glass is no longer a `backdrop-filter`.** Even with #22 applied, Chrome re-rasterises a backdrop
+    blur under any transform on the panel, so the blur edge drifted off the frame edge during the lean and
+    the scale-based unfold, the fold-away exit ended on a thin bright slab (the "hard solid line"), and the
+    content faded before the blur did. Rule: every panel carries its own copy of the footage — cut.mjs
+    writes a 480×270 gaussian-blurred `<id>.blur.mp4` beside each cut clip, and `bgFor()` in build.mjs
+    places it inside the panel at `left:-x; top:-y` so it lines up with the frame, clipped by the panel's
+    own rounded box. The blur edge *is* the panel edge, on every frame, under any transform; the whole slab
+    (blur, tint, rim, content) fades as one thing; and nothing above it is off limits any more — opacity,
+    3D rotation, preserve-3d all safe. A timed `<video>` may not sit inside a timed element, so the panel
+    wrapper is an untimed div (`.panel`) and the `.float` is hidden by CSS until its first tween.
+28. **Cards are small glass slabs in the same way.** Eight `translateZ` layers behind the face give them a
+    body you see on the turned side; the face carries its own blurred copy under a dense frost with a lit
+    gradient (bright top-left, cooler bottom-right), a metal chip, one static highlight, a rim, no shadow.
+    Exits are one fade with a small drift — never a sink into depth, which reads as a jump.
+29. **Empty first, then 3D.** A panel arrives flat and empty (a fade and a small rise) a beat before she gets
+    to it; at `cueAt` — the moment she starts on the graphic — the heading rises, the slab leans and the
+    camera zooms, together (`glass({cueAt})` plus a `chain()` whose first zoom lands at `cueAt + 0.9`).
+    Data still arrives on its own words. A row that is not spoken yet is not on screen — the sum panel's
+    arrow was visible from the start in v4 because `.arrowwrap` lacked `.cue`.
+30. **A colour never changes on a wordmark.** The title and end cards tweened "Pay" from ink to yellow on
+    landing; Faisal saw it as the yellow flashing. "Pay" is `#F5C518` from its first frame. The only colour
+    tweens left are the ladder's yellow-to-grey hand-off and the strike-through dimming 0.5%, both slow.
+31. **The outro is minimal.** Six generic labels (Payment Terminal, Free POS Software, Online Ordering
+    System, Booking System, QR Payments, API for Ecommerce), one tile per two beats, one fade in and one
+    fade out each, no product names, no wipes. No AI wording anywhere in the video (rail 4).
+
 ## 9 Sep 2026 — the re-cut (Faisal's second review of the full edit)
 
 21. **The idle bob is gone.** A blurred panel that drifts re-samples its backdrop every frame, which reads
