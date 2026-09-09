@@ -2,3 +2,6 @@ node_modules/
 out/
 *.log
 .hyperframes/
+**/assets/clips/
+**/snapshots/
+**/renders/
