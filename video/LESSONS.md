@@ -3,6 +3,21 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 10 Sep 2026 — v6, Faisal's fourth review (the inner rectangle, the card jump, less glass)
+
+32. **Opacity flattens a 3D group.** The cards "teleported" on their way out because the exit faded
+    `.orbit`, and any opacity below 1 on a `preserve-3d` element forces it flat for that frame, so the
+    fanned cards snapped into one plane at the first frame of the fade. Rule: opacity only ever moves
+    on leaves with no 3D children (`.face`, `.edge`); groups and cards move by transform only. The same
+    goes for `filter` — a drop shadow on a 3D card goes on the face as `box-shadow`.
+33. **No decoration inside the glass.** A masked gradient ring drawn 26 px inside the panel edge read
+    as a second, harder box under the glass, on every panel and every card. The glass is one slab: the
+    blurred copy, an even tint, a thin edge highlight. Nothing drawn inset from the edge.
+34. **Not everything is a panel.** A phrase she says ("their card. your rate.") is big type on the
+    footage with a soft shadow, not another box. Panels carry data; type carries emphasis.
+35. **Cut a line, keep the joins.** `edit.json` `endAtWord` drops a clip's tail after a word, cut.mjs
+    remaps, and every later cue moves with the timeline because cues come from words, not seconds.
+
 ## 9 Sep 2026 — v5, Faisal's third review (flicker, the hard line, the blur edge, the yellow flash)
 
 27. **The glass is no longer a `backdrop-filter`.** Even with #22 applied, Chrome re-rasterises a backdrop
