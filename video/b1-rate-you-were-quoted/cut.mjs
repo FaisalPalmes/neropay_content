@@ -26,6 +26,10 @@ const EDIT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/edit.json'), 'utf8
 const dur = (f) => parseFloat(execFileSync(ffprobe, ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString());
 const filters = execFileSync(ffmpeg, ['-hide_banner', '-filters']).toString();
 const hasFade = /\bafade\b/.test(filters);
+/* the blurred copy every glass panel shows through itself (build.mjs, bgFor): 480×270, gaussian blur, no audio.
+   The web container's ffmpeg has no blur filter, so there it is a 96×54 copy and the page blurs it with CSS */
+const blurVf = /\bgblur\b/.test(filters) ? 'scale=480:270:flags=lanczos,gblur=sigma=11:steps=2' : /\bboxblur\b/.test(filters) ? 'scale=480:270:flags=lanczos,boxblur=10:2' : 'scale=96:54:flags=area';
+const blurCopy = (src) => execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', src, '-vf', blurVf, '-an', '-c:v', 'libx264', '-preset', 'fast', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', src.replace(/\.mp4$/, '.blur.mp4')]);
 const placeholder = process.argv.includes('--placeholder') || !/\bsetpts\b/.test(filters);
 const LAST = 'B1-18';
 
@@ -65,9 +69,10 @@ for (const id of Object.keys(WORDS)) {
   });
   const graph = parts.join(';') + ';' + labels.join('') + `concat=n=${keep.length}:v=1:a=1[v][a]`;
   const out = path.join(HERE, 'assets/cut', id + '.mp4');
-  if (placeholder) { execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', src, '-t', String(total), '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '28', '-c:a', 'aac', '-b:a', '96k', out]); continue; }
-  execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', src, '-filter_complex', graph, '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'fast', '-crf', '16', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out]);
+  if (placeholder) execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', src, '-t', String(total), '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '28', '-c:a', 'aac', '-b:a', '96k', out]);
+  else execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', src, '-filter_complex', graph, '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'fast', '-crf', '16', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out]);
+  blurCopy(out);
 }
 if (!dry) fs.writeFileSync(path.join(HERE, 'data/cuts.json'), JSON.stringify(cuts, null, 1));
 const tot = Object.values(cuts).reduce((s, c) => s + c.removed, 0);
-console.log((placeholder && !dry ? 'PLACEHOLDER clips written — ' : '') + (dry ? 'plan: ' : 'cut: ') + r3(tot) + 's of dead air removed across ' + Object.keys(cuts).length + ' clips' + (hasFade ? '' : ' (no afade in this ffmpeg — cuts are unfaded)'));
+console.log((placeholder && !dry ? 'PLACEHOLDER clips written — ' : '') + (dry ? 'plan: ' : 'cut: ') + r3(tot) + 's of dead air removed across ' + Object.keys(cuts).length + ' clips' + (hasFade ? '' : ' (no afade in this ffmpeg — cuts are unfaded)') + (/gblur|boxblur/.test(blurVf) ? '' : ' (no blur filter — tiny copies, CSS blurs them)'));

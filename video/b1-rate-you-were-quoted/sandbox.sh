@@ -9,7 +9,8 @@ REPO=https://github.com/faisalpalmes/neropay_content
 PROJECT=video/b1-rate-you-were-quoted
 mkdir -p "$ROOT"/clips "$ROOT"/proxies
 cd "$ROOT"
-[ -d repo ] || git clone -q --depth 1 "$REPO" repo
+BRANCH=${BRANCH:-main}
+[ -d repo ] || git clone -q --depth 1 -b "$BRANCH" "$REPO" repo
 ( cd repo && git checkout -q -- . && git pull -q )
 SRC="$ROOT/repo/$PROJECT/data/sources.json"
 BASE=$(node -e 'console.log(require(process.argv[1]).base)' "$SRC")
