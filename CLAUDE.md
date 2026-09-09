@@ -24,6 +24,9 @@ Facebook profile (21 Aug 2026). Refuse and explain if asked to cross one.
    named in copy.
 4. **AI-generated presenters carry an on-screen disclosure in the first three seconds.**
    ASA guidance 22 June 2026; EU AI Act Article 50, in force since 2 August 2026.
+   *Faisal's decision, 9 Sep 2026: no AI wording inside the video itself. The disclosure is made at
+   upload instead — YouTube's "altered or synthetic content" setting plus a line in the description.
+   Raise it once per new series, then follow the decision.*
 5. **Every competitor figure carries a date and is screenshotted.** Current register is dated
    18 August 2026 — see `generation-pack.md`. Don't invent or update competitor prices.
 6. **No merchant named without written consent.** Currently only the Armenian Taverna shoot is

@@ -3,6 +3,23 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 9 Sep 2026 — full B1 edit, Faisal's notes on v2
+
+11. **No on-screen "AI" wording.** Faisal's decision, given after the risk was explained: the name plate reads
+    "Ava / NeroPay" and no generated video carries an AI line. The disclosure moves to the upload: tick
+    YouTube's "altered or synthetic content" setting and keep a line in the description. Root CLAUDE.md
+    rail 4 carries the same note.
+12. **Figures are yellow, labels are white.** Every number she says is the thing the viewer should look at,
+    so it is `#F5C518`, counts up as she says it, and nothing else on the panel competes with it.
+13. **Cards live in a real 3D space.** No blur on the cards themselves (blur and 3D rotation must not share
+    an element), a perspective parent with `preserve-3d`, a slow orbit on the group, and a container big
+    enough that nothing clips at the edge.
+14. **Whisper is the script.** Ava's take can differ from the pack (shot 9 says "the payout fee", shot 18 has
+    a different close). Cues come from the transcript, never from the script text, and any on-screen copy
+    that quotes her must match what she actually said.
+15. **Tall panels meet the captions once the camera zooms.** Keep a panel's bottom at or above y=800 on the
+    1920×1080 frame and cap the push on it at about 1.18×.
+
 ## 9 Sep 2026 — B1 glass edit, Faisal's review of the first render
 
 1. **Title card panel stuck top-left.** The panel wrapper had `left/top` but no `position:absolute`, so the
