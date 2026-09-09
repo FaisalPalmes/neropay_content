@@ -15,10 +15,10 @@ whoosh, whoosh-short, whoosh-cinematic.
 Used in B1 (copied into `b1-rate-you-were-quoted/assets/sfx/`): whoosh-short (panel entrances),
 pop (chips and tags), sparkle (bars rising), click-soft (checklist).
 
-## bgm/ — nothing yet
+## bgm/ — the B1 intro and outro bed
 
-No music bed is in use. When one is added, list it here with source, licence and any attribution line
-before it goes into a build.
+"Tropicorp Advertisement" by Nancy_Sinclair, CC0, https://freesound.org/apiv2/sounds/561190/ — 82 bpm; the
+build cuts it into `music-intro` (5.4 s) and `music-outro` (18.6 s) with baked fades.
 
 ## How to add a sound
 
@@ -29,3 +29,15 @@ before it goes into a build.
 2. Drop the file in `sfx/` or `bgm/`, add a line here with the source URL and licence.
 3. Copy it into the project's `assets/` folder and reference it from the build. Never load it from
    the network in a composition.
+
+## Freesound picks used by B1 (CC0 1.0, fetched by `fetch-sounds.mjs` from `sounds.json`)
+
+- `whoosh` — "Woosh" by Anthousai, 1.72s, https://freesound.org/apiv2/sounds/683096/ — panel entrance — airy, long tail
+- `swish` — "digital_whoosh_soft" by Halleck, 0.95s, https://freesound.org/apiv2/sounds/71852/ — bar rising, a row sliding in
+- `pop` — "Pop in sfx" by BaggoNotes, 0.56s, https://freesound.org/apiv2/sounds/824189/ — a chip, tag or card appearing
+- `tick` — "Soft UI Button Click" by Erokia, 0.24s, https://freesound.org/apiv2/sounds/528561/ — a checklist item, a small change
+- `chime` — "snd_fragment_retrieve" by Kastenfrosch, 1.7s, https://freesound.org/apiv2/sounds/562196/ — the highlight figure landing
+- `riser` — "Cinematic Riser #3 subtle" by Pixabay (mirror), 3.0s, https://freesound.org/apiv2/sounds/859482/ — into the title card — crests at the end
+- `impact` — "Impact Hit at soft but big material" by Nox_Sound, 1.34s, https://freesound.org/apiv2/sounds/728515/ — title and end card landing
+- `bounce` — "Energy Bounce 1" by Aleks41, 1.21s, https://freesound.org/apiv2/sounds/523088/ — the 'more than double' tag
+- `music` — "Tropicorp Advertisement" by Nancy_Sinclair, 37.65s, https://freesound.org/apiv2/sounds/561190/ — intro and outro beats — corporate, claps, bright

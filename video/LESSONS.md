@@ -3,6 +3,32 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 9 Sep 2026 — the re-cut (Faisal's second review of the full edit)
+
+21. **The idle bob is gone.** A blurred panel that drifts re-samples its backdrop every frame, which reads
+    as shimmer. Panels enter, hold still, and leave. One sheen pass on entrance.
+22. **Three things blind the glass, and all three were in the build.** Under HyperFrames' Chrome a
+    `backdrop-filter` goes dead when any ancestor has `transform-style: preserve-3d`, an opacity below 1,
+    or a clip-path. This was the root of every glass complaint since v1: the panels were tinted boxes
+    with a crisp backdrop (the "sticker") and the blur popped in and out with every fade (the "flicker").
+    Rules: nothing above a `.glass` carries preserve-3d; the panel wrapper is never faded or clipped — it
+    unfolds with a 2D scale from its entering edge while it leans into place, folds down on exit, and only
+    the content (a child of the glass) fades. Plain transforms, 3D rotations included, are safe. The cards
+    keep their real 3D space because they have no backdrop blur at all. Test: snapshot a panel over text
+    at rest, mid-entrance and mid-exit — the text behind must be unreadable in all three.
+
+23. **Nothing is on screen before she says it.** Every cued element carries `.cue` (hidden in CSS) and is
+    revealed by a fromTo; a fromTo alone leaves the element visible until its start time because
+    HyperFrames renders frames in order.
+24. **The left column sits over the whiteboard.** Panels there use `.glass.dark` (brightness .36 and a
+    charcoal tint) so white and yellow type still clear contrast.
+25. **A panel-aware focus.** `pf(id, S, px, py)` raises the focus point so the panel's bottom edge never
+    drops into the caption zone at any zoom; camera runs inside a clip go through `chain()`, which clamps
+    every point to the clip and never runs backwards.
+26. **Dead air is cut with `cut.mjs`, not by hand.** Gaps longer than 0.6 s between Whisper words shrink
+    to 0.38 s, heads and tails are trimmed; the word timings are remapped. Faded audio cuts need the full
+    ffmpeg (the sandbox); the web container only writes placeholder lengths.
+
 ## 9 Sep 2026 — sound
 
 20. **Sound effects come from `video/library/`, never synthesised on the fly.** B1's first cut used five

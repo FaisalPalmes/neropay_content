@@ -32,6 +32,8 @@ mkdir -p "repo/$PROJECT/assets/clips" && cp proxies/*.mp4 "repo/$PROJECT/assets/
 cd "repo/$PROJECT"
 export HYPERFRAMES_SKIP_SKILLS=1
 HF="$ROOT/repo/video/node_modules/.bin/hyperframes"
+node ../library/fetch-sounds.mjs --into assets/sfx        # needs FREESOUND_TOKEN in the environment
+node cut.mjs | tail -3                                      # real cuts from the proxies, with faded audio joins
 node build.mjs | tail -3
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json
