@@ -330,10 +330,10 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
    dissolves at the edges instead of ending in a hard block; the tint is even so no patch of the
    footage stays saturated; nothing on this element is ever transformed */
 .glass{position:absolute;left:0;top:0;border-radius:34px;overflow:hidden;isolation:isolate;
-  background:linear-gradient(135deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.18) 45%,rgba(255,255,255,.16) 60%,rgba(255,255,255,.26) 100%);
+  background:linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.09) 45%,rgba(255,255,255,.08) 60%,rgba(255,255,255,.15) 100%);
   box-shadow:inset 0 1.5px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(255,255,255,.18),inset 1px 0 0 rgba(255,255,255,.26),inset -1px 0 0 rgba(255,255,255,.14),0 40px 80px rgba(0,0,0,.40),0 6px 18px rgba(0,0,0,.24)}
 .glass::before{content:"";position:absolute;inset:-60px;z-index:0;
-  -webkit-backdrop-filter:blur(34px) saturate(135%) brightness(1.02);backdrop-filter:blur(34px) saturate(135%) brightness(1.02)}
+  -webkit-backdrop-filter:blur(34px) saturate(125%) brightness(.62);backdrop-filter:blur(34px) saturate(125%) brightness(.62)}
 .glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 0 30px rgba(255,255,255,.06);
   background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.22),transparent 55%),radial-gradient(80% 60% at 100% 100%,rgba(245,197,24,.08),transparent 60%)}
@@ -393,7 +393,8 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
 .tstack.end .wordmark{font-size:150px}
 .tstack .sub{display:block;font-size:52px;font-weight:600}
 .tstack .legal{display:block;max-width:900px;font-size:24px;font-weight:500;color:rgba(255,255,255,.62);margin-top:26px;letter-spacing:0}
-/* captions: no plate, tight Poppins, yellow on the spoken word */
+#floor{position:absolute;left:0;right:0;bottom:0;height:300px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
+/* captions: no plate, no shadow, tight Poppins, yellow on the spoken word */
 .cap{left:0;right:0;width:${W}px;bottom:118px;display:flex;justify-content:center;pointer-events:none}
 .cap .line{max-width:1500px;text-align:center;font-size:56px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;
   text-wrap:balance}
@@ -406,6 +407,7 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
   <div id="world">
 ${html.filter((h) => !/class="clip cap"/.test(h)).map((h) => '    ' + h).join('\n')}
   </div>
+  <div id="floor"></div>
 ${html.filter((h) => /class="clip cap"/.test(h)).map((h) => '  ' + h).join('\n')}
 ${audio.map((a) => '  ' + a).join('\n')}
 </div>
