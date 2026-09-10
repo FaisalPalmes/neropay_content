@@ -3,7 +3,9 @@
 > **NeroPay note.** This container cannot reach CDNs: load GSAP from `vendor/gsap.min.js` (already vendored),
 > never from jsdelivr. Fonts come from `@fontsource/*` or a local file. Brand: Poppins, `#F5C518` yellow as an
 > accent on charcoal, "Nero" white / "Pay" yellow. Never put a terminal price or transaction rate on screen.
-> Deliver renders through the Higgsfield media upload, not Google Drive. Read the repo's root `CLAUDE.md` first.
+> Deliver renders through the Higgsfield media upload, not Google Drive. Read the repo's root `CLAUDE.md` first,
+> then `PLAYBOOK.md` (the brief: Faisal's standards, the three delivery formats, the sandbox pipeline) and
+> `LESSONS.md` (the fault log) in this folder.
 
 ## Skills — USE THESE FIRST
 

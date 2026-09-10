@@ -84,7 +84,7 @@ from here, and folder uploads silently fail there.
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
-| `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/CLAUDE.md` is HyperFrames' own guide | Yes — one folder per piece inside it |
+| `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide | Yes — one folder per piece inside it |
 | `.claude/` | Skills (the HyperFrames pack, committed so every session has it) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
 
 The two subfolders are deliberate; everything else stays flat.
@@ -202,8 +202,11 @@ Rules that come from this environment, not from HyperFrames:
   `npm install` in `video/`, curl the clips into `assets/clips/`, `node build.mjs`, `npx hyperframes render`),
   loudnorm to -14 LUFS with ffmpeg, PUT to a `media_upload` URL, `media_confirm`. Identify a clip from a
   Higgsfield generation by matching Content-Length to the file size Faisal uploaded.
-- **Read `video/LESSONS.md` before any edit and add to it after every review.** It is the log of faults
-  Faisal has caught and the rule that prevents each one.
+- **Read `video/PLAYBOOK.md` and `video/LESSONS.md` before any edit.** The playbook is the standing brief —
+  Faisal's standards and the words they use for each fault, the rails as they apply to a frame, the three
+  delivery formats (16:9 master, 9:16 Reels/TikTok, 4:5 Meta ad), the sandbox pipeline and the review loop.
+  LESSONS.md is the log of faults Faisal has caught and the rule that prevents each one — add to it after
+  every review.
 - `video/b1-rate-you-were-quoted/` is the reference build: `build.mjs` generates `index.html` from
   `data/words.json` (Whisper timings), `data/edit.json` (trims) and the clips on disk. Copy its
   patterns — liquid-glass panels, the clamped virtual camera, per-word captions — for the next piece.

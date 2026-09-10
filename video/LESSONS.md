@@ -2,6 +2,8 @@
 
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
+**Read `PLAYBOOK.md` beside this file first** — it carries the brief (what Faisal wants, the three
+delivery formats, the sandbox pipeline, what a finished cut looks like); this file is the fault log.
 
 ## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
 
