@@ -26,9 +26,10 @@ const EDIT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/edit.json'), 'utf8
 const dur = (f) => parseFloat(execFileSync(ffprobe, ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString());
 const filters = execFileSync(ffmpeg, ['-hide_banner', '-filters']).toString();
 const hasFade = /\bafade\b/.test(filters);
-/* the blurred copy every glass panel shows through itself (build.mjs, bgFor): 480×270, gaussian blur, no audio.
-   The web container's ffmpeg has no blur filter, so there it is a 96×54 copy and the page blurs it with CSS */
-const blurVf = /\bgblur\b/.test(filters) ? 'scale=480:270:flags=lanczos,gblur=sigma=11:steps=2' : /\bboxblur\b/.test(filters) ? 'scale=480:270:flags=lanczos,boxblur=10:2' : 'scale=96:54:flags=area';
+/* the blurred copy every glass panel shows through itself (build.mjs, bgFor): 480 wide at the clip's own aspect
+   (480×270 landscape, 480×600 for the vertical 4:5 proxies), gaussian blur, no audio. The web container's ffmpeg
+   has no blur filter, so there it is a 96-wide copy and the page blurs it with CSS */
+const blurVf = /\bgblur\b/.test(filters) ? 'scale=480:-2:flags=lanczos,gblur=sigma=11:steps=2' : /\bboxblur\b/.test(filters) ? 'scale=480:-2:flags=lanczos,boxblur=10:2' : 'scale=96:-2:flags=area';
 const blurCopy = (src) => execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', src, '-vf', blurVf, '-an', '-c:v', 'libx264', '-preset', 'fast', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', src.replace(/\.mp4$/, '.blur.mp4')]);
 const placeholder = process.argv.includes('--placeholder') || !/\bsetpts\b/.test(filters);
 const LAST = 'B1-18';

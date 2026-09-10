@@ -26,9 +26,14 @@ echo "clips: $(ls clips/*.mp4 | wc -l)"
 [ -x "$ROOT"/n22/bin/node ] || npm i --silent node@22 -g --prefix "$ROOT"/n22
 export PATH="$ROOT"/n22/bin:$PATH
 ( cd repo/video && npm install --silent --no-audit --no-fund )
-# 3. 1080p proxies (4K sources crash the Chrome capture — LESSONS.md #16)
-ls clips/*.mp4 | xargs -P 4 -I{} sh -c 'b=$(basename {}); [ -s proxies/$b ] || ffmpeg -y -v error -i {} -vf scale=1920:1080:flags=lanczos -r 24 -c:v libx264 -preset fast -crf 16 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart proxies/$b'
-mkdir -p "repo/$PROJECT/assets/clips" && cp proxies/*.mp4 "repo/$PROJECT/assets/clips/"
+# 3. 1080p proxies (4K sources crash the Chrome capture — LESSONS.md #16). ORIENT=vertical instead cuts a
+#    4:5 window on Ava (she sits at 51% across the frame) straight from the 4K source, 1080×1350, no upscale.
+export ORIENT=${ORIENT:-landscape}
+if [ "$ORIENT" = vertical ]; then PVF='crop=w=ih*4/5:h=ih:x=trunc(iw*0.51-ih*2/5):y=0,scale=1080:1350:flags=lanczos'; PDIR=proxies-v; else PVF='scale=1920:1080:flags=lanczos'; PDIR=proxies; fi
+mkdir -p "$PDIR"
+export PVF PDIR
+ls clips/*.mp4 | xargs -P 4 -I{} sh -c 'b=$(basename {}); [ -s $PDIR/$b ] || ffmpeg -y -v error -i {} -vf "$PVF" -r 24 -c:v libx264 -preset fast -crf 16 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart $PDIR/$b'
+mkdir -p "repo/$PROJECT/assets/clips" && rm -f "repo/$PROJECT/assets/clips/"*.mp4 "repo/$PROJECT/assets/cut/"*.mp4 && cp "$PDIR"/*.mp4 "repo/$PROJECT/assets/clips/"
 # 4. build, check, render, loudness
 cd "repo/$PROJECT"
 export HYPERFRAMES_SKIP_SKILLS=1
@@ -39,7 +44,8 @@ node build.mjs | tail -3
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json
 mkdir -p renders
-"$HF" render -q "${QUALITY:-high}" -o renders/b1-high.mp4 --quiet
-ffmpeg -y -v error -i renders/b1-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k renders/b1-final.mp4
-ffprobe -v error -show_entries format=duration,size -of csv=p=0 renders/b1-final.mp4
+OUT=b1; [ "$ORIENT" = vertical ] && OUT=b1-vertical
+"$HF" render -q "${QUALITY:-high}" -o "renders/$OUT-high.mp4" --quiet
+ffmpeg -y -v error -i "renders/$OUT-high.mp4" -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k "renders/$OUT-final.mp4"
+ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 "renders/$OUT-final.mp4"
 echo BOOT_DONE

@@ -16,7 +16,13 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const W = 1920, H = 1080, FPS = 30, Y = '#F5C518', INK = '#141416';
+const V = process.env.ORIENT === 'vertical';   // 9:16 for Reels / TikTok: the same cut, sounds and overlays, re-laid out
+const W = V ? 1080 : 1920, H = V ? 1920 : 1080, FPS = 30, Y = '#F5C518', INK = '#141416';
+/* Vertical: the footage is a 4:5 crop on Ava (sandbox.sh cuts it from the 4K source, so nothing is upscaled),
+   FH tall, sat on the floor of the frame; a blurred, darkened copy of the same clip fills the band above it.
+   Every overlay lives in that top band, the captions sit over her chest, all inside the Reels/TikTok safe
+   area (nothing in the bottom 440px, nothing hugging the right edge). */
+const FT = V ? 570 : 0, FH = V ? 1350 : H;
 const WORDS = JSON.parse(fs.readFileSync(path.join(HERE, 'data/words.json'), 'utf8'));
 const SCRIPT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/script.json'), 'utf8'));
 const EDIT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/edit.json'), 'utf8'));
@@ -119,7 +125,8 @@ function bgFor(id, start, end, x, y) {
   const vids = clipsIn(start, end).map((s) => {
     const a = r3(Math.max(start, s.start)), b = r3(Math.min(end, s.start + s.dur));
     const blur = s.src.replace(/\.mp4$/, '.blur.mp4'), has = fs.existsSync(path.join(HERE, blur));
-    return `<video id="bg-${id}-${s.id}" class="bgv ${has ? 'lo' : 'hi'}" src="${has ? blur : s.src}" data-start="${a}" data-duration="${r3(b - a)}" data-media-start="${r3(s.mediaStart + a - s.start)}" data-track-index="1" muted playsinline></video>`;
+    const attrs = `src="${has ? blur : s.src}" data-start="${a}" data-duration="${r3(b - a)}" data-media-start="${r3(s.mediaStart + a - s.start)}" data-track-index="1" muted playsinline`;
+    return (V ? `<video id="bgf-${id}-${s.id}" class="bgv f ${has ? 'lo' : 'hi'}" ${attrs}></video>` : '') + `<video id="bg-${id}-${s.id}" class="bgv ${has ? 'lo' : 'hi'}" ${attrs}></video>`;
   });
   return `<div class="bg" style="left:${-x}px;top:${-y}px">${vids.join('')}</div>`;
 }
@@ -211,6 +218,10 @@ const hold = (t, c) => ({ t, c: bump(c), ease: 'none' });
 /* ---------- video, audio, captions for every clip ---------- */
 for (const s of segs) {
   if (s.kind !== 'clip') continue;
+  if (V) {
+    const blur = s.src.replace(/\.mp4$/, '.blur.mp4'), has = fs.existsSync(path.join(HERE, blur));
+    html.push(`<video id="f-${s.id}" class="clip fill ${has ? 'lo' : 'hi'}" src="${has ? blur : s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="2" muted playsinline></video>`);
+  }
   html.push(`<video id="v-${s.id}" class="clip" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="0" muted playsinline></video>`);
   audio.push(`<audio id="a-${s.id}" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="10" data-volume="1"></audio>`);
   const groups = phrases(s.words);
@@ -228,9 +239,11 @@ for (const s of segs) {
   });
 }
 
-const PX = 1110, PW = 760;   // right column, clear of Ava
-const PLATE = { x: 1160, y: 440 };   // name plate, just right of her face (measured on a real frame)
-const LX = 50;               // left column — where she points
+if (V) html.push(`<div id="seam"></div>`);   // the shadow the footage casts up into the fill band
+const PX = V ? 80 : 1110, PW = V ? 920 : 760;   // right column, clear of Ava (vertical: the one column, in the top band)
+const PLATE = V ? { x: 730, y: 1130 } : { x: 1160, y: 440 };   // name plate, just right of her face (measured on a real frame)
+const LX = V ? 80 : 50;               // left column — where she points
+const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under the app chrome
 
 /* ---------- 1 · hook: 0.5%? --- B1-01 ---------- */
 {
@@ -240,7 +253,7 @@ const LX = 50;               // left column — where she points
     inner: `<div class="plate cue"><b></b><div><strong>Ava</strong><span>NeroPay</span></div></div>` });
   rise('#plate .plate', a + 0.4, 8);
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
-  const cx = 1200, cy = 220, cw = 460, ch = 210;
+  const cx = V ? 310 : 1200, cy = V ? 600 : 220, cw = 460, ch = 210;
   glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: -7,
     inner: `<div class="chip"><span class="big cue">0.5%</span><span class="q cue">?</span><i class="strike"></i></div>` });
   rise('#chip .big', tMaybe, 18);
@@ -249,7 +262,7 @@ const LX = 50;               // left column — where she points
   js.push(`tl.fromTo("#chip .strike", { scaleX: 0, rotation: -8 }, { scaleX: 1, rotation: -8, duration: 0.4, ease: "power3.inOut", immediateRender: false }, ${tNot});`);
   js.push(`tl.fromTo("#chip .big", { color: "#ffffff" }, { color: "rgba(255,255,255,0.5)", duration: 0.4, immediateRender: false }, ${tNot});`);
   sfx('pop', tCent, 0.16); sfx('swish', tNot, 0.14);
-  const f1 = focus(1.16, cx + cw / 2 - 100, cy + ch / 2 + 110), f2 = focus(1.22, cx + cw / 2 - 120, cy + ch / 2 + 90);
+  const f1 = V ? focus(1.14, CX, cy + ch / 2 + 250) : focus(1.16, cx + cw / 2 - 100, cy + ch / 2 + 110), f2 = V ? focus(1.2, CX + 24, cy + ch / 2 + 230) : focus(1.22, cx + cw / 2 - 120, cy + ch / 2 + 90);
   chain('B1-01', [{ t: a, c: flat(1.0) }, { t: tMaybe, c: flat(1.02) }, { t: tMaybe + 0.9, c: f1, ease: 'power3.out' }, hold(tNot, f1), { t: tNot + 0.5, c: f2, ease: 'power3.out' }, hold(b - 0.45, f2), { t: b, c: flat(1.06) }]);
 }
 
@@ -257,7 +270,7 @@ const LX = 50;               // left column — where she points
 {
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
-  const FX = 1120, FY = 120;
+  const FX = V ? 180 : 1120, FY = V ? 300 : 120;
   html.push(`<div id="fan" class="space" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
   /* the first card lands from depth; three more slide out behind it, each deeper than the last, so the
      slow turn of the group gives them parallax */
@@ -278,7 +291,7 @@ const LX = 50;               // left column — where she points
   js.push(`tl.set("${leaves('#fan .card')}", { opacity: 0 }, ${b});`);
   js.push(`tl.set("#fan .card", { autoAlpha: 0 }, ${b});`);
   sfx('pop', tOne, 0.16); sfx('whoosh', r3(tMore - 0.05), 0.15);
-  const f1 = focus(1.12, 1420, 400);
+  const f1 = V ? focus(1.14, CX, 640) : focus(1.12, 1420, 400);
   chain('B1-02', [{ t: a, c: flat(1.06, 40, 0) }, { t: tOne, c: flat(1.04, 20, 0) }, { t: tMore + 0.7, c: f1, ease: 'power3.out' }, hold(b, f1)]);
 }
 
@@ -292,9 +305,10 @@ const LX = 50;               // left column — where she points
 {
   const s = S['[TITLE]'], a = r3(s.start - XF), d = r3(s.dur + 2 * XF);
   const land = r3(a + XF * 0.5 + 0.55);       // the glass settles here; the riser crests on it
+  const TW = V ? 940 : 1320, TH = V ? 720 : 600;
   html.push(`<div id="title" class="clip card-full light" data-start="${a}" data-duration="${d}" data-track-index="4">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-  <div class="p3d" style="left:${(W - 1320) / 2}px;top:${(H - 600) / 2}px;width:1320px;height:600px"><div class="float"><div class="glass lglass" style="width:1320px;height:600px"><i class="tint"></i><i class="sheen"></i>
+  <div class="p3d" style="left:${(W - TW) / 2}px;top:${(H - TH) / 2}px;width:${TW}px;height:${TH}px"><div class="float"><div class="glass lglass" style="width:${TW}px;height:${TH}px"><i class="tint"></i><i class="sheen"></i>
     <div class="body tstack"><span class="kicker cue">EXPLAINED BY</span><span class="wordmark cue"><b>Nero</b><em>Pay</em></span><span class="ep cue">Why the rate you were quoted isn't the rate you pay</span></div><i class="rim"></i></div></div></div></div>`);
   js.push(`tl.fromTo("#title", { autoAlpha: 0 }, { autoAlpha: 1, duration: ${XF}, ease: "power2.inOut" }, ${a});`);
   js.push(`tl.fromTo("#title", { autoAlpha: 1 }, { autoAlpha: 0, duration: ${XF}, ease: "power2.inOut", immediateRender: false }, ${r3(a + d - XF)});`);
@@ -317,7 +331,7 @@ const LX = 50;               // left column — where she points
   const tAdv = findWord('B1-03', 'advertised'), tDebit = findWord('B1-03', 'debit'), tCheap = findWord('B1-03', 'cheapest');
   const tCredit = findWord('B1-04', 'credit'), tCompany = findWord('B1-04', 'company'), tAmex = findWord('B1-04', 'amex'), tOver = findWord('B1-04', 'overseas'), tMost = findWord('B1-04', 'most');
   const bars = [['Debit', 0.5, 0.18, tDebit], ['Credit', 1.2, 0.42, tCredit], ['Business', 2.6, 0.86, tCompany], ['Amex', 1.75, 0.6, tAmex], ['Overseas', 2.9, 0.96, tOver]];
-  const ly = 110, lh = 600;
+  const ly = V ? 210 : 110, lh = 600;
   glass('ladder', { start: Math.max(a3, tAdv - 0.7), dur: r3(b4 - Math.max(a3, tAdv - 0.7)), x: PX, y: ly, w: PW, h: lh, cueAt: tAdv, lean: -7,
     inner: `<div class="pad"><span class="th cue">the advertised rate, by card</span><div class="bars">${bars.map(([n, v, h], i) => `<div class="bar b${i} cue"><b>0.00%</b><div class="col" style="height:${Math.round(h * 100)}%"><i class="base"></i><i class="fill"></i></div><span>${n}</span></div>`).join('')}</div></div>` });
   bars.forEach(([, val, , when], i) => {
@@ -350,7 +364,7 @@ const LX = 50;               // left column — where she points
 {
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
-  const HX = 1120, HY = 20, c0 = r3(Math.max(a, tWhat - 0.3));
+  const HX = V ? 230 : 1120, HY = V ? 300 : 20, c0 = r3(Math.max(a, tWhat - 0.3));
   html.push(`<div id="hand" class="space" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
   <div id="bigline" class="bigline"><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
   [0, 1, 2, 3].forEach((i) => {
@@ -374,7 +388,7 @@ const LX = 50;               // left column — where she points
   js.push(`tl.set("${leaves('#hand .card')}", { opacity: 0 }, ${b});`);
   js.push(`tl.set("#bigline .b1, #bigline .b2", { autoAlpha: 0 }, ${b});`);
   js.push(`tl.set("#hand .card", { autoAlpha: 0 }, ${b});`);
-  const f1 = focus(1.08, 1480, 420), f2 = focus(1.12, 1500, 420);
+  const f1 = V ? focus(1.1, CX, 700) : focus(1.08, 1480, 420), f2 = V ? focus(1.12, CX, 700) : focus(1.12, 1500, 420);
   chain('B1-05', [{ t: a, c: flat(1.0) }, { t: c0 + 0.8, c: f1, ease: 'power2.out' }, { t: tPocket + 0.6, c: f2, ease: 'power3.out' }, hold(b, f2)]);
 }
 
@@ -384,7 +398,7 @@ const LX = 50;               // left column — where she points
   const tHere = findWord('B1-06', 'here'), tTwenty = findWord('B1-06', 'twenty'), tSeven = findWord('B1-06', 'seven'), tNought = findWord('B1-06', 'nought');
   const t70 = findWord('B1-07', 'seventy'), tCred = findWord('B1-07', 'credit'), tComp = findWord('B1-07', 'company'), tOver = findWord('B1-07', 'overseas');
   const rows = [['Consumer debit', 71, '0.50%'], ['Consumer credit', 20, '1.20%'], ['Business / commercial', 5, '2.60%'], ['International / non-UK', 2, '2.90%']];
-  const py = 96, ph = 690, st = r3(Math.max(a6, tHere - 0.6));
+  const py = PY, ph = 690, st = r3(Math.max(a6, tHere - 0.6));
   glass('month', { start: st, dur: r3(b7 - st), x: LX, y: py, w: PW, h: ph, cueAt: tHere, lean: 7,
     inner: `<div class="pad"><span class="th cue">a made-up month, one restaurant</span>
       <div class="stats"><div class="stat s0 cue"><b>£0</b><span>card turnover</span></div><div class="stat s1 cue"><b>0</b><span>card payments</span></div><div class="stat s2 cue"><b>0.00%</b><span>the quoted rate</span></div></div>
@@ -411,7 +425,7 @@ const LX = 50;               // left column — where she points
   const tCharges = findWord('B1-08', 'charges'), tFour = findWord('B1-08', 'four'), tSeventeen = findWord('B1-08', 'seventeen'), tPci = findWord('B1-08', 'pci');
   const tAccount = findWord('B1-09', 'account'), tPayout = findWord('B1-09', 'payout'), tOwn = findWord('B1-09', 'own');
   const rows = [['Authorisation fees', '780 × 4p', 31.2], ['Terminal rental', 'monthly', 17.5], ['PCI compliance fee', 'monthly', 9.95], ['Account fee', 'monthly', 5], ['Payout fees', 'every time they pay you', 12]];
-  const py = 96, ph = 680;
+  const py = PY, ph = 680;
   glass('fixed', { start: a8, dur: r3(b9 - a8), x: PX, y: py, w: PW, h: ph, cueAt: tCharges, lean: -7,
     inner: `<div class="pad"><span class="th cue">the charges that aren't a percentage</span>
       ${rows.map(([n, how, v], i) => `<div class="frow f${i} cue"><div><span>${n}</span><small>${how}</small></div><b>£0.00</b></div>`).join('')}
@@ -432,7 +446,7 @@ const LX = 50;               // left column — where she points
 {
   const s = S['B1-10'], a = s.start, b = endOf('B1-10');
   const tAdd = findWord('B1-10', 'add'), tDivide = findWord('B1-10', 'divide'), tMultiply = findWord('B1-10', 'multiply'), tHundred = findWord('B1-10', 'hundred');
-  const fx = LX, fy = 170, fw = 920, fh = 600, st = r3(Math.max(a, tAdd - 0.7));
+  const fx = LX, fy = V ? 240 : 170, fw = 920, fh = 600, st = r3(Math.max(a, tAdd - 0.7));
   glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: 8,
     inner: `<div class="pad formula"><span class="th cue">your effective rate</span>
       <div class="frac">
@@ -461,7 +475,7 @@ const LX = 50;               // left column — where she points
   const a11 = S['B1-11'].start, b11 = endOf('B1-11'), a12 = S['B1-12'].start, b12 = endOf('B1-12');
   const tHere = findWord('B1-11', 'here'), tThree = findWord('B1-11', 'three'), tTwenty = findWord('B1-11', 'twenty'), tOne = findWord('B1-11', 'one');
   const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tDouble = findWord('B1-12', 'double');
-  const sx = 1040, sy = 50, sw = 840, sh = 740;
+  const sx = V ? 80 : 1040, sy = V ? 190 : 50, sw = V ? 920 : 840, sh = 740;
   glass('sum', { start: a11, dur: r3(b12 - a11), x: sx, y: sy, w: sw, h: sh, cueAt: tHere, lean: -6,
     inner: `<div class="pad sum"><span class="th cue">what that month really cost</span>
       <div class="sline l0 cue"><span>all charges</span><b>£0.00</b></div>
@@ -506,7 +520,7 @@ const LX = 50;               // left column — where she points
   const a13 = S['B1-13'].start, b13 = endOf('B1-13'), a14 = S['B1-14'].start, b14 = endOf('B1-14');
   const tNought = findWord('B1-13', 'nought'), tFlat = findWord('B1-13', 'flat'), tLess = findWord('B1-13', 'less');
   const tHundred = findWord('B1-14', 'hundred'), tHigher = findWord('B1-14', 'higher'), tLess2 = findWord('B1-14', 'less');
-  const py = 96, ph = 690, st = r3(Math.max(a13, tNought - 0.7));
+  const py = PY, ph = 690, st = r3(Math.max(a13, tNought - 0.7));
   glass('flatp', { start: st, dur: r3(b14 - st), x: PX, y: py, w: PW, h: ph, cueAt: tNought, lean: -7,
     inner: `<div class="pad"><span class="th cue">the same month, two ways</span>
       <div class="head cue"><b>0.00%</b><span>flat, every card, no fees</span></div>
@@ -535,7 +549,7 @@ const LX = 50;               // left column — where she points
   const tAsk = findWord('B1-15', 'ask'), tCredit = findWord('B1-15', 'credit'), tCompany = findWord('B1-15', 'company'), tAmex = findWord('B1-15', 'amex'), tPayout = findWord('B1-15', 'payout');
   const tPci = findWord('B1-16', 'pci'), tAccount = findWord('B1-16', 'account'), tMinimum = findWord('B1-16', 'minimum'), tEffective = findWord('B1-16', 'effective'), tOnly = findWord('B1-16', 'only');
   const items = ['What do credit cards cost?', 'And business cards?', 'And American Express?', 'What does each payout cost?', 'Is there a PCI fee?', 'An account fee?', 'A minimum monthly charge?', 'So what is my effective rate?'];
-  const qx = 1020, qy = 60, qw = 860, qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
+  const qx = V ? 80 : 1020, qy = V ? 180 : 60, qw = V ? 920 : 860, qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
   glass('ask', { start: st, dur: r3(b16 - st), x: qx, y: qy, w: qw, h: qh, cueAt: tAsk, lean: -7,
     inner: `<div class="pad"><span class="th cue">ask any provider</span>${items.map((q, i) => `<div class="qrow k${i}${i === 7 ? ' last' : ''} cue"><i></i><span>${q}</span></div>`).join('')}</div>` });
   [tCredit, tCompany, tAmex, tPayout, tPci, tAccount, tMinimum, tEffective].forEach((when, i) => {
@@ -555,7 +569,7 @@ const LX = 50;               // left column — where she points
 {
   const s = S['B1-17'], a = s.start, b = endOf('B1-17');
   const tTwo = findWord('B1-17', 'two'), tStatement = findWord('B1-17', 'statement'), tCalc = findWord('B1-17', 'calculator');
-  const tx = PX - 20, ty = 170, tw = 800, th = 300;
+  const tx = V ? 100 : PX - 20, ty = V ? 560 : 170, tw = V ? 880 : 800, th = 300;
   glass('two', { start: a, dur: r3(b - a), x: tx, y: ty, w: tw, h: th, cueAt: tTwo + 0.05, lean: -6,
     inner: `<div class="pad twomin"><b class="n cue">2 min</b><div class="lines"><span class="l1 cue"><i></i>last month's statement</span><span class="l2 cue"><i></i>+ a calculator</span></div></div>` });
   js.push(`tl.fromTo("#two .n", { autoAlpha: 0, scale: 0.5, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, ${r3(tTwo + 0.05)});`);
@@ -576,7 +590,7 @@ const LX = 50;               // left column — where she points
     yt: '<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="21" height="14" rx="4.5" fill="#fff"/><path d="M10 8.8l5.2 3.2L10 15.2z" fill="#141416"/></svg>',
     tt: '<svg viewBox="0 0 24 24"><path d="M13.3 3h3.2a4.2 4.2 0 0 0 4.2 4.1v3.2a7.4 7.4 0 0 1-4.2-1.4v6.2a5.6 5.6 0 1 1-5.6-5.6h.6v3.3h-.6a2.3 2.3 0 1 0 2.4 2.3z" fill="#fff"/></svg>',
   };
-  html.push(`<div id="social" class="social" style="left:${PX + 20}px;top:250px;width:760px;height:260px">
+  html.push(`<div id="social" class="social" style="left:${V ? 330 : PX + 20}px;top:${V ? 640 : 250}px;width:760px;height:260px">
     <span class="smark"><b>Nero</b><em>Pay</em></span><i class="wipe"></i>
     <div class="icons">${['ig', 'li', 'yt', 'tt'].map((k) => `<i class="ic ${k} cue">${ICON[k]}</i>`).join('')}</div></div>`);
   const t0 = r3(tFollow - 0.1);
@@ -603,9 +617,10 @@ const LX = 50;               // left column — where she points
 {
   const s = S['[END]'], a = s.start, d = s.dur;
   const offer = ['Payment Terminal', 'Free POS Software', 'Online Ordering System', 'Booking System', 'QR Payments', 'API for Ecommerce'];
+  const EW = V ? 960 : 1400, EH = V ? 1060 : 660;
   html.push(`<div id="end" class="clip card-full light" data-start="${a}" data-duration="${d}" data-track-index="4">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-  <div class="p3d" style="left:${(W - 1400) / 2}px;top:${(H - 660) / 2}px;width:1400px;height:660px"><div class="float"><div class="glass lglass" style="width:1400px;height:660px"><i class="tint"></i><i class="sheen"></i>
+  <div class="p3d" style="left:${(W - EW) / 2}px;top:${(H - EH) / 2}px;width:${EW}px;height:${EH}px"><div class="float"><div class="glass lglass" style="width:${EW}px;height:${EH}px"><i class="tint"></i><i class="sheen"></i>
     <div class="body estage">
       <div class="layer brand"><span class="wordmark cue"><b>Nero</b><em>Pay</em></span><span class="sub cue">Subscribe for more</span></div>
       <div class="layer items"><span class="kicker cue">WHAT COMES WITH NEROPAY</span><div class="grid">${offer.map((t, i) => `<div class="tile t${i} cue"><i></i><span>${esc(t)}</span></div>`).join('')}</div></div>
@@ -670,7 +685,7 @@ html,body{width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 body{font-family:Poppins,"Helvetica Neue",Arial,sans-serif;color:#fff;letter-spacing:-0.03em}
 #root{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 #world{position:absolute;inset:0;transform-origin:50% 50%}
-video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:cover}
+video.clip{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;object-fit:cover}
 .clip{position:absolute}
 .panel,.p3d{position:absolute}
 .p3d{perspective:1600px}
@@ -683,7 +698,7 @@ video.clip{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:
 .glass{position:absolute;left:0;top:0;border-radius:36px;overflow:hidden;isolation:isolate;background:rgba(26,26,30,.30);
   box-shadow:0 30px 60px rgba(0,0,0,.26),0 6px 16px rgba(0,0,0,.16)}
 .glass .bg{position:absolute;width:${W}px;height:${H}px;z-index:0}
-.bgv{position:absolute;left:0;top:0;width:${W}px;height:${H}px;object-fit:cover;transform:scale(1.06)}
+.bgv{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;object-fit:cover;transform:scale(1.06)}
 .bgv.lo{filter:blur(7px) saturate(1.3) brightness(.5)}
 .bgv.hi{filter:blur(30px) saturate(1.3) brightness(.5)}
 .glass .tint{position:absolute;inset:0;z-index:1;display:block;
@@ -853,12 +868,32 @@ b.y,.y{color:${Y}}
   background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,255,255,.72));box-shadow:inset 0 1.5px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.95),0 10px 30px rgba(20,20,22,.05)}
 .estage .tile i{display:block;flex:none;width:16px;height:16px;border-radius:5px;background:${Y}}
 .estage .tile span{display:block;font-size:40px;font-weight:700;letter-spacing:-0.03em;color:${INK};line-height:1.1}
-#floor{position:absolute;left:0;right:0;bottom:0;height:300px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
+#floor{position:absolute;left:0;right:0;bottom:0;height:${V ? 520 : 300}px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
 /* captions: no plate, no shadow, tight Poppins, yellow on the spoken word */
-.cap{left:0;right:0;width:${W}px;bottom:118px;display:flex;justify-content:center;pointer-events:none}
-.cap .line{max-width:1500px;text-align:center;font-size:56px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
+.cap{left:0;right:0;width:${W}px;bottom:${V ? 400 : 118}px;display:flex;justify-content:center;pointer-events:none}
+.cap .line{max-width:${V ? 900 : 1500}px;text-align:center;font-size:${V ? 54 : 56}px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
 .cap .w{display:inline-block;color:rgba(255,255,255,.86);margin:0 0.03em}
 .cap .w.em{font-style:italic;font-weight:800;font-size:1.06em}
+${V ? `/* vertical: the fill band, the seam, the type that was sized for a wide frame */
+video.clip.fill{top:0;height:${H}px}
+.fill.lo{filter:blur(6px) saturate(1.15) brightness(.45)}
+.fill.hi{filter:blur(28px) saturate(1.15) brightness(.45)}
+#seam{position:absolute;left:0;top:${FT - 150}px;width:${W}px;height:210px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(20,20,22,0) 0%,rgba(20,20,22,.42) 71.4%,rgba(0,0,0,.32) 71.5%,rgba(0,0,0,0) 100%)}
+.bgv.f{top:0;height:${H}px}
+.bigline{left:110px;top:190px;width:860px}
+.bigline span{font-size:84px}
+.wordmark{font-size:176px}
+.tstack{padding:0 50px}
+.tstack .ep{font-size:31px;margin-top:22px}
+.estage{padding:0 60px}
+.estage .layer{left:60px;right:60px}
+.estage .wordmark{font-size:150px}
+.estage .items{padding-top:56px}
+.estage .grid{grid-template-columns:1fr;width:800px;gap:18px}
+.estage .tile{height:106px}
+.estage .tile span{font-size:36px}
+.social .smark{font-size:112px}` : ''}
 </style>
 </head>
 <body>

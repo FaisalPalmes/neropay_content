@@ -3,6 +3,23 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 10 Sep 2026 — the vertical cut (Reels / TikTok) of B1
+
+36. **One build, two frames.** `ORIENT=vertical node build.mjs` writes the 1080×1920 version of the same
+    composition into `index.html` (the CLI only checks and snapshots index.html); the default stays 1920×1080
+    and must stay byte-identical when the vertical branch changes — diff it. Every position is a
+    `V ? vertical : landscape` pair; timings, sounds, cues and captions are shared.
+37. **Crop from the 4K source, never upscale the proxy.** `sandbox.sh ORIENT=vertical` cuts a 4:5 window on
+    Ava (she is at 51% across this set) straight from the 3840×2160 sources to 1080×1350. A 9:16 crop of the
+    1080p proxy would be soft and would leave no room above her head for the panels.
+38. **Vertical layout.** Footage sits on the floor of the frame (top 570); above it a blurred, darkened copy
+    of the same clip fills the band and a soft gradient sits on the seam. Panels live in that band, starting
+    at y ≥ 180 (the TikTok header) and ending above her hair (~950); captions at bottom 400 (the app UI),
+    max-width 900; the big type goes above the cards, not beside them. The camera can only pan ±(S−1)·540 on a
+    1080-wide frame, so every zoom centres on Ava and the bar-walk pans are gentle by nature.
+39. **The glass shows two layers in vertical.** Each panel's own copy of the footage is the fill band plus
+    the footage window, both from the `.blur.mp4` (now cut at the clip's own aspect, `scale=480:-2`).
+
 ## 10 Sep 2026 — v6, Faisal's fourth review (the inner rectangle, the card jump, less glass)
 
 32. **Opacity flattens a 3D group.** The cards "teleported" on their way out because the exit faded
