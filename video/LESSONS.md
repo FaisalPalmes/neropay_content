@@ -3,6 +3,19 @@
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
 The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
 
+## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
+
+40. **An ad is a second project on the same assets.** `video/b1-ad-4x5` symlinks the B1 `assets` folder and
+    reads the B1 data files, so it shares the cut clips, words, sounds and glass; `ORIENT=vertical AD=1
+    bash sandbox.sh` renders it from the 4:5 proxies. Seven takes, the argument only: hook, one card /
+    many, their card your rate, formula, result, more than double, two minutes. Nothing that names a NeroPay
+    rate (the 0.70% takes), no follow-us, no long outro.
+41. **Her voice under a diagram.** A take can be audio only: the `<video>` is left out, a full-frame stage
+    fades in over the last footage frame and the slab builds on her words. Anything fixed on screen (the
+    brand mark, captions) lives outside `#world`, or the camera pushes it off the canvas.
+42. **4:5 panels live in the top 380 px** — above her head on this set — and every pan is centred on x,
+    because a 1080-wide frame has no room to pan a 900-wide panel sideways.
+
 ## 10 Sep 2026 — the vertical cut (Reels / TikTok) of B1
 
 36. **One build, two frames.** `ORIENT=vertical node build.mjs` writes the 1080×1920 version of the same

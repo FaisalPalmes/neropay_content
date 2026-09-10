@@ -40,6 +40,19 @@ export HYPERFRAMES_SKIP_SKILLS=1
 HF="$ROOT/repo/video/node_modules/.bin/hyperframes"
 node ../library/fetch-sounds.mjs --into assets/sfx        # needs FREESOUND_TOKEN in the environment
 node cut.mjs | tail -3                                      # real cuts from the proxies, with faded audio joins
+# AD=1 (with ORIENT=vertical, whose 4:5 proxies it shares): build and render the Meta ad in ../b1-ad-4x5 instead
+if [ "${AD:-0}" = 1 ]; then
+  cd ../b1-ad-4x5
+  node build.mjs | tail -3
+  "$HF" check --json > "$ROOT"/check-ad.json 2>/dev/null || true
+  node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"layout err="+j.layout.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check-ad.json
+  mkdir -p renders
+  "$HF" render -q "${QUALITY:-high}" -o renders/b1-ad-high.mp4 --quiet
+  ffmpeg -y -v error -i renders/b1-ad-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k renders/b1-ad-final.mp4
+  ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 renders/b1-ad-final.mp4
+  echo BOOT_DONE
+  exit 0
+fi
 node build.mjs | tail -3
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json

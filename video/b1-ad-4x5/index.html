@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1350" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{font-family:Poppins;font-weight:500;src:url(assets/fonts/poppins-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:600;src:url(assets/fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:700;src:url(assets/fonts/poppins-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:800;src:url(assets/fonts/poppins-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:500;font-style:italic;src:url(assets/fonts/poppins-latin-500-italic.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:700;font-style:italic;src:url(assets/fonts/poppins-latin-700-italic.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:800;font-style:italic;src:url(assets/fonts/poppins-latin-800-italic.woff2) format("woff2")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1350px;overflow:hidden;background:#141416}
+body{font-family:Poppins,"Helvetica Neue",Arial,sans-serif;color:#fff;letter-spacing:-0.03em}
+#root{position:relative;width:1080px;height:1350px;overflow:hidden;background:#141416}
+#world{position:absolute;inset:0;transform-origin:50% 50%}
+video.clip{position:absolute;left:0;top:0;width:1080px;height:1350px;object-fit:cover}
+.clip{position:absolute}
+.panel,.p3d{position:absolute}
+.p3d{perspective:1600px}
+.float{position:absolute;inset:0;opacity:0;visibility:hidden;transform-origin:50% 50%}
+.cue{opacity:0;visibility:hidden}
+.brand{position:absolute;left:44px;top:40px;font-size:38px;font-weight:800;letter-spacing:-0.05em;line-height:1;text-shadow:0 6px 20px rgba(0,0,0,.45)}
+.brand em,.wordmark em{font-style:normal;color:#F5C518}
+.glass{position:absolute;left:0;top:0;border-radius:36px;overflow:hidden;isolation:isolate;background:rgba(26,26,30,.30);
+  box-shadow:0 30px 60px rgba(0,0,0,.26),0 6px 16px rgba(0,0,0,.16)}
+.glass .bg{position:absolute;width:1080px;height:1350px;z-index:0}
+.bgv{position:absolute;left:0;top:0;width:1080px;height:1350px;object-fit:cover;transform:scale(1.06)}
+.bgv.lo{filter:blur(7px) saturate(1.3) brightness(.5)}
+.bgv.hi{filter:blur(30px) saturate(1.3) brightness(.5)}
+.glass .tint{position:absolute;inset:0;z-index:1;display:block;
+  background:linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.08) 45%,rgba(255,255,255,.07) 60%,rgba(255,255,255,.14) 100%),
+  radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.16),transparent 55%),radial-gradient(80% 60% at 100% 100%,rgba(245,197,24,.10),transparent 60%)}
+.sheen{position:absolute;top:-20%;left:0;width:45%;height:140%;display:block;pointer-events:none;z-index:2;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.04) 35%,rgba(255,255,255,.16) 50%,rgba(255,255,255,.04) 65%,transparent 100%)}
+.glass .body{position:absolute;inset:0;z-index:3}
+.glass .rim{position:absolute;inset:0;z-index:4;display:block;border-radius:inherit;pointer-events:none;
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(255,255,255,.10),inset 1px 0 0 rgba(255,255,255,.18),inset -1px 0 0 rgba(255,255,255,.10)}
+/* a slab on the dark stage: no footage behind it, so it is a lighter charcoal with the same rim */
+.sglass{background:linear-gradient(135deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.05) 50%,rgba(255,255,255,.09) 100%)}
+.lglass{background:linear-gradient(135deg,rgba(255,255,255,.80) 0%,rgba(255,255,255,.62) 50%,rgba(255,255,255,.74) 100%);color:#141416;
+  box-shadow:0 40px 90px rgba(20,20,22,.10),0 8px 24px rgba(20,20,22,.06)}
+.lglass .tint{background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.7),transparent 55%),radial-gradient(70% 60% at 100% 100%,rgba(245,197,24,.16),transparent 60%)}
+.lglass .rim{box-shadow:inset 0 2px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.9)}
+.lglass .sheen{background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.55) 50%,rgba(255,255,255,.1) 65%,transparent 100%)}
+.pad{height:100%;padding:38px 46px 34px;display:flex;flex-direction:column}
+.th{display:block;font-size:26px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.72);margin-bottom:16px}
+/* hook chip */
+.chip{display:flex;align-items:center;justify-content:center;gap:12px;height:100%}
+.chip .big{display:block;font-size:118px;font-weight:800;letter-spacing:-0.05em;line-height:1}
+.chip .q{display:block;font-size:118px;font-weight:800;font-style:italic;color:#F5C518;line-height:1;transform-origin:50% 60%}
+.chip .strike{position:absolute;left:62px;top:50%;width:340px;height:11px;margin-top:-6px;display:block;background:#F5C518;border-radius:6px;transform-origin:0 50%}
+/* cards */
+.space{position:absolute;perspective:1500px;overflow:visible}
+.orbit{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 55%}
+.card{position:absolute;left:60px;top:220px;width:330px;height:208px;display:block;transform-style:preserve-3d;transform-origin:50% 50%}
+.card .edge{position:absolute;inset:0;display:block;border-radius:26px;opacity:0}
+.card .face{position:absolute;inset:0;border-radius:26px;overflow:hidden;opacity:0;box-shadow:0 26px 44px rgba(0,0,0,.34),0 6px 14px rgba(0,0,0,.18)}
+.card.k0 .face{background:linear-gradient(135deg,#3a3a41 0%,#232327 55%,#2c2c31 100%)} .card.k0 .edge{background:#121214}
+.card.k1 .face{background:linear-gradient(135deg,#ffdc63 0%,#F5C518 50%,#d9a90f 100%)} .card.k1 .edge{background:#a37d0a}
+.card.k2 .face{background:linear-gradient(135deg,#55698d 0%,#33425c 55%,#3d4d6a 100%)} .card.k2 .edge{background:#1b2332}
+.card.k3 .face{background:linear-gradient(135deg,#faf8f3 0%,#e4e1d9 55%,#efece5 100%)} .card.k3 .edge{background:#b5b2a9}
+.card .cshine{position:absolute;left:-30%;top:-40%;width:70%;height:180%;display:block;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent)}
+.card .cchip{position:absolute;left:30px;top:30px;width:60px;height:44px;border-radius:9px;display:block;background:linear-gradient(135deg,#ffe38a 0%,#F5C518 45%,#c99a0a 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.2)}
+.card .cchip::after{content:"";position:absolute;left:8px;right:8px;top:14px;height:1px;background:rgba(0,0,0,.2);box-shadow:0 8px 0 rgba(0,0,0,.2)}
+.card.k1 .cchip{background:linear-gradient(135deg,#ffffff,#d6d6dc 55%,#b8b8c0)}
+.card .cband{position:absolute;left:0;right:0;bottom:52px;height:28px;display:block;background:rgba(20,20,22,.34)}
+.card.k0 .cband,.card.k2 .cband{background:rgba(0,0,0,.42)}
+.card .crim{position:absolute;inset:0;display:block;border-radius:26px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.12)}
+.card.k3 .crim{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(0,0,0,.08)}
+/* big type, no glass */
+.bigline{position:absolute;left:70px;top:96px;width:560px;display:flex;flex-direction:column;gap:6px}
+.bigline span{display:block;font-size:86px;font-weight:800;letter-spacing:-0.045em;line-height:1.05;text-shadow:0 10px 34px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.35);transform-origin:0 50%}
+.bigline .b2,.bigline .h2{color:#F5C518;font-style:italic}
+.bigline.hook{top:110px;width:700px}
+/* formula */
+.formula{justify-content:center}
+.frac{display:flex;flex-direction:column;align-items:stretch;gap:14px;margin:4px 0 30px;padding:0 10px}
+.frac .row{display:flex;align-items:center;gap:22px;font-size:42px;font-weight:700;letter-spacing:-0.02em}
+.frac .badge{display:flex;align-items:center;justify-content:center;flex:none;width:58px;height:58px;border-radius:50%;background:#F5C518;color:#141416;font-style:normal;font-size:32px;font-weight:800}
+.frac .den{color:rgba(255,255,255,.88)}
+.frac .line{display:block;height:5px;margin:2px 0;background:#F5C518;border-radius:3px;transform-origin:50% 50%;box-shadow:0 0 14px rgba(245,197,24,.55)}
+.ops{display:flex;align-items:center;justify-content:center;gap:26px;font-size:50px;font-weight:600}
+.ops .x100{display:inline-block;padding:6px 26px;border-radius:18px;background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.35);transform-origin:50% 50%}
+.ops .res{position:relative;display:inline-block;font-size:64px;font-weight:800;color:#F5C518;font-style:italic;transform-origin:50% 50%;padding-bottom:6px}
+.ops .res .under{position:absolute;left:0;right:0;bottom:-4px;height:6px;display:block;border-radius:3px;background:#F5C518;transform-origin:0 50%;box-shadow:0 0 12px rgba(245,197,24,.6)}
+/* the result */
+.sum{justify-content:center}
+.sline{display:flex;justify-content:space-between;align-items:baseline;font-size:36px;font-weight:600;padding:10px 0}
+.sline b{font-size:52px;font-weight:800;color:#F5C518;letter-spacing:-0.04em}
+.sum .rule{display:block;height:3px;margin:14px 0 22px;background:rgba(255,255,255,.28);border-radius:2px;transform-origin:0 50%}
+.big1{display:flex;flex-direction:column;align-items:flex-start;margin:0 0 10px}
+.big1 em{font-style:normal;font-size:26px;font-weight:500;color:rgba(255,255,255,.75);letter-spacing:0}
+.big1 b{font-size:190px;font-weight:800;color:#F5C518;letter-spacing:-0.06em;line-height:1;transform-origin:0 60%}
+.foot{display:block;margin-top:auto;font-size:18px;font-weight:500;color:rgba(255,255,255,.6);letter-spacing:0}
+/* quoted vs paying */
+.vsp{justify-content:center;padding:26px 46px}
+.vs{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.vs > div.v0,.vs > div.v1{display:flex;flex-direction:column;flex:none}
+.vs em{font-style:normal;font-size:22px;font-weight:500;color:rgba(255,255,255,.7);letter-spacing:0.06em;text-transform:uppercase}
+.vs b{font-size:84px;font-weight:800;letter-spacing:-0.04em;line-height:1.05;display:block;transform-origin:0 60%}
+.vs .v0 b{color:rgba(255,255,255,.8)} .vs .v1 b{color:#F5C518}
+.vs .arrowwrap{flex:none;width:236px;height:64px;margin-top:22px}
+.vs .arrowwrap svg{display:block;overflow:visible;filter:drop-shadow(0 0 8px rgba(245,197,24,.55))}
+.tag2{display:inline-block;align-self:center;margin-top:18px;padding:8px 24px;border-radius:16px;background:#F5C518;color:#141416;font-size:30px;font-weight:800;font-style:italic;letter-spacing:-0.02em;transform-origin:50% 50%}
+/* two minutes */
+.twomin{flex-direction:row;align-items:center;gap:28px;padding:0 40px}
+.twomin .n{display:block;flex:none;font-size:112px;font-weight:800;color:#F5C518;letter-spacing:-0.06em;line-height:1;white-space:nowrap;transform-origin:50% 60%}
+.twomin .lines{display:flex;flex-direction:column;gap:14px}
+.twomin .lines span{display:flex;align-items:center;gap:14px;font-size:30px;font-weight:600;white-space:nowrap}
+.twomin .lines i{display:block;flex:none;width:14px;height:14px;border-radius:4px;background:#F5C518}
+.twomin .l2{color:rgba(255,255,255,.88)}
+/* full-frame cards: the dark stage for the diagrams, the light end card (blurred blobs are static) */
+.card-full{left:0;top:0;width:1080px;height:1350px;background:#141416;overflow:hidden}
+.card-full.dark{background:radial-gradient(120% 90% at 50% 110%,#26262c 0%,#141416 60%)}
+.card-full.light{background:#f7f6f2;color:#141416}
+.blob{position:absolute;border-radius:50%;display:block;filter:blur(90px);pointer-events:none}
+.blob.b1{left:-260px;top:-360px;width:1000px;height:900px;background:radial-gradient(circle,rgba(245,197,24,.55),rgba(245,197,24,0) 62%)}
+.blob.b2{right:-380px;bottom:-460px;width:1100px;height:1000px;background:radial-gradient(circle,rgba(245,197,24,.42),rgba(245,197,24,0) 62%)}
+.blob.b3{left:30%;top:50%;width:600px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,255,255,0) 62%)}
+.blob.d1{right:-300px;top:-300px;width:900px;height:900px;background:radial-gradient(circle,rgba(245,197,24,.22),rgba(245,197,24,0) 62%)}
+.blob.d2{left:-360px;bottom:-380px;width:900px;height:900px;background:radial-gradient(circle,rgba(255,255,255,.10),rgba(255,255,255,0) 62%)}
+.grain{position:absolute;inset:0;display:block;background:repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 2px,transparent 2px 4px)}
+.tstack{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:0 70px}
+.wordmark{display:block;font-size:176px;font-weight:800;letter-spacing:-0.05em;line-height:1;color:#141416}
+.tstack .sub{display:block;font-size:40px;font-weight:600;color:#141416;margin-top:6px}
+.tstack .foot{display:block;margin-top:26px;font-size:24px;font-weight:500;color:#6d6c68;letter-spacing:0;max-width:760px;line-height:1.35}
+#floor{position:absolute;left:0;right:0;bottom:0;height:380px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
+.cap{left:0;right:0;width:1080px;bottom:96px;display:flex;justify-content:center;pointer-events:none}
+.cap .line{max-width:940px;text-align:center;font-size:52px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
+.cap .w{display:inline-block;color:rgba(255,255,255,.86);margin:0 0.03em}
+.cap .w.em{font-style:italic;font-weight:800;font-size:1.06em}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="b1-ad" data-start="0" data-duration="50.334" data-width="1080" data-height="1350" data-fps="30">
+  <div id="world">
+    <video id="v-B1-01" class="clip" src="assets/cut/B1-01.mp4" data-start="0" data-duration="7.1" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-02" class="clip" src="assets/cut/B1-02.mp4" data-start="7.1" data-duration="5.467" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-05" class="clip" src="assets/cut/B1-05.mp4" data-start="12.567" data-duration="3.8" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-12" class="clip" src="assets/cut/B1-12.mp4" data-start="32.067" data-duration="5.7" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-17" class="clip" src="assets/cut/B1-17.mp4" data-start="37.767" data-duration="5.567" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <div id="hook" class="bigline hook"><span class="h1 cue">you were quoted</span><span class="h2 cue">a rate.</span></div>
+    <div id="chip" class="panel p3d" style="left:560px;top:110px;width:460px;height:210px">
+  <div class="float"><div class="glass" style="width:460px;height:210px;border-radius:36px"><div class="bg" style="left:-560px;top:-110px"><video id="bg-chip-B1-01" class="bgv lo" src="assets/cut/B1-01.blur.mp4" data-start="3.22" data-duration="3.88" data-media-start="3.22" data-track-index="1" muted playsinline></video></div><i class="tint"></i><i class="sheen"></i><div class="body"><div class="chip"><span class="big cue">0.5%</span><span class="q cue">?</span><i class="strike"></i></div></div><i class="rim"></i></div></div></div>
+    <div id="fan" class="space" style="left:440px;top:-40px;width:640px;height:520px"><div class="orbit"><div class="card k0 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div><div class="card k1 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div><div class="card k2 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div><div class="card k3 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div></div></div>
+    <div id="hand" class="space" style="left:540px;top:-90px;width:560px;height:560px"><div class="orbit"><div class="card k0 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div><div class="card k1 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div><div class="card k2 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div><div class="card k3 cue"><i class="edge" style="transform:translateZ(-2px)"></i><i class="edge" style="transform:translateZ(-4px)"></i><i class="edge" style="transform:translateZ(-6px)"></i><i class="edge" style="transform:translateZ(-8px)"></i><i class="edge" style="transform:translateZ(-10px)"></i><i class="edge" style="transform:translateZ(-12px)"></i><div class="face"><i class="cchip"></i><i class="cband"></i><i class="cshine"></i><i class="crim"></i></div></div></div></div>
+  <div id="bigline" class="bigline"><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>
+    <div id="stage" class="clip card-full dark" data-start="16.367" data-duration="15.7" data-track-index="3"><div class="blob d1"></div><div class="blob d2"></div><div class="grain"></div></div>
+    <div id="formula" class="panel p3d" style="left:70px;top:230px;width:940px;height:640px">
+  <div class="float"><div class="glass sglass" style="width:940px;height:640px;border-radius:36px"><i class="tint"></i><i class="sheen"></i><div class="body"><div class="pad formula"><span class="th cue">your effective rate</span>
+      <div class="frac">
+        <div class="row num cue"><i class="badge">£</i><span>every charge on the statement</span></div>
+        <i class="line"></i>
+        <div class="row den cue"><i class="badge">÷</i><span>total card turnover</span></div>
+      </div>
+      <div class="ops"><span class="x100 cue">× 100</span><span class="eq cue">=</span><b class="res cue">effective rate<i class="under"></i></b></div></div></div><i class="rim"></i></div></div></div>
+    <div id="sum" class="panel p3d" style="left:70px;top:190px;width:940px;height:740px">
+  <div class="float"><div class="glass sglass" style="width:940px;height:740px;border-radius:36px"><i class="tint"></i><i class="sheen"></i><div class="body"><div class="pad sum"><span class="th cue">a made-up month, one restaurant</span>
+      <div class="sline l0 cue"><span>every charge</span><b>£0.00</b></div>
+      <div class="sline l1 cue"><span>card turnover</span><b>£0</b></div>
+      <i class="rule cue"></i>
+      <div class="big1 cue"><em>effective rate</em><b>0.00%</b></div>
+      <span class="foot cue">Illustrative example, not a real statement.</span></div></div><i class="rim"></i></div></div></div>
+    <div id="vs" class="panel p3d" style="left:100px;top:60px;width:880px;height:310px">
+  <div class="float"><div class="glass" style="width:880px;height:310px;border-radius:36px"><div class="bg" style="left:-100px;top:-60px"><video id="bg-vs-B1-12" class="bgv lo" src="assets/cut/B1-12.blur.mp4" data-start="32.067" data-duration="5.7" data-media-start="0" data-track-index="1" muted playsinline></video></div><i class="tint"></i><i class="sheen"></i><div class="body"><div class="pad vsp"><div class="vs"><div class="v0 cue"><em>quoted</em><b>0.50%</b></div>
+        <div class="arrowwrap cue"><svg viewBox="0 0 236 64" width="236" height="64"><path class="ashaft" d="M8 50 C 84 50, 150 14, 222 14" fill="none" stroke="#F5C518" stroke-width="6" stroke-linecap="round"/><path class="ahead" d="M232 14 l-22 -13 v26 z" fill="#F5C518"/></svg></div>
+        <div class="v1 cue"><em>paying</em><b>1.09%</b></div></div>
+      <span class="tag2 cue">more than double</span></div></div><i class="rim"></i></div></div></div>
+    <div id="two" class="panel p3d" style="left:90px;top:60px;width:900px;height:300px">
+  <div class="float"><div class="glass" style="width:900px;height:300px;border-radius:36px"><div class="bg" style="left:-90px;top:-60px"><video id="bg-two-B1-17" class="bgv lo" src="assets/cut/B1-17.blur.mp4" data-start="37.767" data-duration="5.567" data-media-start="0" data-track-index="1" muted playsinline></video></div><i class="tint"></i><i class="sheen"></i><div class="body"><div class="pad twomin"><b class="n cue">2 min</b><div class="lines"><span class="l1 cue"><i></i>last month's statement</span><span class="l2 cue"><i></i>+ a calculator</span></div></div></div><i class="rim"></i></div></div></div>
+    <div id="end" class="clip card-full light" data-start="43.334" data-duration="7" data-track-index="4">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="p3d" style="left:70px;top:355px;width:940px;height:640px"><div class="float"><div class="glass lglass" style="width:940px;height:640px"><i class="tint"></i><i class="sheen"></i>
+    <div class="body tstack"><span class="wordmark cue"><b>Nero</b><em>Pay</em></span><span class="sub cue">Card terminal. Free EPOS software.</span><span class="foot cue">Check your statement first. If it matches your quote, stay where you are.</span></div><i class="rim"></i></div></div></div></div>
+  </div>
+  <div id="floor"></div>
+  <div id="cap-B1-01-0" class="clip cap" data-start="0" data-duration="1.3" data-track-index="6"><div class="line"><span class="w" data-i="0">You</span> <span class="w" data-i="1">were</span> <span class="w em" data-i="2">quoted</span> <span class="w" data-i="3">a</span> <span class="w" data-i="4">rate</span></div></div>
+  <div id="cap-B1-01-130" class="clip cap" data-start="1.3" data-duration="0.92" data-track-index="6"><div class="line"><span class="w" data-i="5">when</span> <span class="w" data-i="6">you</span> <span class="w" data-i="7">signed</span> <span class="w" data-i="8">up</span> <span class="w" data-i="9">for</span></div></div>
+  <div id="cap-B1-01-222" class="clip cap" data-start="2.22" data-duration="1.17" data-track-index="6"><div class="line"><span class="w" data-i="10">card</span> <span class="w" data-i="11">payments.</span></div></div>
+  <div id="cap-B1-01-342" class="clip cap" data-start="3.42" data-duration="1.83" data-track-index="6"><div class="line"><span class="w" data-i="12">Maybe</span> <span class="w" data-i="13">nought</span> <span class="w" data-i="14">point</span> <span class="w" data-i="15">five</span> <span class="w" data-i="16">per</span> <span class="w" data-i="17">cent.</span></div></div>
+  <div id="cap-B1-01-528" class="clip cap" data-start="5.28" data-duration="1.82" data-track-index="6"><div class="line"><span class="w" data-i="18">You're</span> <span class="w" data-i="19">almost</span> <span class="w" data-i="20">certainly</span> <span class="w" data-i="21">not</span> <span class="w em" data-i="22">paying</span> <span class="w" data-i="23">that.</span></div></div>
+  <div id="cap-B1-02-0" class="clip cap" data-start="7.1" data-duration="1.73" data-track-index="6"><div class="line"><span class="w" data-i="24">Nobody</span> <span class="w" data-i="25">lied</span> <span class="w" data-i="26">to</span> <span class="w" data-i="27">you.</span></div></div>
+  <div id="cap-B1-02-176" class="clip cap" data-start="8.86" data-duration="1.32" data-track-index="6"><div class="line"><span class="w" data-i="28">That</span> <span class="w" data-i="29">rate</span> <span class="w" data-i="30">just</span> <span class="w" data-i="31">covers</span> <span class="w" data-i="32">one</span></div></div>
+  <div id="cap-B1-02-308" class="clip cap" data-start="10.18" data-duration="0.9" data-track-index="6"><div class="line"><span class="w" data-i="33">type</span> <span class="w" data-i="34">of</span> <span class="w" data-i="35">card,</span></div></div>
+  <div id="cap-B1-02-398" class="clip cap" data-start="11.08" data-duration="0.64" data-track-index="6"><div class="line"><span class="w" data-i="36">and</span> <span class="w" data-i="37">there's</span> <span class="w" data-i="38">a</span> <span class="w" data-i="39">lot</span> <span class="w" data-i="40">more</span></div></div>
+  <div id="cap-B1-02-462" class="clip cap" data-start="11.72" data-duration="0.847" data-track-index="6"><div class="line"><span class="w" data-i="41">on</span> <span class="w" data-i="42">the</span> <span class="w em" data-i="43">statement.</span></div></div>
+  <div id="cap-B1-05-0" class="clip cap" data-start="12.567" data-duration="0.96" data-track-index="6"><div class="line"><span class="w" data-i="44">get</span> <span class="w" data-i="45">to</span> <span class="w em" data-i="46">choose.</span></div></div>
+  <div id="cap-B1-05-115" class="clip cap" data-start="13.717" data-duration="0.86" data-track-index="6"><div class="line"><span class="w" data-i="47">Whatever</span> <span class="w" data-i="48">card</span> <span class="w" data-i="49">comes</span> <span class="w" data-i="50">out</span> <span class="w" data-i="51">of</span></div></div>
+  <div id="cap-B1-05-201" class="clip cap" data-start="14.577" data-duration="1.04" data-track-index="6"><div class="line"><span class="w" data-i="52">their</span> <span class="w" data-i="53">pocket,</span> <span class="w" data-i="54">that's</span> <span class="w" data-i="55">the</span> <span class="w" data-i="56">rate</span></div></div>
+  <div id="cap-B1-05-305" class="clip cap" data-start="15.617" data-duration="0.75" data-track-index="6"><div class="line"><span class="w" data-i="57">you</span> <span class="w" data-i="58">pay.</span></div></div>
+  <div id="cap-B1-10-0" class="clip cap" data-start="16.367" data-duration="1.32" data-track-index="6"><div class="line"><span class="w" data-i="59">To</span> <span class="w" data-i="60">find</span> <span class="w" data-i="61">what</span> <span class="w" data-i="62">you're</span> <span class="w" data-i="63">really</span></div></div>
+  <div id="cap-B1-10-132" class="clip cap" data-start="17.687" data-duration="2.24" data-track-index="6"><div class="line"><span class="w em" data-i="64">paying,</span> <span class="w" data-i="65">add</span> <span class="w" data-i="66">up</span> <span class="w" data-i="67">every</span> <span class="w" data-i="68">charge,</span></div></div>
+  <div id="cap-B1-10-356" class="clip cap" data-start="19.927" data-duration="1.6" data-track-index="6"><div class="line"><span class="w" data-i="69">divide</span> <span class="w" data-i="70">by</span> <span class="w" data-i="71">your</span> <span class="w" data-i="72">card</span> <span class="w" data-i="73">turnover,</span></div></div>
+  <div id="cap-B1-10-516" class="clip cap" data-start="21.527" data-duration="1.32" data-track-index="6"><div class="line"><span class="w" data-i="74">and</span> <span class="w" data-i="75">then</span> <span class="w" data-i="76">multiply</span> <span class="w" data-i="77">that</span> <span class="w" data-i="78">by</span></div></div>
+  <div id="cap-B1-10-648" class="clip cap" data-start="22.847" data-duration="1.053" data-track-index="6"><div class="line"><span class="w" data-i="79">one</span> <span class="w" data-i="80">hundred.</span></div></div>
+  <div id="cap-B1-11-0" class="clip cap" data-start="23.9" data-duration="1.88" data-track-index="6"><div class="line"><span class="w" data-i="81">The</span> <span class="w" data-i="82">charges</span> <span class="w" data-i="83">here</span> <span class="w" data-i="84">come</span> <span class="w" data-i="85">to</span></div></div>
+  <div id="cap-B1-11-188" class="clip cap" data-start="25.78" data-duration="1.75" data-track-index="6"><div class="line"><span class="w" data-i="86">three</span> <span class="w" data-i="87">hundred</span> <span class="w" data-i="88">and</span> <span class="w" data-i="89">eight</span> <span class="w" data-i="90">pounds.</span></div></div>
+  <div id="cap-B1-11-366" class="clip cap" data-start="27.56" data-duration="1.14" data-track-index="6"><div class="line"><span class="w" data-i="91">On</span> <span class="w" data-i="92">that</span> <span class="w" data-i="93">twenty</span> <span class="w" data-i="94">-eight</span> <span class="w" data-i="95">thousand</span></div></div>
+  <div id="cap-B1-11-480" class="clip cap" data-start="28.7" data-duration="1.3" data-track-index="6"><div class="line"><span class="w" data-i="96">four</span> <span class="w" data-i="97">hundred</span> <span class="w" data-i="98">of</span> <span class="w" data-i="99">turnover,</span></div></div>
+  <div id="cap-B1-11-610" class="clip cap" data-start="30" data-duration="1.34" data-track-index="6"><div class="line"><span class="w" data-i="100">that's</span> <span class="w" data-i="101">one</span> <span class="w" data-i="102">point</span> <span class="w" data-i="103">zero</span> <span class="w" data-i="104">nine</span></div></div>
+  <div id="cap-B1-11-744" class="clip cap" data-start="31.34" data-duration="0.727" data-track-index="6"><div class="line"><span class="w" data-i="105">per</span> <span class="w" data-i="106">cent.</span></div></div>
+  <div id="cap-B1-12-0" class="clip cap" data-start="32.067" data-duration="2.73" data-track-index="6"><div class="line"><span class="w" data-i="107">They</span> <span class="w" data-i="108">were</span> <span class="w em" data-i="109">quoted</span> <span class="w" data-i="110">nought</span> <span class="w" data-i="111">point</span> <span class="w" data-i="112">five.</span></div></div>
+  <div id="cap-B1-12-290" class="clip cap" data-start="34.967" data-duration="1.8" data-track-index="6"><div class="line"><span class="w" data-i="113">But</span> <span class="w" data-i="114">they're</span> <span class="w" data-i="115">actually</span> <span class="w em" data-i="116">paying</span> <span class="w" data-i="117">more</span></div></div>
+  <div id="cap-B1-12-470" class="clip cap" data-start="36.767" data-duration="0.89" data-track-index="6"><div class="line"><span class="w" data-i="118">than</span> <span class="w em" data-i="119">double.</span></div></div>
+  <div id="cap-B1-17-14" class="clip cap" data-start="37.907" data-duration="1.58" data-track-index="6"><div class="line"><span class="w" data-i="120">Two</span> <span class="w" data-i="121">minutes</span> <span class="w" data-i="122">with</span> <span class="w" data-i="123">last</span> <span class="w" data-i="124">month's</span></div></div>
+  <div id="cap-B1-17-172" class="clip cap" data-start="39.487" data-duration="1.64" data-track-index="6"><div class="line"><span class="w em" data-i="125">statement</span> <span class="w" data-i="126">and</span> <span class="w" data-i="127">a</span> <span class="w em" data-i="128">calculator</span> <span class="w" data-i="129">tells</span></div></div>
+  <div id="cap-B1-17-336" class="clip cap" data-start="41.127" data-duration="1.28" data-track-index="6"><div class="line"><span class="w" data-i="130">you</span> <span class="w" data-i="131">more</span> <span class="w" data-i="132">than</span> <span class="w" data-i="133">any</span> <span class="w" data-i="134">advert</span></div></div>
+  <div id="cap-B1-17-464" class="clip cap" data-start="42.407" data-duration="0.927" data-track-index="6"><div class="line"><span class="w" data-i="135">ever</span> <span class="w" data-i="136">will.</span></div></div>
+  <div id="brand" class="brand cue"><b>Nero</b><em>Pay</em></div>
+  <audio id="a-B1-01" src="assets/cut/B1-01.mp4" data-start="0" data-duration="7.1" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-02" src="assets/cut/B1-02.mp4" data-start="7.1" data-duration="5.467" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-05" src="assets/cut/B1-05.mp4" data-start="12.567" data-duration="3.8" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-10" src="assets/cut/B1-10.mp4" data-start="16.367" data-duration="7.533" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-11" src="assets/cut/B1-11.mp4" data-start="23.9" data-duration="8.167" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-12" src="assets/cut/B1-12.mp4" data-start="32.067" data-duration="5.7" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-17" src="assets/cut/B1-17.mp4" data-start="37.767" data-duration="5.567" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="sfx-music-0" src="assets/sfx/music.m4a" data-start="0" data-duration="37.65" data-media-start="0" data-track-index="12" data-volume="0.13"></audio>
+  <audio id="sfx-tick-46" src="assets/sfx/tick.m4a" data-start="0.46" data-duration="0.24" data-media-start="0" data-track-index="13" data-volume="0.18"></audio>
+  <audio id="sfx-bounce-110" src="assets/sfx/bounce.m4a" data-start="1.1" data-duration="1.21" data-media-start="0" data-track-index="14" data-volume="0.14"></audio>
+  <audio id="sfx-whoosh-317" src="assets/sfx/whoosh.m4a" data-start="3.17" data-duration="1.72" data-media-start="0" data-track-index="15" data-volume="0.14"></audio>
+  <audio id="sfx-pop-460" src="assets/sfx/pop.m4a" data-start="4.6" data-duration="0.56" data-media-start="0" data-track-index="16" data-volume="0.16"></audio>
+  <audio id="sfx-swish-604" src="assets/sfx/swish.m4a" data-start="6.04" data-duration="0.95" data-media-start="0" data-track-index="17" data-volume="0.14"></audio>
+  <audio id="sfx-pop-994" src="assets/sfx/pop.m4a" data-start="9.94" data-duration="0.56" data-media-start="0" data-track-index="18" data-volume="0.16"></audio>
+  <audio id="sfx-whoosh-1143" src="assets/sfx/whoosh.m4a" data-start="11.43" data-duration="1.72" data-media-start="0" data-track-index="19" data-volume="0.15"></audio>
+  <audio id="sfx-whoosh-1342" src="assets/sfx/whoosh.m4a" data-start="13.417" data-duration="1.72" data-media-start="0" data-track-index="20" data-volume="0.15"></audio>
+  <audio id="sfx-pop-1468" src="assets/sfx/pop.m4a" data-start="14.677" data-duration="0.56" data-media-start="0" data-track-index="21" data-volume="0.16"></audio>
+  <audio id="sfx-tick-1483" src="assets/sfx/tick.m4a" data-start="14.827" data-duration="0.24" data-media-start="0" data-track-index="22" data-volume="0.18"></audio>
+  <audio id="sfx-bounce-1545" src="assets/sfx/bounce.m4a" data-start="15.447" data-duration="1.21" data-media-start="0" data-track-index="23" data-volume="0.16"></audio>
+  <audio id="sfx-whoosh-1632" src="assets/sfx/whoosh.m4a" data-start="16.317" data-duration="1.72" data-media-start="0" data-track-index="24" data-volume="0.18"></audio>
+  <audio id="sfx-whoosh-1652" src="assets/sfx/whoosh.m4a" data-start="16.517" data-duration="1.72" data-media-start="0" data-track-index="25" data-volume="0.14"></audio>
+  <audio id="sfx-swish-1875" src="assets/sfx/swish.m4a" data-start="18.747" data-duration="0.95" data-media-start="0" data-track-index="26" data-volume="0.1"></audio>
+  <audio id="sfx-tick-1875" src="assets/sfx/tick.m4a" data-start="18.747" data-duration="0.24" data-media-start="0" data-track-index="27" data-volume="0.18"></audio>
+  <audio id="sfx-swish-1993" src="assets/sfx/swish.m4a" data-start="19.927" data-duration="0.95" data-media-start="0" data-track-index="28" data-volume="0.14"></audio>
+  <audio id="sfx-tick-2171" src="assets/sfx/tick.m4a" data-start="21.707" data-duration="0.24" data-media-start="0" data-track-index="29" data-volume="0.18"></audio>
+  <audio id="sfx-pop-2321" src="assets/sfx/pop.m4a" data-start="23.207" data-duration="0.56" data-media-start="0" data-track-index="30" data-volume="0.14"></audio>
+  <audio id="sfx-whoosh-2455" src="assets/sfx/whoosh.m4a" data-start="24.55" data-duration="1.72" data-media-start="0" data-track-index="31" data-volume="0.14"></audio>
+  <audio id="sfx-tick-2578" src="assets/sfx/tick.m4a" data-start="25.78" data-duration="0.24" data-media-start="0" data-track-index="32" data-volume="0.18"></audio>
+  <audio id="sfx-tick-2796" src="assets/sfx/tick.m4a" data-start="27.96" data-duration="0.24" data-media-start="0" data-track-index="33" data-volume="0.18"></audio>
+  <audio id="sfx-chime-3022" src="assets/sfx/chime.m4a" data-start="30.22" data-duration="1.7" data-media-start="0" data-track-index="34" data-volume="0.22"></audio>
+  <audio id="sfx-whoosh-3202" src="assets/sfx/whoosh.m4a" data-start="32.017" data-duration="1.72" data-media-start="0" data-track-index="35" data-volume="0.14"></audio>
+  <audio id="sfx-swish-3271" src="assets/sfx/swish.m4a" data-start="32.707" data-duration="0.95" data-media-start="0" data-track-index="36" data-volume="0.1"></audio>
+  <audio id="sfx-tick-3271" src="assets/sfx/tick.m4a" data-start="32.707" data-duration="0.24" data-media-start="0" data-track-index="37" data-volume="0.18"></audio>
+  <audio id="sfx-swish-3581" src="assets/sfx/swish.m4a" data-start="35.807" data-duration="0.95" data-media-start="0" data-track-index="38" data-volume="0.16"></audio>
+  <audio id="sfx-pop-3651" src="assets/sfx/pop.m4a" data-start="36.507" data-duration="0.56" data-media-start="0" data-track-index="39" data-volume="0.18"></audio>
+  <audio id="sfx-bounce-3695" src="assets/sfx/bounce.m4a" data-start="36.947" data-duration="1.21" data-media-start="0" data-track-index="40" data-volume="0.22"></audio>
+  <audio id="sfx-whoosh-3772" src="assets/sfx/whoosh.m4a" data-start="37.717" data-duration="1.72" data-media-start="0" data-track-index="41" data-volume="0.14"></audio>
+  <audio id="sfx-pop-3796" src="assets/sfx/pop.m4a" data-start="37.957" data-duration="0.56" data-media-start="0" data-track-index="42" data-volume="0.18"></audio>
+  <audio id="sfx-tick-3949" src="assets/sfx/tick.m4a" data-start="39.487" data-duration="0.24" data-media-start="0" data-track-index="43" data-volume="0.18"></audio>
+  <audio id="sfx-tick-4013" src="assets/sfx/tick.m4a" data-start="40.127" data-duration="0.24" data-media-start="0" data-track-index="44" data-volume="0.18"></audio>
+  <audio id="sfx-impact-4418" src="assets/sfx/impact.m4a" data-start="44.184" data-duration="1.34" data-media-start="0" data-track-index="45" data-volume="0.28"></audio>
+  <audio id="sfx-tick-4492" src="assets/sfx/tick.m4a" data-start="44.916" data-duration="0.24" data-media-start="0" data-track-index="46" data-volume="0.2"></audio>
+  <audio id="sfx-tick-4601" src="assets/sfx/tick.m4a" data-start="46.013" data-duration="0.24" data-media-start="0" data-track-index="47" data-volume="0.16"></audio>
+  <audio id="sfx-riser-4118" src="assets/sfx/riser.m4a" data-start="41.184" data-duration="3" data-media-start="0" data-track-index="48" data-volume="0.24"></audio>
+  <audio id="sfx-music-outro-4333" src="assets/sfx/music-outro.m4a" data-start="43.334" data-duration="NaN" data-media-start="NaN" data-track-index="49" data-volume="0.4"></audio>
+</div>
+<script>
+(function () {
+  const tl = gsap.timeline({ paused: true });
+  const world = document.getElementById("world");
+  const cam = { scale: 1, x: 0, y: 0 };
+  function applyCam() { world.style.transform = "translate(" + cam.x + "px, " + cam.y + "px) scale(" + cam.scale + ")"; }
+  applyCam();
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":3.42,"ease":"power2.inOut"}, { onUpdate: applyCam, immediateRender: false }), 0);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1.1,"x":-54,"y":67.5,"duration":0.9,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 3.42);
+  tl.fromTo(cam, {"scale":1.1,"x":-54,"y":67.5}, Object.assign({"scale":1.12,"x":-64.8,"y":81,"duration":1.72,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 4.32);
+  tl.fromTo(cam, {"scale":1.12,"x":-64.8,"y":81}, Object.assign({"scale":1.16,"x":-86.4,"y":108,"duration":0.5,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 6.04);
+  tl.fromTo(cam, {"scale":1.16,"x":-86.4,"y":108}, Object.assign({"scale":1.18,"x":-92.8,"y":121.5,"duration":0.56,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 6.54);
+  tl.fromTo(cam, {"scale":1.04,"x":20,"y":0}, Object.assign({"scale":1.03,"x":10,"y":0,"duration":2.84,"ease":"power2.inOut"}, { onUpdate: applyCam, immediateRender: false }), 7.1);
+  tl.fromTo(cam, {"scale":1.03,"x":10,"y":0}, Object.assign({"scale":1.12,"x":-64.8,"y":81,"duration":2.24,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 9.94);
+  tl.fromTo(cam, {"scale":1.12,"x":-64.8,"y":81}, Object.assign({"scale":1.14,"x":-75.6,"y":94.5,"duration":0.387,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 12.18);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.06,"x":0,"y":40.5,"duration":1.65,"ease":"power2.out"}, { onUpdate: applyCam, immediateRender: false }), 12.567);
+  tl.fromTo(cam, {"scale":1.06,"x":0,"y":40.5}, Object.assign({"scale":1.1,"x":0,"y":67.5,"duration":1.06,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 14.217);
+  tl.fromTo(cam, {"scale":1.1,"x":0,"y":67.5}, Object.assign({"scale":1.12,"x":0,"y":81,"duration":1.09,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 15.277);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.06,"x":0,"y":40.5,"duration":3.28,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 16.367);
+  tl.fromTo(cam, {"scale":1.06,"x":0,"y":40.5}, Object.assign({"scale":1.08,"x":0,"y":54,"duration":2.06,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 19.647);
+  tl.fromTo(cam, {"scale":1.08,"x":0,"y":54}, Object.assign({"scale":1.1,"x":0,"y":67.5,"duration":0.6,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 21.707);
+  tl.fromTo(cam, {"scale":1.1,"x":0,"y":67.5}, Object.assign({"scale":1.12,"x":0,"y":81,"duration":1.593,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 22.307);
+  tl.fromTo(cam, {"scale":1.12,"x":0,"y":81}, Object.assign({"scale":1.03,"x":0,"y":20.25,"duration":1.4,"ease":"power2.inOut"}, { onUpdate: applyCam, immediateRender: false }), 23.9);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":20.25}, Object.assign({"scale":1.05,"x":0,"y":33.75,"duration":4.92,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 25.3);
+  tl.fromTo(cam, {"scale":1.05,"x":0,"y":33.75}, Object.assign({"scale":1.08,"x":0,"y":16.2,"duration":0.7,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 30.22);
+  tl.fromTo(cam, {"scale":1.08,"x":0,"y":16.2}, Object.assign({"scale":1.1,"x":0,"y":16.2,"duration":0.747,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 30.92);
+  tl.fromTo(cam, {"scale":1.1,"x":0,"y":16.2}, Object.assign({"scale":1,"x":0,"y":0,"duration":0.4,"ease":"power2.inOut"}, { onUpdate: applyCam, immediateRender: false }), 31.667);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.08,"x":43.2,"y":54,"duration":1.14,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 32.067);
+  tl.fromTo(cam, {"scale":1.08,"x":43.2,"y":54}, Object.assign({"scale":1.1,"x":54,"y":67.5,"duration":2.6,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 33.207);
+  tl.fromTo(cam, {"scale":1.1,"x":54,"y":67.5}, Object.assign({"scale":1.08,"x":-43.2,"y":54,"duration":0.85,"ease":"power2.inOut"}, { onUpdate: applyCam, immediateRender: false }), 35.807);
+  tl.fromTo(cam, {"scale":1.08,"x":-43.2,"y":54}, Object.assign({"scale":1.1,"x":-54,"y":67.5,"duration":0.29,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 36.657);
+  tl.fromTo(cam, {"scale":1.1,"x":-54,"y":67.5}, Object.assign({"scale":1.14,"x":0,"y":94.5,"duration":0.5,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 36.947);
+  tl.fromTo(cam, {"scale":1.14,"x":0,"y":94.5}, Object.assign({"scale":1.16,"x":0,"y":108,"duration":0.32,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 37.447);
+  tl.fromTo(cam, {"scale":1.04,"x":0,"y":0}, Object.assign({"scale":1.1,"x":0,"y":67.5,"duration":1.04,"ease":"power3.out"}, { onUpdate: applyCam, immediateRender: false }), 37.767);
+  tl.fromTo(cam, {"scale":1.1,"x":0,"y":67.5}, Object.assign({"scale":1.12,"x":0,"y":81,"duration":4.027,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 38.807);
+  tl.fromTo(cam, {"scale":1.12,"x":0,"y":81}, Object.assign({"scale":1,"x":0,"y":0,"duration":0.5,"ease":"power2.inOut"}, { onUpdate: applyCam, immediateRender: false }), 42.834);
+  tl.fromTo(cam, {"scale":1.05,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":7,"ease":"power1.inOut"}, { onUpdate: applyCam, immediateRender: false }), 43.334);
+  const WORDS = [[0,0.46],[0.46,0.6],[0.6,0.88],[0.88,1.1],[1.1,1.3],[1.3,1.52],[1.52,1.68],[1.68,1.86],[1.86,2.04],[2.04,2.22],[2.22,2.46],[2.46,3.04],[3.42,3.68],[3.68,3.96],[3.96,4.12],[4.12,4.44],[4.44,4.6],[4.6,4.9],[5.28,5.42],[5.42,5.6],[5.6,6.04],[6.04,6.26],[6.26,6.5],[6.5,6.78],[7.1,7.58],[7.58,7.94],[7.94,8.18],[8.18,8.48],[8.86,9.18],[9.18,9.44],[9.44,9.64],[9.64,9.94],[9.94,10.18],[10.18,10.4],[10.4,10.56],[10.56,10.88],[11.08,11.1],[11.1,11.32],[11.32,11.36],[11.36,11.48],[11.48,11.72],[11.72,11.88],[11.88,12],[12,12.22],[12.567,12.637],[12.637,12.777],[12.777,13.177],[13.717,13.877],[13.877,14.197],[14.197,14.357],[14.357,14.517],[14.517,14.577],[14.577,14.677],[14.677,14.977],[15.217,15.377],[15.377,15.497],[15.497,15.617],[15.617,15.797],[15.797,16.017],[16.367,16.847],[16.847,17.087],[17.087,17.287],[17.287,17.507],[17.507,17.687],[17.687,18.167],[18.747,18.787],[18.787,18.947],[18.947,19.287],[19.287,19.647],[19.927,20.167],[20.167,20.387],[20.387,20.547],[20.547,20.807],[20.807,21.207],[21.527,21.587],[21.587,21.707],[21.707,22.107],[22.107,22.507],[22.507,22.847],[22.847,23.207],[23.207,23.567],[23.9,24.34],[24.34,24.7],[24.7,25.1],[25.1,25.4],[25.4,25.78],[25.78,26.14],[26.14,26.44],[26.44,26.58],[26.58,26.78],[26.78,27.18],[27.56,27.72],[27.72,27.96],[27.96,28.22],[28.22,28.5],[28.5,28.7],[28.7,29.08],[29.08,29.32],[29.32,29.48],[29.48,29.8],[30,30.22],[30.22,30.44],[30.44,30.7],[30.7,31.02],[31.02,31.34],[31.34,31.52],[31.52,31.74],[32.067,32.527],[32.527,32.707],[32.707,33.147],[33.147,33.647],[33.647,33.887],[33.887,34.447],[34.967,35.387],[35.387,35.907],[35.907,36.207],[36.207,36.487],[36.487,36.767],[36.767,36.947],[36.947,37.307],[37.907,38.407],[38.407,38.647],[38.647,38.907],[38.907,39.147],[39.147,39.487],[39.487,39.687],[39.687,40.007],[40.007,40.127],[40.127,40.627],[40.627,41.127],[41.127,41.367],[41.367,41.607],[41.607,41.807],[41.807,42.067],[42.067,42.407],[42.407,42.727],[42.727,42.987]];
+  const spans = Array.from(document.querySelectorAll(".cap .w")).sort((p, q) => +p.dataset.i - +q.dataset.i);
+  const driver = { t: 0 };
+  function paint() {
+    const now = driver.t;
+    for (let i = 0; i < spans.length; i++) {
+      const s = WORDS[i][0], e = WORDS[i][1], el = spans[i];
+      if (now < s - 0.02) el.style.color = "rgba(255,255,255,0.86)";
+      else if (now < e + 0.04) el.style.color = "#F5C518";
+      else el.style.color = "#ffffff";
+    }
+  }
+  paint();
+  tl.fromTo(driver, { t: 0 }, { t: 50.334, duration: 50.334, ease: "none", onUpdate: paint, immediateRender: false }, 0);
+  tl.fromTo("#hook .h1", { autoAlpha: 0, y: 40, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: false }, 0.46);
+  tl.fromTo("#hook .h2", { autoAlpha: 0, y: 40, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: false }, 1.1);
+  tl.fromTo("#hook .h1", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -30, duration: 0.42, ease: "power2.in", immediateRender: false }, 2.92);
+  tl.set("#hook .h1", { autoAlpha: 0 }, 3.34);
+  tl.fromTo("#hook .h2", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -30, duration: 0.42, ease: "power2.in", immediateRender: false }, 2.97);
+  tl.set("#hook .h2", { autoAlpha: 0 }, 3.39);
+  tl.fromTo("#chip .float", { autoAlpha: 0, y: 16, scale: 0.985, transformPerspective: 1600 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, 3.22);
+  tl.fromTo("#chip .float", { rotationY: 0, rotationX: 0 }, { rotationY: -7, rotationX: 2.5, duration: 0.9, ease: "power3.out", immediateRender: false }, 3.52);
+  tl.fromTo("#chip .float", { rotationY: -7, rotationX: 2.5 }, { rotationY: 0, rotationX: 0, duration: 0.5, ease: "power2.in", immediateRender: false }, 6.6);
+  tl.fromTo("#chip .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.3, ease: "power2.inOut", immediateRender: false }, 3.57);
+  tl.fromTo("#chip .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -12, duration: 0.45, ease: "power2.in", immediateRender: false }, 6.65);
+  tl.set("#chip .float", { autoAlpha: 0 }, 7.1);
+  tl.fromTo("#chip .big", { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 3.52);
+  tl.set("#chip .strike", { scaleX: 0, rotation: -8 }, 3.22);
+  tl.fromTo("#chip .q", { autoAlpha: 0, scale: 0.4, rotation: -20 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.35, ease: "back.out(2.2)", immediateRender: false }, 4.6);
+  tl.fromTo("#chip .strike", { scaleX: 0, rotation: -8 }, { scaleX: 1, rotation: -8, duration: 0.4, ease: "power3.inOut", immediateRender: false }, 6.04);
+  tl.fromTo("#chip .big", { color: "#ffffff" }, { color: "rgba(255,255,255,0.5)", duration: 0.4, immediateRender: false }, 6.04);
+  tl.set("#fan .k0", { autoAlpha: 1 }, 9.94);
+  tl.fromTo("#fan .k0 .face, #fan .k0 .edge", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, 9.94);
+  tl.fromTo("#fan .k0", { z: -420, rotationY: 44, rotationX: 12, y: 40 }, { z: 0, rotationY: -14, rotationX: 6, y: 0, duration: 0.9, ease: "power3.out", immediateRender: false }, 9.94);
+  tl.set("#fan .k1", { autoAlpha: 1 }, 11.48);
+  tl.fromTo("#fan .k1 .face, #fan .k1 .edge", { opacity: 0 }, { opacity: 1, duration: 0.35, immediateRender: false }, 11.48);
+  tl.fromTo("#fan .k1", { x: 0, y: 0, z: -60, rotationY: -14, rotationX: 6, rotationZ: 0 }, { x: 64, y: -46, z: -120, rotationY: -14, rotationX: 6, rotationZ: 4, duration: 0.55, ease: "power3.out", immediateRender: false }, 11.48);
+  tl.set("#fan .k2", { autoAlpha: 1 }, 11.55);
+  tl.fromTo("#fan .k2 .face, #fan .k2 .edge", { opacity: 0 }, { opacity: 1, duration: 0.35, immediateRender: false }, 11.55);
+  tl.fromTo("#fan .k2", { x: 0, y: 0, z: -60, rotationY: -14, rotationX: 6, rotationZ: 0 }, { x: 128, y: -92, z: -240, rotationY: -14, rotationX: 6, rotationZ: 8, duration: 0.55, ease: "power3.out", immediateRender: false }, 11.55);
+  tl.set("#fan .k3", { autoAlpha: 1 }, 11.62);
+  tl.fromTo("#fan .k3 .face, #fan .k3 .edge", { opacity: 0 }, { opacity: 1, duration: 0.35, immediateRender: false }, 11.62);
+  tl.fromTo("#fan .k3", { x: 0, y: 0, z: -60, rotationY: -14, rotationX: 6, rotationZ: 0 }, { x: 192, y: -138, z: -360, rotationY: -14, rotationX: 6, rotationZ: 12, duration: 0.55, ease: "power3.out", immediateRender: false }, 11.62);
+  tl.fromTo("#fan .orbit", { rotationY: -8 }, { rotationY: 8, duration: 2.627, ease: "sine.inOut", immediateRender: false }, 9.94);
+  tl.fromTo("#fan .card .face, #fan .card .edge", { opacity: 1 }, { opacity: 0, duration: 0.36, ease: "power2.in", immediateRender: false }, 12.207);
+  tl.fromTo("#fan .orbit", { y: 0 }, { y: -14, duration: 0.36, ease: "power2.in", immediateRender: false }, 12.207);
+  tl.set("#fan .card .face, #fan .card .edge", { opacity: 0 }, 12.567);
+  tl.set("#fan .card", { autoAlpha: 0 }, 12.567);
+  tl.set("#hand .k0", { autoAlpha: 1 }, 13.417);
+  tl.fromTo("#hand .k0 .face, #hand .k0 .edge", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, 13.417);
+  tl.fromTo("#hand .k0", { y: 160, z: -380, rotationY: 34, rotationX: 10, rotationZ: 0, x: 0 }, { y: 0, x: 0, z: 0, rotationY: -12, rotationX: 8, rotationZ: -10, duration: 0.8, ease: "power3.out", immediateRender: false }, 13.417);
+  tl.set("#hand .k1", { autoAlpha: 1 }, 13.517);
+  tl.fromTo("#hand .k1 .face, #hand .k1 .edge", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, 13.517);
+  tl.fromTo("#hand .k1", { y: 160, z: -380, rotationY: 34, rotationX: 10, rotationZ: 0, x: 0 }, { y: -40, x: 60, z: -110, rotationY: -12, rotationX: 8, rotationZ: -3, duration: 0.8, ease: "power3.out", immediateRender: false }, 13.517);
+  tl.set("#hand .k2", { autoAlpha: 1 }, 13.617);
+  tl.fromTo("#hand .k2 .face, #hand .k2 .edge", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, 13.617);
+  tl.fromTo("#hand .k2", { y: 160, z: -380, rotationY: 34, rotationX: 10, rotationZ: 0, x: 0 }, { y: -80, x: 120, z: -220, rotationY: -12, rotationX: 8, rotationZ: 4, duration: 0.8, ease: "power3.out", immediateRender: false }, 13.617);
+  tl.set("#hand .k3", { autoAlpha: 1 }, 13.717);
+  tl.fromTo("#hand .k3 .face, #hand .k3 .edge", { opacity: 0 }, { opacity: 1, duration: 0.4, immediateRender: false }, 13.717);
+  tl.fromTo("#hand .k3", { y: 160, z: -380, rotationY: 34, rotationX: 10, rotationZ: 0, x: 0 }, { y: -120, x: 180, z: -330, rotationY: -12, rotationX: 8, rotationZ: 11, duration: 0.8, ease: "power3.out", immediateRender: false }, 13.717);
+  tl.fromTo("#hand .k3", { x: 180, y: -120, z: -330, rotationZ: 11, rotationY: -12, rotationX: 8, scale: 1 }, { x: 70, y: 70, z: 160, rotationZ: 0, rotationY: -4, rotationX: 4, scale: 1.2, duration: 0.8, ease: "power3.inOut", immediateRender: false }, 14.677);
+  tl.fromTo("#hand .k0 .face, #hand .k0 .edge", { opacity: 1 }, { opacity: 0.45, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 14.677);
+  tl.fromTo("#hand .k1 .face, #hand .k1 .edge", { opacity: 1 }, { opacity: 0.45, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 14.677);
+  tl.fromTo("#hand .k2 .face, #hand .k2 .edge", { opacity: 1 }, { opacity: 0.45, duration: 0.5, ease: "power2.inOut", immediateRender: false }, 14.677);
+  tl.fromTo("#hand .orbit", { rotationY: 6 }, { rotationY: -6, duration: 2.95, ease: "sine.inOut", immediateRender: false }, 13.417);
+  tl.fromTo("#bigline .b1", { autoAlpha: 0, y: 40, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: false }, 14.827);
+  tl.fromTo("#bigline .b2", { autoAlpha: 0, y: 40, scale: 0.9 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", immediateRender: false }, 15.447);
+  tl.fromTo("#hand .card .face, #hand .card .edge", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, 16.067);
+  tl.fromTo("#hand .orbit", { y: 0 }, { y: -14, duration: 0.3, ease: "power2.in", immediateRender: false }, 16.067);
+  tl.fromTo("#bigline .b1, #bigline .b2", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, 16.067);
+  tl.set("#hand .card .face, #hand .card .edge", { opacity: 0 }, 16.367);
+  tl.set("#bigline .b1, #bigline .b2", { autoAlpha: 0 }, 16.367);
+  tl.set("#hand .card", { autoAlpha: 0 }, 16.367);
+  tl.fromTo("#stage", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: "power2.inOut", immediateRender: false }, 16.367);
+  tl.fromTo("#stage", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.35, ease: "power2.inOut", immediateRender: false }, 31.717);
+  tl.set("#stage", { autoAlpha: 0 }, 32.067);
+  tl.fromTo("#formula .float", { autoAlpha: 0, y: 16, scale: 0.985, transformPerspective: 1600 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, 16.567);
+  tl.fromTo("#formula .float", { rotationY: 0, rotationX: 0 }, { rotationY: 6, rotationX: -2.5, duration: 0.9, ease: "power3.out", immediateRender: false }, 18.747);
+  tl.fromTo("#formula .float", { rotationY: 6, rotationX: -2.5 }, { rotationY: 0, rotationX: 0, duration: 0.5, ease: "power2.in", immediateRender: false }, 24.1);
+  tl.fromTo("#formula .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.3, ease: "power2.inOut", immediateRender: false }, 18.797);
+  tl.fromTo("#formula .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -12, duration: 0.45, ease: "power2.in", immediateRender: false }, 24.15);
+  tl.set("#formula .float", { autoAlpha: 0 }, 24.6);
+  tl.fromTo("#formula .th", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 18.747);
+  tl.fromTo("#formula .num", { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 18.897);
+  tl.set("#formula .line", { scaleX: 0 }, 16.567);
+  tl.fromTo("#formula .line", { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 19.927);
+  tl.fromTo("#formula .den", { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 20.047);
+  tl.fromTo("#formula .x100", { autoAlpha: 0, scale: 0.7 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: "back.out(2)", immediateRender: false }, 21.707);
+  tl.fromTo("#formula .eq", { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 21.957);
+  tl.fromTo("#formula .res", { autoAlpha: 0, x: 30 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, 22.107);
+  tl.set("#formula .under", { scaleX: 0 }, 16.567);
+  tl.fromTo("#formula .under", { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power3.out", immediateRender: false }, 23.207);
+  tl.fromTo("#formula .res", { scale: 1 }, { scale: 1.08, duration: 0.35, ease: "back.out(2)", yoyo: true, repeat: 1, immediateRender: false }, 23.207);
+  tl.fromTo("#sum .float", { autoAlpha: 0, y: 16, scale: 0.985, transformPerspective: 1600 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, 24.6);
+  tl.fromTo("#sum .float", { rotationY: 0, rotationX: 0 }, { rotationY: -4, rotationX: 2.5, duration: 0.9, ease: "power3.out", immediateRender: false }, 24.8);
+  tl.fromTo("#sum .float", { rotationY: -4, rotationX: 2.5 }, { rotationY: 0, rotationX: 0, duration: 0.5, ease: "power2.in", immediateRender: false }, 31.567);
+  tl.fromTo("#sum .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.3, ease: "power2.inOut", immediateRender: false }, 24.85);
+  tl.fromTo("#sum .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -12, duration: 0.45, ease: "power2.in", immediateRender: false }, 31.617);
+  tl.set("#sum .float", { autoAlpha: 0 }, 32.067);
+  tl.fromTo("#sum .th", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 24.8);
+  tl.fromTo("#sum .l0", { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 25.78);
+  const cu0 = { n: 0 }, cu0el = document.querySelector("#sum .l0 b");
+  const cu0f = () => { const n = cu0.n; const s = n.toFixed(2); cu0el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu0f();
+  tl.fromTo(cu0, { n: 0 }, { n: 308.46, duration: 1, ease: "power2.out", onUpdate: cu0f, immediateRender: false }, 25.78);
+  tl.fromTo("#sum .l1", { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 27.96);
+  const cu1 = { n: 0 }, cu1el = document.querySelector("#sum .l1 b");
+  const cu1f = () => { const n = cu1.n; const s = n.toFixed(0); cu1el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu1f();
+  tl.fromTo(cu1, { n: 0 }, { n: 28400, duration: 0.9, ease: "power2.out", onUpdate: cu1f, immediateRender: false }, 27.96);
+  tl.fromTo("#sum .rule", { autoAlpha: 0, scaleX: 0 }, { autoAlpha: 1, scaleX: 1, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 29.92);
+  tl.fromTo("#sum .big1", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 30.22);
+  const cu2 = { n: 0 }, cu2el = document.querySelector("#sum .big1 b");
+  const cu2f = () => { const n = cu2.n; const s = n.toFixed(2); cu2el.textContent = "" + (false ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + "%"; };
+  cu2f();
+  tl.fromTo(cu2, { n: 0 }, { n: 1.09, duration: 1.1, ease: "power2.out", onUpdate: cu2f, immediateRender: false }, 30.22);
+  tl.fromTo("#sum .big1 b", { scale: 0.9 }, { scale: 1, duration: 1.1, ease: "power2.out", immediateRender: false }, 30.22);
+  tl.fromTo("#sum .foot", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 31.02);
+  tl.fromTo("#vs .float", { autoAlpha: 0, y: 16, scale: 0.985, transformPerspective: 1600 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, 32.067);
+  tl.fromTo("#vs .float", { rotationY: 0, rotationX: 0 }, { rotationY: -6, rotationX: 2.5, duration: 0.9, ease: "power3.out", immediateRender: false }, 32.707);
+  tl.fromTo("#vs .float", { rotationY: -6, rotationX: 2.5 }, { rotationY: 0, rotationX: 0, duration: 0.5, ease: "power2.in", immediateRender: false }, 37.267);
+  tl.fromTo("#vs .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.3, ease: "power2.inOut", immediateRender: false }, 32.757);
+  tl.fromTo("#vs .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -12, duration: 0.45, ease: "power2.in", immediateRender: false }, 37.317);
+  tl.set("#vs .float", { autoAlpha: 0 }, 37.767);
+  tl.fromTo("#vs .v0", { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 32.707);
+  const shaft = document.querySelector("#vs .ashaft"), shaftL = shaft.getTotalLength();
+  gsap.set(shaft, { strokeDasharray: shaftL, strokeDashoffset: shaftL });
+  gsap.set("#vs .ahead", { scale: 0, svgOrigin: "232 14" });
+  tl.set("#vs .arrowwrap", { autoAlpha: 1 }, 35.807);
+  tl.fromTo(shaft, { strokeDashoffset: shaftL }, { strokeDashoffset: 0, duration: 0.75, ease: "power2.inOut", immediateRender: false }, 35.807);
+  tl.fromTo("#vs .ahead", { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(2.5)", immediateRender: false }, 36.357);
+  tl.fromTo("#vs .v1", { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 36.507);
+  tl.fromTo("#vs .v1 b", { scale: 0.8 }, { scale: 1.08, duration: 0.5, ease: "back.out(2)", immediateRender: false }, 36.507);
+  tl.fromTo("#vs .v1 b", { scale: 1.08 }, { scale: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, 37.007);
+  tl.fromTo("#vs .tag2", { autoAlpha: 0, scale: 0.7, rotation: -6 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.5, ease: "back.out(1.8)", immediateRender: false }, 36.947);
+  tl.fromTo("#two .float", { autoAlpha: 0, y: 16, scale: 0.985, transformPerspective: 1600 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, 37.767);
+  tl.fromTo("#two .float", { rotationY: 0, rotationX: 0 }, { rotationY: -6, rotationX: 2.5, duration: 0.9, ease: "power3.out", immediateRender: false }, 37.957);
+  tl.fromTo("#two .float", { rotationY: -6, rotationX: 2.5 }, { rotationY: 0, rotationX: 0, duration: 0.5, ease: "power2.in", immediateRender: false }, 42.834);
+  tl.fromTo("#two .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.3, ease: "power2.inOut", immediateRender: false }, 38.007);
+  tl.fromTo("#two .float", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -12, duration: 0.45, ease: "power2.in", immediateRender: false }, 42.884);
+  tl.set("#two .float", { autoAlpha: 0 }, 43.334);
+  tl.fromTo("#two .n", { autoAlpha: 0, scale: 0.5, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, 37.957);
+  tl.fromTo("#two .l1", { autoAlpha: 0, x: 40 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, 39.487);
+  tl.fromTo("#two .l2", { autoAlpha: 0, x: 40 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, 40.127);
+  tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power2.inOut", immediateRender: false }, 43.334);
+  tl.fromTo("#floor", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.45, immediateRender: false }, 43.334);
+  tl.fromTo("#end .float", { autoAlpha: 0, rotationX: 12, y: 80, z: -300, scale: 0.92, transformPerspective: 1800 }, { autoAlpha: 1, rotationX: 0, y: 0, z: 0, scale: 1, duration: 1.15, ease: "power4.out", immediateRender: false }, 43.584);
+  tl.fromTo("#end .sheen", { xPercent: -140 }, { xPercent: 240, duration: 1.6, ease: "power2.inOut", immediateRender: false }, 44.284);
+  tl.fromTo("#end .float", { rotationY: 0 }, { rotationY: -4, duration: 5.8, ease: "sine.inOut", immediateRender: false }, 44.234);
+  tl.fromTo("#end .wordmark", { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 44.184);
+  tl.fromTo("#end .sub", { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 44.916);
+  tl.fromTo("#end .foot", { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 46.013);
+  tl.fromTo("#brand", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false }, 0.25);
+  tl.fromTo("#brand", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -16, duration: 0.42, ease: "power2.in", immediateRender: false }, 42.884);
+  tl.set("#brand", { autoAlpha: 0 }, 43.304);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["b1-ad"] = tl;
+})();
+</script>
+</body>
+</html>
