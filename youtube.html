@@ -12,7 +12,7 @@
 <title>YouTube series — NeroPay Content</title>
 <style>html{scroll-padding-top:190px}section{scroll-margin-top:190px}</style>
 </head>
-<body>
+<body data-lang="en">
 <header class="nav"><div class="wrap">
   <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
   <nav class="nlinks" aria-label="Pages">
@@ -171,7 +171,8 @@
   function trBar(vid){
     var t = TR.titles && TR.titles[vid];
     return '<div class="trbar"><span class="lbl"><span data-l="en">Turkish script</span><span data-l="tr">Türkçe metin</span>' +
-      (t ? '<b lang="tr">' + esc(t) + '</b>' : '') + '</span>' +
+      '<b data-l="en">Every line of this script also exists in Turkish.</b>' +
+      (t ? '<b data-l="tr" lang="tr">' + esc(t) + '</b>' : '') + '</span>' +
       '<span class="trnote" data-l="tr">' + esc(TR.status || '') + '</span>' +
       '<div class="seg on" role="group" aria-label="Language"><button type="button" data-lang-go="en" aria-pressed="true">EN</button>' +
       '<button type="button" data-lang-go="tr" aria-pressed="false">TR</button></div></div>';

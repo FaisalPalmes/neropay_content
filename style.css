@@ -475,9 +475,13 @@ details.shot .who{font-family:"Chivo",sans-serif;font-size:.72rem;font-weight:70
 /* ---------- language switching ----------
    Every bilingual element carries data-l. Turkish is hidden until the
    page is put in Turkish, then the English half hides instead.        */
-[data-l="tr"]{display:none}
-body[data-lang="tr"] [data-l="en"]{display:none}
-body[data-lang="tr"] [data-l="tr"]{display:revert}
+/* Hide the half that isn't wanted; never force the other half's display, so a
+   component rule like .trbar .lbl b{display:block} still governs it. !important
+   because those component rules out-specify a bare attribute selector — that is
+   exactly how the Turkish titles leaked into the English view once already.
+   <body data-lang="en"> is set in the HTML so nothing flashes before JS runs. */
+body[data-lang="en"] [data-l="tr"]{display:none!important}
+body[data-lang="tr"] [data-l="en"]{display:none!important}
 .trbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px;
   padding:12px 14px;border:1px solid var(--rule);background:var(--surface)}
 .trbar .lbl{flex:1 1 auto;min-width:120px}
