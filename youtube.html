@@ -13,27 +13,38 @@
 <style>html{scroll-padding-top:190px}section{scroll-margin-top:190px}</style>
 </head>
 <body>
-<div class="nav"><div class="wrap">
+<header class="nav"><div class="wrap">
   <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
-  <a class="n" href="index.html">Overview</a>
-  <a class="n" href="social.html">Social posts</a>
-  <a class="n" href="youtube.html">YouTube series</a>
-  <a class="n" href="ideas.html">Ideas</a>
-  <a class="n" href="calendar.html">Calendar</a>
-  <a class="n" href="rails.html">Rails</a>
-</div></div>
+  <nav class="nlinks" aria-label="Pages">
+    <a class="n" href="index.html">Overview</a>
+    <a class="n" href="social.html">Posts</a>
+    <a class="n" href="youtube.html" aria-current="page">Videos</a>
+    <a class="n" href="ideas.html">Ideas</a>
+    <a class="n" href="calendar.html">Calendar</a>
+    <a class="n" href="rails.html">Rails</a>
+  </nav>
+</div></header>
 <div class="wrap">
 
 <div class="hero">
-  <span class="kicker">YouTube · Explained by NeroPay v6 · Behind the Counter v1</span>
+  <span class="kicker">YouTube · Explained by NeroPay v6 · Behind the Counter v1 · English + Türkçe</span>
   <h1>Three series.<br>Every shot, every prompt.</h1>
-  <p class="lede">Everything NeroPay puts on YouTube, generated in Higgsfield. Two runs of <em>Explained by NeroPay</em> — three explainers for business owners, three for partners — and <em>Behind the Counter</em>, a fortnightly video-call montage with six owners in their own premises. Paste the global first, then each shot, or copy both together. Every graphic the scripts call for is drawn below as an exact file.</p>
+  <p class="lede">Everything NeroPay puts on YouTube, generated in Higgsfield. Two runs of <em>Explained by NeroPay</em> — three explainers for business owners, three for partners — and <em>Behind the Counter</em>, a fortnightly video-call montage with six owners in their own premises. Paste the global first, then each shot, or copy both together. Every graphic the scripts call for is drawn below as an exact file. Every script also carries a Turkish version — flip every script at once with the <em>EN / TR</em> control.</p>
   <div class="facts" id="stats"></div>
 </div>
 
 </div>
-<div class="subbar"><div class="wrap"><div class="row" id="tabs" role="tablist" aria-label="Jump to"></div><div class="row2" id="tabs2" hidden></div></div></div>
+<div class="subbar"><div class="wrap">
+  <div class="row"><div id="tabs" role="tablist" aria-label="Jump to" style="display:flex;gap:6px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none"></div><span class="sep"></span><div class="seg" id="lang" role="group" aria-label="Script language"><button type="button" data-lang-go="en" aria-pressed="true">EN</button><button type="button" data-lang-go="tr" aria-pressed="false">TR</button></div></div>
+  <div class="row2" id="tabs2" hidden></div>
+</div></div>
 <div class="wrap">
+
+<section id="pick">
+  <div class="sec-head"><span class="lbl">Videos</span><h2>Pick a video</h2></div>
+  <p class="sec-sub">Twelve videos across three series. Click one and the page shows only that video — every shot, every prompt, every graphic, in both languages.</p>
+  <div id="picker"></div>
+</section>
 
 <section id="how" data-tab="how">
   <div class="sec-head"><span class="lbl">01</span><h2>How to use this</h2></div>
@@ -89,6 +100,21 @@
   <div class="note yl" style="margin-top:28px"><b>Two brand calls to check</b>The Explained pack says the end card is a white screen. Brand says yellow only ever sits on dark, so every end card here is charcoal — flip it if you'd rather keep the pack literal. And the NeroPay specimen statement carries the pack's 0.70% flat rate, which is still an open question for Eray; it's here because the video needs it, not because the rate is settled.</div>
 </section>
 
+<section id="turkish" data-tab="turkish">
+  <div class="sec-head"><span class="lbl">TR</span><h2>Turkish — how these were translated</h2></div>
+  <p class="sec-sub">B1 was worked through line by line with Elif on 10 September 2026. What she corrected is written down here so the next video reads in the same register instead of being translated from scratch. Anyone adding a video translates to these rules, then has a Turkish speaker read it aloud once — the fault always shows up in the mouth, not on the page.</p>
+  <div class="note warn"><b>Disclosure — a Turkish upload is a separate upload</b><span id="tr-disc"></span></div>
+  <div class="note yl"><b>What is and isn't translated</b><span id="tr-scope"></span></div>
+  <h3 style="margin:32px 0 10px">The rules Elif gave</h3>
+  <div class="scroller"><table class="t" id="tr-guide"><thead><tr><th>Rule</th><th>Not this</th><th>This</th><th>Why</th></tr></thead><tbody></tbody></table></div>
+  <h3 style="margin:36px 0 10px">Where her figures and the pack disagree</h3>
+  <p class="sec-sub" style="margin-bottom:14px">Raised, not silently applied. The English figures are the ones the overlays are drawn from and they reconcile to £308.46; hers don't. Worth one message to Elif before anything is filmed.</p>
+  <div class="scroller"><table class="t" id="tr-flags"><thead><tr><th>She said</th><th>The pack says</th><th>What we did</th></tr></thead><tbody></tbody></table></div>
+  <h3 style="margin:36px 0 10px">The Turkish voice globals</h3>
+  <p class="sec-sub" style="margin-bottom:14px">Both globals specify a British voice. Generate a Turkish shot with the English global and you get a British actor reading Turkish phonetically. Every "· TR" button on this page has already swapped the paragraph below in.</p>
+  <div class="two" id="tr-voice"></div>
+</section>
+
 <section id="settle" data-tab="settle">
   <div class="sec-head"><span class="lbl">—</span><h2>Still to settle</h2></div>
   <p class="sec-sub">Open questions, not decisions.</p>
@@ -111,6 +137,7 @@
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="videos.js"></script>
+<script src="scripts-tr.js"></script>
 <script src="calls.js"></script>
 <script src="overlays.js"></script>
 <script src="app.js"></script>
@@ -119,6 +146,36 @@
   var V = window.VIDEOS, C = window.CALLS, ART = window.OVERLAY_ART, esc = NP.esc;
   var LIMIT = 2500, GL = V.presenterGlobal, OGL = V.overlayGlobal, MG = C.merchantGlobal, HG = C.hostGlobal;
   var stash = NP.stash;
+
+  /* ---------- Turkish ----------
+     scripts-tr.js carries one Turkish line per spoken shot, keyed by shot
+     id, plus a Turkish VOICE paragraph for each global. A Turkish
+     generation is the same prompt with the SPEAKS line swapped and the
+     British voice paragraph replaced — otherwise the model casts a
+     British actor and has them read Turkish phonetically. */
+  var TR = window.SCRIPTS_TR || { lines:{}, titles:{}, questions:{}, desc:{}, voice:{} };
+  var TRL = TR.lines || {};
+  function trLine(id){ return TRL[id] || ''; }
+  function trGlobal(g, which){
+    var v = TR.voice && TR.voice[which];
+    if (!v) return g;
+    return g.split('\n\n').map(function(p){ return /^VOICE:/.test(p) ? v : p; }).join('\n\n');
+  }
+  function trPrompt(p, line){
+    if (!line) return null;
+    return p.split('\n').map(function(l){
+      return /^SPEAKS: /.test(l) ? 'SPEAKS (Türkçe): "' + line + '"' : l;
+    }).join('\n');
+  }
+  var GLT = trGlobal(GL, 'presenter'), HGT = trGlobal(HG, 'host'), MGT = trGlobal(MG, 'merchant');
+  function trBar(vid){
+    var t = TR.titles && TR.titles[vid];
+    return '<div class="trbar"><span class="lbl"><span data-l="en">Turkish script</span><span data-l="tr">Türkçe metin</span>' +
+      (t ? '<b lang="tr">' + esc(t) + '</b>' : '') + '</span>' +
+      '<span class="trnote" data-l="tr">' + esc(TR.status || '') + '</span>' +
+      '<div class="seg on" role="group" aria-label="Language"><button type="button" data-lang-go="en" aria-pressed="true">EN</button>' +
+      '<button type="button" data-lang-go="tr" aria-pressed="false">TR</button></div></div>';
+  }
   function key(s){ return String(s).replace(/[^\w-]/g, ''); }
   function chars(c){ return '<span class="chip n' + (c > LIMIT ? ' over' : '') + '">' + c + ' / ' + LIMIT + '</span>'; }
   function has(id){ return ART.ids().indexOf(id) > -1; }
@@ -232,25 +289,47 @@
       (aid && has(aid) ? '<a href="#asset-' + key(aid) + '" data-goto="assets">card asset →</a>' : '') + '</div>';
   }
   function shotCard(o){ /* o: {cls, id, tc, spoken, chips, delivery, gesture, note, prompt, pid, comb, primary, who} */
+    var trS = o.trSpoken, trP = o.trPrompt, trC = o.trComb;
     var b = '<details class="shot' + (o.cls ? ' ' + o.cls : '') + '"><summary><span class="sid">' + esc(o.id) + '</span><span class="stc">' + esc(o.tc) + '</span>' +
       (o.who ? '<span class="who">' + esc(o.who) + '</span>' : '') +
-      '<span class="ssp">' + esc(o.spoken) + '</span>' + (o.chips || '') + chars(o.comb.length) + '</summary><div class="sbody">';
-    b += '<p class="say">“' + esc(o.spoken) + '”</p>';
+      '<span class="ssp" data-l="en">' + esc(o.spoken) + '</span>' +
+      '<span class="ssp" data-l="tr" lang="tr">' + esc(trS || o.spoken) + '</span>' +
+      (o.chips || '') + chars(o.comb.length) + '</summary><div class="sbody">';
+    b += '<p class="say" data-l="en">“' + esc(o.spoken) + '”</p>';
+    b += '<p class="say" data-l="tr" lang="tr">“' + esc(trS || o.spoken) + '”</p>';
+    if (trS) b += '<p class="small" data-l="tr">English: “' + esc(o.spoken) + '”</p>';
     if (o.delivery) b += '<div class="mb"><span class="lbl">Delivery</span><p>' + esc(o.delivery) + '</p></div>';
     if (o.gesture)  b += '<div class="mb"><span class="lbl">Gesture</span><p>' + esc(o.gesture) + '</p></div>';
     if (o.note)     b += '<div class="mb"><span class="lbl">' + esc(o.note[0]) + '</span><p>' + esc(o.note[1]) + '</p></div>';
-    b += '<div class="mb"><span class="lbl">' + esc(o.label) + '</span></div><pre class="p" id="' + o.pid + '">' + esc(o.prompt) + '</pre>';
-    b += '<div class="btns"><button class="cp pri' + (o.btn ? ' ' + o.btn : '') + '" type="button" data-text="' + stash(o.comb) + '">' + esc(o.primary) + '</button>' +
-         '<button class="cp" type="button" data-copy="' + o.pid + '">' + esc(o.secondary || 'Shot only') + '</button></div></div></details>';
+    b += '<div class="mb"><span class="lbl" data-l="en">' + esc(o.label) + '</span>' +
+         '<span class="lbl" data-l="tr">' + esc(o.label) + ' · Turkish, with the Turkish voice global</span></div>';
+    b += '<pre class="p" id="' + o.pid + '" data-l="en">' + esc(o.prompt) + '</pre>';
+    b += '<pre class="p" id="' + o.pid + '-tr" data-l="tr">' + esc(trP || o.prompt) + '</pre>';
+    b += '<div class="btns">' +
+      '<button class="cp pri' + (o.btn ? ' ' + o.btn : '') + '" type="button" data-l="en" data-text="' + stash(o.comb) + '">' + esc(o.primary) + '</button>' +
+      '<button class="cp pri' + (o.btn ? ' ' + o.btn : '') + '" type="button" data-l="tr" data-text="' + stash(trC || o.comb) + '">' + esc(o.primary) + ' · TR</button>' +
+      '<button class="cp" type="button" data-l="en" data-copy="' + o.pid + '">' + esc(o.secondary || 'Shot only') + '</button>' +
+      '<button class="cp" type="button" data-l="tr" data-copy="' + o.pid + '-tr">' + esc(o.secondary || 'Shot only') + ' · TR</button>' +
+      '</div></div></details>';
     return b;
   }
-  function scriptBlock(vid, script){
-    return '<details class="shot" style="margin-top:22px"><summary><span class="sid">SCRIPT</span><span class="stc">in order</span><span class="ssp">Every spoken line, read straight through</span></summary><div class="sbody">' +
-      '<div class="copy" id="scr-' + vid + '">' + esc(script) + '</div><button class="cp" type="button" data-copy="scr-' + vid + '">Copy full script</button></div></details>';
+  function scriptBlock(vid, script, scriptTr){
+    var h = '<details class="shot" style="margin-top:22px"><summary><span class="sid">SCRIPT</span><span class="stc">in order</span>' +
+      '<span class="ssp" data-l="en">Every spoken line, read straight through</span>' +
+      '<span class="ssp" data-l="tr">Konuşulan her satır, baştan sona</span></summary><div class="sbody">';
+    h += '<div class="copy" id="scr-' + vid + '" data-l="en">' + esc(script) + '</div>';
+    h += '<div class="copy" id="scr-' + vid + '-tr" data-l="tr" lang="tr">' + esc(scriptTr || script) + '</div>';
+    h += '<div class="btns"><button class="cp" type="button" data-l="en" data-copy="scr-' + vid + '">Copy full script</button>' +
+         '<button class="cp" type="button" data-l="tr" data-copy="scr-' + vid + '-tr">Türkçe metni kopyala</button></div>';
+    return h + '</div></details>';
   }
-  function descNote(vid, text){
-    return '<div class="note" style="margin-top:28px"><b>Description + pinned comment — where the ask lives instead of in the script</b>' + esc(text) +
-      '<div class="btns"><button class="cp" type="button" data-text="' + stash(text) + '">Copy description</button></div></div>';
+  function descNote(vid, text, textTr){
+    var h = '<div class="note" style="margin-top:28px"><b>Description + pinned comment — where the ask lives instead of in the script</b>' +
+      '<span data-l="en">' + esc(text) + '</span>' +
+      '<span data-l="tr" lang="tr">' + esc(textTr || text) + '</span>' +
+      '<div class="btns"><button class="cp" type="button" data-l="en" data-text="' + stash(text) + '">Copy description</button>';
+    if (textTr) h += '<button class="cp" type="button" data-l="tr" data-text="' + stash(textTr) + '">Açıklamayı kopyala</button>';
+    return h + '</div></div>';
   }
 
   /* ---------- Explained: one timeline per video, overlays in purple where they start ---------- */
@@ -259,7 +338,9 @@
   function explainedSection(v){
     var np = v.shots.filter(function(s){ return s.spoken; }).length;
     var placeholders = v.shots.filter(function(s){ return /PLACEHOLDER/.test(s.prompt); }).map(function(s){ return s.id; });
-    var h = '<section id="' + v.id + '" data-tab="' + v.id + '" data-group="' + GROUP_OF[v.id] + '"><div class="sec-head"><span class="lbl">' + v.id + '</span><h2>' + esc(v.title) + '</h2></div>';
+    var trT = TR.titles && TR.titles[v.id];
+    var h = '<section id="' + v.id + '" data-tab="' + v.id + '" data-group="' + GROUP_OF[v.id] + '"><div class="sec-head"><span class="lbl">' + v.id + '</span>' +
+      '<h2><span data-l="en">' + esc(v.title) + '</span><span data-l="tr" lang="tr">' + esc(trT || v.title) + '</span></h2></div>';
     h += '<p class="sec-sub">' + esc(v.series) + ' · ' + esc(v.runtime) + ' · aspect ' + esc(v.aspect) + ' · ' + np + ' presenter shots · ' + v.overlays.length + ' overlay clips</p>';
     if (placeholders.length) h += '<div class="note warn"><b>Blocked</b>' + placeholders.join(', ') + ' carries <code>[PLACEHOLDER]</code> where the partner incentive figure goes. Still with Eray. Generate everything else; leave that shot until the figure is signed off.</div>';
 
@@ -288,10 +369,24 @@
       if (s.spoken) dump.push('=== ' + s.id + ' · presenter · ' + s.tc + ' ===\n\n' + GL + '\n\n' + s.prompt);
     });
     (startsAt.__end || []).forEach(dumpOverlay);
-    var script = v.shots.filter(function(s){ return s.spoken; }).map(function(s){ return s.spoken; }).join('\n\n');
-    h += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + v.id + '</button>' +
-         '<button class="cp" type="button" data-text="' + stash(script) + '">Copy full script</button><span class="chip n">' + dump.length + ' prompts</span></div>';
-    h += scriptBlock(v.id, script);
+    var spokenShots = v.shots.filter(function(s){ return s.spoken; });
+    var script = spokenShots.map(function(s){ return s.spoken; }).join('\n\n');
+    var scriptTr = spokenShots.map(function(s){ return trLine(s.id) || s.spoken; }).join('\n\n');
+    var dumpTr = [];
+    v.shots.forEach(function(s){
+      if (!s.spoken) return;
+      var t = trLine(s.id);
+      dumpTr.push('=== ' + s.id + ' · sunucu · ' + s.tc + ' ===\n\n' + GLT + '\n\n' + (trPrompt(s.prompt, t) || s.prompt));
+    });
+    h += trBar(v.id);
+    h += '<div class="btns"><button class="cp pri" type="button" data-l="en" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + v.id + '</button>' +
+         '<button class="cp pri" type="button" data-l="tr" data-text="' + stash(dumpTr.join('\n\n\n')) + '">' + v.id + ' · Türkçe sunucu çekimleri</button>' +
+         '<button class="cp" type="button" data-l="en" data-text="' + stash(script) + '">Copy full script</button>' +
+         '<button class="cp" type="button" data-l="tr" data-text="' + stash(scriptTr) + '">Türkçe metni kopyala</button>' +
+         '<span class="chip n" data-l="en">' + dump.length + ' prompts</span>' +
+         '<span class="chip n" data-l="tr">' + dumpTr.length + ' Türkçe çekim</span></div>';
+    h += '<div class="note yl" data-l="tr"><b>Türkçe sürüm — okumadan üretmeyin</b>Konuşma metni Türkçe, ekrandaki grafikler değil. OV kartları hâlâ İngilizce çizili; Türkçe yükleme için yeniden çizilmeleri gerekiyor. Yüklerken YouTube\'un "değiştirilmiş veya sentetik içerik" ayarını bu video için ayrıca işaretleyin ve açıklamaya şu satırı koyun: ' + esc(TR.disclosure || '') + '</div>';
+    h += scriptBlock(v.id, script, scriptTr);
 
     function overlayCard(o){
       var k = v.id + '-' + key(o.id), combA = OGL + '\n\n' + o.anim, aid = v.id + '/' + o.id;
@@ -311,7 +406,9 @@
       var pre = (startsAt[s.id] || []).map(overlayCard).join('');
       if (!s.spoken) return pre + cardRow(s.id, s.tc, s.prompt, cardAsset[s.id] ? cardAsset[s.id](v) : null);
       var secs = (s.prompt.match(/ - (\d+)s/) || [])[1];
+      var t = trLine(s.id), tp = trPrompt(s.prompt, t);
       return pre + shotCard({ id: s.id, tc: s.tc, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture,
+        trSpoken: t, trPrompt: tp, trComb: tp ? GLT + '\n\n' + tp : null,
         chips: (secs ? '<span class="chip d">' + secs + 's</span>' : '') + (s.ov ? '<span class="chip mt">' + esc(s.ov) + '</span>' : ''),
         note: s.ov ? ['Overlay in post', s.ov + ' sits over this shot — the purple card above, where it starts.'] : null,
         label: 'Shot prompt — the presenter global goes before it', prompt: s.prompt, pid: 'pr-' + v.id + '-' + key(s.id),
@@ -323,7 +420,7 @@
     if (v.id === 'B1') used = used.concat(['STATEMENT/TIERED', 'STATEMENT/FLAT']);
     h += '<h3 style="margin:36px 0 4px">Everything drawn for ' + v.id + '</h3>';
     h += NP.assetStrip(used, 'Overlays, cards and the disclosure this video uses — one place, ready to download');
-    if (DESC[v.id]) h += descNote(v.id, DESC[v.id]);
+    if (DESC[v.id]) h += descNote(v.id, DESC[v.id], TR.desc && TR.desc[v.id]);
     return h + '</section>';
   }
 
@@ -345,7 +442,12 @@
 
     h += '<h3 style="margin:32px 0 10px">Schedule</h3>';
     h += '<div class="scroller"><table class="t"><thead><tr><th>Ep</th><th>Out</th><th>Title</th><th>The question</th><th>Runtime</th></tr></thead><tbody>' +
-      C.episodes.map(function(e){ return '<tr><td>' + e.id + '</td><td>' + esc(e.date) + '</td><td><a href="#' + e.id + '" data-goto="' + e.id + '">' + esc(e.title) + '</a></td><td>' + esc(e.question) + '</td><td class="num">' + esc(e.runtime) + '</td></tr>'; }).join('') +
+      C.episodes.map(function(e){
+        var tt = (TR.titles || {})[e.id], tq = (TR.questions || {})[e.id];
+        return '<tr><td>' + e.id + '</td><td>' + esc(e.date) + '</td><td><a href="#' + e.id + '" data-goto="' + e.id + '">' +
+          '<span data-l="en">' + esc(e.title) + '</span><span data-l="tr" lang="tr">' + esc(tt || e.title) + '</span></a></td>' +
+          '<td><span data-l="en">' + esc(e.question) + '</span><span data-l="tr" lang="tr">' + esc(tq || e.question) + '</span></td>' +
+          '<td class="num">' + esc(e.runtime) + '</td></tr>'; }).join('') +
       '</tbody></table></div>';
 
     h += '<h3 style="margin:36px 0 4px">The cast — generate the starting frames once</h3>';
@@ -365,20 +467,40 @@
     return h + '</section>';
   }
   function callSection(e){
-    var h = '<section id="' + e.id + '" data-tab="' + e.id + '" data-group="BC"><div class="sec-head"><span class="lbl">' + e.id + '</span><h2>' + esc(e.title) + '</h2></div>';
+    var trT = TR.titles && TR.titles[e.id];
+    var h = '<section id="' + e.id + '" data-tab="' + e.id + '" data-group="BC"><div class="sec-head"><span class="lbl">' + e.id + '</span>' +
+      '<h2><span data-l="en">' + esc(e.title) + '</span><span data-l="tr" lang="tr">' + esc(trT || e.title) + '</span></h2></div>';
     var nh = e.shots.filter(function(s){ return s.kind === 'host'; }).length, nb = e.shots.filter(function(s){ return s.kind === 'bite'; }).length;
     h += '<p class="sec-sub">Behind the Counter · episode ' + e.ep + ' · out ' + esc(e.date) + ' · ' + esc(e.runtime) + ' · 16:9 · ' + nh + ' host shots · ' + nb + ' owner bites</p>';
-    if (e.cold) h += '<div class="note yl"><b>Cold open · 0:00–0:03</b>The last three seconds of ' + esc(e.cold.id) + ', ' + esc(castByKey[e.cold.who].name) + ': “' + esc(e.cold.spoken) + '” No plate, no host box. Then the question.</div>';
-    var dump = [], script = [];
+    if (e.cold) h += '<div class="note yl"><b>Cold open · 0:00–0:03</b>The last three seconds of ' + esc(e.cold.id) + ', ' + esc(castByKey[e.cold.who].name) + ': ' +
+      '<span data-l="en">“' + esc(e.cold.spoken) + '”</span><span data-l="tr" lang="tr">“' + esc(trLine(e.cold.id) || e.cold.spoken) + '”</span>' +
+      ' No plate, no host box. Then the question.</div>';
+    var dump = [], script = [], dumpTr = [], scriptTr = [];
     e.shots.forEach(function(s){
-      if (s.kind === 'host') { dump.push('=== ' + s.id + ' · host · ' + s.tc + ' ===\n\n' + HG + '\n\n' + s.prompt); script.push('NEROPAY: ' + s.spoken); }
-      if (s.kind === 'bite') { var c = castByKey[s.who]; dump.push('=== ' + s.id + ' · ' + c.name + ' · ' + s.tc + ' ===\n\n' + MG + '\n\n' + s.prompt); script.push(c.name.toUpperCase() + ': ' + s.spoken); }
+      var t = trLine(s.id), tp = trPrompt(s.prompt, t);
+      if (s.kind === 'host') {
+        dump.push('=== ' + s.id + ' · host · ' + s.tc + ' ===\n\n' + HG + '\n\n' + s.prompt);
+        dumpTr.push('=== ' + s.id + ' · sunucu · ' + s.tc + ' ===\n\n' + HGT + '\n\n' + (tp || s.prompt));
+        script.push('NEROPAY: ' + s.spoken); scriptTr.push('NEROPAY: ' + (t || s.spoken));
+      }
+      if (s.kind === 'bite') {
+        var c = castByKey[s.who];
+        dump.push('=== ' + s.id + ' · ' + c.name + ' · ' + s.tc + ' ===\n\n' + MG + '\n\n' + s.prompt);
+        dumpTr.push('=== ' + s.id + ' · ' + c.name + ' · ' + s.tc + ' ===\n\n' + MGT + '\n\n' + (tp || s.prompt));
+        script.push(c.name.toUpperCase() + ': ' + s.spoken); scriptTr.push(c.name.toUpperCase() + ': ' + (t || s.spoken));
+      }
     });
-    script = script.join('\n\n');
-    h += '<div class="btns"><button class="cp pri" type="button" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + e.id + '</button>' +
-         '<button class="cp" type="button" data-text="' + stash(script) + '">Copy full script</button><span class="chip n">' + dump.length + ' prompts</span>' +
-         '<span class="chip d">frames + loops are in the series section</span></div>';
-    h += scriptBlock(e.id, script);
+    script = script.join('\n\n'); scriptTr = scriptTr.join('\n\n');
+    h += trBar(e.id);
+    h += '<div class="btns"><button class="cp pri" type="button" data-l="en" data-text="' + stash(dump.join('\n\n\n')) + '">Copy every generation for ' + e.id + '</button>' +
+         '<button class="cp pri" type="button" data-l="tr" data-text="' + stash(dumpTr.join('\n\n\n')) + '">' + e.id + ' · Türkçe çekimlerin tamamı</button>' +
+         '<button class="cp" type="button" data-l="en" data-text="' + stash(script) + '">Copy full script</button>' +
+         '<button class="cp" type="button" data-l="tr" data-text="' + stash(scriptTr) + '">Türkçe metni kopyala</button>' +
+         '<span class="chip n">' + dump.length + ' prompts</span>' +
+         '<span class="chip d" data-l="en">frames + loops are in the series section</span>' +
+         '<span class="chip d" data-l="tr">başlangıç kareleri ve döngüler seri bölümünde</span></div>';
+    if (TR.questions && TR.questions[e.id]) h += '<div class="note yl" data-l="tr"><b>Soru kartı — Türkçe</b>' + esc(TR.questions[e.id]) + '<br>Kart hâlâ İngilizce çizili; Türkçe yükleme için yeniden çizilmesi gerekiyor. Yüklerken sentetik içerik ayarını işaretleyin ve açıklamaya şu satırı koyun: ' + esc(TR.disclosure || '') + '</div>';
+    h += scriptBlock(e.id, script, scriptTr);
     h += '<h3 style="margin:32px 0 10px">Timeline — every generation, in order</h3>';
     h += '<p class="sec-sub" style="margin-bottom:14px">Host in yellow, owner bites in blue, the question card in purple where it sits. Each bite is generated from that owner\'s starting frame with the owner global in front. The host listening loop runs top right over every bite.</p>';
     h += e.shots.map(function(s){
@@ -389,10 +511,14 @@
         return row;
       }
       if (s.kind === 'end') return cardRow(s.id, s.tc, s.prompt, 'CALL/END');
-      if (s.kind === 'host') return shotCard({ id: s.id, tc: s.tc, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture, chips: '<span class="chip d">' + s.secs + 's</span><span class="chip p">host</span>',
+      var t = trLine(s.id), tp = trPrompt(s.prompt, t);
+      if (s.kind === 'host') return shotCard({ id: s.id, tc: s.tc, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture,
+        trSpoken: t, trPrompt: tp, trComb: tp ? HGT + '\n\n' + tp : null,
+        chips: '<span class="chip d">' + s.secs + 's</span><span class="chip p">host</span>',
         label: 'Host shot — the host global goes before it', prompt: s.prompt, pid: 'pr-' + key(s.id), comb: HG + '\n\n' + s.prompt, primary: 'Copy global + shot' });
       var c = castByKey[s.who];
       return shotCard({ cls: 'mc', id: s.id, tc: s.tc, who: c.name, spoken: s.spoken, delivery: s.delivery, gesture: s.gesture,
+        trSpoken: t, trPrompt: tp, trComb: tp ? MGT + '\n\n' + tp : null,
         chips: '<span class="chip d">' + s.secs + 's</span><span class="chip li">' + esc(c.trade) + '</span>' + (s.cold ? '<span class="chip p">cold open</span>' : ''),
         note: ['In post', 'Name plate for ' + c.name + ' bottom left; host listening loop top right; the owner global goes before this prompt.'],
         label: 'Bite prompt — attach ' + c.name + '\'s starting frame; the owner global goes before it', prompt: s.prompt, pid: 'pr-' + key(s.id),
@@ -406,28 +532,74 @@
     return h + '</section>';
   }
 
+  /* ---------- one video, as a button ----------
+     The old list was six near-identical lines of text. These are the
+     primary way into a video: series colour on the spine, the id big,
+     the state (blocked, Turkish) visible without opening anything.  */
+  function videoButton(v, g){
+    var call = !!g.call;
+    var np = v.shots.filter(function(s){ return s.spoken; }).length;
+    var blocked = v.shots.some(function(s){ return /PLACEHOLDER/.test(s.prompt || ''); });
+    var trT = (TR.titles || {})[v.id];
+    var done = v.shots.filter(function(s){ return s.spoken && trLine(s.id); }).length;
+    var meta = call
+      ? esc(v.runtime) + ' · ' + v.shots.filter(function(s){ return s.kind === 'bite'; }).length + ' bites · 16:9'
+      : esc(v.runtime) + ' · ' + np + ' shots · ' + v.overlays.length + ' overlays · ' + esc(v.aspect);
+    return '<button class="v ' + g.id.toLowerCase() + (blocked ? ' blk' : '') + '" type="button" data-tab-go="' + v.id + '" aria-pressed="false">' +
+      '<span class="vid">' + v.id + '</span>' +
+      '<span class="vt" data-l="en">' + esc(v.title) + '</span>' +
+      '<span class="vt" data-l="tr" lang="tr">' + esc(trT || v.title) + '</span>' +
+      '<span class="vm">' + meta + '</span>' +
+      '<span class="vch">' + (blocked ? '<span class="chip blocked">blocked</span>' : '') +
+        (done === np && np ? '<span class="chip p">TR</span>' : (done ? '<span class="chip d">TR ' + done + '/' + np + '</span>' : '')) +
+      '</span></button>';
+  }
+
   /* ---------- assemble ---------- */
   var out = '';
   GROUPS.forEach(function(g){
     if (g.call) { out += callIntro(g); out += g.vids.map(callSection).join(''); return; }
-    out += '<section id="' + g.id + '-intro" data-group="' + g.id + '" data-tab="' + g.id + '"><div class="sec-head"><span class="lbl">' + g.n + '</span><h2>' + esc(g.name) + '</h2></div><p class="sec-sub">' + esc(g.sub) + '</p><div class="vgrid">' +
-      g.vids.map(function(v){
-        var np = v.shots.filter(function(s){ return s.spoken; }).length, blocked = v.shots.some(function(s){ return /PLACEHOLDER/.test(s.prompt); });
-        return '<a href="#' + v.id + '" data-goto="' + v.id + '"><span class="vt">' + v.id + ' — ' + esc(v.title) + '</span><span class="vm">' + esc(v.series) + (blocked ? ' · <span class="chip blocked">blocked</span>' : '') + '</span>' +
-          '<span class="vm">' + esc(v.runtime) + ' · ' + np + ' shots · ' + v.overlays.length + ' overlays · ' + esc(v.aspect) + '</span></a>';
-      }).join('') + '</div></section>';
+    out += '<section id="' + g.id + '-intro" data-group="' + g.id + '" data-tab="' + g.id + '"><div class="sec-head"><span class="lbl">' + g.n + '</span><h2>' + esc(g.name) + '</h2></div><p class="sec-sub">' + esc(g.sub) + '</p>' +
+      '<div class="vpick">' + g.vids.map(function(v){ return videoButton(v, g); }).join('') + '</div></section>';
     out += g.vids.map(explainedSection).join('');
   });
   document.getElementById('series').innerHTML = out;
 
+  document.getElementById('picker').innerHTML = GROUPS.map(function(g){
+    return '<div class="vgroup"><h3>' + esc(g.name) + '<span>' + g.vids.length + ' videos</span></h3>' +
+      '<p>' + esc(g.sub.split('. ').slice(0, 2).join('. ')) + '.</p>' +
+      '<div class="vpick">' + g.vids.map(function(v){ return videoButton(v, g); }).join('') +
+      '<button class="v all" type="button" data-tab-go="' + g.id + '" aria-pressed="false">' +
+      '<span class="vid">ALL</span><span class="vt">All of ' + esc(g.short) + '</span>' +
+      '<span class="vm">series notes, schedule and every video</span></button></div></div>';
+  }).join('');
+
+  /* ---------- the Turkish section ---------- */
+  document.getElementById('tr-disc').textContent = (TR.disclosureNote || '') + ' The line to paste: “' + (TR.disclosure || '') + '”';
+  document.getElementById('tr-scope').textContent = TR.overlayNote || '';
+  document.querySelector('#tr-guide tbody').innerHTML = (TR.guide || []).map(function(r){
+    return '<tr><td><strong>' + esc(r.rule) + '</strong></td><td lang="tr">' + esc(r.bad) + '</td><td lang="tr">' + esc(r.good) + '</td><td>' + esc(r.why) + '</td></tr>';
+  }).join('');
+  document.querySelector('#tr-flags tbody').innerHTML = (TR.flags || []).map(function(r){
+    return '<tr><td lang="tr">' + esc(r.heard) + '</td><td class="num">' + esc(r.pack) + '</td><td>' + esc(r.note) + '</td></tr>';
+  }).join('');
+  document.getElementById('tr-voice').innerHTML = [['presenter', 'Explained · presenter'], ['host', 'Behind the Counter · host'], ['merchant', 'Behind the Counter · owners']]
+    .filter(function(v){ return TR.voice && TR.voice[v[0]]; })
+    .map(function(v){
+      return '<div><div class="btns" style="margin-bottom:8px"><h4>' + v[1] + '</h4></div>' +
+        '<pre class="p" id="trv-' + v[0] + '">' + esc(TR.voice[v[0]]) + '</pre>' +
+        '<button class="cp" type="button" data-copy="trv-' + v[0] + '">Copy VOICE paragraph</button></div>';
+    }).join('');
+
   /* ---------- tabs: series on the first row, that series' videos on the second ---------- */
   var tabs = document.getElementById('tabs'), tabs2 = document.getElementById('tabs2');
-  var TOP = [['all', 'All'], ['how', 'How to use'], ['globals', 'Globals'], ['assets', 'Assets']].concat(GROUPS.map(function(g){ return [g.id, g.short]; }));
+  var TOP = [['all', 'All'], ['how', 'How to use'], ['globals', 'Globals'], ['assets', 'Assets']].concat(GROUPS.map(function(g){ return [g.id, g.short]; })).concat([['turkish', 'Turkish']]);
   tabs.innerHTML = TOP.map(function(t){ return '<button class="f" type="button" role="tab" data-tab-go="' + t[0] + '" aria-pressed="false">' + t[1] + '</button>'; }).join('');
   function groupOf(tab){ return GROUP_OF[tab] || (GROUPS.some(function(g){ return g.id === tab; }) ? tab : null); }
   function show(tab){
     var g = groupOf(tab);
     tabs.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', (b.dataset.tabGo === tab || b.dataset.tabGo === g) ? 'true' : 'false'); });
+    document.querySelectorAll('.vpick button[data-tab-go]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.tabGo === tab ? 'true' : 'false'); });
     document.querySelectorAll('section[data-tab]').forEach(function(s){
       var st = s.dataset.tab, sg = s.dataset.group;
       s.hidden = !(tab === 'all' || st === tab || (g && sg === g && tab === g));
@@ -442,11 +614,32 @@
     } else tabs2.hidden = true;
     document.querySelectorAll('[data-rv]').forEach(function(el){ el.classList.add('in'); });
   }
-  document.querySelector('.subbar').addEventListener('click', function(e){
+  document.addEventListener('click', function(e){
     var b = e.target.closest('button[data-tab-go]'); if (!b) return;
-    show(b.dataset.tabGo);
-    window.scrollTo({ top: document.querySelector('.subbar').getBoundingClientRect().top + window.scrollY - 60, behavior: 'auto' });
+    var tab = b.dataset.tabGo;
+    show(tab);
+    var target = GROUP_OF[tab] ? document.getElementById(tab) : document.querySelector('.subbar');
+    var off = GROUP_OF[tab] ? 150 : 60;
+    if (target) window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - off, behavior: 'auto' });
   });
+
+  /* ---------- EN / TR ----------
+     One flag on <body>; CSS does the swapping, so nothing re-renders and
+     an open shot card stays open when you flip the language. */
+  function setLang(l){
+    document.body.dataset.lang = l;
+    document.querySelectorAll('[data-lang-go]').forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.langGo === l ? 'true' : 'false');
+    });
+    try { localStorage.setItem('np-lang', l); } catch (err) {}
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-lang-go]'); if (!b) return;
+    setLang(b.dataset.langGo);
+  });
+  var saved = 'en';
+  try { saved = localStorage.getItem('np-lang') || 'en'; } catch (err) {}
+  setLang(saved === 'tr' ? 'tr' : 'en');
   document.addEventListener('click', function(e){
     var a = e.target.closest('a[data-goto]'); if (!a) return;
     show(a.dataset.goto);

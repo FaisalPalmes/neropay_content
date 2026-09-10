@@ -441,3 +441,89 @@ details.shot .who{font-family:"Chivo",sans-serif;font-size:.72rem;font-weight:70
 
 /* long chips in idea headers wrap instead of pushing the page wide */
 .idea .ih .chip{white-space:normal;text-align:left;line-height:1.4}
+
+/* ===========================================================
+   Navigation, video buttons and the EN/TR language switch
+   Added 10 Sep 2026. The old nav was six identical words with
+   no current-page state; the video list was a flat text stack.
+   =========================================================== */
+
+/* ---------- top nav ---------- */
+.nav .wrap{gap:10px;overflow:visible;padding-top:10px;padding-bottom:10px}
+.nav .nlinks{display:flex;gap:3px;align-items:center;flex:1;min-width:0;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nav .nlinks::-webkit-scrollbar{display:none}
+.nav a.n{flex:none;border-radius:2px;padding:7px 12px}
+.nav a.n[aria-current="page"]{background:var(--ink);color:var(--bg);font-weight:700}
+.nav a.n[aria-current="page"]::after{display:none}
+.nav a.n[aria-current="page"]:hover{color:var(--bg)}
+.nav .navend{flex:none;display:flex;gap:8px;align-items:center}
+@media(max-width:720px){.nav .navend{display:none}}
+
+/* ---------- segmented control (EN / TR) ---------- */
+.seg{display:inline-flex;gap:2px;padding:2px;flex:none;
+  border:1px solid var(--rule-2);background:var(--surface)}
+.seg button{font-family:"Chivo",sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;padding:6px 11px;border:0;background:transparent;color:var(--muted);
+  cursor:pointer;transition:background .25s var(--e),color .25s var(--e);line-height:1}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg.on button[aria-pressed="true"]{background:var(--yl);color:#141410}
+.seg .sl{font-family:"Martian Mono",monospace;font-size:.55rem;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;padding:6px 8px 6px 10px;align-self:center}
+
+/* ---------- language switching ----------
+   Every bilingual element carries data-l. Turkish is hidden until the
+   page is put in Turkish, then the English half hides instead.        */
+[data-l="tr"]{display:none}
+body[data-lang="tr"] [data-l="en"]{display:none}
+body[data-lang="tr"] [data-l="tr"]{display:revert}
+.trbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px;
+  padding:12px 14px;border:1px solid var(--rule);background:var(--surface)}
+.trbar .lbl{flex:1 1 auto;min-width:120px}
+.trbar .lbl b{display:block;font-family:"Chivo",sans-serif;font-size:.8rem;font-weight:700;
+  letter-spacing:-.01em;color:var(--ink);text-transform:none}
+body[data-lang="tr"] .trbar{border-color:var(--yl-line);background:var(--yl-soft)}
+.say[lang="tr"]{font-style:normal}
+.trnote{font-family:"Martian Mono",monospace;font-size:.55rem;letter-spacing:.06em;
+  color:var(--yl-ink)}
+
+/* ---------- the video buttons ---------- */
+.vpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:12px;margin-top:14px}
+.vpick .v{position:relative;display:flex;flex-direction:column;gap:7px;text-align:left;cursor:pointer;
+  padding:16px 16px 17px 19px;border:1px solid var(--rule);background:var(--surface);
+  font-family:"Source Serif 4",Georgia,serif;color:var(--ink);text-decoration:none;
+  transition:border-color .3s var(--e),transform .3s var(--e),box-shadow .4s var(--e),background .3s var(--e)}
+.vpick .v::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:3px;
+  background:var(--rule-2);transition:background .3s var(--e)}
+.vpick .v:hover{border-color:var(--rule-2);transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.vpick .v[aria-pressed="true"]{background:var(--surface-2);border-color:var(--ink)}
+.vpick .v[aria-pressed="true"]::before{background:var(--ink)}
+.vpick .v .vid{font-family:"Martian Mono",monospace;font-size:.66rem;font-weight:500;
+  letter-spacing:.12em;color:var(--yl-ink)}
+.vpick .v .vt{font-family:"Chivo",sans-serif;font-weight:800;font-size:.95rem;letter-spacing:-.02em;
+  line-height:1.25;color:var(--ink);flex:1}
+.vpick .v:hover .vt{color:var(--yl-ink)}
+.vpick .v .vm{font-family:"Martian Mono",monospace;font-size:.55rem;letter-spacing:.08em;color:var(--muted)}
+.vpick .v .vch{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.vpick .v.eb::before{background:var(--yl)}
+.vpick .v.ea::before{background:var(--li)}
+.vpick .v.bc::before{background:var(--mt)}
+.vpick .v.all{justify-content:center;align-items:flex-start;background:var(--surface-2)}
+.vpick .v.blk::before{background:var(--stop)}
+.vgroup{margin-top:26px}
+.vgroup:first-of-type{margin-top:6px}
+.vgroup h3{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;
+  padding-bottom:9px;border-bottom:1px solid var(--rule-2)}
+.vgroup h3 span{font-family:"Martian Mono",monospace;font-size:.55rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);font-weight:400}
+.vgroup>p{margin-top:10px;font-size:.9rem;color:var(--muted);max-width:66ch}
+
+/* ---------- sticky bar: real buttons, current one obvious ---------- */
+.subbar button.f[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.subbar .row{gap:6px}
+.subbar .row2 button.f[aria-pressed="true"]{background:var(--yl);color:#141410;border-color:var(--yl)}
+
+@media(min-width:720px){
+  .vpick{grid-template-columns:repeat(auto-fill,minmax(258px,1fr))}
+}

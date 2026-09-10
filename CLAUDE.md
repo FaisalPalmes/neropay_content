@@ -82,6 +82,7 @@ from here, and folder uploads silently fail there.
 | `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes, next briefs | **Yes — hand-edited, copy an episode to add one** |
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
+| `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
 | `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide | Yes — one folder per piece inside it |
@@ -90,7 +91,40 @@ from here, and folder uploads silently fail there.
 The two subfolders are deliberate; everything else stays flat.
 
 On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
-where they start. Keep that for any new video — don't split overlays into their own list.
+where they start. Keep that for any new video — don't split overlays into their own list. Above the
+timelines sits the video picker — twelve buttons, one per video, colour-coded by series. Add a video
+and its button appears automatically; don't hand-maintain a second list of them.
+
+## Turkish
+
+Every spoken line has a Turkish translation in `scripts-tr.js`, keyed by the same shot id, and
+`youtube.html` flips between them with an **EN / TR** switch. English stays the source of truth: a
+figure changes in `generation-pack.md` first, then the English, then the Turkish.
+
+B1 was translated line by line with Elif on 10 September 2026. **Read `SCRIPTS_TR.guide` before
+translating anything** — it is the list of faults a straight translation produces, each with the
+version that survived her reading it aloud. The short version: keep the English card words (debit
+kart, kredi kartı, şirket kartı, Amex, yurt dışı kartı), say decimals with *nokta* and print them
+with a comma, money is *pound* and *peni* (never sterlin, never kuruş), spell numbers out as the
+English scripts do, the statement is a *döküm*, the effective rate is *efektif oran* glossed once,
+and the payout line keeps its indignation — *kendi paranızı*, not a neutral noun phrase. Address the
+viewer as **siz**; the presenter is still **biz**, never **ben**.
+
+Three things that don't change in translation:
+
+- **The rails apply in every language.** No credit or lending words (s.21 FSMA), no earnings claims,
+  no guaranteed saving. A Turkish caption is a financial promotion in exactly the same way.
+- **Rail 4 is per upload.** Tick YouTube's *altered or synthetic content* setting on the Turkish
+  video too and put `SCRIPTS_TR.disclosure` in the Turkish description. It does not carry over.
+- **The graphics are still English.** `overlays.js` is drawn in English; a Turkish upload needs them
+  redrawn. B1's wording is settled in `SCRIPTS_TR.overlayText`; B2, B3 and A1–A3 are not.
+
+A Turkish generation is not just the Turkish line — both globals specify a British voice, so the
+page swaps in `SCRIPTS_TR.voice` and rewrites the prompt's `SPEAKS:` line. Use the `· TR` buttons.
+
+Where Elif's figures and the pack disagree (terminal rental, the payout fee, the debit share), the
+pack wins — it reconciles to £308.46 and the overlays are drawn from it. Those are listed in
+`SCRIPTS_TR.flags` for her to confirm; don't quietly adopt either side.
 
 **Behind the Counter (series C, `calls.js`) is a dramatised explainer, not testimony.** Every person in
 it is AI-generated and the disclosure runs over the first three seconds. The owners are composite
@@ -213,7 +247,7 @@ Rules that come from this environment, not from HyperFrames:
 
 ## Verification before pushing
 
-Run `node --check app.js posts.js videos.js` at minimum. If Playwright is available, load each
+Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
 page and confirm no console errors, `.post` count matches `POSTS.length` on social.html, and
 nothing overflows at 390px. The site is light by default (off-white ground, black and grey type); dark is opt-in via `data-theme="dark"` and must still paint its own background.
 

@@ -18,6 +18,8 @@ step, no dependencies, no framework.
 | `calendar.html` | Sixteen weeks, 7 Sept – 3 Jan, with the immovable dates marked |
 | `rails.html` | Compliance rails and how the channel is measured |
 
+Every video script exists in English and Turkish. `youtube.html` has an **EN / TR** switch in the sticky bar and on each video; the English stays the source of truth and the Turkish sits alongside it, line for line.
+
 ```
 .
 ├── index.html · social.html · youtube.html · calendar.html · rails.html
@@ -28,6 +30,7 @@ step, no dependencies, no framework.
 ├── calls.js               Behind the Counter series  ← hand-edited, copy an episode to add one
 ├── ideas.js               the video backlog — proposed series and one-offs  ← hand-edited
 ├── overlays.js            the video graphics drawn as SVG — overlays, cards, plates, disclosure, specimen statements
+├── scripts-tr.js          the Turkish scripts — one line per spoken shot, plus the translation rules  ← hand-edited
 ├── generation-pack.md     source of truth for the video series
 ├── vercel.json
 ├── README.md
@@ -156,6 +159,54 @@ typed by hand, so if a number changes in `generation-pack.md` it has to change i
 too — search for the old value. Nothing in there is new content; each asset is one the pack
 already specifies, and the ground rules from the overlay global (black or transparent, white
 sans-serif, one yellow accent, no icons, no logos except the wordmark on the cards) are baked in.
+
+---
+
+## The Turkish scripts (`scripts-tr.js`)
+
+Every spoken line in `videos.js` and `calls.js` has a Turkish translation, keyed by the same shot id.
+B1 was translated line by line with Elif on 10 September 2026; everything else follows the rules she
+gave, which are written down in the same file and rendered on the **Turkish** tab of `youtube.html`.
+
+```js
+window.SCRIPTS_TR = {
+  status: "...",              // where the translation has got to
+  guide:  [ { rule, bad, good, why } ],   // what Elif corrected — read before translating anything
+  flags:  [ { heard, pack, note } ],      // where her figures and the pack disagree
+  voice:  { presenter, host, merchant },  // the VOICE paragraph each global needs swapping to
+  disclosure: "...",          // the line that goes in a Turkish description (rail 4)
+  overlayText: { ... },       // Turkish wording for B1's on-screen graphics
+  titles: { B1: "...", ... },
+  questions: { C1: "...", ... },
+  desc: { B1: "...", ... },
+  lines: { "B1-01": "...", "C3-H2": "...", ... }   // one per spoken shot
+};
+```
+
+**To add a translation**, add a `lines` entry keyed by the shot id. The page picks it up with no
+other change — the shot card, the full script, the "Copy global + shot · TR" button and the video
+button's TR chip are all derived from it.
+
+**A Turkish generation is not just the Turkish line.** Both presenter globals specify a British
+voice, so the page swaps in the matching `voice` paragraph and rewrites the prompt's `SPEAKS:` line
+before it hands you the text. Use the `· TR` buttons rather than assembling it yourself.
+
+**Two things the Turkish does not cover yet.** The on-screen graphics in `overlays.js` are still
+drawn in English — a Turkish upload needs them redrawn, and B1's wording is settled in
+`overlayText`. And rail 4 applies per upload: tick YouTube's *altered or synthetic content* setting
+on the Turkish video too, and put `SCRIPTS_TR.disclosure` in its description. It does not carry over
+from the English one.
+
+To check a translation before pushing:
+
+```
+node --check scripts-tr.js
+node -e 'global.window={};require("./videos.js");require("./calls.js");require("./scripts-tr.js");
+  var T=window.SCRIPTS_TR.lines,m=[];
+  [].concat(window.VIDEOS.videos,window.CALLS.episodes).forEach(function(v){
+    v.shots.forEach(function(s){ if(s.spoken && !T[s.id]) m.push(s.id); }); });
+  console.log(m.length? "missing: "+m.join(", ") : "every spoken shot has a Turkish line");'
+```
 
 ---
 
