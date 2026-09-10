@@ -83,6 +83,7 @@ from here, and folder uploads silently fail there.
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
+| `MOTION-SYSTEM.md` | The motion graphics spec — three camera angles, seven overlay archetypes, the BUILD/HOLD/EXIT timing law, alpha compositing. Read it before any overlay or any shot list | Only when Faisal issues a new version |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
 | `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide | Yes — one folder per piece inside it |
@@ -205,6 +206,41 @@ dead (Budget + half term). CPMs double Oct–Dec but organic doesn't care. Chris
 window for Muslim-owned merchants closes ~5 Feb for Ramadan, and Ramadan moves ~11 days earlier
 each year.
 
+## Motion graphics, camera angles and overlay timing
+
+**`MOTION-SYSTEM.md` is the current spec and supersedes every older overlay instruction in this
+repo.** Read it before writing a shot list, choosing a start frame, or building a single overlay.
+The short version: three camera angles per video (FRONT, SIDE, CLOSE) chosen by what the shot
+carries; seven named overlay archetypes, no eighth without asking; and a BUILD → HOLD → EXIT timing
+law where the hold is `max(1.5s, on_screen_words × 0.4)` and is asserted in code, not eyeballed.
+
+**The rule it kills.** "Build the overlay on pure solid black and composite with a Screen or Add
+blend" is retired. It only ever existed because Higgsfield has no alpha channel. Overlays are
+rendered by us now — HTML page, transparent background, Playwright `omitBackground: true`, real
+alpha — and Screen blend would destroy the dark translucent panels, soft shadows and muted outlines
+the whole look depends on. Overlays are no longer generated in Higgsfield at all; Higgsfield keeps
+the presenter.
+
+**What still says the old thing, and why it's still here.** The overlay `still` and `anim` prompts
+in `generation-pack.md` (and so in `videos.js`), and the compositing note on `youtube.html`,
+describe the retired Higgsfield route. Their *figures* are still correct and still the source of
+truth — every number reconciles to £308.46. Their *look, black background and Screen blend* are not.
+Don't follow them for a new build, and don't rewrite them in passing either: reworking nineteen
+overlays into the archetypes is its own job with its own review gate.
+
+**Two things the spec needs that aren't in the repo yet.** The seven reference screenshots it names
+(`reference 1`–`reference 7`) were never attached — the archetype descriptions are usable without
+them but the vibe check isn't. And `anim.py` / `neropay-edit-pipeline.zip`, which §4 calls the
+working reference for the render pipeline, isn't here either; `video/b1-rate-you-were-quoted/` is
+the nearest thing we do have. Ask Faisal for both before starting a run that depends on them.
+
+**One conflict to settle with Faisal — do not resolve it yourself.** `MOTION-SYSTEM.md` §9 requires
+"AI-presenter disclosure on screen inside the first three seconds, and persistent." Rail 4 above,
+`video/PLAYBOOK.md` §2 and `video/LESSONS.md` entry 11 all record the opposite as Faisal's explicit
+decision of 9 Sep 2026: no AI wording inside the video, disclosure at upload instead. Behind the
+Counter does carry it on screen; the Explained series does not. Both can't be right for the
+Explained videos. Raise it and wait.
+
 ## Editing video
 
 Two toolchains, chosen by the job:
@@ -236,6 +272,8 @@ Rules that come from this environment, not from HyperFrames:
   `npm install` in `video/`, curl the clips into `assets/clips/`, `node build.mjs`, `npx hyperframes render`),
   loudnorm to -14 LUFS with ffmpeg, PUT to a `media_upload` URL, `media_confirm`. Identify a clip from a
   Higgsfield generation by matching Content-Length to the file size Faisal uploaded.
+- **Read `MOTION-SYSTEM.md` first for anything involving an overlay, a camera angle or overlay timing** —
+  it outranks the older overlay guidance here and in the playbook.
 - **Read `video/PLAYBOOK.md` and `video/LESSONS.md` before any edit.** The playbook is the standing brief —
   Faisal's standards and the words they use for each fault, the rails as they apply to a frame, the three
   delivery formats (16:9 master, 9:16 Reels/TikTok, 4:5 Meta ad), the sandbox pipeline and the review loop.

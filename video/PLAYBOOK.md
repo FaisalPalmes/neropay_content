@@ -1,5 +1,11 @@
 # NeroPay video playbook — read this with LESSONS.md before any edit
 
+> **Overlays, camera angles and overlay timing: `../MOTION-SYSTEM.md` is the current spec and
+> outranks anything here that disagrees with it.** Three angles per video, seven overlay
+> archetypes, a BUILD → HOLD → EXIT law with the hold asserted in code, and real alpha instead
+> of the retired build-on-black-and-Screen-blend route. One open conflict: its §9 wants the AI
+> disclosure on screen and persistent, which contradicts §2 below. Raise it, don't pick a side.
+
 Written 10 Sep 2026, at the end of the B1 English video (master, vertical cut, Meta ad).
 `LESSONS.md` is the fault log: what broke and the rule that stops it. **This file is the brief**:
 what Faisal wants, how the pipeline runs, and what "finished" means. Read both. Root `CLAUDE.md`
