@@ -238,7 +238,9 @@ statement and the two long tables have to be split into smaller graphics on more
 does not recede in perspective the way the reference frames show. Real SIDE and CLOSE takes need
 `00 start frames/` and a generation run with the credit gate (MOTION-SYSTEM.md §1, §7).
 
-The ledger row for the v7 master is added when its render lands.
+| Cut | Spec | Commit |
+|---|---|---|
+| Master 16:9 v7 | 1920×1080, 164.467 s, −14 LUFS, 213 MB, check clean on the real footage | `65cf0ca` |
 
 Ad structure, as an example of trimming an explainer to an ad: hook on footage (0–7 s) → one rate
 covers one card type (7–12 s) → "their card. your rate." (12–16 s) → **audio-only, formula diagram**
