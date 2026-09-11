@@ -242,7 +242,7 @@ panel's last held moment plus the fans, the title and the end card for the conta
 
 | Cut | Spec | Commit |
 |---|---|---|
-| Master 16:9 v8 | 1920×1080, 164.4 s, −14 LUFS, check clean on the real footage, frame scan 0 spikes | (pending) |
+| Master 16:9 v8 | 1920×1080, 164.5 s (4,934 frames), −14 LUFS, 190 MB, check clean on the real footage, frame scan 0 spikes | `2b9b196` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
