@@ -82,15 +82,16 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     when it can and prefers `/usr/bin/ffmpeg`; a build or scan run by hand needs `HYPERFRAMES_FFMPEG_PATH=/usr/bin/ffmpeg`
     too, and a truncated test cut needs `HF_VIDEO_COVERAGE_THRESHOLD=0` or the coverage gate aborts on the clips outside it.
 
-58. **The box dies of silence, not of the lease.** The re-render vanished nineteen minutes in — box gone, log gone —
-    and the pattern across every loss is the same: a gap of eight minutes or more with no call at all (LESSONS #53's
-    `sleep 840` renewals were exactly that gap). The run that survived twenty-three minutes was polled every minute or
-    two. Rule: while a background job runs, call the box every two to three minutes with a light foreground poll
-    (`sleep 50; grep framesCompleted`), and never leave it alone longer than that. Two other things learned the same
-    hour: `SETUP_ONLY=1 sandbox.sh` (clips, proxies, sounds, cut, build, check) in one call and the render in the next
-    keeps each call short and lets the render start from a checked build; and more capture workers don't help — the
-    parallel path stores every frame on disk first (41 GB for 4,933 frames; the box has 18 GB free), so it is one
-    worker and the streaming encoder at ~5 fps, seventeen minutes for B1, and the polling is what carries it.
+58. **The box lives fifteen minutes from the start of the last *background* call. Polls don't extend it; a new
+    background call does.** Three losses today line up on that clock to the minute: a render launched at 02:57 was gone
+    by 03:16, one launched at 03:32 was gone by 03:49, and the box that had a background call at 03:23 outlived the
+    03:16 one's lease because of it. Foreground polls every two minutes changed nothing; LESSONS #53's `sleep 840`
+    was one background call that ran out at fourteen minutes. Rule: while a render runs, fire a trivial background
+    call (`sleep 2`) every eight to ten minutes — each one resets the lease — and poll for progress with foreground
+    calls in between. A B1 render is five minutes of setup, seventeen of capture and three of loudnorm, sheets, scan
+    and upload; that is three renewals. `SETUP_ONLY=1` stays useful for a build that might need a second look before
+    the render. More capture workers don't help: the parallel path stores every frame on disk first (41 GB for 4,933
+    frames on a box with 18 GB free), so it is one worker and the streaming encoder at ~5 fps.
 
 ## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
 

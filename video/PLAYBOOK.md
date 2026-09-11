@@ -231,7 +231,8 @@ captions, same outro shape.
 
 Run it as two background `sandbox_exec` calls (LESSONS #58): `SETUP_ONLY=1 sandbox.sh` with `FREESOUND_TOKEN`
 in the environment, then `sandbox.sh` again with the upload `curl` appended (`QUALITY=draft` for the review
-pass), polling the box every two to three minutes until it prints `ALL_DONE` — and it leaves `review/overlays-contact.jpg` (every
+pass), firing a trivial background call every eight to ten minutes so the box's lease is renewed until it
+prints `ALL_DONE` — and it leaves `review/overlays-contact.jpg` (every
 overlay's last held frame at full size, §7), `review/frames-contact.jpg` (a frame every six seconds) and
 `review/spikes.txt` beside the render. The last one is the frame scan (LESSONS #55): the mean luma of every
 frame, and any frame that differs from both neighbours by more than four is listed. It has to read

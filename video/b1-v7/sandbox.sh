@@ -4,8 +4,9 @@
 #   FREESOUND_TOKEN=... bash sandbox.sh > /home/user/hf/boot.log 2>&1
 # A background call holds the box for fifteen minutes and the whole run takes longer than that (LESSONS #58), so run it
 # twice: first with SETUP_ONLY=1 (clips, proxies, sounds, cut, build, check — about six minutes), then again without,
-# which skips what is already there and goes straight to the render — and poll the box every two to three minutes while
-# it renders; a silence of eight minutes loses it. WORKERS is there for a box with the disk for it (the parallel path
+# which skips what is already there and goes straight to the render — and fire a trivial background sandbox_exec call
+# every eight to ten minutes while it renders: the box lives fifteen minutes from the last background call, and polls
+# don't renew it. WORKERS is there for a box with the disk for it (the parallel path
 # stores every captured frame first, ~41 GB for B1); this one hasn't, so leave it unset and let the encoder stream.
 # Reads data/sources.json for the clip → CDN mapping (the same files as Drive "01 Clips in", byte for byte)
 # and data/angles.json for the crop per shot. Needs curl, ffmpeg, node 20+, git, npm.
