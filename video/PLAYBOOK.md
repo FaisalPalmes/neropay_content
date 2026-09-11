@@ -229,8 +229,9 @@ flat translucent panels with real alpha instead of glass sampled from the footag
 the centre of the frame on "NeroPay", and effects 2.5 dB under v6. Same words, same cuts (`cut.mjs`), same
 captions, same outro shape.
 
-Run it the same way — `sandbox.sh` through `sandbox_exec` with `background:true`, `FREESOUND_TOKEN` in the
-environment, `QUALITY=draft` for the review pass — and it leaves `review/overlays-contact.jpg` (every
+Run it as two background `sandbox_exec` calls (LESSONS #58): `SETUP_ONLY=1 sandbox.sh` with `FREESOUND_TOKEN`
+in the environment, then `WORKERS=3 sandbox.sh` with the upload `curl` appended (`QUALITY=draft` for the review
+pass) — and it leaves `review/overlays-contact.jpg` (every
 overlay's last held frame at full size, §7), `review/frames-contact.jpg` (a frame every six seconds) and
 `review/spikes.txt` beside the render. The last one is the frame scan (LESSONS #55): the mean luma of every
 frame, and any frame that differs from both neighbours by more than four is listed. It has to read
