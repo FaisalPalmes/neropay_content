@@ -236,9 +236,21 @@ Run it exactly as §9 says (two calls, lease renewals, the frame scan). Every se
 and every start sits on the grid (LESSONS #63) — keep it that way when a cut or a card length changes. `review/manifest.json` lists every
 panel's last held moment plus the fans, the title and the end card for the contact sheet.
 
-**The lean, so it is never wrong again:** `glass()` takes `lean`; left-column panels (`LX`) lean `+7` or
-`+8`, right-column panels (`PX`) lean `-6` or `-7`. The near edge comes forward. v7 had the statement at
-`rotateY(-10deg)` on the left and Faisal saw it immediately.
+**The lean, so it is never wrong again:** `glass()` takes `lean`; left-column panels lean `+7` or `+8`,
+right-column panels `-6` or `-7`. The near edge comes forward. v7 had the statement at `rotateY(-10deg)` on the
+left and Faisal saw it immediately. `colLean()` sets it from the column now, so it can't be typed wrong.
+
+**The side, after Faisal's second review (11 Sep, "some of them cover the staff's face"):** `data/angles.json`
+carries `ava: L | R | C` per shot; `angles.mjs` turns angle + side into the crop (`sandbox.sh` reads it) and into
+her face position on the proxy (`FACE()`, used for the name plate). Every panel's x goes through
+`colX(id, xRight, w)` — the right-column x, or its mirror when she is on the right — and the sides alternate down
+the video. The camera push is capped at `ZMAX = 1.12`: with her 30 % in from an edge, a push toward the other
+column is all sideways, and 1.2 carried her hair out of frame. `pf()` keeps 330 px of clearance so a 760-tall
+panel's top stays in at that push. Rule for a new panel: never a literal x; `colX` and `colLean`, and check the
+sheet with her in it, not the placeholder one.
+
+**The y:** `inset(0 …)` on the wordmark's clip clipped the descender at 230 px (Poppins descends past a
+line-height of 1). Both wordmark clips are `inset(-20% … -30% …)` now.
 
 | Cut | Spec | Commit |
 |---|---|---|

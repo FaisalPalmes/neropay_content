@@ -34,7 +34,17 @@ a `v3:` note at the line that changed. The reference build is now `video/b1-v8/`
 4. **The end card is the same stage.** Same ground, blooms and full stop: NeroPay. → Subscribe for more →
    the six generic lines as white frosted tiles, one per two beats → NeroPay. + the concession line. No
    charcoal, no grid.
-5. **Unchanged:** the three angles (§1), the words-first timing (v8 times every piece to a word, as v6 did;
+5. **A panel never covers her face — she takes one side of the frame, the panel takes the other.** Faisal's
+   second review of v8 (11 Sep): "some of them cover the staff's face … make it so the staff is either on the
+   left or right side of the screen and the overlays are on the other side." So the crop per shot now carries
+   a side: `data/angles.json` says `ava: "L" | "R" | "C"`, `angles.mjs` cuts the window so her face sits 30 %
+   in from that edge, and every panel in `build.mjs` goes in the other column (`colX`), with the lean following
+   the column (`colLean`). The sides alternate down the video — chip right, ladder left, month left, fixed
+   right, formula left, sum right, flat left, questions right, two-minutes left, follow right — and the camera's
+   push onto a panel stops at 1.12 (`ZMAX`) so the push, which is all sideways once she is on an edge, never
+   carries her out of frame. §1's "SIDE puts the presenter in the right third" is superseded: SIDE is the
+   1.5× window, and which third she is in is decided per shot by the panel.
+6. **Unchanged:** the three angles (§1), the words-first timing (v8 times every piece to a word, as v6 did;
    the §3 law stays the target and its report is still worth running), the alpha compositing principle (§4 —
    the graphics are authored inside the HyperFrames composition, so alpha is native), the rails (§9), and
    Faisal's 9 Sep decision that the AI disclosure is made at upload, not in the frame.
@@ -65,6 +75,9 @@ that was in the previous briefs.
 |---|---|---|
 | **FRONT** | Presenter centred, front on, locked off, desk in shot | The default. Talking beats, and small type-only overlays that sit above or beside the head. |
 | **SIDE** | Presenter in the **right third**, camera angled so the left two-thirds is clean negative space with the wall receding in perspective | Every large overlay. The empty left volume is where a panel, table, card fan or floating document lives, sitting in the room rather than stuck on the glass. |
+
+*v3: SIDE is the 1.5× window; the third she sits in is set per shot (`ava` in `data/angles.json`), opposite the panel, alternating down the video. Same for CLOSE, which does carry a panel in v8 when the shot needs the emphasis.*
+
 | **CLOSE** | Tighter on the face, shoulders up | Emphasis beats only. The concession, the number said out loud, the sign-off. **Never carries an overlay.** |
 
 The SIDE angle is the whole reason the graphics can look like the references. Look at reference 1

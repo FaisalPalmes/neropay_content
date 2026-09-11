@@ -35,6 +35,18 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     rounds every clip and card to whole frames, and writes each start as `k / FPS` with no rounding at all —
     `String(k / 30)` round-trips the double exactly, so the floor lands on k and the media time is exactly zero.
     Placeholders can't catch this (every placeholder frame looks alike); only the real-footage scan does.
+64. **Look at the sheet with her in it.** v8's contact sheet on the real footage showed the ladder, the fee list
+    and the sum panel sitting on Ava's face, and it went out anyway — the panels had been placed against placeholder
+    clips and checked on placeholder snapshots, where there is no face to cover. The v6 layout assumed a centred FRONT
+    take; v7's SIDE crop moved her into the right third under the right column. Rule: the crop per shot carries her
+    side (`ava` in `data/angles.json`), every panel takes the other column through `colX`/`colLean`, and the review
+    gate before delivery is the sheet on the real footage, read for her face first. Second rule: the camera's push
+    toward a panel is capped (`ZMAX = 1.12`) because once she is 30 % in from an edge, a push toward the other column
+    is all sideways and carries her out.
+65. **A clip-path inset of zero cuts the descender.** `inset(0% …)` on the "NeroPay" wipe clipped the y at 230 px,
+    on the title and the end card, and the same on the follow beat's mark: Poppins descends past a line-height of 1,
+    so the border box the inset clips to ends above the tail. Wipe masks need room top and bottom —
+    `inset(-20% 100% -30% 0%)` to `inset(-20% 0% -30% 0%)`.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 
