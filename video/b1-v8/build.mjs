@@ -60,14 +60,18 @@ const ORDER = ['B1-01', 'B1-02', 'B1-INTRO', '[TITLE]', 'B1-03', 'B1-04', 'B1-05
 const BEAT = 60 / SOUNDS.sounds.music.bpm, BAR2 = 2 * BEAT;     // the music grid the cards move on
 const CARD = { '[TITLE]': r3(6 * BEAT), '[END]': 18.0 };
 const XF = 0.4;                        // crossfade into and out of the title card
-let t = 0;
+/* Every segment starts and ends on the frame grid (LESSONS.md #63): the renderer floors each boundary to a frame,
+   so a cut that sits 0.7 of a frame past the grid shows the next shot's caption, camera and graphics one frame
+   before its picture. Segment lengths are whole frames; times are written a hair above k/FPS so the floor lands
+   on k, never on k-1. */
+const gridUp = (frames) => Math.ceil(frames * 1000 / FPS - 1e-7) / 1000;
+let tf = 0;                              // the timeline, in frames
 const segs = [];
 let estimated = [], cutUsed = 0;
 for (const id of ORDER) {
   if (CARD[id]) {
-    // the last card ends on the frame grid: the renderer floors every boundary to a frame (LESSONS.md #56)
-    const cd = id === '[END]' ? r3(Math.floor((t + CARD[id]) * FPS + 1e-6) / FPS - t) : CARD[id];
-    segs.push({ id, kind: 'card', start: r3(t), dur: cd }); t += cd; continue;
+    const cf = Math.round(CARD[id] * FPS);
+    segs.push({ id, kind: 'card', start: gridUp(tf), dur: r3(gridUp(tf + cf) - gridUp(tf)) }); tf += cf; continue;
   }
   const cutFile = path.join(HERE, 'assets/cut', id + '.mp4');
   const useCut = CUTS && CUTS[id] && fs.existsSync(cutFile);
@@ -75,18 +79,21 @@ for (const id of ORDER) {
   if (!fs.existsSync(file)) { console.log('skip ' + id + ' (no clip)'); continue; }
   let d, inn = 0, words;
   if (useCut) {
-    d = dur(file); words = CUTS[id].words.filter((w) => w.s < d); cutUsed++;
+    d = dur(file); words = CUTS[id].words; cutUsed++;
   } else {
     const full = dur(file); inn = (EDIT[id] && EDIT[id].in) || 0; const out = (EDIT[id] && EDIT[id].out) || 0;
     d = r3(full - inn - out);
     let raw = WORDS[id];
     if (!raw || !raw.length) { raw = estimateWords(SCRIPT[id], full); estimated.push(id); }
-    words = raw.map((w) => ({ w: w.w, s: r3(w.s - inn), e: r3(w.e - inn) })).filter((w) => w.e > 0 && w.s < d);
+    words = raw.map((w) => ({ w: w.w, s: r3(w.s - inn), e: r3(w.e - inn) }));
   }
-  segs.push({ id, kind: 'clip', start: r3(t), dur: d, mediaStart: inn, words, src: (useCut ? 'assets/cut/' : 'assets/clips/') + id + '.mp4' });
-  t += d;
+  const df = Math.round(d * FPS);
+  const start = gridUp(tf), dur_ = r3(gridUp(tf + df) - gridUp(tf));
+  words = words.filter((w) => w.s < dur_);
+  segs.push({ id, kind: 'clip', start, dur: dur_, mediaStart: inn, words, src: (useCut ? 'assets/cut/' : 'assets/clips/') + id + '.mp4' });
+  tf += df;
 }
-const TOTAL = r3(t);
+const TOTAL = gridUp(tf);
 const S = Object.fromEntries(segs.map((s) => [s.id, s]));
 const at = (id, local) => r3(S[id].start + local);
 const endOf = (id) => r3(S[id].start + S[id].dur);
