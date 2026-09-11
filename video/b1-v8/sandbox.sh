@@ -33,24 +33,11 @@ echo "clips: $(ls clips/*.mp4 | wc -l)"
 [ -x "$ROOT"/n22/bin/node ] || npm i --silent node@22 -g --prefix "$ROOT"/n22
 export PATH="$ROOT"/n22/bin:$PATH
 ( cd repo/video && npm install --silent --no-audit --no-fund )
-# 3. one 1080p proxy per clip, cut to its angle straight from the 4K source (MOTION-SYSTEM.md §1).
-#    Measured on a real frame: Ava's face at (1950, 900) of 3840×2160, head top 600, shoulders 1410.
-#    FRONT  the whole frame                     SIDE  1.5× window from the left edge → Ava in the right third
-#    CLOSE  1.7× window on her face             the 2 variants are the same angle a little looser
-crop_for() {
-  case "$1" in
-    FRONT)  echo 'scale=1920:1080:flags=lanczos' ;;
-    FRONT2) echo 'crop=3491:1964:177:81,scale=1920:1080:flags=lanczos' ;;
-    SIDE)   echo 'crop=2560:1440:0:420,scale=1920:1080:flags=lanczos' ;;
-    SIDE2)  echo 'crop=2704:1521:0:398,scale=1920:1080:flags=lanczos' ;;
-    CLOSE)  echo 'crop=2259:1271:820:392,scale=1920:1080:flags=lanczos' ;;
-    CLOSE2) echo 'crop=2430:1367:735:353,scale=1920:1080:flags=lanczos' ;;
-    *) echo "unknown angle $1" >&2; exit 1 ;;
-  esac
-}
-node -e 'const a=require(process.argv[1]);for(const [k,v] of Object.entries(a))if(!k.startsWith("_"))console.log(k,v)' "$ROOT/repo/$PROJECT/data/angles.json" > "$ROOT"/angles.txt
-while read -r id angle; do
-  vf=$(crop_for "$angle")
+# 3. one 1080p proxy per clip, cut to its angle and to Ava's side straight from the 4K source (MOTION-SYSTEM.md §1).
+#    The crop per shot comes from angles.mjs (data/angles.json): the window is the angle, its x position puts her
+#    30% in from the left or the right edge, and build.mjs puts every panel in the other column.
+node "$ROOT/repo/$PROJECT/angles.mjs" > "$ROOT"/angles.txt
+while read -r id angle ava vf; do
   # -nostdin: a backgrounded ffmpeg inside a while-read loop otherwise eats the loop's stdin as keystrokes
   [ -s "proxies/$id.mp4" ] || ffmpeg -nostdin -y -v error -i "clips/$id.mp4" -vf "$vf" -r 24 -c:v libx264 -preset fast -crf 16 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart "proxies/$id.mp4" < /dev/null &
   while [ "$(jobs -r | wc -l)" -ge 4 ]; do sleep 1; done

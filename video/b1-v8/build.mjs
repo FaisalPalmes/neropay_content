@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { cropFor } from './angles.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const V = process.env.ORIENT === 'vertical';   // 9:16 for Reels / TikTok: the same cut, sounds and overlays, re-laid out
@@ -215,7 +216,7 @@ function sfx(role, start, vol, maxLen) {
    as it finishes (back.out, ten frames) and takes one slow, shallow breath — the only motion Faisal asked for */
 function wordmark(stage, when) {
   js.push(`tl.set("${stage} .wm", { autoAlpha: 1 }, ${r3(when)});`);
-  js.push(`tl.fromTo("${stage} .wm .wt", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: ${r3(14 / FPS)}, ease: "none", immediateRender: false }, ${r3(when)});`);
+  js.push(`tl.fromTo("${stage} .wm .wt", { clipPath: "inset(-20% 100% -30% 0%)" }, { clipPath: "inset(-20% 0% -30% 0%)", duration: ${r3(14 / FPS)}, ease: "none", immediateRender: false }, ${r3(when)});`);
   js.push(`tl.fromTo("${stage} .wm .dot", { scale: 0 }, { scale: 1, duration: ${r3(10 / FPS)}, ease: "back.out(2.4)", immediateRender: false }, ${r3(when + 12 / FPS)});`);
   js.push(`tl.fromTo("${stage} .wm .dot", { scale: 1 }, { scale: 1.12, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, ${r3(when + 0.9)});`);
   sfx('pop', r3(when + 12 / FPS), 0.12);
@@ -243,10 +244,13 @@ const clampCam = (c) => {
   return { scale: c.scale, x: r3(Math.max(-mx, Math.min(mx, c.x))), y: r3(Math.max(-my, Math.min(my, c.y))) };
 };
 function move(t0, t1, from, to, ease = 'power2.inOut') { if (t1 - t0 < 0.05) return; cam.push({ t0: r3(t0), t1: r3(t1), from: clampCam(from), to: clampCam(to), ease }); }
-const focus = (S_, px, py) => ({ scale: S_, x: r3(-(px - W / 2) * S_), y: r3(-(py - H / 2) * S_) });
+/* the push onto a panel stops at ZMAX: with Ava 30% in from one edge, a bigger push toward the other column would
+   carry her out of frame (the translation is clamped to the scale, so the push is all sideways) */
+const ZMAX = V ? 1.3 : 1.12;
+const focus = (S_, px, py) => { S_ = Math.min(S_, ZMAX); return { scale: S_, x: r3(-(px - W / 2) * S_), y: r3(-(py - H / 2) * S_) }; };
 const flat = (S_, x = 0, y = 0) => ({ scale: S_, x, y });
 /* focus on a panel: the point is raised so the panel's bottom edge stays above the captions (LESSONS.md #15) */
-const pf = (id, S_, px, py) => { const g = PANEL[id]; const lim = g ? g.bottom - 300 / S_ : py; return focus(S_, px, Math.max(py, lim)); };
+const pf = (id, S_, px, py) => { const g = PANEL[id]; const lim = g ? g.bottom - 330 / S_ : py; return focus(S_, px, Math.max(py, lim)); };   // 330: a 760-tall panel keeps its top in at ZMAX too
 const bump = (c, d = 0.02) => ({ scale: r3(c.scale + d), x: c.x, y: c.y });
 /* a run of camera points inside one clip: each time is clamped to the clip, zero-length legs are dropped,
    so a cue near the end of a take (or a shorter placeholder) can never make segments overlap */
@@ -294,8 +298,15 @@ for (const s of segs) {
 }
 
 if (V) html.push(`<div id="seam"></div>`);   // the shadow the footage casts up into the fill band
-const PX = V ? 80 : 1110, PW = V ? 920 : 760;   // right column, clear of Ava (vertical: the one column, in the top band)
-const PLATE = V ? { x: 730, y: 1130 } : { x: 1160, y: 440 };   // name plate, just right of her face (measured on a real frame)
+const PX = V ? 80 : 1110, PW = V ? 920 : 760;   // right column (vertical: the one column, in the top band)
+/* Ava's side per shot comes from data/angles.json (angles.mjs cuts the proxy to it); every panel takes the other
+   column (Faisal, 11 Sep: nothing over her face). colX mirrors a right-column x when she is on the right, and the
+   lean follows the column — the near edge comes forward, so left leans positive, right negative. */
+const AVA = (id) => (V ? 'C' : cropFor(id).ava);
+const colX = (id, xRight, w) => (AVA(id) === 'R' ? W - xRight - w : xRight);
+const colLean = (id, right) => (AVA(id) === 'R' ? Math.abs(right) : -Math.abs(right));
+const FACE = (id) => cropFor(id).face;   // her face on the 1920×1080 proxy
+const PLATE = V ? { x: 730, y: 1130 } : { x: FACE('B1-01').x + 300, y: FACE('B1-01').y + 280 };   // name plate, off her shoulder
 const LX = V ? 80 : 50;               // left column — where she points
 const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under the app chrome
 
@@ -307,8 +318,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     inner: `<div class="plate cue"><b></b><div><strong>Ava</strong><span>NeroPay</span></div></div>` });
   rise('#plate .plate', a + 0.4, 8);
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
-  const cx = V ? 290 : 1150, cy = V ? 600 : 200, cw = V ? 500 : 560, ch = V ? 230 : 250;   // a size up on v6: Faisal asked for the 0.5% large
-  glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: -7,
+  const cw = V ? 500 : 560, ch = V ? 230 : 250, cx = V ? 290 : colX('B1-01', 1180, cw), cy = V ? 600 : 200;   // a size up on v6: Faisal asked for the 0.5% large
+  glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: colLean('B1-01', -7),
     inner: `<div class="chip"><span class="big cue">0.5%</span><span class="q cue">?</span><i class="strike"></i></div>` });
   rise('#chip .big', tMaybe, 18);
   js.push(`tl.set("#chip .strike", { scaleX: 0, rotation: -8 }, ${r3(tMaybe - 0.55)});`);
@@ -324,7 +335,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
-  const FX = V ? 180 : 1120, FY = V ? 300 : 120;
+  const FX = V ? 180 : colX('B1-02', 1120, 720), FY = V ? 300 : 120;
   html.push(`<div id="fan" class="space" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
   /* the first card lands from depth; three more slide out behind it, each deeper than the last, so the
      slow turn of the group gives them parallax */
@@ -345,7 +356,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   js.push(`tl.set("${leaves('#fan .card')}", { opacity: 0 }, ${b});`);
   js.push(`tl.set("#fan .card", { autoAlpha: 0 }, ${b});`);
   sfx('pop', tOne, 0.16); sfx('whoosh', r3(tMore - 0.05), 0.15);
-  const f1 = V ? focus(1.14, CX, 640) : focus(1.12, 1420, 400);
+  const f1 = V ? focus(1.14, CX, 640) : focus(1.12, FX + 300, 400);
   chain('B1-02', [{ t: a, c: flat(1.06, 40, 0) }, { t: tOne, c: flat(1.04, 20, 0) }, { t: tMore + 0.7, c: f1, ease: 'power3.out' }, hold(b, f1)]);
 }
 
@@ -394,7 +405,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const tCredit = findWord('B1-04', 'credit'), tCompany = findWord('B1-04', 'company'), tAmex = findWord('B1-04', 'amex'), tOver = findWord('B1-04', 'overseas'), tMost = findWord('B1-04', 'most');
   const bars = [['Debit', 0.5, 0.18, tDebit], ['Credit', 1.2, 0.42, tCredit], ['Business', 2.6, 0.86, tCompany], ['Amex', 1.75, 0.6, tAmex], ['Overseas', 2.9, 0.96, tOver]];
   const ly = V ? 210 : 110, lh = 600;
-  glass('ladder', { start: Math.max(a3, tAdv - 0.7), dur: r3(b4 - Math.max(a3, tAdv - 0.7)), x: PX, y: ly, w: PW, h: lh, cueAt: tAdv, lean: -7,
+  const lx = colX('B1-03', PX, PW);
+  glass('ladder', { start: Math.max(a3, tAdv - 0.7), dur: r3(b4 - Math.max(a3, tAdv - 0.7)), x: lx, y: ly, w: PW, h: lh, cueAt: tAdv, lean: colLean('B1-03', -7),
     inner: `<div class="pad"><span class="th cue">the advertised rate, by card</span><div class="bars">${bars.map(([n, v, h], i) => `<div class="bar b${i} cue"><b>0.00%</b><div class="col" style="height:${Math.round(h * 100)}%"><i class="base"></i><i class="fill"></i></div><span>${n}</span></div>`).join('')}</div></div>` });
   bars.forEach(([, val, , when], i) => {
     js.push(`tl.fromTo("#ladder .b${i}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25, immediateRender: false }, ${r3(when)});`);
@@ -411,8 +423,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   js.push(`tl.fromTo("#ladder .b4 .col", { scaleY: 1 }, { scaleY: 1.04, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, immediateRender: false }, ${tMost});`);
   js.push(`tl.fromTo("#ladder .b3 .fill", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, immediateRender: false }, ${tMost});`);
   js.push(`tl.fromTo("#ladder .b3 b", { color: "rgba(255,255,255,0.55)" }, { color: "${Y}", duration: 0.4, immediateRender: false }, ${tMost});`);
-  const barX = (i) => PX + 46 + (PW - 92) * (i + 0.5) / 5;
-  const c0 = pf('ladder', 1.12, PX + PW / 2, ly + 320), c0b = pf('ladder', 1.2, barX(0) + 120, ly + 480);
+  const barX = (i) => lx + 46 + (PW - 92) * (i + 0.5) / 5;
+  const c0 = pf('ladder', 1.12, lx + PW / 2, ly + 320), c0b = pf('ladder', 1.2, barX(0) + 120, ly + 480);
   chain('B1-03', [{ t: a3, c: flat(1.0) }, { t: tAdv - 0.1, c: flat(1.02) }, { t: tAdv + 0.9, c: c0, ease: 'power3.out' }, hold(tDebit, c0), { t: tDebit + 0.7, c: c0b, ease: 'power3.out' }, hold(b3, c0b)]);
   /* B1-04: the camera walks the ladder with her — credit, company, then up to the most expensive */
   const c1 = pf('ladder', 1.14, barX(1) + 60, ly + 400), c2 = pf('ladder', 1.18, barX(2), ly + 330), c4 = pf('ladder', 1.2, barX(4) - 90, ly + 300), c4b = pf('ladder', 1.24, barX(4) - 110, ly + 280);
@@ -426,9 +438,9 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
-  const HX = V ? 230 : 1120, HY = V ? 300 : 20, c0 = r3(Math.max(a, tWhat - 0.3));
+  const HX = V ? 230 : colX('B1-05', 1120, 740), HY = V ? 300 : 20, c0 = r3(Math.max(a, tWhat - 0.3));
   html.push(`<div id="hand" class="space" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
-  <div id="bigline" class="bigline"><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
+  <div id="bigline" class="bigline"${V ? '' : ` style="left:${HX + 30}px"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
   [0, 1, 2, 3].forEach((i) => {
     const t0 = r3(c0 + i * 0.1);
     js.push(`tl.set("#hand .k${i}", { autoAlpha: 1 }, ${t0});`);
@@ -450,7 +462,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   js.push(`tl.set("${leaves('#hand .card')}", { opacity: 0 }, ${b});`);
   js.push(`tl.set("#bigline .b1, #bigline .b2", { autoAlpha: 0 }, ${b});`);
   js.push(`tl.set("#hand .card", { autoAlpha: 0 }, ${b});`);
-  const f1 = V ? focus(1.1, CX, 700) : focus(1.08, 1480, 420), f2 = V ? focus(1.12, CX, 700) : focus(1.12, 1500, 420);
+  const f1 = V ? focus(1.1, CX, 700) : focus(1.08, HX + 360, 420), f2 = V ? focus(1.12, CX, 700) : focus(1.12, HX + 380, 420);
   chain('B1-05', [{ t: a, c: flat(1.0) }, { t: c0 + 0.8, c: f1, ease: 'power2.out' }, { t: tPocket + 0.6, c: f2, ease: 'power3.out' }, hold(b, f2)]);
 }
 
@@ -461,7 +473,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const t70 = findWord('B1-07', 'seventy'), tCred = findWord('B1-07', 'credit'), tComp = findWord('B1-07', 'company'), tOver = findWord('B1-07', 'overseas');
   const rows = [['Consumer debit', 71, '0.50%'], ['Consumer credit', 20, '1.20%'], ['Business / commercial', 5, '2.60%'], ['International / non-UK', 2, '2.90%']];
   const py = PY, ph = 690, st = r3(Math.max(a6, tHere - 0.6));
-  glass('month', { start: st, dur: r3(b7 - st), x: LX, y: py, w: PW, h: ph, cueAt: tHere, lean: 7,
+  const mx = V ? LX : colX('B1-06', PX, PW);
+  glass('month', { start: st, dur: r3(b7 - st), x: mx, y: py, w: PW, h: ph, cueAt: tHere, lean: V ? 7 : colLean('B1-06', -7),
     inner: `<div class="pad"><span class="th cue">a made-up month, one restaurant</span>
       <div class="stats"><div class="stat s0 cue"><b>£0</b><span>card turnover</span></div><div class="stat s1 cue"><b>0</b><span>card payments</span></div><div class="stat s2 cue"><b>0.00%</b><span>the quoted rate</span></div></div>
       <div class="split">${rows.map(([n, pct, r], i) => `<div class="srow q${i} cue"><div class="lab"><span>${n}</span><b>${r}</b></div><div class="track"><i style="width:${pct}%"></i><em>${pct}%</em></div></div>`).join('')}</div>
@@ -476,7 +489,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     sfx('swish', when, 0.13);
   });
   rise('#month .foot', tOver + 0.6);
-  const m0 = pf('month', 1.12, LX + PW / 2, py + 320), m1 = pf('month', 1.14, LX + 240, py + 300), m2 = pf('month', 1.14, LX + PW / 2, py + 420), m3 = pf('month', 1.16, LX + PW - 200, py + 520);
+  const m0 = pf('month', 1.12, mx + PW / 2, py + 320), m1 = pf('month', 1.14, mx + 240, py + 300), m2 = pf('month', 1.14, mx + PW / 2, py + 420), m3 = pf('month', 1.16, mx + PW - 200, py + 520);
   chain('B1-06', [{ t: a6, c: flat(1.0) }, { t: tHere - 0.1, c: flat(1.02) }, { t: tHere + 0.9, c: m0, ease: 'power3.out' }, hold(tTwenty, m0), { t: tTwenty + 0.7, c: m1, ease: 'power3.out' }, hold(b6, m1)]);
   chain('B1-07', [{ t: a7, c: bump(m1) }, { t: t70 + 0.6, c: m2 }, hold(tOver, m2), { t: tOver + 0.6, c: m3, ease: 'power3.out' }, hold(b7 - 0.6, m3), { t: b7, c: flat(1.06, 40, 0) }]);
 }
@@ -488,7 +501,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const tAccount = findWord('B1-09', 'account'), tPayout = findWord('B1-09', 'payout'), tOwn = findWord('B1-09', 'own');
   const rows = [['Authorisation fees', '780 × 4p', 31.2], ['Terminal rental', 'monthly', 17.5], ['PCI compliance fee', 'monthly', 9.95], ['Account fee', 'monthly', 5], ['Payout fees', 'every time they pay you', 12]];
   const py = PY, ph = 680;
-  glass('fixed', { start: a8, dur: r3(b9 - a8), x: PX, y: py, w: PW, h: ph, cueAt: tCharges, lean: -7,
+  const xx = colX('B1-08', PX, PW);
+  glass('fixed', { start: a8, dur: r3(b9 - a8), x: xx, y: py, w: PW, h: ph, cueAt: tCharges, lean: colLean('B1-08', -7),
     inner: `<div class="pad"><span class="th cue">the charges that aren't a percentage</span>
       ${rows.map(([n, how, v], i) => `<div class="frow f${i} cue"><div><span>${n}</span><small>${how}</small></div><b>£0.00</b></div>`).join('')}
       <div class="ftotal cue"><span>these alone</span><b>£0.00</b><em>0.27% of turnover</em></div></div>` });
@@ -508,8 +522,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-10'], a = s.start, b = endOf('B1-10');
   const tAdd = findWord('B1-10', 'add'), tDivide = findWord('B1-10', 'divide'), tMultiply = findWord('B1-10', 'multiply'), tHundred = findWord('B1-10', 'hundred');
-  const fx = LX, fy = V ? 240 : 170, fw = 920, fh = 600, st = r3(Math.max(a, tAdd - 0.7));
-  glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: 8,
+  const fw = 920, fx = V ? LX : colX('B1-10', W - LX - fw, fw), fy = V ? 240 : 170, fh = 600, st = r3(Math.max(a, tAdd - 0.7));
+  glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: V ? 8 : colLean('B1-10', -8),
     inner: `<div class="pad formula"><span class="th cue">your effective rate</span>
       <div class="frac">
         <div class="row num cue"><i class="badge">£</i><span>every charge on the statement</span></div>
@@ -537,8 +551,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const a11 = S['B1-11'].start, b11 = endOf('B1-11'), a12 = S['B1-12'].start, b12 = endOf('B1-12');
   const tHere = findWord('B1-11', 'here'), tThree = findWord('B1-11', 'three'), tTwenty = findWord('B1-11', 'twenty'), tOne = findWord('B1-11', 'one');
   const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tDouble = findWord('B1-12', 'double');
-  const sx = V ? 80 : 1040, sy = V ? 190 : 50, sw = V ? 920 : 840, sh = 740;
-  glass('sum', { start: a11, dur: r3(b12 - a11), x: sx, y: sy, w: sw, h: sh, cueAt: tHere, lean: -6,
+  const sw = V ? 920 : 840, sx = V ? 80 : colX('B1-11', 1040, sw), sy = V ? 190 : 50, sh = 740;
+  glass('sum', { start: a11, dur: r3(b12 - a11), x: sx, y: sy, w: sw, h: sh, cueAt: tHere, lean: colLean('B1-11', -6),
     inner: `<div class="pad sum"><span class="th cue">what that month really cost</span>
       <div class="sline l0 cue"><span>all charges</span><b>£0.00</b></div>
       <div class="sline l1 cue"><span>card turnover</span><b>£0</b></div>
@@ -583,7 +597,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const tNought = findWord('B1-13', 'nought'), tFlat = findWord('B1-13', 'flat'), tLess = findWord('B1-13', 'less');
   const tHundred = findWord('B1-14', 'hundred'), tHigher = findWord('B1-14', 'higher'), tLess2 = findWord('B1-14', 'less');
   const py = PY, ph = 690, st = r3(Math.max(a13, tNought - 0.7));
-  glass('flatp', { start: st, dur: r3(b14 - st), x: PX, y: py, w: PW, h: ph, cueAt: tNought, lean: -7,
+  const wx = colX('B1-13', PX, PW);
+  glass('flatp', { start: st, dur: r3(b14 - st), x: wx, y: py, w: PW, h: ph, cueAt: tNought, lean: colLean('B1-13', -7),
     inner: `<div class="pad"><span class="th cue">the same month, two ways</span>
       <div class="head cue"><b>0.00%</b><span>flat, every card, no fees</span></div>
       <div class="hbars">
@@ -600,7 +615,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   countUp('#flatp .h1 b', 198.81, tHundred, { prefix: '£', dp: 2, dur: 0.9 });
   js.push(`tl.fromTo("#flatp .h1 .hbt i", { scaleX: 1 }, { scaleX: 1.03, duration: 0.3, ease: "back.out(2)", yoyo: true, repeat: 1, immediateRender: false }, ${tHigher});`);
   rise('#flatp .save', tLess2); countUp('#flatp .save b', 109.65, tLess2, { prefix: '£', dp: 2, dur: 0.8 }); sfx('pop', tLess2, 0.16);
-  const w0 = pf('flatp', 1.12, PX + PW / 2, py + 330), w1 = pf('flatp', 1.18, PX + 380, py + 430), w2 = pf('flatp', 1.18, PX + 380, py + 600);
+  const w0 = pf('flatp', 1.12, wx + PW / 2, py + 330), w1 = pf('flatp', 1.18, wx + 380, py + 430), w2 = pf('flatp', 1.18, wx + 380, py + 600);
   chain('B1-13', [{ t: a13, c: flat(1.0) }, { t: tNought - 0.1, c: flat(1.02) }, { t: tNought + 0.9, c: w0, ease: 'power3.out' }, hold(tLess, w0), { t: tLess + 0.6, c: w1, ease: 'power3.out' }, hold(b13, w1)]);
   chain('B1-14', [{ t: a14, c: bump(w1) }, hold(tLess2, w1), { t: tLess2 + 0.6, c: w2, ease: 'power3.out' }, hold(b14 - 0.6, w2), { t: b14, c: flat(1.06, -50, 0) }]);
 }
@@ -611,8 +626,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const tAsk = findWord('B1-15', 'ask'), tCredit = findWord('B1-15', 'credit'), tCompany = findWord('B1-15', 'company'), tAmex = findWord('B1-15', 'amex'), tPayout = findWord('B1-15', 'payout');
   const tPci = findWord('B1-16', 'pci'), tAccount = findWord('B1-16', 'account'), tMinimum = findWord('B1-16', 'minimum'), tEffective = findWord('B1-16', 'effective'), tOnly = findWord('B1-16', 'only');
   const items = ['What do credit cards cost?', 'And business cards?', 'And American Express?', 'What does each payout cost?', 'Is there a PCI fee?', 'An account fee?', 'A minimum monthly charge?', 'So what is my effective rate?'];
-  const qx = V ? 80 : 1020, qy = V ? 180 : 60, qw = V ? 920 : 860, qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
-  glass('ask', { start: st, dur: r3(b16 - st), x: qx, y: qy, w: qw, h: qh, cueAt: tAsk, lean: -7,
+  const qw = V ? 920 : 860, qx = V ? 80 : colX('B1-15', 1020, qw), qy = V ? 180 : 60, qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
+  glass('ask', { start: st, dur: r3(b16 - st), x: qx, y: qy, w: qw, h: qh, cueAt: tAsk, lean: colLean('B1-15', -7),
     inner: `<div class="pad"><span class="th cue">ask any provider</span>${items.map((q, i) => `<div class="qrow k${i}${i === 7 ? ' last' : ''} cue"><i></i><span>${q}</span></div>`).join('')}</div>` });
   [tCredit, tCompany, tAmex, tPayout, tPci, tAccount, tMinimum, tEffective].forEach((when, i) => {
     arrive(`#ask .k${i}`, when, 40);
@@ -631,8 +646,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-17'], a = s.start, b = endOf('B1-17');
   const tTwo = findWord('B1-17', 'two'), tStatement = findWord('B1-17', 'statement'), tCalc = findWord('B1-17', 'calculator');
-  const tx = V ? 100 : PX - 20, ty = V ? 560 : 170, tw = V ? 880 : 800, th = 300;
-  glass('two', { start: a, dur: r3(b - a), x: tx, y: ty, w: tw, h: th, cueAt: tTwo + 0.05, lean: -6,
+  const tw = V ? 880 : 800, tx = V ? 100 : colX('B1-17', PX - 20, tw), ty = V ? 560 : 170, th = 300;
+  glass('two', { start: a, dur: r3(b - a), x: tx, y: ty, w: tw, h: th, cueAt: tTwo + 0.05, lean: colLean('B1-17', -6),
     inner: `<div class="pad twomin"><b class="n cue">2 min</b><div class="lines"><span class="l1 cue"><i></i>last month's statement</span><span class="l2 cue"><i></i>+ a calculator</span></div></div>` });
   js.push(`tl.fromTo("#two .n", { autoAlpha: 0, scale: 0.5, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, ${r3(tTwo + 0.05)});`);
   sfx('pop', tTwo + 0.05, 0.18);
@@ -652,12 +667,13 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     yt: '<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="21" height="14" rx="4.5" fill="#fff"/><path d="M10 8.8l5.2 3.2L10 15.2z" fill="#141416"/></svg>',
     tt: '<svg viewBox="0 0 24 24"><path d="M13.3 3h3.2a4.2 4.2 0 0 0 4.2 4.1v3.2a7.4 7.4 0 0 1-4.2-1.4v6.2a5.6 5.6 0 1 1-5.6-5.6h.6v3.3h-.6a2.3 2.3 0 1 0 2.4 2.3z" fill="#fff"/></svg>',
   };
-  html.push(`<div id="social" class="social" style="left:${V ? 330 : PX + 20}px;top:${V ? 640 : 250}px;width:760px;height:260px">
+  const socX = V ? 330 : colX('B1-18', PX + 20, 760);
+  html.push(`<div id="social" class="social" style="left:${socX}px;top:${V ? 640 : 250}px;width:760px;height:260px">
     <span class="smark"><b>Nero</b><em>Pay</em></span><i class="wipe"></i>
     <div class="icons">${['ig', 'li', 'yt', 'tt'].map((k) => `<i class="ic ${k} cue">${ICON[k]}</i>`).join('')}</div></div>`);
   const t0 = r3(tFollow - 0.1);
   js.push(`tl.set("#social", { autoAlpha: 1 }, ${t0});`);
-  js.push(`tl.fromTo("#social .smark", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
+  js.push(`tl.fromTo("#social .smark", { clipPath: "inset(-20% 100% -30% 0%)" }, { clipPath: "inset(-20% 0% -30% 0%)", duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
   js.push(`tl.fromTo("#social .wipe", { autoAlpha: 1, x: 0 }, { x: 520, duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
   js.push(`tl.fromTo("#social .wipe", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.15, immediateRender: false }, ${r3(t0 + 0.5)});`);
   ['ig', 'li', 'yt', 'tt'].forEach((k, i) => {
@@ -670,7 +686,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   js.push(`tl.fromTo("#social", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -24, duration: 0.4, ease: "power2.in", immediateRender: false }, ${tOut});`);
   js.push(`tl.set("#social", { autoAlpha: 0 }, ${r3(tOut + 0.4)});`);
   sfx('whoosh', tOut, 0.1);
-  chain('B1-18', [{ t: a, c: flat(1.0) }, { t: t0 + 0.9, c: flat(1.06, -30, 0), ease: 'power2.out' }, hold(tOut, flat(1.06, -30, 0)), { t: b, c: flat(1.0) }]);
+  const sp = AVA('B1-18') === 'R' ? 30 : -30;
+  chain('B1-18', [{ t: a, c: flat(1.0) }, { t: t0 + 0.9, c: flat(1.06, sp, 0), ease: 'power2.out' }, hold(tOut, flat(1.06, sp, 0)), { t: b, c: flat(1.0) }]);
 }
 
 /* ---------- 15 · end card, on the beat, in the title's style: NeroPay. → subscribe → six plain lines → NeroPay. + the concession ----------
