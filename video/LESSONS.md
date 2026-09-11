@@ -14,10 +14,16 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     framing (§1 step 5); where two adjacent shots need the same angle, the second uses the looser variant (SIDE2,
     CLOSE2, FRONT2) so the cut is a punch, not a jump.
 44. **The hold law is asserted, and it changes the cut, not the graphic.** `law()` in `build.mjs` computes build / hold /
-    exit per overlay and refuses to write `index.html` if hold < max(1.5 s, words × 0.4). Where a take had the air,
-    `edit.json` `tail` keeps more of it after the last word (B1-01 1.0 s, B1-04 0.6, B1-10 0.8, B1-11 0.7, B1-12 1.15,
-    B1-17 1.0); nothing is stretched. Where it didn't, the graphic lost words (the title lost its episode pill, the
-    end card its footnote) or landed earlier.
+    exit per overlay and refuses to write `index.html` if hold < max(1.5 s, words × 0.4). Where a take has the air,
+    `edit.json` `tail` keeps more of it after the last word (B1-10 0.8 s, B1-17 1.0 s; B1-01, B1-04 and B1-11 keep all
+    the air they have, 0.34–0.68 s); nothing is stretched. Where it doesn't, the graphic loses words (the title lost its
+    episode pill, the end card its footnote), lands earlier (the hook's strike on "almost", the 1.09 % on "actually",
+    the fan's cards in eight frames), or is held across a cut on the same angle (the two-ways table into B1-15).
+44a. **Plan against the takes, not the placeholders.** v6's `cuts.json` recorded the *placeholder* lengths as source
+    lengths (B1-01 "10.05 s" — the take is 8.04), so a tail budget planned here failed in the sandbox. `data/takes.json`
+    now records every take's real length (ffprobe on the CDN files) and `make-placeholders.sh` cuts the local stand-ins
+    to match, so `node cut.mjs && node build.mjs` here fails the law exactly where the sandbox would. Run it before
+    trusting any local hold.
 45. **A graphic that grows on her words is checked twice.** The spec's formula assumes a graphic that appears whole. For
     a table or a statement that prints row by row as she reads it, `law()` checks the whole graphic against its total
     time on screen and the last thing to land against the time left after it — the words she has already said have
