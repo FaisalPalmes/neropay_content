@@ -16,15 +16,22 @@ cd "$ROOT"
 ( cd edit && npm install --no-audit --no-fund --loglevel=error )
 ( cd video && npm install --no-audit --no-fund --loglevel=error )
 
-# 2. ffmpeg / ffprobe on PATH — Remotion ships static builds, HyperFrames needs them on PATH
+# 2. ffmpeg / ffprobe. HyperFrames' frame extraction needs a full build (the fps filter, the image2 muxer);
+#    Remotion's bundled ffmpeg is built with --disable-filters and fails every extraction in ~100 ms, so a local
+#    render dies with "VIDEO_SOURCE_UNRENDERABLE; ffmpeg_failed" (LESSONS #57). Prefer the distro build, install
+#    it if the network allows, and fall back to Remotion's only for `hyperframes doctor` and ffprobe work.
 FF="$ROOT/edit/node_modules/@remotion/compositor-linux-x64-gnu"
-if [ -x "$FF/ffmpeg" ] && ! command -v ffmpeg >/dev/null 2>&1; then
-  ln -sf "$FF/ffmpeg" /usr/local/bin/ffmpeg 2>/dev/null || true
-  ln -sf "$FF/ffprobe" /usr/local/bin/ffprobe 2>/dev/null || true
+if [ ! -x /usr/bin/ffmpeg ] && command -v apt-get >/dev/null 2>&1; then
+  ( apt-get update -q && DEBIAN_FRONTEND=noninteractive apt-get install -y -q ffmpeg ) >/tmp/ffmpeg-apt.log 2>&1 || true
 fi
-if [ -x "$FF/ffmpeg" ]; then
+if [ -x /usr/bin/ffmpeg ]; then
+  echo 'export HYPERFRAMES_FFMPEG_PATH="/usr/bin/ffmpeg"' >> "$CLAUDE_ENV_FILE"
+  echo 'export HYPERFRAMES_FFPROBE_PATH="/usr/bin/ffprobe"' >> "$CLAUDE_ENV_FILE"
+elif [ -x "$FF/ffmpeg" ]; then
+  command -v ffmpeg >/dev/null 2>&1 || { ln -sf "$FF/ffmpeg" /usr/local/bin/ffmpeg 2>/dev/null || true; ln -sf "$FF/ffprobe" /usr/local/bin/ffprobe 2>/dev/null || true; }
   echo "export HYPERFRAMES_FFMPEG_PATH=\"$FF/ffmpeg\"" >> "$CLAUDE_ENV_FILE"
   echo "export HYPERFRAMES_FFPROBE_PATH=\"$FF/ffprobe\"" >> "$CLAUDE_ENV_FILE"
+  echo "session-start: only Remotion's stripped ffmpeg is available — local HyperFrames renders will fail at frame extraction; render in the sandbox"
 fi
 
 # 3. a browser HyperFrames can render with: its own headless shell if it can be fetched,

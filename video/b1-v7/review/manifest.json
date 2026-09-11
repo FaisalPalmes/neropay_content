@@ -1,6 +1,6 @@
 {
  "built": "2026-09-11",
- "total": 163.958,
+ "total": 163.933,
  "fps": 30,
  "sfx_gain": 0.75,
  "shots": [
@@ -148,7 +148,7 @@
    "id": "[END]",
    "kind": "card",
    "start": 145.958,
-   "dur": 18,
+   "dur": 17.975,
    "angle": null
   }
  ],
@@ -313,13 +313,13 @@
    "shot": "[END]",
    "start": 145.958,
    "formed": 159.496,
-   "end": 163.958,
+   "end": 163.933,
    "cut": true,
    "words": 11,
    "build_f": 406,
-   "hold_f": 134,
+   "hold_f": 133,
    "exit_f": 0,
-   "held_frame_at": 163.908
+   "held_frame_at": 163.883
   }
  ],
  "contact_at": [
@@ -334,6 +334,6 @@
   118.465,
   133.975,
   140.208,
-  163.908
+  163.883
  ]
 }

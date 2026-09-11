@@ -210,6 +210,12 @@ identifiers in commits, PR bodies or code comments.
 | Vertical 9:16 | 1080×1920, 162.667 s, 175 MB | `1c682e5` |
 | Meta ad 4:5 | 1080×1350, 50.816 s, 46.8 MB | `5054f42` |
 
+Ad structure, as an example of trimming an explainer to an ad: hook on footage (0–7 s) → one rate
+covers one card type (7–12 s) → "their card. your rate." (12–16 s) → **audio-only, formula diagram**
+(16–24 s) → **audio-only, result counting to an illustrative 1.09%** (24–32 s) → quoted vs paying,
+"more than double" (32–38 s) → "2 min" statement check (38–43 s) → end card with the concession
+(43–51 s). The music bed runs out at 38 s on purpose; the last two beats are bare voice.
+
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
 `video/b1-v7/` is the B1 master rebuilt on `../MOTION-SYSTEM.md`, and the reference for every build that
@@ -224,9 +230,15 @@ the centre of the frame on "NeroPay", and effects 2.5 dB under v6. Same words, s
 captions, same outro shape.
 
 Run it the same way — `sandbox.sh` through `sandbox_exec` with `background:true`, `FREESOUND_TOKEN` in the
-environment, `QUALITY=draft` for the review pass — and it leaves `review/overlays-contact.png` (every
-overlay's last held frame at full size, §7) and `review/frames-contact.jpg` (a frame every six seconds)
-beside the render.
+environment, `QUALITY=draft` for the review pass — and it leaves `review/overlays-contact.jpg` (every
+overlay's last held frame at full size, §7), `review/frames-contact.jpg` (a frame every six seconds) and
+`review/spikes.txt` beside the render. The last one is the frame scan (LESSONS #55): the mean luma of every
+frame, and any frame that differs from both neighbours by more than four is listed. It has to read
+`single-frame spikes 0` before a render is delivered — the first v7 master had one flat frame at the cut out of
+the title card (the renderer paints the first frame after a gap on the video track blank) and ran half a
+second past the composition on an outro bed longer than the time left; both are fixed in `build.mjs`
+(the muted `v-under-*` clip beneath each card, beds cut to length, the end card on the frame grid) and the
+scan is what proves it on every run.
 
 **One interpretation to confirm with Faisal.** The spec's hold formula assumes a graphic that appears whole.
 For a table or a statement that prints row by row as she reads it, the build checks the whole graphic
@@ -241,9 +253,3 @@ does not recede in perspective the way the reference frames show. Real SIDE and 
 | Cut | Spec | Commit |
 |---|---|---|
 | Master 16:9 v7 | 1920×1080, 164.467 s, −14 LUFS, 213 MB, check clean on the real footage | `65cf0ca` |
-
-Ad structure, as an example of trimming an explainer to an ad: hook on footage (0–7 s) → one rate
-covers one card type (7–12 s) → "their card. your rate." (12–16 s) → **audio-only, formula diagram**
-(16–24 s) → **audio-only, result counting to an illustrative 1.09%** (24–32 s) → quoted vs paying,
-"more than double" (32–38 s) → "2 min" statement check (38–43 s) → end card with the concession
-(43–51 s). The music bed runs out at 38 s on purpose; the last two beats are bare voice.

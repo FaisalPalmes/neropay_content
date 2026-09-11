@@ -58,6 +58,30 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     sheet at `-q:v 9 -pix_fmt yuvj420p` is 40 KB; an eight-frame sheet was 130 KB — keep them small and ask for the
     frames that carry the risk (an overlay over the whiteboard, the band under the lamp, one CLOSE).
 
+55. **The review sheet caught a one-frame flash the eye never would.** The twelve-tile sheet showed the title's held
+    frame as empty charcoal. Chasing it: a per-frame mean-luma scan of the master (`signalstats`, 480×270) found exactly
+    one single-frame spike in 4,934 — frame 631, a flat frame between the title card and B1-03 — reproduced locally on
+    a 22.5 s cut, and the cause is the renderer, not the composition (a snapshot of the same instant is perfect). The
+    export runtime floors every `data-start` to the frame grid, so a clip that starts at 21.091 is shown from frame 632
+    with a media time still below zero, and when nothing was playing on that track before it (the title card sits in a
+    gap) the first frame paints blank; a clip that follows another clip does not. Rule: under every card that a clip
+    follows, `build.mjs` places a muted copy of that clip on track 0 (`v-under-*`), fully covered by the opaque stage —
+    with it the cut frame is footage. Aligning the cut to the frame grid also fixes it, but every boundary would have to
+    be aligned; the under-clip is one line and changes no timing. The scan is now step 6 of `sandbox.sh` and part of the
+    §7 gate: `review/spikes.txt` must say zero.
+56. **The file ran 0.5 s past the composition, and its last frame was blank.** The outro bed is 18.6 s and only 18 s fit;
+    the page clamped `data-duration` but the renderer ran to the end of the file, so the master was 4,934 frames for a
+    163.958 s root and the last one had nothing on it. Rule: a sound that runs past the composition is cut to length
+    with ffmpeg at build time (`role-fit<start>.m4a`, 0.3 s fade) and the page references the cut copy; the end card's
+    duration is chosen so the composition ends on the frame grid; and the end stage overhangs the root by three frames
+    so the flooring can't strip its last frame. Root and file are now the same 4,918 frames.
+57. **Local renders were failing for a reason that had nothing to do with the composition.** The session hook pointed
+    `HYPERFRAMES_FFMPEG_PATH` at Remotion's bundled ffmpeg, which is built with `--disable-filters`; HyperFrames' frame
+    extraction (`-vf fps=30` to `frame_%05d.jpg`) dies in 100 ms with "VIDEO_SOURCE_UNRENDERABLE; ffmpeg_failed" and no
+    stderr. Wrap the binary in a script that logs argv and stderr to see it. The hook now installs the distro ffmpeg
+    when it can and prefers `/usr/bin/ffmpeg`; a build or scan run by hand needs `HYPERFRAMES_FFMPEG_PATH=/usr/bin/ffmpeg`
+    too, and a truncated test cut needs `HF_VIDEO_COVERAGE_THRESHOLD=0` or the coverage gate aborts on the clips outside it.
+
 ## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
 
 40. **An ad is a second project on the same assets.** `video/b1-ad-4x5` symlinks the B1 `assets` folder and

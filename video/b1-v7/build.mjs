@@ -47,6 +47,7 @@ const SOUNDS = JSON.parse(fs.readFileSync(path.join(HERE, '../library/sounds.jso
 const EMPH = ['effective', 'statement', 'fees', 'fee', 'flat', 'tiered', 'exit', 'term', 'rental', 'average', 'debit', 'credit', 'amex', 'own', 'renting', 'choose', 'cheapest', 'most', 'double', 'less', 'payout', 'calculator'];
 
 const ffprobe = process.env.HYPERFRAMES_FFPROBE_PATH || 'ffprobe';
+const ffmpeg = process.env.HYPERFRAMES_FFMPEG_PATH || 'ffmpeg';
 function dur(file) {
   const out = execFileSync(ffprobe, ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', file]).toString().trim();
   return Math.round(parseFloat(out) * 1000) / 1000;
@@ -76,7 +77,12 @@ let t = 0;
 const segs = [];
 let estimated = [], cutUsed = 0;
 for (const id of ORDER) {
-  if (CARD[id]) { segs.push({ id, kind: 'card', start: r3(t), dur: CARD[id] }); t += CARD[id]; continue; }
+  if (CARD[id]) {
+    // the last card ends on the frame grid: the renderer floors every boundary to a frame (LESSONS #56), so a
+    // composition that ends between frames leaves its last frame with nothing on it
+    const cd = id === '[END]' ? r3(Math.floor((t + CARD[id]) * FPS + 1e-6) / FPS - t) : CARD[id];
+    segs.push({ id, kind: 'card', start: r3(t), dur: cd }); t += cd; continue;
+  }
   const cutFile = path.join(HERE, 'assets/cut', id + '.mp4');
   const useCut = CUTS && CUTS[id] && fs.existsSync(cutFile);
   const file = useCut ? cutFile : path.join(HERE, 'assets/clips', id + '.mp4');
@@ -199,7 +205,20 @@ function sfx(role, start, vol, { bed = false, maxLen } = {}) {
   const d = maxLen ? Math.min(SFXDUR[role], maxLen) : SFXDUR[role];
   const s = Math.max(0, r3(start));
   const v = r3(bed ? vol : vol * SFX_GAIN);
-  audio.push(`<audio id="sfx-${role}-${Math.round(s * 100)}" src="assets/sfx/${role}.m4a" data-start="${s}" data-duration="${r3(Math.min(d, TOTAL - s))}" data-track-index="${12 + (sfxN++)}" data-volume="${v}"></audio>`);
+  const fit = r3(Math.min(d, TOTAL - s));
+  let src = `assets/sfx/${role}.m4a`;
+  if (SFXDUR[role] > fit + 0.01) {
+    // the renderer runs to the end of the file, not to data-duration (LESSONS #56): a bed longer than the time
+    // left is cut to fit, with a short fade so it doesn't click, and the cut copy is what the page references
+    const name = `${role}-fit${Math.round(s * 100)}.m4a`, out = path.join(HERE, 'assets/sfx', name);
+    if (!fs.existsSync(out) || Math.abs(dur(out) - fit) > 0.05) {
+      const args = ['-nostdin', '-y', '-v', 'error', '-i', file, '-t', String(fit), '-c:a', 'aac', '-b:a', '192k', out];
+      try { execFileSync(ffmpeg, [...args.slice(0, -1), '-af', `afade=t=out:st=${r3(Math.max(0, fit - 0.3))}:d=0.3`, out]); }
+      catch { execFileSync(ffmpeg, args); }   // a stripped ffmpeg without afade still cuts it to length
+    }
+    src = `assets/sfx/${name}`;
+  }
+  audio.push(`<audio id="sfx-${role}-${Math.round(s * 100)}" src="${src}" data-start="${s}" data-duration="${fit}" data-track-index="${12 + (sfxN++)}" data-volume="${v}"></audio>`);
 }
 
 /* ---------- camera ----------
@@ -216,6 +235,14 @@ const flat = (S_, x = 0, y = 0) => ({ scale: S_, x, y });
 
 /* ---------- video, audio, captions for every clip ---------- */
 let dirn = 1;
+segs.forEach((s, i) => {
+  const next = segs[i + 1];
+  if (s.kind === 'card' && next && next.kind === 'clip') {
+    // a muted copy of the next clip runs under the card, hidden by the stage. Without it the renderer
+    // paints the first frame after a gap on the video track blank — one flat frame at the cut (LESSONS #55)
+    html.push(`<video id="v-under-${i}" class="clip" src="${next.src}" data-start="${s.start}" data-duration="${r3(next.start - s.start)}" data-media-start="${next.mediaStart}" data-track-index="0" muted playsinline></video>`);
+  }
+});
 for (const s of segs) {
   if (s.kind !== 'clip') continue;
   html.push(`<video id="v-${s.id}" class="clip" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="0" muted playsinline></video>`);
@@ -487,7 +514,9 @@ const BAND = { y: 196 };
   const s = S['[END]'], a = s.start, d = s.dur;
   const offer = ['Payment terminal', 'Free POS software', 'Online ordering', 'Booking system', 'QR payments', 'API for ecommerce'];
   const concede = 'Check your statement first. If it matches your quote, stay put.';
-  stages.push(`<div id="end" class="clip stage" data-start="${a}" data-duration="${d}" data-track-index="4">
+  // three frames past the root end: the renderer floors every boundary to a frame, and a stage that ends exactly
+  // where the composition does can lose its last frame (LESSONS #56)
+  stages.push(`<div id="end" class="clip stage" data-start="${a}" data-duration="${r3(d + F(3))}" data-track-index="4">
     <div class="bgd"><div class="grid"></div><svg class="arc" viewBox="0 0 1920 1080"><circle class="ring" cx="420" cy="1180" r="760"/><circle class="sweep" cx="420" cy="1180" r="760"/></svg></div>
     <div class="brand"><div class="wm"><b>Nero</b><em>Pay</em></div><div class="sub"><b>Subscribe for more</b></div></div>
     <div class="items"><div class="kick2"><b>What comes with NeroPay</b></div><div class="list">${offer.map((o, i) => `<div class="row t${i}"><i class="hl"></i><span class="k">${esc(o)}</span><span class="v n">0${i + 1}</span></div>`).join('')}</div></div>

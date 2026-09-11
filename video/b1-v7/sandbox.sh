@@ -74,4 +74,13 @@ ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/held/*.pn
 mkdir -p review/every6 && for t in $(seq 1 6 163); do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/every6/$(printf '%03d' "$t").png"; done
 N=$(ls review/every6/*.png | wc -l); ROWS=$(( (N + 5) / 6 ))
 ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/every6/*.png' -vf "scale=480:270,tile=6x${ROWS}:padding=4:color=0x141416" -frames:v 1 -q:v 4 review/frames-contact.jpg
+# 6. the frame scan (MOTION-SYSTEM.md §7, LESSONS #55): mean luma of every frame; a frame that differs from both
+#    neighbours by more than 4 is a flash — a blank cut frame, a dropped overlay — and fails the gate
+ffmpeg -nostdin -v error -i renders/b1-v7-final.mp4 -vf "scale=480:270,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=review/yavg.txt" -f null -
+python3 - <<'PY' | tee review/spikes.txt
+import re
+ys=[float(m.group(1)) for l in open('review/yavg.txt') for m in [re.search(r'YAVG=([0-9.]+)',l)] if m]
+sp=[(i,round(i/30,3),round(ys[i-1],1),round(ys[i],1),round(ys[i+1],1)) for i in range(1,len(ys)-1) if abs(ys[i]-ys[i-1])>4 and abs(ys[i]-ys[i+1])>4 and (ys[i]<min(ys[i-1],ys[i+1]) or ys[i]>max(ys[i-1],ys[i+1]))]
+print('frames', len(ys), 'single-frame spikes', len(sp), sp)
+PY
 echo BOOT_DONE

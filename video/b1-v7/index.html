@@ -120,8 +120,9 @@ video.clip{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="b1v7" data-start="0" data-duration="163.958" data-width="1920" data-height="1080" data-fps="30">
+<div id="root" data-composition-id="b1v7" data-start="0" data-duration="163.933" data-width="1920" data-height="1080" data-fps="30">
   <div id="world">
+    <video id="v-under-3" class="clip" src="assets/cut/B1-03.mp4" data-start="16.701" data-duration="4.39" data-media-start="0" data-track-index="0" muted playsinline></video>
     <video id="v-B1-01" class="clip" src="assets/cut/B1-01.mp4" data-start="0" data-duration="7.167" data-media-start="0" data-track-index="0" muted playsinline></video>
     <video id="v-B1-02" class="clip" src="assets/cut/B1-02.mp4" data-start="7.167" data-duration="5.467" data-media-start="0" data-track-index="0" muted playsinline></video>
     <video id="v-B1-INTRO" class="clip" src="assets/cut/B1-INTRO.mp4" data-start="12.634" data-duration="4.067" data-media-start="0" data-track-index="0" muted playsinline></video>
@@ -185,7 +186,7 @@ video.clip{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:
     <div class="wm"><b>Nero</b><em>Pay</em></div>
     <div class="ep"><span class="ew">The</span> <span class="ew">rate</span> <span class="ew">you</span> <span class="ew">were</span> <span class="ew">quoted</span></div>
   </div>
-  <div id="end" class="clip stage" data-start="145.958" data-duration="18" data-track-index="4">
+  <div id="end" class="clip stage" data-start="145.958" data-duration="18.075" data-track-index="4">
     <div class="bgd"><div class="grid"></div><svg class="arc" viewBox="0 0 1920 1080"><circle class="ring" cx="420" cy="1180" r="760"/><circle class="sweep" cx="420" cy="1180" r="760"/></svg></div>
     <div class="brand"><div class="wm"><b>Nero</b><em>Pay</em></div><div class="sub"><b>Subscribe for more</b></div></div>
     <div class="items"><div class="kick2"><b>What comes with NeroPay</b></div><div class="list"><div class="row t0"><i class="hl"></i><span class="k">Payment terminal</span><span class="v n">01</span></div><div class="row t1"><i class="hl"></i><span class="k">Free POS software</span><span class="v n">02</span></div><div class="row t2"><i class="hl"></i><span class="k">Online ordering</span><span class="v n">03</span></div><div class="row t3"><i class="hl"></i><span class="k">Booking system</span><span class="v n">04</span></div><div class="row t4"><i class="hl"></i><span class="k">QR payments</span><span class="v n">05</span></div><div class="row t5"><i class="hl"></i><span class="k">API for ecommerce</span><span class="v n">06</span></div></div></div>
@@ -367,7 +368,7 @@ video.clip{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:
   <audio id="sfx-tick-15767" src="assets/sfx/tick.m4a" data-start="157.665" data-duration="0.24" data-track-index="72" data-volume="0.135"></audio>
   <audio id="sfx-pop-15913" src="assets/sfx/pop.m4a" data-start="159.129" data-duration="0.56" data-track-index="73" data-volume="0.12"></audio>
   <audio id="sfx-tick-15923" src="assets/sfx/tick.m4a" data-start="159.229" data-duration="0.24" data-track-index="74" data-volume="0.135"></audio>
-  <audio id="sfx-music-outro-14596" src="assets/sfx/music-outro.m4a" data-start="145.958" data-duration="18" data-track-index="75" data-volume="0.42"></audio>
+  <audio id="sfx-music-outro-14596" src="assets/sfx/music-outro-fit14596.m4a" data-start="145.958" data-duration="17.975" data-track-index="75" data-volume="0.42"></audio>
 </div>
 <script>
 (function () {
@@ -407,7 +408,7 @@ video.clip{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:
     }
   }
   paint();
-  tl.fromTo(driver, { t: 0 }, { t: 163.958, duration: 163.958, ease: "none", onUpdate: paint, immediateRender: false }, 0);
+  tl.fromTo(driver, { t: 0 }, { t: 163.933, duration: 163.933, ease: "none", onUpdate: paint, immediateRender: false }, 0);
   tl.set("#plate", { autoAlpha: 1 }, 0.25);
   tl.fromTo("#plate", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 0.25);
   tl.fromTo("#plate", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.233, ease: "power1.in", immediateRender: false }, 3.2);
@@ -589,9 +590,9 @@ video.clip{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:
   tl.fromTo("#two .p2 span", { autoAlpha: 0, scaleX: 0 }, { autoAlpha: 1, scaleX: 1, duration: 0.267, ease: "power2.out", immediateRender: false }, 138.425);
   tl.set("#two", { autoAlpha: 0 }, 140.258);
   tl.set("#end", { autoAlpha: 1 }, 145.958);
-  tl.fromTo("#end .grid", { x: 0, y: 0 }, { x: -60, y: -36, duration: 18, ease: "none", immediateRender: false }, 145.958);
+  tl.fromTo("#end .grid", { x: 0, y: 0 }, { x: -60, y: -36, duration: 17.975, ease: "none", immediateRender: false }, 145.958);
   tl.fromTo("#end .sweep", { strokeDashoffset: 4776 }, { strokeDashoffset: 2900, duration: 2.6, ease: "power2.out", immediateRender: false }, 145.958);
-  tl.fromTo("#end .arc", { rotation: 0 }, { rotation: -22, duration: 18, ease: "sine.inOut", immediateRender: false }, 145.958);
+  tl.fromTo("#end .arc", { rotation: 0 }, { rotation: -22, duration: 17.975, ease: "sine.inOut", immediateRender: false }, 145.958);
   tl.set("#end .brand .wm", { autoAlpha: 1 }, 146.258);
   tl.fromTo("#end .brand .wm", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.467, ease: "none", immediateRender: false }, 146.258);
   tl.fromTo("#end .brand .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 147.421);
