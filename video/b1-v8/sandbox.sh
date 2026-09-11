@@ -74,6 +74,7 @@ ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/every6/*.
 # 6. the frame scan (MOTION-SYSTEM.md §7, LESSONS #55): mean luma of every frame; a frame that differs from both
 #    neighbours by more than 4 is a flash — a blank cut frame, a dropped overlay — and fails the gate
 ffmpeg -nostdin -v error -i renders/b1-v8-final.mp4 -vf "scale=480:270,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=review/yavg.txt" -f null -
+# (the report the delivery gate reads is written in step 7 — upload review/report.txt with the video, LESSONS #66)
 python3 - <<'PY' | tee review/spikes.txt
 import re
 ys=[float(m.group(1)) for l in open('review/yavg.txt') for m in [re.search(r'YAVG=([0-9.]+)',l)] if m]
@@ -81,3 +82,7 @@ sp=[(i,round(i/30,3),round(ys[i-1],1),round(ys[i],1),round(ys[i+1],1)) for i in 
 print('frames', len(ys), 'single-frame spikes', len(sp), sp)
 PY
 echo BOOT_DONE
+# 7. the report that travels with the file (LESSONS #66): frames, spikes, md5, probe — one small text file to upload
+{ echo "b1-v8 $(git -C "$ROOT/repo" rev-parse --short HEAD) $(date -u +%FT%TZ)"; cat review/spikes.txt; md5sum renders/b1-v8-final.mp4;
+  ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 renders/b1-v8-final.mp4; } > review/report.txt
+cat review/report.txt

@@ -254,7 +254,8 @@ line-height of 1). Both wordmark clips are `inset(-20% … -30% …)` now.
 
 | Cut | Spec | Commit |
 |---|---|---|
-| Master 16:9 v8 | 1920×1080, 164.5 s (4,934 frames), −14 LUFS, 190 MB, check clean on the real footage, frame scan 0 spikes | `2b9b196` |
+| Master 16:9 v8 | superseded by v8.2 — the panels sat on her face | `2b9b196` |
+| Master 16:9 v8.2 | 1920×1080, 164.5 s (4,934 frames), −14 LUFS, 202 MB, check clean on the real footage, frame scan 0 spikes (re-run from the CDN copy, md5 `07897a1e…`) | `837253b` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 

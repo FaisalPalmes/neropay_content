@@ -47,6 +47,14 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     on the title and the end card, and the same on the follow beat's mark: Poppins descends past a line-height of 1,
     so the border box the inset clips to ends above the tail. Wipe masks need room top and bottom —
     `inset(-20% 100% -30% 0%)` to `inset(-20% 0% -30% 0%)`.
+66. **The proof travels with the file, or it dies with the box.** The v8.2 render finished, the loudness pass, the
+    sheets, the scan and the three uploads all ran, and then the session sat idle for hours; when it came back the
+    sandbox was gone and with it `review/spikes.txt`, the md5 and the ffprobe line. The uploads were fine, but the
+    evidence had to be rebuilt by pulling the 200 MB file back off the CDN and scanning it again. Rule: whatever the
+    delivery gate needs — the frame count, the spike count, the md5, the loudness — goes into one small
+    `review/report.txt` that is uploaded alongside the video in the same background command, so the gate can be
+    read from the CDN after the box has gone. And the lease renewals are only as good as the session driving them:
+    if the session can go idle, the run has to be self-sufficient.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 
