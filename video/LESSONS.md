@@ -47,6 +47,16 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     slot as the window opens, so nothing has to be re-parented or scaled.
 52. **Effects sit 2.5 dB under v6 (`SFX_GAIN = 0.75`), the music beds unchanged.** Faisal's note on v6 was that the
     effects were too loud; the base levels stay at v6 parity so the gain is the only difference and can be tuned once.
+53. **A sandbox can be recycled mid-render, lease or no lease.** The first high-quality run vanished with the whole
+    box about twenty minutes in, despite `sleep 840` renewals. Rule: the upload is part of the render command — the
+    `curl -X PUT` to the `media_upload` URL sits in the same background command as `sandbox.sh`, right after the
+    loudnorm, so a finished file leaves the box before anything else can happen to it. Don't run a second heavy job in
+    the same box while a render is capturing (the review sheet and the high render shared a box; only the sheet survived).
+54. **Stills come back through the session log, not by retyping.** Print each still as base64 in ≤15 K chunks with a
+    marker (`=====D0=====`), then a local script pulls the chunks out of the session's `.jsonl` transcript, joins them and
+    checks the md5 the sandbox printed. Zero transcription, a 40 KB JPEG in one call each way. A four-frame 960×540
+    sheet at `-q:v 9 -pix_fmt yuvj420p` is 40 KB; an eight-frame sheet was 130 KB — keep them small and ask for the
+    frames that carry the risk (an overlay over the whiteboard, the band under the lamp, one CLOSE).
 
 ## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
 
