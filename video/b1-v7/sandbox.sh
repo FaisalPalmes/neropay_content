@@ -45,7 +45,8 @@ crop_for() {
 node -e 'const a=require(process.argv[1]);for(const [k,v] of Object.entries(a))if(!k.startsWith("_"))console.log(k,v)' "$ROOT/repo/$PROJECT/data/angles.json" > "$ROOT"/angles.txt
 while read -r id angle; do
   vf=$(crop_for "$angle")
-  [ -s "proxies/$id.mp4" ] || ffmpeg -y -v error -i "clips/$id.mp4" -vf "$vf" -r 24 -c:v libx264 -preset fast -crf 16 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart "proxies/$id.mp4" &
+  # -nostdin: a backgrounded ffmpeg inside a while-read loop otherwise eats the loop's stdin as keystrokes
+  [ -s "proxies/$id.mp4" ] || ffmpeg -nostdin -y -v error -i "clips/$id.mp4" -vf "$vf" -r 24 -c:v libx264 -preset fast -crf 16 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart "proxies/$id.mp4" < /dev/null &
   while [ "$(jobs -r | wc -l)" -ge 4 ]; do sleep 1; done
 done < "$ROOT"/angles.txt
 wait
@@ -66,8 +67,8 @@ ffmpeg -y -v error -i renders/b1-v7-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -
 ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 renders/b1-v7-final.mp4
 # 5. the review sheets (MOTION-SYSTEM.md §7): every overlay's last held frame at full size, and a frame every 6 s
 AT=$(node -e 'const m=require("./review/manifest.json");console.log(m.contact_at.map(x=>Math.round(x*100)/100).join(","))')
-mkdir -p review/held && for t in ${AT//,/ }; do ffmpeg -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/held/$(printf '%07.2f' "$t").png"; done
+mkdir -p review/held && for t in ${AT//,/ }; do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/held/$(printf '%07.2f' "$t").png"; done
 montage review/held/*.png -tile 3x -geometry 1920x1080+8+8 -background '#141416' review/overlays-contact.png
-mkdir -p review/every6 && for t in $(seq 1 6 163); do ffmpeg -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/every6/$(printf '%03d' "$t").png"; done
+mkdir -p review/every6 && for t in $(seq 1 6 163); do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/every6/$(printf '%03d' "$t").png"; done
 montage review/every6/*.png -tile 6x -geometry 480x270+4+4 -background '#141416' review/frames-contact.jpg
 echo BOOT_DONE
