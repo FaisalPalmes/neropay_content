@@ -1,0 +1,22 @@
+{
+  "_": "Camera angle per shot, decided here at build time (MOTION-SYSTEM.md §1). Every take is the one locked-off FRONT framing, so an angle is a crop of the 3840×2160 source that sandbox.sh cuts before anything else: FRONT is the full frame, SIDE a 1.5× window from the left edge that puts Ava in the right third with the whiteboard wall as negative space, CLOSE a 1.7× window on her face. The 2 variants (SIDE2, CLOSE2, FRONT2) are the same angle a few percent looser, used whenever two adjacent shots share an angle so the cut is a punch, not a jump. build.mjs reads this to place overlays and to refuse a FRONT-to-FRONT cut.",
+  "B1-01": "FRONT",
+  "B1-02": "CLOSE",
+  "B1-INTRO": "FRONT2",
+  "B1-03": "SIDE",
+  "B1-04": "SIDE2",
+  "B1-05": "CLOSE",
+  "B1-06": "SIDE",
+  "B1-07": "SIDE2",
+  "B1-08": "SIDE",
+  "B1-09": "SIDE2",
+  "B1-10": "FRONT",
+  "B1-11": "SIDE",
+  "B1-12": "FRONT2",
+  "B1-13": "CLOSE",
+  "B1-14": "SIDE",
+  "B1-15": "SIDE2",
+  "B1-16": "SIDE",
+  "B1-17": "FRONT",
+  "B1-18": "CLOSE2"
+}

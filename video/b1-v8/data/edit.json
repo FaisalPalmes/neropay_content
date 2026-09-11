@@ -1,0 +1,25 @@
+{
+  "_": "Hand trims on the source takes. in: start later (seconds into the take). endAtWord: drop everything after that word. tail: seconds of air kept after the last word (default 0.32) \u2014 raised where an overlay needs its hold (MOTION-SYSTEM.md \u00a73) and the take has the air to give (data/takes.json has the take lengths; B1-12 has 0.9 s before the sentence Faisal cut, so 0.7 keeps that cut clean).",
+  "B1-01": {
+    "tail": 0.36
+  },
+  "B1-04": {
+    "tail": 0.34
+  },
+  "B1-05": {
+    "in": 1.55
+  },
+  "B1-10": {
+    "tail": 0.8
+  },
+  "B1-11": {
+    "tail": 0.68
+  },
+  "B1-12": {
+    "endAtWord": "double.",
+    "tail": 0.7
+  },
+  "B1-17": {
+    "tail": 1.0
+  }
+}
