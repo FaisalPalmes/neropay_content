@@ -290,7 +290,7 @@ What changed:
 | Cut | Spec | Commit |
 |---|---|---|
 | Master 16:9 v8.2 | superseded by v8.3 — always pushed in | `837253b` |
-| Master 16:9 v8.3 | (filled in on delivery) | `bde751c` |
+| Master 16:9 v8.3 | 1920×1080, 164.5 s (4,934 frames), −14.8 LUFS / −1.2 dBTP, 183 MB, check clean on the real footage, frame scan 0 spikes, md5 `2ed2c81e…`, report.txt uploaded beside it | `bde751c` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
