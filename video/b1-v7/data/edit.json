@@ -1,0 +1,10 @@
+{
+  "_": "Hand trims on the source takes. in: start later (seconds into the take). endAtWord: drop everything after that word. tail: seconds of air kept after the last word (default 0.32) — raised where an overlay needs its hold (MOTION-SYSTEM.md §3) and the take has the air to give.",
+  "B1-01": { "tail": 1.0 },
+  "B1-04": { "tail": 0.6 },
+  "B1-05": { "in": 1.55 },
+  "B1-10": { "tail": 0.8 },
+  "B1-11": { "tail": 0.7 },
+  "B1-12": { "endAtWord": "double.", "tail": 1.15 },
+  "B1-17": { "tail": 1.0 }
+}

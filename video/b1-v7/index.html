@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{font-family:Poppins;font-weight:600;src:url(assets/fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:800;src:url(assets/fonts/poppins-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Poppins;font-weight:800;font-style:italic;src:url(assets/fonts/poppins-latin-800-italic.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:500;src:url(assets/fonts/inter-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:600;src:url(assets/fonts/inter-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:700;src:url(assets/fonts/inter-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:800;src:url(assets/fonts/inter-latin-800-normal.woff2) format("woff2")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#141416}
+body{font-family:Inter,"Helvetica Neue",Arial,sans-serif;color:#fff}
+#root{position:relative;width:1920px;height:1080px;overflow:hidden;background:#141416}
+#world{position:absolute;inset:0;transform-origin:50% 50%}
+video.clip{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover}
+.clip{position:absolute}
+/* every overlay starts hidden and is revealed by its first tween (LESSONS.md #23) */
+.ov{position:absolute;opacity:0;visibility:hidden}
+.ov .cue{opacity:0;visibility:hidden}
+/* ---- type: labels 600–800 caps, tracked; values 600, normal tracking (MOTION-SYSTEM.md §5) ---- */
+.caps{text-transform:uppercase;letter-spacing:0.06em}
+/* B — kinetic label */
+.lbl b{display:block;font-weight:800;font-size:64px;line-height:1;text-transform:uppercase;letter-spacing:0.06em;color:#F5C518;white-space:nowrap;text-shadow:0 6px 28px rgba(0,0,0,.55)}
+.lbl .strike{position:absolute;left:-2%;top:50%;width:104%;height:6px;margin-top:-3px;display:block;background:#fff;border-radius:3px;transform:rotate(-5deg);transform-origin:0 50%}
+/* the name plate: a small B */
+.plate{display:flex;align-items:center;gap:14px;opacity:0;visibility:hidden}
+.plate i{display:block;width:12px;height:12px;background:#F5C518;border-radius:3px;flex:none}
+.plate b{display:block;font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;line-height:1;text-shadow:0 4px 18px rgba(0,0,0,.6)}
+.plate span{display:block;margin-top:5px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,.6);line-height:1}
+/* D — glass spec table: a flat translucent fill, a hairline, a soft low shadow, sitting in the room */
+.panel .tilt{position:absolute;inset:0;transform:perspective(1400px) rotateY(-10deg) rotateX(2deg);transform-origin:100% 50%}
+.slab{position:absolute;inset:0;border-radius:22px;background:rgba(16,18,22,.62);border:1px solid rgba(255,255,255,.22);filter:drop-shadow(0 24px 48px rgba(0,0,0,.45));padding:34px 40px 30px;display:flex;flex-direction:column}
+.ph{font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,.6);margin-bottom:14px}
+.row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;height:78px;padding:0 2px;opacity:0;visibility:hidden}
+.row .hl{position:absolute;left:0;right:0;top:0;height:1px;display:block;background:rgba(255,255,255,.22);transform-origin:0 50%}
+.row .k{font-size:29px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#fff;white-space:nowrap}
+.row .v{font-size:38px;font-weight:600;color:#fff;letter-spacing:-0.01em;white-space:nowrap;text-align:right}
+.row .v.n{font-size:26px;color:rgba(255,255,255,.45);font-weight:600}
+.row.y .k,.row.y .v{color:#F5C518}
+#ask .row{height:78px} #ask .row .k{font-size:27px}
+.pf{margin-top:auto;padding-top:14px;font-size:17px;font-weight:500;letter-spacing:0.02em;color:rgba(255,255,255,.55)}
+/* C — card fan: rounded portrait cards on a shallow arc, a small yellow caption under each */
+.fan{left:0;top:0;width:1920px;height:1080px}
+.cardw{position:absolute;width:168px;height:280px;transform-origin:50% 100%;opacity:0;visibility:hidden}
+.cardf{position:absolute;left:0;top:0;width:168px;height:236px;border-radius:18px;background:rgba(16,18,22,.62);border:1px solid rgba(255,255,255,.22);filter:drop-shadow(0 24px 48px rgba(0,0,0,.45));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transform-origin:50% 100%}
+.cardf b{font-size:40px;font-weight:700;letter-spacing:-0.02em;line-height:1}
+.cardf small{font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,.5)}
+.cardw .cname{position:absolute;left:-40px;right:-40px;top:250px;display:block;text-align:center;font-style:normal;font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#F5C518;text-shadow:0 3px 14px rgba(0,0,0,.6)}
+/* E — floating document: paper on a card turned to the wall, dark ink, one yellow marker */
+.doc .tilt{position:absolute;inset:0;transform:perspective(1400px) rotateY(-10deg);transform-origin:100% 50%;opacity:0;visibility:hidden}
+.paper{position:absolute;inset:0;border-radius:14px;background:#f6f3ec;color:#17181b;filter:drop-shadow(0 24px 48px rgba(0,0,0,.45));padding:30px 34px 26px;display:flex;flex-direction:column;overflow:hidden}
+.dh{display:flex;flex-direction:column;gap:3px;padding-bottom:12px;border-bottom:2px solid #17181b;margin-bottom:12px}
+.dh b{font-size:22px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em}
+.dh span{font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#5a5a58}
+.dh em{font-style:normal;font-size:14px;font-weight:600;letter-spacing:0.02em;color:#6b6b68}
+.dl{position:relative;display:flex;justify-content:space-between;align-items:baseline;height:36px;font-size:20px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;opacity:0;visibility:hidden}
+.dl b{font-weight:800;letter-spacing:0;text-transform:none;font-size:22px}
+.mk{position:absolute;left:-10px;right:-10px;top:4px;height:26px;display:block;background:rgba(245,197,24,.55);border-radius:4px;transform:scaleX(0);transform-origin:0 50%;z-index:0}
+.dl span,.dl b,.dr span{position:relative;z-index:1}
+.dt{margin-top:10px;border-top:1px solid #c9c6bf;padding-top:6px}
+.dr{position:relative;display:grid;grid-template-columns:2.3fr 0.7fr 1.2fr 0.8fr 1fr;align-items:center;height:35px;font-size:18px;font-weight:600;letter-spacing:0;white-space:nowrap;opacity:0;visibility:hidden}
+.dr span:nth-child(n+2){text-align:right} .dr .mk + span{text-align:left}
+.dr.fee .lab{grid-column:1}
+.dr.fee .how{grid-column:2 / 5;text-align:left;color:#6b6b68;font-weight:500}
+.dr.fee .amt{grid-column:5;text-align:right}
+.dr.dhd{font-size:13px;text-transform:uppercase;letter-spacing:0.08em;color:#6b6b68;height:26px}
+.dr.dsub{border-top:1px solid #c9c6bf;border-bottom:1px solid #c9c6bf;font-weight:800;margin:2px 0}
+.dr.f0{margin-top:4px}
+/* F — arrow relation: two terms and a thin line with a head */
+.rel{display:flex;align-items:center;gap:26px;height:64px}
+.rel .t1,.rel .t2{display:flex;align-items:center;white-space:nowrap}
+.rel b{display:block;font-size:38px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;line-height:1;color:#fff;text-shadow:0 6px 28px rgba(0,0,0,.55);opacity:0;visibility:hidden}
+.rel .t2 b{color:#F5C518}
+.rel .ln{position:relative;flex:1;height:64px;min-width:200px;opacity:0;visibility:hidden}
+.rel .shaft{position:absolute;left:0;right:14px;top:31px;height:2px;display:block;background:rgba(255,255,255,.85);transform-origin:0 50%;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.rel .head{position:absolute;right:0;top:22px;width:0;height:0;display:block;border-left:18px solid rgba(255,255,255,.95);border-top:10px solid transparent;border-bottom:10px solid transparent;transform-origin:100% 50%}
+.rel .tag{position:absolute;left:0;right:14px;top:-6px;text-align:center;font-style:normal;font-size:22px;font-weight:700;letter-spacing:0.06em;color:#F5C518;text-shadow:0 4px 18px rgba(0,0,0,.6)}
+/* G — status pills: a badge, then a lozenge; the affirmative filled yellow, the negative outlined */
+.pills{display:flex;flex-direction:column;gap:14px}
+.pill{display:flex;align-items:center;gap:16px;opacity:0;visibility:hidden}
+.pill .badge{position:relative;display:block;flex:none;width:46px;height:46px;border-radius:50%;transform-origin:50% 50%;filter:drop-shadow(0 8px 20px rgba(0,0,0,.45))}
+.pill.ok .badge{background:#F5C518} .pill.ok .badge::after{content:"";position:absolute;left:16px;top:10px;width:11px;height:20px;border-right:4px solid #141416;border-bottom:4px solid #141416;transform:rotate(45deg)}
+.pill.no .badge{border:2px solid rgba(255,255,255,.55)} .pill.no .badge::before,.pill.no .badge::after{content:"";position:absolute;left:12px;top:20px;width:18px;height:3px;background:#fff;transform:rotate(45deg)} .pill.no .badge::after{transform:rotate(-45deg)}
+.pill span{display:block;height:56px;line-height:56px;padding:0 26px;border-radius:28px;font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;transform-origin:0 50%;filter:drop-shadow(0 12px 28px rgba(0,0,0,.45))}
+.pill.ok span{background:#F5C518;color:#141416} .pill.no span{border:2px solid rgba(255,255,255,.55);color:#fff;line-height:52px}
+/* ---- the title and end stages: charcoal, a fine drifting grid, one yellow arc ---- */
+.stage{left:0;top:0;width:1920px;height:1080px;background:#141416;overflow:hidden;opacity:0;visibility:hidden}
+.stage .bgd{position:absolute;inset:0;overflow:hidden}
+.stage .grid{position:absolute;left:-120px;top:-120px;width:2160px;height:1320px;background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:120px 120px}
+.stage .arc{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%}
+.stage .ring{fill:none;stroke:rgba(255,255,255,.12);stroke-width:1}
+.stage .sweep{fill:none;stroke:#F5C518;stroke-width:3;stroke-linecap:round;stroke-dasharray:4776;stroke-dashoffset:4776}
+.stage .kick,.stage .kick2{position:absolute;left:0;right:0;top:520px;text-align:center;opacity:0;visibility:hidden}
+.stage .kick b,.stage .kick2 b,.stage .sub b{display:inline-block;font-size:30px;font-weight:700;text-transform:uppercase;letter-spacing:0.3em;padding-left:0.3em;color:#F5C518;line-height:1.3}
+.stage .wm{position:absolute;left:0;right:0;top:430px;line-height:1;text-align:center;font-family:Poppins,Inter,sans-serif;font-size:230px;font-weight:800;letter-spacing:-0.05em;line-height:1;opacity:0;visibility:hidden}
+.stage .wm em{font-style:normal;color:#F5C518}
+.stage .ep{position:absolute;left:0;right:0;top:700px;text-align:center;font-size:40px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:#fff}
+.stage .ep .ew{display:inline-block;margin:0 0.18em;opacity:0;visibility:hidden}
+/* the end card's three layers */
+#end .brand,#end .items,#end .final{position:absolute;inset:0}
+#end .brand .wm,#end .final .wm{top:280px}
+#end .sub{position:absolute;left:0;right:0;top:600px;text-align:center;opacity:0;visibility:hidden}
+#end .sub b{color:#fff;letter-spacing:0.22em;font-size:28px}
+#end .items .kick2{top:160px;color:#F5C518}
+#end .list{position:absolute;left:360px;top:250px;width:1200px}
+#end .list .row{height:88px}
+#end .list .row .k{font-size:34px}
+#end .final .concede{position:absolute;left:0;right:0;top:700px;text-align:center;font-size:30px;font-weight:500;letter-spacing:0;color:rgba(255,255,255,.85);opacity:0;visibility:hidden}
+#floor{position:absolute;left:0;right:0;bottom:0;height:300px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
+/* captions: no plate, no shadow, tight Poppins, yellow on the spoken word (LESSONS.md #4) */
+.cap{left:0;right:0;width:1920px;bottom:118px;display:flex;justify-content:center;pointer-events:none;font-family:Poppins,Inter,sans-serif}
+.cap .line{max-width:1500px;text-align:center;font-size:56px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
+.cap .w{display:inline-block;color:rgba(255,255,255,.86);margin:0 0.03em}
+.cap .w.em{font-style:italic;font-weight:800;font-size:1.06em}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="b1v7" data-start="0" data-duration="164.257" data-width="1920" data-height="1080" data-fps="30">
+  <div id="world">
+    <video id="v-B1-01" class="clip" src="assets/cut/B1-01.mp4" data-start="0" data-duration="7.8" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-02" class="clip" src="assets/cut/B1-02.mp4" data-start="7.8" data-duration="5.467" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-INTRO" class="clip" src="assets/cut/B1-INTRO.mp4" data-start="13.267" data-duration="4.1" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-03" class="clip" src="assets/cut/B1-03.mp4" data-start="21.757" data-duration="7.933" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-04" class="clip" src="assets/cut/B1-04.mp4" data-start="29.69" data-duration="6.767" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-05" class="clip" src="assets/cut/B1-05.mp4" data-start="36.457" data-duration="3.8" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-06" class="clip" src="assets/cut/B1-06.mp4" data-start="40.257" data-duration="8.767" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-07" class="clip" src="assets/cut/B1-07.mp4" data-start="49.024" data-duration="10.667" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-08" class="clip" src="assets/cut/B1-08.mp4" data-start="59.691" data-duration="10.3" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-09" class="clip" src="assets/cut/B1-09.mp4" data-start="69.991" data-duration="7.633" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-10" class="clip" src="assets/cut/B1-10.mp4" data-start="77.624" data-duration="8" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-11" class="clip" src="assets/cut/B1-11.mp4" data-start="85.624" data-duration="8.567" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-12" class="clip" src="assets/cut/B1-12.mp4" data-start="94.191" data-duration="6.4" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-13" class="clip" src="assets/cut/B1-13.mp4" data-start="100.591" data-duration="8.6" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-14" class="clip" src="assets/cut/B1-14.mp4" data-start="109.191" data-duration="6.5" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-15" class="clip" src="assets/cut/B1-15.mp4" data-start="115.691" data-duration="9.667" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-16" class="clip" src="assets/cut/B1-16.mp4" data-start="125.358" data-duration="8.733" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-17" class="clip" src="assets/cut/B1-17.mp4" data-start="134.091" data-duration="6.233" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <video id="v-B1-18" class="clip" src="assets/cut/B1-18.mp4" data-start="140.324" data-duration="5.933" data-media-start="0" data-track-index="0" muted playsinline></video>
+    <div id="plate" class="ov plate" style="left:72px;top:72px"><i></i><div><b>Ava</b><span>NeroPay</span></div></div>
+    <div id="quoted" class="ov lbl" style="left:1250px;top:372px"><b>Quoted 0.5%</b><i class="strike"></i></div>
+    <div id="fan" class="ov fan"><div class="cardw k0" style="left:116px;top:388px;transform:rotate(-10deg)"><div class="cardf"><b>0.50%</b><small>from</small></div><em class="cname">Debit</em></div><div class="cardw k1" style="left:286px;top:322px;transform:rotate(-5deg)"><div class="cardf"><b>1.20%</b><small>from</small></div><em class="cname">Credit</em></div><div class="cardw k2" style="left:456px;top:300px;transform:rotate(0deg)"><div class="cardf"><b>1.75%</b><small>from</small></div><em class="cname">Amex</em></div><div class="cardw k3" style="left:626px;top:322px;transform:rotate(5deg)"><div class="cardf"><b>2.60%</b><small>from</small></div><em class="cname">Business</em></div><div class="cardw k4" style="left:796px;top:388px;transform:rotate(10deg)"><div class="cardf"><b>2.90%</b><small>from</small></div><em class="cname">Overseas</em></div></div>
+    <div id="doc" class="ov doc" style="left:90px;top:104px;width:860px;height:760px"><div class="tilt"><div class="paper">
+    <div class="dh"><b>Northwick Payment Services</b><span>Card processing statement · August</span><em>Illustrative — not a real statement</em></div>
+    <div class="dl s0"><span>Card turnover</span><b>£0.00</b></div>
+    <div class="dl s1"><span>Transactions</span><b>0</b></div>
+    <div class="dl s2"><i class="mk"></i><span>Rate advertised</span><b>from 0.50%</b></div>
+    <div class="dt">
+      <div class="dr dhd"><span>Card type</span><span>Txns</span><span>Value</span><span>Rate</span><span>Charge</span></div>
+      <div class="dr c0"><span>Consumer debit</span><span>601</span><span>£20,164.00</span><span>0.50%</span><span>£100.82</span></div><div class="dr c1"><span>Consumer credit</span><span>118</span><span>£5,590.00</span><span>1.20%</span><span>£67.08</span></div><div class="dr c2"><span>Business / commercial</span><span>31</span><span>£1,420.00</span><span>2.60%</span><span>£36.92</span></div><div class="dr c3"><span>American Express</span><span>14</span><span>£658.00</span><span>1.75%</span><span>£11.52</span></div><div class="dr c4"><span>International / non-UK</span><span>16</span><span>£568.00</span><span>2.90%</span><span>£16.47</span></div>
+      <div class="dr dsub"><span>Card charges</span><span></span><span>£28,400.00</span><span></span><span>£232.81</span></div>
+      <div class="dr fee f0"><i class="mk"></i><span class="lab">Authorisation fees</span><span class="how">780 at 4p</span><span class="amt">£31.20</span></div><div class="dr fee f1"><i class="mk"></i><span class="lab">Terminal rental</span><span class="how">monthly</span><span class="amt">£17.50</span></div><div class="dr fee f2"><i class="mk"></i><span class="lab">PCI DSS compliance fee</span><span class="how">monthly</span><span class="amt">£9.95</span></div><div class="dr fee f3"><i class="mk"></i><span class="lab">Account / statement fee</span><span class="how">monthly</span><span class="amt">£5.00</span></div><div class="dr fee f4"><i class="mk"></i><span class="lab">Payout fee — to your bank</span><span class="how">4 at £3.00</span><span class="amt">£12.00</span></div>
+    </div>
+  </div></div></div>
+    <div id="formula" class="ov rel" style="left:180px;top:196px;width:1560px"><span class="t1"><b class="ta">All charges</b><b class="tb">&nbsp;÷ card turnover</b></span><span class="ln"><i class="shaft"></i><i class="head"></i><em class="tag">× 100</em></span><span class="t2"><b>The rate you pay</b></span></div>
+    <div id="cost" class="ov panel" style="left:80px;top:150px;width:880px;height:410px"><div class="tilt"><div class="slab">
+    <div class="ph">What that month really cost</div>
+    <div class="row r0"><i class="hl"></i><span class="k">All charges</span><span class="v">£0.00</span></div>
+    <div class="row r1"><i class="hl"></i><span class="k">Card turnover</span><span class="v">£0</span></div>
+    <div class="row r2 y"><i class="hl"></i><span class="k">Effective rate</span><span class="v">0.00%</span></div>
+    <div class="pf">Illustrative example, not a real statement</div>
+  </div></div></div>
+    <div id="paid" class="ov rel" style="left:420px;top:196px;width:1080px"><span class="t1"><b class="ta">Quoted 0.50%</b></span><span class="ln"><i class="shaft"></i><i class="head"></i></span><span class="t2"><b>Paying 1.09%</b></span></div>
+    <div id="ways" class="ov panel" style="left:80px;top:150px;width:880px;height:430px"><div class="tilt"><div class="slab">
+    <div class="ph">The same month, two ways</div>
+    <div class="row r0"><i class="hl"></i><span class="k">0.70% flat, no fees</span><span class="v">£0.00</span></div>
+    <div class="row r1"><i class="hl"></i><span class="k">Quoted 0.50%, plus fees</span><span class="v">£0.00</span></div>
+    <div class="row r2 y"><i class="hl"></i><span class="k">A month less</span><span class="v">£0.00</span></div>
+    <div class="pf">Illustrative figures</div>
+  </div></div></div>
+    <div id="ask" class="ov panel" style="left:80px;top:110px;width:880px;height:420px"><div class="tilt"><div class="slab">
+    <div class="ph">Ask any provider</div>
+    <div class="row q0"><i class="hl"></i><span class="k">What do credit cards cost?</span><span class="v n">01</span></div><div class="row q1"><i class="hl"></i><span class="k">And business cards?</span><span class="v n">02</span></div><div class="row q2"><i class="hl"></i><span class="k">And American Express?</span><span class="v n">03</span></div><div class="row q3"><i class="hl"></i><span class="k">What does each payout cost?</span><span class="v n">04</span></div><div class="row q4"><i class="hl"></i><span class="k">Is there a PCI fee?</span><span class="v n">05</span></div><div class="row q5"><i class="hl"></i><span class="k">An account fee?</span><span class="v n">06</span></div><div class="row q6"><i class="hl"></i><span class="k">A minimum monthly charge?</span><span class="v n">07</span></div><div class="row q7 y"><i class="hl"></i><span class="k">What is my effective rate?</span><span class="v n">08</span></div>
+  </div></div></div>
+    <div id="two" class="ov pills" style="left:1250px;top:330px"><div class="pill p0 ok"><i class="badge"></i><span>Last month’s statement</span></div><div class="pill p1 ok"><i class="badge"></i><span>A calculator</span></div><div class="pill p2 no"><i class="badge"></i><span>Any advert</span></div></div>
+  </div>
+  <div id="floor"></div>
+  <div id="title" class="clip stage" data-start="15.637" data-duration="6.12" data-track-index="4">
+    <div class="bgd"><div class="grid"></div><svg class="arc" viewBox="0 0 1920 1080"><circle class="ring" cx="1500" cy="1180" r="760"/><circle class="sweep" cx="1500" cy="1180" r="760"/></svg></div>
+    <div class="kick"><b>Explained by</b></div>
+    <div class="wm"><b>Nero</b><em>Pay</em></div>
+    <div class="ep"><span class="ew">The</span> <span class="ew">rate</span> <span class="ew">you</span> <span class="ew">were</span> <span class="ew">quoted</span></div>
+  </div>
+  <div id="end" class="clip stage" data-start="146.257" data-duration="18" data-track-index="4">
+    <div class="bgd"><div class="grid"></div><svg class="arc" viewBox="0 0 1920 1080"><circle class="ring" cx="420" cy="1180" r="760"/><circle class="sweep" cx="420" cy="1180" r="760"/></svg></div>
+    <div class="brand"><div class="wm"><b>Nero</b><em>Pay</em></div><div class="sub"><b>Subscribe for more</b></div></div>
+    <div class="items"><div class="kick2"><b>What comes with NeroPay</b></div><div class="list"><div class="row t0"><i class="hl"></i><span class="k">Payment terminal</span><span class="v n">01</span></div><div class="row t1"><i class="hl"></i><span class="k">Free POS software</span><span class="v n">02</span></div><div class="row t2"><i class="hl"></i><span class="k">Online ordering</span><span class="v n">03</span></div><div class="row t3"><i class="hl"></i><span class="k">Booking system</span><span class="v n">04</span></div><div class="row t4"><i class="hl"></i><span class="k">QR payments</span><span class="v n">05</span></div><div class="row t5"><i class="hl"></i><span class="k">API for ecommerce</span><span class="v n">06</span></div></div></div>
+    <div class="final"><div class="wm"><b>Nero</b><em>Pay</em></div><div class="sub"><b>Subscribe for more</b></div><p class="concede">Check your statement first. If it matches your quote, stay put.</p></div>
+  </div>
+  <div id="cap-B1-01-0" class="clip cap" data-start="0" data-duration="1.3" data-track-index="6"><div class="line"><span class="w" data-i="0">You</span> <span class="w" data-i="1">were</span> <span class="w" data-i="2">quoted</span> <span class="w" data-i="3">a</span> <span class="w" data-i="4">rate</span></div></div>
+  <div id="cap-B1-01-130" class="clip cap" data-start="1.3" data-duration="0.92" data-track-index="6"><div class="line"><span class="w" data-i="5">when</span> <span class="w" data-i="6">you</span> <span class="w" data-i="7">signed</span> <span class="w" data-i="8">up</span> <span class="w" data-i="9">for</span></div></div>
+  <div id="cap-B1-01-222" class="clip cap" data-start="2.22" data-duration="1.17" data-track-index="6"><div class="line"><span class="w" data-i="10">card</span> <span class="w" data-i="11">payments.</span></div></div>
+  <div id="cap-B1-01-342" class="clip cap" data-start="3.42" data-duration="1.83" data-track-index="6"><div class="line"><span class="w" data-i="12">Maybe</span> <span class="w" data-i="13">nought</span> <span class="w" data-i="14">point</span> <span class="w" data-i="15">five</span> <span class="w" data-i="16">per</span> <span class="w" data-i="17">cent.</span></div></div>
+  <div id="cap-B1-01-528" class="clip cap" data-start="5.28" data-duration="1.85" data-track-index="6"><div class="line"><span class="w" data-i="18">You're</span> <span class="w" data-i="19">almost</span> <span class="w" data-i="20">certainly</span> <span class="w" data-i="21">not</span> <span class="w" data-i="22">paying</span> <span class="w" data-i="23">that.</span></div></div>
+  <div id="cap-B1-02-0" class="clip cap" data-start="7.8" data-duration="1.73" data-track-index="6"><div class="line"><span class="w" data-i="24">Nobody</span> <span class="w" data-i="25">lied</span> <span class="w" data-i="26">to</span> <span class="w" data-i="27">you.</span></div></div>
+  <div id="cap-B1-02-176" class="clip cap" data-start="9.56" data-duration="1.32" data-track-index="6"><div class="line"><span class="w" data-i="28">That</span> <span class="w" data-i="29">rate</span> <span class="w" data-i="30">just</span> <span class="w" data-i="31">covers</span> <span class="w" data-i="32">one</span></div></div>
+  <div id="cap-B1-02-308" class="clip cap" data-start="10.88" data-duration="0.9" data-track-index="6"><div class="line"><span class="w" data-i="33">type</span> <span class="w" data-i="34">of</span> <span class="w" data-i="35">card,</span></div></div>
+  <div id="cap-B1-02-398" class="clip cap" data-start="11.78" data-duration="0.64" data-track-index="6"><div class="line"><span class="w" data-i="36">and</span> <span class="w" data-i="37">there's</span> <span class="w" data-i="38">a</span> <span class="w" data-i="39">lot</span> <span class="w" data-i="40">more</span></div></div>
+  <div id="cap-B1-02-462" class="clip cap" data-start="12.42" data-duration="0.847" data-track-index="6"><div class="line"><span class="w" data-i="41">on</span> <span class="w" data-i="42">the</span> <span class="w em" data-i="43">statement.</span></div></div>
+  <div id="cap-B1-INTRO-0" class="clip cap" data-start="13.267" data-duration="1.86" data-track-index="6"><div class="line"><span class="w" data-i="44">Hi,</span> <span class="w" data-i="45">I'm</span> <span class="w" data-i="46">Ava,</span></div></div>
+  <div id="cap-B1-INTRO-186" class="clip cap" data-start="15.127" data-duration="2.24" data-track-index="6"><div class="line"><span class="w" data-i="47">and</span> <span class="w" data-i="48">this</span> <span class="w" data-i="49">is</span> <span class="w" data-i="50">Explained</span> <span class="w" data-i="51">by</span> <span class="w" data-i="52">NeroPay.</span></div></div>
+  <div id="cap-B1-03-2" class="clip cap" data-start="21.777" data-duration="1.2" data-track-index="6"><div class="line"><span class="w" data-i="53">When</span> <span class="w" data-i="54">you</span> <span class="w" data-i="55">see</span> <span class="w" data-i="56">a</span> <span class="w" data-i="57">rate</span></div></div>
+  <div id="cap-B1-03-122" class="clip cap" data-start="22.977" data-duration="1.9" data-track-index="6"><div class="line"><span class="w" data-i="58">advertised</span> <span class="w" data-i="59">from</span> <span class="w" data-i="60">nought</span> <span class="w" data-i="61">point</span> <span class="w" data-i="62">five</span></div></div>
+  <div id="cap-B1-03-312" class="clip cap" data-start="24.877" data-duration="1.18" data-track-index="6"><div class="line"><span class="w" data-i="63">per</span> <span class="w" data-i="64">cent,</span> <span class="w" data-i="65">that's</span> <span class="w" data-i="66">the</span> <span class="w em" data-i="67">debit</span></div></div>
+  <div id="cap-B1-03-430" class="clip cap" data-start="26.057" data-duration="0.7" data-track-index="6"><div class="line"><span class="w" data-i="68">card</span> <span class="w" data-i="69">rate.</span></div></div>
+  <div id="cap-B1-03-500" class="clip cap" data-start="26.757" data-duration="2" data-track-index="6"><div class="line"><span class="w em" data-i="70">Debit</span> <span class="w" data-i="71">is</span> <span class="w" data-i="72">the</span> <span class="w em" data-i="73">cheapest</span> <span class="w" data-i="74">card</span></div></div>
+  <div id="cap-B1-03-700" class="clip cap" data-start="28.757" data-duration="0.933" data-track-index="6"><div class="line"><span class="w" data-i="75">there</span> <span class="w" data-i="76">is.</span></div></div>
+  <div id="cap-B1-04-0" class="clip cap" data-start="29.69" data-duration="2.29" data-track-index="6"><div class="line"><span class="w em" data-i="77">Credit</span> <span class="w" data-i="78">cards</span> <span class="w" data-i="79">cost</span> <span class="w" data-i="80">more</span> <span class="w" data-i="81">than</span> <span class="w" data-i="82">that.</span></div></div>
+  <div id="cap-B1-04-244" class="clip cap" data-start="32.13" data-duration="1.79" data-track-index="6"><div class="line"><span class="w" data-i="83">Company</span> <span class="w" data-i="84">cards</span> <span class="w" data-i="85">cost</span> <span class="w" data-i="86">more</span> <span class="w" data-i="87">again.</span></div></div>
+  <div id="cap-B1-04-426" class="clip cap" data-start="33.95" data-duration="1.4" data-track-index="6"><div class="line"><span class="w em" data-i="88">Amex</span> <span class="w" data-i="89">and</span> <span class="w" data-i="90">overseas</span> <span class="w" data-i="91">cards</span> <span class="w" data-i="92">cost</span></div></div>
+  <div id="cap-B1-04-566" class="clip cap" data-start="35.35" data-duration="0.83" data-track-index="6"><div class="line"><span class="w" data-i="93">the</span> <span class="w em" data-i="94">most.</span></div></div>
+  <div id="cap-B1-05--29" class="clip cap" data-start="36.167" data-duration="1.25" data-track-index="6"><div class="line"><span class="w" data-i="95">You</span> <span class="w" data-i="96">don't</span> <span class="w" data-i="97">get</span> <span class="w" data-i="98">to</span> <span class="w em" data-i="99">choose.</span></div></div>
+  <div id="cap-B1-05-115" class="clip cap" data-start="37.607" data-duration="0.86" data-track-index="6"><div class="line"><span class="w" data-i="100">Whatever</span> <span class="w" data-i="101">card</span> <span class="w" data-i="102">comes</span> <span class="w" data-i="103">out</span> <span class="w" data-i="104">of</span></div></div>
+  <div id="cap-B1-05-201" class="clip cap" data-start="38.467" data-duration="1.04" data-track-index="6"><div class="line"><span class="w" data-i="105">their</span> <span class="w" data-i="106">pocket,</span> <span class="w" data-i="107">that's</span> <span class="w" data-i="108">the</span> <span class="w" data-i="109">rate</span></div></div>
+  <div id="cap-B1-05-305" class="clip cap" data-start="39.507" data-duration="0.75" data-track-index="6"><div class="line"><span class="w" data-i="110">you</span> <span class="w" data-i="111">pay.</span></div></div>
+  <div id="cap-B1-06-0" class="clip cap" data-start="40.257" data-duration="1.02" data-track-index="6"><div class="line"><span class="w" data-i="112">Here's</span> <span class="w" data-i="113">a</span> <span class="w" data-i="114">made</span> <span class="w" data-i="115">-up</span> <span class="w" data-i="116">month</span></div></div>
+  <div id="cap-B1-06-102" class="clip cap" data-start="41.277" data-duration="1.07" data-track-index="6"><div class="line"><span class="w" data-i="117">for</span> <span class="w" data-i="118">a</span> <span class="w" data-i="119">restaurant.</span></div></div>
+  <div id="cap-B1-06-230" class="clip cap" data-start="42.557" data-duration="1.62" data-track-index="6"><div class="line"><span class="w" data-i="120">Twenty</span> <span class="w" data-i="121">-eight</span> <span class="w" data-i="122">thousand</span> <span class="w" data-i="123">four</span> <span class="w" data-i="124">hundred</span></div></div>
+  <div id="cap-B1-06-392" class="clip cap" data-start="44.177" data-duration="1.62" data-track-index="6"><div class="line"><span class="w" data-i="125">pounds,</span> <span class="w" data-i="126">that's</span> <span class="w" data-i="127">seven</span> <span class="w" data-i="128">hundred</span> <span class="w" data-i="129">and</span></div></div>
+  <div id="cap-B1-06-554" class="clip cap" data-start="45.797" data-duration="1.28" data-track-index="6"><div class="line"><span class="w" data-i="130">eighty</span> <span class="w" data-i="131">card</span> <span class="w" data-i="132">payments,</span></div></div>
+  <div id="cap-B1-06-682" class="clip cap" data-start="47.077" data-duration="1.947" data-track-index="6"><div class="line"><span class="w" data-i="133">on</span> <span class="w" data-i="134">that</span> <span class="w" data-i="135">nought</span> <span class="w" data-i="136">point</span> <span class="w" data-i="137">five</span> <span class="w" data-i="138">rate.</span></div></div>
+  <div id="cap-B1-07-0" class="clip cap" data-start="49.024" data-duration="1.06" data-track-index="6"><div class="line"><span class="w" data-i="139">Seventy</span> <span class="w" data-i="140">per</span> <span class="w" data-i="141">cent</span> <span class="w" data-i="142">of</span> <span class="w" data-i="143">it</span></div></div>
+  <div id="cap-B1-07-106" class="clip cap" data-start="50.084" data-duration="2.47" data-track-index="6"><div class="line"><span class="w" data-i="144">was</span> <span class="w em" data-i="145">debit,</span> <span class="w" data-i="146">at</span> <span class="w" data-i="147">nought</span> <span class="w" data-i="148">point</span> <span class="w" data-i="149">five.</span></div></div>
+  <div id="cap-B1-07-366" class="clip cap" data-start="52.684" data-duration="1.42" data-track-index="6"><div class="line"><span class="w" data-i="150">But</span> <span class="w em" data-i="151">credit</span> <span class="w" data-i="152">came</span> <span class="w" data-i="153">in</span> <span class="w" data-i="154">at</span></div></div>
+  <div id="cap-B1-07-508" class="clip cap" data-start="54.104" data-duration="1.04" data-track-index="6"><div class="line"><span class="w" data-i="155">one</span> <span class="w" data-i="156">point</span> <span class="w" data-i="157">two,</span></div></div>
+  <div id="cap-B1-07-612" class="clip cap" data-start="55.144" data-duration="1.36" data-track-index="6"><div class="line"><span class="w" data-i="158">company</span> <span class="w" data-i="159">cards</span> <span class="w" data-i="160">at</span> <span class="w" data-i="161">two</span> <span class="w" data-i="162">point</span></div></div>
+  <div id="cap-B1-07-748" class="clip cap" data-start="56.504" data-duration="2" data-track-index="6"><div class="line"><span class="w" data-i="163">six,</span> <span class="w" data-i="164">and</span> <span class="w" data-i="165">overseas</span> <span class="w" data-i="166">cards</span> <span class="w" data-i="167">at</span></div></div>
+  <div id="cap-B1-07-948" class="clip cap" data-start="58.504" data-duration="1.187" data-track-index="6"><div class="line"><span class="w" data-i="168">two</span> <span class="w" data-i="169">point</span> <span class="w" data-i="170">nine.</span></div></div>
+  <div id="cap-B1-08-0" class="clip cap" data-start="59.691" data-duration="0.96" data-track-index="6"><div class="line"><span class="w" data-i="171">Then</span> <span class="w" data-i="172">there</span> <span class="w" data-i="173">are</span> <span class="w" data-i="174">the</span> <span class="w" data-i="175">charges</span></div></div>
+  <div id="cap-B1-08-96" class="clip cap" data-start="60.651" data-duration="2.37" data-track-index="6"><div class="line"><span class="w" data-i="176">that</span> <span class="w" data-i="177">aren't</span> <span class="w" data-i="178">a</span> <span class="w" data-i="179">percentage</span> <span class="w" data-i="180">at</span> <span class="w" data-i="181">all.</span></div></div>
+  <div id="cap-B1-08-336" class="clip cap" data-start="63.051" data-duration="2.47" data-track-index="6"><div class="line"><span class="w" data-i="182">Four</span> <span class="w" data-i="183">pence</span> <span class="w" data-i="184">on</span> <span class="w" data-i="185">every</span> <span class="w" data-i="186">authorisation,</span></div></div>
+  <div id="cap-B1-08-586" class="clip cap" data-start="65.551" data-duration="1.48" data-track-index="6"><div class="line"><span class="w" data-i="187">seventeen</span> <span class="w" data-i="188">fifty</span> <span class="w" data-i="189">to</span> <span class="w" data-i="190">rent</span> <span class="w" data-i="191">the</span></div></div>
+  <div id="cap-B1-08-734" class="clip cap" data-start="67.031" data-duration="2.96" data-track-index="6"><div class="line"><span class="w" data-i="192">terminal,</span> <span class="w" data-i="193">and</span> <span class="w" data-i="194">a</span> <span class="w" data-i="195">monthly</span> <span class="w" data-i="196">PCI</span> <span class="w em" data-i="197">fee.</span></div></div>
+  <div id="cap-B1-09-0" class="clip cap" data-start="69.991" data-duration="2.19" data-track-index="6"><div class="line"><span class="w" data-i="198">There's</span> <span class="w" data-i="199">an</span> <span class="w" data-i="200">account</span> <span class="w em" data-i="201">fee</span> <span class="w" data-i="202">too.</span></div></div>
+  <div id="cap-B1-09-222" class="clip cap" data-start="72.211" data-duration="1.79" data-track-index="6"><div class="line"><span class="w" data-i="203">And</span> <span class="w" data-i="204">then</span> <span class="w" data-i="205">the</span> <span class="w" data-i="206">one</span> <span class="w" data-i="207">nobody</span> <span class="w" data-i="208">counts.</span></div></div>
+  <div id="cap-B1-09-404" class="clip cap" data-start="74.031" data-duration="1.25" data-track-index="6"><div class="line"><span class="w" data-i="209">The</span> <span class="w em" data-i="210">payout</span> <span class="w em" data-i="211">fee.</span></div></div>
+  <div id="cap-B1-09-532" class="clip cap" data-start="75.311" data-duration="1.3" data-track-index="6"><div class="line"><span class="w" data-i="212">The</span> <span class="w" data-i="213">charges</span> <span class="w" data-i="214">every</span> <span class="w" data-i="215">time</span> <span class="w" data-i="216">they</span></div></div>
+  <div id="cap-B1-09-662" class="clip cap" data-start="76.611" data-duration="1.013" data-track-index="6"><div class="line"><span class="w" data-i="217">send</span> <span class="w" data-i="218">you</span> <span class="w" data-i="219">your</span> <span class="w em" data-i="220">own</span> <span class="w" data-i="221">money.</span></div></div>
+  <div id="cap-B1-10-0" class="clip cap" data-start="77.624" data-duration="1.32" data-track-index="6"><div class="line"><span class="w" data-i="222">To</span> <span class="w" data-i="223">find</span> <span class="w" data-i="224">what</span> <span class="w" data-i="225">you're</span> <span class="w" data-i="226">really</span></div></div>
+  <div id="cap-B1-10-132" class="clip cap" data-start="78.944" data-duration="2.24" data-track-index="6"><div class="line"><span class="w" data-i="227">paying,</span> <span class="w" data-i="228">add</span> <span class="w" data-i="229">up</span> <span class="w" data-i="230">every</span> <span class="w" data-i="231">charge,</span></div></div>
+  <div id="cap-B1-10-356" class="clip cap" data-start="81.184" data-duration="1.6" data-track-index="6"><div class="line"><span class="w" data-i="232">divide</span> <span class="w" data-i="233">by</span> <span class="w" data-i="234">your</span> <span class="w" data-i="235">card</span> <span class="w" data-i="236">turnover,</span></div></div>
+  <div id="cap-B1-10-516" class="clip cap" data-start="82.784" data-duration="1.32" data-track-index="6"><div class="line"><span class="w" data-i="237">and</span> <span class="w" data-i="238">then</span> <span class="w" data-i="239">multiply</span> <span class="w" data-i="240">that</span> <span class="w" data-i="241">by</span></div></div>
+  <div id="cap-B1-10-648" class="clip cap" data-start="84.104" data-duration="1.07" data-track-index="6"><div class="line"><span class="w" data-i="242">one</span> <span class="w" data-i="243">hundred.</span></div></div>
+  <div id="cap-B1-11-0" class="clip cap" data-start="85.624" data-duration="1.88" data-track-index="6"><div class="line"><span class="w" data-i="244">The</span> <span class="w" data-i="245">charges</span> <span class="w" data-i="246">here</span> <span class="w" data-i="247">come</span> <span class="w" data-i="248">to</span></div></div>
+  <div id="cap-B1-11-188" class="clip cap" data-start="87.504" data-duration="1.75" data-track-index="6"><div class="line"><span class="w" data-i="249">three</span> <span class="w" data-i="250">hundred</span> <span class="w" data-i="251">and</span> <span class="w" data-i="252">eight</span> <span class="w" data-i="253">pounds.</span></div></div>
+  <div id="cap-B1-11-366" class="clip cap" data-start="89.284" data-duration="1.14" data-track-index="6"><div class="line"><span class="w" data-i="254">On</span> <span class="w" data-i="255">that</span> <span class="w" data-i="256">twenty</span> <span class="w" data-i="257">-eight</span> <span class="w" data-i="258">thousand</span></div></div>
+  <div id="cap-B1-11-480" class="clip cap" data-start="90.424" data-duration="1.3" data-track-index="6"><div class="line"><span class="w" data-i="259">four</span> <span class="w" data-i="260">hundred</span> <span class="w" data-i="261">of</span> <span class="w" data-i="262">turnover,</span></div></div>
+  <div id="cap-B1-11-610" class="clip cap" data-start="91.724" data-duration="1.34" data-track-index="6"><div class="line"><span class="w" data-i="263">that's</span> <span class="w" data-i="264">one</span> <span class="w" data-i="265">point</span> <span class="w" data-i="266">zero</span> <span class="w" data-i="267">nine</span></div></div>
+  <div id="cap-B1-11-744" class="clip cap" data-start="93.064" data-duration="0.75" data-track-index="6"><div class="line"><span class="w" data-i="268">per</span> <span class="w" data-i="269">cent.</span></div></div>
+  <div id="cap-B1-12-0" class="clip cap" data-start="94.191" data-duration="2.73" data-track-index="6"><div class="line"><span class="w" data-i="270">They</span> <span class="w" data-i="271">were</span> <span class="w" data-i="272">quoted</span> <span class="w" data-i="273">nought</span> <span class="w" data-i="274">point</span> <span class="w" data-i="275">five.</span></div></div>
+  <div id="cap-B1-12-290" class="clip cap" data-start="97.091" data-duration="1.8" data-track-index="6"><div class="line"><span class="w" data-i="276">But</span> <span class="w" data-i="277">they're</span> <span class="w" data-i="278">actually</span> <span class="w" data-i="279">paying</span> <span class="w" data-i="280">more</span></div></div>
+  <div id="cap-B1-12-470" class="clip cap" data-start="98.891" data-duration="0.89" data-track-index="6"><div class="line"><span class="w" data-i="281">than</span> <span class="w em" data-i="282">double.</span></div></div>
+  <div id="cap-B1-13-0" class="clip cap" data-start="100.591" data-duration="2.05" data-track-index="6"><div class="line"><span class="w" data-i="283">Now</span> <span class="w" data-i="284">here's</span> <span class="w" data-i="285">the</span> <span class="w" data-i="286">bit</span> <span class="w" data-i="287">worth</span> <span class="w" data-i="288">knowing.</span></div></div>
+  <div id="cap-B1-13-228" class="clip cap" data-start="102.871" data-duration="1.24" data-track-index="6"><div class="line"><span class="w" data-i="289">A</span> <span class="w" data-i="290">rate</span> <span class="w" data-i="291">of</span> <span class="w" data-i="292">nought</span> <span class="w" data-i="293">point</span></div></div>
+  <div id="cap-B1-13-352" class="clip cap" data-start="104.111" data-duration="1.42" data-track-index="6"><div class="line"><span class="w" data-i="294">seven</span> <span class="w" data-i="295">per</span> <span class="w" data-i="296">cent,</span></div></div>
+  <div id="cap-B1-13-494" class="clip cap" data-start="105.531" data-duration="1.76" data-track-index="6"><div class="line"><span class="w em" data-i="297">flat</span> <span class="w" data-i="298">across</span> <span class="w" data-i="299">every</span> <span class="w" data-i="300">card,</span></div></div>
+  <div id="cap-B1-13-670" class="clip cap" data-start="107.291" data-duration="1.9" data-track-index="6"><div class="line"><span class="w" data-i="301">would</span> <span class="w" data-i="302">have</span> <span class="w" data-i="303">cost</span> <span class="w" data-i="304">that</span> <span class="w" data-i="305">restaurant</span> <span class="w em" data-i="306">less.</span></div></div>
+  <div id="cap-B1-14-0" class="clip cap" data-start="109.191" data-duration="1.48" data-track-index="6"><div class="line"><span class="w" data-i="307">A</span> <span class="w" data-i="308">hundred</span> <span class="w" data-i="309">and</span> <span class="w" data-i="310">ninety</span> <span class="w" data-i="311">-eight</span></div></div>
+  <div id="cap-B1-14-148" class="clip cap" data-start="110.671" data-duration="1.38" data-track-index="6"><div class="line"><span class="w" data-i="312">pounds</span> <span class="w" data-i="313">instead</span> <span class="w" data-i="314">of</span> <span class="w" data-i="315">three</span> <span class="w" data-i="316">hundred</span></div></div>
+  <div id="cap-B1-14-286" class="clip cap" data-start="112.051" data-duration="0.81" data-track-index="6"><div class="line"><span class="w" data-i="317">and</span> <span class="w" data-i="318">eight.</span></div></div>
+  <div id="cap-B1-14-370" class="clip cap" data-start="112.891" data-duration="1.61" data-track-index="6"><div class="line"><span class="w" data-i="319">That's</span> <span class="w" data-i="320">a</span> <span class="w" data-i="321">higher</span> <span class="w" data-i="322">rate,</span></div></div>
+  <div id="cap-B1-14-538" class="clip cap" data-start="114.571" data-duration="1.001" data-track-index="6"><div class="line"><span class="w" data-i="323">and</span> <span class="w" data-i="324">it</span> <span class="w" data-i="325">still</span> <span class="w" data-i="326">costs</span> <span class="w em" data-i="327">less</span></div></div>
+  <div id="cap-B1-14-638" class="clip cap" data-start="115.572" data-duration="0.119" data-track-index="6"><div class="line"><span class="w" data-i="328">at</span> <span class="w" data-i="329">the</span> <span class="w" data-i="330">end.</span></div></div>
+  <div id="cap-B1-15-0" class="clip cap" data-start="115.691" data-duration="2.26" data-track-index="6"><div class="line"><span class="w" data-i="331">So</span> <span class="w" data-i="332">when</span> <span class="w" data-i="333">someone</span> <span class="w" data-i="334">quotes</span> <span class="w" data-i="335">you</span></div></div>
+  <div id="cap-B1-15-226" class="clip cap" data-start="117.951" data-duration="1.72" data-track-index="6"><div class="line"><span class="w" data-i="336">a</span> <span class="w" data-i="337">rate,</span> <span class="w" data-i="338">ask</span> <span class="w" data-i="339">what</span> <span class="w em" data-i="340">credit</span></div></div>
+  <div id="cap-B1-15-398" class="clip cap" data-start="119.671" data-duration="1.67" data-track-index="6"><div class="line"><span class="w" data-i="341">and</span> <span class="w" data-i="342">company</span> <span class="w" data-i="343">cards</span> <span class="w" data-i="344">cost,</span></div></div>
+  <div id="cap-B1-15-582" class="clip cap" data-start="121.511" data-duration="1.55" data-track-index="6"><div class="line"><span class="w" data-i="345">and</span> <span class="w" data-i="346">what</span> <span class="w em" data-i="347">Amex</span> <span class="w" data-i="348">costs.</span></div></div>
+  <div id="cap-B1-15-740" class="clip cap" data-start="123.091" data-duration="2.267" data-track-index="6"><div class="line"><span class="w" data-i="349">Then</span> <span class="w" data-i="350">ask</span> <span class="w" data-i="351">what</span> <span class="w" data-i="352">a</span> <span class="w em" data-i="353">payout</span> <span class="w" data-i="354">costs.</span></div></div>
+  <div id="cap-B1-16-0" class="clip cap" data-start="125.358" data-duration="2.42" data-track-index="6"><div class="line"><span class="w" data-i="355">Ask</span> <span class="w" data-i="356">about</span> <span class="w" data-i="357">PCI</span> <span class="w em" data-i="358">fees,</span></div></div>
+  <div id="cap-B1-16-242" class="clip cap" data-start="127.778" data-duration="2.27" data-track-index="6"><div class="line"><span class="w" data-i="359">account</span> <span class="w em" data-i="360">fees</span> <span class="w" data-i="361">and</span> <span class="w" data-i="362">minimum</span> <span class="w" data-i="363">monthly</span> <span class="w" data-i="364">charges.</span></div></div>
+  <div id="cap-B1-16-472" class="clip cap" data-start="130.078" data-duration="1.04" data-track-index="6"><div class="line"><span class="w" data-i="365">Then</span> <span class="w" data-i="366">work</span> <span class="w" data-i="367">out</span> <span class="w" data-i="368">the</span> <span class="w em" data-i="369">effective</span></div></div>
+  <div id="cap-B1-16-576" class="clip cap" data-start="131.118" data-duration="1.48" data-track-index="6"><div class="line"><span class="w" data-i="370">rate,</span> <span class="w" data-i="371">because</span> <span class="w" data-i="372">that's</span> <span class="w" data-i="373">the</span> <span class="w" data-i="374">only</span></div></div>
+  <div id="cap-B1-16-724" class="clip cap" data-start="132.598" data-duration="1.493" data-track-index="6"><div class="line"><span class="w" data-i="375">number</span> <span class="w" data-i="376">worth</span> <span class="w" data-i="377">comparing.</span></div></div>
+  <div id="cap-B1-17-14" class="clip cap" data-start="134.231" data-duration="1.58" data-track-index="6"><div class="line"><span class="w" data-i="378">Two</span> <span class="w" data-i="379">minutes</span> <span class="w" data-i="380">with</span> <span class="w" data-i="381">last</span> <span class="w" data-i="382">month's</span></div></div>
+  <div id="cap-B1-17-172" class="clip cap" data-start="135.811" data-duration="1.64" data-track-index="6"><div class="line"><span class="w em" data-i="383">statement</span> <span class="w" data-i="384">and</span> <span class="w" data-i="385">a</span> <span class="w em" data-i="386">calculator</span> <span class="w" data-i="387">tells</span></div></div>
+  <div id="cap-B1-17-336" class="clip cap" data-start="137.451" data-duration="1.28" data-track-index="6"><div class="line"><span class="w" data-i="388">you</span> <span class="w" data-i="389">more</span> <span class="w" data-i="390">than</span> <span class="w" data-i="391">any</span> <span class="w" data-i="392">advert</span></div></div>
+  <div id="cap-B1-17-464" class="clip cap" data-start="138.731" data-duration="0.93" data-track-index="6"><div class="line"><span class="w" data-i="393">ever</span> <span class="w" data-i="394">will.</span></div></div>
+  <div id="cap-B1-18-0" class="clip cap" data-start="140.324" data-duration="1.11" data-track-index="6"><div class="line"><span class="w" data-i="395">That's</span> <span class="w" data-i="396">it</span> <span class="w" data-i="397">from</span> <span class="w" data-i="398">me.</span></div></div>
+  <div id="cap-B1-18-114" class="clip cap" data-start="141.464" data-duration="0.88" data-track-index="6"><div class="line"><span class="w" data-i="399">If</span> <span class="w" data-i="400">that</span> <span class="w" data-i="401">was</span> <span class="w" data-i="402">useful,</span></div></div>
+  <div id="cap-B1-18-202" class="clip cap" data-start="142.344" data-duration="0.97" data-track-index="6"><div class="line"><span class="w" data-i="403">give</span> <span class="w" data-i="404">us</span> <span class="w" data-i="405">a</span> <span class="w" data-i="406">follow.</span></div></div>
+  <div id="cap-B1-18-308" class="clip cap" data-start="143.404" data-duration="0.62" data-track-index="6"><div class="line"><span class="w" data-i="407">We</span> <span class="w" data-i="408">plan</span> <span class="w" data-i="409">to</span> <span class="w" data-i="410">put</span> <span class="w" data-i="411">a</span></div></div>
+  <div id="cap-B1-18-370" class="clip cap" data-start="144.024" data-duration="1.04" data-track-index="6"><div class="line"><span class="w" data-i="412">lot</span> <span class="w" data-i="413">more</span> <span class="w" data-i="414">helpful</span> <span class="w" data-i="415">videos</span> <span class="w" data-i="416">like</span></div></div>
+  <div id="cap-B1-18-474" class="clip cap" data-start="145.064" data-duration="1.03" data-track-index="6"><div class="line"><span class="w" data-i="417">these</span> <span class="w" data-i="418">on</span> <span class="w" data-i="419">our</span> <span class="w" data-i="420">channel.</span></div></div>
+  <audio id="a-B1-01" src="assets/cut/B1-01.mp4" data-start="0" data-duration="7.8" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-02" src="assets/cut/B1-02.mp4" data-start="7.8" data-duration="5.467" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-INTRO" src="assets/cut/B1-INTRO.mp4" data-start="13.267" data-duration="4.1" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-03" src="assets/cut/B1-03.mp4" data-start="21.757" data-duration="7.933" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-04" src="assets/cut/B1-04.mp4" data-start="29.69" data-duration="6.767" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-05" src="assets/cut/B1-05.mp4" data-start="36.457" data-duration="3.8" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-06" src="assets/cut/B1-06.mp4" data-start="40.257" data-duration="8.767" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-07" src="assets/cut/B1-07.mp4" data-start="49.024" data-duration="10.667" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-08" src="assets/cut/B1-08.mp4" data-start="59.691" data-duration="10.3" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-09" src="assets/cut/B1-09.mp4" data-start="69.991" data-duration="7.633" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-10" src="assets/cut/B1-10.mp4" data-start="77.624" data-duration="8" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-11" src="assets/cut/B1-11.mp4" data-start="85.624" data-duration="8.567" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-12" src="assets/cut/B1-12.mp4" data-start="94.191" data-duration="6.4" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-13" src="assets/cut/B1-13.mp4" data-start="100.591" data-duration="8.6" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-14" src="assets/cut/B1-14.mp4" data-start="109.191" data-duration="6.5" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-15" src="assets/cut/B1-15.mp4" data-start="115.691" data-duration="9.667" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-16" src="assets/cut/B1-16.mp4" data-start="125.358" data-duration="8.733" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-17" src="assets/cut/B1-17.mp4" data-start="134.091" data-duration="6.233" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="a-B1-18" src="assets/cut/B1-18.mp4" data-start="140.324" data-duration="5.933" data-media-start="0" data-track-index="10" data-volume="1"></audio>
+  <audio id="sfx-swish-342" src="assets/sfx/swish.m4a" data-start="3.42" data-duration="0.95" data-track-index="12" data-volume="0.105"></audio>
+  <audio id="sfx-swish-604" src="assets/sfx/swish.m4a" data-start="6.04" data-duration="0.95" data-track-index="13" data-volume="0.105"></audio>
+  <audio id="sfx-tick-1569" src="assets/sfx/tick.m4a" data-start="15.687" data-duration="0.24" data-track-index="14" data-volume="0.135"></audio>
+  <audio id="sfx-impact-1724" src="assets/sfx/impact.m4a" data-start="17.24" data-duration="1.34" data-track-index="15" data-volume="0.21"></audio>
+  <audio id="sfx-riser-1424" src="assets/sfx/riser.m4a" data-start="14.24" data-duration="3" data-track-index="16" data-volume="0.195"></audio>
+  <audio id="sfx-music-intro-1651" src="assets/sfx/music-intro.m4a" data-start="16.507" data-duration="5.4" data-track-index="17" data-volume="0.34"></audio>
+  <audio id="sfx-pop-2390" src="assets/sfx/pop.m4a" data-start="23.897" data-duration="0.56" data-track-index="18" data-volume="0.112"></audio>
+  <audio id="sfx-pop-2984" src="assets/sfx/pop.m4a" data-start="29.84" data-duration="0.56" data-track-index="19" data-volume="0.112"></audio>
+  <audio id="sfx-pop-3395" src="assets/sfx/pop.m4a" data-start="33.95" data-duration="0.56" data-track-index="20" data-volume="0.112"></audio>
+  <audio id="sfx-pop-3213" src="assets/sfx/pop.m4a" data-start="32.13" data-duration="0.56" data-track-index="21" data-volume="0.112"></audio>
+  <audio id="sfx-pop-3433" src="assets/sfx/pop.m4a" data-start="34.33" data-duration="0.56" data-track-index="22" data-volume="0.112"></audio>
+  <audio id="sfx-whoosh-4063" src="assets/sfx/whoosh.m4a" data-start="40.627" data-duration="1.72" data-track-index="23" data-volume="0.105"></audio>
+  <audio id="sfx-tick-4256" src="assets/sfx/tick.m4a" data-start="42.557" data-duration="0.24" data-track-index="24" data-volume="0.135"></audio>
+  <audio id="sfx-tick-4500" src="assets/sfx/tick.m4a" data-start="44.997" data-duration="0.24" data-track-index="25" data-volume="0.135"></audio>
+  <audio id="sfx-tick-4760" src="assets/sfx/tick.m4a" data-start="47.597" data-duration="0.24" data-track-index="26" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5000" src="assets/sfx/tick.m4a" data-start="50.004" data-duration="0.24" data-track-index="27" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5030" src="assets/sfx/tick.m4a" data-start="50.304" data-duration="0.24" data-track-index="28" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5318" src="assets/sfx/tick.m4a" data-start="53.184" data-duration="0.24" data-track-index="29" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5514" src="assets/sfx/tick.m4a" data-start="55.144" data-duration="0.24" data-track-index="30" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5740" src="assets/sfx/tick.m4a" data-start="57.404" data-duration="0.24" data-track-index="31" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5744" src="assets/sfx/tick.m4a" data-start="57.444" data-duration="0.24" data-track-index="32" data-volume="0.135"></audio>
+  <audio id="sfx-tick-5896" src="assets/sfx/tick.m4a" data-start="58.964" data-duration="0.24" data-track-index="33" data-volume="0.135"></audio>
+  <audio id="sfx-tick-6305" src="assets/sfx/tick.m4a" data-start="63.051" data-duration="0.24" data-track-index="34" data-volume="0.135"></audio>
+  <audio id="sfx-tick-6555" src="assets/sfx/tick.m4a" data-start="65.551" data-duration="0.24" data-track-index="35" data-volume="0.135"></audio>
+  <audio id="sfx-tick-6845" src="assets/sfx/tick.m4a" data-start="68.451" data-duration="0.24" data-track-index="36" data-volume="0.135"></audio>
+  <audio id="sfx-tick-7075" src="assets/sfx/tick.m4a" data-start="70.751" data-duration="0.24" data-track-index="37" data-volume="0.135"></audio>
+  <audio id="sfx-tick-7413" src="assets/sfx/tick.m4a" data-start="74.131" data-duration="0.24" data-track-index="38" data-volume="0.135"></audio>
+  <audio id="sfx-swish-8000" src="assets/sfx/swish.m4a" data-start="80.004" data-duration="0.95" data-track-index="39" data-volume="0.105"></audio>
+  <audio id="sfx-swish-8118" src="assets/sfx/swish.m4a" data-start="81.184" data-duration="0.95" data-track-index="40" data-volume="0.105"></audio>
+  <audio id="sfx-pop-8330" src="assets/sfx/pop.m4a" data-start="83.297" data-duration="0.56" data-track-index="41" data-volume="0.112"></audio>
+  <audio id="sfx-whoosh-8601" src="assets/sfx/whoosh.m4a" data-start="86.014" data-duration="1.72" data-track-index="42" data-volume="0.105"></audio>
+  <audio id="sfx-tick-8750" src="assets/sfx/tick.m4a" data-start="87.504" data-duration="0.24" data-track-index="43" data-volume="0.135"></audio>
+  <audio id="sfx-tick-8968" src="assets/sfx/tick.m4a" data-start="89.684" data-duration="0.24" data-track-index="44" data-volume="0.135"></audio>
+  <audio id="sfx-chime-9194" src="assets/sfx/chime.m4a" data-start="91.944" data-duration="1.7" data-track-index="45" data-volume="0.15"></audio>
+  <audio id="sfx-swish-9483" src="assets/sfx/swish.m4a" data-start="94.831" data-duration="0.95" data-track-index="46" data-volume="0.105"></audio>
+  <audio id="sfx-pop-9861" src="assets/sfx/pop.m4a" data-start="98.611" data-duration="0.56" data-track-index="47" data-volume="0.12"></audio>
+  <audio id="sfx-whoosh-10914" src="assets/sfx/whoosh.m4a" data-start="109.141" data-duration="1.72" data-track-index="48" data-volume="0.105"></audio>
+  <audio id="sfx-tick-10949" src="assets/sfx/tick.m4a" data-start="109.491" data-duration="0.24" data-track-index="49" data-volume="0.135"></audio>
+  <audio id="sfx-tick-11157" src="assets/sfx/tick.m4a" data-start="111.571" data-duration="0.24" data-track-index="50" data-volume="0.135"></audio>
+  <audio id="sfx-chime-11537" src="assets/sfx/chime.m4a" data-start="115.371" data-duration="1.7" data-track-index="51" data-volume="0.15"></audio>
+  <audio id="sfx-whoosh-11888" src="assets/sfx/whoosh.m4a" data-start="118.881" data-duration="1.72" data-track-index="52" data-volume="0.105"></audio>
+  <audio id="sfx-tick-11933" src="assets/sfx/tick.m4a" data-start="119.331" data-duration="0.24" data-track-index="53" data-volume="0.135"></audio>
+  <audio id="sfx-tick-11995" src="assets/sfx/tick.m4a" data-start="119.951" data-duration="0.24" data-track-index="54" data-volume="0.135"></audio>
+  <audio id="sfx-tick-12177" src="assets/sfx/tick.m4a" data-start="121.771" data-duration="0.24" data-track-index="55" data-volume="0.135"></audio>
+  <audio id="sfx-tick-12433" src="assets/sfx/tick.m4a" data-start="124.331" data-duration="0.24" data-track-index="56" data-volume="0.135"></audio>
+  <audio id="sfx-tick-12654" src="assets/sfx/tick.m4a" data-start="126.538" data-duration="0.24" data-track-index="57" data-volume="0.135"></audio>
+  <audio id="sfx-tick-12778" src="assets/sfx/tick.m4a" data-start="127.778" data-duration="0.24" data-track-index="58" data-volume="0.135"></audio>
+  <audio id="sfx-tick-12848" src="assets/sfx/tick.m4a" data-start="128.478" data-duration="0.24" data-track-index="59" data-volume="0.135"></audio>
+  <audio id="sfx-tick-13082" src="assets/sfx/tick.m4a" data-start="130.818" data-duration="0.24" data-track-index="60" data-volume="0.135"></audio>
+  <audio id="sfx-chime-13082" src="assets/sfx/chime.m4a" data-start="130.818" data-duration="1.7" data-track-index="61" data-volume="0.135"></audio>
+  <audio id="sfx-pop-13581" src="assets/sfx/pop.m4a" data-start="135.811" data-duration="0.56" data-track-index="62" data-volume="0.112"></audio>
+  <audio id="sfx-pop-13645" src="assets/sfx/pop.m4a" data-start="136.451" data-duration="0.56" data-track-index="63" data-volume="0.112"></audio>
+  <audio id="sfx-pop-13839" src="assets/sfx/pop.m4a" data-start="138.391" data-duration="0.56" data-track-index="64" data-volume="0.112"></audio>
+  <audio id="sfx-impact-14656" src="assets/sfx/impact.m4a" data-start="146.557" data-duration="1.34" data-track-index="65" data-volume="0.195"></audio>
+  <audio id="sfx-tick-14772" src="assets/sfx/tick.m4a" data-start="147.72" data-duration="0.24" data-track-index="66" data-volume="0.135"></audio>
+  <audio id="sfx-tick-15065" src="assets/sfx/tick.m4a" data-start="150.647" data-duration="0.24" data-track-index="67" data-volume="0.135"></audio>
+  <audio id="sfx-tick-15211" src="assets/sfx/tick.m4a" data-start="152.111" data-duration="0.24" data-track-index="68" data-volume="0.135"></audio>
+  <audio id="sfx-tick-15357" src="assets/sfx/tick.m4a" data-start="153.574" data-duration="0.24" data-track-index="69" data-volume="0.135"></audio>
+  <audio id="sfx-tick-15504" src="assets/sfx/tick.m4a" data-start="155.037" data-duration="0.24" data-track-index="70" data-volume="0.135"></audio>
+  <audio id="sfx-tick-15650" src="assets/sfx/tick.m4a" data-start="156.501" data-duration="0.24" data-track-index="71" data-volume="0.135"></audio>
+  <audio id="sfx-tick-15796" src="assets/sfx/tick.m4a" data-start="157.964" data-duration="0.24" data-track-index="72" data-volume="0.135"></audio>
+  <audio id="sfx-pop-15943" src="assets/sfx/pop.m4a" data-start="159.428" data-duration="0.56" data-track-index="73" data-volume="0.12"></audio>
+  <audio id="sfx-tick-15953" src="assets/sfx/tick.m4a" data-start="159.528" data-duration="0.24" data-track-index="74" data-volume="0.135"></audio>
+  <audio id="sfx-music-outro-14626" src="assets/sfx/music-outro.m4a" data-start="146.257" data-duration="18" data-track-index="75" data-volume="0.42"></audio>
+</div>
+<script>
+(function () {
+  const tl = gsap.timeline({ paused: true });
+  const world = document.getElementById("world");
+  const cam = { scale: 1, x: 0, y: 0 };
+  function applyCam() { world.style.transform = "translate(" + cam.x + "px, " + cam.y + "px) scale(" + cam.scale + ")"; }
+  applyCam();
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":7.8,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 0);
+  tl.fromTo(cam, {"scale":1.05,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":5.467,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 7.8);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":7.933,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 21.757);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":6.767,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 29.69);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.05,"x":0,"y":0,"duration":3.8,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 36.457);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":8.767,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 40.257);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":10.667,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 49.024);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":10.3,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 59.691);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":7.633,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 69.991);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":8,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 77.624);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":8.567,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 85.624);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":6.4,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 94.191);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.05,"x":0,"y":0,"duration":8.6,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 100.591);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":6.5,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 109.191);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":9.667,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 115.691);
+  tl.fromTo(cam, {"scale":1.03,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":8.733,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 125.358);
+  tl.fromTo(cam, {"scale":1,"x":0,"y":0}, Object.assign({"scale":1.03,"x":0,"y":0,"duration":6.233,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 134.091);
+  tl.fromTo(cam, {"scale":1.05,"x":0,"y":0}, Object.assign({"scale":1,"x":0,"y":0,"duration":5.933,"ease":"none"}, { onUpdate: applyCam, immediateRender: false }), 140.324);
+  const WORDS = [[0,0.46],[0.46,0.6],[0.6,0.88],[0.88,1.1],[1.1,1.3],[1.3,1.52],[1.52,1.68],[1.68,1.86],[1.86,2.04],[2.04,2.22],[2.22,2.46],[2.46,3.04],[3.42,3.68],[3.68,3.96],[3.96,4.12],[4.12,4.44],[4.44,4.6],[4.6,4.9],[5.28,5.42],[5.42,5.6],[5.6,6.04],[6.04,6.26],[6.26,6.5],[6.5,6.78],[7.8,8.28],[8.28,8.64],[8.64,8.88],[8.88,9.18],[9.56,9.88],[9.88,10.14],[10.14,10.34],[10.34,10.64],[10.64,10.88],[10.88,11.1],[11.1,11.26],[11.26,11.58],[11.78,11.8],[11.8,12.02],[12.02,12.06],[12.06,12.18],[12.18,12.42],[12.42,12.58],[12.58,12.7],[12.7,12.92],[13.267,13.867],[14.107,14.427],[14.427,14.827],[15.127,15.187],[15.187,15.447],[15.447,15.687],[15.687,16.307],[16.307,16.507],[16.507,17.067],[21.777,22.337],[22.337,22.537],[22.537,22.697],[22.697,22.797],[22.797,22.977],[22.977,23.537],[23.537,23.897],[23.897,24.237],[24.237,24.457],[24.457,24.877],[24.877,25.057],[25.057,25.337],[25.537,25.717],[25.717,25.857],[25.857,26.057],[26.057,26.337],[26.337,26.757],[26.757,27.677],[27.677,27.877],[27.877,28.057],[28.057,28.457],[28.457,28.757],[28.757,28.977],[28.977,29.357],[29.69,30.09],[30.09,30.37],[30.37,30.57],[30.57,30.85],[30.85,30.99],[30.99,31.63],[32.13,32.33],[32.33,32.69],[32.69,32.95],[32.95,33.19],[33.19,33.57],[33.95,34.17],[34.17,34.33],[34.33,34.69],[34.69,35.09],[35.09,35.35],[35.35,35.57],[35.57,35.83],[36.167,36.247],[36.247,36.427],[36.427,36.527],[36.527,36.667],[36.667,37.067],[37.607,37.767],[37.767,38.087],[38.087,38.247],[38.247,38.407],[38.407,38.467],[38.467,38.567],[38.567,38.867],[39.107,39.267],[39.267,39.387],[39.387,39.507],[39.507,39.687],[39.687,39.907],[40.257,40.597],[40.597,40.677],[40.677,40.857],[40.857,41.037],[41.037,41.277],[41.277,41.517],[41.517,41.637],[41.637,41.997],[42.557,42.877],[42.877,43.157],[43.157,43.377],[43.377,43.837],[43.837,44.177],[44.177,44.517],[44.797,44.997],[44.997,45.257],[45.257,45.617],[45.617,45.797],[45.797,46.157],[46.157,46.537],[46.537,46.917],[47.077,47.417],[47.417,47.597],[47.597,47.837],[47.837,48.017],[48.017,48.397],[48.397,48.677],[49.024,49.624],[49.624,49.704],[49.704,49.864],[49.864,49.984],[49.984,50.084],[50.084,50.304],[50.304,50.684],[51.004,51.104],[51.104,51.424],[51.424,51.644],[51.644,52.204],[52.684,53.184],[53.184,53.584],[53.584,53.864],[53.864,54.004],[54.004,54.104],[54.104,54.324],[54.324,54.564],[54.564,54.944],[55.144,55.404],[55.404,55.764],[55.764,55.984],[55.984,56.244],[56.244,56.504],[56.504,57.024],[57.404,57.444],[57.444,57.844],[57.844,58.284],[58.284,58.504],[58.504,58.724],[58.724,58.964],[58.964,59.344],[59.691,59.851],[59.851,60.051],[60.051,60.151],[60.151,60.311],[60.311,60.651],[60.651,60.991],[60.991,61.311],[61.311,61.491],[61.491,61.871],[61.871,62.231],[62.231,62.671],[63.051,63.471],[63.471,63.851],[63.851,64.151],[64.151,64.371],[64.371,65.171],[65.551,65.791],[65.791,66.331],[66.331,66.671],[66.671,66.851],[66.851,67.031],[67.031,67.511],[67.691,67.811],[67.811,67.971],[67.971,68.451],[68.451,69.091],[69.091,69.651],[69.991,70.651],[70.651,70.751],[70.751,71.091],[71.091,71.391],[71.391,71.831],[72.211,72.371],[72.371,72.531],[72.531,72.691],[72.691,72.871],[72.871,73.231],[73.231,73.651],[74.031,74.131],[74.131,74.511],[74.511,74.931],[75.311,75.531],[75.531,75.871],[75.871,76.191],[76.191,76.411],[76.411,76.611],[76.611,76.811],[76.811,77.011],[77.011,77.191],[77.191,77.491],[77.491,77.596],[77.624,78.104],[78.104,78.344],[78.344,78.544],[78.544,78.764],[78.764,78.944],[78.944,79.424],[80.004,80.044],[80.044,80.204],[80.204,80.544],[80.544,80.904],[81.184,81.424],[81.424,81.644],[81.644,81.804],[81.804,82.064],[82.064,82.464],[82.784,82.844],[82.844,82.964],[82.964,83.364],[83.364,83.764],[83.764,84.104],[84.104,84.464],[84.464,84.824],[85.624,86.064],[86.064,86.424],[86.424,86.824],[86.824,87.124],[87.124,87.504],[87.504,87.864],[87.864,88.164],[88.164,88.304],[88.304,88.504],[88.504,88.904],[89.284,89.444],[89.444,89.684],[89.684,89.944],[89.944,90.224],[90.224,90.424],[90.424,90.804],[90.804,91.044],[91.044,91.204],[91.204,91.524],[91.724,91.944],[91.944,92.164],[92.164,92.424],[92.424,92.744],[92.744,93.064],[93.064,93.244],[93.244,93.464],[94.191,94.651],[94.651,94.831],[94.831,95.271],[95.271,95.771],[95.771,96.011],[96.011,96.571],[97.091,97.511],[97.511,98.031],[98.031,98.331],[98.331,98.611],[98.611,98.891],[98.891,99.071],[99.071,99.431],[100.591,100.951],[100.951,101.331],[101.331,101.431],[101.431,101.591],[101.591,101.811],[101.811,102.291],[102.871,102.951],[102.951,103.231],[103.231,103.511],[103.511,103.871],[103.871,104.111],[104.111,104.611],[104.611,104.831],[104.831,105.191],[105.531,105.751],[105.751,106.091],[106.091,106.571],[106.571,107.031],[107.291,107.471],[107.471,107.611],[107.611,107.851],[107.851,108.091],[108.091,108.491],[108.491,108.871],[109.191,109.491],[109.491,109.751],[109.751,110.051],[110.051,110.411],[110.411,110.671],[110.671,110.951],[110.951,111.391],[111.391,111.571],[111.571,111.751],[111.751,112.051],[112.051,112.231],[112.231,112.511],[112.891,113.451],[113.451,113.531],[113.531,113.791],[113.791,114.151],[114.571,114.691],[114.691,114.811],[114.811,115.091],[115.091,115.371],[115.371,115.651],[115.572,115.622],[115.572,115.622],[115.572,115.622],[115.691,116.471],[116.471,117.111],[117.111,117.431],[117.431,117.731],[117.731,117.951],[117.951,118.051],[118.051,118.411],[118.931,119.051],[119.051,119.331],[119.331,119.671],[119.671,119.951],[119.951,120.311],[120.311,120.711],[120.711,120.991],[121.511,121.571],[121.571,121.771],[121.771,122.311],[122.311,122.711],[123.091,123.471],[123.471,123.991],[123.991,124.231],[124.231,124.331],[124.331,124.551],[124.551,125.031],[125.358,125.958],[125.958,126.538],[126.538,127.018],[127.018,127.438],[127.778,127.898],[127.898,128.238],[128.238,128.478],[128.478,128.738],[128.738,129.178],[129.178,129.698],[130.078,130.198],[130.198,130.518],[130.518,130.698],[130.698,130.818],[130.818,131.118],[131.118,131.498],[131.958,131.998],[131.998,132.258],[132.258,132.358],[132.358,132.598],[132.598,132.978],[132.978,133.318],[133.318,133.758],[134.231,134.731],[134.731,134.971],[134.971,135.231],[135.231,135.471],[135.471,135.811],[135.811,136.011],[136.011,136.331],[136.331,136.451],[136.451,136.951],[136.951,137.451],[137.451,137.691],[137.691,137.931],[137.931,138.131],[138.131,138.391],[138.391,138.731],[138.731,139.051],[139.051,139.311],[140.324,140.584],[140.584,140.664],[140.664,140.844],[140.844,141.084],[141.464,141.504],[141.504,141.664],[141.664,141.804],[141.804,142.184],[142.344,142.464],[142.464,142.584],[142.584,142.724],[142.724,142.964],[143.404,143.464],[143.464,143.644],[143.644,143.784],[143.784,143.904],[143.904,144.024],[144.024,144.144],[144.144,144.304],[144.304,144.584],[144.584,144.864],[144.864,145.064],[145.064,145.244],[145.244,145.384],[145.384,145.544],[145.544,145.744]];
+  const spans = Array.from(document.querySelectorAll(".cap .w")).sort((p, q) => +p.dataset.i - +q.dataset.i);
+  const driver = { t: 0 };
+  function paint() {
+    const now = driver.t;
+    for (let i = 0; i < spans.length; i++) {
+      const s = WORDS[i][0], e = WORDS[i][1], el = spans[i];
+      if (now < s - 0.02) el.style.color = "rgba(255,255,255,0.86)";
+      else if (now < e + 0.04) el.style.color = "#F5C518";
+      else el.style.color = "#ffffff";
+    }
+  }
+  paint();
+  tl.fromTo(driver, { t: 0 }, { t: 164.257, duration: 164.257, ease: "none", onUpdate: paint, immediateRender: false }, 0);
+  tl.set("#plate", { autoAlpha: 1 }, 0.25);
+  tl.fromTo("#plate", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 0.25);
+  tl.fromTo("#plate", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.233, ease: "power1.in", immediateRender: false }, 3.2);
+  tl.set("#plate", { autoAlpha: 0 }, 3.434);
+  tl.set("#quoted", { autoAlpha: 1 }, 3.42);
+  tl.fromTo("#quoted", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 3.42);
+  tl.fromTo("#quoted b", { color: "#F5C518" }, { color: "rgba(255,255,255,0.45)", duration: 0.2, ease: "none", immediateRender: false }, 6.04);
+  tl.fromTo("#quoted .strike", { scaleX: 0 }, { scaleX: 1, duration: 0.2, ease: "power2.out", immediateRender: false }, 6.04);
+  tl.set("#quoted", { autoAlpha: 0 }, 7.8);
+  tl.set("#title", { autoAlpha: 1, clipPath: "inset(44.5% 38% 44.5% 38% round 26px)" }, 15.637);
+  tl.set("#title .kick", { autoAlpha: 1 }, 15.687);
+  tl.fromTo("#title .kick", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 15.687);
+  tl.fromTo("#title", { clipPath: "inset(44.5% 38% 44.5% 38% round 26px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 0.733, ease: "power3.inOut", immediateRender: false }, 16.507);
+  tl.fromTo("#title .kick", { y: 0 }, { y: -280, duration: 0.467, ease: "power3.out", immediateRender: false }, 17.107);
+  tl.set("#title .wm", { autoAlpha: 1 }, 17.24);
+  tl.fromTo("#title .wm", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.467, ease: "none", immediateRender: false }, 17.24);
+  tl.fromTo("#title .ep .ew:nth-child(1)", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 17.69);
+  tl.fromTo("#title .ep .ew:nth-child(2)", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 17.79);
+  tl.fromTo("#title .ep .ew:nth-child(3)", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 17.89);
+  tl.fromTo("#title .ep .ew:nth-child(4)", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 17.99);
+  tl.fromTo("#title .ep .ew:nth-child(5)", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 18.09);
+  tl.fromTo("#title .sweep", { strokeDashoffset: 4776 }, { strokeDashoffset: 2900, duration: 2.4, ease: "power2.out", immediateRender: false }, 17.04);
+  tl.fromTo("#title .arc", { rotation: 0 }, { rotation: 16, duration: 4.717, ease: "sine.inOut", immediateRender: false }, 17.04);
+  tl.fromTo("#title .grid", { x: 0, y: 0 }, { x: -48, y: -30, duration: 6.12, ease: "none", immediateRender: false }, 15.637);
+  tl.set("#title", { autoAlpha: 0 }, 21.757);
+  tl.set("#fan", { autoAlpha: 1 }, 23.897);
+  tl.set("#fan .k0", { autoAlpha: 1 }, 23.897);
+  tl.fromTo("#fan .k0 .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.333, ease: "power3.out", immediateRender: false }, 23.897);
+  tl.fromTo("#fan .k0 .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.167, ease: "none", immediateRender: false }, 26.057);
+  tl.set("#fan .k1", { autoAlpha: 1 }, 29.84);
+  tl.fromTo("#fan .k1 .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.333, ease: "power3.out", immediateRender: false }, 29.84);
+  tl.fromTo("#fan .k1 .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.167, ease: "none", immediateRender: false }, 30.04);
+  tl.set("#fan .k2", { autoAlpha: 1 }, 33.95);
+  tl.fromTo("#fan .k2 .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.333, ease: "power3.out", immediateRender: false }, 33.95);
+  tl.fromTo("#fan .k2 .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.167, ease: "none", immediateRender: false }, 34.15);
+  tl.set("#fan .k3", { autoAlpha: 1 }, 32.13);
+  tl.fromTo("#fan .k3 .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.333, ease: "power3.out", immediateRender: false }, 32.13);
+  tl.fromTo("#fan .k3 .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.167, ease: "none", immediateRender: false }, 32.33);
+  tl.set("#fan .k4", { autoAlpha: 1 }, 34.33);
+  tl.fromTo("#fan .k4 .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.333, ease: "power3.out", immediateRender: false }, 34.33);
+  tl.fromTo("#fan .k4 .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.167, ease: "none", immediateRender: false }, 34.53);
+  tl.set("#fan", { autoAlpha: 0 }, 36.457);
+  tl.set("#doc", { autoAlpha: 1 }, 40.677);
+  tl.fromTo("#doc .tilt", { autoAlpha: 0, z: -260, rotationY: -24, x: -40 }, { autoAlpha: 1, z: 0, rotationY: -10, x: 0, duration: 0.467, ease: "power4.out", immediateRender: false }, 40.677);
+  tl.fromTo("#doc .tilt", { rotationY: -10, y: 0 }, { rotationY: -8.5, y: -6, duration: 36.48, ease: "sine.inOut", immediateRender: false }, 41.144);
+  tl.fromTo("#doc .s0", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 42.557);
+  const cu0 = { n: 0 }, cu0el = document.querySelector("#doc .s0 b");
+  const cu0f = () => { const n = cu0.n; const s = n.toFixed(0); cu0el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ".00"; };
+  cu0f();
+  tl.fromTo(cu0, { n: 0 }, { n: 28400, duration: 0.4, ease: "power2.out", onUpdate: cu0f, immediateRender: false }, 42.557);
+  tl.fromTo("#doc .s1", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 44.997);
+  const cu1 = { n: 0 }, cu1el = document.querySelector("#doc .s1 b");
+  const cu1f = () => { const n = cu1.n; const s = n.toFixed(0); cu1el.textContent = "" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu1f();
+  tl.fromTo(cu1, { n: 0 }, { n: 780, duration: 0.4, ease: "power2.out", onUpdate: cu1f, immediateRender: false }, 44.997);
+  tl.fromTo("#doc .s2", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 47.597);
+  tl.fromTo("#doc .s2 .mk", { scaleX: 0 }, { scaleX: 1, duration: 0.267, ease: "power2.out", immediateRender: false }, 47.73);
+  tl.fromTo("#doc .dhd", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 50.004);
+  tl.fromTo("#doc .c0", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 50.304);
+  tl.fromTo("#doc .c1", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 53.184);
+  tl.fromTo("#doc .c2", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 55.144);
+  tl.fromTo("#doc .c3", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 57.404);
+  tl.fromTo("#doc .c4", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 57.444);
+  tl.fromTo("#doc .dsub", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 58.964);
+  tl.fromTo("#doc .f0", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 63.051);
+  tl.fromTo("#doc .f1", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 65.551);
+  tl.fromTo("#doc .f2", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 68.451);
+  tl.fromTo("#doc .f3", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 70.751);
+  tl.fromTo("#doc .f4", { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 74.131);
+  tl.fromTo("#doc .f4 .mk", { scaleX: 0 }, { scaleX: 1, duration: 0.267, ease: "power2.out", immediateRender: false }, 74.331);
+  tl.set("#doc", { autoAlpha: 0 }, 77.624);
+  tl.set("#formula", { autoAlpha: 1 }, 80.004);
+  tl.set("#formula .ta", { autoAlpha: 1 }, 80.004);
+  tl.fromTo("#formula .ta", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 80.004);
+  tl.set("#formula .tb", { autoAlpha: 1 }, 81.184);
+  tl.fromTo("#formula .tb", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 81.184);
+  tl.set("#formula .ln", { autoAlpha: 1 }, 82.964);
+  tl.fromTo("#formula .shaft", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, 82.964);
+  tl.fromTo("#formula .head", { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.167, ease: "back.out(2.5)", immediateRender: false }, 83.297);
+  tl.fromTo("#formula .tag", { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.2, ease: "power2.out", immediateRender: false }, 83.097);
+  tl.set("#formula .t2 b", { autoAlpha: 1 }, 83.297);
+  tl.fromTo("#formula .t2 b", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 83.297);
+  tl.set("#formula", { autoAlpha: 0 }, 85.624);
+  tl.set("#cost", { autoAlpha: 1 }, 86.064);
+  tl.fromTo("#cost", { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 0.333, ease: "power2.out", immediateRender: false }, 86.064);
+  tl.set("#cost .r0", { autoAlpha: 1 }, 87.504);
+  tl.fromTo("#cost .r0 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 87.504);
+  tl.fromTo("#cost .r0 .k, #cost .r0 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 87.637);
+  const cu2 = { n: 0 }, cu2el = document.querySelector("#cost .r0 .v");
+  const cu2f = () => { const n = cu2.n; const s = n.toFixed(2); cu2el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu2f();
+  tl.fromTo(cu2, { n: 0 }, { n: 308.46, duration: 0.4, ease: "power2.out", onUpdate: cu2f, immediateRender: false }, 87.637);
+  tl.set("#cost .r1", { autoAlpha: 1 }, 89.684);
+  tl.fromTo("#cost .r1 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 89.684);
+  tl.fromTo("#cost .r1 .k, #cost .r1 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 89.817);
+  const cu3 = { n: 0 }, cu3el = document.querySelector("#cost .r1 .v");
+  const cu3f = () => { const n = cu3.n; const s = n.toFixed(0); cu3el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu3f();
+  tl.fromTo(cu3, { n: 0 }, { n: 28400, duration: 0.4, ease: "power2.out", onUpdate: cu3f, immediateRender: false }, 89.817);
+  tl.set("#cost .r2", { autoAlpha: 1 }, 91.944);
+  tl.fromTo("#cost .r2 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 91.944);
+  tl.fromTo("#cost .r2 .k, #cost .r2 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 92.077);
+  const cu4 = { n: 0 }, cu4el = document.querySelector("#cost .r2 .v");
+  const cu4f = () => { const n = cu4.n; const s = n.toFixed(2); cu4el.textContent = "" + (false ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + "%"; };
+  cu4f();
+  tl.fromTo(cu4, { n: 0 }, { n: 1.09, duration: 0.4, ease: "power2.out", onUpdate: cu4f, immediateRender: false }, 92.077);
+  tl.set("#cost", { autoAlpha: 0 }, 94.191);
+  tl.set("#paid", { autoAlpha: 1 }, 94.831);
+  tl.set("#paid .ta", { autoAlpha: 1 }, 94.831);
+  tl.fromTo("#paid .ta", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 94.831);
+  tl.set("#paid .ln", { autoAlpha: 1 }, 98.031);
+  tl.fromTo("#paid .shaft", { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: "power2.inOut", immediateRender: false }, 98.031);
+  tl.fromTo("#paid .head", { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.167, ease: "back.out(2.5)", immediateRender: false }, 98.364);
+  tl.set("#paid .t2 b", { autoAlpha: 1 }, 98.611);
+  tl.fromTo("#paid .t2 b", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.267, ease: "none", immediateRender: false }, 98.611);
+  tl.set("#paid", { autoAlpha: 0 }, 100.591);
+  tl.set("#ways", { autoAlpha: 1 }, 109.191);
+  tl.fromTo("#ways", { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 0.333, ease: "power2.out", immediateRender: false }, 109.191);
+  tl.set("#ways .r0", { autoAlpha: 1 }, 109.491);
+  tl.fromTo("#ways .r0 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 109.491);
+  tl.fromTo("#ways .r0 .k, #ways .r0 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 109.624);
+  const cu5 = { n: 0 }, cu5el = document.querySelector("#ways .r0 .v");
+  const cu5f = () => { const n = cu5.n; const s = n.toFixed(2); cu5el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu5f();
+  tl.fromTo(cu5, { n: 0 }, { n: 198.81, duration: 0.4, ease: "power2.out", onUpdate: cu5f, immediateRender: false }, 109.624);
+  tl.set("#ways .r1", { autoAlpha: 1 }, 111.571);
+  tl.fromTo("#ways .r1 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 111.571);
+  tl.fromTo("#ways .r1 .k, #ways .r1 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 111.704);
+  const cu6 = { n: 0 }, cu6el = document.querySelector("#ways .r1 .v");
+  const cu6f = () => { const n = cu6.n; const s = n.toFixed(2); cu6el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu6f();
+  tl.fromTo(cu6, { n: 0 }, { n: 308.46, duration: 0.4, ease: "power2.out", onUpdate: cu6f, immediateRender: false }, 111.704);
+  tl.set("#ways .r2", { autoAlpha: 1 }, 115.371);
+  tl.fromTo("#ways .r2 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 115.371);
+  tl.fromTo("#ways .r2 .k, #ways .r2 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 115.504);
+  const cu7 = { n: 0 }, cu7el = document.querySelector("#ways .r2 .v");
+  const cu7f = () => { const n = cu7.n; const s = n.toFixed(2); cu7el.textContent = "£" + (true ? s.replace(/\B(?=(\d{3})+(?!\d))/g, ",") : s) + ""; };
+  cu7f();
+  tl.fromTo(cu7, { n: 0 }, { n: 109.65, duration: 0.4, ease: "power2.out", onUpdate: cu7f, immediateRender: false }, 115.504);
+  tl.fromTo("#ways", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.233, ease: "power1.in", immediateRender: false }, 118.581);
+  tl.set("#ways", { autoAlpha: 0 }, 118.815);
+  tl.set("#ask", { autoAlpha: 1 }, 118.931);
+  tl.fromTo("#ask", { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 0.333, ease: "power2.out", immediateRender: false }, 118.931);
+  tl.set("#ask", { height: 732 }, 125.358);
+  tl.set("#ask .q0", { autoAlpha: 1 }, 119.331);
+  tl.fromTo("#ask .q0 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 119.331);
+  tl.fromTo("#ask .q0 .k, #ask .q0 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 119.464);
+  tl.set("#ask .q1", { autoAlpha: 1 }, 119.951);
+  tl.fromTo("#ask .q1 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 119.951);
+  tl.fromTo("#ask .q1 .k, #ask .q1 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 120.084);
+  tl.set("#ask .q2", { autoAlpha: 1 }, 121.771);
+  tl.fromTo("#ask .q2 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 121.771);
+  tl.fromTo("#ask .q2 .k, #ask .q2 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 121.904);
+  tl.set("#ask .q3", { autoAlpha: 1 }, 124.331);
+  tl.fromTo("#ask .q3 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 124.331);
+  tl.fromTo("#ask .q3 .k, #ask .q3 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 124.464);
+  tl.set("#ask .q4", { autoAlpha: 1 }, 126.538);
+  tl.fromTo("#ask .q4 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 126.538);
+  tl.fromTo("#ask .q4 .k, #ask .q4 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 126.671);
+  tl.set("#ask .q5", { autoAlpha: 1 }, 127.778);
+  tl.fromTo("#ask .q5 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 127.778);
+  tl.fromTo("#ask .q5 .k, #ask .q5 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 127.911);
+  tl.set("#ask .q6", { autoAlpha: 1 }, 128.478);
+  tl.fromTo("#ask .q6 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 128.478);
+  tl.fromTo("#ask .q6 .k, #ask .q6 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 128.611);
+  tl.set("#ask .q7", { autoAlpha: 1 }, 130.818);
+  tl.fromTo("#ask .q7 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 130.818);
+  tl.fromTo("#ask .q7 .k, #ask .q7 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 130.951);
+  tl.set("#ask", { autoAlpha: 0 }, 134.091);
+  tl.set("#two", { autoAlpha: 1 }, 135.811);
+  tl.set("#two .p0", { autoAlpha: 1 }, 135.811);
+  tl.fromTo("#two .p0 .badge", { scale: 0 }, { scale: 1, duration: 0.167, ease: "back.out(3)", immediateRender: false }, 135.811);
+  tl.fromTo("#two .p0 span", { autoAlpha: 0, scaleX: 0 }, { autoAlpha: 1, scaleX: 1, duration: 0.267, ease: "power2.out", immediateRender: false }, 135.911);
+  tl.set("#two .p1", { autoAlpha: 1 }, 136.451);
+  tl.fromTo("#two .p1 .badge", { scale: 0 }, { scale: 1, duration: 0.167, ease: "back.out(3)", immediateRender: false }, 136.451);
+  tl.fromTo("#two .p1 span", { autoAlpha: 0, scaleX: 0 }, { autoAlpha: 1, scaleX: 1, duration: 0.267, ease: "power2.out", immediateRender: false }, 136.551);
+  tl.set("#two .p2", { autoAlpha: 1 }, 138.391);
+  tl.fromTo("#two .p2 .badge", { scale: 0 }, { scale: 1, duration: 0.167, ease: "back.out(3)", immediateRender: false }, 138.391);
+  tl.fromTo("#two .p2 span", { autoAlpha: 0, scaleX: 0 }, { autoAlpha: 1, scaleX: 1, duration: 0.267, ease: "power2.out", immediateRender: false }, 138.491);
+  tl.set("#two", { autoAlpha: 0 }, 140.324);
+  tl.set("#end", { autoAlpha: 1 }, 146.257);
+  tl.fromTo("#end .grid", { x: 0, y: 0 }, { x: -60, y: -36, duration: 18, ease: "none", immediateRender: false }, 146.257);
+  tl.fromTo("#end .sweep", { strokeDashoffset: 4776 }, { strokeDashoffset: 2900, duration: 2.6, ease: "power2.out", immediateRender: false }, 146.257);
+  tl.fromTo("#end .arc", { rotation: 0 }, { rotation: -22, duration: 18, ease: "sine.inOut", immediateRender: false }, 146.257);
+  tl.set("#end .brand .wm", { autoAlpha: 1 }, 146.557);
+  tl.fromTo("#end .brand .wm", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.467, ease: "none", immediateRender: false }, 146.557);
+  tl.fromTo("#end .brand .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 147.72);
+  tl.fromTo("#end .brand", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.267, ease: "power1.in", immediateRender: false }, 150.247);
+  tl.set("#end .brand", { autoAlpha: 0 }, 150.515);
+  tl.fromTo("#end .items .kick2", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.267, ease: "none", immediateRender: false }, 150.647);
+  tl.set("#end .items .t0", { autoAlpha: 1 }, 150.647);
+  tl.fromTo("#end .items .t0 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 150.647);
+  tl.fromTo("#end .items .t0 .k, #end .items .t0 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 150.78);
+  tl.set("#end .items .t1", { autoAlpha: 1 }, 152.111);
+  tl.fromTo("#end .items .t1 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 152.111);
+  tl.fromTo("#end .items .t1 .k, #end .items .t1 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 152.244);
+  tl.set("#end .items .t2", { autoAlpha: 1 }, 153.574);
+  tl.fromTo("#end .items .t2 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 153.574);
+  tl.fromTo("#end .items .t2 .k, #end .items .t2 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 153.707);
+  tl.set("#end .items .t3", { autoAlpha: 1 }, 155.037);
+  tl.fromTo("#end .items .t3 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 155.037);
+  tl.fromTo("#end .items .t3 .k, #end .items .t3 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 155.17);
+  tl.set("#end .items .t4", { autoAlpha: 1 }, 156.501);
+  tl.fromTo("#end .items .t4 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 156.501);
+  tl.fromTo("#end .items .t4 .k, #end .items .t4 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 156.634);
+  tl.set("#end .items .t5", { autoAlpha: 1 }, 157.964);
+  tl.fromTo("#end .items .t5 .hl", { scaleX: 0 }, { scaleX: 1, duration: 0.133, ease: "none", immediateRender: false }, 157.964);
+  tl.fromTo("#end .items .t5 .k, #end .items .t5 .v", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.133, ease: "none", immediateRender: false }, 158.097);
+  tl.fromTo("#end .items", { autoAlpha: 1 }, { autoAlpha: 0, duration: 0.267, ease: "power1.in", immediateRender: false }, 159.028);
+  tl.set("#end .items", { autoAlpha: 0 }, 159.296);
+  tl.set("#end .final .wm", { autoAlpha: 1 }, 159.428);
+  tl.fromTo("#end .final .wm", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.467, ease: "none", immediateRender: false }, 159.428);
+  tl.fromTo("#end .final .sub", { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 159.728);
+  tl.fromTo("#end .final .concede", { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.267, ease: "power3.out", immediateRender: false }, 159.528);
+  window.__timelines["b1v7"] = tl;
+})();
+</script>
+</body>
+</html>

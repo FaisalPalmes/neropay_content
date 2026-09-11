@@ -1,0 +1,339 @@
+{
+ "built": "2026-09-11",
+ "total": 164.257,
+ "fps": 30,
+ "sfx_gain": 0.75,
+ "shots": [
+  {
+   "id": "B1-01",
+   "kind": "clip",
+   "start": 0,
+   "dur": 7.8,
+   "angle": "FRONT"
+  },
+  {
+   "id": "B1-02",
+   "kind": "clip",
+   "start": 7.8,
+   "dur": 5.467,
+   "angle": "CLOSE"
+  },
+  {
+   "id": "B1-INTRO",
+   "kind": "clip",
+   "start": 13.267,
+   "dur": 4.1,
+   "angle": "FRONT2"
+  },
+  {
+   "id": "[TITLE]",
+   "kind": "card",
+   "start": 17.367,
+   "dur": 4.39,
+   "angle": null
+  },
+  {
+   "id": "B1-03",
+   "kind": "clip",
+   "start": 21.757,
+   "dur": 7.933,
+   "angle": "SIDE"
+  },
+  {
+   "id": "B1-04",
+   "kind": "clip",
+   "start": 29.69,
+   "dur": 6.767,
+   "angle": "SIDE2"
+  },
+  {
+   "id": "B1-05",
+   "kind": "clip",
+   "start": 36.457,
+   "dur": 3.8,
+   "angle": "CLOSE"
+  },
+  {
+   "id": "B1-06",
+   "kind": "clip",
+   "start": 40.257,
+   "dur": 8.767,
+   "angle": "SIDE"
+  },
+  {
+   "id": "B1-07",
+   "kind": "clip",
+   "start": 49.024,
+   "dur": 10.667,
+   "angle": "SIDE2"
+  },
+  {
+   "id": "B1-08",
+   "kind": "clip",
+   "start": 59.691,
+   "dur": 10.3,
+   "angle": "SIDE"
+  },
+  {
+   "id": "B1-09",
+   "kind": "clip",
+   "start": 69.991,
+   "dur": 7.633,
+   "angle": "SIDE2"
+  },
+  {
+   "id": "B1-10",
+   "kind": "clip",
+   "start": 77.624,
+   "dur": 8,
+   "angle": "FRONT"
+  },
+  {
+   "id": "B1-11",
+   "kind": "clip",
+   "start": 85.624,
+   "dur": 8.567,
+   "angle": "SIDE"
+  },
+  {
+   "id": "B1-12",
+   "kind": "clip",
+   "start": 94.191,
+   "dur": 6.4,
+   "angle": "FRONT2"
+  },
+  {
+   "id": "B1-13",
+   "kind": "clip",
+   "start": 100.591,
+   "dur": 8.6,
+   "angle": "CLOSE"
+  },
+  {
+   "id": "B1-14",
+   "kind": "clip",
+   "start": 109.191,
+   "dur": 6.5,
+   "angle": "SIDE"
+  },
+  {
+   "id": "B1-15",
+   "kind": "clip",
+   "start": 115.691,
+   "dur": 9.667,
+   "angle": "SIDE2"
+  },
+  {
+   "id": "B1-16",
+   "kind": "clip",
+   "start": 125.358,
+   "dur": 8.733,
+   "angle": "SIDE"
+  },
+  {
+   "id": "B1-17",
+   "kind": "clip",
+   "start": 134.091,
+   "dur": 6.233,
+   "angle": "FRONT"
+  },
+  {
+   "id": "B1-18",
+   "kind": "clip",
+   "start": 140.324,
+   "dur": 5.933,
+   "angle": "CLOSE2"
+  },
+  {
+   "id": "[END]",
+   "kind": "card",
+   "start": 146.257,
+   "dur": 18,
+   "angle": null
+  }
+ ],
+ "overlays": [
+  {
+   "id": "plate",
+   "archetype": "B",
+   "shot": "B1-01",
+   "start": 0.25,
+   "formed": 0.517,
+   "end": 3.2,
+   "cut": false,
+   "words": 2,
+   "build_f": 8,
+   "hold_f": 74,
+   "exit_f": 7,
+   "held_frame_at": 2.917
+  },
+  {
+   "id": "quoted",
+   "archetype": "B",
+   "shot": "B1-01",
+   "start": 3.42,
+   "formed": 3.687,
+   "end": 7.8,
+   "cut": true,
+   "words": 2,
+   "build_f": 8,
+   "hold_f": 47,
+   "exit_f": 0,
+   "held_frame_at": 7.75
+  },
+  {
+   "id": "title",
+   "archetype": "TITLE",
+   "shot": "B1-INTRO→[TITLE]",
+   "start": 15.637,
+   "formed": 18.357,
+   "end": 21.757,
+   "cut": true,
+   "words": 8,
+   "build_f": 82,
+   "hold_f": 102,
+   "exit_f": 0,
+   "held_frame_at": 21.707
+  },
+  {
+   "id": "fan",
+   "archetype": "C",
+   "shot": "B1-03→B1-04",
+   "start": 23.897,
+   "formed": 24.229999999999997,
+   "end": 36.457,
+   "cut": true,
+   "words": 10,
+   "build_f": 10,
+   "hold_f": 53,
+   "exit_f": 0,
+   "held_frame_at": 36.407
+  },
+  {
+   "id": "doc",
+   "archetype": "E",
+   "shot": "B1-06→B1-09",
+   "start": 40.677,
+   "formed": 41.144,
+   "end": 77.624,
+   "cut": true,
+   "words": 66,
+   "build_f": 14,
+   "hold_f": 91,
+   "exit_f": 0,
+   "held_frame_at": 77.574
+  },
+  {
+   "id": "formula",
+   "archetype": "F",
+   "shot": "B1-10",
+   "start": 80.004,
+   "formed": 80.271,
+   "end": 85.624,
+   "cut": true,
+   "words": 9,
+   "build_f": 8,
+   "hold_f": 62,
+   "exit_f": 0,
+   "held_frame_at": 85.574
+  },
+  {
+   "id": "cost",
+   "archetype": "D",
+   "shot": "B1-11",
+   "start": 86.064,
+   "formed": 86.39699999999999,
+   "end": 94.191,
+   "cut": true,
+   "words": 12,
+   "build_f": 10,
+   "hold_f": 51,
+   "exit_f": 0,
+   "held_frame_at": 94.141
+  },
+  {
+   "id": "paid",
+   "archetype": "F",
+   "shot": "B1-12",
+   "start": 94.831,
+   "formed": 95.098,
+   "end": 100.591,
+   "cut": true,
+   "words": 4,
+   "build_f": 8,
+   "hold_f": 51,
+   "exit_f": 0,
+   "held_frame_at": 100.541
+  },
+  {
+   "id": "ways",
+   "archetype": "D",
+   "shot": "B1-14→B1-15",
+   "start": 109.191,
+   "formed": 109.524,
+   "end": 118.81400000000001,
+   "cut": false,
+   "words": 15,
+   "build_f": 10,
+   "hold_f": 80,
+   "exit_f": 7,
+   "held_frame_at": 118.531
+  },
+  {
+   "id": "ask",
+   "archetype": "D",
+   "shot": "B1-15→B1-16",
+   "start": 118.931,
+   "formed": 119.264,
+   "end": 134.091,
+   "cut": true,
+   "words": 36,
+   "build_f": 10,
+   "hold_f": 90,
+   "exit_f": 0,
+   "held_frame_at": 134.041
+  },
+  {
+   "id": "two",
+   "archetype": "G",
+   "shot": "B1-17",
+   "start": 135.811,
+   "formed": 136.178,
+   "end": 140.324,
+   "cut": true,
+   "words": 7,
+   "build_f": 11,
+   "hold_f": 47,
+   "exit_f": 0,
+   "held_frame_at": 140.274
+  },
+  {
+   "id": "end",
+   "archetype": "END",
+   "shot": "[END]",
+   "start": 146.257,
+   "formed": 159.795,
+   "end": 164.257,
+   "cut": true,
+   "words": 11,
+   "build_f": 406,
+   "hold_f": 134,
+   "exit_f": 0,
+   "held_frame_at": 164.207
+  }
+ ],
+ "contact_at": [
+  2.917,
+  7.75,
+  21.707,
+  36.407,
+  77.574,
+  85.574,
+  94.141,
+  100.541,
+  118.531,
+  134.041,
+  140.274,
+  164.207
+ ]
+}
