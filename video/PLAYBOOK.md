@@ -210,6 +210,36 @@ identifiers in commits, PR bodies or code comments.
 | Vertical 9:16 | 1080×1920, 162.667 s, 175 MB | `1c682e5` |
 | Meta ad 4:5 | 1080×1350, 50.816 s, 46.8 MB | `5054f42` |
 
+## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
+
+`video/b1-v7/` is the B1 master rebuilt on `../MOTION-SYSTEM.md`, and the reference for every build that
+follows the spec. `b1-rate-you-were-quoted/` (v6) stays as the reference for the glass look, the vertical
+cut and the Meta ad, which still read its assets.
+
+What is different, in one paragraph: three camera angles cut from the 4K takes (`data/angles.json`,
+`sandbox.sh`), the seven overlay archetypes and nothing else (B label, C card fan, D spec table, E floating
+document, F arrow relation, G status pills), the BUILD → HOLD → EXIT law asserted in `build.mjs` (`law()`),
+flat translucent panels with real alpha instead of glass sampled from the footage, a title that grows from
+the centre of the frame on "NeroPay", and effects 2.5 dB under v6. Same words, same cuts (`cut.mjs`), same
+captions, same outro shape.
+
+Run it the same way — `sandbox.sh` through `sandbox_exec` with `background:true`, `FREESOUND_TOKEN` in the
+environment, `QUALITY=draft` for the review pass — and it leaves `review/overlays-contact.png` (every
+overlay's last held frame at full size, §7) and `review/frames-contact.jpg` (a frame every six seconds)
+beside the render.
+
+**One interpretation to confirm with Faisal.** The spec's hold formula assumes a graphic that appears whole.
+For a table or a statement that prints row by row as she reads it, the build checks the whole graphic
+against its total time on screen and the last row against the time left after it (LESSONS #45). If Faisal
+wants the literal reading — every graphic fully formed, then max(1.5 s, words × 0.4) of stillness — the
+statement and the two long tables have to be split into smaller graphics on more shots.
+
+**Angles, honestly.** SIDE and CLOSE here are windows on the one FRONT take, not a second camera: the wall
+does not recede in perspective the way the reference frames show. Real SIDE and CLOSE takes need
+`00 start frames/` and a generation run with the credit gate (MOTION-SYSTEM.md §1, §7).
+
+The ledger row for the v7 master is added when its render lands.
+
 Ad structure, as an example of trimming an explainer to an ad: hook on footage (0–7 s) → one rate
 covers one card type (7–12 s) → "their card. your rate." (12–16 s) → **audio-only, formula diagram**
 (16–24 s) → **audio-only, result counting to an illustrative 1.09%** (24–32 s) → quoted vs paying,

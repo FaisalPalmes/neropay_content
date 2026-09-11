@@ -1,9 +1,46 @@
 # Video edit faults log — read before every edit, add to it after every review
 
 Each entry: what went wrong, why, the rule that stops it happening again. Newest at the top.
-The B1 build (`b1-rate-you-were-quoted/build.mjs`) already applies every rule below.
+The B1 builds (`b1-v7/build.mjs` on MOTION-SYSTEM.md, `b1-rate-you-were-quoted/build.mjs` for the glass look, the vertical and the ad) already apply every rule below.
 **Read `PLAYBOOK.md` beside this file first** — it carries the brief (what Faisal wants, the three
 delivery formats, the sandbox pipeline, what a finished cut looks like); this file is the fault log.
+
+## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
+
+43. **An angle is a crop decided at build time.** Every take is the one locked-off FRONT framing, so `data/angles.json`
+    names FRONT / SIDE / CLOSE per shot and `sandbox.sh` cuts that window from the 3840×2160 source before anything
+    else (SIDE: 2560×1440 from the left edge, Ava in the right third; CLOSE: 2259×1271 on her face). The clip on disk
+    *is* the angle; the in-page camera only breathes ±3 %. `build.mjs` refuses a cut between two shots on the identical
+    framing (§1 step 5); where two adjacent shots need the same angle, the second uses the looser variant (SIDE2,
+    CLOSE2, FRONT2) so the cut is a punch, not a jump.
+44. **The hold law is asserted, and it changes the cut, not the graphic.** `law()` in `build.mjs` computes build / hold /
+    exit per overlay and refuses to write `index.html` if hold < max(1.5 s, words × 0.4). Where a take had the air,
+    `edit.json` `tail` keeps more of it after the last word (B1-01 1.0 s, B1-04 0.6, B1-10 0.8, B1-11 0.7, B1-12 1.15,
+    B1-17 1.0); nothing is stretched. Where it didn't, the graphic lost words (the title lost its episode pill, the
+    end card its footnote) or landed earlier.
+45. **A graphic that grows on her words is checked twice.** The spec's formula assumes a graphic that appears whole. For
+    a table or a statement that prints row by row as she reads it, `law()` checks the whole graphic against its total
+    time on screen and the last thing to land against the time left after it — the words she has already said have
+    already been read. This is an interpretation, written down here and in PLAYBOOK §9, for Faisal to confirm.
+46. **Panels are a flat fill, not glass.** `rgba(16,18,22,.62)` with a 1 px hairline at 22 % white and
+    `filter: drop-shadow(0 24px 48px rgba(0,0,0,.45))` — no blurred copy of the footage, no `backdrop-filter`. The
+    drop-shadow filter is safe because nothing above it is `preserve-3d` (#32 still holds for anything that is).
+47. **Overlay class names are namespaced.** A card caption called `.cap` inherited the captions' `.cap` rule
+    (`width:1920px; bottom:118px; display:flex`) and flew 900 px to the right. The check's `escaped_container` info
+    is the tell — read the info findings, not only the errors.
+48. **Mask the element that carries the hidden state.** `.rel b` starts hidden, so `maskOn('#formula .t2 b')`, not the
+    span around it — otherwise the right-hand term of the relation never appears and nothing errors.
+49. **Rows with fewer cells get explicit grid columns.** Auto-placement put the statement's fee amounts in column two;
+    `.fee .lab{grid-column:1} .fee .how{grid-column:2/5} .fee .amt{grid-column:5}` puts them where the card lines are.
+50. **A size change under a hard cut is invisible.** The eight-question panel is four rows tall through B1-15 and
+    takes its full height with a `tl.set` at the first frame of B1-16 — the cut is already a jump, so the panel
+    growing on the same frame reads as nothing at all. Use this instead of an empty slab holding space.
+51. **The title comes from the middle of the frame.** `#title` is the full stage from the first frame; a `clipPath`
+    inset tween takes it from a 460×120 window at the centre to the whole frame over 22 frames on "NeroPay". Everything
+    inside is laid out in its final position; the kicker sits at the centre while the window is small and rises to its
+    slot as the window opens, so nothing has to be re-parented or scaled.
+52. **Effects sit 2.5 dB under v6 (`SFX_GAIN = 0.75`), the music beds unchanged.** Faisal's note on v6 was that the
+    effects were too loud; the base levels stay at v6 parity so the gain is the only difference and can be tuned once.
 
 ## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
 
