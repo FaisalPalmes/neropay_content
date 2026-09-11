@@ -254,4 +254,5 @@ does not recede in perspective the way the reference frames show. Real SIDE and 
 
 | Cut | Spec | Commit |
 |---|---|---|
-| Master 16:9 v7 | 1920×1080, 164.467 s, −14 LUFS, 213 MB, check clean on the real footage | `65cf0ca` |
+| Master 16:9 v7 | 1920×1080, 164.467 s, −14 LUFS, 213 MB, check clean on the real footage — superseded: one flat frame at the title cut, 0.5 s tail | `65cf0ca` |
+| Master 16:9 v7.1 | 1920×1080, 164.433 s (4,933 frames), −14 LUFS, 213 MB, check clean on the real footage, frame scan 0 spikes | `23c4784` |
