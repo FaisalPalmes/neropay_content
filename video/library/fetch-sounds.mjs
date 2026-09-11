@@ -28,6 +28,25 @@ const { sounds } = JSON.parse(fs.readFileSync(path.join(LIB, 'sounds.json'), 'ut
 const cache = path.join(LIB, 'freesound'); fs.mkdirSync(cache, { recursive: true }); fs.mkdirSync(into, { recursive: true });
 const out = path.resolve(into);
 
+/* Freesound answers 503 with an HTML page under load, a few requests out of every ten some afternoons (11 Sep 2026):
+   every request retries with a growing pause rather than killing the run on the first bad answer */
+const pause = (ms) => new Promise((r) => setTimeout(r, ms));
+async function retrying(url, want) {
+  let last;
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    try {
+      const res = await fetch(url, { headers: { 'User-Agent': 'neropay-content/1.0 (fetch-sounds.mjs)' } });
+      if (res.ok) return await want(res);
+      last = new Error('HTTP ' + res.status + ' for ' + url);
+    } catch (e) { last = e; }
+    console.log('  freesound: ' + last.message.slice(0, 80) + ' — retry ' + attempt + ' in ' + attempt * 4 + 's');
+    await pause(attempt * 4000);
+  }
+  throw last;
+}
+const getJson = (url) => retrying(url, async (res) => { const t = await res.text(); try { return JSON.parse(t); } catch { throw new Error('not JSON: ' + t.slice(0, 40)); } });
+const getBuf = (url) => retrying(url, async (res) => Buffer.from(await res.arrayBuffer()));
+
 for (const [role, s] of Object.entries(sounds)) {
   const target = path.join(out, role + '.m4a');
   if (placeholder) {
@@ -42,10 +61,10 @@ for (const [role, s] of Object.entries(sounds)) {
   const raw = path.join(cache, s.id + '.mp3');
   if (!fs.existsSync(raw)) {
     const token = process.env.FREESOUND_TOKEN; if (!token) { console.error('FREESOUND_TOKEN missing'); process.exit(1); }
-    const meta = await (await fetch(`https://freesound.org/apiv2/sounds/${s.id}/?fields=previews,license,name,username&token=${token}`)).json();
+    const meta = await getJson(`https://freesound.org/apiv2/sounds/${s.id}/?fields=previews,license,name,username&token=${token}`);
     if (!meta.previews) { console.error('freesound', s.id, JSON.stringify(meta).slice(0, 200)); process.exit(1); }
     if (!/publicdomain\/zero/.test(meta.license)) { console.error(role, s.id, 'is not CC0:', meta.license); process.exit(1); }
-    fs.writeFileSync(raw, Buffer.from(await (await fetch(meta.previews['preview-hq-mp3'])).arrayBuffer()));
+    fs.writeFileSync(raw, await getBuf(meta.previews['preview-hq-mp3']));
   }
   const gain = Math.pow(10, (-3 - s.peak) / 20);
   execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', raw, '-af', `volume=${gain.toFixed(3)}`, '-ar', '48000', '-ac', '2', '-c:a', 'aac', '-b:a', '192k', '-f', 'mp4', target]);
