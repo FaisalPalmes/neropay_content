@@ -24,14 +24,17 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     phrase ("…Explained by NeroPay.") in white would sit on the white card as it opens. Its `data-duration` is
     capped at `TT.expandAt` in the caption loop.
 
-63. **Every segment on the frame grid, or every cut after the title lags a frame.** The v8 scan found one spike at
-    39.7 s; the frame showed B1-05's picture with B1-06's caption, camera and card-fade already applied. The title
-    card was six beats — 131.7 frames — so every start after it sat 0.72 of a frame past the grid; the renderer floors
-    each boundary, and a clip whose start is floored begins with a media time below zero, so its picture arrives a
-    frame after everything timed to the same instant. v7.1 had the same lag at every cut and the scan never saw it,
-    because nothing else changed on those frames. Rule: `build.mjs` counts the timeline in frames (`tf`), rounds every
-    clip and card to whole frames, and writes times a hair *above* k/FPS (`gridUp`) so the floor lands on k, never
-    k-1 — `r3(k/30)` alone rounds .x33 down and loses a frame. The under-card clip (#55) stays as belt and braces.
+63. **Every segment on the frame grid, written as the exact double.** The v8 scan found one spike at 39.7 s: the
+    frame showed B1-05's picture with B1-06's caption, camera and card-fade already applied. The title card was six
+    beats — 131.7 frames — so every start after it sat 0.72 of a frame past the grid. The renderer floors each start
+    to a frame for visibility but clocks the clip's media from the raw value, so a clip whose start is not exactly
+    k/FPS begins with a media time below zero and holds the previous shot's last picture for one frame while
+    everything else has switched. Rounding the start *up* to three decimals (a first fix) moved the same lag to the
+    next cut; rounding down makes the caption a frame early instead. v7.1 had the lag at every cut and the scan never
+    saw it, because nothing else changed on those frames. Rule: `build.mjs` counts the timeline in frames (`tf`),
+    rounds every clip and card to whole frames, and writes each start as `k / FPS` with no rounding at all —
+    `String(k / 30)` round-trips the double exactly, so the floor lands on k and the media time is exactly zero.
+    Placeholders can't catch this (every placeholder frame looks alike); only the real-footage scan does.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 
