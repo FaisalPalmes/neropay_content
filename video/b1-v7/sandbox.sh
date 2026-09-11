@@ -3,7 +3,7 @@
 # Run it through sandbox_exec with background:true (a foreground call loses the sandbox ~10 s after it returns):
 #   FREESOUND_TOKEN=... bash sandbox.sh > /home/user/hf/boot.log 2>&1
 # Reads data/sources.json for the clip → CDN mapping (the same files as Drive "01 Clips in", byte for byte)
-# and data/angles.json for the crop per shot. Needs curl, ffmpeg, node 20+, git, npm, ImageMagick (montage).
+# and data/angles.json for the crop per shot. Needs curl, ffmpeg, node 20+, git, npm.
 set -euo pipefail
 ROOT=${ROOT:-/home/user/hf}
 REPO=https://github.com/faisalpalmes/neropay_content
@@ -68,7 +68,10 @@ ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=
 # 5. the review sheets (MOTION-SYSTEM.md §7): every overlay's last held frame at full size, and a frame every 6 s
 AT=$(node -e 'const m=require("./review/manifest.json");console.log(m.contact_at.map(x=>Math.round(x*100)/100).join(","))')
 mkdir -p review/held && for t in ${AT//,/ }; do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/held/$(printf '%07.2f' "$t").png"; done
-montage review/held/*.png -tile 3x -geometry 1920x1080+8+8 -background '#141416' review/overlays-contact.png
+# (ffmpeg's tile filter, not ImageMagick's montage — montage aborts on twelve full-size PNGs in the sandbox)
+N=$(ls review/held/*.png | wc -l); ROWS=$(( (N + 2) / 3 ))
+ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/held/*.png' -vf "tile=3x${ROWS}:padding=8:color=0x141416" -frames:v 1 -q:v 2 review/overlays-contact.jpg
 mkdir -p review/every6 && for t in $(seq 1 6 163); do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v7-final.mp4 -frames:v 1 "review/every6/$(printf '%03d' "$t").png"; done
-montage review/every6/*.png -tile 6x -geometry 480x270+4+4 -background '#141416' review/frames-contact.jpg
+N=$(ls review/every6/*.png | wc -l); ROWS=$(( (N + 5) / 6 ))
+ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/every6/*.png' -vf "scale=480:270,tile=6x${ROWS}:padding=4:color=0x141416" -frames:v 1 -q:v 4 review/frames-contact.jpg
 echo BOOT_DONE
