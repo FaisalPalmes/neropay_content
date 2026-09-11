@@ -82,13 +82,15 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     when it can and prefers `/usr/bin/ffmpeg`; a build or scan run by hand needs `HYPERFRAMES_FFMPEG_PATH=/usr/bin/ffmpeg`
     too, and a truncated test cut needs `HF_VIDEO_COVERAGE_THRESHOLD=0` or the coverage gate aborts on the clips outside it.
 
-58. **The box lives fifteen minutes from the background call that started the work, and polling does not stretch
-    it.** The re-render died nineteen minutes in — box gone, log gone — on a single-worker high render that needs about
-    seventeen minutes of capture after five minutes of setup. Rule: two background calls. `SETUP_ONLY=1 sandbox.sh`
-    downloads, proxies, fetches sounds, cuts, builds and checks; the second call runs the same script without it, which
-    skips everything already on disk and renders with `WORKERS=3 --no-low-memory-mode` (the box has eight cores and
-    seven gigabytes; the low-memory profile pins it to one capture worker at ~5 fps). The upload `curl` stays in the
-    render call. Budget each call under twelve minutes and it finishes with time to spare.
+58. **The box dies of silence, not of the lease.** The re-render vanished nineteen minutes in — box gone, log gone —
+    and the pattern across every loss is the same: a gap of eight minutes or more with no call at all (LESSONS #53's
+    `sleep 840` renewals were exactly that gap). The run that survived twenty-three minutes was polled every minute or
+    two. Rule: while a background job runs, call the box every two to three minutes with a light foreground poll
+    (`sleep 50; grep framesCompleted`), and never leave it alone longer than that. Two other things learned the same
+    hour: `SETUP_ONLY=1 sandbox.sh` (clips, proxies, sounds, cut, build, check) in one call and the render in the next
+    keeps each call short and lets the render start from a checked build; and more capture workers don't help — the
+    parallel path stores every frame on disk first (41 GB for 4,933 frames; the box has 18 GB free), so it is one
+    worker and the streaming encoder at ~5 fps, seventeen minutes for B1, and the polling is what carries it.
 
 ## 10 Sep 2026 — the Meta ad cut of B1 (4:5, 50 s)
 
