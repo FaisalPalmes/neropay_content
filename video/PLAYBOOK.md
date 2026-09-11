@@ -290,7 +290,7 @@ What changed:
 | Cut | Spec | Commit |
 |---|---|---|
 | Master 16:9 v8.2 | superseded by v8.3 — always pushed in | `837253b` |
-| Master 16:9 v8.3 | (filled in on delivery) | `e00860b` |
+| Master 16:9 v8.3 | (filled in on delivery) | `bde751c` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
