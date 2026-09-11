@@ -24,6 +24,15 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     phrase ("…Explained by NeroPay.") in white would sit on the white card as it opens. Its `data-duration` is
     capped at `TT.expandAt` in the caption loop.
 
+63. **Every segment on the frame grid, or every cut after the title lags a frame.** The v8 scan found one spike at
+    39.7 s; the frame showed B1-05's picture with B1-06's caption, camera and card-fade already applied. The title
+    card was six beats — 131.7 frames — so every start after it sat 0.72 of a frame past the grid; the renderer floors
+    each boundary, and a clip whose start is floored begins with a media time below zero, so its picture arrives a
+    frame after everything timed to the same instant. v7.1 had the same lag at every cut and the scan never saw it,
+    because nothing else changed on those frames. Rule: `build.mjs` counts the timeline in frames (`tf`), rounds every
+    clip and card to whole frames, and writes times a hair *above* k/FPS (`gridUp`) so the floor lands on k, never
+    k-1 — `r3(k/30)` alone rounds .x33 down and loses a frame. The under-card clip (#55) stays as belt and braces.
+
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 
 43. **An angle is a crop decided at build time.** Every take is the one locked-off FRONT framing, so `data/angles.json`

@@ -232,7 +232,8 @@ frame-grid end and the 2.5 dB effects gain all carry over — with v7's grow-fro
 light theme and an end card in the same style. The v6 `cut.mjs` blurred copies are back (the glass needs
 them). The chip is a size up on v6 (144 px, 560×250) because Faisal asked for the 0.5% large.
 
-Run it exactly as §9 says (two calls, lease renewals, the frame scan). `review/manifest.json` lists every
+Run it exactly as §9 says (two calls, lease renewals, the frame scan). Every segment is a whole number of frames
+and every start sits on the grid (LESSONS #63) — keep it that way when a cut or a card length changes. `review/manifest.json` lists every
 panel's last held moment plus the fans, the title and the end card for the contact sheet.
 
 **The lean, so it is never wrong again:** `glass()` takes `lean`; left-column panels (`LX`) lean `+7` or
