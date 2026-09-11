@@ -306,7 +306,7 @@ const AVA = (id) => (V ? 'C' : cropFor(id).ava);
 const colX = (id, xRight, w) => (AVA(id) === 'R' ? W - xRight - w : xRight);
 const colLean = (id, right) => (AVA(id) === 'R' ? Math.abs(right) : -Math.abs(right));
 const FACE = (id) => cropFor(id).face;   // her face on the 1920×1080 proxy
-const PLATE = V ? { x: 730, y: 1130 } : { x: FACE('B1-01').x + 300, y: FACE('B1-01').y + 280 };   // name plate, off her shoulder
+const PLATE = V ? { x: 730, y: 1130 } : { x: FACE('B1-01').x + 350, y: FACE('B1-01').y + 100 };   // name plate beside her neck, clear of her hair and under the chip
 const LX = V ? 80 : 50;               // left column — where she points
 const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under the app chrome
 
