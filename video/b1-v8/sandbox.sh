@@ -49,7 +49,9 @@ mkdir -p "repo/$PROJECT/assets/clips" && rm -f "repo/$PROJECT/assets/clips/"*.mp
 cd "repo/$PROJECT"
 export HYPERFRAMES_SKIP_SKILLS=1
 HF="$ROOT/repo/video/node_modules/.bin/hyperframes"
-node ../library/fetch-sounds.mjs --into assets/sfx        # needs FREESOUND_TOKEN in the environment
+# the sounds: fetched from Freesound (needs FREESOUND_TOKEN) unless the fourteen files are already in place — a zip of a
+# local assets/sfx dropped in before the run does, and needs no token
+[ "$(ls assets/sfx/*.m4a 2>/dev/null | wc -l)" -ge 14 ] || node ../library/fetch-sounds.mjs --into assets/sfx
 node cut.mjs | tail -3                                      # real cuts from the proxies, with faded audio joins
 node build.mjs | tail -14
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true
