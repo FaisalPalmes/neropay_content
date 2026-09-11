@@ -861,7 +861,7 @@ b.y,.y{color:${Y}}
 .card .crim{position:absolute;inset:0;display:block;border-radius:26px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(0,0,0,.12)}
 .card.k3 .crim{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(0,0,0,.08)}
 /* two big lines of type beside the cards, no glass */
-.bigline{position:absolute;left:1150px;top:500px;width:740px;display:flex;flex-direction:column;gap:6px}
+.bigline{position:absolute;left:1150px;top:560px;width:740px;display:flex;flex-direction:column;gap:6px}   /* v8.3: 60 px lower, clear of the forward card's shadow now the fan sits outside the camera */
 .bigline span{display:block;font-size:76px;font-weight:800;letter-spacing:-0.045em;line-height:1.05;text-shadow:0 10px 34px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.35);transform-origin:0 50%}
 .bigline .b2{color:${Y};font-style:italic}
 /* ladder: one bar per card, the named one yellow, the rest grey */
