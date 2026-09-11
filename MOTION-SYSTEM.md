@@ -44,6 +44,11 @@ a `v3:` note at the line that changed. The reference build is now `video/b1-v8/`
    push onto a panel stops at 1.12 (`ZMAX`) so the push, which is all sideways once she is on an edge, never
    carries her out of frame. §1's "SIDE puts the presenter in the right third" is superseded: SIDE is the
    1.5× window, and which third she is in is decided per shot by the panel.
+   *v8.3, later the same day: the crop is gone too. Faisal's preview note — "I don't want it always zoomed in with the
+   staff on the left or right … don't zoom in unless there's an overlay" — makes every proxy the whole FRONT frame
+   and moves the side framing into the virtual camera: flat when nothing is up, a 1.42× push to her side only while a
+   panel is on screen, overlays outside the camera so they keep their size. The three angles of §1 are now a camera
+   behaviour, not a cut.*
 6. **Unchanged:** the three angles (§1), the words-first timing (v8 times every piece to a word, as v6 did;
    the §3 law stays the target and its report is still worth running), the alpha compositing principle (§4 —
    the graphics are authored inside the HyperFrames composition, so alpha is native), the rails (§9), and

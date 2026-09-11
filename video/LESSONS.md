@@ -55,6 +55,14 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     `review/report.txt` that is uploaded alongside the video in the same background command, so the gate can be
     read from the CDN after the box has gone. And the lease renewals are only as good as the session driving them:
     if the session can go idle, the run has to be self-sufficient.
+67. **A long-form talking head is the clip as shot; the camera moves only for a graphic.** The v8.2 preview was pushed
+    in on her for the whole video because the side framing was baked into every proxy. Faisal: "don't zoom in unless
+    there's an overlay that needs to be added." The push is now a camera event compiled from the overlay windows, so
+    it exists exactly where a panel exists. Two consequences to remember: overlays must live outside the camera or
+    they scale with the push (the `#ovl` layer), and a glass backing that is supposed to be the footage behind the
+    panel has to follow the camera or the glass lies (`applyCam` writes the same transform to every `.glass .bg`).
+    And because every cut is now between two takes of one framing, consecutive clips alternate a 6–8% step or the
+    cut jumps — the angle variants used to do that job.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 

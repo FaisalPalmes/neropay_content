@@ -257,6 +257,41 @@ line-height of 1). Both wordmark clips are `inset(-20% … -30% …)` now.
 | Master 16:9 v8 | superseded by v8.2 — the panels sat on her face | `2b9b196` |
 | Master 16:9 v8.2 | 1920×1080, 164.5 s (4,934 frames), −14 LUFS, 202 MB, check clean on the real footage, frame scan 0 spikes (re-run from the CDN copy, md5 `07897a1e…`) | `837253b` |
 
+## 11. B1 v8.3 — the clip as shot unless an overlay is up (11 Sep 2026)
+
+Faisal's third review, from the v8.2 preview: "I don't want it to always be zoomed in with the staff on the left or
+right … think of this as a long-form YouTube video … don't zoom in unless there's an overlay that needs to be added.
+If there's no overlay, don't zoom in." Plus: the strike "goes in the middle of 0.5", and the intro and outro text is
+animated. He keeps the glass, the bars, the title and end card.
+
+What changed:
+
+- **Every proxy is the whole FRONT frame** (`data/angles.json`: every `angle` is FRONT; `ava` is kept as the side the
+  camera sends her to). No SIDE or CLOSE crop is cut any more.
+- **The camera is compiled from the overlay windows**, not hand-chained per section (`compileCamera` in `build.mjs`,
+  `camWindow()` registered by `glass()`, the fans and the follow mark). Flat — the clip as shot — whenever nothing is
+  up; a 1.42× push with a 384 px slide while a panel, fan or mark is on screen, so her face sits 30% in from the
+  edge on her side and the overlay has the other column. A window that starts within 0.7 s of the cut is cut into;
+  one that ends within 0.5 s of the cut holds to the cut; otherwise 0.9 s in, 0.8 s out around the overlay's fade.
+- **Cuts never repeat a framing.** Every cut in B1 is between takes of one locked-off camera, so identical framing
+  either side is a jump cut. Consecutive clips alternate: flat clips sit at 1.0 or 1.06 and do not move; pushed clips
+  creep 4% over the window, in on even clips and out on odd, with an 8% step at the cut. Say this to Faisal if he
+  asks why a static shot is 6% tighter than its neighbour: it is the cut hider, not a zoom.
+- **The overlays sit outside the camera** (`#ovl`, after `#world`): panels, card fans, the big lines and the follow
+  mark keep their screen size while the footage pushes. Each glass panel's backing (`.glass .bg`) is given the same
+  transform as the world by `applyCam`, so the footage seen through the glass still lines up. The name plate is the
+  one overlay left in the world (`inWorld: true`): it rides with her.
+- **The strike** is a child of the `0.5%` span (`left:-4%; width:108%; top:54%`), pivots on its own centre at −6°, and
+  is drawn left to right by its clip-path, so it passes through the middle of the figure whatever the font metrics.
+- **The stage text**: the wordmark settles (scaleX 1.035→1 with a 14 px rise) as it wipes — a transform, because
+  `hyperframes check` rejects a letter-spacing tween as motion that snaps to device pixels — and the kicker, episode
+  line, sub and concession rise further.
+
+| Cut | Spec | Commit |
+|---|---|---|
+| Master 16:9 v8.2 | superseded by v8.3 — always pushed in | `837253b` |
+| Master 16:9 v8.3 | (filled in on delivery) | `e00860b` |
+
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
 `video/b1-v7/` is the B1 master rebuilt on `../MOTION-SYSTEM.md`, and the reference for every build that
