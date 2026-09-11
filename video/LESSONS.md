@@ -74,7 +74,7 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     163.958 s root and the last one had nothing on it. Rule: a sound that runs past the composition is cut to length
     with ffmpeg at build time (`role-fit<start>.m4a`, 0.3 s fade) and the page references the cut copy; the end card's
     duration is chosen so the composition ends on the frame grid; and the end stage overhangs the root by three frames
-    so the flooring can't strip its last frame. Root and file are now the same 4,918 frames.
+    so the flooring can't strip its last frame. Root and file are now the same length, and the frame scan proves it.
 57. **Local renders were failing for a reason that had nothing to do with the composition.** The session hook pointed
     `HYPERFRAMES_FFMPEG_PATH` at Remotion's bundled ffmpeg, which is built with `--disable-filters`; HyperFrames' frame
     extraction (`-vf fps=30` to `frame_%05d.jpg`) dies in 100 ms with "VIDEO_SOURCE_UNRENDERABLE; ffmpeg_failed" and no

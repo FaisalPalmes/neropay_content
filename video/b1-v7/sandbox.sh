@@ -2,6 +2,9 @@
 # Rebuild the B1 v7 master from a clean Higgsfield sandbox and render it.
 # Run it through sandbox_exec with background:true (a foreground call loses the sandbox ~10 s after it returns):
 #   FREESOUND_TOKEN=... bash sandbox.sh > /home/user/hf/boot.log 2>&1
+# A background call holds the box for fifteen minutes and the whole run takes longer than that (LESSONS #58), so run it
+# twice: first with SETUP_ONLY=1 (clips, proxies, sounds, cut, build, check — about six minutes), then again without,
+# which skips what is already there and goes straight to the render, with WORKERS=2 to keep the render inside the lease.
 # Reads data/sources.json for the clip → CDN mapping (the same files as Drive "01 Clips in", byte for byte)
 # and data/angles.json for the crop per shot. Needs curl, ffmpeg, node 20+, git, npm.
 set -euo pipefail
@@ -61,8 +64,10 @@ node cut.mjs | tail -3                                      # real cuts from the
 node build.mjs | tail -14
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"layout err="+j.layout.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json
+if [ -n "${SETUP_ONLY:-}" ]; then echo SETUP_DONE; exit 0; fi
 mkdir -p renders review
-"$HF" render -q "${QUALITY:-high}" -o renders/b1-v7-high.mp4 --quiet
+# WORKERS=2 overrides the low-memory profile that pins the sandbox to one capture worker (~5 fps at 1080p)
+"$HF" render -q "${QUALITY:-high}" -o renders/b1-v7-high.mp4 --quiet ${WORKERS:+-w "$WORKERS" --no-low-memory-mode}
 ffmpeg -y -v error -i renders/b1-v7-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k renders/b1-v7-final.mp4
 ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 renders/b1-v7-final.mp4
 # 5. the review sheets (MOTION-SYSTEM.md §7): every overlay's last held frame at full size, and a frame every 6 s
