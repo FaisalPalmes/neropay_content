@@ -1,4 +1,4 @@
-# NeroPay video — motion graphics system and run brief (v2)
+# NeroPay video — motion graphics system and run brief (v3)
 
 Paste this whole file as the first message of a fresh Claude Code session, and attach the seven
 reference screenshots with it. Also commit it to the repo as `MOTION-SYSTEM.md` — it is the
@@ -6,7 +6,42 @@ permanent spec for every video from here on, not a one-off instruction.
 
 ---
 
-## WHAT HAS CHANGED SINCE THE LAST RUN
+## WHAT CHANGED ON 11 SEP 2026 — v3, Faisal's review of the v7.1 master
+
+Faisal reviewed the first build on this spec (`video/b1-v7/`) and reversed the look, keeping the rest.
+This section is the ruling; where it contradicts §2, §4, §5 or §8 below, it wins, and those sections carry
+a `v3:` note at the line that changed. The reference build is now `video/b1-v8/`.
+
+1. **The overlays are the liquid-glass system again, not the seven flat archetypes.** Faisal: "I want the
+   previous liquid glass look, the animated bar charts for stats, the nice large 0.5% that gets a line
+   through it." The glass is the v6 system (`video/b1-rate-you-were-quoted/build.mjs`, `glass()`): every
+   panel carries its own blurred copy of the footage lined up with the frame under it and clipped by its
+   rounded box, a frost tint, one sheen pass on the cue, a polished rim, a soft low shadow. It arrives flat
+   and empty, leans into 3D on its cue, its rows and bars arrive on her words, and it leaves as one fade
+   with the lean coming off. Stats are animated: bars scale up on the word, figures count up, the bar she
+   has moved on from turns grey. The hook is the large "0.5%?" chip with the yellow line drawn through it on
+   "not". No dark flat panels, no hairline boxes, no numbered spec tables.
+2. **The lean goes toward the centre of the frame.** A panel in the left column leans `rotationY: +7`
+   (its right edge, nearest her, comes forward); a panel in the right column leans `-6` or `-7`. v7 turned
+   the statement the other way (`rotateY(-10deg)` on a left-column panel) and Faisal called it "tilted the
+   wrong way" — the far edge came forward. The §4 line "rotateY(-14deg) … tune against the SIDE frame" is
+   superseded by this rule.
+3. **The title keeps v7's animation on a light theme.** A small white slab at the centre on "Explained",
+   the whole frame on "NeroPay". Near-white ground (`#fbfaf7`), three static, heavily blurred yellow blooms
+   behind it with a faint white frost over them (blurred glass), black type. The wordmark is **NeroPay** in
+   black — not "Pay" in yellow — with a yellow full stop that pops in (ten frames, `back.out(2.4)`) as the
+   word finishes and takes one shallow breath. Kicker in `#6d6c68`, episode line in `#4d4c48` italic.
+4. **The end card is the same stage.** Same ground, blooms and full stop: NeroPay. → Subscribe for more →
+   the six generic lines as white frosted tiles, one per two beats → NeroPay. + the concession line. No
+   charcoal, no grid.
+5. **Unchanged:** the three angles (§1), the words-first timing (v8 times every piece to a word, as v6 did;
+   the §3 law stays the target and its report is still worth running), the alpha compositing principle (§4 —
+   the graphics are authored inside the HyperFrames composition, so alpha is native), the rails (§9), and
+   Faisal's 9 Sep decision that the AI disclosure is made at upload, not in the frame.
+
+---
+
+## WHAT HAS CHANGED SINCE THE LAST RUN (v2, 10 Sep 2026)
 
 Four things. Read all four before you touch anything, because the third one invalidates a rule
 that was in the previous briefs.
@@ -82,6 +117,10 @@ amount of editing fixes it. Say so and stop rather than generating twenty clips 
 Seven archetypes, each taken from one of the attached references. Use the closest one. Do not
 invent an eighth without asking.
 
+*v3: retired as the look. The shapes are still a useful vocabulary for what a graphic is doing (a
+comparison, a document, a relation, a list) but every one of them is drawn as liquid glass now — see the
+v3 section at the top and `video/b1-v8/build.mjs`.*
+
 ### What these references have in common — this is the vibe, get it right
 - **One accent colour on otherwise white or grey type.** Never two accents in one graphic.
 - **Bold, all-caps, tightly tracked sans.** Labels are small and confident, not shouty.
@@ -90,6 +129,8 @@ invent an eighth without asking.
 - **Nothing crosses the face.** Ever. The graphics occupy negative space, which is what the SIDE
   angle exists to provide.
 - **Restraint.** One idea per graphic. No boxes inside boxes, no gradients, no glow, no bounce.
+  *v3: the glass itself is a gradient tint, a sheen and a rim, and a bar landing may overshoot a few
+  percent (`back.out`) — those are the look Faisal chose. "One idea per graphic" still holds.*
 
 ### The seven
 
@@ -232,6 +273,9 @@ ffmpeg -y -i presenter.mp4 -framerate 25 -i ov/%05d.png \
 - **3D tilt (D, E):** `transform: perspective(1400px) rotateY(-14deg) rotateX(3deg)`. Tune the
   rotateY against the SIDE start frame so the card sits parallel to the wall behind it. Get this
   angle right and the graphic looks like it is in the room; get it wrong and it looks pasted on.
+  *v3: superseded — the lean is toward the centre of the frame, `+7` in the left column, `-6/-7` in the
+  right, applied on the cue and taken off on the exit (`glass()`, `lean`). The v7 statement leaned the
+  other way and read as tilted wrong.*
 - **Curved text (A):** SVG `<textPath>` on a `<path>` circle. Animate with `startOffset` and a
   `stroke-dasharray` sweep on the guide arc.
 - **Frosted glass (D):** `backdrop-filter` does **not** work here — there is nothing behind it on a
@@ -239,6 +283,10 @@ ffmpeg -y -i presenter.mp4 -framerate 25 -i ov/%05d.png \
   (`rgba(16,18,22,0.62)`) with a `1px solid rgba(255,255,255,0.22)` border. Tested, and it reads
   correctly over footage. If real frosted glass is wanted later it has to be done at composite time
   by blurring the video under the panel shape — do not attempt that in this run.
+  *v3: real frosted glass is what is wanted, and it is done the way this paragraph anticipated: the panel
+  carries a blurred copy of the clip (`cut.mjs` writes one beside every cut), positioned to line up with
+  the frame and clipped by the panel, so the blur edge is the panel edge and any transform is safe. No
+  `backdrop-filter`, no flat dark fill.*
 - **Shadow (C, D, E):** `filter: drop-shadow(0 24px 48px rgba(0,0,0,0.45))`. Soft and low. This is
   what sells the graphic as an object in the room.
 
@@ -255,6 +303,11 @@ ffmpeg -y -i presenter.mp4 -framerate 25 -i ov/%05d.png \
 | Hairline | `rgba(255,255,255,0.22)`, 1px |
 | Negative pill outline | `rgba(255,255,255,0.55)` or `#D9534F` for a genuine "don't" |
 | Face | Inter / Inter Display. Labels 600–800, all caps, `letter-spacing: 0.06em`. Values 600, tracking normal to slightly tight. |
+
+*v3: the glass panels keep v6's type — Poppins 500–800, tight tracking, labels in sentence case at 60–90 %
+white, values in the yellow. The light stages: ground `#fbfaf7`, type `#141416`, kicker `#6d6c68`, episode
+line `#4d4c48`, the full stop `#F5C518`. The panel-fill and hairline rows above belong to the retired flat
+look.*
 
 **On the accent:** the references use an acid lime-yellow. Ours is a warmer gold. Keep ours — it is
 on the statements, the print, the end cards and the site, and a second yellow is a worse trade than
@@ -305,6 +358,8 @@ Two additions to the review checklist, both from this change:
 - Do not animate during the hold. Still means still. The one exception is the slow drift on
   archetype E.
 - Do not add glow, bevel, gradient fills, bounce easing or motion blur.
+  *v3: the glass has its gradient tint, sheen and rim by design; a small `back.out` overshoot on a bar or a
+  figure is allowed. Still no motion blur, still nothing glowing for its own sake.*
 - Do not build overlays on black and Screen-blend them. That rule is retired.
 - Do not attempt to matte the presenter for occlusion in this run.
 - Do not stretch a presenter clip to fit a graphic.

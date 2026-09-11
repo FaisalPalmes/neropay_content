@@ -216,6 +216,33 @@ covers one card type (7–12 s) → "their card. your rate." (12–16 s) → **a
 "more than double" (32–38 s) → "2 min" statement check (38–43 s) → end card with the concession
 (43–51 s). The music bed runs out at 38 s on purpose; the last two beats are bare voice.
 
+## 10. B1 v8 — the liquid glass back, on the angle cut (11 Sep 2026)
+
+Faisal's review of v7.1, verbatim where it matters: "this overlay is tilted the wrong way, so are other
+overlays … I do not like these new overlays. I want the previous liquid glass look, the previous animated
+bar charts for stats, nice large 0.5% text that gets a line through it … keep the intro animation but
+theme it light — white background with the yellow subtle diffused blur as if it's blurred glass, black
+text, NeroPay in black with a yellow dot at the end with a very subtle animation. Do the same for the
+outro." `MOTION-SYSTEM.md` carries this as its v3 section; `video/b1-v8/` is the build and the reference
+from here on.
+
+What v8 is: v6's `build.mjs` (the glass, the cards, the bars, the count-ups, the camera that lands on each
+panel) on v7's proxies, cut and data — so the three angles, the under-card clip, the fitted beds, the
+frame-grid end and the 2.5 dB effects gain all carry over — with v7's grow-from-the-centre title on the
+light theme and an end card in the same style. The v6 `cut.mjs` blurred copies are back (the glass needs
+them). The chip is a size up on v6 (144 px, 560×250) because Faisal asked for the 0.5% large.
+
+Run it exactly as §9 says (two calls, lease renewals, the frame scan). `review/manifest.json` lists every
+panel's last held moment plus the fans, the title and the end card for the contact sheet.
+
+**The lean, so it is never wrong again:** `glass()` takes `lean`; left-column panels (`LX`) lean `+7` or
+`+8`, right-column panels (`PX`) lean `-6` or `-7`. The near edge comes forward. v7 had the statement at
+`rotateY(-10deg)` on the left and Faisal saw it immediately.
+
+| Cut | Spec | Commit |
+|---|---|---|
+| Master 16:9 v8 | 1920×1080, 164.4 s, −14 LUFS, check clean on the real footage, frame scan 0 spikes | (pending) |
+
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
 `video/b1-v7/` is the B1 master rebuilt on `../MOTION-SYSTEM.md`, and the reference for every build that

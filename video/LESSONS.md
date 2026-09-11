@@ -5,6 +5,25 @@ The B1 builds (`b1-v7/build.mjs` on MOTION-SYSTEM.md, `b1-rate-you-were-quoted/b
 **Read `PLAYBOOK.md` beside this file first** — it carries the brief (what Faisal wants, the three
 delivery formats, the sandbox pipeline, what a finished cut looks like); this file is the fault log.
 
+## 11 Sep 2026 — v8, Faisal's review of v7.1 (the tilt, the flat look, the light cards)
+
+59. **A spec is not a review.** v7 was built to `MOTION-SYSTEM.md` to the letter and Faisal rejected the look in one
+    line: the flat dark panels, the hairline boxes, the numbered tables. What he wanted was the liquid glass he had
+    already approved four times on v6. Rule: a new spec changes the *structure* (angles, timing, the scan) unless
+    Faisal has seen the new look on real footage and said yes; the look that passed review stays until he sees a
+    reason to change it. The spec now says so in its v3 section.
+60. **The lean goes toward the centre.** He called the v7 statement "tilted the wrong way" and he was right: a
+    left-column panel at `rotateY(-10deg)` brings its far edge forward. v6's rule, now written down: left column
+    `+7`, right column `-6/-7`, the edge nearest her comes forward (`glass()`, `lean`).
+61. **The light stage.** Ground `#fbfaf7`, three static blurred blooms (`filter: blur(90px)` on a radial gradient;
+    a blurred element never moves), a faint white frost gradient over them, black type. The wordmark is the word
+    in black with a yellow full stop — `.wm .wt` masks on over fourteen frames, `.wm .dot` pops from zero with
+    `back.out(2.4)` over ten frames twelve frames later, then one 12 % breath over 1.4 s. Faisal asked for "very
+    subtle"; that is the whole animation.
+62. **The INTRO caption ends when the slab starts to grow.** Captions are drawn above the stages, so the last
+    phrase ("…Explained by NeroPay.") in white would sit on the white card as it opens. Its `data-duration` is
+    capped at `TT.expandAt` in the caption loop.
+
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 
 43. **An angle is a crop decided at build time.** Every take is the one locked-off FRONT framing, so `data/angles.json`

@@ -279,9 +279,11 @@ Rules that come from this environment, not from HyperFrames:
   delivery formats (16:9 master, 9:16 Reels/TikTok, 4:5 Meta ad), the sandbox pipeline and the review loop.
   LESSONS.md is the log of faults Faisal has caught and the rule that prevents each one — add to it after
   every review.
-- `video/b1-v7/` is the B1 master on `MOTION-SYSTEM.md` — three angles cut from the 4K takes in `sandbox.sh`, the
-  seven archetypes as components in `build.mjs`, the hold law asserted by `law()`. Copy it for any build that follows
-  the spec. `video/b1-rate-you-were-quoted/` (v6) is the reference for the glass look, the vertical cut and the ad:
+- `video/b1-v8/` is the B1 master and the reference build: the liquid-glass overlays (v6's system) on the three
+  angles cut from the 4K takes in `sandbox.sh`, with the light title and end card Faisal chose on 11 Sep 2026 —
+  `MOTION-SYSTEM.md`'s v3 section is the ruling on the look. `video/b1-v7/` is the flat-archetype build that was
+  rejected; keep it for its `law()` hold report and the frame scan, don't copy its look.
+  `video/b1-rate-you-were-quoted/` (v6) is the reference for the vertical cut and the ad:
   `build.mjs` generates `index.html` from
   `data/words.json` (Whisper timings), `data/edit.json` (trims) and the clips on disk. Copy its
   patterns — liquid-glass panels, the clamped virtual camera, per-word captions — for the next piece.
