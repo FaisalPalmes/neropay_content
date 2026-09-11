@@ -1,0 +1,4 @@
+{
+  "_": "Length of every take as delivered (ffprobe on the CDN files, 11 Sep 2026). The v6 cuts.json recorded placeholder lengths, which is how tails got planned that the takes did not have. make-placeholders.sh cuts local stand-ins to these lengths so a local build fails the timing law exactly where the sandbox would.",
+  "B1-01": 8.042, "B1-02": 6.042, "B1-03": 8.042, "B1-04": 7.042, "B1-05": 6.042, "B1-06": 9.042, "B1-07": 11.042, "B1-08": 12.042, "B1-09": 10.042, "B1-10": 8.042, "B1-11": 9.042, "B1-12": 9.042, "B1-13": 9.042, "B1-14": 8.042, "B1-15": 10.042, "B1-16": 9.042, "B1-17": 7.042, "B1-18": 6.042, "B1-INTRO": 4.042
+}

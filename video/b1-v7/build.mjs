@@ -254,15 +254,15 @@ const BAND = { y: 196 };
   html.push(`<div id="plate" class="ov plate" style="left:72px;top:72px"><i></i><div><b>Ava</b><span>NeroPay</span></div></div>`);
   maskOn('#plate', a + 0.25); fadeOut('#plate', a + 3.2);
   law('plate', { archetype: 'B', shot: 'B1-01', start: a + 0.25, formed: a + 0.25 + F(8), end: a + 3.2, words: 2 });
-  const tMaybe = findWord('B1-01', 'maybe'), tNot = findWord('B1-01', 'not');
+  const tMaybe = findWord('B1-01', 'maybe'), tNot = findWord('B1-01', 'almost');   // "almost certainly not paying that" — the line goes through the figure as the sentence turns
   html.push(`<div id="quoted" class="ov lbl" style="left:${RIGHT.x}px;top:372px"><b>Quoted 0.5%</b><i class="strike"></i></div>`);
   maskOn('#quoted', tMaybe); sfx('swish', tMaybe, 0.14);
   /* "not paying that": the label greys and a line goes through it — the same graphic, marked, not a second one */
-  js.push(`tl.fromTo("#quoted b", { color: "${Y}" }, { color: "rgba(255,255,255,0.45)", duration: ${F(6)}, ease: "none", immediateRender: false }, ${tNot});`);
-  js.push(`tl.fromTo("#quoted .strike", { scaleX: 0 }, { scaleX: 1, duration: ${F(6)}, ease: "power2.out", immediateRender: false }, ${tNot});`);
+  js.push(`tl.fromTo("#quoted b", { color: "${Y}" }, { color: "rgba(255,255,255,0.45)", duration: ${F(4)}, ease: "none", immediateRender: false }, ${tNot});`);
+  js.push(`tl.fromTo("#quoted .strike", { scaleX: 0 }, { scaleX: 1, duration: ${F(4)}, ease: "power2.out", immediateRender: false }, ${tNot});`);
   sfx('swish', tNot, 0.14);
   kill('#quoted', b);
-  law('quoted', { archetype: 'B', shot: 'B1-01', start: tMaybe, formed: tMaybe + F(8), end: b, cut: true, words: 2, last: { formed: tNot + F(6), words: 0 } });
+  law('quoted', { archetype: 'B', shot: 'B1-01', start: tMaybe, formed: tMaybe + F(8), end: b, cut: true, words: 2, last: { formed: tNot + F(4), words: 0 } });
 }
 
 /* ---------- 2 · nobody lied — B1-02 (CLOSE): nothing on screen ---------- */
@@ -312,12 +312,12 @@ const BAND = { y: 196 };
   show('#fan', tRate);
   cards.forEach(([, , when, nameAt], i) => {
     show(`#fan .k${i}`, when);
-    js.push(`tl.fromTo("#fan .k${i} .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: ${F(10)}, ease: "power3.out", immediateRender: false }, ${r3(when)});`);
-    js.push(`tl.fromTo("#fan .k${i} .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: ${F(5)}, ease: "none", immediateRender: false }, ${r3((nameAt || when) + F(6))});`);
+    js.push(`tl.fromTo("#fan .k${i} .cardf", { autoAlpha: 0, scale: 0.9, y: 30 }, { autoAlpha: 1, scale: 1, y: 0, duration: ${F(8)}, ease: "power3.out", immediateRender: false }, ${r3(when)});`);
+    js.push(`tl.fromTo("#fan .k${i} .cname", { autoAlpha: 0 }, { autoAlpha: 1, duration: ${F(4)}, ease: "none", immediateRender: false }, ${r3(nameAt ? nameAt + F(4) : when + F(2))});`);
     sfx('pop', when, 0.15);
   });
   kill('#fan', b4);
-  law('fan', { archetype: 'C', shot: 'B1-03→B1-04', start: tRate, formed: tRate + F(10), end: b4, cut: true, words: 10, last: { formed: tOver + F(11), words: 2 } });
+  law('fan', { archetype: 'C', shot: 'B1-03→B1-04', start: tRate, formed: tRate + F(8), end: b4, cut: true, words: 10, last: { formed: tOver + F(6), words: 2 } });
 }
 
 /* ---------- 5 · you don't choose — B1-05 (CLOSE): nothing on screen ---------- */
@@ -407,16 +407,16 @@ const BAND = { y: 196 };
 /* ---------- 9 · quoted against paid — B1-12 (FRONT): F, the headline as a relation above her head ---------- */
 {
   const a = S['B1-12'].start, b = endOf('B1-12');
-  const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tMore = findWord('B1-12', 'more');
+  const tQuoted = findWord('B1-12', 'quoted'), tTheyre = findWord('B1-12', "they're"), tActually = findWord('B1-12', 'actually');
   html.push(`<div id="paid" class="ov rel" style="left:420px;top:${BAND.y}px;width:1080px"><span class="t1"><b class="ta">Quoted 0.50%</b></span><span class="ln"><i class="shaft"></i><i class="head"></i></span><span class="t2"><b>Paying 1.09%</b></span></div>`);
   show('#paid', tQuoted);
   maskOn('#paid .ta', tQuoted); sfx('swish', tQuoted, 0.14);
-  show('#paid .ln', tActually);
-  js.push(`tl.fromTo("#paid .shaft", { scaleX: 0 }, { scaleX: 1, duration: ${F(12)}, ease: "power2.inOut", immediateRender: false }, ${tActually});`);
-  js.push(`tl.fromTo("#paid .head", { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: ${F(5)}, ease: "back.out(2.5)", immediateRender: false }, ${r3(tActually + F(10))});`);
-  maskOn('#paid .t2 b', tMore); sfx('pop', tMore, 0.16);
+  show('#paid .ln', tTheyre);
+  js.push(`tl.fromTo("#paid .shaft", { scaleX: 0 }, { scaleX: 1, duration: ${F(12)}, ease: "power2.inOut", immediateRender: false }, ${tTheyre});`);
+  js.push(`tl.fromTo("#paid .head", { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: ${F(5)}, ease: "back.out(2.5)", immediateRender: false }, ${r3(tTheyre + F(10))});`);
+  maskOn('#paid .t2 b', tActually); sfx('pop', tActually, 0.16);
   kill('#paid', b);
-  law('paid', { archetype: 'F', shot: 'B1-12', start: tQuoted, formed: tQuoted + F(8), end: b, cut: true, words: 4, last: { formed: tMore + F(8), words: 2 } });
+  law('paid', { archetype: 'F', shot: 'B1-12', start: tQuoted, formed: tQuoted + F(8), end: b, cut: true, words: 4, last: { formed: tActually + F(8), words: 2 } });
 }
 
 /* ---------- 10 · the bit worth knowing — B1-13 (CLOSE): nothing on screen ---------- */
