@@ -1,32 +1,119 @@
 {
-  "_": "Camera angle and Ava's side per shot, decided here at build time (MOTION-SYSTEM.md §1). Every take is the one locked-off FRONT framing (Ava's face at 1950,900 of 3840×2160, head top 600, shoulders 1410), so an angle is a crop of the source that sandbox.sh cuts before anything else: FRONT the full frame, SIDE a 1.5× window, CLOSE a 1.7× window on her face; the 2 variants are the same angle a few percent looser, used whenever two adjacent shots share an angle so the cut is a punch, not a jump. `ava` is the side of the frame she sits on — L puts her face 30% in from the left edge, R 30% in from the right, C in the middle — and every panel in build.mjs takes the other column (Faisal, 11 Sep: never a panel over her face). angles.mjs turns these into the ffmpeg crop and into her face position on the proxy.",
+  "_": "Framing per shot (MOTION-SYSTEM.md §1, revised 11 Sep for v8.3). Every take is the one locked-off FRONT framing (Ava's face at 1950,900 of 3840×2160, head top 600, shoulders 1410) and every proxy is now that whole frame scaled to 1920×1080 — the 1.5× SIDE and 1.7× CLOSE windows are kept in `windows` but no shot uses them: Faisal's ruling is that the clip stays as shot unless an overlay is up. `ava` is the side the virtual camera sends her to while a panel is on screen (L = her face 30% in from the left edge, the panel in the right column; R the mirror; C never pushed), which build.mjs does with a 1.42× push on the footage alone — the overlays sit outside the camera. angles.mjs turns the angle into the ffmpeg crop and her face position on the proxy.",
   "windows": {
-    "FRONT":  { "w": 3840, "h": 2160, "y": 0,   "p": 0.5 },
-    "FRONT2": { "w": 3491, "h": 1964, "y": 81,  "p": 0.5 },
-    "SIDE":   { "w": 2560, "h": 1440, "y": 420, "p": 0.30 },
-    "SIDE2":  { "w": 2704, "h": 1521, "y": 398, "p": 0.31 },
-    "CLOSE":  { "w": 2259, "h": 1271, "y": 392, "p": 0.30 },
-    "CLOSE2": { "w": 2430, "h": 1367, "y": 353, "p": 0.30 }
+    "FRONT": {
+      "w": 3840,
+      "h": 2160,
+      "y": 0,
+      "p": 0.5
+    },
+    "FRONT2": {
+      "w": 3491,
+      "h": 1964,
+      "y": 81,
+      "p": 0.5
+    },
+    "SIDE": {
+      "w": 2560,
+      "h": 1440,
+      "y": 420,
+      "p": 0.3
+    },
+    "SIDE2": {
+      "w": 2704,
+      "h": 1521,
+      "y": 398,
+      "p": 0.31
+    },
+    "CLOSE": {
+      "w": 2259,
+      "h": 1271,
+      "y": 392,
+      "p": 0.3
+    },
+    "CLOSE2": {
+      "w": 2430,
+      "h": 1367,
+      "y": 353,
+      "p": 0.3
+    }
   },
   "shots": {
-    "B1-01":    { "angle": "SIDE",   "ava": "L" },
-    "B1-02":    { "angle": "CLOSE",  "ava": "L" },
-    "B1-INTRO": { "angle": "FRONT2", "ava": "C" },
-    "B1-03":    { "angle": "SIDE",   "ava": "R" },
-    "B1-04":    { "angle": "SIDE2",  "ava": "R" },
-    "B1-05":    { "angle": "CLOSE",  "ava": "L" },
-    "B1-06":    { "angle": "SIDE",   "ava": "R" },
-    "B1-07":    { "angle": "SIDE2",  "ava": "R" },
-    "B1-08":    { "angle": "SIDE",   "ava": "L" },
-    "B1-09":    { "angle": "SIDE2",  "ava": "L" },
-    "B1-10":    { "angle": "SIDE",   "ava": "R" },
-    "B1-11":    { "angle": "SIDE",   "ava": "L" },
-    "B1-12":    { "angle": "CLOSE",  "ava": "L" },
-    "B1-13":    { "angle": "CLOSE",  "ava": "R" },
-    "B1-14":    { "angle": "SIDE",   "ava": "R" },
-    "B1-15":    { "angle": "SIDE2",  "ava": "L" },
-    "B1-16":    { "angle": "SIDE",   "ava": "L" },
-    "B1-17":    { "angle": "CLOSE",  "ava": "R" },
-    "B1-18":    { "angle": "CLOSE2", "ava": "L" }
+    "B1-01": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-02": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-INTRO": {
+      "angle": "FRONT",
+      "ava": "C"
+    },
+    "B1-03": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-04": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-05": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-06": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-07": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-08": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-09": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-10": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-11": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-12": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-13": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-14": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-15": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-16": {
+      "angle": "FRONT",
+      "ava": "L"
+    },
+    "B1-17": {
+      "angle": "FRONT",
+      "ava": "R"
+    },
+    "B1-18": {
+      "angle": "FRONT",
+      "ava": "L"
+    }
   }
 }

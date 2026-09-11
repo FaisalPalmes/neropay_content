@@ -154,10 +154,11 @@ function bgFor(id, start, end, x, y) {
   return `<div class="bg" style="left:${-x}px;top:${-y}px">${vids.join('')}</div>`;
 }
 const PANEL = {};
-function glass(id, { start, dur: life, x, y, w, h, inner, cueAt, lean = -6, quiet = false, light = false, radius = 36 }) {
+function glass(id, { start, dur: life, x, y, w, h, inner, cueAt, lean = -6, quiet = false, light = false, radius = 36, inWorld = false }) {
   start = r3(start); const end = r3(start + life);
   const c = r3(cueAt == null ? start : Math.max(cueAt, start));
-  html.push(`<div id="${id}" class="panel p3d" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px">
+  if (!inWorld) camWindow(start, end);
+  html.push(`<div id="${id}" class="panel p3d${inWorld ? '' : ' ov'}" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px">
   <div class="float"><div class="glass${light ? ' lglass' : ''}" style="width:${w}px;height:${h}px;border-radius:${radius}px">${light ? '' : bgFor(id, start, end, x, y)}<i class="tint"></i><i class="sheen"></i><div class="body">${inner}</div><i class="rim"></i></div></div></div>`);
   js.push(`tl.fromTo("#${id} .float", { autoAlpha: 0, y: 16, scale: 0.985, transformPerspective: 1600 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.55, ease: "power2.out", immediateRender: false }, ${start});`);
   if (lean) {
@@ -217,6 +218,7 @@ function sfx(role, start, vol, maxLen) {
 function wordmark(stage, when) {
   js.push(`tl.set("${stage} .wm", { autoAlpha: 1 }, ${r3(when)});`);
   js.push(`tl.fromTo("${stage} .wm .wt", { clipPath: "inset(-20% 100% -30% 0%)" }, { clipPath: "inset(-20% 0% -30% 0%)", duration: ${r3(14 / FPS)}, ease: "none", immediateRender: false }, ${r3(when)});`);
+  js.push(`tl.fromTo("${stage} .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, ${r3(when)});`);   // the word settles as it wipes (a transform: letter-spacing snaps, lint)
   js.push(`tl.fromTo("${stage} .wm .dot", { scale: 0 }, { scale: 1, duration: ${r3(10 / FPS)}, ease: "back.out(2.4)", immediateRender: false }, ${r3(when + 12 / FPS)});`);
   js.push(`tl.fromTo("${stage} .wm .dot", { scale: 1 }, { scale: 1.12, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, ${r3(when + 0.9)});`);
   sfx('pop', r3(when + 12 / FPS), 0.12);
@@ -252,9 +254,13 @@ const flat = (S_, x = 0, y = 0) => ({ scale: S_, x, y });
 /* focus on a panel: the point is raised so the panel's bottom edge stays above the captions (LESSONS.md #15) */
 const pf = (id, S_, px, py) => { const g = PANEL[id]; const lim = g ? g.bottom - 330 / S_ : py; return focus(S_, px, Math.max(py, lim)); };   // 330: a 760-tall panel keeps its top in at ZMAX too
 const bump = (c, d = 0.02) => ({ scale: r3(c.scale + d), x: c.x, y: c.y });
-/* a run of camera points inside one clip: each time is clamped to the clip, zero-length legs are dropped,
-   so a cue near the end of a take (or a shorter placeholder) can never make segments overlap */
-function chain(id, pts) {
+/* v8.3 (Faisal, 11 Sep): the camera no longer walks the panels. It is flat — the clip as shot — whenever nothing is on
+   screen, and pushes the footage 1.42× to one side only while an overlay is up (compileCamera, below the sections).
+   chain() is kept as a no-op so the sections still read; their points are ignored. */
+const CAMS = [];
+const camWindow = (start, end) => CAMS.push({ start: r3(start), end: r3(end) });
+function chain() {}
+function chainOld(id, pts) {
   const a = S[id].start, b = endOf(id);
   const P = pts.map((p) => ({ t: r3(Math.min(Math.max(p.t, a), b)), c: p.c, ease: p.ease || 'power2.inOut' }));
   for (let i = 1; i < P.length; i++) P[i].t = Math.max(P[i].t, P[i - 1].t);      // never run backwards
@@ -306,7 +312,7 @@ const AVA = (id) => (V ? 'C' : cropFor(id).ava);
 const colX = (id, xRight, w) => (AVA(id) === 'R' ? W - xRight - w : xRight);
 const colLean = (id, right) => (AVA(id) === 'R' ? Math.abs(right) : -Math.abs(right));
 const FACE = (id) => cropFor(id).face;   // her face on the 1920×1080 proxy
-const PLATE = V ? { x: 730, y: 1130 } : { x: FACE('B1-01').x + 350, y: FACE('B1-01').y + 100 };   // name plate beside her neck, clear of her hair and under the chip
+const PLATE = V ? { x: 730, y: 1130 } : { x: FACE('B1-01').x + 250, y: FACE('B1-01').y + 90 };   // name plate beside her neck in the FRONT frame; it rides with the footage (inWorld)
 const LX = V ? 80 : 50;               // left column — where she points
 const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under the app chrome
 
@@ -314,17 +320,17 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-01'], a = s.start, b = endOf('B1-01');
   /* name plate beside her head, small and quiet (PLATE is set from a real frame) */
-  glass('plate', { start: a + 0.2, dur: 3.0, x: PLATE.x, y: PLATE.y, w: 268, h: 80, lean: 0, quiet: true, radius: 22,
+  glass('plate', { start: a + 0.2, dur: 3.0, x: PLATE.x, y: PLATE.y, w: 268, h: 80, lean: 0, quiet: true, radius: 22, inWorld: true,
     inner: `<div class="plate cue"><b></b><div><strong>Ava</strong><span>NeroPay</span></div></div>` });
   rise('#plate .plate', a + 0.4, 8);
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
   const cw = V ? 500 : 560, ch = V ? 230 : 250, cx = V ? 290 : colX('B1-01', 1180, cw), cy = V ? 600 : 200;   // a size up on v6: Faisal asked for the 0.5% large
   glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: colLean('B1-01', -7),
-    inner: `<div class="chip"><span class="big cue">0.5%</span><span class="q cue">?</span><i class="strike"></i></div>` });
+    inner: `<div class="chip"><span class="big cue">0.5%<i class="strike"></i></span><span class="q cue">?</span></div>` });
   rise('#chip .big', tMaybe, 18);
-  js.push(`tl.set("#chip .strike", { scaleX: 0, rotation: -8 }, ${r3(tMaybe - 0.55)});`);
+  js.push(`tl.set("#chip .strike", { clipPath: "inset(0% 100% 0% 0%)" }, ${r3(tMaybe - 0.55)});`);
   js.push(`tl.fromTo("#chip .q", { autoAlpha: 0, scale: 0.4, rotation: -20 }, { autoAlpha: 1, scale: 1, rotation: 0, duration: 0.35, ease: "back.out(2.2)", immediateRender: false }, ${tCent});`);
-  js.push(`tl.fromTo("#chip .strike", { scaleX: 0, rotation: -8 }, { scaleX: 1, rotation: -8, duration: 0.4, ease: "power3.inOut", immediateRender: false }, ${tNot});`);
+  js.push(`tl.fromTo("#chip .strike", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "power3.inOut", immediateRender: false }, ${tNot});`);
   js.push(`tl.fromTo("#chip .big", { color: "#ffffff" }, { color: "rgba(255,255,255,0.5)", duration: 0.4, immediateRender: false }, ${tNot});`);
   sfx('pop', tCent, 0.16); sfx('swish', tNot, 0.14);
   const f1 = V ? focus(1.14, CX, cy + ch / 2 + 250) : focus(1.16, cx + cw / 2 - 100, cy + ch / 2 + 110), f2 = V ? focus(1.2, CX + 24, cy + ch / 2 + 230) : focus(1.22, cx + cw / 2 - 120, cy + ch / 2 + 90);
@@ -336,9 +342,10 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
   const FX = V ? 180 : colX('B1-02', 1120, 720), FY = V ? 300 : 120;
-  html.push(`<div id="fan" class="space" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
+  html.push(`<div id="fan" class="space ov" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
   /* the first card lands from depth; three more slide out behind it, each deeper than the last, so the
      slow turn of the group gives them parallax */
+  camWindow(tOne - 0.1, b);
   js.push(`tl.set("#fan .k0", { autoAlpha: 1 }, ${tOne});`);
   js.push(`tl.fromTo("${leaves('#fan .k0')}", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out", immediateRender: false }, ${tOne});`);
   js.push(`tl.fromTo("#fan .k0", { z: -420, rotationY: 44, rotationX: 12, y: 40 }, { z: 0, rotationY: -14, rotationX: 6, y: 0, duration: 0.9, ease: "power3.out", immediateRender: false }, ${tOne});`);
@@ -362,8 +369,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 
 /* ---------- 3 · Ava's line --- B1-INTRO ---------- */
 {
-  const a = S['B1-INTRO'].start, b = endOf('B1-INTRO');
-  move(a, r3(b - XF), flat(1.0), flat(1.06), 'power1.inOut');
+  // v8.3: no push on the intro line — nothing is on screen until the slab
 }
 
 /* ---------- 4 · the title, from the middle of the frame — B1-INTRO + [TITLE] ----------
@@ -390,12 +396,10 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   js.push(`tl.fromTo("#title .kick", { y: 0 }, { y: -280, duration: ${r3(14 / FPS)}, ease: "power3.out", immediateRender: false }, ${r3(landAt - 4 / FPS)});`);
   wordmark('#title', landAt);
   sfx('impact', landAt, 0.28);
-  ep.split(' ').forEach((_, i) => js.push(`tl.fromTo("#title .ep .ew:nth-child(${i + 1})", { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: ${r3(8 / FPS)}, ease: "power3.out", immediateRender: false }, ${r3(landAt + 0.45 + i * 3 / FPS)});`));
+  ep.split(' ').forEach((_, i) => js.push(`tl.fromTo("#title .ep .ew:nth-child(${i + 1})", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: ${r3(12 / FPS)}, ease: "power3.out", immediateRender: false }, ${r3(landAt + 0.45 + i * 3 / FPS)});`));
   js.push(`tl.set("#title", { autoAlpha: 0 }, ${tEnd});`);
   sfx('riser', r3(landAt - SOUNDS.sounds.riser.duration), 0.26);
   sfx('music-intro', expandAt, 0.34);
-  /* the camera lands on 1.0 under the card so B1-03 starts flat (the stage sits outside the camera) */
-  move(r3(endOf('B1-INTRO') - XF), tEnd, flat(1.06), flat(1.0), 'none');
 }
 
 /* ---------- 5 · the rate ladder --- B1-03 + B1-04 (one panel, one bar per card as she names it) ---------- */
@@ -439,8 +443,9 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
   const HX = V ? 230 : colX('B1-05', 1120, 740), HY = V ? 300 : 20, c0 = r3(Math.max(a, tWhat - 0.3));
-  html.push(`<div id="hand" class="space" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
-  <div id="bigline" class="bigline"${V ? '' : ` style="left:${HX + 30}px"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
+  html.push(`<div id="hand" class="space ov" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
+  <div id="bigline" class="bigline ov"${V ? '' : ` style="left:${HX + 30}px"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
+  camWindow(c0, b);
   [0, 1, 2, 3].forEach((i) => {
     const t0 = r3(c0 + i * 0.1);
     js.push(`tl.set("#hand .k${i}", { autoAlpha: 1 }, ${t0});`);
@@ -668,10 +673,12 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     tt: '<svg viewBox="0 0 24 24"><path d="M13.3 3h3.2a4.2 4.2 0 0 0 4.2 4.1v3.2a7.4 7.4 0 0 1-4.2-1.4v6.2a5.6 5.6 0 1 1-5.6-5.6h.6v3.3h-.6a2.3 2.3 0 1 0 2.4 2.3z" fill="#fff"/></svg>',
   };
   const socX = V ? 330 : colX('B1-18', PX + 20, 760);
-  html.push(`<div id="social" class="social" style="left:${socX}px;top:${V ? 640 : 250}px;width:760px;height:260px">
+  html.push(`<div id="social" class="social ov" style="left:${socX}px;top:${V ? 640 : 250}px;width:760px;height:260px">
     <span class="smark"><b>Nero</b><em>Pay</em></span><i class="wipe"></i>
     <div class="icons">${['ig', 'li', 'yt', 'tt'].map((k) => `<i class="ic ${k} cue">${ICON[k]}</i>`).join('')}</div></div>`);
   const t0 = r3(tFollow - 0.1);
+  const tOutS = r3(Math.min(t0 + 3.2, b - 0.5));
+  camWindow(t0, tOutS + 0.4);
   js.push(`tl.set("#social", { autoAlpha: 1 }, ${t0});`);
   js.push(`tl.fromTo("#social .smark", { clipPath: "inset(-20% 100% -30% 0%)" }, { clipPath: "inset(-20% 0% -30% 0%)", duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
   js.push(`tl.fromTo("#social .wipe", { autoAlpha: 1, x: 0 }, { x: 520, duration: 0.55, ease: "power3.inOut", immediateRender: false }, ${t0});`);
@@ -708,7 +715,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const g = (k) => r3(a + k * BAR2), land = r3(a + 0.3);
   js.push(`tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power2.inOut", immediateRender: false }, ${a});`);
   wordmark('#end .brand', land); sfx('impact', land, 0.26);
-  rise('#end .brand .sub', g(1), 24); sfx('tick', g(1), 0.2);
+  rise('#end .brand .sub', g(1), 40); sfx('tick', g(1), 0.2);
   leave('#end .brand .wm', g(3) - 0.5); leave('#end .brand .sub', g(3) - 0.45);
   rise('#end .items .kick2', g(3), 16);
   offer.forEach((_, i) => {
@@ -720,12 +727,47 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   leave('#end .items .kick2', fin - 0.5);
   offer.forEach((_, i) => leave(`#end .items .t${i}`, fin - 0.5 + i * 0.03));
   wordmark('#end .final', fin);
-  rise('#end .final .sub', r3(fin + 0.5), 24); sfx('tick', r3(fin + 0.5), 0.2);
+  rise('#end .final .sub', r3(fin + 0.5), 40); sfx('tick', r3(fin + 0.5), 0.2);
   rise('#end .final .concede', g(4 + offer.length), 14); sfx('tick', g(4 + offer.length), 0.18);
   sfx('music-outro', a, 0.42);
 }
 
 /* ---------- camera tweens ---------- */
+/* ---------- the camera, compiled from the overlay windows (v8.3) ----------
+   Per clip: flat (the clip as shot) unless an overlay window covers it, then the footage pushes 1.42× and slides so
+   her face sits 30% in from the edge on her side (angles.json `ava`) and the overlay has the other column. A window
+   that starts within 0.7 s of the cut is cut into (the punch-in is the cut); one that ends within 0.5 s of the cut
+   holds to the cut. Otherwise the push is 0.9 s in and 0.8 s out around the overlay's own fade. Consecutive clips
+   alternate framing so a cut is never the same framing twice (a 6 % punch when flat, 8 % when pushed): flat clips
+   sit at 1.0 or 1.06 and do not move; pushed clips creep 4 % over the window, in on even clips, out on odd. */
+{
+  const SIDE_S = 1.42, PUNCH_FLAT = 0.06, PUNCH_SIDE = 0.08, CREEP = 0.04, TX = 384, TY = 20;
+  const side = (ava, sc) => ({ scale: sc, x: ava === 'L' ? -TX : ava === 'R' ? TX : 0, y: TY });
+  const wins = CAMS.slice().sort((p, q) => p.start - q.start).reduce((acc, w) => {   // union of overlapping windows
+    const last = acc[acc.length - 1];
+    if (last && w.start <= last.end + 0.05) last.end = Math.max(last.end, w.end); else acc.push({ ...w });
+    return acc;
+  }, []);
+  const clips = segs.filter((s) => s.kind === 'clip');
+  clips.forEach((s, k) => {
+    const a = s.start, b = r3(s.start + s.dur), odd = k % 2 === 1, ava = AVA(s.id);
+    const flatS = odd ? 1 + PUNCH_FLAT : 1.0;
+    const s0 = odd ? SIDE_S + PUNCH_SIDE + CREEP : SIDE_S, s1 = odd ? SIDE_S + PUNCH_SIDE : SIDE_S + CREEP;
+    const inside = wins.filter((w) => w.start < b - 0.05 && w.end > a + 0.05);
+    let t = a, state = flat(flatS);
+    for (const w of inside) {
+      const cutIn = w.start <= a + 0.7, cutOut = w.end >= b - 0.5;
+      const inA = cutIn ? a : r3(Math.max(t, w.start - 0.6)), inB = cutIn ? a : r3(Math.min(b, w.start + 0.3));
+      const outA = cutOut ? b : r3(Math.max(inB, w.end - 0.45)), outB = cutOut ? b : r3(Math.min(b, w.end + 0.35));
+      if (inA > t) move(t, inA, state, state, 'none');
+      if (!cutIn) move(inA, inB, state, side(ava, s0));
+      move(inB, outA, side(ava, s0), side(ava, s1), 'none');
+      if (!cutOut) move(outA, outB, side(ava, s1), flat(flatS));
+      t = outB; state = flat(flatS);
+    }
+    if (t < b) move(t, b, state, state, 'none');
+  });
+}
 cam.sort((p, q) => p.t0 - q.t0);
 for (let i = 1; i < cam.length; i++) if (cam[i].t0 < cam[i - 1].t1 - 0.001) throw new Error('camera segments overlap at ' + cam[i].t0 + ' (' + cam[i - 1].t0 + '-' + cam[i - 1].t1 + ')');
 const camCode = cam.map((c) => {
@@ -753,6 +795,7 @@ html,body{width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 body{font-family:Poppins,"Helvetica Neue",Arial,sans-serif;color:#fff;letter-spacing:-0.03em}
 #root{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 #world{position:absolute;inset:0;transform-origin:50% 50%}
+#ovl{position:absolute;inset:0}
 video.clip{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;object-fit:cover}
 .clip{position:absolute}
 .panel,.p3d{position:absolute}
@@ -765,7 +808,7 @@ video.clip{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;obje
    that lightens toward the edges the way thick glass does. No backdrop-filter anywhere (LESSONS.md #27). */
 .glass{position:absolute;left:0;top:0;border-radius:36px;overflow:hidden;isolation:isolate;background:rgba(26,26,30,.30);
   box-shadow:0 30px 60px rgba(0,0,0,.26),0 6px 16px rgba(0,0,0,.16)}
-.glass .bg{position:absolute;width:${W}px;height:${H}px;z-index:0}
+.glass .bg{position:absolute;width:${W}px;height:${H}px;z-index:0;transform-origin:${W / 2}px ${H / 2}px}
 .bgv{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;object-fit:cover;transform:scale(1.06)}
 .bgv.lo{filter:blur(7px) saturate(1.3) brightness(.5)}
 .bgv.hi{filter:blur(30px) saturate(1.3) brightness(.5)}
@@ -793,9 +836,10 @@ b.y,.y{color:${Y}}
 .plate span{display:block;font-size:16px;font-weight:500;color:rgba(255,255,255,.85);margin-top:2px;letter-spacing:0}
 /* hook chip */
 .chip{display:flex;align-items:center;justify-content:center;gap:12px;height:100%}
-.chip .big{display:block;font-size:${V ? 118 : 144}px;font-weight:800;letter-spacing:-0.05em;line-height:1}
+.chip .big{display:block;position:relative;font-size:${V ? 118 : 144}px;font-weight:800;letter-spacing:-0.05em;line-height:1}
 .chip .q{display:block;font-size:${V ? 118 : 144}px;font-weight:800;font-style:italic;color:${Y};line-height:1;transform-origin:50% 60%}
-.chip .strike{position:absolute;left:${V ? 62 : 70}px;top:50%;width:${V ? 340 : 420}px;height:${V ? 11 : 13}px;margin-top:-6px;display:block;background:${Y};border-radius:6px;transform-origin:0 50%}
+/* the line through the middle of the figure: sized to the figure itself, pivoting on its own centre, drawn left to right by its clip */
+.chip .strike{position:absolute;left:-4%;top:54%;width:108%;height:${V ? 11 : 13}px;margin-top:-6px;display:block;background:${Y};border-radius:7px;transform:rotate(-6deg);transform-origin:50% 50%;clip-path:inset(0% 100% 0% 0%)}
 /* cards: solid objects in a real 3D space — a coloured face, six layers of body behind it, chip, band,
    one highlight, a soft shadow. Opacity is only ever animated on .face and .edge (LESSONS.md #32). */
 .space{position:absolute;perspective:1500px;overflow:visible}
@@ -971,7 +1015,10 @@ video.clip.fill{top:0;height:${H}px}
 <body>
 <div id="root" data-composition-id="b1" data-start="0" data-duration="${TOTAL}" data-width="${W}" data-height="${H}" data-fps="${FPS}">
   <div id="world">
-${html.filter((h) => !/class="clip cap"/.test(h)).map((h) => '    ' + h).join('\n')}
+${html.filter((h) => !/class="clip cap"/.test(h) && !/class="[^"]* ov"/.test(h)).map((h) => '    ' + h).join('\n')}
+  </div>
+  <div id="ovl">
+${html.filter((h) => /class="[^"]* ov"/.test(h)).map((h) => '    ' + h).join('\n')}
   </div>
   <div id="floor"></div>
 ${stages.map((h) => '  ' + h).join('\n')}
@@ -982,8 +1029,13 @@ ${audio.map((a) => '  ' + a).join('\n')}
 (function () {
   const tl = gsap.timeline({ paused: true });
   const world = document.getElementById("world");
+  const backs = Array.from(document.querySelectorAll("#ovl .glass .bg"));   // each panel's copy of the footage follows the camera
   const cam = { scale: 1, x: 0, y: 0 };
-  function applyCam() { world.style.transform = "translate(" + cam.x + "px, " + cam.y + "px) scale(" + cam.scale + ")"; }
+  function applyCam() {
+    const t = "translate(" + cam.x + "px, " + cam.y + "px) scale(" + cam.scale + ")";
+    world.style.transform = t;
+    for (let i = 0; i < backs.length; i++) backs[i].style.transform = t;
+  }
   applyCam();
 ${camCode.split('\n').map((l) => '  ' + l).join('\n')}
   const WORDS = ${JSON.stringify(WORDLIST)};
