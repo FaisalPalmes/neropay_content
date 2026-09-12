@@ -20,12 +20,21 @@ import { cropFor } from './angles.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const V = process.env.ORIENT === 'vertical';   // 9:16 for Reels / TikTok: the same cut, sounds and overlays, re-laid out
-const W = V ? 1080 : 1920, H = V ? 1920 : 1080, FPS = 30, Y = '#F5C518', INK = '#141416';
+const AD = process.env.ORIENT === 'ad';        // 4:5 for the Meta feed (Faisal, 12 Sep 2026): see the AD block below
+const W = (V || AD) ? 1080 : 1920, H = V ? 1920 : AD ? 1350 : 1080, FPS = 30, Y = '#F5C518', INK = '#141416';
 /* Vertical: the footage is a 4:5 crop on Ava (sandbox.sh cuts it from the 4K source, so nothing is upscaled),
    FH tall, sat on the floor of the frame; a blurred, darkened copy of the same clip fills the band above it.
    Every overlay lives in that top band, the captions sit over her chest, all inside the Reels/TikTok safe
    area (nothing in the bottom 440px, nothing hugging the right edge). */
-const FT = V ? 570 : 0, FH = V ? 1350 : H;
+const FT = V ? 570 : AD ? 640 : 0, FH = V ? 1350 : AD ? 600 : H;
+/* 4:5 (AD): three bands, nothing overlapping. The 16:9 footage sits in the middle band (FT..FT+FH), Ava centred; a
+   blurred, darkened copy of the clip fills the whole frame behind it; every overlay lives in the band above, drawn
+   at OS scale in a virtual space VW wide (so the panels keep their layouts and simply come out smaller), each one
+   centred; captions sit under the footage on the fill. The camera keeps the alternating 6 % punch on cuts and
+   nothing else — she is never pushed aside because nothing shares her band. */
+const OS = AD ? 0.80 : 1, VW = Math.round(W / OS), VB = Math.round(FT / OS);   // overlay scale, virtual width, virtual band height
+const adX = (w) => Math.round((VW - w) / 2), adY = (h) => Math.max(5, Math.round((VB - h) / 2));
+const L = (ad, vert, land) => (AD ? ad : V ? vert : land);
 const WORDS = JSON.parse(fs.readFileSync(path.join(HERE, 'data/words.json'), 'utf8'));
 const SCRIPT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/script.json'), 'utf8'));
 const EDIT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/edit.json'), 'utf8'));
@@ -124,7 +133,7 @@ function phrases(words) {
 }
 
 /* ---------- html pieces ---------- */
-const html = [], js = [], audio = [], stages = [];   // stages: the title and end cards, outside the camera
+const html = [], js = [], audio = [], stages = [], fills = [];   // fills: the 4:5 blurred fill layer, outside the footage window   // stages: the title and end cards, outside the camera
 let wordIndex = 0;
 const WORDLIST = [];
 
@@ -149,7 +158,8 @@ function bgFor(id, start, end, x, y) {
     const a = r3(Math.max(start, s.start)), b = r3(Math.min(end, s.start + s.dur));
     const blur = s.src.replace(/\.mp4$/, '.blur.mp4'), has = fs.existsSync(path.join(HERE, blur));
     const attrs = `src="${has ? blur : s.src}" data-start="${a}" data-duration="${r3(b - a)}" data-media-start="${r3(s.mediaStart + a - s.start)}" data-track-index="1" muted playsinline`;
-    return (V ? `<video id="bgf-${id}-${s.id}" class="bgv f ${has ? 'lo' : 'hi'}" ${attrs}></video>` : '') + `<video id="bg-${id}-${s.id}" class="bgv ${has ? 'lo' : 'hi'}" ${attrs}></video>`;
+    const fillCopy = `<video id="bgf-${id}-${s.id}" class="bgv f ${has ? 'lo' : 'hi'}" ${attrs}></video>`, footCopy = `<video id="bg-${id}-${s.id}" class="bgv ${has ? 'lo' : 'hi'}" ${attrs}></video>`;
+    return AD ? fillCopy : (V ? fillCopy : '') + footCopy;   // 4:5: the panels sit over the fill only
   });
   return `<div class="bg" style="left:${-x}px;top:${-y}px">${vids.join('')}</div>`;
 }
@@ -287,9 +297,9 @@ segs.forEach((s, i) => {
 });
 for (const s of segs) {
   if (s.kind !== 'clip') continue;
-  if (V) {
+  if (V || AD) {
     const blur = s.src.replace(/\.mp4$/, '.blur.mp4'), has = fs.existsSync(path.join(HERE, blur));
-    html.push(`<video id="f-${s.id}" class="clip fill ${has ? 'lo' : 'hi'}" src="${has ? blur : s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="2" muted playsinline></video>`);
+    (AD ? fills : html).push(`<video id="f-${s.id}" class="clip fill ${has ? 'lo' : 'hi'}" src="${has ? blur : s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="2" muted playsinline></video>`);
   }
   html.push(`<video id="v-${s.id}" class="clip" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="0" muted playsinline></video>`);
   audio.push(`<audio id="a-${s.id}" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="10" data-volume="1"></audio>`);
@@ -309,17 +319,17 @@ for (const s of segs) {
 }
 
 if (V) html.push(`<div id="seam"></div>`);   // the shadow the footage casts up into the fill band
-const PX = V ? 80 : 1110, PW = V ? 920 : 760;   // right column (vertical: the one column, in the top band)
+const PW = L(920, 920, 760), PX = L(adX(PW), 80, 1110);   // right column (vertical: the one column, in the top band)
 /* Ava's side per shot comes from data/angles.json (angles.mjs cuts the proxy to it); every panel takes the other
    column (Faisal, 11 Sep: nothing over her face). colX mirrors a right-column x when she is on the right, and the
    lean follows the column — the near edge comes forward, so left leans positive, right negative. */
-const AVA = (id) => (V ? 'C' : cropFor(id).ava);
+const AVA = (id) => ((V || AD) ? 'C' : cropFor(id).ava);
 const colX = (id, xRight, w) => (AVA(id) === 'R' ? W - xRight - w : xRight);
 const colLean = (id, right) => (AVA(id) === 'R' ? Math.abs(right) : -Math.abs(right));
 const FACE = (id) => cropFor(id).face;   // her face on the 1920×1080 proxy
-const PLATE = V ? { x: 730, y: 1130 } : { x: FACE('B1-01').x + 250, y: FACE('B1-01').y + 90 };   // name plate beside her neck in the FRONT frame; it rides with the footage (inWorld)
-const LX = V ? 80 : 50;               // left column — where she points
-const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under the app chrome
+const PLATE = L({ x: 700, y: 690 }, { x: 730, y: 1130 }, { x: FACE('B1-01').x + 250, y: FACE('B1-01').y + 90 });   // 4:5: top right of the footage band, beside her head   // name plate beside her neck in the FRONT frame; it rides with the footage (inWorld)
+const LX = L(PX, 80, 50);               // left column — where she points
+const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts under the app chrome
 
 /* ---------- 1 · hook: 0.5%? --- B1-01 ---------- */
 {
@@ -329,7 +339,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     inner: `<div class="plate cue"><b></b><div><strong>Ava</strong><span>NeroPay</span></div></div>` });
   rise('#plate .plate', a + 0.4, 8);
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
-  const cw = V ? 500 : 560, ch = V ? 230 : 250, cx = V ? 290 : colX('B1-01', 1180, cw), cy = V ? 600 : 200;   // a size up on v6: Faisal asked for the 0.5% large
+  const cw = L(500, 500, 560), ch = L(230, 230, 250), cx = L(adX(500), 290, colX('B1-01', 1180, cw)), cy = L(adY(230), 600, 200);   // a size up on v6: Faisal asked for the 0.5% large
   glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: colLean('B1-01', -7),
     inner: `<div class="chip"><span class="big cue">0.5%<i class="strike"></i></span><span class="q cue">?</span></div>` });
   rise('#chip .big', tMaybe, 18);
@@ -346,7 +356,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
-  const FX = V ? 180 : colX('B1-02', 1120, 720), FY = V ? 300 : 120;
+  const FX = L(adX(720), 180, colX('B1-02', 1120, 720)), FY = L(adY(560), 300, 120);
   html.push(`<div id="fan" class="space ov" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
   /* the first card lands from depth; three more slide out behind it, each deeper than the last, so the
      slow turn of the group gives them parallax */
@@ -392,7 +402,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     ${WM}
     <div class="ep">${ep.split(' ').map((w) => `<span class="ew">${esc(w)}</span>`).join(' ')}</div>
   </div>`);
-  const SEED = 'inset(44.5% 38% 44.5% 38% round 26px)', FULL = 'inset(0% 0% 0% 0% round 0px)';
+  const SEED = AD ? 'inset(44.5% 30% 44.5% 30% round 26px)' : 'inset(44.5% 38% 44.5% 38% round 26px)', FULL = 'inset(0% 0% 0% 0% round 0px)';
   js.push(`tl.set("#title", { autoAlpha: 1, clipPath: "${SEED}" }, ${seedAt});`);
   js.push(`tl.set("#title .kick", { autoAlpha: 1 }, ${r3(seedAt + 0.05)});`);
   js.push(`tl.fromTo("#title .kick", { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: ${r3(8 / FPS)}, ease: "none", immediateRender: false }, ${r3(seedAt + 0.05)});`);
@@ -413,7 +423,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const tAdv = findWord('B1-03', 'advertised'), tDebit = findWord('B1-03', 'debit'), tCheap = findWord('B1-03', 'cheapest');
   const tCredit = findWord('B1-04', 'credit'), tCompany = findWord('B1-04', 'company'), tAmex = findWord('B1-04', 'amex'), tOver = findWord('B1-04', 'overseas'), tMost = findWord('B1-04', 'most');
   const bars = [['Debit', 0.5, 0.18, tDebit], ['Credit', 1.2, 0.42, tCredit], ['Business', 2.6, 0.86, tCompany], ['Amex', 1.75, 0.6, tAmex], ['Overseas', 2.9, 0.96, tOver]];
-  const ly = V ? 210 : 110, lh = 600;
+  const ly = L(adY(600), 210, 110), lh = 600;
   const lx = colX('B1-03', PX, PW);
   glass('ladder', { start: Math.max(a3, tAdv - 0.7), dur: r3(b4 - Math.max(a3, tAdv - 0.7)), x: lx, y: ly, w: PW, h: lh, cueAt: tAdv, lean: colLean('B1-03', -7),
     inner: `<div class="pad"><span class="th cue">the advertised rate, by card</span><div class="bars">${bars.map(([n, v, h], i) => `<div class="bar b${i} cue"><b>0.00%</b><div class="col" style="height:${Math.round(h * 100)}%"><i class="base"></i><i class="fill"></i></div><span>${n}</span></div>`).join('')}</div></div>` });
@@ -447,9 +457,9 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
-  const HX = V ? 230 : colX('B1-05', 1120, 740), HY = V ? 300 : 20, c0 = r3(Math.max(a, tWhat - 0.3));
+  const HX = L(adX(740), 230, colX('B1-05', 1120, 740)), HY = L(0, 300, 20), c0 = r3(Math.max(a, tWhat - 0.3));
   html.push(`<div id="hand" class="space ov" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
-  <div id="bigline" class="bigline ov"${V ? '' : ` style="left:${HX + 30}px"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
+  <div id="bigline" class="bigline ov"${(V || AD) ? '' : ` style="left:${HX + 30}px"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
   camWindow(c0, b);
   [0, 1, 2, 3].forEach((i) => {
     const t0 = r3(c0 + i * 0.1);
@@ -483,8 +493,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const t70 = findWord('B1-07', 'seventy'), tCred = findWord('B1-07', 'credit'), tComp = findWord('B1-07', 'company'), tOver = findWord('B1-07', 'overseas');
   const rows = [['Consumer debit', 71, '0.50%'], ['Consumer credit', 20, '1.20%'], ['Business / commercial', 5, '2.60%'], ['International / non-UK', 2, '2.90%']];
   const py = PY, ph = 690, st = r3(Math.max(a6, tHere - 0.6));
-  const mx = V ? LX : colX('B1-06', PX, PW);
-  glass('month', { start: st, dur: r3(b7 - st), x: mx, y: py, w: PW, h: ph, cueAt: tHere, lean: V ? 7 : colLean('B1-06', -7),
+  const mx = L(PX, LX, colX('B1-06', PX, PW));
+  glass('month', { start: st, dur: r3(b7 - st), x: mx, y: py, w: PW, h: ph, cueAt: tHere, lean: L(6, 7, colLean('B1-06', -7)),
     inner: `<div class="pad"><span class="th cue">a made-up month, one restaurant</span>
       <div class="stats"><div class="stat s0 cue"><b>£0</b><span>card turnover</span></div><div class="stat s1 cue"><b>0</b><span>card payments</span></div><div class="stat s2 cue"><b>0.00%</b><span>the quoted rate</span></div></div>
       <div class="split">${rows.map(([n, pct, r], i) => `<div class="srow q${i} cue"><div class="lab"><span>${n}</span><b>${r}</b></div><div class="track"><i style="width:${pct}%"></i><em>${pct}%</em></div></div>`).join('')}</div>
@@ -532,8 +542,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-10'], a = s.start, b = endOf('B1-10');
   const tAdd = findWord('B1-10', 'add'), tDivide = findWord('B1-10', 'divide'), tMultiply = findWord('B1-10', 'multiply'), tHundred = findWord('B1-10', 'hundred');
-  const fw = 920, fx = V ? LX : colX('B1-10', W - LX - fw, fw), fy = V ? 240 : 170, fh = 600, st = r3(Math.max(a, tAdd - 0.7));
-  glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: V ? 8 : colLean('B1-10', -8),
+  const fw = 920, fx = L(adX(fw), LX, colX('B1-10', W - LX - fw, fw)), fy = L(adY(600), 240, 170), fh = 600, st = r3(Math.max(a, tAdd - 0.7));
+  glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: L(6, 8, colLean('B1-10', -8)),
     inner: `<div class="pad formula"><span class="th cue">your effective rate</span>
       <div class="frac">
         <div class="row num cue"><i class="badge">£</i><span>every charge on the statement</span></div>
@@ -561,7 +571,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const a11 = S['B1-11'].start, b11 = endOf('B1-11'), a12 = S['B1-12'].start, b12 = endOf('B1-12');
   const tHere = findWord('B1-11', 'here'), tThree = findWord('B1-11', 'three'), tTwenty = findWord('B1-11', 'twenty'), tOne = findWord('B1-11', 'one');
   const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tDouble = findWord('B1-12', 'double');
-  const sw = V ? 920 : 840, sx = V ? 80 : colX('B1-11', 1040, sw), sy = V ? 190 : 50, sh = 740;
+  const sw = L(920, 920, 840), sx = L(adX(920), 80, colX('B1-11', 1040, sw)), sy = L(adY(740), 190, 50), sh = 740;
   glass('sum', { start: a11, dur: r3(b12 - a11), x: sx, y: sy, w: sw, h: sh, cueAt: tHere, lean: colLean('B1-11', -6),
     inner: `<div class="pad sum"><span class="th cue">what that month really cost</span>
       <div class="sline l0 cue"><span>all charges</span><b>£0.00</b></div>
@@ -636,7 +646,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   const tAsk = findWord('B1-15', 'ask'), tCredit = findWord('B1-15', 'credit'), tCompany = findWord('B1-15', 'company'), tAmex = findWord('B1-15', 'amex'), tPayout = findWord('B1-15', 'payout');
   const tPci = findWord('B1-16', 'pci'), tAccount = findWord('B1-16', 'account'), tMinimum = findWord('B1-16', 'minimum'), tEffective = findWord('B1-16', 'effective'), tOnly = findWord('B1-16', 'only');
   const items = ['What do credit cards cost?', 'And business cards?', 'And American Express?', 'What does each payout cost?', 'Is there a PCI fee?', 'An account fee?', 'A minimum monthly charge?', 'So what is my effective rate?'];
-  const qw = V ? 920 : 860, qx = V ? 80 : colX('B1-15', 1020, qw), qy = V ? 180 : 60, qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
+  const qw = L(920, 920, 860), qx = L(adX(920), 80, colX('B1-15', 1020, qw)), qy = L(adY(760), 180, 60), qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
   glass('ask', { start: st, dur: r3(b16 - st), x: qx, y: qy, w: qw, h: qh, cueAt: tAsk, lean: colLean('B1-15', -7),
     inner: `<div class="pad"><span class="th cue">ask any provider</span>${items.map((q, i) => `<div class="qrow k${i}${i === 7 ? ' last' : ''} cue"><i></i><span>${q}</span></div>`).join('')}</div>` });
   [tCredit, tCompany, tAmex, tPayout, tPci, tAccount, tMinimum, tEffective].forEach((when, i) => {
@@ -656,7 +666,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
 {
   const s = S['B1-17'], a = s.start, b = endOf('B1-17');
   const tTwo = findWord('B1-17', 'two'), tStatement = findWord('B1-17', 'statement'), tCalc = findWord('B1-17', 'calculator');
-  const tw = V ? 880 : 800, tx = V ? 100 : colX('B1-17', PX - 20, tw), ty = V ? 560 : 170, th = 300;
+  const tw = L(880, 880, 800), tx = L(adX(880), 100, colX('B1-17', PX - 20, tw)), ty = L(adY(300), 560, 170), th = 300;
   glass('two', { start: a, dur: r3(b - a), x: tx, y: ty, w: tw, h: th, cueAt: tTwo + 0.05, lean: colLean('B1-17', -6),
     inner: `<div class="pad twomin"><b class="n cue">2 min</b><div class="lines"><span class="l1 cue"><i></i>last month's statement</span><span class="l2 cue"><i></i>+ a calculator</span></div></div>` });
   js.push(`tl.fromTo("#two .n", { autoAlpha: 0, scale: 0.5, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, ${r3(tTwo + 0.05)});`);
@@ -677,8 +687,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     yt: '<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="21" height="14" rx="4.5" fill="#fff"/><path d="M10 8.8l5.2 3.2L10 15.2z" fill="#141416"/></svg>',
     tt: '<svg viewBox="0 0 24 24"><path d="M13.3 3h3.2a4.2 4.2 0 0 0 4.2 4.1v3.2a7.4 7.4 0 0 1-4.2-1.4v6.2a5.6 5.6 0 1 1-5.6-5.6h.6v3.3h-.6a2.3 2.3 0 1 0 2.4 2.3z" fill="#fff"/></svg>',
   };
-  const socX = V ? 330 : colX('B1-18', PX + 20, 760);
-  html.push(`<div id="social" class="social ov" style="left:${socX}px;top:${V ? 640 : 250}px;width:760px;height:260px">
+  const socX = L(adX(760), 330, colX('B1-18', PX + 20, 760));
+  html.push(`<div id="social" class="social ov" style="left:${socX}px;top:${L(adY(260), 640, 250)}px;width:760px;height:260px">
     <span class="smark"><b>Nero</b><em>Pay</em></span><i class="wipe"></i>
     <div class="icons">${['ig', 'li', 'yt', 'tt'].map((k) => `<i class="ic ${k} cue">${ICON[k]}</i>`).join('')}</div></div>`);
   const t0 = r3(tFollow - 0.1);
@@ -754,7 +764,8 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
     return acc;
   }, []);
   const clips = segs.filter((s) => s.kind === 'clip');
-  clips.forEach((s, k) => {
+  if (AD) clips.forEach((s, k) => { const a = s.start, b = r3(s.start + s.dur), fs = k % 2 ? 1 + PUNCH_FLAT : 1; move(a, b, flat(fs), flat(fs), 'none'); });
+  else clips.forEach((s, k) => {
     const a = s.start, b = r3(s.start + s.dur), odd = k % 2 === 1, ava = AVA(s.id);
     const flatS = odd ? 1 + PUNCH_FLAT : 1.0;
     const s0 = odd ? SIDE_S + PUNCH_SIDE + CREEP : SIDE_S, s1 = odd ? SIDE_S + PUNCH_SIDE : SIDE_S + CREEP;
@@ -799,7 +810,7 @@ const page = `<!doctype html>
 html,body{width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 body{font-family:Poppins,"Helvetica Neue",Arial,sans-serif;color:#fff;letter-spacing:-0.03em}
 #root{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:#141416}
-#world{position:absolute;inset:0;transform-origin:50% 50%}
+#world{position:absolute;inset:0;transform-origin:${AD ? `${W / 2}px ${FT + FH / 2}px` : '50% 50%'}}
 #ovl{position:absolute;inset:0}
 video.clip{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;object-fit:cover}
 .clip{position:absolute}
@@ -841,10 +852,10 @@ b.y,.y{color:${Y}}
 .plate span{display:block;font-size:16px;font-weight:500;color:rgba(255,255,255,.85);margin-top:2px;letter-spacing:0}
 /* hook chip */
 .chip{display:flex;align-items:center;justify-content:center;gap:12px;height:100%}
-.chip .big{display:block;position:relative;font-size:${V ? 118 : 144}px;font-weight:800;letter-spacing:-0.05em;line-height:1}
-.chip .q{display:block;font-size:${V ? 118 : 144}px;font-weight:800;font-style:italic;color:${Y};line-height:1;transform-origin:50% 60%}
+.chip .big{display:block;position:relative;font-size:${(V || AD) ? 118 : 144}px;font-weight:800;letter-spacing:-0.05em;line-height:1}
+.chip .q{display:block;font-size:${(V || AD) ? 118 : 144}px;font-weight:800;font-style:italic;color:${Y};line-height:1;transform-origin:50% 60%}
 /* the line through the middle of the figure: sized to the figure itself, pivoting on its own centre, drawn left to right by its clip */
-.chip .strike{position:absolute;left:-4%;top:54%;width:108%;height:${V ? 11 : 13}px;margin-top:-6px;display:block;background:${Y};border-radius:7px;transform:rotate(-6deg);transform-origin:50% 50%;clip-path:inset(0% 100% 0% 0%)}
+.chip .strike{position:absolute;left:-4%;top:54%;width:108%;height:${(V || AD) ? 11 : 13}px;margin-top:-6px;display:block;background:${Y};border-radius:7px;transform:rotate(-6deg);transform-origin:50% 50%;clip-path:inset(0% 100% 0% 0%)}
 /* cards: solid objects in a real 3D space — a coloured face, six layers of body behind it, chip, band,
    one highlight, a soft shadow. Opacity is only ever animated on .face and .edge (LESSONS.md #32). */
 .space{position:absolute;perspective:1500px;overflow:visible}
@@ -991,10 +1002,10 @@ b.y,.y{color:${Y}}
   background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,255,255,.72));box-shadow:inset 0 1.5px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.95),0 10px 30px rgba(20,20,22,.05)}
 .stage .tile i{display:block;flex:none;width:16px;height:16px;border-radius:50%;background:${Y}}
 .stage .tile span{display:block;font-size:40px;font-weight:700;letter-spacing:-0.03em;color:${INK};line-height:1.1}
-#floor{position:absolute;left:0;right:0;bottom:0;height:${V ? 520 : 300}px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
+#floor{position:absolute;left:0;right:0;bottom:0;height:${L(0, 520, 300)}px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
 /* captions: no plate, no shadow, tight Poppins, yellow on the spoken word */
-.cap{left:0;right:0;width:${W}px;bottom:${V ? 400 : 118}px;display:flex;justify-content:center;pointer-events:none}
-.cap .line{max-width:${V ? 900 : 1500}px;text-align:center;font-size:${V ? 54 : 56}px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
+.cap{left:0;right:0;width:${W}px;bottom:${L(22, 400, 118)}px;display:flex;justify-content:center;pointer-events:none}
+.cap .line{max-width:${L(980, 900, 1500)}px;text-align:center;font-size:${L(40, 54, 56)}px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
 .cap .w{display:inline-block;color:rgba(255,255,255,.86);margin:0 0.03em}
 .cap .w.em{font-style:italic;font-weight:800;font-size:1.06em}
 ${V ? `/* vertical: the fill band, the seam, the type that was sized for a wide frame */
@@ -1016,14 +1027,37 @@ video.clip.fill{top:0;height:${H}px}
 .estage .grid{grid-template-columns:1fr;width:800px;gap:18px}
 .estage .tile{height:106px}
 .estage .tile span{font-size:36px}
-.social .smark{font-size:112px}` : ''}
+.social .smark{font-size:112px}` : ''}${AD ? `
+/* 4:5 Meta feed: the fill behind everything, the footage window, the overlay layer scaled into the top band, the cards re-set for a tall frame */
+#fills{position:absolute;inset:0}
+video.clip.fill{top:0;height:${H}px}
+.fill.lo{filter:blur(6px) saturate(1.15) brightness(.42)}
+.fill.hi{filter:blur(28px) saturate(1.15) brightness(.42)}
+#fwin{position:absolute;inset:0;clip-path:inset(${FT}px 0 ${H - FT - FH}px 0)}
+#ovl{transform:scale(${OS});transform-origin:0 0;width:${VW}px;height:${Math.round(H / OS)}px}
+.glass .bg{width:${VW}px;height:${Math.round(H / OS)}px;transform-origin:${VW / 2}px ${Math.round(H / OS / 2)}px}
+.bgv{width:${VW}px}
+.bgv.f{top:0;height:${Math.round(H / OS)}px}
+.bigline{left:0;width:${VW}px;top:${VB - 200}px;align-items:center;text-align:center}
+.bigline span{font-size:72px}
+.stage .kick,.stage .kick2{top:700px}
+.stage .wm{top:490px;font-size:150px}
+.stage .ep{top:690px}
+.stage .layer .wm{font-size:140px;top:520px}
+.stage .layer .sub{top:700px;font-size:40px}
+.stage .final .wm{top:430px} .stage .final .sub{top:600px}
+.stage .final .concede{top:680px;font-size:26px}
+.stage .items .kick2{top:130px}
+.stage .items .grid{left:90px;top:210px;width:900px;grid-template-columns:1fr;gap:16px}
+.stage .tile{height:104px}
+.stage .tile span{font-size:36px}` : ''}
 </style>
 </head>
 <body>
 <div id="root" data-composition-id="b1" data-start="0" data-duration="${TOTAL}" data-width="${W}" data-height="${H}" data-fps="${FPS}">
-  <div id="world">
+${AD ? `  <div id="fills">\n${fills.map((h) => '    ' + h).join('\n')}\n  </div>\n  <div id="fwin">\n` : ''}  <div id="world">
 ${html.filter((h) => !/class="clip cap"/.test(h) && !/class="[^"]* ov"/.test(h)).map((h) => '    ' + h).join('\n')}
-  </div>
+  </div>${AD ? '\n  </div>' : ''}
   <div id="ovl">
 ${html.filter((h) => /class="[^"]* ov"/.test(h)).map((h) => '    ' + h).join('\n')}
   </div>

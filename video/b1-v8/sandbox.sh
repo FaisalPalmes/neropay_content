@@ -63,32 +63,34 @@ node build.mjs | tail -14
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"layout err="+j.layout.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json
 if [ -n "${SETUP_ONLY:-}" ]; then echo SETUP_DONE; exit 0; fi
-mkdir -p renders review
+# ORIENT=ad builds the 4:5 Meta feed cut (build.mjs reads ORIENT); its files carry the suffix so a box can hold both
+SUF=${ORIENT:+-$ORIENT}; OUT=b1-v8$SUF; REV=review$SUF; TILE=480:270; [ "${ORIENT:-}" = ad ] && TILE=432:540
+mkdir -p renders "$REV"
 # WORKERS=2 overrides the low-memory profile that pins the sandbox to one capture worker (~5 fps at 1080p)
-"$HF" render -q "${QUALITY:-high}" -o renders/b1-v8-high.mp4 --quiet ${WORKERS:+-w "$WORKERS" --no-low-memory-mode}
-ffmpeg -y -v error -i renders/b1-v8-high.mp4 -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k renders/b1-v8-final.mp4
-ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 renders/b1-v8-final.mp4
+"$HF" render -q "${QUALITY:-high}" -o "renders/$OUT-high.mp4" --quiet ${WORKERS:+-w "$WORKERS" --no-low-memory-mode}
+ffmpeg -y -v error -i "renders/$OUT-high.mp4" -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:v copy -c:a aac -b:a 192k "renders/$OUT-final.mp4"
+ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 "renders/$OUT-final.mp4"
 # 5. the review sheets (MOTION-SYSTEM.md §7): every overlay's last held frame at full size, and a frame every 6 s
 AT=$(node -e 'const m=require("./review/manifest.json");console.log(m.contact_at.map(x=>Math.round(x*100)/100).join(","))')
-mkdir -p review/held && for t in ${AT//,/ }; do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v8-final.mp4 -frames:v 1 "review/held/$(printf '%07.2f' "$t").png"; done
+mkdir -p "$REV/held" && for t in ${AT//,/ }; do ffmpeg -nostdin -y -v error -ss "$t" -i "renders/$OUT-final.mp4" -frames:v 1 "$REV/held/$(printf '%07.2f' "$t").png"; done
 # (ffmpeg's tile filter, not ImageMagick's montage — montage aborts on twelve full-size PNGs in the sandbox)
-N=$(ls review/held/*.png | wc -l); ROWS=$(( (N + 2) / 3 ))
-ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/held/*.png' -vf "tile=3x${ROWS}:padding=8:color=0x141416" -frames:v 1 -q:v 2 review/overlays-contact.jpg
-mkdir -p review/every6 && for t in $(seq 1 6 163); do ffmpeg -nostdin -y -v error -ss "$t" -i renders/b1-v8-final.mp4 -frames:v 1 "review/every6/$(printf '%03d' "$t").png"; done
-N=$(ls review/every6/*.png | wc -l); ROWS=$(( (N + 5) / 6 ))
-ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i 'review/every6/*.png' -vf "scale=480:270,tile=6x${ROWS}:padding=4:color=0x141416" -frames:v 1 -q:v 4 review/frames-contact.jpg
+N=$(ls "$REV/held"/*.png | wc -l); ROWS=$(( (N + 2) / 3 ))
+ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i "$REV/held/*.png" -vf "tile=3x${ROWS}:padding=8:color=0x141416" -frames:v 1 -q:v 2 "$REV/overlays-contact.jpg"
+mkdir -p "$REV/every6" && for t in $(seq 1 6 163); do ffmpeg -nostdin -y -v error -ss "$t" -i "renders/$OUT-final.mp4" -frames:v 1 "$REV/every6/$(printf '%03d' "$t").png"; done
+N=$(ls "$REV/every6"/*.png | wc -l); ROWS=$(( (N + 5) / 6 ))
+ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i "$REV/every6/*.png" -vf "scale=$TILE,tile=6x${ROWS}:padding=4:color=0x141416" -frames:v 1 -q:v 4 "$REV/frames-contact.jpg"
 # 6. the frame scan (MOTION-SYSTEM.md §7, LESSONS #55): mean luma of every frame; a frame that differs from both
 #    neighbours by more than 4 is a flash — a blank cut frame, a dropped overlay — and fails the gate
-ffmpeg -nostdin -v error -i renders/b1-v8-final.mp4 -vf "scale=480:270,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=review/yavg.txt" -f null -
+ffmpeg -nostdin -v error -i "renders/$OUT-final.mp4" -vf "scale=480:270,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=$REV/yavg.txt" -f null -
 # (the report the delivery gate reads is written in step 7 — upload review/report.txt with the video, LESSONS #66)
-python3 - <<'PY' | tee review/spikes.txt
+REV="$REV" python3 - <<'PY' | tee "$REV/spikes.txt"
 import re
-ys=[float(m.group(1)) for l in open('review/yavg.txt') for m in [re.search(r'YAVG=([0-9.]+)',l)] if m]
+ys=[float(m.group(1)) for l in open(__import__('os').environ.get('REV','review')+'/yavg.txt') for m in [re.search(r'YAVG=([0-9.]+)',l)] if m]
 sp=[(i,round(i/30,3),round(ys[i-1],1),round(ys[i],1),round(ys[i+1],1)) for i in range(1,len(ys)-1) if abs(ys[i]-ys[i-1])>4 and abs(ys[i]-ys[i+1])>4 and (ys[i]<min(ys[i-1],ys[i+1]) or ys[i]>max(ys[i-1],ys[i+1]))]
 print('frames', len(ys), 'single-frame spikes', len(sp), sp)
 PY
 echo BOOT_DONE
 # 7. the report that travels with the file (LESSONS #66): frames, spikes, md5, probe — one small text file to upload
-{ echo "b1-v8 $(git -C "$ROOT/repo" rev-parse --short HEAD) $(date -u +%FT%TZ)"; cat review/spikes.txt; md5sum renders/b1-v8-final.mp4;
-  ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 renders/b1-v8-final.mp4; } > review/report.txt
-cat review/report.txt
+{ echo "$OUT $(git -C "$ROOT/repo" rev-parse --short HEAD) $(date -u +%FT%TZ)"; cat "$REV/spikes.txt"; md5sum "renders/$OUT-final.mp4";
+  ffprobe -v error -show_entries stream=width,height:format=duration,size -of csv=p=0 "renders/$OUT-final.mp4"; } > "$REV/report.txt"
+cat "$REV/report.txt"
