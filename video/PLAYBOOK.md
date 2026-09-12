@@ -315,9 +315,21 @@ the y "still cuts out"; animate the title text "better with the sound and beats"
 - **Drive.** Every export note stays: the previous ones carry their version in the title, the newest is "latest".
   Nothing in Exports is deleted or trashed again.
 
+**The 4:5 feed cut (Faisal, 12 Sep: "a Facebook Meta ad-friendly version … she is in the middle … nothing
+overlapping … captions a bit smaller").** `ORIENT=ad node build.mjs` → 1080×1350, the whole video, not the v6 ad trim.
+Three bands, nothing shares one: the 16:9 footage sits in the middle band (y 640–1240, Ava centred, `object-fit: cover`
+on the FRONT proxy) over a blurred, darkened copy of the same clip that fills the frame; every overlay lives in the band
+above it, drawn at 0.80 scale in a virtual space 1350 wide so the panels keep their layouts and come out smaller, each
+one centred (`adX`/`adY`); the captions sit under the footage at 40 px. The camera keeps only the alternating 6 % punch,
+about the footage centre, inside a clip-path window so it never spills into the other bands. The name plate sits top
+right of the footage band. The title and end card get their own 1080×1350 metrics (wordmark 150 / 140 px, one column of
+tiles). `sandbox.sh` reads `ORIENT` and suffixes the outputs (`b1-v8-ad-final.mp4`, `review-ad/`). The landscape page
+stays byte-identical — diff `index.html` after any change to the AD branch.
+
 | Cut | Spec | Commit |
 |---|---|---|
 | Master 16:9 v8.4 | 1920×1080, 164.5 s (4,934 frames), −15.2 LUFS / −1.3 dBTP, 184 MB, sounds fetched and gated (quietest peak −5.8 dB), check clean on the real footage, frame scan 0 spikes, md5 `c6ad7ec5…`, report.txt (with the sound-check windows) uploaded beside it | `ed6a9bd` |
+| Feed 4:5 v8.4 | (filled in on delivery) | `a26d139` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
