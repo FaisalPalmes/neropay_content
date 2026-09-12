@@ -78,9 +78,13 @@ for (const [role, s] of Object.entries(sounds)) {
     if (!/publicdomain\/zero/.test(licence)) { console.error(role, s.id, 'is not CC0:', licence); process.exit(1); }
     fs.writeFileSync(raw, await getBuf(preview));
   }
-  const gain = Math.pow(10, (-3 - s.peak) / 20);
+  /* the peak is measured, not read from sounds.json: the page preview and the API preview of the same sound can differ
+     by a few dB, and the -3 dBFS target is what makes the per-cue volumes in a build comparable (12 Sep 2026) */
+  const probe = execFileSync(ffmpeg, ['-nostdin', '-i', raw, '-af', 'volumedetect', '-f', 'null', '-'], { stdio: ['ignore', 'pipe', 'pipe'] }).toString();
+  const peak = Number((probe.match(/max_volume: (-?[0-9.]+) dB/) || [])[1] ?? s.peak);
+  const gain = Math.pow(10, (-3 - peak) / 20);
   execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', raw, '-af', `volume=${gain.toFixed(3)}`, '-ar', '48000', '-ac', '2', '-c:a', 'aac', '-b:a', '192k', '-f', 'mp4', target]);
-  console.log('fetched', role, '←', s.id, s.name, `gain ×${gain.toFixed(2)}`);
+  console.log('fetched', role, '←', s.id, s.name, `peak ${peak} dB, gain ×${gain.toFixed(2)}`);
 }
 
 /* derived cuts of the music bed with baked fades — HyperFrames plays audio as-is, so the fade is in the file */

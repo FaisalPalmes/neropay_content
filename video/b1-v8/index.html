@@ -192,7 +192,7 @@ b.y,.y{color:#F5C518}
 .stage .wm{position:absolute;left:0;right:0;top:430px;text-align:center;font-size:230px;font-weight:800;letter-spacing:-0.05em;line-height:1;color:#141416;white-space:nowrap;opacity:0;visibility:hidden}
 .stage .wm .wt{display:inline-block}
 .stage .wm .ch{display:inline-block;position:relative}
-.stage .wm .yy::after{content:"";position:absolute;left:.092em;top:.974em;width:.209em;height:.209em;border-radius:50%;background:currentColor}   /* rounds the flat terminal of the Poppins y (measured at 230 px: the tail ends 48 px wide, 26 px below the em box) */
+.stage .wm .yy::after{content:"";position:absolute;left:.211em;top:.876em;width:.187em;height:.393em;border-radius:.0935em;background:currentColor;transform-origin:50% 0;transform:rotate(24.6deg)}   /* a round terminal on the y: a pill the width of the tail, laid along it (the tail leans 24.6° at 230 px, 47 px wide on the row, its flat cut 26 px below the em box) so both edges run on and the end is a semicircle */
 .stage .wm .dot{display:inline-block;width:0.17em;height:0.17em;border-radius:50%;background:#F5C518;margin-left:0.04em;transform:scale(0);transform-origin:50% 50%}
 .stage .ep{position:absolute;left:0;right:0;top:700px;text-align:center;font-size:34px;font-weight:500;font-style:italic;letter-spacing:-0.01em;color:#4d4c48}
 .stage .ep .ew{display:inline-block;opacity:0;visibility:hidden;margin:0 0.05em}
@@ -611,6 +611,7 @@ b.y,.y{color:#F5C518}
   tl.fromTo("#title", { clipPath: "inset(44.5% 38% 44.5% 38% round 26px)" }, { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 0.733, ease: "power3.inOut", immediateRender: false }, 15.873);
   tl.fromTo("#title .kick", { y: 0 }, { y: -280, duration: 0.467, ease: "power3.out", immediateRender: false }, 16.473);
   tl.set("#title .wm", { autoAlpha: 1 }, 16.606);
+  tl.set("#title .wm .ch", { autoAlpha: 0, y: 72 }, 16.606);
   tl.fromTo("#title .wm .ch", { autoAlpha: 0, y: 72 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power4.out", stagger: 0.04, immediateRender: false }, 16.606);
   tl.fromTo("#title .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, 16.606);
   tl.fromTo("#title .wm .dot", { scale: 0 }, { scale: 1, duration: 0.333, ease: "back.out(2.4)", immediateRender: false }, 16.986);
@@ -898,6 +899,7 @@ b.y,.y{color:#F5C518}
   tl.set("#social", { autoAlpha: 0 }, 146.267);
   tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power2.inOut", immediateRender: false }, 146.36666666666667);
   tl.set("#end .brand .wm", { autoAlpha: 1 }, 146.667);
+  tl.set("#end .brand .wm .ch", { autoAlpha: 0, y: 72 }, 146.667);
   tl.fromTo("#end .brand .wm .ch", { autoAlpha: 0, y: 72 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power4.out", stagger: 0.04, immediateRender: false }, 146.667);
   tl.fromTo("#end .brand .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, 146.667);
   tl.fromTo("#end .brand .wm .dot", { scale: 0 }, { scale: 1, duration: 0.333, ease: "back.out(2.4)", immediateRender: false }, 147.047);
@@ -929,6 +931,7 @@ b.y,.y{color:#F5C518}
   tl.fromTo("#end .items .t5", { autoAlpha: 1, y: 0 }, { autoAlpha: 0, y: -16, duration: 0.42, ease: "power2.in", immediateRender: false }, 159.187);
   tl.set("#end .items .t5", { autoAlpha: 0 }, 159.607);
   tl.set("#end .final .wm", { autoAlpha: 1 }, 159.537);
+  tl.set("#end .final .wm .ch", { autoAlpha: 0, y: 72 }, 159.537);
   tl.fromTo("#end .final .wm .ch", { autoAlpha: 0, y: 72 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power4.out", stagger: 0.04, immediateRender: false }, 159.537);
   tl.fromTo("#end .final .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, 159.537);
   tl.fromTo("#end .final .wm .dot", { scale: 0 }, { scale: 1, duration: 0.333, ease: "back.out(2.4)", immediateRender: false }, 159.917);

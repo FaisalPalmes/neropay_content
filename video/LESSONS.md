@@ -63,6 +63,21 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     panel has to follow the camera or the glass lies (`applyCam` writes the same transform to every `.glass .bg`).
     And because every cut is now between two takes of one framing, consecutive clips alternate a 6–8% step or the
     cut jumps — the angle variants used to do that job.
+68. **Silent placeholders shipped as the mix.** `fetch-sounds.mjs --placeholder` writes silent files of the right
+    length so the web container can build and check; a zip of that folder went to the CDN and `sandbox.sh` skipped the
+    fetch because "fourteen files were present". v8.2 and v8.3 rendered with every effect and both music beds at −91 dB,
+    and nobody heard it until Faisal did. Rule: the sandbox always fetches; every sound file is peak-checked before the
+    render (a peak under −40 dBFS stops the run); never zip `assets/sfx` out of the web container; the fetcher reads the
+    sound's public Freesound page when there is no token, so a render never waits on the key.
+69. **"The y is cut off" was the glyph.** Blamed twice on the wipe's clip-path. A pixel comparison of the rendered frame
+    against the raw font with no clip showed the same ink rows: the Poppins y ends in a flat horizontal terminal, 26 px
+    below the em box at 230 px, and at that size it reads as a cut. Rule: before changing a clip or an inset for a
+    "cut off" letter, screenshot the same text with no clip and compare rows. The wordmark now rises letter by letter
+    (no clip-path anywhere) and the y carries a round terminal (`.yy::after`, a disc the width of the cut) so the tail
+    finishes.
+70. **A staggered `fromTo` with `immediateRender:false` shows the later letters before their turn.** Each letter sits in
+    its natural, visible state until its own tween starts, so "oPay" was on screen while "Ner" was still rising. Rule:
+    `tl.set` every staggered element to its from-state at the sequence start, then stagger.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 

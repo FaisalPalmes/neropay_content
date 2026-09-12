@@ -32,6 +32,10 @@ build cuts it into `music-intro` (5.4 s) and `music-outro` (18.6 s) with baked f
 
 ## Freesound picks used by B1 (CC0 1.0, fetched by `fetch-sounds.mjs` from `sounds.json`)
 
+No token needed since 12 Sep 2026: with `FREESOUND_TOKEN` unset the fetcher reads each sound's public page
+(`freesound.org/s/<id>/`) for the same `-hq.mp3` preview and the licence link, and still refuses anything that is not
+CC0. The API route is used when the token is present. Every file is normalised to a measured −3 dBFS peak.
+
 - `whoosh` — "Woosh" by Anthousai, 1.72s, https://freesound.org/apiv2/sounds/683096/ — panel entrance — airy, long tail
 - `swish` — "digital_whoosh_soft" by Halleck, 0.95s, https://freesound.org/apiv2/sounds/71852/ — bar rising, a row sliding in
 - `pop` — "Pop in sfx" by BaggoNotes, 0.56s, https://freesound.org/apiv2/sounds/824189/ — a chip, tag or card appearing

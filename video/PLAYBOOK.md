@@ -194,6 +194,10 @@ of adjectives. Mention the upload disclosure every time a cut is being published
 
 ---
 
+**Drive (Faisal, 12 Sep 2026):** never delete or trash a previous export note in B1 › Exports. Rename the one being
+superseded to carry its version ("B1 v8.3 — master export note"), and title the new one "latest". The MP4 itself still
+cannot pass through the Drive connector; the note carries the CDN link.
+
 ## 7. Git
 
 Develop on the session branch, and push the same commit to `main` as well — Faisal's convention;
@@ -290,7 +294,30 @@ What changed:
 | Cut | Spec | Commit |
 |---|---|---|
 | Master 16:9 v8.2 | superseded by v8.3 — always pushed in | `837253b` |
-| Master 16:9 v8.3 | 1920×1080, 164.5 s (4,934 frames), −14.8 LUFS / −1.2 dBTP, 183 MB, check clean on the real footage, frame scan 0 spikes, md5 `2ed2c81e…`, report.txt uploaded beside it | `bde751c` |
+| Master 16:9 v8.3 | superseded by v8.4 — rendered with silent sound files (LESSONS #68); picture as delivered: 164.5 s, 0 spikes, md5 `2ed2c81e…` | `bde751c` |
+
+## 12. B1 v8.4 — the sound back, the title on the beat (12 Sep 2026)
+
+Faisal's fourth review of v8: the edit is right, but "the sound effects are gone, essentially, even the intro song";
+the y "still cuts out"; animate the title text "better with the sound and beats".
+
+- **The sound was never there.** Every file in `assets/sfx` was a silent placeholder (LESSONS #68). `fetch-sounds.mjs`
+  now works without the Freesound token (the public page carries the same CC0 preview), normalises to a measured
+  −3 dBFS peak, and `sandbox.sh` refuses to render a file that peaks under −40 dBFS. The mix is unchanged: effects at
+  their v6 levels 2.5 dB down (`SFX_GAIN = 0.75`), the beds at 0.34 / 0.42 — the effects sit 15–20 dB under her voice,
+  there but barely, which is the brief. "Whisper sounds" is read as the soft whoosh/swish air on each panel's
+  entrance, not a new sound.
+- **The title on the beat.** The bed starts on "NeroPay" (beat 0); the slab expands over 22 frames, one beat at 82 bpm;
+  the letters rise one after another from beat 1 with the impact, the dot pops as the y lands; the episode line rises
+  on beat 2. The end card already sat on the same grid (`BAR2`).
+- **The y.** Not clipped — measured (LESSONS #69). Letter-by-letter rise instead of the wipe, and a round terminal on
+  the y's tail so it no longer reads as cut.
+- **Drive.** Every export note stays: the previous ones carry their version in the title, the newest is "latest".
+  Nothing in Exports is deleted or trashed again.
+
+| Cut | Spec | Commit |
+|---|---|---|
+| Master 16:9 v8.4 | (filled in on delivery) | |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 

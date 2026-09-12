@@ -221,6 +221,7 @@ const WM = '<div class="wm"><span class="wt">' + 'NeroPay'.split('').map((c) => 
 const WM_LAND = 0.38;   // when the last letter is in and the dot pops (s after `when`)
 function wordmark(stage, when) {
   js.push(`tl.set("${stage} .wm", { autoAlpha: 1 }, ${r3(when)});`);
+  js.push(`tl.set("${stage} .wm .ch", { autoAlpha: 0, y: 72 }, ${r3(when)});`);   // every letter starts hidden — a staggered tween leaves the later ones in their natural state until their turn (LESSONS #70)
   js.push(`tl.fromTo("${stage} .wm .ch", { autoAlpha: 0, y: 72 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power4.out", stagger: 0.04, immediateRender: false }, ${r3(when)});`);
   js.push(`tl.fromTo("${stage} .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, ${r3(when)});`);   // the word settles as the letters land (a transform: letter-spacing snaps, lint)
   js.push(`tl.fromTo("${stage} .wm .dot", { scale: 0 }, { scale: 1, duration: ${r3(10 / FPS)}, ease: "back.out(2.4)", immediateRender: false }, ${r3(when + WM_LAND)});`);
@@ -974,7 +975,7 @@ b.y,.y{color:${Y}}
 .stage .wm{position:absolute;left:0;right:0;top:430px;text-align:center;font-size:230px;font-weight:800;letter-spacing:-0.05em;line-height:1;color:${INK};white-space:nowrap;opacity:0;visibility:hidden}
 .stage .wm .wt{display:inline-block}
 .stage .wm .ch{display:inline-block;position:relative}
-.stage .wm .yy::after{content:"";position:absolute;left:.092em;top:.974em;width:.209em;height:.209em;border-radius:50%;background:currentColor}   /* rounds the flat terminal of the Poppins y (measured at 230 px: the tail ends 48 px wide, 26 px below the em box) */
+.stage .wm .yy::after{content:"";position:absolute;left:.211em;top:.876em;width:.187em;height:.393em;border-radius:.0935em;background:currentColor;transform-origin:50% 0;transform:rotate(24.6deg)}   /* a round terminal on the y: a pill the width of the tail, laid along it (the tail leans 24.6° at 230 px, 47 px wide on the row, its flat cut 26 px below the em box) so both edges run on and the end is a semicircle */
 .stage .wm .dot{display:inline-block;width:0.17em;height:0.17em;border-radius:50%;background:${Y};margin-left:0.04em;transform:scale(0);transform-origin:50% 50%}
 .stage .ep{position:absolute;left:0;right:0;top:700px;text-align:center;font-size:34px;font-weight:500;font-style:italic;letter-spacing:-0.01em;color:#4d4c48}
 .stage .ep .ew{display:inline-block;opacity:0;visibility:hidden;margin:0 0.05em}
