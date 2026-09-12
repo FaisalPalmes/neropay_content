@@ -7,7 +7,8 @@
 //   node fetch-sounds.mjs --into ../b1-rate-you-were-quoted/assets/sfx            # real files
 //   node fetch-sounds.mjs --into ../b1-rate-you-were-quoted/assets/sfx --placeholder
 //
-// Token: FREESOUND_TOKEN in the environment or in library/.env (git-ignored).
+// Token: FREESOUND_TOKEN in the environment or in library/.env (git-ignored). Without one the fetcher reads each
+// sound's public page for the same preview URL and licence (CC0 previews are public), so a render never needs the key.
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -35,7 +36,7 @@ async function retrying(url, want) {
   let last;
   for (let attempt = 1; attempt <= 8; attempt++) {
     try {
-      const res = await fetch(url, { headers: { 'User-Agent': 'neropay-content/1.0 (fetch-sounds.mjs)' } });
+      const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) neropay-content/1.0 (fetch-sounds.mjs)' } });
       if (res.ok) return await want(res);
       last = new Error('HTTP ' + res.status + ' for ' + url);
     } catch (e) { last = e; }
@@ -60,11 +61,22 @@ for (const [role, s] of Object.entries(sounds)) {
   }
   const raw = path.join(cache, s.id + '.mp3');
   if (!fs.existsSync(raw)) {
-    const token = process.env.FREESOUND_TOKEN; if (!token) { console.error('FREESOUND_TOKEN missing'); process.exit(1); }
-    const meta = await getJson(`https://freesound.org/apiv2/sounds/${s.id}/?fields=previews,license,name,username&token=${token}`);
-    if (!meta.previews) { console.error('freesound', s.id, JSON.stringify(meta).slice(0, 200)); process.exit(1); }
-    if (!/publicdomain\/zero/.test(meta.license)) { console.error(role, s.id, 'is not CC0:', meta.license); process.exit(1); }
-    fs.writeFileSync(raw, await getBuf(meta.previews['preview-hq-mp3']));
+    const token = process.env.FREESOUND_TOKEN;
+    let preview, licence;
+    if (token) {
+      const meta = await getJson(`https://freesound.org/apiv2/sounds/${s.id}/?fields=previews,license,name,username&token=${token}`);
+      if (!meta.previews) { console.error('freesound', s.id, JSON.stringify(meta).slice(0, 200)); process.exit(1); }
+      preview = meta.previews['preview-hq-mp3']; licence = meta.license;
+    } else {
+      /* no token (12 Sep 2026): the sound's public page carries the same hq preview URL the API hands out, and its
+         licence link — enough for a CC0 file. The API route stays first because it is the documented one. */
+      const html = await retrying(`https://freesound.org/s/${s.id}/`, async (res) => res.text());
+      preview = (html.match(/https:\/\/cdn\.freesound\.org\/previews\/[^"'\s]+-hq\.mp3/) || [])[0];
+      licence = (html.match(/creativecommons\.org\/[a-z0-9./-]+/) || [])[0] || '';
+      if (!preview) { console.error('freesound page for', s.id, 'carries no preview url — set FREESOUND_TOKEN'); process.exit(1); }
+    }
+    if (!/publicdomain\/zero/.test(licence)) { console.error(role, s.id, 'is not CC0:', licence); process.exit(1); }
+    fs.writeFileSync(raw, await getBuf(preview));
   }
   const gain = Math.pow(10, (-3 - s.peak) / 20);
   execFileSync(ffmpeg, ['-y', '-v', 'error', '-i', raw, '-af', `volume=${gain.toFixed(3)}`, '-ar', '48000', '-ac', '2', '-c:a', 'aac', '-b:a', '192k', '-f', 'mp4', target]);

@@ -49,9 +49,15 @@ mkdir -p "repo/$PROJECT/assets/clips" && rm -f "repo/$PROJECT/assets/clips/"*.mp
 cd "repo/$PROJECT"
 export HYPERFRAMES_SKIP_SKILLS=1
 HF="$ROOT/repo/video/node_modules/.bin/hyperframes"
-# the sounds: fetched from Freesound (needs FREESOUND_TOKEN) unless the fourteen files are already in place — a zip of a
-# local assets/sfx dropped in before the run does, and needs no token
-[ "$(ls assets/sfx/*.m4a 2>/dev/null | wc -l)" -ge 14 ] || node ../library/fetch-sounds.mjs --into assets/sfx
+# the sounds: always fetched from Freesound here (no token needed — fetch-sounds.mjs reads the public page), then every
+# file is checked for signal. v8.2 and v8.3 shipped with silent placeholders zipped in from the web container (LESSONS #68):
+# a file that peaks under -40 dBFS stops the run.
+node ../library/fetch-sounds.mjs --into assets/sfx
+for f in assets/sfx/*.m4a; do
+  peak=$(ffmpeg -nostdin -i "$f" -af volumedetect -f null - 2>&1 | sed -n 's/.*max_volume: \([-0-9.]*\) dB.*/\1/p')
+  awk -v v="${peak:--99}" 'BEGIN{exit !(v < -40)}' && { echo "SILENT SOUND $f (peak ${peak:-none} dB) — not rendering"; exit 1; }
+done
+echo "sounds: $(ls assets/sfx/*.m4a | wc -l), quietest peak $(for f in assets/sfx/*.m4a; do ffmpeg -nostdin -i "$f" -af volumedetect -f null - 2>&1 | sed -n 's/.*max_volume: \([-0-9.]*\) dB.*/\1/p'; done | sort -n | head -1) dB"
 node cut.mjs | tail -3                                      # real cuts from the proxies, with faded audio joins
 node build.mjs | tail -14
 "$HF" check --json > "$ROOT"/check.json 2>/dev/null || true

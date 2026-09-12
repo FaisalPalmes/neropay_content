@@ -213,15 +213,19 @@ function sfx(role, start, vol, maxLen) {
   audio.push(`<audio id="sfx-${role}-${Math.round(s * 100)}" src="${src}" data-start="${s}" data-duration="${fit}" data-track-index="${12 + (sfxN++)}" data-volume="${v}"></audio>`);
 }
 
-/* the wordmark on a light stage: the black "NeroPay" masks on left to right, the yellow full stop pops in
-   as it finishes (back.out, ten frames) and takes one slow, shallow breath — the only motion Faisal asked for */
+/* the wordmark on a light stage (v8.4): the seven letters of "NeroPay" rise into place one after another over a
+   beat, the word settles as they land, the yellow full stop pops in behind the y (back.out, ten frames) and takes one
+   slow, shallow breath. No clip-path anywhere near it: the earlier wipe was blamed twice for cutting the y, and what
+   Faisal was seeing is the flat terminal of the Poppins y itself — the .yy::after cap below rounds it (LESSONS #69). */
+const WM = '<div class="wm"><span class="wt">' + 'NeroPay'.split('').map((c) => `<span class="ch${c === 'y' ? ' yy' : ''}">${c}</span>`).join('') + '</span><i class="dot"></i></div>';
+const WM_LAND = 0.38;   // when the last letter is in and the dot pops (s after `when`)
 function wordmark(stage, when) {
   js.push(`tl.set("${stage} .wm", { autoAlpha: 1 }, ${r3(when)});`);
-  js.push(`tl.fromTo("${stage} .wm .wt", { clipPath: "inset(-20% 100% -30% 0%)" }, { clipPath: "inset(-20% 0% -30% 0%)", duration: ${r3(14 / FPS)}, ease: "none", immediateRender: false }, ${r3(when)});`);
-  js.push(`tl.fromTo("${stage} .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, ${r3(when)});`);   // the word settles as it wipes (a transform: letter-spacing snaps, lint)
-  js.push(`tl.fromTo("${stage} .wm .dot", { scale: 0 }, { scale: 1, duration: ${r3(10 / FPS)}, ease: "back.out(2.4)", immediateRender: false }, ${r3(when + 12 / FPS)});`);
+  js.push(`tl.fromTo("${stage} .wm .ch", { autoAlpha: 0, y: 72 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power4.out", stagger: 0.04, immediateRender: false }, ${r3(when)});`);
+  js.push(`tl.fromTo("${stage} .wm", { scaleX: 1.035, y: 14, transformOrigin: "50% 50%" }, { scaleX: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false }, ${r3(when)});`);   // the word settles as the letters land (a transform: letter-spacing snaps, lint)
+  js.push(`tl.fromTo("${stage} .wm .dot", { scale: 0 }, { scale: 1, duration: ${r3(10 / FPS)}, ease: "back.out(2.4)", immediateRender: false }, ${r3(when + WM_LAND)});`);
   js.push(`tl.fromTo("${stage} .wm .dot", { scale: 1 }, { scale: 1.12, duration: 0.7, ease: "sine.inOut", yoyo: true, repeat: 1, immediateRender: false }, ${r3(when + 0.9)});`);
-  sfx('pop', r3(when + 12 / FPS), 0.12);
+  sfx('pop', r3(when + WM_LAND), 0.12);
 }
 
 /* ---------- cards ----------
@@ -384,7 +388,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   stages.push(`<div id="title" class="clip stage" data-start="${seedAt}" data-duration="${r3(tEnd - seedAt)}" data-track-index="4">
     <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
     <div class="kick"><b>Explained by</b></div>
-    <div class="wm"><span class="wt">NeroPay</span><i class="dot"></i></div>
+    ${WM}
     <div class="ep">${ep.split(' ').map((w) => `<span class="ew">${esc(w)}</span>`).join(' ')}</div>
   </div>`);
   const SEED = 'inset(44.5% 38% 44.5% 38% round 26px)', FULL = 'inset(0% 0% 0% 0% round 0px)';
@@ -396,7 +400,7 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   js.push(`tl.fromTo("#title .kick", { y: 0 }, { y: -280, duration: ${r3(14 / FPS)}, ease: "power3.out", immediateRender: false }, ${r3(landAt - 4 / FPS)});`);
   wordmark('#title', landAt);
   sfx('impact', landAt, 0.28);
-  ep.split(' ').forEach((_, i) => js.push(`tl.fromTo("#title .ep .ew:nth-child(${i + 1})", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: ${r3(12 / FPS)}, ease: "power3.out", immediateRender: false }, ${r3(landAt + 0.45 + i * 3 / FPS)});`));
+  ep.split(' ').forEach((_, i) => js.push(`tl.fromTo("#title .ep .ew:nth-child(${i + 1})", { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: ${r3(12 / FPS)}, ease: "power3.out", immediateRender: false }, ${r3(landAt + BEAT + i * 3 / FPS)});`));
   js.push(`tl.set("#title", { autoAlpha: 0 }, ${tEnd});`);
   sfx('riser', r3(landAt - SOUNDS.sounds.riser.duration), 0.26);
   sfx('music-intro', expandAt, 0.34);
@@ -708,9 +712,9 @@ const CX = W / 2, PY = V ? 200 : 96;   // vertical: the top band starts under th
   // three frames past the root end: the renderer floors every boundary to a frame (LESSONS.md #56)
   stages.push(`<div id="end" class="clip stage" data-start="${a}" data-duration="${r3(d + 3 / FPS)}" data-track-index="4">
     <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
-    <div class="layer brand"><div class="wm"><span class="wt">NeroPay</span><i class="dot"></i></div><span class="sub cue">Subscribe for more</span></div>
+    <div class="layer brand">${WM}<span class="sub cue">Subscribe for more</span></div>
     <div class="layer items"><div class="kick2 cue"><b>What comes with NeroPay</b></div><div class="grid">${offer.map((t, i) => `<div class="tile t${i} cue"><i></i><span>${esc(t)}</span></div>`).join('')}</div></div>
-    <div class="layer final"><div class="wm"><span class="wt">NeroPay</span><i class="dot"></i></div><span class="sub cue">Subscribe for more</span><p class="concede cue">${esc(concede)}</p></div>
+    <div class="layer final">${WM}<span class="sub cue">Subscribe for more</span><p class="concede cue">${esc(concede)}</p></div>
   </div>`);
   const g = (k) => r3(a + k * BAR2), land = r3(a + 0.3);
   js.push(`tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power2.inOut", immediateRender: false }, ${a});`);
@@ -969,6 +973,8 @@ b.y,.y{color:${Y}}
 .stage .kick b,.stage .kick2 b{display:inline-block;font-size:28px;font-weight:600;text-transform:uppercase;letter-spacing:0.36em;padding-left:0.36em;color:#6d6c68;line-height:1.3}
 .stage .wm{position:absolute;left:0;right:0;top:430px;text-align:center;font-size:230px;font-weight:800;letter-spacing:-0.05em;line-height:1;color:${INK};white-space:nowrap;opacity:0;visibility:hidden}
 .stage .wm .wt{display:inline-block}
+.stage .wm .ch{display:inline-block;position:relative}
+.stage .wm .yy::after{content:"";position:absolute;left:.092em;top:.974em;width:.209em;height:.209em;border-radius:50%;background:currentColor}   /* rounds the flat terminal of the Poppins y (measured at 230 px: the tail ends 48 px wide, 26 px below the em box) */
 .stage .wm .dot{display:inline-block;width:0.17em;height:0.17em;border-radius:50%;background:${Y};margin-left:0.04em;transform:scale(0);transform-origin:50% 50%}
 .stage .ep{position:absolute;left:0;right:0;top:700px;text-align:center;font-size:34px;font-weight:500;font-style:italic;letter-spacing:-0.01em;color:#4d4c48}
 .stage .ep .ew{display:inline-block;opacity:0;visibility:hidden;margin:0 0.05em}
