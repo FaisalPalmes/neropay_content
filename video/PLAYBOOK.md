@@ -317,7 +317,7 @@ the y "still cuts out"; animate the title text "better with the sound and beats"
 
 | Cut | Spec | Commit |
 |---|---|---|
-| Master 16:9 v8.4 | (filled in on delivery) | |
+| Master 16:9 v8.4 | 1920×1080, 164.5 s (4,934 frames), −15.2 LUFS / −1.3 dBTP, 184 MB, sounds fetched and gated (quietest peak −5.8 dB), check clean on the real footage, frame scan 0 spikes, md5 `c6ad7ec5…`, report.txt (with the sound-check windows) uploaded beside it | `ed6a9bd` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
