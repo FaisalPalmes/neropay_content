@@ -83,6 +83,13 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     sight: no blank space top or bottom, crop into the footage, the overlays may sit over her. Rule: a feed cut fills
     the frame with the footage; "nothing overlapping" means the graphics do not fight each other or the captions, not
     that the footage is shrunk to make room. Ask which before building a layout that sacrifices the picture.
+72. **The full-bleed 4:5 render still had the band, and it was uploaded before anyone looked.** The AD block
+    overrode the footage element's `left` and `width` but inherited the vertical cut's `top:640px;height:600px`, so
+    the real-footage render showed the 16:9 frame as a strip with black above — and the video, the sheets and the
+    ledger row all went up before the check sheet was reassembled and viewed. Rule: a layout mode sets all four sides
+    of the footage box, never two; and the frames sheet is looked at *before* `media_confirm` and before the ledger
+    row is written. A placeholder snapshot (`npx hyperframes snapshot . --at …`) shows the geometry in a minute —
+    run it for every new orientation before the sandbox.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 
