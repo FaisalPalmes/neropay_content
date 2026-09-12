@@ -78,6 +78,11 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
 70. **A staggered `fromTo` with `immediateRender:false` shows the later letters before their turn.** Each letter sits in
     its natural, visible state until its own tween starts, so "oPay" was on screen while "Ner" was still rising. Rule:
     `tl.set` every staggered element to its from-state at the sequence start, then stagger.
+71. **A "nothing overlapping" brief for 4:5 did not mean bands.** The first 4:5 cut letterboxed the 16:9 footage into a
+    middle band with the graphics above and the captions below, so nothing touched her — and Faisal rejected it on
+    sight: no blank space top or bottom, crop into the footage, the overlays may sit over her. Rule: a feed cut fills
+    the frame with the footage; "nothing overlapping" means the graphics do not fight each other or the captions, not
+    that the footage is shrunk to make room. Ask which before building a layout that sacrifices the picture.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 

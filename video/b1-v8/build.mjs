@@ -27,13 +27,15 @@ const W = (V || AD) ? 1080 : 1920, H = V ? 1920 : AD ? 1350 : 1080, FPS = 30, Y 
    Every overlay lives in that top band, the captions sit over her chest, all inside the Reels/TikTok safe
    area (nothing in the bottom 440px, nothing hugging the right edge). */
 const FT = V ? 570 : AD ? 640 : 0, FH = V ? 1350 : AD ? 600 : H;
-/* 4:5 (AD): three bands, nothing overlapping. The 16:9 footage sits in the middle band (FT..FT+FH), Ava centred; a
-   blurred, darkened copy of the clip fills the whole frame behind it; every overlay lives in the band above, drawn
-   at OS scale in a virtual space VW wide (so the panels keep their layouts and simply come out smaller), each one
-   centred; captions sit under the footage on the fill. The camera keeps the alternating 6 % punch on cuts and
-   nothing else — she is never pushed aside because nothing shares her band. */
-const OS = AD ? 0.80 : 1, VW = Math.round(W / OS), VB = Math.round(FT / OS);   // overlay scale, virtual width, virtual band height
-const adX = (w) => Math.round((VW - w) / 2), adY = (h) => Math.max(5, Math.round((VB - h) / 2));
+/* 4:5 (AD, Faisal 12 Sep, second brief): the 16:9 footage covers the whole 4:5 frame — scaled to the frame's height
+   (2400 wide, centred, so 660 px of it hangs off each side) with Ava centred. No bands, no fill. The camera works as in
+   the master: flat unless an overlay is up, then a small push that slides her to one side while the panel takes the
+   other column, over the footage. The overlays are drawn at OS scale in a virtual space VW×VH so the panels keep their
+   layouts and come out smaller; captions sit at the bottom middle, smaller. */
+const FW = AD ? 2400 : W, FL = AD ? -660 : 0;   // the footage element: width and left offset on the frame
+const OS = AD ? 0.7 : 1, VW = Math.round(W / OS), VH = Math.round(H / OS);
+const COL_L = Math.round(20 / OS), COL_R = Math.round(1060 / OS);   // the two overlay columns in virtual px (20 px in from each frame edge)
+const adY = (h) => Math.round(((H - h * OS) / 2 - 60) / OS);       // a panel's y: centred on the frame, lifted 60 px
 const L = (ad, vert, land) => (AD ? ad : V ? vert : land);
 const WORDS = JSON.parse(fs.readFileSync(path.join(HERE, 'data/words.json'), 'utf8'));
 const SCRIPT = JSON.parse(fs.readFileSync(path.join(HERE, 'data/script.json'), 'utf8'));
@@ -133,7 +135,7 @@ function phrases(words) {
 }
 
 /* ---------- html pieces ---------- */
-const html = [], js = [], audio = [], stages = [], fills = [];   // fills: the 4:5 blurred fill layer, outside the footage window   // stages: the title and end cards, outside the camera
+const html = [], js = [], audio = [], stages = [];   // stages: the title and end cards, outside the camera
 let wordIndex = 0;
 const WORDLIST = [];
 
@@ -159,7 +161,7 @@ function bgFor(id, start, end, x, y) {
     const blur = s.src.replace(/\.mp4$/, '.blur.mp4'), has = fs.existsSync(path.join(HERE, blur));
     const attrs = `src="${has ? blur : s.src}" data-start="${a}" data-duration="${r3(b - a)}" data-media-start="${r3(s.mediaStart + a - s.start)}" data-track-index="1" muted playsinline`;
     const fillCopy = `<video id="bgf-${id}-${s.id}" class="bgv f ${has ? 'lo' : 'hi'}" ${attrs}></video>`, footCopy = `<video id="bg-${id}-${s.id}" class="bgv ${has ? 'lo' : 'hi'}" ${attrs}></video>`;
-    return AD ? fillCopy : (V ? fillCopy : '') + footCopy;   // 4:5: the panels sit over the fill only
+    return (V ? fillCopy : '') + footCopy;
   });
   return `<div class="bg" style="left:${-x}px;top:${-y}px">${vids.join('')}</div>`;
 }
@@ -257,7 +259,7 @@ const leaves = (sel) => `${sel} .face, ${sel} .edge`;
    clamped to what the scale covers so the frame edge never shows. Segments run back to back. */
 const cam = [];
 const clampCam = (c) => {
-  const mx = (c.scale - 1) * W / 2, my = (c.scale - 1) * H / 2;
+  const mx = (c.scale * FW - W) / 2, my = (c.scale - 1) * H / 2;
   return { scale: c.scale, x: r3(Math.max(-mx, Math.min(mx, c.x))), y: r3(Math.max(-my, Math.min(my, c.y))) };
 };
 function move(t0, t1, from, to, ease = 'power2.inOut') { if (t1 - t0 < 0.05) return; cam.push({ t0: r3(t0), t1: r3(t1), from: clampCam(from), to: clampCam(to), ease }); }
@@ -297,9 +299,9 @@ segs.forEach((s, i) => {
 });
 for (const s of segs) {
   if (s.kind !== 'clip') continue;
-  if (V || AD) {
+  if (V) {
     const blur = s.src.replace(/\.mp4$/, '.blur.mp4'), has = fs.existsSync(path.join(HERE, blur));
-    (AD ? fills : html).push(`<video id="f-${s.id}" class="clip fill ${has ? 'lo' : 'hi'}" src="${has ? blur : s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="2" muted playsinline></video>`);
+    html.push(`<video id="f-${s.id}" class="clip fill ${has ? 'lo' : 'hi'}" src="${has ? blur : s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="2" muted playsinline></video>`);
   }
   html.push(`<video id="v-${s.id}" class="clip" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="0" muted playsinline></video>`);
   audio.push(`<audio id="a-${s.id}" src="${s.src}" data-start="${s.start}" data-duration="${s.dur}" data-media-start="${s.mediaStart}" data-track-index="10" data-volume="1"></audio>`);
@@ -319,16 +321,16 @@ for (const s of segs) {
 }
 
 if (V) html.push(`<div id="seam"></div>`);   // the shadow the footage casts up into the fill band
-const PW = L(920, 920, 760), PX = L(adX(PW), 80, 1110);   // right column (vertical: the one column, in the top band)
+const PW = L(920, 920, 760), PX = L(COL_R - PW, 80, 1110);   // right column (vertical: the one column, in the top band)
 /* Ava's side per shot comes from data/angles.json (angles.mjs cuts the proxy to it); every panel takes the other
    column (Faisal, 11 Sep: nothing over her face). colX mirrors a right-column x when she is on the right, and the
    lean follows the column — the near edge comes forward, so left leans positive, right negative. */
-const AVA = (id) => ((V || AD) ? 'C' : cropFor(id).ava);
-const colX = (id, xRight, w) => (AVA(id) === 'R' ? W - xRight - w : xRight);
+const AVA = (id) => (V ? 'C' : cropFor(id).ava);
+const colX = (id, xRight, w) => (AD ? (AVA(id) === 'R' ? COL_L : COL_R - w) : AVA(id) === 'R' ? W - xRight - w : xRight);   // 4:5: the column she is not in, 20 px in from the edge
 const colLean = (id, right) => (AVA(id) === 'R' ? Math.abs(right) : -Math.abs(right));
 const FACE = (id) => cropFor(id).face;   // her face on the 1920×1080 proxy
-const PLATE = L({ x: 700, y: 690 }, { x: 730, y: 1130 }, { x: FACE('B1-01').x + 250, y: FACE('B1-01').y + 90 });   // 4:5: top right of the footage band, beside her head   // name plate beside her neck in the FRONT frame; it rides with the footage (inWorld)
-const LX = L(PX, 80, 50);               // left column — where she points
+const PLATE = L({ x: 690, y: 470 }, { x: 730, y: 1130 }, { x: FACE('B1-01').x + 250, y: FACE('B1-01').y + 90 });   // 4:5: beside her head with her centred   // name plate beside her neck in the FRONT frame; it rides with the footage (inWorld)
+const LX = L(COL_L, 80, 50);               // left column — where she points
 const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts under the app chrome
 
 /* ---------- 1 · hook: 0.5%? --- B1-01 ---------- */
@@ -339,7 +341,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
     inner: `<div class="plate cue"><b></b><div><strong>Ava</strong><span>NeroPay</span></div></div>` });
   rise('#plate .plate', a + 0.4, 8);
   const tMaybe = findWord('B1-01', 'maybe'), tCent = findWord('B1-01', 'cent'), tNot = findWord('B1-01', 'not');
-  const cw = L(500, 500, 560), ch = L(230, 230, 250), cx = L(adX(500), 290, colX('B1-01', 1180, cw)), cy = L(adY(230), 600, 200);   // a size up on v6: Faisal asked for the 0.5% large
+  const cw = L(500, 500, 560), ch = L(230, 230, 250), cx = L(colX('B1-01', 0, cw), 290, colX('B1-01', 1180, cw)), cy = L(adY(230), 600, 200);   // a size up on v6: Faisal asked for the 0.5% large
   glass('chip', { start: tMaybe - 0.55, dur: r3(b - tMaybe + 0.55), x: cx, y: cy, w: cw, h: ch, cueAt: tMaybe, lean: colLean('B1-01', -7),
     inner: `<div class="chip"><span class="big cue">0.5%<i class="strike"></i></span><span class="q cue">?</span></div>` });
   rise('#chip .big', tMaybe, 18);
@@ -356,7 +358,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 {
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
-  const FX = L(adX(720), 180, colX('B1-02', 1120, 720)), FY = L(adY(560), 300, 120);
+  const FX = L(colX('B1-02', 0, 720), 180, colX('B1-02', 1120, 720)), FY = L(adY(560), 300, 120);
   html.push(`<div id="fan" class="space ov" style="left:${FX}px;top:${FY}px;width:720px;height:560px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>`);
   /* the first card lands from depth; three more slide out behind it, each deeper than the last, so the
      slow turn of the group gives them parallax */
@@ -457,9 +459,9 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 {
   const s = S['B1-05'], a = s.start, b = endOf('B1-05');
   const tWhat = findWord('B1-05', 'whatever'), tPocket = findWord('B1-05', 'pocket'), tRate = findWord('B1-05', 'rate');
-  const HX = L(adX(740), 230, colX('B1-05', 1120, 740)), HY = L(0, 300, 20), c0 = r3(Math.max(a, tWhat - 0.3));
+  const HX = L(colX('B1-05', 0, 740), 230, colX('B1-05', 1120, 740)), HY = L(adY(640) - 80, 300, 20), c0 = r3(Math.max(a, tWhat - 0.3));
   html.push(`<div id="hand" class="space ov" style="left:${HX}px;top:${HY}px;width:740px;height:640px"><div class="orbit">${[0, 1, 2, 3].map((i) => cardHtml(i)).join('')}</div></div>
-  <div id="bigline" class="bigline ov"${(V || AD) ? '' : ` style="left:${HX + 30}px"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
+  <div id="bigline" class="bigline ov"${V ? '' : ` style="left:${HX + 30}px${AD ? `;top:${HY + 470}px;width:700px` : ''}"`}><span class="b1 cue">their card.</span><span class="b2 cue">your rate.</span></div>`);
   camWindow(c0, b);
   [0, 1, 2, 3].forEach((i) => {
     const t0 = r3(c0 + i * 0.1);
@@ -493,8 +495,8 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
   const t70 = findWord('B1-07', 'seventy'), tCred = findWord('B1-07', 'credit'), tComp = findWord('B1-07', 'company'), tOver = findWord('B1-07', 'overseas');
   const rows = [['Consumer debit', 71, '0.50%'], ['Consumer credit', 20, '1.20%'], ['Business / commercial', 5, '2.60%'], ['International / non-UK', 2, '2.90%']];
   const py = PY, ph = 690, st = r3(Math.max(a6, tHere - 0.6));
-  const mx = L(PX, LX, colX('B1-06', PX, PW));
-  glass('month', { start: st, dur: r3(b7 - st), x: mx, y: py, w: PW, h: ph, cueAt: tHere, lean: L(6, 7, colLean('B1-06', -7)),
+  const mx = V ? LX : colX('B1-06', PX, PW);
+  glass('month', { start: st, dur: r3(b7 - st), x: mx, y: py, w: PW, h: ph, cueAt: tHere, lean: V ? 7 : colLean('B1-06', -7),
     inner: `<div class="pad"><span class="th cue">a made-up month, one restaurant</span>
       <div class="stats"><div class="stat s0 cue"><b>£0</b><span>card turnover</span></div><div class="stat s1 cue"><b>0</b><span>card payments</span></div><div class="stat s2 cue"><b>0.00%</b><span>the quoted rate</span></div></div>
       <div class="split">${rows.map(([n, pct, r], i) => `<div class="srow q${i} cue"><div class="lab"><span>${n}</span><b>${r}</b></div><div class="track"><i style="width:${pct}%"></i><em>${pct}%</em></div></div>`).join('')}</div>
@@ -542,8 +544,8 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 {
   const s = S['B1-10'], a = s.start, b = endOf('B1-10');
   const tAdd = findWord('B1-10', 'add'), tDivide = findWord('B1-10', 'divide'), tMultiply = findWord('B1-10', 'multiply'), tHundred = findWord('B1-10', 'hundred');
-  const fw = 920, fx = L(adX(fw), LX, colX('B1-10', W - LX - fw, fw)), fy = L(adY(600), 240, 170), fh = 600, st = r3(Math.max(a, tAdd - 0.7));
-  glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: L(6, 8, colLean('B1-10', -8)),
+  const fw = 920, fx = V ? LX : colX('B1-10', W - LX - fw, fw), fy = L(adY(600), 240, 170), fh = 600, st = r3(Math.max(a, tAdd - 0.7));
+  glass('formula', { start: st, dur: r3(b - st), x: fx, y: fy, w: fw, h: fh, cueAt: tAdd, lean: V ? 8 : colLean('B1-10', -8),
     inner: `<div class="pad formula"><span class="th cue">your effective rate</span>
       <div class="frac">
         <div class="row num cue"><i class="badge">£</i><span>every charge on the statement</span></div>
@@ -571,7 +573,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
   const a11 = S['B1-11'].start, b11 = endOf('B1-11'), a12 = S['B1-12'].start, b12 = endOf('B1-12');
   const tHere = findWord('B1-11', 'here'), tThree = findWord('B1-11', 'three'), tTwenty = findWord('B1-11', 'twenty'), tOne = findWord('B1-11', 'one');
   const tQuoted = findWord('B1-12', 'quoted'), tActually = findWord('B1-12', 'actually'), tDouble = findWord('B1-12', 'double');
-  const sw = L(920, 920, 840), sx = L(adX(920), 80, colX('B1-11', 1040, sw)), sy = L(adY(740), 190, 50), sh = 740;
+  const sw = L(920, 920, 840), sx = V ? 80 : colX('B1-11', 1040, sw), sy = L(adY(740), 190, 50), sh = 740;
   glass('sum', { start: a11, dur: r3(b12 - a11), x: sx, y: sy, w: sw, h: sh, cueAt: tHere, lean: colLean('B1-11', -6),
     inner: `<div class="pad sum"><span class="th cue">what that month really cost</span>
       <div class="sline l0 cue"><span>all charges</span><b>£0.00</b></div>
@@ -646,7 +648,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
   const tAsk = findWord('B1-15', 'ask'), tCredit = findWord('B1-15', 'credit'), tCompany = findWord('B1-15', 'company'), tAmex = findWord('B1-15', 'amex'), tPayout = findWord('B1-15', 'payout');
   const tPci = findWord('B1-16', 'pci'), tAccount = findWord('B1-16', 'account'), tMinimum = findWord('B1-16', 'minimum'), tEffective = findWord('B1-16', 'effective'), tOnly = findWord('B1-16', 'only');
   const items = ['What do credit cards cost?', 'And business cards?', 'And American Express?', 'What does each payout cost?', 'Is there a PCI fee?', 'An account fee?', 'A minimum monthly charge?', 'So what is my effective rate?'];
-  const qw = L(920, 920, 860), qx = L(adX(920), 80, colX('B1-15', 1020, qw)), qy = L(adY(760), 180, 60), qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
+  const qw = L(920, 920, 860), qx = V ? 80 : colX('B1-15', 1020, qw), qy = L(adY(760), 180, 60), qh = 760, st = r3(Math.max(a15, tAsk - 0.7));
   glass('ask', { start: st, dur: r3(b16 - st), x: qx, y: qy, w: qw, h: qh, cueAt: tAsk, lean: colLean('B1-15', -7),
     inner: `<div class="pad"><span class="th cue">ask any provider</span>${items.map((q, i) => `<div class="qrow k${i}${i === 7 ? ' last' : ''} cue"><i></i><span>${q}</span></div>`).join('')}</div>` });
   [tCredit, tCompany, tAmex, tPayout, tPci, tAccount, tMinimum, tEffective].forEach((when, i) => {
@@ -666,7 +668,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 {
   const s = S['B1-17'], a = s.start, b = endOf('B1-17');
   const tTwo = findWord('B1-17', 'two'), tStatement = findWord('B1-17', 'statement'), tCalc = findWord('B1-17', 'calculator');
-  const tw = L(880, 880, 800), tx = L(adX(880), 100, colX('B1-17', PX - 20, tw)), ty = L(adY(300), 560, 170), th = 300;
+  const tw = L(880, 880, 800), tx = V ? 100 : colX('B1-17', PX - 20, tw), ty = L(adY(300), 560, 170), th = 300;
   glass('two', { start: a, dur: r3(b - a), x: tx, y: ty, w: tw, h: th, cueAt: tTwo + 0.05, lean: colLean('B1-17', -6),
     inner: `<div class="pad twomin"><b class="n cue">2 min</b><div class="lines"><span class="l1 cue"><i></i>last month's statement</span><span class="l2 cue"><i></i>+ a calculator</span></div></div>` });
   js.push(`tl.fromTo("#two .n", { autoAlpha: 0, scale: 0.5, y: 20 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, ${r3(tTwo + 0.05)});`);
@@ -687,7 +689,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
     yt: '<svg viewBox="0 0 24 24"><rect x="1.5" y="5" width="21" height="14" rx="4.5" fill="#fff"/><path d="M10 8.8l5.2 3.2L10 15.2z" fill="#141416"/></svg>',
     tt: '<svg viewBox="0 0 24 24"><path d="M13.3 3h3.2a4.2 4.2 0 0 0 4.2 4.1v3.2a7.4 7.4 0 0 1-4.2-1.4v6.2a5.6 5.6 0 1 1-5.6-5.6h.6v3.3h-.6a2.3 2.3 0 1 0 2.4 2.3z" fill="#fff"/></svg>',
   };
-  const socX = L(adX(760), 330, colX('B1-18', PX + 20, 760));
+  const socX = V ? 330 : colX('B1-18', PX + 20, 760);
   html.push(`<div id="social" class="social ov" style="left:${socX}px;top:${L(adY(260), 640, 250)}px;width:760px;height:260px">
     <span class="smark"><b>Nero</b><em>Pay</em></span><i class="wipe"></i>
     <div class="icons">${['ig', 'li', 'yt', 'tt'].map((k) => `<i class="ic ${k} cue">${ICON[k]}</i>`).join('')}</div></div>`);
@@ -756,7 +758,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
    alternate framing so a cut is never the same framing twice (a 6 % punch when flat, 8 % when pushed): flat clips
    sit at 1.0 or 1.06 and do not move; pushed clips creep 4 % over the window, in on even clips, out on odd. */
 {
-  const SIDE_S = 1.42, PUNCH_FLAT = 0.06, PUNCH_SIDE = 0.08, CREEP = 0.04, TX = 384, TY = 20;
+  const SIDE_S = AD ? 1.12 : 1.42, PUNCH_FLAT = 0.06, PUNCH_SIDE = AD ? 0.04 : 0.08, CREEP = AD ? 0.03 : 0.04, TX = AD ? 216 : 384, TY = AD ? 0 : 20;   // 4:5: the footage is wider than the frame, so a small push slides her to 30 % without a hard zoom
   const side = (ava, sc) => ({ scale: sc, x: ava === 'L' ? -TX : ava === 'R' ? TX : 0, y: TY });
   const wins = CAMS.slice().sort((p, q) => p.start - q.start).reduce((acc, w) => {   // union of overlapping windows
     const last = acc[acc.length - 1];
@@ -764,8 +766,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
     return acc;
   }, []);
   const clips = segs.filter((s) => s.kind === 'clip');
-  if (AD) clips.forEach((s, k) => { const a = s.start, b = r3(s.start + s.dur), fs = k % 2 ? 1 + PUNCH_FLAT : 1; move(a, b, flat(fs), flat(fs), 'none'); });
-  else clips.forEach((s, k) => {
+  clips.forEach((s, k) => {
     const a = s.start, b = r3(s.start + s.dur), odd = k % 2 === 1, ava = AVA(s.id);
     const flatS = odd ? 1 + PUNCH_FLAT : 1.0;
     const s0 = odd ? SIDE_S + PUNCH_SIDE + CREEP : SIDE_S, s1 = odd ? SIDE_S + PUNCH_SIDE : SIDE_S + CREEP;
@@ -810,7 +811,7 @@ const page = `<!doctype html>
 html,body{width:${W}px;height:${H}px;overflow:hidden;background:#141416}
 body{font-family:Poppins,"Helvetica Neue",Arial,sans-serif;color:#fff;letter-spacing:-0.03em}
 #root{position:relative;width:${W}px;height:${H}px;overflow:hidden;background:#141416}
-#world{position:absolute;inset:0;transform-origin:${AD ? `${W / 2}px ${FT + FH / 2}px` : '50% 50%'}}
+#world{position:absolute;inset:0;transform-origin:50% 50%}
 #ovl{position:absolute;inset:0}
 video.clip{position:absolute;left:0;top:${FT}px;width:${W}px;height:${FH}px;object-fit:cover}
 .clip{position:absolute}
@@ -1002,10 +1003,10 @@ b.y,.y{color:${Y}}
   background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,255,255,.72));box-shadow:inset 0 1.5px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.95),0 10px 30px rgba(20,20,22,.05)}
 .stage .tile i{display:block;flex:none;width:16px;height:16px;border-radius:50%;background:${Y}}
 .stage .tile span{display:block;font-size:40px;font-weight:700;letter-spacing:-0.03em;color:${INK};line-height:1.1}
-#floor{position:absolute;left:0;right:0;bottom:0;height:${L(0, 520, 300)}px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
+#floor{position:absolute;left:0;right:0;bottom:0;height:${L(340, 520, 300)}px;pointer-events:none;background:linear-gradient(180deg,rgba(10,10,12,0) 0%,rgba(10,10,12,.28) 45%,rgba(10,10,12,.5) 100%)}
 /* captions: no plate, no shadow, tight Poppins, yellow on the spoken word */
-.cap{left:0;right:0;width:${W}px;bottom:${L(22, 400, 118)}px;display:flex;justify-content:center;pointer-events:none}
-.cap .line{max-width:${L(980, 900, 1500)}px;text-align:center;font-size:${L(40, 54, 56)}px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
+.cap{left:0;right:0;width:${W}px;bottom:${L(64, 400, 118)}px;display:flex;justify-content:center;pointer-events:none}
+.cap .line{max-width:${L(960, 900, 1500)}px;text-align:center;font-size:${L(40, 54, 56)}px;font-weight:600;line-height:1.16;letter-spacing:-0.035em;text-wrap:balance}
 .cap .w{display:inline-block;color:rgba(255,255,255,.86);margin:0 0.03em}
 .cap .w.em{font-style:italic;font-weight:800;font-size:1.06em}
 ${V ? `/* vertical: the fill band, the seam, the type that was sized for a wide frame */
@@ -1028,17 +1029,11 @@ video.clip.fill{top:0;height:${H}px}
 .estage .tile{height:106px}
 .estage .tile span{font-size:36px}
 .social .smark{font-size:112px}` : ''}${AD ? `
-/* 4:5 Meta feed: the fill behind everything, the footage window, the overlay layer scaled into the top band, the cards re-set for a tall frame */
-#fills{position:absolute;inset:0}
-video.clip.fill{top:0;height:${H}px}
-.fill.lo{filter:blur(6px) saturate(1.15) brightness(.42)}
-.fill.hi{filter:blur(28px) saturate(1.15) brightness(.42)}
-#fwin{position:absolute;inset:0;clip-path:inset(${FT}px 0 ${H - FT - FH}px 0)}
-#ovl{transform:scale(${OS});transform-origin:0 0;width:${VW}px;height:${Math.round(H / OS)}px}
-.glass .bg{width:${VW}px;height:${Math.round(H / OS)}px;transform-origin:${VW / 2}px ${Math.round(H / OS / 2)}px}
-.bgv{width:${VW}px}
-.bgv.f{top:0;height:${Math.round(H / OS)}px}
-.bigline{left:0;width:${VW}px;top:${VB - 200}px;align-items:center;text-align:center}
+/* 4:5 Meta feed: the footage covers the frame, the overlay layer is scaled, the cards re-set for a tall frame */
+video.clip{left:${FL}px;width:${FW}px}
+#ovl{transform:scale(${OS});transform-origin:0 0;width:${VW}px;height:${VH}px}
+.glass .bg{width:${VW}px;height:${VH}px;transform-origin:${Math.round(W / 2 / OS)}px ${Math.round(H / 2 / OS)}px}
+.bgv{left:${Math.round(FL / OS)}px;top:0;width:${Math.round(FW / OS)}px;height:${VH}px}
 .bigline span{font-size:72px}
 .stage .kick,.stage .kick2{top:700px}
 .stage .wm{top:490px;font-size:150px}
@@ -1055,9 +1050,9 @@ video.clip.fill{top:0;height:${H}px}
 </head>
 <body>
 <div id="root" data-composition-id="b1" data-start="0" data-duration="${TOTAL}" data-width="${W}" data-height="${H}" data-fps="${FPS}">
-${AD ? `  <div id="fills">\n${fills.map((h) => '    ' + h).join('\n')}\n  </div>\n  <div id="fwin">\n` : ''}  <div id="world">
+  <div id="world">
 ${html.filter((h) => !/class="clip cap"/.test(h) && !/class="[^"]* ov"/.test(h)).map((h) => '    ' + h).join('\n')}
-  </div>${AD ? '\n  </div>' : ''}
+  </div>
   <div id="ovl">
 ${html.filter((h) => /class="[^"]* ov"/.test(h)).map((h) => '    ' + h).join('\n')}
   </div>
@@ -1075,7 +1070,7 @@ ${audio.map((a) => '  ' + a).join('\n')}
   function applyCam() {
     const t = "translate(" + cam.x + "px, " + cam.y + "px) scale(" + cam.scale + ")";
     world.style.transform = t;
-    for (let i = 0; i < backs.length; i++) backs[i].style.transform = t;
+    for (let i = 0; i < backs.length; i++) backs[i].style.transform = ${AD ? `"translate(" + (cam.x * ${r3(1 / OS)}) + "px, " + (cam.y * ${r3(1 / OS)}) + "px) scale(" + cam.scale + ")"` : 't'};${AD ? '   // the panel copies live in the scaled overlay layer: their translation is in virtual px' : ''}
   }
   applyCam();
 ${camCode.split('\n').map((l) => '  ' + l).join('\n')}
