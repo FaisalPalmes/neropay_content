@@ -196,7 +196,12 @@ of adjectives. Mention the upload disclosure every time a cut is being published
 
 **Drive (Faisal, 12 Sep 2026):** never delete or trash a previous export note in B1 › Exports. Rename the one being
 superseded to carry its version ("B1 v8.3 — master export note"), and title the new one "latest". The MP4 itself still
-cannot pass through the Drive connector; the note carries the CDN link.
+cannot pass through the Drive connector; the note carries the CDN link. Faisal asked for the MP4s themselves in Drive
+on 12 Sep: not possible from a session — the connector only carries small text, and the web container's egress policy
+denies the Higgsfield CDN host (403 at CONNECT), so the bytes cannot even be fetched here. The folder B1 › Exports ›
+"B1 — MP4 exports" holds a READ ME with the two links and the filenames to save them under
+("NeroPay B1 — Meta Ads 4x5 (1080x1350) v8.4.mp4", "NeroPay B1 — YouTube 16x9 (1920x1080) v8.4 master.mp4");
+Faisal drops the files in. Name any future export the same way: product, episode, platform, aspect, frame size, version.
 
 ## 7. Git
 
