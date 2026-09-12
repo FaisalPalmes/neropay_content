@@ -336,7 +336,7 @@ carried the 9:16 band: the AD block set the footage element's left and width but
 | Master 16:9 v8.4 | 1920×1080, 164.5 s (4,934 frames), −15.2 LUFS / −1.3 dBTP, 184 MB, sounds fetched and gated (quietest peak −5.8 dB), check clean on the real footage, frame scan 0 spikes, md5 `c6ad7ec5…`, report.txt (with the sound-check windows) uploaded beside it | `ed6a9bd` |
 | Feed 4:5 v8.4 (banded) | superseded the same day — footage in a middle band, graphics above; Faisal: no blank space, crop into the footage. 164.5 s, 0 spikes, md5 `6d991ade…` | `a26d139` |
 | Feed 4:5 v8.4 (full-bleed, first render) | not delivered — the footage box kept the 9:16 band (top 640, height 600), seen on the real-footage sheet after upload. 164.5 s, 0 spikes, md5 `3a2e6351…` | `f04d6e3` |
-| Feed 4:5 v8.4 (full-bleed) | RENDER_PENDING | `f6bf682` |
+| Feed 4:5 v8.4 (full-bleed) | 1080×1350, 164.5 s (4,934 frames), −15.2 LUFS / −1.4 dBTP, 160 MB, footage full height (checked on the real-footage sheet before confirming), same sounds and gate as the master, check clean on the real footage, frame scan 0 spikes, md5 `33d04105…`, report.txt uploaded beside it | `f6bf682` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
