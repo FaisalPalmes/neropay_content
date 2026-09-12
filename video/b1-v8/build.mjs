@@ -26,7 +26,7 @@ const W = (V || AD) ? 1080 : 1920, H = V ? 1920 : AD ? 1350 : 1080, FPS = 30, Y 
    FH tall, sat on the floor of the frame; a blurred, darkened copy of the same clip fills the band above it.
    Every overlay lives in that top band, the captions sit over her chest, all inside the Reels/TikTok safe
    area (nothing in the bottom 440px, nothing hugging the right edge). */
-const FT = V ? 570 : AD ? 640 : 0, FH = V ? 1350 : AD ? 600 : H;
+const FT = V ? 570 : 0, FH = V ? 1350 : H;   // AD: top 0, full height — the footage box is 2400×1350, the frame-height 16:9, cropped by the frame
 /* 4:5 (AD, Faisal 12 Sep, second brief): the 16:9 footage covers the whole 4:5 frame — scaled to the frame's height
    (2400 wide, centred, so 660 px of it hangs off each side) with Ava centred. No bands, no fill. The camera works as in
    the master: flat unless an overlay is up, then a small push that slides her to one side while the panel takes the
