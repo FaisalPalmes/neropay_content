@@ -354,7 +354,7 @@ of questions to ask — the long version carries those. `sandbox.sh` suffixes th
 | Feed 4:5 v8.4 (banded) | superseded the same day — footage in a middle band, graphics above; Faisal: no blank space, crop into the footage. 164.5 s, 0 spikes, md5 `6d991ade…` | `a26d139` |
 | Feed 4:5 v8.4 (full-bleed, first render) | not delivered — the footage box kept the 9:16 band (top 640, height 600), seen on the real-footage sheet after upload. 164.5 s, 0 spikes, md5 `3a2e6351…` | `f04d6e3` |
 | Feed 4:5 v8.4 (full-bleed) | 1080×1350, 164.5 s (4,934 frames), −15.2 LUFS / −1.4 dBTP, 160 MB, footage full height (checked on the real-footage sheet before confirming), same sounds and gate as the master, check clean on the real footage, frame scan 0 spikes, md5 `33d04105…`, report.txt uploaded beside it | `f6bf682` |
-| Ad 4:5 v8.4 short (`SHORT=1`) | RENDER_PENDING | `2fc4a17` |
+| Ad 4:5 v8.4 short (`SHORT=1`) | 1080×1350, 59.05 s (1,771 frames), −15.4 LUFS / −1.4 dBTP, 61 MB, eight shots + six-second end card, checked on the real-footage sheet before confirming, check clean, frame scan 0 spikes, md5 `61bfc30a…`, report.txt uploaded beside it | `2fc4a17` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
