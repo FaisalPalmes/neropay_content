@@ -21,6 +21,10 @@ import { cropFor } from './angles.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const V = process.env.ORIENT === 'vertical';   // 9:16 for Reels / TikTok: the same cut, sounds and overlays, re-laid out
 const AD = process.env.ORIENT === 'ad';        // 4:5 for the Meta feed (Faisal, 12 Sep 2026): see the AD block below
+/* SHORT=1 (Faisal, 13 Sep 2026): the same build under a minute for an ad — hook, the ladder, their card / your rate, the
+   made-up month, the £308 → 1.09% sum, two minutes with a statement, the follow, a six-second end card. No name intro, no
+   title card. Every section below guards on the shots it needs (`has`), so the master and the full 4:5 are unchanged. */
+const SHORT = !!process.env.SHORT;
 const W = (V || AD) ? 1080 : 1920, H = V ? 1920 : AD ? 1350 : 1080, FPS = 30, Y = '#F5C518', INK = '#141416';
 /* Vertical: the footage is a 4:5 crop on Ava (sandbox.sh cuts it from the 4K source, so nothing is upscaled),
    FH tall, sat on the floor of the frame; a blurred, darkened copy of the same clip fills the band above it.
@@ -68,9 +72,11 @@ function estimateWords(text, d, lead = 0.35, tail = 0.3) {
 }
 
 /* ---------- the cut ---------- */
-const ORDER = ['B1-01', 'B1-02', 'B1-INTRO', '[TITLE]', 'B1-03', 'B1-04', 'B1-05', 'B1-06', 'B1-07', 'B1-08', 'B1-09', 'B1-10', 'B1-11', 'B1-12', 'B1-13', 'B1-14', 'B1-15', 'B1-16', 'B1-17', 'B1-18', '[END]'];
+const ORDER = SHORT
+  ? ['B1-01', 'B1-04', 'B1-05', 'B1-06', 'B1-11', 'B1-12', 'B1-17', 'B1-18', '[END]']
+  : ['B1-01', 'B1-02', 'B1-INTRO', '[TITLE]', 'B1-03', 'B1-04', 'B1-05', 'B1-06', 'B1-07', 'B1-08', 'B1-09', 'B1-10', 'B1-11', 'B1-12', 'B1-13', 'B1-14', 'B1-15', 'B1-16', 'B1-17', 'B1-18', '[END]'];
 const BEAT = 60 / SOUNDS.sounds.music.bpm, BAR2 = 2 * BEAT;     // the music grid the cards move on
-const CARD = { '[TITLE]': r3(6 * BEAT), '[END]': 18.0 };
+const CARD = { '[TITLE]': r3(6 * BEAT), '[END]': SHORT ? 6.0 : 18.0 };
 const XF = 0.4;                        // crossfade into and out of the title card
 /* Every segment starts and ends on the frame grid (LESSONS.md #63): the renderer floors each boundary to a frame
    and clocks the clip's media from the raw start, so a start that is not exactly k/FPS — above it or below it —
@@ -107,6 +113,7 @@ for (const id of ORDER) {
 }
 const TOTAL = grid(tf);
 const S = Object.fromEntries(segs.map((s) => [s.id, s]));
+const has = (...ids) => ids.every((id) => !!S[id]);   // a section runs only when its shots are in the cut
 const at = (id, local) => r3(S[id].start + local);
 const endOf = (id) => r3(S[id].start + S[id].dur);
 /* global start of the nth word whose cleaned text matches (or starts with) `text` */
@@ -117,7 +124,7 @@ const findWord = (id, text, nth = 0) => {
 };
 
 /* the title's timings, needed before the clip loop: the INTRO caption ends as the card starts to grow */
-const TT = (() => {
+const TT = !has('B1-INTRO') ? null : (() => {
   const tExpl = findWord('B1-INTRO', 'explained'), tNero = findWord('B1-INTRO', 'neropay'), EXP = r3(22 / FPS);
   return { seedAt: r3(tExpl - 0.05), expandAt: tNero, EXP, landAt: r3(tNero + EXP) };
 })();
@@ -309,7 +316,7 @@ for (const s of segs) {
   groups.forEach((p, gi) => {
     const ps = r3(s.start + p[0].s);
     const next = groups[gi + 1] ? r3(s.start + groups[gi + 1][0].s) : Infinity;
-    const pe = Math.min(r3(s.start + p[p.length - 1].e + 0.35), next, endOf(s.id), s.id === 'B1-INTRO' ? TT.expandAt : Infinity);
+    const pe = Math.min(r3(s.start + p[p.length - 1].e + 0.35), next, endOf(s.id), s.id === 'B1-INTRO' && TT ? TT.expandAt : Infinity);
     const pd = r3(pe - ps);
     if (pd <= 0.05) return;
     const spans = p.map((w) => {
@@ -355,7 +362,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 }
 
 /* ---------- 2 · one card, then a lot more --- B1-02 ---------- */
-{
+if (has('B1-02')) {
   const s = S['B1-02'], a = s.start, b = endOf('B1-02');
   const tOne = findWord('B1-02', 'one'), tMore = findWord('B1-02', 'more');
   const FX = L(colX('B1-02', 0, 720), 180, colX('B1-02', 1120, 720)), FY = L(adY(560), 300, 120);
@@ -394,7 +401,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
    says "Explained", masking EXPLAINED BY on; on "NeroPay" it grows to the whole frame — near-white ground with
    soft, diffused yellow blooms behind (blurred glass), black type; the wordmark is "NeroPay" in black with a
    yellow full stop that arrives with a very small pop and one shallow breath. Hard cut out on the beat. */
-{
+if (has('B1-INTRO', '[TITLE]')) {
   const { seedAt, expandAt, EXP, landAt } = TT;
   const tEnd = endOf('[TITLE]');
   const ep = 'The rate you were quoted';
@@ -421,13 +428,15 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 
 /* ---------- 5 · the rate ladder --- B1-03 + B1-04 (one panel, one bar per card as she names it) ---------- */
 {
-  const a3 = S['B1-03'].start, b3 = endOf('B1-03'), a4 = S['B1-04'].start, b4 = endOf('B1-04');
-  const tAdv = findWord('B1-03', 'advertised'), tDebit = findWord('B1-03', 'debit'), tCheap = findWord('B1-03', 'cheapest');
+  const a4 = S['B1-04'].start, b4 = endOf('B1-04'), L3 = has('B1-03');   // SHORT: no B1-03 — the panel cuts in with B1-04 and the debit bar is already up
+  const a3 = L3 ? S['B1-03'].start : a4, b3 = L3 ? endOf('B1-03') : a4;
+  const tAdv = L3 ? findWord('B1-03', 'advertised') : r3(a4 + 0.2), tDebit = L3 ? findWord('B1-03', 'debit') : r3(a4 + 0.3), tCheap = L3 ? findWord('B1-03', 'cheapest') : r3(a4 + 0.5);
+  const LID = L3 ? 'B1-03' : 'B1-04';
   const tCredit = findWord('B1-04', 'credit'), tCompany = findWord('B1-04', 'company'), tAmex = findWord('B1-04', 'amex'), tOver = findWord('B1-04', 'overseas'), tMost = findWord('B1-04', 'most');
   const bars = [['Debit', 0.5, 0.18, tDebit], ['Credit', 1.2, 0.42, tCredit], ['Business', 2.6, 0.86, tCompany], ['Amex', 1.75, 0.6, tAmex], ['Overseas', 2.9, 0.96, tOver]];
   const ly = L(adY(600), 210, 110), lh = 600;
-  const lx = colX('B1-03', PX, PW);
-  glass('ladder', { start: Math.max(a3, tAdv - 0.7), dur: r3(b4 - Math.max(a3, tAdv - 0.7)), x: lx, y: ly, w: PW, h: lh, cueAt: tAdv, lean: colLean('B1-03', -7),
+  const lx = colX(LID, PX, PW);
+  glass('ladder', { start: Math.max(a3, tAdv - 0.7), dur: r3(b4 - Math.max(a3, tAdv - 0.7)), x: lx, y: ly, w: PW, h: lh, cueAt: tAdv, lean: colLean(LID, -7),
     inner: `<div class="pad"><span class="th cue">the advertised rate, by card</span><div class="bars">${bars.map(([n, v, h], i) => `<div class="bar b${i} cue"><b>0.00%</b><div class="col" style="height:${Math.round(h * 100)}%"><i class="base"></i><i class="fill"></i></div><span>${n}</span></div>`).join('')}</div></div>` });
   bars.forEach(([, val, , when], i) => {
     js.push(`tl.fromTo("#ladder .b${i}", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.25, immediateRender: false }, ${r3(when)});`);
@@ -490,9 +499,11 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 
 /* ---------- 7 · a made-up month --- B1-06 + the statement --- B1-07 (one panel, on the left where she points) ---------- */
 {
-  const a6 = S['B1-06'].start, b6 = endOf('B1-06'), a7 = S['B1-07'].start, b7 = endOf('B1-07');
+  const a6 = S['B1-06'].start, b6 = endOf('B1-06'), L7 = has('B1-07');   // SHORT: no B1-07 — the rows arrive together after the payments count and the panel leaves with the shot
+  const a7 = L7 ? S['B1-07'].start : b6, b7 = L7 ? endOf('B1-07') : b6;
   const tHere = findWord('B1-06', 'here'), tTwenty = findWord('B1-06', 'twenty'), tSeven = findWord('B1-06', 'seven'), tNought = findWord('B1-06', 'nought');
-  const t70 = findWord('B1-07', 'seventy'), tCred = findWord('B1-07', 'credit'), tComp = findWord('B1-07', 'company'), tOver = findWord('B1-07', 'overseas');
+  const rowAt = (i) => r3(tSeven + 0.9 + i * 0.12);
+  const t70 = L7 ? findWord('B1-07', 'seventy') : rowAt(0), tCred = L7 ? findWord('B1-07', 'credit') : rowAt(1), tComp = L7 ? findWord('B1-07', 'company') : rowAt(2), tOver = L7 ? findWord('B1-07', 'overseas') : rowAt(3);
   const rows = [['Consumer debit', 71, '0.50%'], ['Consumer credit', 20, '1.20%'], ['Business / commercial', 5, '2.60%'], ['International / non-UK', 2, '2.90%']];
   const py = PY, ph = 690, st = r3(Math.max(a6, tHere - 0.6));
   const mx = V ? LX : colX('B1-06', PX, PW);
@@ -513,11 +524,11 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
   rise('#month .foot', tOver + 0.6);
   const m0 = pf('month', 1.12, mx + PW / 2, py + 320), m1 = pf('month', 1.14, mx + 240, py + 300), m2 = pf('month', 1.14, mx + PW / 2, py + 420), m3 = pf('month', 1.16, mx + PW - 200, py + 520);
   chain('B1-06', [{ t: a6, c: flat(1.0) }, { t: tHere - 0.1, c: flat(1.02) }, { t: tHere + 0.9, c: m0, ease: 'power3.out' }, hold(tTwenty, m0), { t: tTwenty + 0.7, c: m1, ease: 'power3.out' }, hold(b6, m1)]);
-  chain('B1-07', [{ t: a7, c: bump(m1) }, { t: t70 + 0.6, c: m2 }, hold(tOver, m2), { t: tOver + 0.6, c: m3, ease: 'power3.out' }, hold(b7 - 0.6, m3), { t: b7, c: flat(1.06, 40, 0) }]);
+  if (L7) chain('B1-07', [{ t: a7, c: bump(m1) }, { t: t70 + 0.6, c: m2 }, hold(tOver, m2), { t: tOver + 0.6, c: m3, ease: 'power3.out' }, hold(b7 - 0.6, m3), { t: b7, c: flat(1.06, 40, 0) }]);
 }
 
 /* ---------- 8 · the charges that aren't a percentage --- B1-08 + B1-09 (one panel) ---------- */
-{
+if (has('B1-08', 'B1-09')) {
   const a8 = S['B1-08'].start, b8 = endOf('B1-08'), a9 = S['B1-09'].start, b9 = endOf('B1-09');
   const tCharges = findWord('B1-08', 'charges'), tFour = findWord('B1-08', 'four'), tSeventeen = findWord('B1-08', 'seventeen'), tPci = findWord('B1-08', 'pci');
   const tAccount = findWord('B1-09', 'account'), tPayout = findWord('B1-09', 'payout'), tOwn = findWord('B1-09', 'own');
@@ -541,7 +552,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 }
 
 /* ---------- 9 · the formula --- B1-10 (left, big, built as she says it) ---------- */
-{
+if (has('B1-10')) {
   const s = S['B1-10'], a = s.start, b = endOf('B1-10');
   const tAdd = findWord('B1-10', 'add'), tDivide = findWord('B1-10', 'divide'), tMultiply = findWord('B1-10', 'multiply'), tHundred = findWord('B1-10', 'hundred');
   const fw = 920, fx = V ? LX : colX('B1-10', W - LX - fw, fw), fy = L(adY(600), 240, 170), fh = 600, st = r3(Math.max(a, tAdd - 0.7));
@@ -614,7 +625,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 }
 
 /* ---------- 11 · 0.70% flat costs less --- B1-13 + B1-14 (one panel) ---------- */
-{
+if (has('B1-13', 'B1-14')) {
   const a13 = S['B1-13'].start, b13 = endOf('B1-13'), a14 = S['B1-14'].start, b14 = endOf('B1-14');
   const tNought = findWord('B1-13', 'nought'), tFlat = findWord('B1-13', 'flat'), tLess = findWord('B1-13', 'less');
   const tHundred = findWord('B1-14', 'hundred'), tHigher = findWord('B1-14', 'higher'), tLess2 = findWord('B1-14', 'less');
@@ -643,7 +654,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
 }
 
 /* ---------- 12 · the questions to ask --- B1-15 + B1-16 (one panel, each line only as she says it) ---------- */
-{
+if (has('B1-15', 'B1-16')) {
   const a15 = S['B1-15'].start, b15 = endOf('B1-15'), a16 = S['B1-16'].start, b16 = endOf('B1-16');
   const tAsk = findWord('B1-15', 'ask'), tCredit = findWord('B1-15', 'credit'), tCompany = findWord('B1-15', 'company'), tAmex = findWord('B1-15', 'amex'), tPayout = findWord('B1-15', 'payout');
   const tPci = findWord('B1-16', 'pci'), tAccount = findWord('B1-16', 'account'), tMinimum = findWord('B1-16', 'minimum'), tEffective = findWord('B1-16', 'effective'), tOnly = findWord('B1-16', 'only');
@@ -727,10 +738,18 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
     <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
     <div class="layer brand">${WM}<span class="sub cue">Subscribe for more</span></div>
     <div class="layer items"><div class="kick2 cue"><b>What comes with NeroPay</b></div><div class="grid">${offer.map((t, i) => `<div class="tile t${i} cue"><i></i><span>${esc(t)}</span></div>`).join('')}</div></div>
-    <div class="layer final">${WM}<span class="sub cue">Subscribe for more</span><p class="concede cue">${esc(concede)}</p></div>
+    <div class="layer final">${WM}<span class="sub cue">${SHORT ? 'Follow for more' : 'Subscribe for more'}</span><p class="concede cue">${esc(concede)}</p></div>
   </div>`);
   const g = (k) => r3(a + k * BAR2), land = r3(a + 0.3);
   js.push(`tl.fromTo("#end", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.45, ease: "power2.inOut", immediateRender: false }, ${a});`);
+  if (SHORT) {
+    // six seconds: the wordmark lands, the follow line rises on the next beat, the concession on the one after (rail 8), hold
+    js.push(`tl.set("#end .brand, #end .items", { autoAlpha: 0 }, ${a});`);
+    wordmark('#end .final', land); sfx('impact', land, 0.26);
+    rise('#end .final .sub', r3(land + BEAT), 40); sfx('tick', r3(land + BEAT), 0.2);
+    rise('#end .final .concede', r3(land + 2 * BEAT), 14); sfx('tick', r3(land + 2 * BEAT), 0.18);
+    sfx('music-outro', a, 0.42);
+  } else {
   wordmark('#end .brand', land); sfx('impact', land, 0.26);
   rise('#end .brand .sub', g(1), 40); sfx('tick', g(1), 0.2);
   leave('#end .brand .wm', g(3) - 0.5); leave('#end .brand .sub', g(3) - 0.45);
@@ -747,6 +766,7 @@ const CX = W / 2, PY = L(adY(690), 200, 96);   // vertical: the top band starts 
   rise('#end .final .sub', r3(fin + 0.5), 40); sfx('tick', r3(fin + 0.5), 0.2);
   rise('#end .final .concede', g(4 + offer.length), 14); sfx('tick', g(4 + offer.length), 0.18);
   sfx('music-outro', a, 0.42);
+  }
 }
 
 /* ---------- camera tweens ---------- */
@@ -1099,7 +1119,8 @@ fs.writeFileSync(path.join(HERE, 'index.html'), page);
 /* review/manifest.json — the moments sandbox.sh pulls as stills (MOTION-SYSTEM.md §7): every glass panel just
    before its exit fade, the card fans, the title and the end card's last screen */
 const contact = Object.values(PANEL).map((g) => r3(g.end - 0.5));
-contact.push(r3(endOf('B1-02') - 0.4), r3(endOf('B1-05') - 0.4), r3(endOf('[TITLE]') - 0.05), r3(endOf('B1-18') - 0.6), r3(TOTAL - 0.1));
+for (const [id, off] of [['B1-02', 0.4], ['B1-05', 0.4], ['[TITLE]', 0.05], ['B1-18', 0.6]]) if (has(id)) contact.push(r3(endOf(id) - off));
+contact.push(r3(TOTAL - 0.1));
 fs.mkdirSync(path.join(HERE, 'review'), { recursive: true });
 fs.writeFileSync(path.join(HERE, 'review/manifest.json'), JSON.stringify({ total: TOTAL, panels: PANEL, contact_at: contact.sort((a, b) => a - b) }, null, 2));
 const nBg = (page.match(/class="bgv/g) || []).length;

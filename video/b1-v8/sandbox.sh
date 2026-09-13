@@ -64,7 +64,7 @@ node build.mjs | tail -14
 node -e 'const j=require(process.argv[1]);console.log("CHECK ok="+j.ok,"runtime err="+j.runtime.errorCount,"layout err="+j.layout.errorCount,"contrast warn="+j.contrast.warningCount)' "$ROOT"/check.json
 if [ -n "${SETUP_ONLY:-}" ]; then echo SETUP_DONE; exit 0; fi
 # ORIENT=ad builds the 4:5 Meta feed cut (build.mjs reads ORIENT); its files carry the suffix so a box can hold both
-SUF=${ORIENT:+-$ORIENT}; OUT=b1-v8$SUF; REV=review$SUF; TILE=480:270; [ "${ORIENT:-}" = ad ] && TILE=432:540
+SUF=${ORIENT:+-$ORIENT}${SHORT:+-short}; OUT=b1-v8$SUF; REV=review$SUF; TILE=480:270; [ "${ORIENT:-}" = ad ] && TILE=432:540   # SHORT=1: the under-a-minute ad cut
 mkdir -p renders "$REV"
 # WORKERS=2 overrides the low-memory profile that pins the sandbox to one capture worker (~5 fps at 1080p)
 "$HF" render -q "${QUALITY:-high}" -o "renders/$OUT-high.mp4" --quiet ${WORKERS:+-w "$WORKERS" --no-low-memory-mode}
@@ -76,7 +76,8 @@ mkdir -p "$REV/held" && for t in ${AT//,/ }; do ffmpeg -nostdin -y -v error -ss 
 # (ffmpeg's tile filter, not ImageMagick's montage — montage aborts on twelve full-size PNGs in the sandbox)
 N=$(ls "$REV/held"/*.png | wc -l); ROWS=$(( (N + 2) / 3 ))
 ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i "$REV/held/*.png" -vf "tile=3x${ROWS}:padding=8:color=0x141416" -frames:v 1 -q:v 2 "$REV/overlays-contact.jpg"
-mkdir -p "$REV/every6" && for t in $(seq 1 6 163); do ffmpeg -nostdin -y -v error -ss "$t" -i "renders/$OUT-final.mp4" -frames:v 1 "$REV/every6/$(printf '%03d' "$t").png"; done
+LAST=$(node -e 'console.log(Math.floor(require("./review/manifest.json").total) - 1)')
+mkdir -p "$REV/every6" && for t in $(seq 1 6 "$LAST"); do ffmpeg -nostdin -y -v error -ss "$t" -i "renders/$OUT-final.mp4" -frames:v 1 "$REV/every6/$(printf '%03d' "$t").png"; done
 N=$(ls "$REV/every6"/*.png | wc -l); ROWS=$(( (N + 5) / 6 ))
 ffmpeg -nostdin -y -v error -framerate 1 -pattern_type glob -i "$REV/every6/*.png" -vf "scale=$TILE,tile=6x${ROWS}:padding=4:color=0x141416" -frames:v 1 -q:v 4 "$REV/frames-contact.jpg"
 # 6. the frame scan (MOTION-SYSTEM.md §7, LESSONS #55): mean luma of every frame; a frame that differs from both
