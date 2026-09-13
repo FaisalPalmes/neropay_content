@@ -336,12 +336,25 @@ byte-identical — diff `index.html` after any change to the AD branch. The firs
 carried the 9:16 band: the AD block set the footage element's left and width but inherited the vertical cut's
 `top:640px;height:600px`, and the sheet was viewed only after the uploads (LESSONS #72). `f6bf682` sets all four sides.
 
+**The under-a-minute ad cut (Faisal, 13 Sep 2026).** "Cut it down to under 1 minute … maintain the important information
+and the CTA at the end … you don't need to put the name intro clip in there. Just keep it initially with the hook, then go
+into explaining it, and then the CTA at the end." `ORIENT=ad SHORT=1 node build.mjs` keeps eight of the eighteen shots —
+B1-01 (the hook), B1-04 (the rate ladder, cut in with her; the debit bar is already up), B1-05 (their card, your rate),
+B1-06 (the made-up month; the mix rows arrive together after the payments count, since B1-07 is gone), B1-11 + B1-12 (the
+£308 → 1.09 % sum and "more than double", untouched), B1-17 (two minutes with a statement), B1-18 (the follow) — and a
+six-second end card: the wordmark, "Follow for more" (the feed's word, not YouTube's "Subscribe"), the concession.
+59.03 s. No name intro, no title card, so no intro bed; the outro bed is cut to the card with a fade. Every section in
+`build.mjs` now guards on the shots it needs (`has()`), so the master and the full 4:5 are byte-identical to before
+(diffed both). The dropped shots are the statement's fixed charges, the formula, the 0.70 % flat comparison and the list
+of questions to ask — the long version carries those. `sandbox.sh` suffixes the outputs `-ad-short`.
+
 | Cut | Spec | Commit |
 |---|---|---|
 | Master 16:9 v8.4 | 1920×1080, 164.5 s (4,934 frames), −15.2 LUFS / −1.3 dBTP, 184 MB, sounds fetched and gated (quietest peak −5.8 dB), check clean on the real footage, frame scan 0 spikes, md5 `c6ad7ec5…`, report.txt (with the sound-check windows) uploaded beside it | `ed6a9bd` |
 | Feed 4:5 v8.4 (banded) | superseded the same day — footage in a middle band, graphics above; Faisal: no blank space, crop into the footage. 164.5 s, 0 spikes, md5 `6d991ade…` | `a26d139` |
 | Feed 4:5 v8.4 (full-bleed, first render) | not delivered — the footage box kept the 9:16 band (top 640, height 600), seen on the real-footage sheet after upload. 164.5 s, 0 spikes, md5 `3a2e6351…` | `f04d6e3` |
 | Feed 4:5 v8.4 (full-bleed) | 1080×1350, 164.5 s (4,934 frames), −15.2 LUFS / −1.4 dBTP, 160 MB, footage full height (checked on the real-footage sheet before confirming), same sounds and gate as the master, check clean on the real footage, frame scan 0 spikes, md5 `33d04105…`, report.txt uploaded beside it | `f6bf682` |
+| Ad 4:5 v8.4 short (`SHORT=1`) | RENDER_PENDING | `2fc4a17` |
 
 ## 9. B1 v7 — the MOTION-SYSTEM.md build (11 Sep 2026)
 
