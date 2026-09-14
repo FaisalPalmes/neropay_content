@@ -9,8 +9,8 @@ Two jobs:
 A motion graphic stating a wrong rate is a compliance incident, not a typo.
 Every check is fatal. Run it before a single frame is rendered.
 
-    python3 maths/verify.py                 # audit figures.json
-    python3 maths/verify.py episode-4       # audit, then run that episode's checks
+    python3 motion/verify.py                    # audit figures.json
+    python3 motion/verify.py maths/episode-4    # audit, then run that episode's checks
 """
 import json
 import sys
@@ -19,6 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FIGURES = ROOT / "figures.json"
+SERIES_DIR = ROOT / "motion"
 STALE_DAYS = 90
 REQUIRED = ("kind", "verified_on", "status")
 REQUIRED_CONFIRMED = ("internal_source", "footer")
@@ -106,9 +107,9 @@ def main():
     problems = audit(figs)
     if len(sys.argv) > 1:
         name = sys.argv[1]
-        mod = ROOT / "maths" / name / "checks.py"
+        mod = SERIES_DIR / name / "checks.py"
         if not mod.exists():
-            problems.append(f"{name}: no checks.py — stage 3 cannot pass without one")
+            problems.append(f"{name}: no checks.py at motion/{name}/ — stage 3 cannot pass without one")
         else:
             print(f"\n  {name} — arithmetic\n")
             ns = {"figure": lambda k: figure(figs, k), "check": check,

@@ -85,10 +85,10 @@ from here, and folder uploads silently fail there.
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
 | `MOTION-SYSTEM.md` | The motion graphics spec — three camera angles, seven overlay archetypes, the BUILD/HOLD/EXIT timing law, alpha compositing. Read it before any overlay or any shot list | Only when Faisal issues a new version |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
-| `figures.json` | The Maths series figure register — every number an episode may state, each dated and sourced, plus the blocked ones and why | **Yes — add a record before a figure goes on screen** |
+| `figures.json` | The figure register for the motion graphics videos — every number one may state, each dated and sourced, plus the blocked ones and why | **Yes — add a record before a figure goes on screen** |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
 | `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide; `video/TOOLS.md` is the register of third-party libraries Faisal has saved, each with a verdict | Yes — one folder per piece inside it |
-| `maths/` | The Maths series — the faceless motion-graphics episodes, one folder each, `verify.py` (the stage-3 arithmetic gate) and `maths/CLAUDE.md`, which is the series spec | Yes — one folder per episode |
+| `motion/` | The motion graphics style — faceless videos built as HTML and rendered frame by frame, one folder per series (`motion/maths/` is the first). `motion/CLAUDE.md` is the style spec, `verify.py` the stage-3 arithmetic gate | Yes — one folder per series, one per episode inside it |
 | `.claude/` | Skills (the HyperFrames pack, committed so every session has it) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
 
 The subfolders are deliberate; the root files stay flat. Content Faisal adds by hand still goes in at
@@ -316,13 +316,22 @@ Push to `main`; Vercel redeploys automatically.
 
 ---
 
-## The Maths — the motion graphics series
+## Motion graphics — the third video style
 
-A second video series lives in `maths/`: faceless motion graphics, HTML/CSS rendered frame by frame,
-ElevenLabs voice, Higgsfield only for short texture beats. It is **not** the presenter-led Explained
-videos (`generation-pack.md`, B1–B6) or Behind the Counter (`calls.js`) — different style, different
-toolchain, don't mix them or reuse presenter assets.
+`motion/` holds a third style of video, alongside the presenter-led Explained series
+(`generation-pack.md`, B1–B6) and Behind the Counter (`calls.js`): **faceless motion graphics**, built
+as HTML/CSS and rendered frame by frame, with an ElevenLabs voice and Higgsfield used only for short
+texture beats. No presenter, in any of them.
 
-**Its spec is `maths/CLAUDE.md`.** Read that before touching anything in `maths/`, the same way
-`video/CLAUDE.md` governs `video/`. The rails above apply to it unchanged, plus two of its own:
-never name a competitor, and nothing goes on screen without a confirmed `figures.json` record.
+It is a style, not a single series. Each series gets a folder under `motion/` with its own brief —
+`motion/maths/` (The Maths, one number worked out on screen) is the first, and the partner programme
+is scaffolded but blocked on figures. Anything that explains better as an animated diagram than as a
+person talking belongs here.
+
+**The spec is `motion/CLAUDE.md`.** Read it before touching anything in `motion/`, the same way
+`video/CLAUDE.md` governs `video/`; the series brief beside it carries the episode bank. The rails
+above apply unchanged, plus two of the style's own: never name a competitor, and nothing goes on
+screen without a confirmed `figures.json` record.
+
+Not to be confused with `MOTION-SYSTEM.md`, which is the overlay and camera spec for the *presenter*
+videos. The two share a timing law and nothing else.

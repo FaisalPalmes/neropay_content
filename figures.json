@@ -1,6 +1,6 @@
 {
   "_schema": {
-    "note": "Every number The Maths states on screen must have a record here. Nothing goes on screen unless it exists in this file with status 'confirmed'.",
+    "note": "Every number a motion graphics video states on screen must have a record here. Nothing goes on screen unless it exists in this file with status 'confirmed'. Shared across every series in motion/.",
     "fields": {
       "value": "machine-readable value. Rates as decimals (0.0169), money in pounds, pence in pence.",
       "display": "exactly how it is rendered on screen.",
@@ -14,7 +14,6 @@
     "verified_on_policy": "warn at 90 days, from the date the figure was last checked against its source, not the date this file was edited.",
     "last_reviewed": "2026-09-14"
   },
-
   "benchmark_flat_no_fee": {
     "value": 0.0169,
     "display": "1.69%",
@@ -28,7 +27,6 @@
     "caveat": "The source document is not in this repo. Traced to the brief only. Ask Faisal to bring NEROPAY_CONTEXT across before this figure carries an episode on its own.",
     "footer": "Benchmark: a flat rate with no fixed fee, 1.69%. Illustrative, not a quote from any provider."
   },
-
   "benchmark_paid_restaurant_pos_monthly": {
     "value": 69.0,
     "display": "£69 a month",
@@ -42,7 +40,6 @@
     "status": "confirmed",
     "footer": "Benchmark: a typical paid restaurant POS tier, £69 a month. Correct as of 18 Aug 2026. Free tiers also exist."
   },
-
   "neropos_software_fee": {
     "value": 0.0,
     "display": "£0",
@@ -54,7 +51,6 @@
     "status": "confirmed",
     "footer": "NeroPay POS software: no monthly software fee."
   },
-
   "merchants_not_switched": {
     "value": 0.42,
     "display": "42%",
@@ -66,7 +62,6 @@
     "note": "The fieldwork date MUST be on screen. It is old and stating it undated is a substantiation problem.",
     "footer": "42% and 76%: PSR / IFF Research, n=1,037, fieldwork Oct–Dec 2019."
   },
-
   "switchers_found_it_easy": {
     "value": 0.76,
     "display": "76%",
@@ -77,7 +72,6 @@
     "status": "confirmed",
     "footer": "42% and 76%: PSR / IFF Research, n=1,037, fieldwork Oct–Dec 2019."
   },
-
   "hospitality_optimism_aug_2026": {
     "value": 0.16,
     "display": "16%",
@@ -90,7 +84,6 @@
     "status": "confirmed",
     "footer": "Operator optimism: 16% Aug 2026, 51% Feb 2026."
   },
-
   "specimen_statement_total": {
     "value": 308.46,
     "display": "£308.46",
@@ -107,7 +100,6 @@
     "status": "confirmed",
     "footer": "Specimen statement. Illustrative figures, not a real merchant."
   },
-
   "rusholme_food_units": {
     "value": 98,
     "display": "98",
@@ -118,7 +110,6 @@
     "status": "confirmed",
     "footer": "98 food businesses in 800m of Wilmslow Road: NeroPay's own count."
   },
-
   "april_2026_cost_stack": {
     "value": null,
     "display": "n/a — a set of facts, not one figure",
@@ -135,7 +126,6 @@
     "status": "confirmed",
     "footer": "April 2026 cost changes: NLW £12.71, employer NI 15% from £5,000, RHL relief ended for restaurants, cafés, bars and takeaways."
   },
-
   "neropay_transaction_rate": {
     "value": null,
     "display": null,
@@ -143,10 +133,13 @@
     "kind": "neropay",
     "status": "blocked",
     "blocked_reason": "CLAUDE.md: do not state the terminal price or any transaction rate. Internal figures conflict — 1.30% + 15p standard, 0.80% bespoke floor, 0.70% flat in the video series. Open question for Eray, listed on youtube.html.",
-    "affects": ["episode 1 (3.30%)", "episode 3 (£20.51)", "episode 5 (8p vs 15p)"],
+    "affects": [
+      "episode 1 (3.30%)",
+      "episode 3 (£20.51)",
+      "episode 5 (8p vs 15p)"
+    ],
     "verified_on": "2026-09-14"
   },
-
   "fixed_fee_8p": {
     "value": null,
     "display": null,
@@ -154,10 +147,12 @@
     "kind": "neropay",
     "status": "blocked",
     "blocked_reason": "Open question with Eray: does 8p alone trigger the 18-month agreement. Named in the brief as the blocker on episode 5, and it is also the hidden input behind episode 3's £20.51 crossover.",
-    "affects": ["episode 3", "episode 5"],
+    "affects": [
+      "episode 3",
+      "episode 5"
+    ],
     "verified_on": "2026-09-14"
   },
-
   "flex_price": {
     "value": null,
     "display": null,
@@ -167,7 +162,6 @@
     "blocked_reason": "NeroPay Flex has no confirmed price. CLAUDE.md unconfirmed list; brief rail 6.",
     "verified_on": "2026-09-14"
   },
-
   "partner_incentive": {
     "value": null,
     "display": null,
