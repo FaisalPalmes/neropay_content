@@ -20,9 +20,9 @@ after contact → manufacturing shopping-around behaviour → partner recruitmen
 
 | # | Number | The turn | State |
 |---|---|---|---|
-| 1 | 3.30% | What you'd pay *us* on a £4 coffee. Don't switch. | **Blocked** — states a NeroPay transaction rate |
+| 1 | 3.30% | What you'd pay *us* on a £4 coffee. Don't switch. | **Built, awaiting review** — `motion/maths/ep01/`. VO and captions pending |
 | 2 | £0 | Our POS software against what a paid restaurant POS tier costs a year | Needs the free-tier concession on screen |
-| 3 | £20.51 | The average sale where a fixed fee stops hurting and starts helping | **Blocked** — the crossover is 8p ÷ (1.69% − 1.30%) |
+| 3 | £20.51 | The average sale where a fixed fee stops hurting and starts helping | **Absorbed into episode 1** — beat 6 is the crossover. Needs a different number if it stays a separate episode |
 | 4 | 42% | UK merchants who haven't considered switching in two years | **Clear** — fully sourced, nothing blocked |
 | 5 | 8p vs 15p | Why the fixed fee moves more money than the rate | **Blocked** — open question with Eray |
 
@@ -32,25 +32,18 @@ point at `neropay.app`.
 
 ## Open questions — raised 14 September 2026, awaiting Faisal
 
-**1. Episode 1 (3.30%) is blocked.** The turn is good — the honest "don't switch" is the strongest
-thing in the bank — but the episode is built on stating a NeroPay transaction rate, and `/CLAUDE.md`
-says not to: *"Do not state the terminal price or any transaction rate — the internal figures conflict
-and it's an open question for Eray."* 3.30% is also a fourth number, not any of the three already on
-record (1.30% + 15p standard, 0.80% bespoke floor, 0.70% flat in the video series). Needs Eray to
-settle the rate before it can be written.
+**1. Episode 1 — resolved, with two things to confirm before it publishes.** The rate was supplied by
+Faisal on 14 September 2026 as `neropay_workhorse_rate`: 1.30% + 8p, no contract, from
+NEROPAY_CONTEXT §3. That unblocks the episode and it is built. Two things still need an answer:
 
-**2. Episode 3 (£20.51) is blocked, and the reason isn't obvious.** The crossover only works out at
-£20.51 on one set of inputs:
+- `/CLAUDE.md` records the internal standard as 1.30% + **15p**, not + 8p. At 15p a £4 coffee is
+  5.05%, not 3.30%, so every figure in the episode rests on 8p being the right tier.
+- The footer claims **"no contract"**, which runs straight into the open question with Eray about
+  whether 8p alone triggers the 18-month agreement. If it does, that claim is false.
 
-```
-8p ÷ (1.69% − 1.30%) = £20.51
-```
-
-So the episode implicitly states NeroPay at **1.30% + 8p** — a rate that appears nowhere in this repo
-(the internal standard is 1.30% + **15p**), and it depends on the exact 8p figure that blocks episode
-5. Same blocker, one layer down. Two ways out: settle the rate with Eray, or rewrite the episode as
-pure maths between two unnamed benchmarks with no NeroPay figure in it at all — which is the version
-that survives a price change anyway, and reads as more honest, not less.
+**2. Episode 3's £20.51 is now episode 1's beat 6.** The reverse-engineered crossover — 8p ÷ (1.69% −
+1.30%) — was exactly right, and the run prompt confirms it. Episode 3 either needs a different number
+or it folds into episode 1 permanently.
 
 **3. Episode 2 (£0) works, with one condition.** It has to concede on screen that free POS tiers
 exist elsewhere. `/CLAUDE.md` records that *"competitors charge for POS software" is inaccurate* — the

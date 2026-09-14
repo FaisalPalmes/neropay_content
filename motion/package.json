@@ -1,0 +1,12 @@
+{
+  "name": "neropay-motion",
+  "private": true,
+  "type": "module",
+  "description": "Render tooling shared by every motion graphics series.",
+  "dependencies": {
+    "playwright": "^1.47.0",
+    "@fontsource/chivo": "^5.0.0",
+    "@fontsource/martian-mono": "^5.0.0",
+    "@fontsource/source-serif-4": "^5.0.0"
+  }
+}

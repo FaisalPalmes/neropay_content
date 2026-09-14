@@ -18,14 +18,14 @@
     "value": 0.0169,
     "display": "1.69%",
     "fixed_fee_pence": 0,
-    "on_screen_label": "a flat rate with no fixed fee",
+    "on_screen_label": "a flat rate, no fixed fee",
     "kind": "benchmark",
-    "note": "Illustrative market benchmark. NOT attributed on screen to any provider.",
+    "note": "Illustrative market benchmark. NEVER attributed on screen to any provider.",
     "internal_source": "NEROPAY_CONTEXT §3 break-even table, supplied in MOTION-SERIES-BRIEF v1.0",
     "verified_on": "2026-09-14",
     "status": "confirmed",
     "caveat": "The source document is not in this repo. Traced to the brief only. Ask Faisal to bring NEROPAY_CONTEXT across before this figure carries an episode on its own.",
-    "footer": "Benchmark: a flat rate with no fixed fee, 1.69%. Illustrative, not a quote from any provider."
+    "footer": "Comparison: an illustrative flat 1.69% with no fixed fee."
   },
   "benchmark_paid_restaurant_pos_monthly": {
     "value": 69.0,
@@ -132,11 +132,10 @@
     "on_screen_label": null,
     "kind": "neropay",
     "status": "blocked",
-    "blocked_reason": "CLAUDE.md: do not state the terminal price or any transaction rate. Internal figures conflict — 1.30% + 15p standard, 0.80% bespoke floor, 0.70% flat in the video series. Open question for Eray, listed on youtube.html.",
+    "blocked_reason": "Superseded for the workhorse tier by neropay_workhorse_rate (Faisal, 14 Sep 2026). Every OTHER rate stays blocked: /CLAUDE.md still says do not state the terminal price or any transaction rate, the internal figures still conflict (1.30%+15p standard, 0.80% bespoke floor, 0.70% flat in the video series) and it is still an open question for Eray. Do not state a rate that isn't the workhorse tier without asking.",
     "affects": [
-      "episode 1 (3.30%)",
-      "episode 3 (£20.51)",
-      "episode 5 (8p vs 15p)"
+      "the 0.70% video pricing story",
+      "the 0.80% bespoke floor"
     ],
     "verified_on": "2026-09-14"
   },
@@ -146,9 +145,9 @@
     "on_screen_label": null,
     "kind": "neropay",
     "status": "blocked",
-    "blocked_reason": "Open question with Eray: does 8p alone trigger the 18-month agreement. Named in the brief as the blocker on episode 5, and it is also the hidden input behind episode 3's £20.51 crossover.",
+    "blocked_reason": "The 8p FEE is confirmed as part of neropay_workhorse_rate. What stays blocked is the AGREEMENT question: does 8p alone trigger the 18-month agreement? Until Eray answers, nothing may claim 'no contract' at 8p, and episode 5 (8p vs 15p) stays unwritten.",
     "affects": [
-      "episode 3",
+      "episode 1's 'no contract' footer claim",
       "episode 5"
     ],
     "verified_on": "2026-09-14"
@@ -170,5 +169,18 @@
     "status": "blocked",
     "blocked_reason": "Partner incentive model not signed off. No partner asset carries figures. CLAUDE.md unconfirmed list; brief rail 6.",
     "verified_on": "2026-09-14"
+  },
+  "neropay_workhorse_rate": {
+    "value": 0.013,
+    "display": "1.30%",
+    "fixed_fee_pence": 8,
+    "on_screen_label": "our rate",
+    "kind": "neropay",
+    "note": "1.30% + 8p, no contract — the workhorse tier.",
+    "internal_source": "NEROPAY_CONTEXT §3 quoting ladder, supplied by Faisal in EP01-RUN-PROMPT 14 Sep 2026",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "caveat": "Two things to settle before anything using this publishes. (1) /CLAUDE.md records the internal standard as 1.30% + 15p, not + 8p. At 15p a £4 coffee is 5.05%, not 3.30%, so every figure in episode 1 depends on 8p being the right tier. (2) 'no contract' contradicts the open question with Eray about whether 8p alone triggers the 18-month agreement — see fixed_fee_8p. If it does, the footer claim is false.",
+    "footer": "Our rate: 1.30% + 8p, no contract."
   }
 }

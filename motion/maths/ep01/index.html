@@ -1,0 +1,307 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The Maths · EP01 — Don't switch to us</title>
+<style>
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+
+:root{
+  --ground:#0E1013; --surface:#1A1D22; --ink:#FFFFFF;
+  --muted:#8A9099; --accent:#F5C518; --loss:#6B7280;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000}
+
+#stage{
+  container-type:size; container-name:v;
+  position:relative; overflow:hidden;
+  background:var(--ground); color:var(--ink);
+  font-family:Chivo,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* every layer fills the stage; setFrame decides what is visible */
+.layer{position:absolute; inset:0; display:grid; place-items:center;
+  padding:0 7cqw 14cqmin; will-change:opacity,transform}
+
+/* ---- persistent source footer: on screen the whole duration ---- */
+#footer{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:0 6cqw calc(3.2cqmin + env(safe-area-inset-bottom,0px));
+  font-size:2.35cqmin; font-weight:400; line-height:1.45; letter-spacing:.005em;
+  color:var(--muted); text-align:center; text-wrap:balance;
+}
+/* ---- beat 1 + 2: the cold open ---- */
+#b1 .fig{font-family:"Martian Mono",monospace; font-weight:700;
+  font-size:23cqmin; letter-spacing:-.045em; line-height:.9;
+  font-variant-numeric:tabular-nums}
+#b1 .rule{height:.85cqmin; background:var(--accent); margin:4.5cqmin auto 0; width:0}
+#b1 .sub{margin-top:4cqmin; font-size:3.5cqmin; font-weight:400; color:var(--muted);
+  max-width:64cqw; line-height:1.5; text-wrap:balance}
+.mask{display:block; overflow:hidden}
+.mask>span{display:block}
+
+/* ---- beat 3: the stack ---- */
+#b3 .stack{display:grid; gap:3.6cqmin; justify-items:start; width:82cqw}
+#b3 .row{font-family:"Martian Mono",monospace; font-weight:700;
+  font-size:5.0cqmin; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+#b3 .row.k{color:var(--accent)}
+
+/* ---- beats 4 + 5: the bars ---- */
+.bars{width:80cqw; display:grid; gap:7cqmin}
+.bars .head{font-size:3.3cqmin; font-weight:600; letter-spacing:.14em;
+  color:var(--muted); text-transform:uppercase; margin-bottom:1cqmin}
+.bar .lab{display:flex; justify-content:space-between; align-items:baseline;
+  font-size:2.9cqmin; font-weight:600; letter-spacing:.11em; color:var(--muted);
+  text-transform:uppercase; margin-bottom:1.9cqmin; gap:3cqw}
+.bar .amt{text-transform:none; font-family:"Martian Mono",monospace; font-weight:700; font-size:4.4cqmin;
+  letter-spacing:-.02em; color:var(--ink); font-variant-numeric:tabular-nums}
+.bar .track{height:5.2cqmin; background:#22262C; border-radius:.6cqmin}
+.bar .fill{height:100%; width:0; border-radius:.6cqmin; background:var(--loss)}
+.note{margin-top:1cqmin; font-size:3.2cqmin; color:var(--muted); font-weight:400}
+
+/* ---- beat 6: the crossover ---- */
+#b6 .fig{font-family:"Martian Mono",monospace; font-weight:700; font-size:18cqmin;
+  letter-spacing:-.045em; color:var(--accent); line-height:.95;
+  font-variant-numeric:tabular-nums}
+#b6 .sub{margin-top:4.4cqmin; font-size:3.5cqmin; color:var(--muted); font-weight:400;
+  max-width:62cqw; line-height:1.5; text-wrap:balance}
+
+/* ---- beat 7: the recap ---- */
+#b7 .pair{display:grid; gap:6.5cqmin; width:74cqw}
+#b7 .tk{display:flex; justify-content:space-between; align-items:baseline; gap:4cqw;
+  border-top:.22cqmin solid #2A2E35; padding-top:2.8cqmin}
+#b7 .tk b{font-family:"Martian Mono",monospace; font-weight:700; font-size:5.6cqmin;
+  letter-spacing:-.03em; font-variant-numeric:tabular-nums}
+#b7 .tk i{font-style:normal; font-size:3.1cqmin; font-weight:600; letter-spacing:.12em;
+  color:var(--muted); text-transform:uppercase}
+#b7 .cap{margin-top:7cqmin; font-size:3.5cqmin; color:var(--muted); font-weight:400;
+  max-width:66cqw; line-height:1.5; text-wrap:balance; text-align:center}
+
+/* ---- beat 8: end card ---- */
+#b8 .mark{font-weight:800; font-size:12.5cqmin; letter-spacing:-.035em; line-height:1}
+#b8 .mark i{font-style:normal; color:var(--accent)}
+#b8 .url{margin-top:3.6cqmin; font-size:3.6cqmin; font-weight:600; color:var(--muted);
+  letter-spacing:.02em}
+
+#cut{position:absolute; inset:0; background:#000; opacity:0}
+</style>
+
+<div id="stage">
+  <div class="layer" id="b1">
+    <div style="text-align:center">
+      <div class="fig" id="b1fig">0.00%</div>
+      <div class="rule" id="b1rule"></div>
+      <div class="sub mask"><span id="b1sub">what you'd pay NeroPay on a £4 coffee</span></div>
+    </div>
+  </div>
+
+  <div class="layer" id="b3">
+    <div class="stack">
+      <div class="mask"><span class="row" data-i="0">1.30% × £4.00 = 5.2p</span></div>
+      <div class="mask"><span class="row" data-i="1">+ 8p fixed</span></div>
+      <div class="mask"><span class="row" data-i="2">= 13.2p</span></div>
+      <div class="mask"><span class="row k" data-i="3">= 3.30%</span></div>
+    </div>
+  </div>
+
+  <div class="layer" id="b45">
+    <div class="bars">
+      <div class="head mask"><span id="bhead">£4.00 SALE</span></div>
+      <div class="bar">
+        <div class="lab"><span>Us</span><span class="amt" id="amtA">13.2p</span></div>
+        <div class="track"><div class="fill" id="fillA"></div></div>
+      </div>
+      <div class="bar">
+        <div class="lab"><span>A flat rate, no fixed fee</span><span class="amt" id="amtB">6.8p</span></div>
+        <div class="track"><div class="fill" id="fillB"></div></div>
+        <div class="note" id="bnote">we lose</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer" id="b6">
+    <div style="text-align:center">
+      <div class="fig mask"><span id="b6fig">£20.51</span></div>
+      <div class="sub mask"><span id="b6sub">where the fixed fee stops hurting</span></div>
+    </div>
+  </div>
+
+  <div class="layer" id="b7">
+    <div>
+      <div class="pair">
+        <div class="tk"><i>£4.00 sale</i><b>3.30%</b></div>
+        <div class="tk"><i>£40.00 sale</i><b>1.50%</b></div>
+      </div>
+      <div class="cap">same rate card</div>
+    </div>
+  </div>
+
+  <div class="layer" id="b8">
+    <div style="text-align:center">
+      <div class="mark mask"><span>Nero<i>Pay</i></span></div>
+      <div class="url" id="b8url">neropay.app</div>
+    </div>
+  </div>
+
+  <div id="cut"></div>
+  <div id="footer">Our rate: 1.30% + 8p, no contract. Comparison: an illustrative flat 1.69% with no fixed fee. Correct 14 September 2026.</div>
+</div>
+
+<script>
+const FPS = 30;
+
+/* ---------------------------------------------------------------------------
+   Timeline. Built from the VO line table, not hand-placed keyframes. When
+   out/ep01/vo_words.json exists, replace LINES[].dur with the real per-line
+   durations from the word timestamps and every beat re-times itself.
+   WPS is an estimate: the real read will differ, so this is nominal only.
+--------------------------------------------------------------------------- */
+const WPS = 3.0, GAP = 0.40, HEAD = 3.0, TAIL = 1.5;
+const LINES = [
+  { id:'L1', words:10 }, { id:'L2', words:20 }, { id:'L3', words:19 },
+  { id:'L4', words:15 }, { id:'L5', words:16 }, { id:'L6', words:14 },
+  { id:'L7', words:11 },
+];
+let cur = HEAD;
+for (const l of LINES) { l.t = cur; l.dur = l.words / WPS; cur += l.dur + GAP; }
+const at = id => LINES.find(l => l.id === id).t;
+const end = id => { const l = LINES.find(l => l.id === id); return l.t + l.dur; };
+const DURATION = cur - GAP + TAIL;
+
+/* on-screen word counts, for the timing law */
+const BEATS = [
+  { name:'1 cold open',  t:0.2,        out:at('L2'),        words:9  },
+  { name:'3 stack',      t:at('L2'),   out:at('L3'),        words:12 },
+  { name:'4 £4 bars',    t:at('L3'),   out:at('L4'),        words:11 },
+  { name:'5 £40 bars',   t:at('L4'),   out:at('L5'),        words:9  },
+  { name:'6 crossover',  t:at('L5'),   out:at('L6'),        words:7  },
+  { name:'7 recap',      t:at('L6'),   out:at('L7'),        words:8  },
+  { name:'8 end card',   t:at('L7'),   out:DURATION,        words:3  },
+];
+/* the law: hold = max(1.5, on_screen_words * 0.4), asserted not eyeballed */
+const BUILD = 0.55, EXIT = 0.30;
+function lawReport(){
+  return BEATS.map(b => {
+    const need = Math.max(1.5, b.words * 0.4);
+    const have = (b.out - b.t) - BUILD - EXIT;
+    return { beat:b.name, words:b.words, required:+need.toFixed(2),
+             hold:+have.toFixed(2), pass:have >= need };
+  });
+}
+
+/* ---- easing: everything eases out, nothing overshoots ---- */
+const clamp = p => p < 0 ? 0 : p > 1 ? 1 : p;
+const seg = (t, s, d) => clamp((t - s) / d);
+const eo  = p => 1 - Math.pow(1 - p, 3);
+const eo2 = p => 1 - Math.pow(1 - p, 2);
+
+const $ = s => document.querySelector(s);
+const px = (el, o) => Object.assign(el.style, o);
+
+/* mask-up: text arrives from behind its own edge, never blur or bounce */
+function maskUp(el, t, start, dur = 0.42){
+  const p = eo(seg(t, start, dur));
+  px(el, { transform:`translateY(${(1 - p) * 105}%)`, opacity: p < 0.02 ? 0 : 1 });
+}
+function show(el, on){ el.style.opacity = on ? 1 : 0; }
+
+const money = v => '£' + v.toFixed(2);
+
+function setFrame(n){
+  const t = n / FPS;
+
+  /* ---------- which beat owns the screen ---------- */
+  const vis = {
+    b1: t < at('L2'),
+    b3: t >= at('L2') && t < at('L3'),
+    b45:t >= at('L3') && t < at('L5'),
+    b6: t >= at('L5') && t < at('L6'),
+    b7: t >= at('L6') && t < at('L7'),
+    b8: t >= at('L7'),
+  };
+  for (const k in vis) show($('#' + k), vis[k]);
+
+  /* ---------- beat 1: count up 0.00 -> 3.30 over 0.8s, then dead still --- */
+  if (vis.b1){
+    const p = eo2(seg(t, 0.2, 0.8));
+    $('#b1fig').textContent = (3.30 * p).toFixed(2) + '%';
+    maskUp($('#b1sub'), t, 1.05);
+    /* beat 2: the yellow rule wipes in left to right as the VO starts */
+    const w = eo(seg(t, at('L1'), 0.4));
+    px($('#b1rule'), { width: (w * 34) + 'cqmin' });
+  }
+
+  /* ---------- beat 3: the stack builds line by line ---------- */
+  if (vis.b3){
+    const s = at('L2'), step = (end('L2') - s) / 4.6;
+    document.querySelectorAll('#b3 .row').forEach(r => {
+      maskUp(r, t, s + (+r.dataset.i) * step);
+    });
+  }
+
+  /* ---------- beats 4 and 5: bars draw from their origin, never scale ---- */
+  if (vis.b45){
+    const four = t < at('L4');
+    const s = four ? at('L3') : at('L4');
+    maskUp($('#bhead'), t, s, 0.34);
+    $('#bhead').textContent = four ? '£4.00 SALE' : '£40.00 SALE';
+
+    /* widths are proportional to real cost — see checks.py */
+    const A = four ? 100 : 88.8;            /* ours: 13.2/13.2 , 60.0/67.6 */
+    const B = four ? 51.2 : 100;            /* benchmark: 6.76/13.2 , 67.6/67.6 */
+    const pA = eo(seg(t, s + 0.30, 0.65));
+    const pB = eo(seg(t, s + 0.55, 0.65));
+    px($('#fillA'), { width:(A * pA) + '%' });
+    px($('#fillB'), { width:(B * pB) + '%' });
+
+    $('#amtA').textContent = four ? '13.2p' : '60.0p';
+    $('#amtB').textContent = four ? '6.8p'  : '67.6p';
+    show($('#amtA'), pA > 0.9); show($('#amtB'), pB > 0.9);
+
+    /* ours is grey on the £4 sale — deliberately not red. It turns yellow
+       only on the £40 sale, as it lands: the turn, and the frame's one accent */
+    $('#fillA').style.background = four ? 'var(--loss)'
+      : `color-mix(in srgb, var(--accent) ${Math.round(eo(seg(t, s + 0.80, 0.4)) * 100)}%, var(--loss))`;
+    $('#fillB').style.background = '#4E5561';
+
+    $('#bnote').textContent = four ? 'we lose' : 'here we do not';
+    show($('#bnote'), t > s + (four ? 1.9 : 1.5));
+  }
+
+  /* ---------- beat 6: the only hard cut in the video, 3 frames of black --- */
+  const cutAt = at('L5');
+  $('#cut').style.opacity = (t >= cutAt - 0.10 && t < cutAt) ? 1 : 0;
+  if (vis.b6){
+    maskUp($('#b6fig'), t, cutAt + 0.02, 0.5);
+    maskUp($('#b6sub'), t, cutAt + 0.40);
+  }
+
+  /* ---------- beat 7: the recap that replaces the texture beat ---------- */
+  if (vis.b7){
+    const s = at('L6');
+    document.querySelectorAll('#b7 .tk').forEach((r, i) => {
+      const p = eo(seg(t, s + i * 0.5, 0.45));
+      px(r, { opacity:p, transform:`translateY(${(1 - p) * 14}px)` });
+    });
+    const c = eo(seg(t, s + 1.5, 0.4));
+    px($('#b7 .cap'), { opacity:c });
+  }
+
+  /* ---------- beat 8: wordmark masks up, URL follows 6 frames later ------ */
+  if (vis.b8){
+    const s = at('L7');
+    maskUp($('#b8 .mark span'), t, s, 0.46);
+    px($('#b8url'), { opacity: eo(seg(t, s + 0.20, 0.45)) });
+  }
+}
+
+window.setFrame = setFrame;
+window.DURATION = DURATION;
+window.FPS = FPS;
+window.lawReport = lawReport;
+setFrame(0);
+</script>

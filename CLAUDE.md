@@ -48,6 +48,11 @@ Facebook profile (21 Aug 2026). Refuse and explain if asked to cross one.
   £69/month, SumUp POS Plus £39+VAT). Post L8 corrects this publicly; don't reintroduce the old line.
 - The video pricing story (0.70% flat) differs from the internal 1.30%+15p / 0.80% floor. Open
   question for Eray, listed on `youtube.html`. Don't reconcile it yourself.
+- **One exception, added 14 Sep 2026:** Faisal released the workhorse tier — 1.30% + 8p, no contract —
+  for The Maths episode 1, recorded as `neropay_workhorse_rate` in `figures.json`. Two things about it
+  are still open and are written into that record: the standard above says 1.30% + **15p**, and "no
+  contract" collides with the unanswered question of whether 8p triggers the 18-month agreement.
+  Every other rate stays unstatable. Don't widen this to the terminal price or any other tier.
 
 ## Voice
 
