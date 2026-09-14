@@ -1,0 +1,180 @@
+{
+  "_schema": {
+    "note": "Every number The Maths states on screen must have a record here. Nothing goes on screen unless it exists in this file with status 'confirmed'.",
+    "fields": {
+      "value": "machine-readable value. Rates as decimals (0.0169), money in pounds, pence in pence.",
+      "display": "exactly how it is rendered on screen.",
+      "on_screen_label": "the label rendered beside it. NEVER a provider name — see rail 2.",
+      "kind": "benchmark | neropay | research | specimen | context",
+      "internal_source": "traceability only. May name a provider. NEVER rendered.",
+      "verified_on": "ISO date. Older than 90 days fails the build with a warning.",
+      "status": "confirmed | blocked. A blocked record fails the build if an episode references it.",
+      "footer": "the source line this figure contributes to the persistent footer."
+    },
+    "verified_on_policy": "warn at 90 days, from the date the figure was last checked against its source, not the date this file was edited.",
+    "last_reviewed": "2026-09-14"
+  },
+
+  "benchmark_flat_no_fee": {
+    "value": 0.0169,
+    "display": "1.69%",
+    "fixed_fee_pence": 0,
+    "on_screen_label": "a flat rate with no fixed fee",
+    "kind": "benchmark",
+    "note": "Illustrative market benchmark. NOT attributed on screen to any provider.",
+    "internal_source": "NEROPAY_CONTEXT §3 break-even table, supplied in MOTION-SERIES-BRIEF v1.0",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "caveat": "The source document is not in this repo. Traced to the brief only. Ask Faisal to bring NEROPAY_CONTEXT across before this figure carries an episode on its own.",
+    "footer": "Benchmark: a flat rate with no fixed fee, 1.69%. Illustrative, not a quote from any provider."
+  },
+
+  "benchmark_paid_restaurant_pos_monthly": {
+    "value": 69.0,
+    "display": "£69 a month",
+    "annual_value": 828.0,
+    "annual_display": "£828 a year",
+    "on_screen_label": "a typical paid restaurant POS tier",
+    "kind": "benchmark",
+    "note": "Paid tier only. Free tiers exist and any episode using this MUST concede that on screen — see the CLAUDE.md correction and post L8.",
+    "internal_source": "Square for Restaurants Plus, £69/month, per CLAUDE.md competitor register. Second data point: SumUp POS Plus £39+VAT/month.",
+    "verified_on": "2026-08-18",
+    "status": "confirmed",
+    "footer": "Benchmark: a typical paid restaurant POS tier, £69 a month. Correct as of 18 Aug 2026. Free tiers also exist."
+  },
+
+  "neropos_software_fee": {
+    "value": 0.0,
+    "display": "£0",
+    "on_screen_label": "what our POS software costs a month",
+    "kind": "neropay",
+    "note": "Safe product fact. EPOS software included at no monthly software fee. Says nothing about the terminal price or any transaction rate, and must not be drawn into implying either.",
+    "internal_source": "CLAUDE.md, Product facts safe to state",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "footer": "NeroPay POS software: no monthly software fee."
+  },
+
+  "merchants_not_switched": {
+    "value": 0.42,
+    "display": "42%",
+    "on_screen_label": "of UK merchants had not switched or considered switching in two years",
+    "kind": "research",
+    "internal_source": "PSR / IFF Research, n=1,037, fieldwork Oct–Dec 2019",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "note": "The fieldwork date MUST be on screen. It is old and stating it undated is a substantiation problem.",
+    "footer": "42% and 76%: PSR / IFF Research, n=1,037, fieldwork Oct–Dec 2019."
+  },
+
+  "switchers_found_it_easy": {
+    "value": 0.76,
+    "display": "76%",
+    "on_screen_label": "of those who did switch found it easy",
+    "kind": "research",
+    "internal_source": "PSR / IFF Research, n=1,037, fieldwork Oct–Dec 2019",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "footer": "42% and 76%: PSR / IFF Research, n=1,037, fieldwork Oct–Dec 2019."
+  },
+
+  "hospitality_optimism_aug_2026": {
+    "value": 0.16,
+    "display": "16%",
+    "prior_value": 0.51,
+    "prior_display": "51%",
+    "on_screen_label": "of independent hospitality operators optimistic, Aug 2026, down from 51% in Feb",
+    "kind": "research",
+    "internal_source": "CLAUDE.md, Numbers you can use",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "footer": "Operator optimism: 16% Aug 2026, 51% Feb 2026."
+  },
+
+  "specimen_statement_total": {
+    "value": 308.46,
+    "display": "£308.46",
+    "turnover": 28400.0,
+    "transactions": 780,
+    "effective_rate": 0.0109,
+    "effective_display": "1.09%",
+    "advertised_display": "0.50%",
+    "on_screen_label": "total charges on £28,400 of card turnover",
+    "kind": "specimen",
+    "note": "Specimen statement from a fictional provider. Demo data, rail 7 / rail 5 safe. The provider name in the pack is fictional and still must not appear on screen. Every overlay in the video series reconciles to this figure.",
+    "internal_source": "generation-pack.md, statement-tiered, Northwick Payment Services (fictional)",
+    "verified_on": "2026-08-18",
+    "status": "confirmed",
+    "footer": "Specimen statement. Illustrative figures, not a real merchant."
+  },
+
+  "rusholme_food_units": {
+    "value": 98,
+    "display": "98",
+    "on_screen_label": "food businesses in 800 metres of Wilmslow Road",
+    "kind": "context",
+    "internal_source": "NeroPay's own count",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "footer": "98 food businesses in 800m of Wilmslow Road: NeroPay's own count."
+  },
+
+  "april_2026_cost_stack": {
+    "value": null,
+    "display": "n/a — a set of facts, not one figure",
+    "facts": {
+      "nlw": "£12.71",
+      "rate_18_to_20_uplift": "up 8.5%",
+      "employer_ni": "15% from £5,000",
+      "rhl_relief": "40% RHL rates relief ended April 2026; pubs got 15% plus a three-year freeze; restaurants, cafés, bars and takeaways excluded"
+    },
+    "on_screen_label": "what changed in April 2026",
+    "kind": "context",
+    "internal_source": "CLAUDE.md, Numbers you can use",
+    "verified_on": "2026-09-14",
+    "status": "confirmed",
+    "footer": "April 2026 cost changes: NLW £12.71, employer NI 15% from £5,000, RHL relief ended for restaurants, cafés, bars and takeaways."
+  },
+
+  "neropay_transaction_rate": {
+    "value": null,
+    "display": null,
+    "on_screen_label": null,
+    "kind": "neropay",
+    "status": "blocked",
+    "blocked_reason": "CLAUDE.md: do not state the terminal price or any transaction rate. Internal figures conflict — 1.30% + 15p standard, 0.80% bespoke floor, 0.70% flat in the video series. Open question for Eray, listed on youtube.html.",
+    "affects": ["episode 1 (3.30%)", "episode 3 (£20.51)", "episode 5 (8p vs 15p)"],
+    "verified_on": "2026-09-14"
+  },
+
+  "fixed_fee_8p": {
+    "value": null,
+    "display": null,
+    "on_screen_label": null,
+    "kind": "neropay",
+    "status": "blocked",
+    "blocked_reason": "Open question with Eray: does 8p alone trigger the 18-month agreement. Named in the brief as the blocker on episode 5, and it is also the hidden input behind episode 3's £20.51 crossover.",
+    "affects": ["episode 3", "episode 5"],
+    "verified_on": "2026-09-14"
+  },
+
+  "flex_price": {
+    "value": null,
+    "display": null,
+    "on_screen_label": null,
+    "kind": "neropay",
+    "status": "blocked",
+    "blocked_reason": "NeroPay Flex has no confirmed price. CLAUDE.md unconfirmed list; brief rail 6.",
+    "verified_on": "2026-09-14"
+  },
+
+  "partner_incentive": {
+    "value": null,
+    "display": null,
+    "on_screen_label": null,
+    "kind": "neropay",
+    "status": "blocked",
+    "blocked_reason": "Partner incentive model not signed off. No partner asset carries figures. CLAUDE.md unconfirmed list; brief rail 6.",
+    "verified_on": "2026-09-14"
+  }
+}
