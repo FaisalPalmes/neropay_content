@@ -76,3 +76,15 @@ already lands the point and L7 closes it. Your call; it's one line in the table.
   scrim, above the footer. libass cannot read woff2, so `motion/assets/fonts-ttf/` carries a TTF built
   from the vendored file. Burned into 9:16, 4:5 and 1:1; 16:9 stays clean for YouTube.
 - `finish.sh` does the burn, the mux, the contact sheet, the loudness check and the frame scan.
+
+## Delivered — 15 September 2026, draft for review, nothing published
+
+| Cut | Facts | md5 |
+|---|---|---|
+| 9:16 | 1080×1920, 46.4 s (1392 frames), captions burned, −16.27 LUFS / −1.42 dBTP, frame scan 0 spikes | `09b477a1…` |
+| 4:5 | 1080×1350, 46.4 s, captions burned, same mix | `539f73fd…` |
+| 1:1 | 1080×1080, 46.4 s, captions burned, same mix | `afa6d823…` |
+| 16:9 | 1920×1080, 46.4 s, clean (captions uploaded separately on YouTube), same mix | `34d75029…` |
+
+ElevenLabs credits spent: 576 (one take). Effects from the library, nothing generated. Files in
+`out/final/`, gitignored; the take, the word timings, the captions and the mix map are in `data/`.
