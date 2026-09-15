@@ -59,17 +59,34 @@ Outbound HTTPS goes through a policy-enforcing proxy. Measured 15 Sep 2026 from 
 | `freesound.org`, `cdn.freesound.org` | **403** | `fetch-sounds.mjs` writes placeholders only |
 | `pixabay.com` | **403** | no new effects from source |
 | `registry.npmjs.org`, `pypi.org`, `files.pythonhosted.org` | allowed | packages install fine; their model weights do not |
+| MCP connectors (Higgsfield, Drive, GitHub) | allowed | their traffic goes through Anthropic's servers, not the session's network — which is why `sandbox_exec` works when `curl` does not |
 
 So the honest position: **a Claude Code web session cannot generate or fetch a single new sound.**
-It can only use what is committed. Three ways round it, in the order they are worth trying:
+It can only use what is committed. Editing is not affected: once a file is on disk — committed,
+fetched in the sandbox, or made locally — wiring it into a composition, mixing it and mastering it is
+all local work with `ffmpeg` and needs no network at all. Only *acquiring* audio is blocked. Three ways round it, in the order they are worth trying:
 
-1. **The Higgsfield sandbox** (`mcp__Higgsfield__sandbox_exec`) has open internet, and is where
-   every B1 render already happens. Clone the repo there, fetch the sounds, run the voiceover call,
-   render, loudnorm, upload. This is the proven route and needs nothing from anyone.
-2. **Allowlist the hosts on the environment.** Faisal can add `api.elevenlabs.io`, `freesound.org`,
-   `cdn.freesound.org` and `huggingface.co` to the environment's network policy at
-   code.claude.com → the environment → network access. Then the web session does it directly.
-3. **Run Claude Code locally**, where there is no egress policy at all.
+The block is the **cloud environment's network access level**, not the provider and not Claude. The
+default level is **Trusted** — package registries, GitHub and cloud SDKs, nothing else — so the proxy
+refuses at CONNECT before it ever reaches the host. Four ways round it, best first:
+
+1. **Store the key as an environment API credential** (Pro and Max plans). In the environment editor
+   at claude.ai/code → **API credentials** → **Add credential**: allowed website `api.elevenlabs.io`,
+   a custom header named `xi-api-key` with the prefix cleared, the key as the value. Anthropic's proxy
+   then attaches the header *after* each request leaves the VM — **the key never enters the session**,
+   is not in the environment variables or any file, and the host becomes reachable even at Trusted.
+   Call it with plain `curl` and no auth header. Note the corollary: `$ELEVENLABS_API_KEY` is unset in
+   that session, so `hyperframes tts` and the `media-use` engine will think there is no key and fall
+   back to a local voice — use `curl` for ElevenLabs on this route, not those.
+2. **Raise the environment's network access.** Same editor → **Network access** → **Custom**, then
+   `api.elevenlabs.io`, `freesound.org`, `*.freesound.org`, `huggingface.co`, `cdn-lfs.huggingface.co`,
+   `cdn.pixabay.com` and `d2ol7oe51mr4n9.cloudfront.net` in **Allowed domains**, one per line, with
+   *Also include default list of common package managers* ticked. **Full** allows any domain.
+3. **Run the session locally.** The Desktop app's environment selector has a **Local** row — a session
+   on the machine itself, with its own network and no egress proxy, where all of this just works.
+4. **The Higgsfield sandbox** (`mcp__Higgsfield__sandbox_exec`) has open internet and is where every
+   B1 render already happens, so it needs no configuration at all. Fetch sounds there freely; think
+   twice before passing an API key into it, since the key then transits a third party's machine.
 
 ## 3. How sound is wired into a composition
 
