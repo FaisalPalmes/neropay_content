@@ -27,3 +27,9 @@ number before the turn. Ends on a concession. Draft only — Faisal reviews befo
 
 **Footer copy.** "Our rate: 1.30% + 8p. Comparison: an illustrative flat 1.69% with no fixed fee. Correct
 14 September 2026." — "no contract" is left out of this piece while the 18-month-agreement question is open.
+
+## Delivered
+
+| Cut | Facts | Commit |
+|---|---|---|
+| 9:16 showcase | 1080×1920, 24.9 s (747 frames), −14.28 LUFS / −1.34 dBTP, 2.2 MB, check clean (0 runtime, 0 layout), frame scan 0 spikes, 19 sounds fetched and gated (bed peak −3.3 dB), md5 `88c94625…`, Higgsfield media `neropay-motion-showcase-9x16.mp4` | `95902a3` |

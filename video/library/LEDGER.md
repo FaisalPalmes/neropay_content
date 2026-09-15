@@ -20,6 +20,9 @@ pop (chips and tags), sparkle (bars rising), click-soft (checklist).
 "Tropicorp Advertisement" by Nancy_Sinclair, CC0, https://freesound.org/apiv2/sounds/561190/ — 82 bpm; the
 build cuts it into `music-intro` (5.4 s) and `music-outro` (18.6 s) with baked fades.
 
+Used in `motion/showcase` (15 Sep 2026): the bed cut to 28 beats (`music-showcase`, 20.488 s, ends dead on the
+end-card downbeat); Pixabay impact-bass-1/2, whoosh-short, sparkle, chime, click-soft, riser (its last 3 s).
+
 ## How to add a sound
 
 1. Download it from a source whose licence you can quote (Pixabay: no attribution; Freesound: check the
