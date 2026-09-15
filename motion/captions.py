@@ -35,7 +35,9 @@ for line in spec['lines']:
         end = words[j]['e']; i = j + 1
     cues.append([head + start, head + end, line])
 for k in range(len(cues) - 1):
-    cues[k][1] = min(cues[k][1] + 0.12, cues[k + 1][0] - 0.04)
+    nxt = cues[k + 1][0]
+    # a short gap between cues is a one-frame flash of no caption box — run them together instead
+    cues[k][1] = nxt if nxt - cues[k][1] < 0.35 else cues[k][1] + 0.12
 cues[-1][1] += 0.4
 
 def wrap(s, n=26):
