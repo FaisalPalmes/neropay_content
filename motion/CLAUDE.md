@@ -11,6 +11,7 @@ Don't mix the styles and don't reuse presenter assets here. Nothing in `motion/`
 | Series | Folder | What it is |
 |---|---|---|
 | The Maths | `motion/maths/` | One number out of a merchant's life, worked out on screen |
+| Small Print | `motion/print/` | The law, the deadline and the rule a card machine touches — tips, contracts, surcharges, disputes, HMRC. White editorial, a stamp on the date, and "if this doesn't apply to you, do nothing". Briefed in `motion.js` |
 | *(proposed)* Partner programme | `motion/partner/` | The partner programme explained as an animated diagram. **Blocked on figures** — the incentive model isn't signed off, and rail 10 blocks partner commission regardless. A figureless version explaining the mechanics is publishable now |
 
 Adding a series: a folder in `motion/`, a `CLAUDE.md` in it carrying the premise, the spec and the
@@ -71,48 +72,99 @@ Rails 1, 3, 5, 6, 7, 9 and 10 above apply unchanged. Rail 4 (AI presenter disclo
 a faceless video — but if a Higgsfield texture beat is ever used, raise the disclosure question
 before it ships rather than assuming it's exempt.
 
-## Style
+## What v1 got wrong — Faisal, 15 Sep 2026
 
-**Ground.** Near-black charcoal. Dark-first, always. Never a light background — this style is the
-one place in the repo that ignores the site's light default.
+Episode 1 v1 rendered clean and it read as **AI slop**: a level, dry read; one centred figure on a dark
+card; every beat the same shape; nothing a person would stop for. The fault was not the maths, it was
+the register. This section replaces it. The rules below are the ruling for every video in `motion/`.
 
-```
---ground    #0E1013   page ground
---surface   #1A1D22   raised panels, bars
---ink       #FFFFFF   primary type, figures
---muted     #8A9099   labels, footnotes, sources
---accent    #F5C518   NeroPay yellow — accent only
---loss      #6B7280   the "we lose" state, deliberately grey not red
-```
+**Two jobs, in this order.** A short-form video is an **attention grab first** and an explainer
+second. The first 1.5 seconds carry the hook — spoken, on screen, or both — and the hook is never
+"here is a number". It is a claim that costs the viewer something to ignore: *"That sign in your
+window has been illegal since 2018."* The maths earns its place after that, or it doesn't appear.
 
-`#F5C518` is the NeroPay yellow everywhere in this repo (`style.css`, `MOTION-SYSTEM.md`,
-`video/LESSONS.md`). The series brief proposed `#F2B705` and said the repo's brand file wins. It does.
+## Style — v2, editorial
 
-**Yellow discipline.** One thing per frame — the number or idea under discussion. Never a background,
-never a large fill, never two things at once. In the wordmark NERO is white and PAY is yellow, always.
+**Look.** Apple-editorial, high-end commercial. Calm, sharp, still — but *composed*, not centred.
+Type sits where a magazine art director would put it, with air around it. One idea per frame, but
+that idea can be a small word and a large one, a number and its qualifier, a serif whisper under a
+sans shout. **Tasteful use of the whole frame**: something small in a corner, something large across
+the middle, and empty space that is doing work.
 
-**Type.** Display and headlines **Chivo**, heavy, tight tracking. Anything numeric — figures, rates,
-currency — **Martian Mono**, because a monospace face stops digits jittering as they count up.
-Long-form or quoted text **Source Serif**. Footnotes and source lines Chivo 11px, `--muted`.
-This is the v2 type system, deliberately; the `video/` pieces are still Poppins and stay that way.
+**Ground.** Two grounds, chosen per video, never mixed inside one:
 
-**Motion.** Figures count up, they don't fade in. Bars draw from their origin, they don't scale.
-Text arrives by mask-up, never blur or bounce. Everything eases out, nothing overshoots. Honour
-`prefers-reduced-motion` in the markup even though the render ignores it — the same markup gets
-reused on the site.
+- **White editorial** — `#FBFAF7` off-white, ink `#141416`, the yellow as the single accent. The Apple
+  register. Default for regulatory and "did you know" videos.
+- **Charcoal** — `#0E1013` as before. For the money videos where the number needs to glow.
 
-**Timing law.** `hold_seconds = max(1.5, on_screen_words × 0.4)` — the same law as `MOTION-SYSTEM.md`,
-not a second one. Every overlay comes fully to rest and holds at least one second before anything
-else moves. The commonest failure in this style is graphics leaving before they can be read.
-Assert it in code.
+**Liquid glass, tastefully.** The `video/b1-v8` glass system (a blurred copy of what is behind,
+an even tint, one sheen pass on entrance, a thin rim — never `backdrop-filter`) is used for the
+*one* element that carries data on a frame: a card, a pill, a receipt. Never for type on its own,
+never two glass objects competing, never as decoration. On white it is the frosted-white slab
+(`.lglass`); on charcoal the dark slab.
 
-**Persistent source footer.** Any video stating a figure carries a fixed `--muted` 11px line for its
-whole duration, not just at the end: the figures used and the date verified. Each `figures.json`
-record supplies its `footer` string.
+**Type hierarchy is the animation.** Three faces, each with a job:
 
-**Layout.** Container query units (`cqmin`, `cqw`) so one layout holds across 16:9, 9:16, 4:5 and 1:1
-without a rewrite. Crops: `{"16x9":(1920,1080), "9x16":(1080,1920), "4x5":(1080,1350), "1x1":(1080,1080)}`.
-Primary is 9:16 unless a series says otherwise.
+| Face | Job | How it moves |
+|---|---|---|
+| **Chivo 800**, tight | The shout — the claim, the big word, the number's label | Masks up hard, lands on the beat |
+| **Martian Mono 700** | Every figure, rate, date, deadline | Counts, ticks, or stamps; never fades |
+| **Source Serif 4 italic** | The human line — the aside, the concession, the "and honestly…" | Rises softly, half a beat late, smaller |
+
+Colour by phrase, not by rule: the thing the voice is *hitting* is the thing that's yellow. A word
+the voice throws away is `--muted` and small. Italic is the voice dropping to an aside. Caps and
+size are the voice raising. **The typography should be readable as the narrator's performance with
+the sound off.**
+
+**Motion vocabulary.** Figures count up, bars draw, text masks up — unchanged. New: **stamps** (a
+date or a deadline lands with a 2-frame overshoot-free scale from 1.06 to 1 and a thud), **strikes**
+(a line drawn through a claim as it's retracted — the B1 0.5% strike), **ledger ticks** (rows
+appearing on the beat with a dry tick), and **camera travel** (below). Everything eases out; the only
+thing that overshoots is nothing.
+
+**The board.** Some videos are shot on **one large board** — a 2D layout three or four frames wide
+and tall, every station laid out at once, and a virtual camera that travels between stations as the
+video goes on: a push, a pan, a pull-back to reveal the whole board at the end. The board is the
+video's map; the viewer feels the space. Rules: the camera moves *only between* beats, never during
+a hold; moves are 0.6–0.9 s, eased, and land dead still; each station is composed to be read at its
+own zoom; the pull-back at the end shows the whole argument in one frame. Built as one `#board`
+element under a clamped transform — the `video/b1-rate-you-were-quoted` virtual camera pattern.
+Not every video is a board; a board earns itself when the video has four or more stations that
+relate spatially (a calendar, a receipt, a ledger, a route).
+
+**Higgsfield plates.** Allowed now, for images only, under overlays: a photographic **plate** — a
+card terminal on a counter, a receipt, a street at night, a till drawer — generated in Higgsfield
+(`gpt_image_2_5`, `quality: "high"`, `resolution: "2k"`, 9:16), colour-graded to the ground, sitting
+behind the type or the glass card. Rules: no text in the image (we set it), no people, no NeroPay
+props (the terminal is the only branded object and must not carry a competitor's mark), sharp and
+deep (no bokeh, MOTION-SYSTEM §1), and one plate per beat at most. A plate is a *texture for a
+beat*, never the body of the video. Rail 4: an AI image under a caption is synthetic content — the
+upload disclosure applies as it does for the presenter series; raise it once per series.
+
+## Narration — the performance
+
+**Model.** `eleven_v3` with inline audio tags, one take per video, the series voice
+`jP5jSWhfXz3nfQENMtf4`. `eleven_multilingual_v2` produced the level v1 read and is retired for this
+style. Tags are sparse and specific; the script is punctuated for delivery.
+
+**Register.** Real, human, awake. High energy is not shouting — it is *investment*: the narrator
+finds this genuinely interesting and wants you to get it. The tone changes on the phrase: a claim
+lands flat and sure; a number is said like it matters; the concession drops to an aside and a
+smile; the close is direct. Never sales-voice, never radio-voice, never the dry v1 read.
+
+**Every video carries a `narrator` block** in `motion.js` with three parts: the *energy curve* (one
+line per beat — where it lifts, where it drops), the *tags* used and why, and *the one word* in
+each beat that gets the hit. Every `say` line in the shot list is written with its tags in place, so
+the take can be generated from the warehouse without a second interpretation.
+
+**Tag vocabulary** (keep to these): `[excited]` `[curious]` `[serious]` `[deadpan]` `[whispers]`
+`[sighs]` `[laughs softly]` `[warmly]` `[urgent]`. Emphasis by CAPITALS on at most one word per line.
+Pauses by an ellipsis `…` (thoughtful) or an em dash `—` (a beat). No tag on more than one line in
+three; the words do most of it.
+
+**Word timings** still drive every in-point. Scribe through the connector returns text only, so the
+take goes through faster-whisper in the Higgsfield sandbox (`motion/README.md`), and the composition
+takes the `[{w,s,e}]` array in directly, as `maths/ep01` does.
 
 ## Pipeline
 
@@ -125,15 +177,14 @@ and a contact sheet → **Faisal reviews** → commit and publish only after app
 word timestamps. Building to estimated timings and generating audio afterwards means hand-nudging
 keyframes, which is the manual work this pipeline exists to remove.
 
-**Voice.** ElevenLabs MCP (`elevenlabs/elevenlabs-mcp`), voice `jP5jSWhfXz3nfQENMtf4`,
-`eleven_multilingual_v2`, `mp3_44100_128`, output mode **files**, **always request word-level
-timestamps** — they drive both caption timing and overlay in-points. One fixed voice across every
-series here. Budget: 50,000 credits/period, a 40-second VO is ~500–600. No speculative batches, and
-ask before any run over ~3,000 credits.
+**Voice.** The ElevenLabs connector on Faisal's account (`creative_generate_speech`,
+`generations_count: 1`), voice `jP5jSWhfXz3nfQENMtf4`, **`eleven_v3`** with the narration spec above.
+One fixed voice across every series. A 40-second take is ~500–600 credits. No speculative batches,
+and ask before any run over ~3,000 credits. Word timings via the sandbox — see Narration.
 
-**Higgsfield**, if a brief calls for it: `gpt_image_2_5` defaults to `quality: low` and `1k`, so set
-`quality: "high"` and `resolution: "2k"` or `"4k"` explicitly. Video is `kling3_0`, 1080p. Workspace
-`9fbbb426` — the private workspace has no credits.
+**Higgsfield** for plates (see Style): `gpt_image_2_5` defaults to `quality: low` and `1k`, so set
+`quality: "high"` and `resolution: "2k"` explicitly. Workspace `9fbbb426` — the private workspace has
+no credits. No video generation in this style.
 
 **Gotchas already paid for.** CSS `%` breaks Python `%`-formatting — use `@@TOKEN@@` placeholders and
 `.replace()`. Backgrounding a render with `&` breaks the `cd` chain and frames land in `$HOME` — use
@@ -143,6 +194,12 @@ them, so vendor fonts (`@fontsource/*` or a local `.woff2`) and libraries.
 
 **Alpha.** PNG sequence with alpha, or ProRes 4444 (`yuva444p10le`). The "build on black + Screen
 blend" workaround is retired, here as everywhere else in the repo.
+
+## Where the briefs live
+
+Every video in this style is briefed in **`motion.js`** at repo root and rendered on `motion.html` — hook,
+need, source, format, board plan, plate, the narrator block and the beats with their `say` lines. A
+video is built from that brief; the brief is the spec the take is generated from.
 
 ## Ask, don't guess
 

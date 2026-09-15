@@ -182,5 +182,162 @@
     "status": "confirmed",
     "caveat": "Two things to settle before anything using this publishes. (1) /CLAUDE.md records the internal standard as 1.30% + 15p, not + 8p. At 15p a £4 coffee is 5.05%, not 3.30%, so every figure in episode 1 depends on 8p being the right tier. (2) 'no contract' contradicts the open question with Eray about whether 8p alone triggers the 18-month agreement — see fixed_fee_8p. If it does, the footer claim is false.",
     "footer": "Our rate: 1.30% + 8p, no contract."
+  },
+  "psr_terminal_lease_cap": {
+    "value": 18,
+    "display": "18 months",
+    "on_screen_label": "the maximum minimum term for a card terminal lease or rental",
+    "kind": "regulatory",
+    "internal_source": "PSR PS22/2 Card-acquiring market remedies, final decision, Oct 2022; POS terminal remedy from Jan 2023; applies to the 14 directed providers (~95% of transactions)",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Terminal lease cap: 18 months, then 31-day rolling. PSR PS22/2, Oct 2022; directed providers only.",
+    "note": "After the minimum term, rolling renewal of no more than 31 days; exit fees must be cost-based and explained up front.",
+    "rolling_days": 31
+  },
+  "psr_trigger_messages": {
+    "value": "2023-07",
+    "display": "July 2023",
+    "on_screen_label": "providers must tell you when your minimum term ends and prompt you to shop around",
+    "kind": "regulatory",
+    "internal_source": "PSR PS22/2; trigger messages and summary boxes from July 2023 for the 14 directed providers",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Trigger messages and summary boxes: PSR PS22/2, from July 2023, directed providers.",
+    "note": "Timing linked to the minimum-term expiry; for indefinite contracts at least every 30 days. Applies to the 14 largest acquirers, not every ISO or reseller."
+  },
+  "tips_act_in_force": {
+    "value": "2024-10-01",
+    "display": "1 October 2024",
+    "on_screen_label": "the Employment (Allocation of Tips) Act came into force",
+    "kind": "regulatory",
+    "internal_source": "Employment (Allocation of Tips) Act 2023; statutory Code of Practice; in force 1 Oct 2024 (England, Scotland, Wales)",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Employment (Allocation of Tips) Act 2023, in force 1 Oct 2024.",
+    "note": "100% of qualifying tips to workers; no deductions (including card processing fees); fair and transparent allocation."
+  },
+  "tips_act_payment_deadline": {
+    "value": "end of the following month",
+    "display": "by the end of the following month",
+    "on_screen_label": "when card tips must reach staff",
+    "kind": "regulatory",
+    "internal_source": "Employment (Allocation of Tips) Act 2023 s.27C — no later than the end of the month following receipt",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Card tips paid to staff by the end of the following month."
+  },
+  "tips_act_records": {
+    "value": 3,
+    "display": "3 years",
+    "on_screen_label": "how long tip allocation records must be kept",
+    "kind": "regulatory",
+    "internal_source": "Employment (Allocation of Tips) Act 2023 — records kept 3 years; worker requests answered within 4 weeks; written policy where tips are more than occasional",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Tip records kept 3 years; staff requests answered in 4 weeks.",
+    "request_weeks": 4
+  },
+  "mtd_itsa_threshold_2026": {
+    "value": 50000,
+    "display": "£50,000",
+    "on_screen_label": "qualifying income above which sole traders and landlords are in MTD for Income Tax from 6 April 2026",
+    "kind": "regulatory",
+    "internal_source": "HMRC, Making Tax Digital for Income Tax; gov.uk; HMRC estimate of 864,000 taxpayers in the first wave",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "MTD for Income Tax: over £50,000 from April 2026. HMRC.",
+    "caveat": "Not tax advice. Every video using this says 'ask your accountant'."
+  },
+  "mtd_itsa_thresholds_later": {
+    "value": [
+      30000,
+      20000
+    ],
+    "display": "£30,000 from April 2027 · £20,000 from April 2028",
+    "on_screen_label": "the thresholds after 2026",
+    "kind": "regulatory",
+    "internal_source": "HMRC, Making Tax Digital for Income Tax phasing",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "MTD thresholds: £30,000 from April 2027, £20,000 from April 2028."
+  },
+  "mtd_itsa_first_deadline": {
+    "value": "2026-08-07",
+    "display": "7 August 2026",
+    "on_screen_label": "the first quarterly update deadline (quarter 6 Apr–5 Jul 2026); next 7 November 2026",
+    "kind": "regulatory",
+    "internal_source": "HMRC quarterly update deadlines: 7 Aug, 7 Nov, 7 Feb, 7 May; no penalty points for late quarterly updates in 2026/27",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Quarterly updates due the 7th of August, November, February, May. No penalty points in year one.",
+    "next_deadline": "2026-11-07"
+  },
+  "surcharge_ban_date": {
+    "value": "2018-01-13",
+    "display": "13 January 2018",
+    "on_screen_label": "since when a business may not add a charge for paying by personal card",
+    "kind": "regulatory",
+    "internal_source": "Consumer Rights (Payment Surcharges) Regulations 2012, as amended by the Payment Services Regulations 2017; ACS guidance",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Card surcharge ban: 13 Jan 2018. Minimum spends allowed; business cards may be surcharged at cost.",
+    "note": "A minimum spend is lawful; card scheme rules may restrict it — check the provider agreement. Commercial cards may be surcharged, capped at actual cost."
+  },
+  "chargeback_cardholder_window": {
+    "value": 120,
+    "display": "120 days",
+    "on_screen_label": "how long a cardholder has to dispute a card payment",
+    "kind": "industry",
+    "internal_source": "Visa and Mastercard dispute rules — 120 days from the transaction for most reason codes (90 for some Mastercard codes)",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Cardholder dispute window: up to 120 days. Visa and Mastercard rules."
+  },
+  "chargeback_merchant_window": {
+    "value": "9–18 days",
+    "display": "often 9–18 days",
+    "on_screen_label": "how long a merchant typically gets to respond with evidence",
+    "kind": "industry",
+    "internal_source": "Scheme windows are 30 days (Visa) and 45 (Mastercard); acquirers commonly pass on 9–18 days — Chargeflow 2026, Chargebacks911 2026",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Merchant response windows vary by provider — often 9–18 days. Check yours.",
+    "caveat": "An industry range, not a rule. Before publish, state our own window on screen or say 'check your provider'."
+  },
+  "chargeback_fee_range": {
+    "value": [
+      15,
+      35
+    ],
+    "display": "£15–£35",
+    "on_screen_label": "the typical UK chargeback fee per case, win or lose",
+    "kind": "industry",
+    "internal_source": "MerchantHQ UK chargebacks 2026 — £15–£35 per case regardless of outcome",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Chargeback fees typically £15–£35 per case, whatever the outcome.",
+    "caveat": "Industry range. State our own fee before publish, or keep the range and say 'typically'."
+  },
+  "ukh_closures_per_day_2026": {
+    "value": 6,
+    "display": "six a day",
+    "on_screen_label": "hospitality closures UKHospitality expects in 2026 without a business-rates solution",
+    "kind": "research",
+    "internal_source": "UKHospitality, 'Hospitality set for 2,076 closures without sector-wide business rates solution' — modelling, 2026",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Six closures a day: UKHospitality modelling, 2026.",
+    "note": "An estimate from the trade body, and it must be labelled as one on screen."
+  },
+  "contactless_cap_removed": {
+    "value": "2026-03-19",
+    "display": "19 March 2026",
+    "on_screen_label": "the FCA stopped setting a single £100 contactless limit; issuers set their own",
+    "kind": "regulatory",
+    "internal_source": "FCA policy statement, 19 March 2026; MLex, FStech, Computer Weekly coverage; most issuers keeping £100 for now",
+    "verified_on": "2026-09-15",
+    "status": "confirmed",
+    "footer": "Contactless cap: FCA let issuers set their own from 19 Mar 2026; most kept £100 for now."
   }
 }

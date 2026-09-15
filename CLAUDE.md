@@ -83,8 +83,9 @@ from here, and folder uploads silently fail there.
 | `videos.js` | Six videos, every shot prompt | No — generated from `generation-pack.md` |
 | `generation-pack.md` | Source of truth for the video series | Yes, then regenerate videos.js |
 | `style.css`, `app.js` | One stylesheet, one script (sketches, filters, motion) | Only for design changes |
-| `*.html` | Six pages — overview, social, youtube, ideas, calendar, rails | Rarely |
+| `*.html` | Seven pages — overview, social, youtube, motion, ideas, calendar, rails | Rarely |
 | `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes, next briefs | **Yes — hand-edited, copy an episode to add one** |
+| `motion.js` | The motion graphics videos as `window.MOTION` — two series, each video with its hook, the audience need it answers (dated, sourced), format, the narrator's performance and the beats. Renders on `motion.html` | **Yes — this is where motion graphics briefs go** |
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
