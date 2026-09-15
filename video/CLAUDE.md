@@ -6,6 +6,9 @@
 > Deliver renders through the Higgsfield media upload, not Google Drive. Read the repo's root `CLAUDE.md` first,
 > then `PLAYBOOK.md` (the brief: Faisal's standards, the three delivery formats, the sandbox pipeline) and
 > `LESSONS.md` (the fault log) in this folder.
+> **Sound is part of every deliverable** — `AUDIO.md` in this folder is the note: nineteen effects are committed at
+> `library/sfx/`, every audio provider host (ElevenLabs, HeyGen, HuggingFace, Freesound, Pixabay) is blocked by the
+> egress policy here, so anything new is fetched or generated in the Higgsfield sandbox. No NeroPay video ships silent.
 
 ## Skills — USE THESE FIRST
 

@@ -90,10 +90,11 @@ from here, and folder uploads silently fail there.
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
 | `MOTION-SYSTEM.md` | The motion graphics spec — three camera angles, seven overlay archetypes, the BUILD/HOLD/EXIT timing law, alpha compositing. Read it before any overlay or any shot list | Only when Faisal issues a new version |
+| `STACK.md` | What a session has to work with — connectors and how credentials actually reach a session, the committed skills, the toolchain and versions, the licensed resources, what the network reaches. Hand this to a new session first | Keep current — it is dated, and verified facts go stale |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 | `figures.json` | The figure register for the motion graphics videos — every number one may state, each dated and sourced, plus the blocked ones and why | **Yes — add a record before a figure goes on screen** |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
-| `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide; `video/TOOLS.md` is the register of third-party libraries Faisal has saved, each with a verdict | Yes — one folder per piece inside it |
+| `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide; `video/TOOLS.md` is the register of third-party libraries Faisal has saved, each with a verdict; `video/AUDIO.md` is the sound note — the committed sound library, the mix and the beat grid, the voiceover route and what the container can actually reach | Yes — one folder per piece inside it |
 | `motion/` | The motion graphics style — faceless videos built as HTML and rendered frame by frame, one folder per series (`motion/maths/` is the first). `motion/CLAUDE.md` is the style spec, `verify.py` the stage-3 arithmetic gate | Yes — one folder per series, one per episode inside it |
 | `.claude/` | Skills (the HyperFrames pack, committed so every session has it) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
 
@@ -284,6 +285,9 @@ Rules that come from this environment, not from HyperFrames:
   Higgsfield generation by matching Content-Length to the file size Faisal uploaded.
 - **Read `MOTION-SYSTEM.md` first for anything involving an overlay, a camera angle or overlay timing** —
   it outranks the older overlay guidance here and in the playbook.
+- **No NeroPay video ships silent.** Sound is part of the deliverable, not a finish: `video/AUDIO.md` is the
+  standing note — the nineteen committed effects, the `<audio>` timing contract, the mix and the beat grid, and the
+  ElevenLabs voiceover route. Read it before any build that will have sound, which is all of them.
 - **Read `video/PLAYBOOK.md` and `video/LESSONS.md` before any edit.** The playbook is the standing brief —
   Faisal's standards and the words they use for each fault, the rails as they apply to a frame, the three
   delivery formats (16:9 master, 9:16 Reels/TikTok, 4:5 Meta ad), the sandbox pipeline and the review loop.
