@@ -20,7 +20,7 @@ after contact → manufacturing shopping-around behaviour → partner recruitmen
 
 | # | Number | The turn | State |
 |---|---|---|---|
-| 1 | 3.30% | What you'd pay *us* on a £4 coffee. Don't switch. | **Built, awaiting review** — `motion/maths/ep01/`. VO and captions pending |
+| 1 | 3.30% | What you'd pay *us* on a £4 coffee. Don't switch. | **Rendered with VO, awaiting review** — `motion/maths/ep01/`, 46.4s, four crops, captioned |
 | 2 | £0 | Our POS software against what a paid restaurant POS tier costs a year | Needs the free-tier concession on screen |
 | 3 | £20.51 | The average sale where a fixed fee stops hurting and starts helping | **Absorbed into episode 1** — beat 6 is the crossover. Needs a different number if it stays a separate episode |
 | 4 | 42% | UK merchants who haven't considered switching in two years | **Clear** — fully sourced, nothing blocked |

@@ -1,7 +1,7 @@
 # EP01 — "Don't switch to us."
 
 The Maths, episode 1. From `EP01-RUN-PROMPT.md` (Faisal, 14 September 2026).
-Target 9:16, ~38s. **Built at 41.9s nominal** — see the note at the foot of this file.
+Target 9:16, ~38s. **Delivered at 46.4s** — the take runs 42.45s, plus 3.0s of head silence and a 1.5s tail. See the note at the foot of this file.
 
 The hook is that a payments company argues against itself. Nothing softens it, no rescue
 line lands early, and the yellow accent stays off the good number until the turn at £40.
@@ -22,8 +22,11 @@ of the model.
 | L6 | 14 | Our rate isn't one number. It depends entirely on what you sell things for. |
 | L7 | 11 | So work that out before anyone quotes you anything. Us included. |
 
-105 words. ElevenLabs voice `jP5jSWhfXz3nfQENMtf4`, `eleven_multilingual_v2`, `mp3_44100_128`,
-word timestamps on, output mode files → `out/vo.mp3`, `out/vo_words.json`.
+104 words as Whisper hears them. **Generated 15 Sep 2026** through the ElevenLabs connector — voice
+`jP5jSWhfXz3nfQENMtf4` ("Jessica, British warmth"), `eleven_multilingual_v2`, one take, 576 credits,
+42.45s, on flow `ns3m8FupNDBjPPLIO8eV`. The take is `data/vo.mp3`. Scribe through the connector returns
+text only, so the word timings (`data/vo_words.json`) came from faster-whisper `small.en` in the
+Higgsfield sandbox, with the script as the initial prompt — the same route as B1's `words.json`.
 
 ## Beats
 
@@ -53,20 +56,23 @@ alone for ten seconds across L5 and L6, so L6 gets a quiet recap of the two tick
 introduces no new figure — both numbers are already on screen in beats 1 and 5 and both are asserted
 in `checks.py`.
 
-**2. Built to the timing law, not to word timestamps.** No ElevenLabs MCP in the session that built
-this, which is the prompt's documented fallback. Beat times come from the VO line table at an
-assumed 3.0 words/sec; `index.html` derives every beat from that table, so swapping in the real
-per-line durations from `vo_words.json` re-times the whole thing without touching a keyframe.
+**2. Re-timed from the real words.** The first build ran to the timing law at an assumed 3.0 words/sec
+(41.9s). Once the take existed, `index.html` took the word timings in directly: every beat is anchored
+to a word index (`A` in the script — the stack rows on *One / plus / that's / Which*, the yellow on
+*five*, the hard cut on *The fixed fee*, the URL on *Us included*). The nominal estimate was 0.55s out.
 
-**3. It runs 41.9s, not ~38s.** 105 words at an unhurried read is about 35s of speech, plus 3s of
-head silence, six inter-line gaps and a 1.5s tail. To reach 38s either the read speeds up — which
+**3. It runs 46.4s, not ~38s.** The unhurried read is 42.45s on its own, plus 3s of head silence and a
+1.5s tail. To reach 38s either the read speeds up — which
 fights the "level, unhurried" direction — or a line comes out. L6 is the one that could go: L5
 already lands the point and L7 closes it. Your call; it's one line in the table.
 
-## Still pending
+## Sound and captions
 
-- **VO and SFX** — needs the ElevenLabs MCP. The sub-thud, stack ticks, bar whooshes and the tone on
-  `£20.51` are all specified in the run prompt and none are generated.
-- **Captions** — built from `vo_words.json`, so they wait on the VO. Burned into 9:16, 4:5 and 1:1;
-  16:9 stays clean for YouTube.
-- **Loudnorm** — nothing to normalise yet. −16 LUFS integrated, true peak ≤ −1.5 dBTP when there is.
+- **Effects** are the library's Pixabay files on the word anchors (`data/mix.json`): impact-bass-1 as
+  3.30% lands, click-soft on each stack line, whoosh-short on each bar, chime on £20.51. Nothing
+  generated, nothing synthesised. Music: none — silence is the point.
+- **Mix** is two-pass loudnorm to −16 LUFS integrated / −1.5 dBTP (measured −16.24 / −1.42).
+- **Captions** come from the same words: one cue per clause, two lines max, Chivo ExtraBold on a soft
+  scrim, above the footer. libass cannot read woff2, so `motion/assets/fonts-ttf/` carries a TTF built
+  from the vendored file. Burned into 9:16, 4:5 and 1:1; 16:9 stays clean for YouTube.
+- `finish.sh` does the burn, the mux, the contact sheet, the loudness check and the frame scan.

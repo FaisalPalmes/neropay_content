@@ -45,9 +45,22 @@ hook, and has `video/b1-rate-you-were-quoted/` as a working reference. Either br
 `edit.py` across, or build on HyperFrames and keep the brief's discipline — `figures.json`, the timing
 law, the stage-3 gate — on top of it. Faisal's call, not one to make in passing.
 
-**ElevenLabs.** The MCP isn't connected in the session that set this up, so no VO and no word
-timestamps there. Since the pipeline is audio-first, an episode can be written, verified and laid out,
-but not rendered to a real timeline until that's available.
+**ElevenLabs — settled 15 Sep 2026.** The ElevenLabs connector is on Faisal's Claude account (work admin),
+so no API key is needed for a session that has it. Three things it taught us:
+
+- `creative_generate_speech` makes the take (one generation, `generations_count: 1` — the default is
+  four takes and four charges). The series voice `jP5jSWhfXz3nfQENMtf4` is in the workspace.
+- **Scribe through the connector returns text only, no word timings.** Word timings come from
+  faster-whisper `small.en` in the Higgsfield sandbox (the web container cannot download the model,
+  403 through the proxy) — the same route as B1's `words.json`. `motion/maths/ep01/data/vo_words.json`
+  is the shape: `[{w, s, e}]`, seconds from the start of the take.
+- The workspace can also run **music** (`eleven_music_v2`, instrumental, 3–600 s) and **sound
+  effects**, which is a second route for a bed when Freesound is out of reach. Anything generated
+  still needs a ledger line and a commercial-use check before it ships.
+
+Captions burned with libass need a **TTF**: it cannot read the vendored woff2, so
+`motion/assets/fonts-ttf/` carries `Chivo-ExtraBold.ttf` built from it (fontTools). Its internal family
+name is `Chivo Medium ExtraBold` — that is the `Fontname` the `.ass` style must use.
 
 **The site page.** These videos get their own page in the content warehouse, the same way
 `youtube.html` carries the presenter series. Not built yet. It will need a nav link adding to the six

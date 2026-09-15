@@ -155,22 +155,20 @@ html,body{background:#000}
 const FPS = 30;
 
 /* ---------------------------------------------------------------------------
-   Timeline. Built from the VO line table, not hand-placed keyframes. When
-   out/ep01/vo_words.json exists, replace LINES[].dur with the real per-line
-   durations from the word timestamps and every beat re-times itself.
-   WPS is an estimate: the real read will differ, so this is nominal only.
+   Timeline. Built from the VO's real word timings (out/vo_words.json — Whisper
+   small.en on the ElevenLabs take, 15 Sep 2026), not from nominal times. Every
+   beat is anchored to a word. HEAD is the 3.0 s of silence padded before the VO
+   in the mix, so composition time = HEAD + word time.
 --------------------------------------------------------------------------- */
-const WPS = 3.0, GAP = 0.40, HEAD = 3.0, TAIL = 1.5;
-const LINES = [
-  { id:'L1', words:10 }, { id:'L2', words:20 }, { id:'L3', words:19 },
-  { id:'L4', words:15 }, { id:'L5', words:16 }, { id:'L6', words:14 },
-  { id:'L7', words:11 },
-];
-let cur = HEAD;
-for (const l of LINES) { l.t = cur; l.dur = l.words / WPS; cur += l.dur + GAP; }
-const at = id => LINES.find(l => l.id === id).t;
-const end = id => { const l = LINES.find(l => l.id === id); return l.t + l.dur; };
-const DURATION = cur - GAP + TAIL;
+const HEAD = 3.0, TAIL = 1.5;
+const WORDS = [{"w":"That's","s":0.0,"e":0.28},{"w":"our","s":0.28,"e":0.5},{"w":"rate","s":0.5,"e":0.8},{"w":"on","s":0.8,"e":1.32},{"w":"a","s":1.32,"e":1.42},{"w":"four","s":1.42,"e":1.68},{"w":"pound","s":1.68,"e":1.96},{"w":"coffee.","s":1.96,"e":2.44},{"w":"It's","s":2.84,"e":3.34},{"w":"terrible.","s":3.34,"e":3.76},{"w":"One","s":5.06,"e":5.16},{"w":"point","s":5.16,"e":5.32},{"w":"three","s":5.32,"e":5.56},{"w":"percent,","s":5.56,"e":5.94},{"w":"plus","s":6.22,"e":6.5},{"w":"eight","s":6.5,"e":6.9},{"w":"pence.","s":6.9,"e":7.24},{"w":"On","s":8.26,"e":8.36},{"w":"four","s":8.36,"e":8.58},{"w":"pounds,","s":8.58,"e":9.0},{"w":"that's","s":9.42,"e":9.68},{"w":"thirteen","s":9.68,"e":9.96},{"w":"pence.","s":9.96,"e":10.38},{"w":"Which","s":11.52,"e":11.72},{"w":"is","s":11.72,"e":11.86},{"w":"three","s":11.86,"e":12.08},{"w":"point","s":12.08,"e":12.24},{"w":"three","s":12.24,"e":12.46},{"w":"percent.","s":12.46,"e":12.8},{"w":"A","s":13.12,"e":13.22},{"w":"flat","s":13.22,"e":13.44},{"w":"rate","s":13.44,"e":13.8},{"w":"with","s":13.8,"e":14.22},{"w":"no","s":14.22,"e":14.46},{"w":"fixed","s":14.46,"e":14.76},{"w":"fee","s":14.76,"e":15.04},{"w":"would","s":15.04,"e":15.2},{"w":"charge","s":15.2,"e":15.46},{"w":"you","s":15.46,"e":15.62},{"w":"half","s":15.62,"e":15.82},{"w":"that.","s":15.82,"e":16.14},{"w":"On","s":17.26,"e":17.46},{"w":"a","s":17.46,"e":17.56},{"w":"four","s":17.56,"e":17.74},{"w":"pound","s":17.74,"e":18.0},{"w":"sale,","s":18.0,"e":18.46},{"w":"we","s":18.92,"e":19.04},{"w":"lose.","s":19.04,"e":19.36},{"w":"Same","s":20.34,"e":20.42},{"w":"rate","s":20.42,"e":20.62},{"w":"card.","s":20.62,"e":21.0},{"w":"Forty","s":21.44,"e":21.66},{"w":"pound","s":21.66,"e":22.04},{"w":"sale.","s":22.04,"e":22.44},{"w":"One","s":23.52,"e":23.64},{"w":"point","s":23.64,"e":23.88},{"w":"five","s":23.88,"e":24.44},{"w":"percent.","s":24.44,"e":24.86},{"w":"Now","s":25.46,"e":25.52},{"w":"we're","s":25.52,"e":25.88},{"w":"the","s":25.88,"e":25.96},{"w":"cheaper","s":25.96,"e":26.18},{"w":"one.","s":26.18,"e":26.46},{"w":"The","s":27.24,"e":27.4},{"w":"fixed","s":27.4,"e":27.64},{"w":"fee","s":27.64,"e":27.9},{"w":"is","s":27.9,"e":28.22},{"w":"what","s":28.22,"e":28.46},{"w":"moves.","s":28.46,"e":28.74},{"w":"It","s":28.74,"e":29.46},{"w":"stops","s":29.46,"e":29.64},{"w":"hurting","s":29.64,"e":29.94},{"w":"at","s":29.94,"e":30.1},{"w":"about","s":30.1,"e":30.34},{"w":"twenty","s":30.34,"e":31.02},{"w":"pounds","s":31.02,"e":31.58},{"w":"fifty","s":31.58,"e":32.14},{"w":"a","s":32.14,"e":32.34},{"w":"sale.","s":32.34,"e":32.56},{"w":"Our","s":33.4,"e":33.64},{"w":"rate","s":33.64,"e":33.82},{"w":"isn't","s":33.82,"e":34.26},{"w":"one","s":34.26,"e":34.58},{"w":"number.","s":34.58,"e":34.88},{"w":"It","s":35.66,"e":35.94},{"w":"depends","s":35.94,"e":36.16},{"w":"entirely","s":36.16,"e":36.54},{"w":"on","s":36.54,"e":36.82},{"w":"what","s":36.82,"e":36.98},{"w":"you","s":36.98,"e":37.12},{"w":"sell","s":37.12,"e":37.3},{"w":"things","s":37.3,"e":37.52},{"w":"for.","s":37.52,"e":37.9},{"w":"So","s":38.5,"e":38.66},{"w":"work","s":38.66,"e":38.9},{"w":"that","s":38.9,"e":39.08},{"w":"out","s":39.08,"e":39.34},{"w":"before","s":39.34,"e":39.66},{"w":"anyone","s":39.66,"e":39.92},{"w":"quotes","s":39.92,"e":40.24},{"w":"you","s":40.24,"e":40.46},{"w":"anything.","s":40.46,"e":40.82},{"w":"Us","s":41.48,"e":41.54},{"w":"included.","s":41.54,"e":41.9}];
+const COUNTS = [10, 19, 19, 15, 16, 14, 11];         // words per VO line, L1..L7
+const LINES = []; { let i = 0; COUNTS.forEach((n, k) => { const ws = WORDS.slice(i, i + n);
+  LINES.push({ id: 'L' + (k + 1), t: HEAD + ws[0].s, end: HEAD + ws[n - 1].e }); i += n; }); }
+const at  = id => LINES.find(l => l.id === id).t;
+const end = id => LINES.find(l => l.id === id).end;
+const W   = i  => HEAD + WORDS[i].s;                  // a word's onset, composition time
+const DURATION = +(end('L7') + TAIL).toFixed(3);
 
 /* on-screen word counts, for the timing law */
 const BEATS = [
@@ -182,14 +180,12 @@ const BEATS = [
   { name:'7 recap',      t:at('L6'),   out:at('L7'),        words:8  },
   { name:'8 end card',   t:at('L7'),   out:DURATION,        words:3  },
 ];
-/* the law: hold = max(1.5, on_screen_words * 0.4), asserted not eyeballed */
 const BUILD = 0.55, EXIT = 0.30;
 function lawReport(){
   return BEATS.map(b => {
     const need = Math.max(1.5, b.words * 0.4);
     const have = (b.out - b.t) - BUILD - EXIT;
-    return { beat:b.name, words:b.words, required:+need.toFixed(2),
-             hold:+have.toFixed(2), pass:have >= need };
+    return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need };
   });
 }
 
@@ -198,23 +194,33 @@ const clamp = p => p < 0 ? 0 : p > 1 ? 1 : p;
 const seg = (t, s, d) => clamp((t - s) / d);
 const eo  = p => 1 - Math.pow(1 - p, 3);
 const eo2 = p => 1 - Math.pow(1 - p, 2);
-
 const $ = s => document.querySelector(s);
 const px = (el, o) => Object.assign(el.style, o);
-
-/* mask-up: text arrives from behind its own edge, never blur or bounce */
 function maskUp(el, t, start, dur = 0.42){
   const p = eo(seg(t, start, dur));
   px(el, { transform:`translateY(${(1 - p) * 105}%)`, opacity: p < 0.02 ? 0 : 1 });
 }
 function show(el, on){ el.style.opacity = on ? 1 : 0; }
 
-const money = v => '£' + v.toFixed(2);
+/* word anchors, by index into WORDS (see script.md for the table) */
+const A = {
+  stack:   [W(10), W(14), W(20), W(23)],   // One… / plus… / that's thirteen… / Which is…
+  barA4:   W(29) + 0.10,                   // "A flat rate" — ours draws
+  barB4:   W(39),                          // "half" — the benchmark draws
+  lose:    W(46),                          // "we lose"
+  flip:    W(48),                          // "Same rate card" — header flips, bars retract
+  barA40:  W(51),                          // "Forty" — ours redraws
+  barB40:  W(53) + 0.20,                   // "sale." — benchmark redraws
+  yellow:  W(56),                          // "five" — ours turns yellow as it lands
+  cheaper: W(58),                          // "Now we're the cheaper one"
+  cut:     at('L5'),                       // "The fixed fee is what moves" — the hard cut
+  sub:     W(70),                          // "stops hurting"
+  recap:   [W(79), W(82)], recapCap: W(84),
+  endUrl:  W(102),                         // "Us included"
+};
 
 function setFrame(n){
   const t = n / FPS;
-
-  /* ---------- which beat owns the screen ---------- */
   const vis = {
     b1: t < at('L2'),
     b3: t >= at('L2') && t < at('L3'),
@@ -230,78 +236,58 @@ function setFrame(n){
     const p = eo2(seg(t, 0.2, 0.8));
     $('#b1fig').textContent = (3.30 * p).toFixed(2) + '%';
     maskUp($('#b1sub'), t, 1.05);
-    /* beat 2: the yellow rule wipes in left to right as the VO starts */
-    const w = eo(seg(t, at('L1'), 0.4));
+    const w = eo(seg(t, at('L1'), 0.4));            /* beat 2: the rule on "That's our rate" */
     px($('#b1rule'), { width: (w * 34) + 'cqmin' });
   }
 
-  /* ---------- beat 3: the stack builds line by line ---------- */
+  /* ---------- beat 3: the stack builds line by line, each on its own words ---------- */
   if (vis.b3){
-    const s = at('L2'), step = (end('L2') - s) / 4.6;
-    document.querySelectorAll('#b3 .row').forEach(r => {
-      maskUp(r, t, s + (+r.dataset.i) * step);
-    });
+    document.querySelectorAll('#b3 .row').forEach(r => maskUp(r, t, A.stack[+r.dataset.i]));
   }
 
   /* ---------- beats 4 and 5: bars draw from their origin, never scale ---- */
   if (vis.b45){
-    const four = t < at('L4');
-    const s = four ? at('L3') : at('L4');
+    const four = t < A.flip;
+    const s = four ? at('L3') : A.flip;
     maskUp($('#bhead'), t, s, 0.34);
     $('#bhead').textContent = four ? '£4.00 SALE' : '£40.00 SALE';
-
-    /* widths are proportional to real cost — see checks.py */
-    const A = four ? 100 : 88.8;            /* ours: 13.2/13.2 , 60.0/67.6 */
-    const B = four ? 51.2 : 100;            /* benchmark: 6.76/13.2 , 67.6/67.6 */
-    const pA = eo(seg(t, s + 0.30, 0.65));
-    const pB = eo(seg(t, s + 0.55, 0.65));
-    px($('#fillA'), { width:(A * pA) + '%' });
-    px($('#fillB'), { width:(B * pB) + '%' });
-
+    const Aw = four ? 100 : 88.8, Bw = four ? 51.2 : 100;      /* proportional to cost — checks.py */
+    const pA = four ? eo(seg(t, A.barA4, 0.65)) : eo(seg(t, A.barA40, 0.65));
+    const pB = four ? eo(seg(t, A.barB4, 0.65)) : eo(seg(t, A.barB40, 0.65));
+    px($('#fillA'), { width:(Aw * pA) + '%' });
+    px($('#fillB'), { width:(Bw * pB) + '%' });
     $('#amtA').textContent = four ? '13.2p' : '60.0p';
     $('#amtB').textContent = four ? '6.8p'  : '67.6p';
     show($('#amtA'), pA > 0.9); show($('#amtB'), pB > 0.9);
-
-    /* ours is grey on the £4 sale — deliberately not red. It turns yellow
-       only on the £40 sale, as it lands: the turn, and the frame's one accent */
     $('#fillA').style.background = four ? 'var(--loss)'
-      : `color-mix(in srgb, var(--accent) ${Math.round(eo(seg(t, s + 0.80, 0.4)) * 100)}%, var(--loss))`;
+      : `color-mix(in srgb, var(--accent) ${Math.round(eo(seg(t, A.yellow, 0.4)) * 100)}%, var(--loss))`;
     $('#fillB').style.background = '#4E5561';
-
     $('#bnote').textContent = four ? 'we lose' : 'here we do not';
-    show($('#bnote'), t > s + (four ? 1.9 : 1.5));
+    show($('#bnote'), four ? t >= A.lose : t >= A.cheaper);
   }
 
   /* ---------- beat 6: the only hard cut in the video, 3 frames of black --- */
-  const cutAt = at('L5');
-  $('#cut').style.opacity = (t >= cutAt - 0.10 && t < cutAt) ? 1 : 0;
+  $('#cut').style.opacity = (t >= A.cut - 0.10 && t < A.cut) ? 1 : 0;
   if (vis.b6){
-    maskUp($('#b6fig'), t, cutAt + 0.02, 0.5);
-    maskUp($('#b6sub'), t, cutAt + 0.40);
+    maskUp($('#b6fig'), t, A.cut + 0.02, 0.5);
+    maskUp($('#b6sub'), t, A.sub);
   }
 
-  /* ---------- beat 7: the recap that replaces the texture beat ---------- */
+  /* ---------- beat 7: the recap, on "Our rate isn't one number" ---------- */
   if (vis.b7){
-    const s = at('L6');
     document.querySelectorAll('#b7 .tk').forEach((r, i) => {
-      const p = eo(seg(t, s + i * 0.5, 0.45));
+      const p = eo(seg(t, A.recap[i], 0.45));
       px(r, { opacity:p, transform:`translateY(${(1 - p) * 14}px)` });
     });
-    const c = eo(seg(t, s + 1.5, 0.4));
-    px($('#b7 .cap'), { opacity:c });
+    px($('#b7 .cap'), { opacity: eo(seg(t, A.recapCap, 0.4)) });
   }
 
-  /* ---------- beat 8: wordmark masks up, URL follows 6 frames later ------ */
+  /* ---------- beat 8: wordmark on "So work that out", URL on "Us included" ------ */
   if (vis.b8){
-    const s = at('L7');
-    maskUp($('#b8 .mark span'), t, s, 0.46);
-    px($('#b8url'), { opacity: eo(seg(t, s + 0.20, 0.45)) });
+    maskUp($('#b8 .mark span'), t, at('L7'), 0.46);
+    px($('#b8url'), { opacity: eo(seg(t, A.endUrl, 0.45)) });
   }
 }
-
-window.setFrame = setFrame;
-window.DURATION = DURATION;
-window.FPS = FPS;
-window.lawReport = lawReport;
+window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport;
 setFrame(0);
 </script>
