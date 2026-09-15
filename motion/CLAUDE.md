@@ -29,6 +29,12 @@ a video.
 *presenter* videos. The two share a timing law and nothing else. If you're working in `motion/`,
 this file is the spec.
 
+**Read alongside this file:** `/STACK.md` (what a session has to work with — connectors, credentials,
+what the network reaches, the seventeen committed HyperFrames skills) and `video/AUDIO.md` (the sound
+note: the committed effects, the ledger rule, the mix and beat grid, the voiceover route). Both were
+written on `main` on 15 Sep 2026. Two of their rules bind every episode here: **nothing ships silent**,
+and **every sound and every generated voice has a row in `video/library/LEDGER.md`** before delivery.
+
 ## figures.json is the gate
 
 `figures.json` at repo root is the register of every number a motion graphic states. **Nothing goes
