@@ -49,7 +49,8 @@ law, the stage-3 gate — on top of it. Faisal's call, not one to make in passin
 so no API key is needed for a session that has it. Three things it taught us:
 
 - `creative_generate_speech` makes the take (one generation, `generations_count: 1` — the default is
-  four takes and four charges). The series voice `jP5jSWhfXz3nfQENMtf4` is in the workspace.
+  four takes and four charges). The series voice is under selection — `motion/CLAUDE.md` (Narration)
+  lists the five candidates; `jP5jSWhfXz3nfQENMtf4` was rejected on 15 September 2026.
 - **Scribe through the connector returns text only, no word timings.** Word timings come from
   faster-whisper `small.en` in the Higgsfield sandbox (the web container cannot download the model,
   403 through the proxy) — the same route as B1's `words.json`. `motion/maths/ep01/data/vo_words.json`

@@ -143,9 +143,26 @@ upload disclosure applies as it does for the presenter series; raise it once per
 
 ## Narration — the performance
 
-**Model.** `eleven_v3` with inline audio tags, one take per video, the series voice
-`jP5jSWhfXz3nfQENMtf4`. `eleven_multilingual_v2` produced the level v1 read and is retired for this
-style. Tags are sparse and specific; the script is punctuated for delivery.
+**Model.** `eleven_v3` with inline audio tags, one take per video, the series voice (under selection —
+see below). `eleven_multilingual_v2` produced the level v1 read and is retired for this style. Tags
+are sparse and specific; the script is punctuated for delivery.
+
+**Voice — under selection, 15 September 2026.** Faisal rejected `jP5jSWhfXz3nfQENMtf4` ("podcast-like
+and chill"). Five British female candidates were sampled on the same tagged line (MG02 hook,
+`eleven_v3`, one take each, on flow `ns3m8FupNDBjPPLIO8eV`); the mp3s are in
+`motion/maths/ep01/out/voice-tests/` (gitignored) and on Higgsfield media as
+`neropay-voice-test-<name>.mp3`. Until Faisal picks one, no VO is generated for any video.
+
+| Candidate | `voice_id` | Library description |
+|---|---|---|
+| Amelia | `ZF6FPAbjXT4488VcRRnw` | young and enthusiastic |
+| Verity | `oW8bn5YtBB89X2nJ0DT9` | chatty, fast-paced storyteller (adverts, UGC) |
+| Lucy | `Gv42yFG3G6CHLsU5y8g6` | upbeat, commercials |
+| Valory B | `kIYbb5iUo0dJb8oRw5Mt` | conversational girl-next-door, UK brands |
+| Rachel | `c3QefzBhE1Cx4Yl23IV3` | natural British female, YouTube and corporate narration |
+
+When one is approved: put its id here and in the **Voice** line under Pipeline, in `motion/README.md`,
+and in every `narrator` block in `motion.js`; then re-voice ep01.
 
 **Register.** Real, human, awake. High energy is not shouting — it is *investment*: the narrator
 finds this genuinely interesting and wants you to get it. The tone changes on the phrase: a claim
@@ -178,7 +195,8 @@ word timestamps. Building to estimated timings and generating audio afterwards m
 keyframes, which is the manual work this pipeline exists to remove.
 
 **Voice.** The ElevenLabs connector on Faisal's account (`creative_generate_speech`,
-`generations_count: 1`), voice `jP5jSWhfXz3nfQENMtf4`, **`eleven_v3`** with the narration spec above.
+`generations_count: 1`), the series voice once Faisal approves one (see Narration — the previous voice
+`jP5jSWhfXz3nfQENMtf4` is rejected), **`eleven_v3`** with the narration spec above.
 One fixed voice across every series. A 40-second take is ~500–600 credits. No speculative batches,
 and ask before any run over ~3,000 credits. Word timings via the sandbox — see Narration.
 
