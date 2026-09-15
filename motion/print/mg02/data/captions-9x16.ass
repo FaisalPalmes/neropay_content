@@ -1,0 +1,37 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Chivo Medium ExtraBold,62,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,-1,0,0,0,100,100,-1,0,3,17,0,2,75,75,190,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.60,0:00:03.62,Cap,,0,0,0,,Your card machine company\Nis legally required
+Dialogue: 0,0:00:03.66,0:00:05.32,Cap,,0,0,0,,to tell you when you can\Nleave.
+Dialogue: 0,0:00:06.26,0:00:07.18,Cap,,0,0,0,,Did you get the message?
+Dialogue: 0,0:00:08.66,0:00:11.10,Cap,,0,0,0,,Since twenty twenty-three,\Nthe payments regulator
+Dialogue: 0,0:00:11.14,0:00:12.84,Cap,,0,0,0,,caps a card terminal lease
+Dialogue: 0,0:00:12.88,0:00:14.76,Cap,,0,0,0,,at eighteen months.
+Dialogue: 0,0:00:15.30,0:00:16.10,Cap,,0,0,0,,Not thirty-six.
+Dialogue: 0,0:00:17.08,0:00:17.82,Cap,,0,0,0,,Not forty-eight.
+Dialogue: 0,0:00:19.10,0:00:20.50,Cap,,0,0,0,,And when that term ends,
+Dialogue: 0,0:00:20.54,0:00:22.70,Cap,,0,0,0,,they have to send you a\Nmessage.
+Dialogue: 0,0:00:23.40,0:00:24.20,Cap,,0,0,0,,In writing.
+Dialogue: 0,0:00:25.08,0:00:25.96,Cap,,0,0,0,,Telling you the date,
+Dialogue: 0,0:00:26.12,0:00:27.64,Cap,,0,0,0,,and telling you to shop\Naround.
+Dialogue: 0,0:00:28.34,0:00:30.84,Cap,,0,0,0,,After that, it rolls month\Nto month.
+Dialogue: 0,0:00:31.34,0:00:32.68,Cap,,0,0,0,,Thirty-one days.
+Dialogue: 0,0:00:33.50,0:00:35.26,Cap,,0,0,0,,You can leave with a\Nmonth's notice,
+Dialogue: 0,0:00:35.56,0:00:36.68,Cap,,0,0,0,,not a year's.
+Dialogue: 0,0:00:37.60,0:00:38.76,Cap,,0,0,0,,If your deal's good,
+Dialogue: 0,0:00:39.14,0:00:39.84,Cap,,0,0,0,,bin the message.
+Dialogue: 0,0:00:40.18,0:00:41.16,Cap,,0,0,0,,Most of them are fine.
+Dialogue: 0,0:00:41.84,0:00:43.66,Cap,,0,0,0,,The point is it's your\Nchoice,
+Dialogue: 0,0:00:43.90,0:00:45.18,Cap,,0,0,0,,on a date you know.
+Dialogue: 0,0:00:45.90,0:00:46.82,Cap,,0,0,0,,Check the letter.
+Dialogue: 0,0:00:47.50,0:00:48.54,Cap,,0,0,0,,Then decide.

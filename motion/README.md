@@ -49,8 +49,8 @@ law, the stage-3 gate — on top of it. Faisal's call, not one to make in passin
 so no API key is needed for a session that has it. Three things it taught us:
 
 - `creative_generate_speech` makes the take (one generation, `generations_count: 1` — the default is
-  four takes and four charges). The series voice is under selection — `motion/CLAUDE.md` (Narration)
-  lists the five candidates; `jP5jSWhfXz3nfQENMtf4` was rejected on 15 September 2026.
+  four takes and four charges). The series voice is Verity, `oW8bn5YtBB89X2nJ0DT9` (`MOTION.voice` in `motion.js`),
+  chosen by Faisal on 15 September 2026 from five samples; `jP5jSWhfXz3nfQENMtf4` is retired.
 - **Scribe through the connector returns text only, no word timings.** Word timings come from
   faster-whisper `small.en` in the Higgsfield sandbox (the web container cannot download the model,
   403 through the proxy) — the same route as B1's `words.json`. `motion/maths/ep01/data/vo_words.json`
@@ -66,6 +66,26 @@ name is `Chivo Medium ExtraBold` — that is the `Fontname` the `.ass` style mus
 **The site page.** These videos get their own page in the content warehouse, the same way
 `youtube.html` carries the presenter series. Not built yet. It will need a nav link adding to the six
 existing pages, and it is dark-first against a light site, so it paints its own ground.
+
+## The tools, as of MG02 (15 Sep 2026)
+
+All shared, all run from the repo root, all take `<series>/<episode>`:
+
+| Tool | Does | Notes |
+|---|---|---|
+| `python3 motion/verify.py print/mg02` | stage 3 — figures audit + the episode's `checks.py` | hard gate, run first |
+| `node motion/peek.mjs print/mg02 9x16 1.2 8.4 …` | the law report and stills at chosen times, tiled into `out/peek/sheet-<ratio>.jpg` | look before a render; run for 9x16, 16x9 and 1x1 — the crops fail differently |
+| `node motion/render.mjs print/mg02 [--ratio 9x16] [--draft]` | law check, frame scan, then every frame of every crop → `out/<ep>-<ratio>.mp4` (silent) | ~6 min for four crops |
+| `node motion/mix.mjs print/mg02` | `data/mix.json` cues + `data/vo.mp3` → `out/mix.m4a`, two-pass loudnorm to −16 LUFS | SFX from `video/library/sfx/` |
+| `python3 motion/captions.py print/mg02` | `data/captions.json` clauses aligned to `data/vo_words.json` → three `.ass` files | Chivo TTF, box captions, above the footer |
+| `motion/<series>/<ep>/finish.sh` | burn captions (not 16:9), mux the mix, contact sheet, loudness, spike scan, md5 | per episode; copy and change `EP=` |
+
+**Board compositions and the frame scan.** A board (one `#board` under a virtual camera) has content off
+the frame by design, so `render.mjs` scans only the station the camera has landed on: the composition
+sets `data-active` on that station's element while the camera is still, and nothing on the board while
+it moves. A ruler that runs off the edge on purpose is marked `data-noscan`. Anything hidden by a
+masked or faded ancestor is not scanned either. `motion/print/mg02/index.html` is the reference: five
+stations, the camera schedule in `CAM`, the perspective tilt on `#tilt`.
 
 ## `showcase/` — the HyperFrames route, worked through once
 

@@ -8,6 +8,10 @@
    ground: white | charcoal   format: board | editorial | plate   status: ready | flagged | brief | blocked */
 window.MOTION = {
 
+  /* One voice across every series. Verity — chosen by Faisal 15 Sep 2026 from five eleven_v3 samples
+     on the MG02 hook. Every narrator block below is performed by this voice. */
+  voice: { id: 'oW8bn5YtBB89X2nJ0DT9', name: 'Verity', model: 'eleven_v3', chosen: '2026-09-15' },
+
   series: [
     { id: 'MATHS', name: 'The Maths', status: 'production', pillar: 'Statement', channel: 'Reels, Shorts, TikTok 9:16 · 4:5 feed · 16:9 YouTube',
       cadence: 'One a fortnight', input: 'Its own committed input — the figure register and the ElevenLabs take; no shoot',
@@ -43,7 +47,8 @@ window.MOTION = {
         { id: 'MG01-6', secs: 7, screen: 'End card on the board\'s empty corner: NERO white / PAY yellow · serif: Under £20 a sale? Stay put. · neropay.app · the source footer.', say: 'Our rate isn\'t one number. It depends what you sell things for. [warmly] So work that out before anyone quotes you anything. Us included.', camera: 'Still' }
       ] },
 
-    { id: 'MG02', series: 'PRINT', title: 'They have to tell you.', status: 'ready', ground: 'white', format: 'board', secs: 32,
+    { id: 'MG02', series: 'PRINT', title: 'They have to tell you.', status: 'production', ground: 'white', format: 'board', secs: 49,
+      build: 'motion/print/mg02/ — Verity take 15 Sep 2026, 47.5 s; five camera stations on a calendar board; rendered in four crops, awaiting Faisal\'s review',
       hook: 'Your card machine company is legally required to tell you when you can leave. Did you get the message?',
       need: 'Since July 2023 the fourteen biggest acquirers must send a "your minimum term is ending, shop around" message, and terminal leases are capped at 18 months then 31-day rolling. Most owner-operators have never heard this.',
       source: 'PSR PS22/2, Card-acquiring market remedies, final decision, October 2022 — psr.org.uk. POS remedy from Jan 2023; trigger messages and summary boxes from July 2023.',

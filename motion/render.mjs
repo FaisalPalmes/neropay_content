@@ -10,7 +10,7 @@
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, rmSync, existsSync, readdirSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -82,14 +82,23 @@ const browser = await chromium.launch({ executablePath });
       const bad = await pg.evaluate(([W, H]) => {
         const out = [];
         const foot = document.querySelector('#footer').getBoundingClientRect();
+        /* board compositions mark the station the camera has landed on with data-active;
+           only that station's content is scanned. Between beats (camera moving) nothing on
+           the board is active and only stage-level layers are checked. */
+        const active = document.querySelector('[data-active]');
         for (const el of document.querySelectorAll('#stage *')) {
           if (el.id === 'footer' || el.closest('#footer') || el.id === 'cut') continue;
+          if (el.closest('#board') && !(active && active.contains(el))) continue;
+          if (el.closest('[data-noscan]')) continue;   /* a ruler that runs off the edge by design */
           /* .layer boxes are inset:0 by design — only leaf content can overflow */
           if (el.classList.contains('layer') || el.children.length) continue;
           const cs = getComputedStyle(el);
           if (cs.opacity === '0' || cs.visibility === 'hidden') continue;
-          const layer = el.closest('.layer');
-          if (layer && getComputedStyle(layer).opacity === '0') continue;
+          /* hidden by any ancestor (a masked span, a faded layer) — not on screen, not scanned */
+          let hidden = false;
+          for (let a = el.parentElement; a && a.id !== 'stage'; a = a.parentElement){
+            const ac = getComputedStyle(a); if (ac.opacity === '0' || ac.visibility === 'hidden' || ac.display === 'none'){ hidden = true; break; } }
+          if (hidden) continue;
           if (!el.textContent.trim() && !String(el.className).includes('fill')) continue;
           const r = el.getBoundingClientRect();
           if (r.width === 0 || r.height === 0) continue;
@@ -135,7 +144,7 @@ for (const [ratio, [W, H]] of Object.entries(CROPS)) {
   }
   await pg.close();
 
-  const mp4 = resolve(out, `ep01-${ratio}.mp4`);
+  const mp4 = resolve(out, `${basename(epDir)}-${ratio}.mp4`);
   execFileSync('ffmpeg', ['-y','-loglevel','error','-framerate',String(fps),
     '-i', resolve(frames,'%05d.png'),
     '-c:v','libx264','-crf', draft ? '26' : '18','-pix_fmt','yuv420p',

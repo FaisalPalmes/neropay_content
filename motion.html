@@ -80,6 +80,7 @@
       (v.board ? '<div><span class="lbl">The board</span><p>' + esc(v.board) + '</p></div>' : '') +
       '<div><span class="lbl">Higgsfield</span><p>' + esc(v.higgsfield) + '</p></div></div>';
     if (v.blocked) h += '<div class="note warn"><b>Before publish</b>' + esc(v.blocked) + '</div>';
+    if (v.build) h += '<div class="note"><b>Build</b>' + esc(v.build) + '</div>';
     h += '<div class="note"><b>Narrator · ' + esc(v.narrator.model) + '</b><p><span class="lbl">Energy</span> ' + esc(v.narrator.energy) + '</p><p><span class="lbl">Tags</span> ' + esc(v.narrator.tags) + '</p><p><span class="lbl">The hits</span> <span class="mono">' + esc(v.narrator.hits) + '</span></p></div>';
     h += '<div class="scroller"><table class="t"><thead><tr><th>Beat</th><th>Secs</th><th>On screen</th><th>Say</th>' + (v.format === 'board' ? '<th>Camera</th>' : '') + '</tr></thead><tbody>' +
       v.shots.map(function(x){ return '<tr><td>' + esc(x.id) + '</td><td class="num">' + x.secs + '</td><td>' + esc(x.screen) + '</td><td>“' + esc(x.say) + '”</td>' + (v.format === 'board' ? '<td>' + esc(x.camera || '') + '</td>' : '') + '</tr>'; }).join('') + '</tbody></table></div>';
