@@ -20,6 +20,14 @@ pop (chips and tags), sparkle (bars rising), click-soft (checklist).
 "Tropicorp Advertisement" by Nancy_Sinclair, CC0, https://freesound.org/apiv2/sounds/561190/ — 82 bpm; the
 build cuts it into `music-intro` (5.4 s) and `music-outro` (18.6 s) with baked fades.
 
+## Voiceover — the same rule, a different source
+
+A generated voiceover is a sound file in a NeroPay video and gets a ledger line like any other: the provider,
+the voice id, the model, and the date. ElevenLabs and HeyGen output is licensed for commercial use on a paid
+plan — confirm the plan before the first delivery, and record which account it was generated under. No voice
+cloned from a real person without written consent, and the narrator voice stays the same across a series.
+`../AUDIO.md` has the route and the disclosure rule (rail 4 — the disclosure is made at upload, per upload).
+
 ## How to add a sound
 
 1. Download it from a source whose licence you can quote (Pixabay: no attribution; Freesound: check the

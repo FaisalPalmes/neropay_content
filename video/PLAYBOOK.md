@@ -396,3 +396,21 @@ does not recede in perspective the way the reference frames show. Real SIDE and 
 |---|---|---|
 | Master 16:9 v7 | 1920×1080, 164.467 s, −14 LUFS, 213 MB, check clean on the real footage — superseded: one flat frame at the title cut, 0.5 s tail | `65cf0ca` |
 | Master 16:9 v7.1 | 1920×1080, 164.433 s (4,933 frames), −14 LUFS, 213 MB, check clean on the real footage, frame scan 0 spikes | `23c4784` |
+
+## 13. Sound is a deliverable, not a finish (15 Sep 2026)
+
+`AUDIO.md` is the standing note for every build that will make a noise, which is all of them: the nineteen
+effects committed at `library/sfx/`, the Freesound set declared in `sounds.json`, the `<audio>` timing
+contract and the `sfx()` helper to copy out of `b1-v8/build.mjs`, the mix (effects 0.12–0.28 at
+`SFX_GAIN = 0.75`, beds 0.34–0.42, master −14 LUFS / −1.5 dBTP / 48 kHz), the beat grid every card lands
+on, the cue vocabulary, and the ElevenLabs voiceover route with the Whisper pass that gives it word timings.
+
+The measured position on 15 Sep 2026: **every audio provider host is refused by the egress policy in a web
+session** — `api.elevenlabs.io`, `api.heygen.com`, `huggingface.co`, `freesound.org` and `pixabay.com` all
+answer 403 at CONNECT. A web session can only use what is committed; anything fetched or generated happens
+in the Higgsfield sandbox, or after those hosts are allowlisted on the environment, or on a PC. A build that
+plans on a voiceover or a new bed plans on the sandbox.
+
+A silent placeholder passes `hyperframes check`, the frame scan and the contact sheet. The only thing that
+catches it is the peak gate in `sandbox.sh` (refuses a file peaking under −40 dBFS) and listening. B1 went
+out silent once because neither happened (LESSONS #68).
