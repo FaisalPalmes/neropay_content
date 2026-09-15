@@ -52,3 +52,12 @@ but not rendered to a real timeline until that's available.
 **The site page.** These videos get their own page in the content warehouse, the same way
 `youtube.html` carries the presenter series. Not built yet. It will need a nav link adding to the six
 existing pages, and it is dark-first against a light site, so it paints its own ground.
+
+## `showcase/` — the HyperFrames route, worked through once
+
+Faisal's 15 Sep 2026 capability test: a ~25 s liquid-glass piece on the ep01 figures, built as a HyperFrames
+project (`motion/showcase/`), with the library's Pixabay effects and the CC0 bed on an 82 bpm grid. It settles
+the renderer question for anything with sound: **HyperFrames** (`motion/node_modules/.bin/hyperframes`, pinned
+0.8.31), with `law.mjs` asserting the hold law against the composition's `lawReport()` before render. Music can
+only be fetched from the Higgsfield sandbox, so `showcase/sandbox.sh` is the delivery route — the web container
+builds, checks and renders a silent-bed draft. `render.mjs` stays for the frame-by-frame route with no sound.
