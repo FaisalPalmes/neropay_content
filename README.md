@@ -32,12 +32,13 @@ Every video script exists in English and Turkish. `youtube.html` has an **EN / T
 ├── overlays.js            the video graphics drawn as SVG — overlays, cards, plates, disclosure, specimen statements
 ├── scripts-tr.js          the Turkish scripts — one line per spoken shot, plus the translation rules  ← hand-edited
 ├── generation-pack.md     source of truth for the video series
+├── nerogym/               the NeroGym feasibility brief — its own eight-page site, one data file (see nerogym/README.md)
 ├── vercel.json
 ├── README.md
 └── CLAUDE.md              rules Claude Code reads automatically — rails, voice, brand, what's blocked
 ```
 
-**Everything is at the top level on purpose.** No subfolders. GitHub's web uploader silently skips
+**Everything is at the top level on purpose.** No subfolders, except the three deliberate ones (`edit/`, `video/`, `nerogym/`) which are edited from a terminal, never uploaded through the web page. GitHub's web uploader silently skips
 folders when files are picked through the file-chooser dialog rather than dragged, which breaks the
 site in a way that's hard to spot — the HTML loads and the styling just vanishes. Flat means every
 upload works, whatever route you take.

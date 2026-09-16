@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;600;700;800;900&family=Martian+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="nerogym.css">
+<title>NeroGym · Running costs</title>
+<meta name="description" content="Monthly running costs at today's labour and energy rates, with rent as X: staffing models, energy, rates, maintenance, and the income that is not memberships.">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="lock" href="index.html">Nero<i>Gym</i><small>Feasibility brief</small></a>
+  <nav aria-label="Pages">
+    <a class="n" href="index.html">Overview</a>
+    <a class="n" href="premises.html">Premises</a>
+    <a class="n" href="sequence.html">Sequence</a>
+    <a class="n" href="costs.html">One-off costs</a>
+    <a class="n" href="running.html" aria-current="page">Running costs</a>
+    <a class="n" href="model.html">Model</a>
+    <a class="n" href="concept.html">Concept</a>
+    <a class="n" href="marketing.html">Marketing</a>
+  </nav>
+  <a class="back" href="../index.html">← Content warehouse</a>
+</div></header>
+<div class="band"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <h1>What it costs<br>to keep the <span class="yl">lights on</span>,<br>every month.</h1>
+      <p class="lede">Running costs for a 465 m², 24/7 strength gym in Stockport at today's labour and energy rates, with rent as <strong>X</strong> at the top of the table. Three cases: <strong>Lean</strong> is eight staffed hours a day and two hours of cleaning; <strong>Mid</strong> is a manager who is in the building and eighty staffed hours; <strong>Full</strong> is staffed 06:00–22:00 with a second person at peak.</p>
+      <div class="meta"><span>Ex rent, lean <b><span data-fig="opex.low"></span></b></span><span>mid <b><span data-fig="opex.mid"></span></b></span><span>full <b><span data-fig="opex.high"></span></b></span><span>Dated <b><span data-fig="date"></span></b></span></div>
+    </div>
+    <div class="xbox">
+      <div class="x"><span data-fig="opex.mid.plusLease"></span></div>
+      <p>Mid case with X at <strong><span data-fig="lease.default"></span></strong>. Move X on the model page and this page follows.</p>
+    </div>
+  </div>
+</div></div>
+
+<div class="wrap doc">
+<aside class="rail"><ol>
+  <li><a href="#ledger">The monthly ledger</a></li>
+  <li><a href="#staff">Staffing, the largest line</a></li>
+  <li><a href="#energy">Energy, the second</a></li>
+  <li><a href="#rates">Business rates</a></li>
+  <li><a href="#promise">The cost of the 48-hour promise</a></li>
+  <li><a href="#income">Income that is not memberships</a></li>
+  <li><a href="#budget">Against the £10–15k budget</a></li>
+</ol><button class="print" type="button">Print this page</button></aside>
+
+<main>
+<section class="s" id="ledger">
+  <h2>The monthly ledger</h2>
+  <p class="sub">Ex VAT. Rent first, then everything else in the order a bookkeeper would meet it. Marketing is shown for scale but the model treats it as a variable: churn × members × cost per join.</p>
+  <div data-opex></div>
+  <p class="note">Not on this ledger: equipment finance (the one-off page assumes outright purchase; five years at 9% on mid-tier kit is about £4,000 a month), owner drawings, corporation tax (19% to £50k profit, 25% above £250k, 26.5% marginal between), and VAT, which is one sixth of every membership payment and is paid over quarterly.</p>
+</section>
+
+<section class="s" id="staff">
+  <h2>Staffing, the largest line</h2>
+  <div class="measure">
+    <p>National Living Wage is £12.71 an hour from 1 April 2026; the 18–20 rate is £10.85. Employer National Insurance is 15% above £5,000 a year per employee, with a £10,500 Employment Allowance that roughly cancels it at this headcount. Pension is 3% of qualifying earnings. Irregular-hours staff accrue holiday at 12.07%. Greater Manchester market rates (estimates; job boards could not be read in the session): general manager £30–38k, duty manager £25–29k, hosts and Level 2 instructors £12.71–£13.50 an hour, cleaner the same.</p>
+  </div>
+  <div class="tbl tight"><table>
+    <thead><tr><th>Model</th><th>Staffed hours a week</th><th>People</th><th class="n">A year</th><th class="n">A month</th></tr></thead>
+    <tbody>
+      <tr><td><b>Lean</b> — 8 staffed hours a day, unstaffed otherwise</td><td>56: GM 40 + weekend host 16</td><td>2</td><td class="n">~£47,000</td><td class="n">~£3,930</td></tr>
+      <tr><td><b>Mid</b> — a manager in the building, duty manager on the evenings, weekend host</td><td>~80</td><td>3</td><td class="n">~£78,000</td><td class="n">~£6,500</td></tr>
+      <tr><td><b>Full</b> — staffed 06:00–22:00 daily, second person 17:00–21:00 weekdays</td><td>132</td><td>5 (2 full-time, 3 part-time)</td><td class="n">~£112,000</td><td class="n">~£9,350</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">The lean model is what makes a £34.99 price arithmetically possible and it is also what the Henry Best inquest was about. A cleaner counted as "staffed", an alarm nobody used, an AED nobody could see, paramedics three minutes late because nobody met them. Lean is only defensible with the remote monitoring line funded (it is, at £750 a month in that column), lanyards on every member overnight, and an 18+ rule out of hours. Mid is the recommendation.</p>
+  <p class="note">Personal trainers are not on the payroll. Six licensed PTs pay a fixed monthly rent under an agreement drafted by an employment solicitor, on the income side below.</p>
+</section>
+
+<section class="s" id="energy">
+  <h2>Energy, the second</h2>
+  <div class="measure">
+    <p>Small-business electricity was 27–30p per kWh in September 2026 (August average 29.6p) plus the Climate Change Levy at 0.801p and a standing charge of 45–70p a day. Gas was 8.5–9p. A 24/7 gym of this size is modelled at 75,000–110,000 kWh of electricity a year: the CIBSE TM46 fitness benchmark (160 kWh/m² electricity, 200 thermal) gives 74,400 kWh; published 24-hour gym averages run about 125,000; strength-led with LED and few treadmills sits between. Hot water for 40 showers a day is roughly 43,000 kWh thermal a year on its own.</p>
+    <p>Three things move this line more than any supplier switch: LED throughout (in the build), a heat pump for the hot water rather than an electric bank, and 30–50 kWp of solar on the roof at £850–£1,100 per kWp installed, which pays back in five to eight years and faster still on a building that uses power at midday.</p>
+  </div>
+</section>
+
+<section class="s" id="rates">
+  <h2>Business rates</h2>
+  <div class="measure">
+    <p>Rateable value is set from the rent at 1 April 2024. Gyms qualify for the retail, hospitality and leisure multipliers in 2026/27: 38.2p in the pound below £51,000 rateable value, 43.0p above. If Stockport does not accept the gym as leisure, the standard small-business multiplier is 43.2p. Small Business Rate Relief ends at £15,000 rateable value and does not help here. At a rateable value of £35,000 (5,000 sq ft at £7) the bill is £13,370 a year, £1,114 a month. Transitional relief may cap the year-one movement after the 2026 revaluation.</p>
+  </div>
+</section>
+
+<section class="s" id="promise">
+  <h2>The cost of the 48-hour promise</h2>
+  <div class="measure">
+    <p>The concept's first commitment is that a fault is fixed or the station replaced within 48 hours. That is bought with the maintenance reserve line (£1,000 a month mid: two planned visits a year at £60–£120 a machine, parts at 1.5–2% of fleet value, cables every two to three years, upholstery at 10% of pads a year), a shelf of common spares (cables, pulleys, pins, pads, about £2,000 in the opening stock), and a duplicate of every station people queue for in the opening kit list. Reactive-only servicing costs 25–30% more per machine per year than planned, according to the PSLT sector report in 2026, so the reserve is cheaper than not having it.</p>
+  </div>
+</section>
+
+<section class="s" id="income">
+  <h2>Income that is not memberships</h2>
+  <p class="sub">Monthly, at steady state. The model adds these to membership contribution before it finds break-even. They are small against a £20,000 cost base and the largest is the one that carries legal risk.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Line</th><th class="n">Low</th><th class="n">Mid</th><th class="n">High</th></tr></thead>
+    <tbody id="anc"></tbody>
+  </table></div>
+  <p class="note">Screen advertising is £0. UK gym screen networks supply screens free or share a small amount of revenue in exchange for the inventory, and no figure a 500-member independent could rely on is published. Merchandise and supplements are year-two lines.</p>
+</section>
+
+<section class="s" id="budget">
+  <h2>Against the £10,000–£15,000 a month budget</h2>
+  <div class="measure">
+    <p>The budget that started the research was £10,000–£15,000 a month for everything, rent included. This ledger says the lean case is about <span data-fig="opex.low"></span> before rent and the mid case about <span data-fig="opex.mid"></span>. With X at <span data-fig="lease.default"></span> the mid case is <span data-fig="opex.mid.plusLease"></span>. The September model's Format B, at £13,594 all-in, sits below even the lean case here plus rent. The differences are energy (this ledger uses today's unit rates and a 24/7 load), remote monitoring for unstaffed hours, seven-day cleaning, and a maintenance reserve sized to the repair promise. Any of those can be struck out; the ledger shows the working so that striking them is a decision.</p>
+  </div>
+</section>
+</main>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var tb = document.getElementById('anc'); if (!tb || !window.NG) return;
+  var h = '', s = {low:0,mid:0,high:0};
+  window.NG.ancillary.forEach(function(r){ s.low+=r.low; s.mid+=r.mid; s.high+=r.high;
+    h += '<tr><td class="lab"><b>'+r.item+'</b>'+(r.note?'<span class="sup">'+r.note+'</span>':'')+'</td><td class="n">'+NGfmt.gbp(r.low)+'</td><td class="n">'+NGfmt.gbp(r.mid)+'</td><td class="n">'+NGfmt.gbp(r.high)+'</td></tr>'; });
+  h += '<tr class="tot"><td>Ancillary income a month</td><td class="n">'+NGfmt.gbp(s.low)+'</td><td class="n">'+NGfmt.gbp(s.mid)+'</td><td class="n">'+NGfmt.gbp(s.high)+'</td></tr>';
+  tb.innerHTML = h;
+});
+</script>
+<footer class="ft"><div class="wrap">
+  <span>NeroGym feasibility brief · Nero Panda Ltd · internal, not for circulation · figures dated <span data-fig="date"></span></span>
+  <span>English figures are GBP, inclusive of VAT where a supplier quotes it that way and marked otherwise. Anything not published is labelled an estimate.</span>
+</div></footer>
+<script src="data.js"></script>
+<script src="nerogym.js"></script>
+</body>
+</html>

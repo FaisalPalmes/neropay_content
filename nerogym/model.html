@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@500;600;700;800;900&family=Martian+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="stylesheet" href="nerogym.css">
+<title>NeroGym · Model</title>
+<meta name="description" content="Interactive membership model: pick the rent X, the running-cost case and the price plan, and see break-even, the four membership scenarios, the ramp and the downside.">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="lock" href="index.html">Nero<i>Gym</i><small>Feasibility brief</small></a>
+  <nav aria-label="Pages">
+    <a class="n" href="index.html">Overview</a>
+    <a class="n" href="premises.html">Premises</a>
+    <a class="n" href="sequence.html">Sequence</a>
+    <a class="n" href="costs.html">One-off costs</a>
+    <a class="n" href="running.html">Running costs</a>
+    <a class="n" href="model.html" aria-current="page">Model</a>
+    <a class="n" href="concept.html">Concept</a>
+    <a class="n" href="marketing.html">Marketing</a>
+  </nav>
+  <a class="back" href="../index.html">← Content warehouse</a>
+</div></header>
+<div class="band"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <h1>Pick X. Pick a price.<br>See how many members<br>it <span class="yl">takes</span>.</h1>
+      <p class="lede">The membership model, break-even, the four membership scenarios Eray asked for, and a thirty-month ramp with a downside. Every figure recomputes from the ledgers on the other pages. <strong>Nothing here is a forecast; it is arithmetic on stated assumptions, and the assumptions are listed.</strong></p>
+      <div class="meta"><span>Assumed churn <b>4.5% a month</b></span><span>Achieved price <b>86% of headline</b></span><span>Cost per join <b>£80</b></span><span>Capacity at 10 sq ft <b>500</b></span></div>
+    </div>
+    <div class="xbox">
+      <div class="x" id="beHero">—</div>
+      <p id="beHeroText">members to break even each month at the settings below.</p>
+    </div>
+  </div>
+</div></div>
+
+<div class="wrap doc">
+<aside class="rail"><ol>
+  <li><a href="#controls">Settings</a></li>
+  <li><a href="#result">Break-even</a></li>
+  <li><a href="#plans">Price plans</a></li>
+  <li><a href="#register">Against the market</a></li>
+  <li><a href="#scen">300 · 500 · 750 · 1,000</a></li>
+  <li><a href="#ramp">The ramp and the downside</a></li>
+  <li><a href="#sens">What moves it most</a></li>
+  <li><a href="#verdict">The verdict</a></li>
+  <li><a href="#assump">Assumptions</a></li>
+</ol><button class="print" type="button">Print this page</button></aside>
+
+<main>
+<section class="s" id="controls">
+  <h2>Settings</h2>
+  <p class="sub">One row. Everything below it follows. X carries to the other pages in this browser.</p>
+  <div class="ctl" role="group" aria-label="Model settings">
+    <div class="g" style="flex-direction:column;align-items:flex-start;gap:2px"><label for="lease">X · rent per month <span class="readout" id="leaseOut"></span></label><input type="range" id="lease" min="2500" max="9000" step="250"></div>
+    <div class="g"><label>Running costs</label><div class="seg" id="tier"><button type="button" data-v="low">Lean</button><button type="button" data-v="mid" aria-pressed="true">Mid</button><button type="button" data-v="high">Full</button></div></div>
+    <div class="g"><label>Price plan</label><div class="seg" id="plan"></div></div>
+    <div class="g"><label>Space per member</label><div class="seg" id="dens"><button type="button" data-v="10" aria-pressed="true">10 sq ft · 500</button><button type="button" data-v="7">7 sq ft · 714</button><button type="button" data-v="5">5 sq ft · 1,000</button></div></div>
+    <div class="g"><label>Equipment</label><div class="seg" id="fin"><button type="button" data-v="0" aria-pressed="true">Bought outright</button><button type="button" data-v="1">HP, 5 years at 9%</button></div></div>
+  </div>
+</section>
+
+<section class="s" id="result">
+  <h2>Break-even</h2>
+  <div class="res" id="res"></div>
+  <p class="note" id="resNote"></p>
+</section>
+
+<section class="s" id="plans">
+  <h2>Price plans</h2>
+  <p class="sub">The recommendation is the Strength House plan. Three tiers, one room, the middle tier carrying most members. Prices include VAT because members pay VAT; the model strips it out.</p>
+  <div class="tiers" id="tiers"></div>
+  <dl class="def" style="margin-top:var(--s6)">
+    <dt>Founder rate</dt><dd>First 250 members pay the off-peak price for 24/7 access, locked 24 months, no joining fee. Sold during the build. This is the discount the 86% realisation factor is paying for.</dd>
+    <dt>Joining fee</dt><dd>£0 in the pre-sale, £20 after. Foundry and the budget chains run at £0–£15; a small fee filters the 90-day quitters without pricing anyone out.</dd>
+    <dt>Minimum term</dt><dd>Rolling monthly with 30 days' notice, or a 12-month term at £5 less. Nothing longer: OFT v Ashbourne.</dd>
+    <dt>Student and off-peak</dt><dd>The off-peak tier is 09:00–16:00 and 21:00–06:00 weekdays plus all weekend, with student ID accepted at any hour on it. Fills the room when it is empty.</dd>
+    <dt>Corporate</dt><dd>15% off Core for ten or more staff at one employer, paid individually.</dd>
+    <dt>Add-ons and pay-per-use</dt><dd>Recovery £8 a month on Off-peak and Core (included in Plus). Massage chair £3 per 10 minutes. Creator zone free to book for every member. Day pass £12, week pass £30, guest £8 with a member.</dd>
+    <dt>PT licence</dt><dd>£300 a month per trainer, fixed, six trainers. Not a membership line, but the model's largest ancillary income.</dd>
+  </dl>
+</section>
+
+<section class="s" id="register">
+  <h2>Against the market, September 2026</h2>
+  <p class="sub">Monthly rolling headline prices seen on 16 September 2026, sorted low to high, with NeroGym's Core price for the selected plan placed among them. Distances are from Stockport town centre, approximate. Third-party guides stand in where the operator does not publish (David Lloyd, Nuffield, Village).</p>
+  <div class="tbl tight" id="reg"></div>
+  <p class="note">The market has a hole between Life Leisure at £30–£44 (not 24/7) and Zeno at £51 (boutique, Didsbury). It also has three budget 24/7 gyms in the town centre from November, which is why the premises page says north and the A34 corridor. Every price here needs a dated screenshot before it is used anywhere public.</p>
+</section>
+
+<section class="s" id="scen">
+  <h2>300 · 500 · 750 · 1,000 members</h2>
+  <p class="sub">Monthly and annual results at each membership level at the current settings. The space column is the concept's own test: below seven square feet a member the room is a budget gym with better lighting.</p>
+  <div class="tbl" id="scenTbl"></div>
+</section>
+
+<section class="s" id="ramp">
+  <h2>The ramp and the downside</h2>
+  <p class="sub">Thirty months from opening. Base case: 250 founders on day one, 45 gross joins a month until the room is at capacity, 4.5% monthly churn. Downside: 180 founders, 30 joins, 6% churn, 80% of headline achieved. The line is cumulative cash after all opening capital at the selected tier, so it starts at minus the capital and pays back where it crosses zero.</p>
+  <figure class="chart" id="chart" aria-describedby="rampDesc" style="margin:var(--s5) 0 0">
+    <div class="legend" id="legend"></div>
+    <div class="cwrap" style="position:relative"><svg id="svg" viewBox="0 0 760 320" width="100%" role="img" aria-label="Cumulative cash over thirty months, base and downside"></svg><div class="tip" id="tip" hidden></div></div>
+    <figcaption id="rampDesc" class="small" style="margin-top:var(--s3)"></figcaption>
+  </figure>
+  <details style="margin-top:var(--s4)"><summary class="ui" style="cursor:pointer;font-size:.85rem;color:var(--mute)">Table view of the ramp</summary><div class="tbl tight" id="rampTable" style="margin-top:var(--s3)"></div></details>
+</section>
+
+<section class="s" id="sens">
+  <h2>What moves it most</h2>
+  <p class="sub">Break-even members at the current settings, changing one thing at a time. Read down each column.</p>
+  <div class="tbl tight" id="sensTbl"></div>
+</section>
+
+<section class="s" id="verdict">
+  <h2>The verdict</h2>
+  <div class="measure" id="verdictText"></div>
+  <div class="gate">
+    <h3>The three answers this is waiting on</h3>
+    <p><strong>1. Gym business or software showcase?</strong> If showcase, price the partnership with an existing independent gym before choosing this. <strong>2. How much capital, from where?</strong> The mid tier needs about <span data-fig="capex.mid"></span> plus the deposit and first rent; £10–15k a month is a running budget, not an opening one. <strong>3. Before or after the investment round closes?</strong> A capital-hungry sister business during a live round is a diligence question whichever entity holds it.</p>
+  </div>
+</section>
+
+<section class="s" id="assump">
+  <h2>Assumptions</h2>
+  <dl class="def">
+    <dt>Achieved price</dt><dd>86% of headline. The Gym Group achieves £22.14 against a £25.64 headline (H1 2026). Covers founder rates, promotions, freezes and arrears.</dd>
+    <dt>VAT</dt><dd>Memberships are standard-rated; one sixth of every payment is VAT and is stripped before anything else.</dd>
+    <dt>Churn</dt><dd>4.5% a month. The Gym Group's 18.5-month tenure implies 5.4%; the market runs 21–26 months. Front-loaded in reality (one in ten quit inside 90 days), so a flat rate flatters year one slightly.</dd>
+    <dt>Cost per gross join</dt><dd>£80 blended. UK Meta cost per fitness lead $28–$50 (2025–26) with 30–50% of leads joining after a visit; referrals and walk-ins bring the blend down. Marketing is therefore churn × members × £80 a month, never a fixed budget.</dd>
+    <dt>Collection</dt><dd>1.6% of membership revenue: GoCardless Standard 1% + 20p capped at £4.</dd>
+    <dt>Per-member consumables</dt><dd>£0.60 a month: wipes, paper, water, tag replacement.</dd>
+    <dt>Ancillary income</dt><dd>From the running-costs page: PT licences, vending, recovery, passes. Scaled down in proportion below 400 members in the ramp.</dd>
+    <dt>Fixed costs</dt><dd>The running-costs ledger for the chosen case, excluding the marketing row, plus X, plus service charge and rates as listed, plus equipment finance when toggled.</dd>
+    <dt>Capital</dt><dd>The one-off ledger total for the chosen tier including contingency and reserve. Deposit and first rent excluded (they are multiples of X).</dd>
+    <dt>Not modelled</dt><dd>Corporation tax, VAT cash-flow timing, owner drawings, price rises, a second site, and any value to NeroPay from the software reference. Interest on any borrowing beyond the equipment toggle.</dd>
+  </dl>
+</section>
+</main>
+</div>
+<style>
+.chart .legend{display:flex;gap:var(--s5);font-family:"Chivo",sans-serif;font-size:.8rem;color:var(--ink-2);margin-bottom:var(--s3)}
+.chart .legend span{display:inline-flex;align-items:center;gap:8px}
+.chart .legend i{display:inline-block;width:18px;height:2px;border-radius:1px}
+.chart .grid line{stroke:var(--rule);stroke-width:1}
+.chart .axis text{font-family:"Martian Mono",monospace;font-size:10px;fill:var(--mute)}
+.chart .zero{stroke:var(--ink);stroke-width:1}
+.chart .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .s0{stroke:#2F63A3}.chart .s1{stroke:#7F5E00}
+.chart .dot{stroke:var(--paper);stroke-width:2}
+.chart .d0{fill:#2F63A3}.chart .d1{fill:#7F5E00}
+.chart .lab{font-family:"Chivo",sans-serif;font-size:11px;fill:var(--ink-2)}
+.chart .xh{stroke:var(--rule-2);stroke-width:1;pointer-events:none}
+.chart .hit{fill:transparent;cursor:crosshair}
+.chart .tip{position:absolute;pointer-events:none;background:var(--paper);border:1px solid var(--rule-2);box-shadow:var(--shadow);padding:8px 10px;font-family:"Chivo",sans-serif;font-size:.78rem;line-height:1.35;min-width:150px;z-index:2}
+.chart .tip b{font-family:"Martian Mono",monospace;font-weight:500}
+.chart .tip .k{display:inline-block;width:12px;height:2px;vertical-align:middle;margin-right:6px}
+.chart .tip .mo{color:var(--mute);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var NG = window.NG, M = window.NGmodel, S = window.NGsum, F = NGfmt; if (!NG || !M) return;
+  var kit = NG.capex.find(function(r){ return r.id==='kit'; }), reserve = NG.capex.find(function(r){ return r.id==='reserve'; });
+  var st = { lease: NG.lease.default, tier:'mid', plan: NG.price.plans.findIndex(function(p){return p.id==='strength';}), dens: 10, fin: 0 };
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* plan buttons */
+  var planSeg = $('plan');
+  NG.price.plans.forEach(function(p,i){ var b=document.createElement('button'); b.type='button'; b.dataset.v=i; b.textContent=p.name; b.setAttribute('aria-pressed', i===st.plan?'true':'false'); planSeg.appendChild(b); });
+  planSeg.addEventListener('click', function(e){ var b=e.target.closest('button'); if(!b) return; planSeg.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed', x===b?'true':'false');}); st.plan=Number(b.dataset.v); draw(); });
+  $('tier').addEventListener('change', function(e){ st.tier=e.detail; draw(); });
+  $('dens').addEventListener('change', function(e){ st.dens=Number(e.detail); draw(); });
+  $('fin').addEventListener('change', function(e){ st.fin=Number(e.detail); draw(); });
+  var lease = $('lease'); lease.min=NG.lease.min; lease.max=NG.lease.max; lease.step=NG.lease.step; lease.value=st.lease;
+  lease.addEventListener('input', function(){ st.lease=Number(lease.value); try{ localStorage.setItem('ng.lease', st.lease); }catch(e){} draw(); });
+
+  function hp(P){ var r=0.09/12, n=60; return P*r/(1-Math.pow(1+r,-n)); }
+  function extra(){ return st.fin ? hp(kit[st.tier]) : 0; }
+  function plan(){ return NG.price.plans[st.plan]; }
+  function cap(){ return Math.floor(NG.meta.sqft/st.dens); }
+
+  function draw(){
+    $('leaseOut').textContent = F.gbp(st.lease);
+    var p = plan(), be = M.breakEven(st.lease, p.blend, st.tier, extra()), c = cap();
+    var over = be.members > c;
+    $('beHero').textContent = be.members.toLocaleString('en-GB');
+    $('beHeroText').innerHTML = 'members to break even each month with X at <strong>'+F.gbp(st.lease)+'</strong>, '+(st.tier==='low'?'lean':st.tier==='mid'?'mid':'full')+' running costs and the '+p.name+' plan. Capacity at '+st.dens+' sq ft a member is <strong>'+c.toLocaleString('en-GB')+'</strong>.';
+    var target = Math.ceil((be.fixed - be.anc + 5000)/be.contrib);
+    var atCap = M.pnl(c, st.lease, p.blend, st.tier, extra());
+    var resH = '';
+    resH += '<div><div class="v">'+F.gbp(be.fixed)+'</div><p>Fixed cost a month: running costs ex marketing, X'+(st.fin?', equipment HP at '+F.gbp(extra()):'')+'.</p></div>';
+    resH += '<div><div class="v">'+F.gbp2(be.net)+'</div><p>Net per member a month: '+F.gbp2(p.blend)+' blended headline × 86% achieved, VAT stripped.</p></div>';
+    resH += '<div><div class="v">'+F.gbp2(be.contrib)+'</div><p>Contribution per member after collection, consumables and the £'+(NG.assump.churn*NG.assump.cpa).toFixed(2)+' a month it costs to replace churn.</p></div>';
+    resH += '<div><div class="v '+(over?'bad':'good')+'">'+be.members.toLocaleString('en-GB')+'</div><p>Break-even members, after '+F.gbp(be.anc)+' of ancillary income. '+(over?'Over the '+c+' capacity.':'Inside the '+c+' capacity.')+'</p></div>';
+    resH += '<div><div class="v">'+(target>c?'<span class="bad">'+target.toLocaleString('en-GB')+'</span>':target.toLocaleString('en-GB'))+'</div><p>Members for £5,000 a month of operating profit'+(target>c?' — more than the room holds.':'.')+'</p></div>';
+    resH += '<div><div class="v '+(atCap.profit<0?'bad':'good')+'">'+F.gbp(atCap.profit*12,{k:1})+'</div><p>Annual operating profit with the room full ('+c+' members), before tax, finance beyond the toggle, and drawings.</p></div>';
+    $('res').innerHTML = resH;
+    $('resNote').innerHTML = over
+      ? 'At these settings the room cannot break even inside its own capacity promise. The levers, in order of how little they cost the concept: a lower X, the lean running case, the next price plan up, or seven square feet a member (which gives up the space promise but keeps the design). The premium chains run at about 3.3 sq ft a member; Foundry will be closer to 5.'
+      : 'At these settings the room breaks even with '+(c-be.members)+' members of headroom below capacity. Each member above break-even adds '+F.gbp2(be.contrib)+' a month; a full room makes '+F.gbp(atCap.profit)+' a month before tax.';
+
+    /* tiers */
+    var t = plan(), tiersH = '';
+    var tierDefs = { foundry:[['24/7',t.head]], single:[['24/7',t.head]],
+      tiered:[['Off-peak / student',34.99],['Core 24/7',44.99],['Plus',54.99]],
+      strength:[['Off-peak / student',39.99],['Core 24/7',49.99],['Plus',59.99]],
+      prem:[['Off-peak / student',44.99],['Core 24/7',59.99],['Plus',69.99]] }[t.id];
+    var incl = { 'Off-peak / student':['09:00–16:00 and 21:00–06:00 weekdays, all weekend','Student ID any hour','App, QR entry, machine log','Creator zone bookable'], 'Core 24/7':['Every hour','Everything in Off-peak','Recovery add-on £8','Guest pass £8'], 'Plus':['Everything in Core','Recovery zone included','Creator zone priority slots','Two guest passes a month, freeze any time'], '24/7':['Every hour','App, QR entry, machine log','Recovery add-on £8','Creator zone bookable'] };
+    tierDefs.forEach(function(d){ tiersH += '<div><div class="p">'+F.gbp2(d[1])+'<small> /month</small></div><h4>'+d[0]+'</h4><ul class="plain">'+incl[d[0]].map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>'; });
+    $('tiers').innerHTML = tiersH;
+
+    /* register */
+    var rows = NG.competitors.slice(); rows.push({ name:'NeroGym Core · '+t.name, price:t.head, join:20, h24:true, dist:'north Stockport', src:'this brief', us:true });
+    rows.sort(function(a,b){return a.price-b.price;}); var mx = 170;
+    var regH = '<table><thead><tr><th>Operator</th><th class="n">A month</th><th></th><th class="n">Joining</th><th>24/7</th><th>From SK1</th><th>Source</th></tr></thead><tbody>';
+    rows.forEach(function(r){ regH += '<tr'+(r.us?' style="background:var(--yl-soft)"':'')+'><td>'+(r.us?'<b>':'')+r.name+(r.us?'</b><span class="tag yl">us</span>':'')+'</td><td class="n">'+F.gbp2(r.price)+'</td><td style="min-width:120px"><div class="bar"><i class="'+(r.us?'us':'')+'" style="width:'+Math.min(100,r.price/mx*100)+'%"></i></div></td><td class="n">'+(r.join==null?'—':F.gbp(r.join))+'</td><td>'+(r.h24===true?'Yes':r.h24===false?'No':'—')+'</td><td>'+r.dist+'</td><td class="small">'+r.src+'</td></tr>'; });
+    $('reg').innerHTML = regH + '</tbody></table>';
+
+    /* scenarios */
+    var scH = '<table><thead><tr><th class="n">Members</th><th class="n">Sq ft each</th><th class="n">Gross revenue / month</th><th class="n">Net of VAT</th><th class="n">Marketing</th><th class="n">Operating profit / month</th><th class="n">A year</th><th></th></tr></thead><tbody>';
+    [300,500,750,1000].forEach(function(m){ var r = M.pnl(m, st.lease, t.blend, st.tier, extra()); var sq = NG.meta.sqft/m; var gross = m*t.blend*NG.assump.realisation;
+      scH += '<tr><td class="n"><b>'+m.toLocaleString('en-GB')+'</b></td><td class="n">'+sq.toFixed(1)+'</td><td class="n">'+F.gbp(gross)+'</td><td class="n">'+F.gbp(r.rev)+'</td><td class="n">'+F.gbp(r.marketing)+'</td><td class="n" style="color:'+(r.profit<0?'var(--stop)':'var(--ok)')+'">'+F.gbp(r.profit)+'</td><td class="n">'+F.gbp(r.profit*12,{k:1})+'</td><td>'+(sq<5?'<span class="tag stop">budget density</span>':sq<7?'<span class="tag yl">tight</span>':sq<=10?'<span class="tag ok">the promise</span>':'<span class="tag">room to spare</span>')+'</td></tr>'; });
+    $("scenTbl").innerHTML = scH + '</tbody></table>';
+
+    /* ramp */
+    var capital = S.capexBy(null, st.tier), months = 30;
+    function run(o){ var mem=o.presold, cash=-capital, out=[{m:0,members:mem,cash:cash,profit:0}], worst=cash, worstM=0, pay=null;
+      for (var i=1;i<=months;i++){ var joins=Math.min(o.joins, Math.max(0,c-mem)); var churn=mem*o.churn; mem=Math.min(c, mem+joins-churn);
+        var net=t.blend*o.real/(1+NG.assump.vat); var contrib=net-net*NG.assump.collection-NG.assump.varPerMember; var anc=be.anc*Math.min(1,mem/400);
+        var profit=mem*contrib+anc-be.fixed-joins*NG.assump.cpa; cash+=profit; if(cash<worst){worst=cash;worstM=i;} if(pay===null&&cash>=0)pay=i; out.push({m:i,members:mem,cash:cash,profit:profit}); }
+      return {pts:out,worst:worst,worstM:worstM,pay:pay,end:mem}; }
+    var base = run({presold:NG.assump.ramp.presold, joins:NG.assump.ramp.joinsPerMonth, churn:NG.assump.churn, real:NG.assump.realisation});
+    var down = run({presold:180, joins:30, churn:0.06, real:0.80});
+    drawChart([base,down], capital);
+    var dip = capital + base.worst; /* how far below opening it went (negative) */
+    $('rampDesc').innerHTML = 'Base case: opening capital '+F.gbp(capital)+' at the '+(st.tier==='low'?'value':st.tier==='mid'?'mid':'premium')+' tier; deepest point '+F.gbp(base.worst)+' in month '+base.worstM+', which is '+F.gbp(Math.abs(dip))+(dip<0?' below':' above')+' the opening position against a reserve line of '+F.gbp(reserve[st.tier])+'; '+(base.pay?'capital repaid in month '+base.pay:'capital not repaid inside thirty months')+'; '+Math.round(base.end)+' members at month 30. Downside: '+(down.pay?'repaid in month '+down.pay:'not repaid inside thirty months')+', '+Math.round(down.end)+' members at month 30, deepest point '+F.gbp(down.worst)+'.';
+    var rtH = '<table><thead><tr><th class="n">Month</th><th class="n">Members, base</th><th class="n">Profit, base</th><th class="n">Cash, base</th><th class="n">Members, downside</th><th class="n">Cash, downside</th></tr></thead><tbody>';
+    base.pts.forEach(function(r,i){ if(i%3!==0 && i!==months) return; var d=down.pts[i]; rtH += '<tr><td class="n">'+r.m+'</td><td class="n">'+Math.round(r.members)+'</td><td class="n">'+F.gbp(r.profit)+'</td><td class="n">'+F.gbp(r.cash)+'</td><td class="n">'+Math.round(d.members)+'</td><td class="n">'+F.gbp(d.cash)+'</td></tr>'; });
+    $('rampTable').innerHTML = rtH + '</tbody></table>';
+
+    /* sensitivity */
+    function beWith(o){ var a=NG.assump, save={churn:a.churn,realisation:a.realisation}; if(o.churn!=null)a.churn=o.churn; if(o.real!=null)a.realisation=o.real; var r=M.breakEven(o.lease!=null?o.lease:st.lease, o.price!=null?o.price:t.blend, st.tier, extra()).members; a.churn=save.churn; a.realisation=save.realisation; return r; }
+    var sensH = '<table><thead><tr><th>Churn a month</th><th class="n">Break-even</th><th>Achieved price</th><th class="n">Break-even</th><th>X</th><th class="n">Break-even</th><th>Blended price</th><th class="n">Break-even</th></tr></thead><tbody>';
+    var rowsS = [[['3.5%',{churn:.035}],['80%',{real:.80}],[F.gbp(st.lease-1000),{lease:st.lease-1000}],[F.gbp2(t.blend-5),{price:t.blend-5}]],
+                 [['4.5% (base)',{}],['86% (base)',{}],[F.gbp(st.lease)+' (base)',{}],[F.gbp2(t.blend)+' (base)',{}]],
+                 [['6.0%',{churn:.06}],['92%',{real:.92}],[F.gbp(st.lease+1000),{lease:st.lease+1000}],[F.gbp2(t.blend+5),{price:t.blend+5}]]];
+    rowsS.forEach(function(r){ sensH += '<tr>'+r.map(function(cell){ return '<td>'+cell[0]+'</td><td class="n">'+beWith(cell[1])+'</td>'; }).join('')+'</tr>'; });
+    $("sensTbl").innerHTML = sensH + '</tbody></table>';
+
+    /* verdict */
+    var v = '';
+    v += '<p>At X of <strong>'+F.gbp(st.lease)+'</strong>, '+(st.tier==='low'?'lean':st.tier==='mid'?'mid':'full')+' running costs and the '+t.name+' plan, the gym breaks even at <strong>'+be.members+' members</strong> against a capacity of '+c+'. '+(over?'That does not close. ':'That closes, with '+(c-be.members)+' members of headroom. ');
+    v += (base.pay?'The base ramp repays '+F.gbp(capital,{k:1})+' of capital in month '+base.pay+'. ':'The base ramp does not repay '+F.gbp(capital,{k:1})+' of capital inside thirty months. ')+(down.pay?'The downside repays in month '+down.pay+'.':'The downside does not repay inside thirty months.')+'</p>';
+    v += '<p>What the arithmetic keeps saying whichever way it is set: the space promise and the price are the same decision. Ten square feet a member is a 500-member room, and a 500-member room needs about '+F.gbp2(be.fixed/500+ (be.net-be.contrib) - be.anc/500)+' of net contribution per member a month to stand still, which is a headline in the fifties, not the thirties. The original £30–£40 brief describes Foundry\'s product, and Foundry opens first. The alternative is seven square feet and a tiered plan around £45, which is a better-lit budget gym that still has to beat Foundry on something other than price.</p>';
+    v += '<p>Gyms are capital-heavy, thin-margined and churn-driven. The ones that work are run by people who are there. This one returns its capital in year three to five in the base case and not inside thirty months in the downside, and it draws founder attention from a fintech with one engineer, a Germany launch in November and a live investment round. That cost is not in the model and it is the largest one.</p>';
+    $('verdictText').innerHTML = v;
+  }
+
+  function drawChart(series, capital){
+    var svg = $('svg'), W=760, H=320, pl=64, pr=96, pt=18, pb=34, iw=W-pl-pr, ih=H-pt-pb;
+    var all = []; series.forEach(function(s){ s.pts.forEach(function(p){ all.push(p.cash); }); });
+    var lo = Math.min.apply(null, all.concat([0])), hi = Math.max.apply(null, all.concat([0]));
+    var step = niceStep((hi-lo)/5); lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step;
+    var x = function(m){ return pl + m/30*iw; }, y = function(v){ return pt + (hi-v)/(hi-lo)*ih; };
+    var g = '<g class="grid">'; for (var v=lo; v<=hi+1; v+=step){ g += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y(v)+'" y2="'+y(v)+'"'+(v===0?' class="zero"':'')+'/>'; g += '<text class="axis-t" x="'+(pl-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end">'+F.gbp(v,{k:1})+'</text>'; } g += '</g>';
+    g += '<g class="axis">'; for (var m=0;m<=30;m+=6){ g += '<text x="'+x(m)+'" y="'+(H-10)+'" text-anchor="middle">'+(m===0?'open':'m'+m)+'</text>'; } g += '</g>';
+    var names = ['Base case','Downside'];
+    series.forEach(function(s,i){ var d = s.pts.map(function(p,j){ return (j?'L':'M')+x(p.m).toFixed(1)+' '+y(p.cash).toFixed(1); }).join(' ');
+      g += '<path class="ln s'+i+'" d="'+d+'"/>'; var last = s.pts[s.pts.length-1];
+      g += '<circle class="dot d'+i+'" cx="'+x(30)+'" cy="'+y(last.cash)+'" r="4.5"/>';
+      g += '<text class="lab" x="'+(x(30)+10)+'" y="'+(y(last.cash)+4)+'">'+F.gbp(last.cash,{k:1})+'</text>';
+      if (s.pay){ g += '<circle class="dot d'+i+'" cx="'+x(s.pay)+'" cy="'+y(0)+'" r="4.5"/><text class="lab" x="'+x(s.pay)+'" y="'+(y(0)-10)+'" text-anchor="middle">repaid m'+s.pay+'</text>'; }
+      if (i===0){ g += '<text class="lab" x="'+x(s.worstM)+'" y="'+(y(s.worst)+16)+'" text-anchor="middle">'+F.gbp(s.worst,{k:1})+' · m'+s.worstM+'</text>'; }
+    });
+    g += '<line id="xh" class="xh" x1="0" x2="0" y1="'+pt+'" y2="'+(pt+ih)+'" visibility="hidden"/>';
+    g += '<rect class="hit" x="'+pl+'" y="'+pt+'" width="'+iw+'" height="'+ih+'"/>';
+    svg.innerHTML = g;
+    svg.querySelectorAll('.axis-t').forEach(function(t){ t.setAttribute('class','axis'); t.style.fontFamily='"Martian Mono",monospace'; t.style.fontSize='10px'; t.style.fill='var(--mute)'; });
+    $('legend').innerHTML = names.map(function(n,i){ return '<span><i style="background:'+(i?'#7F5E00':'#2F63A3')+'"></i>'+n+'</span>'; }).join('');
+    var tip = $('tip'), hit = svg.querySelector('.hit'), xh = $('xh');
+    function show(ev){ var r = svg.getBoundingClientRect(); var px = (ev.clientX - r.left) / r.width * W; var m = Math.round((px-pl)/iw*30); m = Math.max(0, Math.min(30, m));
+      xh.setAttribute('x1', x(m)); xh.setAttribute('x2', x(m)); xh.setAttribute('visibility','visible');
+      tip.innerHTML = ''; var mo = document.createElement('div'); mo.className='mo'; mo.textContent = m===0 ? 'Opening' : 'Month '+m; tip.appendChild(mo);
+      series.forEach(function(s,i){ var p = s.pts[m]; var row = document.createElement('div'); var k=document.createElement('span'); k.className='k'; k.style.background = i?'#7F5E00':'#2F63A3'; var b=document.createElement('b'); b.textContent = F.gbp(p.cash); row.appendChild(k); row.appendChild(b); row.appendChild(document.createTextNode(' '+names[i]+' · '+Math.round(p.members)+' members')); tip.appendChild(row); });
+      tip.hidden = false; var left = (x(m)/W)*r.width; tip.style.left = Math.min(r.width-170, Math.max(0, left+12))+'px'; tip.style.top = '8px'; }
+    hit.onpointermove = show; hit.onpointerleave = function(){ tip.hidden = true; xh.setAttribute('visibility','hidden'); };
+  }
+  function niceStep(raw){ var p = Math.pow(10, Math.floor(Math.log10(raw))); var n = raw/p; return (n<1.5?1:n<3.5?2.5:n<7.5?5:10)*p; }
+  draw();
+});
+</script>
+<footer class="ft"><div class="wrap">
+  <span>NeroGym feasibility brief · Nero Panda Ltd · internal, not for circulation · figures dated <span data-fig="date"></span></span>
+  <span>English figures are GBP, inclusive of VAT where a supplier quotes it that way and marked otherwise. Anything not published is labelled an estimate.</span>
+</div></footer>
+<script src="data.js"></script>
+<script src="nerogym.js"></script>
+</body>
+</html>

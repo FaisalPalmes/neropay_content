@@ -88,9 +88,10 @@ from here, and folder uploads silently fail there.
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
 | `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide; `video/TOOLS.md` is the register of third-party libraries Faisal has saved, each with a verdict; `video/AUDIO.md` is the sound note — the committed sound library, the mix and the beat grid, the voiceover route and what the container can actually reach | Yes — one folder per piece inside it |
+| `nerogym/` | The NeroGym feasibility brief as a site: eight pages (overview, premises, sequence, one-off costs, running costs, model, concept, marketing) that all compute from `nerogym/data.js`. Not content-warehouse material — it is the research and plan for the gym venture, built for Eray. `nerogym/README.md` explains the build and the rules. Figures are dated 16 Sep 2026 and every estimate is marked | Yes — change a figure in `data.js`, never in a page |
 | `.claude/` | Skills (the HyperFrames pack, committed so every session has it) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
 
-The two subfolders are deliberate; everything else stays flat.
+The three subfolders are deliberate; everything else stays flat.
 
 On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
 where they start. Keep that for any new video — don't split overlays into their own list. Above the
@@ -294,7 +295,7 @@ Rules that come from this environment, not from HyperFrames:
 
 ## Verification before pushing
 
-Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
+Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js nerogym/data.js nerogym/nerogym.js` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
 page and confirm no console errors, `.post` count matches `POSTS.length` on social.html, and
 nothing overflows at 390px. The site is light by default (off-white ground, black and grey type); dark is opt-in via `data-theme="dark"` and must still paint its own background.
 
