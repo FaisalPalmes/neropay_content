@@ -6,7 +6,7 @@ captions.json: { "head": 0.8, "lines": ["clause", "clause", ...] }  — the VO s
 clauses you want as cues, in order, punctuation as spoken. Words are matched in order against the
 Whisper words (case- and punctuation-insensitive), so a cue's in-point is its first word's onset and
 its out-point is its last word's end, clamped to the next cue's start. Long clauses wrap at 26 chars.
-Style: Chivo ExtraBold (the TTF libass can read — its internal name is 'Chivo Medium ExtraBold'),
+Style: Poppins Bold (motion/assets/fonts-ttf/Poppins-Bold.ttf, family name 'Poppins'; Chivo's TTF stays for the older episodes),
 white on a translucent black box, above the footer.
 """
 import json, re, sys
@@ -63,7 +63,7 @@ for ratio, (W, H, size, mv) in LAYOUT.items():
     ass = [ '[Script Info]', 'ScriptType: v4.00+', f'PlayResX: {W}', f'PlayResY: {H}', 'WrapStyle: 0', 'ScaledBorderAndShadow: yes', '',
         '[V4+ Styles]',
         'Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding',
-        f'Style: Cap,Chivo Medium ExtraBold,{size},&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,-1,0,0,0,100,100,-1,0,3,17,0,2,75,75,{mv},1', '',
+        f'Style: Cap,Poppins,{size},&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,-1,0,0,0,100,100,-1,0,3,17,0,2,75,75,{mv},1', '',
         '[Events]', 'Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text' ]
     for s, e, txt in cues:
         ass.append(f"Dialogue: 0,{ts(s)},{ts(e)},Cap,,0,0,0,,{wrap(txt)}")

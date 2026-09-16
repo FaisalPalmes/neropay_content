@@ -7,36 +7,36 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Chivo Medium ExtraBold,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,-1,0,0,0,100,100,-1,0,3,17,0,2,75,75,150,1
+Style: Cap,Poppins,58,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,-1,0,0,0,100,100,-1,0,3,17,0,2,75,75,150,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:01.02,0:00:02.76,Cap,,0,0,0,,If you rent your card\Nmachine,
-Dialogue: 0,0:00:02.76,0:00:04.38,Cap,,0,0,0,,there's a rule you should\Nknow about.
-Dialogue: 0,0:00:05.26,0:00:07.06,Cap,,0,0,0,,Since January 2023,
-Dialogue: 0,0:00:07.30,0:00:08.84,Cap,,0,0,0,,the payments regulator\Nsays
-Dialogue: 0,0:00:08.84,0:00:11.16,Cap,,0,0,0,,a terminal lease can only\Ntie you in
-Dialogue: 0,0:00:11.16,0:00:12.46,Cap,,0,0,0,,for 18 months.
-Dialogue: 0,0:00:12.84,0:00:15.08,Cap,,0,0,0,,Not three years, not four.
-Dialogue: 0,0:00:15.86,0:00:17.70,Cap,,0,0,0,,When those 18 months are\Nup,
-Dialogue: 0,0:00:17.70,0:00:20.22,Cap,,0,0,0,,the big providers have to\Nwrite and tell you.
-Dialogue: 0,0:00:20.74,0:00:21.84,Cap,,0,0,0,,The letter gives the date
-Dialogue: 0,0:00:21.84,0:00:23.30,Cap,,0,0,0,,your minimum term ended,
-Dialogue: 0,0:00:23.30,0:00:24.66,Cap,,0,0,0,,and that you're free to\Nswitch
-Dialogue: 0,0:00:24.66,0:00:26.66,Cap,,0,0,0,,to another card machine\Nprovider.
-Dialogue: 0,0:00:27.18,0:00:29.06,Cap,,0,0,0,,If you choose to stay,
-Dialogue: 0,0:00:29.06,0:00:31.38,Cap,,0,0,0,,you can still leave at any\Ntime after that,
-Dialogue: 0,0:00:31.38,0:00:33.82,Cap,,0,0,0,,as long as you give them\None month's notice.
-Dialogue: 0,0:00:35.10,0:00:36.96,Cap,,0,0,0,,Some deals are fine as\Nthey are,
-Dialogue: 0,0:00:36.96,0:00:38.96,Cap,,0,0,0,,but you won't know until\Nyou compare.
-Dialogue: 0,0:00:39.90,0:00:41.70,Cap,,0,0,0,,Comparing terminal rates\Nis easy,
-Dialogue: 0,0:00:41.70,0:00:42.84,Cap,,0,0,0,,it doesn't take long,
-Dialogue: 0,0:00:42.84,0:00:44.84,Cap,,0,0,0,,and the difference between\Nproviders
-Dialogue: 0,0:00:44.84,0:00:46.52,Cap,,0,0,0,,adds up over a year.
-Dialogue: 0,0:00:47.42,0:00:48.60,Cap,,0,0,0,,Here at NeroPay,
-Dialogue: 0,0:00:48.60,0:00:50.14,Cap,,0,0,0,,you can get a quote in\Nminutes.
-Dialogue: 0,0:00:50.62,0:00:52.46,Cap,,0,0,0,,Drop us a message or give\Nus a call
-Dialogue: 0,0:00:52.46,0:00:54.38,Cap,,0,0,0,,and speak to someone from\Nour team.
-Dialogue: 0,0:00:55.26,0:00:56.46,Cap,,0,0,0,,That's it for today,
-Dialogue: 0,0:00:56.80,0:00:57.36,Cap,,0,0,0,,give us a follow
-Dialogue: 0,0:00:57.36,0:00:59.86,Cap,,0,0,0,,to keep up with more\Nvideos like this.
+Dialogue: 0,0:00:02.76,0:00:04.60,Cap,,0,0,0,,there's a rule you should\Nknow about.
+Dialogue: 0,0:00:04.60,0:00:06.40,Cap,,0,0,0,,Since January 2023,
+Dialogue: 0,0:00:06.64,0:00:08.18,Cap,,0,0,0,,the payments regulator\Nsays
+Dialogue: 0,0:00:08.18,0:00:10.50,Cap,,0,0,0,,a terminal lease can only\Ntie you in
+Dialogue: 0,0:00:10.50,0:00:11.80,Cap,,0,0,0,,for 18 months.
+Dialogue: 0,0:00:12.18,0:00:14.64,Cap,,0,0,0,,Not three years, not four.
+Dialogue: 0,0:00:14.64,0:00:16.48,Cap,,0,0,0,,When those 18 months are\Nup,
+Dialogue: 0,0:00:16.48,0:00:19.22,Cap,,0,0,0,,the big providers have to\Nwrite and tell you.
+Dialogue: 0,0:00:19.22,0:00:20.32,Cap,,0,0,0,,The letter gives the date
+Dialogue: 0,0:00:20.32,0:00:21.78,Cap,,0,0,0,,your minimum term ended,
+Dialogue: 0,0:00:21.78,0:00:23.14,Cap,,0,0,0,,and that you're free to\Nswitch
+Dialogue: 0,0:00:23.14,0:00:25.36,Cap,,0,0,0,,to another card machine\Nprovider.
+Dialogue: 0,0:00:25.36,0:00:27.24,Cap,,0,0,0,,If you choose to stay,
+Dialogue: 0,0:00:27.24,0:00:29.56,Cap,,0,0,0,,you can still leave at any\Ntime after that,
+Dialogue: 0,0:00:29.56,0:00:32.22,Cap,,0,0,0,,as long as you give them\None month's notice.
+Dialogue: 0,0:00:32.22,0:00:34.08,Cap,,0,0,0,,Some deals are fine as\Nthey are,
+Dialogue: 0,0:00:34.08,0:00:36.30,Cap,,0,0,0,,but you won't know until\Nyou compare.
+Dialogue: 0,0:00:36.30,0:00:38.10,Cap,,0,0,0,,Comparing terminal rates\Nis easy,
+Dialogue: 0,0:00:38.10,0:00:39.24,Cap,,0,0,0,,it doesn't take long,
+Dialogue: 0,0:00:39.24,0:00:41.24,Cap,,0,0,0,,and the difference between\Nproviders
+Dialogue: 0,0:00:41.24,0:00:43.14,Cap,,0,0,0,,adds up over a year.
+Dialogue: 0,0:00:43.14,0:00:44.32,Cap,,0,0,0,,Here at NeroPay,
+Dialogue: 0,0:00:44.32,0:00:46.08,Cap,,0,0,0,,you can get a quote in\Nminutes.
+Dialogue: 0,0:00:46.08,0:00:47.92,Cap,,0,0,0,,Drop us a message or give\Nus a call
+Dialogue: 0,0:00:47.92,0:00:50.06,Cap,,0,0,0,,and speak to someone from\Nour team.
+Dialogue: 0,0:00:50.06,0:00:51.26,Cap,,0,0,0,,That's it for today,
+Dialogue: 0,0:00:51.60,0:00:52.16,Cap,,0,0,0,,give us a follow
+Dialogue: 0,0:00:52.16,0:00:54.66,Cap,,0,0,0,,to keep up with more\Nvideos like this.

@@ -111,13 +111,17 @@ an even tint, one sheen pass on entrance, a thin rim — never `backdrop-filter`
 never two glass objects competing, never as decoration. On white it is the frosted-white slab
 (`.lglass`); on charcoal the dark slab.
 
-**Type hierarchy is the animation.** Three faces, each with a job:
+**Type hierarchy is the animation.** Three faces, each with a job. **Poppins is the family** (Faisal, 16 Sep
+2026 — it is the brand face in `/CLAUDE.md` too); the other two are the editorial voices beside it:
 
 | Face | Job | How it moves |
 |---|---|---|
-| **Chivo 800**, tight | The shout — the claim, the big word, the number's label | Masks up hard, lands on the beat |
-| **Martian Mono 700** | Every figure, rate, date, deadline | Counts, ticks, or stamps; never fades |
-| **Source Serif 4 italic** | The human line — the aside, the concession, the "and honestly…" | Rises softly, half a beat late, smaller |
+| **Poppins 700**, tight | The shout — the heading, the big word, the pills, the letter's rows | Masks up hard, lands on the beat |
+| **Martian Mono 700 / 400** | Every figure, date and deadline; the small uppercase kickers | Counts, ticks, or stamps; never fades |
+| **Source Serif 4 italic** | The human line — the opening question, the aside, the concession | Rises softly, half a beat late |
+
+Chivo 800 survives only inside the terminal's screen texture (the wordmark). Captions burn in Poppins Bold
+(`motion/assets/fonts-ttf/Poppins-Bold.ttf`).
 
 Colour by phrase, not by rule: the thing the voice is *hitting* is the thing that's yellow. A word
 the voice throws away is `--muted` and small. Italic is the voice dropping to an aside. Caps and
@@ -162,6 +166,20 @@ screen's status line and nowhere louder). `oldTerminal()` is the generic older m
 monochrome LCD, rubber keys, a paper slot — for "the one you're tied to" and for any side-by-side. No maker's mark
 on either, and the maker of our hardware is never named in any file, on screen or in a take. The old one appears
 when the script is about being stuck; ours when it is about switching or getting a quote.
+
+**Nothing enters from above — v4.1, 16 Sep 2026.** A 3D canvas is a rectangle on the board, and an object
+dropping in from above it is clipped by its top edge; a long shadow is clipped by its bottom. Faisal saw both as
+"an invisible cut-off line". So: objects are already on the board when the camera arrives; an entrance that has
+to be seen comes *up out of the paper* (`rise()` — the shadow ground hides what is below it) and an exit sinks
+into it (`sink()`); tiles rise the same way; pillars grow from the ground; the light is steep enough that shadows
+stay by the object. Every view carries headroom above the tallest thing in it, including an opened flap.
+
+**No pauses, no bare screen — v4.1.** The take is tightened before anything is built: `motion/tighten.mjs`
+cuts the middle of every silence longer than half a second down to a third of a second and shifts the word
+timings, so the read runs straight on without sounding rushed (MG02: 58.7 s → 53.6 s). Camera moves are half a
+second and start just after the last word. The heading and stamp of a station are up when the camera lands,
+the first word of the opening question is on beat 1, and no frame is ever type-only for long — a station always
+has its object on it.
 
 **Stations are drawn only while the camera is on them.** The board hides every station except the current one
 and the one being left (which fades over the move), so a neighbour never peeks into the wide crop and the frame

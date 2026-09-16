@@ -24,7 +24,7 @@ date has a shape you can walk along. The camera moves only between beats.
 
 | # | Warehouse id | Rule | State |
 |---|---|---|---|
-| 1 | MG02 | The 18-month rule — the lease cap and the trigger message (PSR PS22/2) | **v4 rendered 16 Sep 2026, awaiting Faisal's review** — `motion/print/mg02/`, script rewritten with Faisal, Verity take 58.7 s (61 s with head and tail), the NeroPay terminal and a generic old one, five stations, looped bed, four crops, captioned |
+| 1 | MG02 | The 18-month rule — the lease cap and the trigger message (PSR PS22/2) | **v4.1 rendered 16 Sep 2026, awaiting Faisal's review** — `motion/print/mg02/`, script rewritten with Faisal, Verity take tightened to 53.6 s (55.9 s with head and tail), the NeroPay terminal and a generic old one, Poppins, nothing entering from above a canvas, five stations, looped bed, four crops, captioned |
 | 2 | MG03 | The tip isn't yours — Employment (Allocation of Tips) Act, 1 Oct 2024 | Clear, figures confirmed |
 | 3 | MG04 | Four times a year — MTD for Income Tax from April 2026 | Clear; carry the "not tax advice" line |
 | 4 | MG05 | That sign — the surcharge ban, 13 Jan 2018 | Clear |

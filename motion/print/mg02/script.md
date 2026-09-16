@@ -6,8 +6,8 @@ act, and the sign-off shape every video will share — what to do, how to reach 
 
 Voice: Verity (`oW8bn5YtBB89X2nJ0DT9`), `eleven_v3`, one take, 58.7 s (flow `ns3m8FupNDBjPPLIO8eV`, node
 `vijJnXSSffXJtTJCwsVJ`, 952 credits). Word timings: faster-whisper `small.en` in the Higgsfield sandbox.
-Bed: `video/library/bgm/underscore-120-a.mp3`, 117.45 bpm, looped at bar 24 so it runs under the whole minute.
-HEAD = 2 beats, TAIL 1.6 s → 61.06 s. White editorial. Board, five stations, no pull-back; the end card is stage level.
+The take is tightened with `motion/tighten.mjs` (nine gaps to 0.34 s, 58.7 s → 53.6 s; the raw take is kept as `data/vo-raw.mp3`).
+Bed: `video/library/bgm/underscore-120-a.mp3`, 117.45 bpm, looped at bar 24. HEAD = 2 beats, TAIL 1.6 s → 55.86 s. White editorial. Board, five stations, no pull-back; the end card is stage level.
 
 ## The take, as generated
 
@@ -50,7 +50,10 @@ competitor, and the maker of our own hardware is not named in any file.
 | End card | stage | the NeroPay terminal drops in on "Here" · **Get a quote in minutes.** · MESSAGE US · CALL US pills on the words · neropay.app · *That's it for today.* · FOLLOW FOR MORE VIDEOS LIKE THIS on "follow" | 46.4 s |
 
 Only the station the camera is on is drawn (the one it is leaving fades over the move), so nothing from a
-neighbouring station peeks into the 16:9 frame. No masthead, no footer, no episode number.
+neighbouring station peeks into the 16:9 frame. No masthead, no footer, no episode number. v4.1: nothing enters
+from above a canvas any more — the old machine sinks into the paper and ours rises out of it on "switch", both
+machines rise as the camera lands on compare, the tiles rise, the tallest pillar fits the frame; headings are up
+when the camera lands; Poppins throughout; camera moves are half a second.
 
 ## Sound
 

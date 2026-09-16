@@ -2,9 +2,13 @@
 <meta charset="utf-8">
 <title>Small Print — The 18-month rule</title>
 <style>
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-500-italic.woff2)format("woff2");font-weight:500;font-style:italic;font-display:block}
 @font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
-@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
-@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
 @font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
 @font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
 @font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-400-italic.woff2)format("woff2");font-weight:400;font-style:italic;font-display:block}
@@ -14,7 +18,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#000}
 #stage{ container-type:size; container-name:v; position:relative; overflow:hidden; background:var(--ground); color:var(--ink);
-  font-family:Chivo,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  font-family:Poppins,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
 
 /* ---- camera ---- */
 #cam{position:absolute; inset:0; perspective:1900px; overflow:hidden}
@@ -26,7 +30,7 @@ html,body{background:#000}
 canvas{position:absolute; display:block}
 
 /* ---- type ---- */
-.shout{font-family:Chivo; font-weight:800; letter-spacing:-.04em; line-height:1; color:var(--ink); white-space:nowrap}
+.shout{font-family:Poppins; font-weight:700; letter-spacing:-.035em; line-height:1.02; color:var(--ink); white-space:nowrap}
 .mono{font-family:"Martian Mono",monospace; font-weight:700; letter-spacing:-.03em; font-variant-numeric:tabular-nums; color:var(--ink); white-space:nowrap}
 .kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
 .serif{font-family:"Source Serif 4",Georgia,serif; font-style:italic; font-weight:400; color:var(--ink); letter-spacing:-.005em; line-height:1.12}
@@ -35,8 +39,8 @@ canvas{position:absolute; display:block}
 .hid{opacity:0}
 /* the highlighter: a marker stroke drawn behind the word the voice is hitting */
 .hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 62%; background-size:calc(var(--p) * 100%) .42em; padding:0 .04em; margin:0 -.04em}
-.pill{position:absolute; padding:12px 22px 10px; border:4px solid var(--accent); border-radius:12px; white-space:nowrap; background:var(--ground);
-  font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
+.pill{position:absolute; padding:12px 24px 10px; border:4px solid var(--accent); border-radius:14px; white-space:nowrap; background:var(--ground);
+  font-family:Poppins; font-weight:600; font-size:30px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
 .pill.solid{background:var(--accent); border-color:var(--accent)}
 .lbl{position:absolute; font-family:"Martian Mono",monospace; font-weight:700; font-size:36px; letter-spacing:-.02em; white-space:nowrap; transform:translate(-50%,-100%); color:var(--ink)}
 .lbl.m{color:var(--muted); font-weight:400}
@@ -71,7 +75,8 @@ canvas{position:absolute; display:block}
 #s2{left:300px; top:1700px; width:1450px; height:1300px}
 #s2 .h{font-size:110px}
 #s2 .hs{position:absolute; left:0; top:100px}
-#s2 .kick{position:absolute; left:0; top:360px}
+#s2 > .mask > .kick{position:absolute; left:0; top:360px}
+#letter .kick{position:static; font-size:22px}
 #cv2{left:-40px; top:420px; width:820px; height:820px}
 #cv2b{left:800px; top:360px; width:660px; height:900px}
 #letter{left:120px; top:520px; width:520px; height:410px}
@@ -80,7 +85,7 @@ canvas{position:absolute; display:block}
 #letter .d{position:relative; display:inline-block; font-size:50px; margin-top:14px; color:var(--muted); padding-bottom:10px}
 #letter .d i{position:absolute; left:0; bottom:0; height:6px; width:0; background:var(--accent); border-radius:3px}
 #letter .rows{margin-top:26px; display:grid; gap:14px}
-#letter .row{display:flex; align-items:center; gap:16px; font-weight:600; font-size:36px; letter-spacing:-.02em; color:var(--muted)}
+#letter .row{display:flex; align-items:center; gap:16px; font-family:Poppins; font-weight:600; font-size:36px; letter-spacing:-.02em; color:var(--muted)}
 #letter .row.on{color:var(--ink)}
 #letter .row b{width:38px; height:38px; border:3px solid var(--line); border-radius:9px; display:grid; place-items:center; font-size:26px; font-weight:800; flex:none; color:transparent}
 #letter .row.on b{background:var(--accent); border-color:var(--accent); color:var(--ink)}
@@ -91,7 +96,7 @@ canvas{position:absolute; display:block}
 #s3 .hs{position:absolute; left:0; top:100px}
 #s3 .kick{position:absolute; left:0; top:380px}
 #cv3{left:0; top:440px; width:1200px; height:760px}
-#one{left:720px; top:1040px; --rot:-7deg}
+#one{left:560px; top:980px; --rot:-6deg}
 
 /* ---- station 4: compare ---- */
 #s4{left:700px; top:3200px; width:1300px; height:1500px}
@@ -110,7 +115,7 @@ canvas{position:absolute; display:block}
 #end .pills{display:flex; gap:1.6cqmin; margin-top:3cqmin; flex-wrap:wrap}
 #end .pill{position:relative; display:inline-block; font-size:2.6cqmin; padding:1.2cqmin 2.2cqmin 1cqmin; border-width:.35cqmin; border-radius:1.1cqmin}
 #end .url{font-family:"Martian Mono",monospace; font-weight:400; font-size:2.6cqmin; letter-spacing:.06em; color:var(--muted); margin-top:2.4cqmin}
-#end .follow{position:absolute; left:7cqw; top:41cqh; width:80cqw}
+#end .follow{margin-top:5cqmin; width:80cqw}
 #end .follow .l{font-size:4.6cqmin; color:var(--ink)}
 #end .follow .pill{margin-top:1.6cqmin}
 #cv5{position:absolute; right:-6cqmin; bottom:24cqmin; width:56cqmin; height:56cqmin}   /* clear of the caption box in 9:16 */
@@ -181,10 +186,10 @@ canvas{position:absolute; display:block}
     <div class="mask"><span class="shout h e2">in <span class="hl" id="hlm">minutes.</span></span></div>
     <div class="pills"><div class="pill hid" id="msg">Message us</div><div class="pill hid" id="call">Call us</div></div>
     <div class="mask"><span class="url">neropay.app</span></div>
-    </div>
     <div class="follow">
       <div class="mask"><span class="serif l f1">That's it for today.</span></div>
       <div class="pill solid hid" id="follow">Follow for more videos like this</div>
+    </div>
     </div>
     <canvas id="cv5"></canvas>
   </div>
@@ -193,9 +198,9 @@ canvas{position:absolute; display:block}
 <script>window.READY = false;</script>
 <script src="data/words.js"></script>
 <script type="module">
-import { view, neroTerminal, oldTerminal, tiles, envelope, pillars, ease, seg } from '../../lib/objects3d.js';
+import { view, neroTerminal, oldTerminal, tiles, envelope, pillars, rise, sink, ease, seg } from '../../lib/objects3d.js';
 await document.fonts.ready;
-await Promise.all(['800 120px Chivo', '600 40px Chivo', '500 26px Chivo', '700 60px "Martian Mono"', '400 28px "Martian Mono"', 'italic 400 96px "Source Serif 4"'].map(f => document.fonts.load(f)));
+await Promise.all(['700 120px Poppins', '600 40px Poppins', '500 26px Poppins', '800 84px Chivo', '700 60px "Martian Mono"', '400 28px "Martian Mono"', 'italic 400 96px "Source Serif 4"'].map(f => document.fonts.load(f)));
 
 const FPS = 30;
 /* ---------------------------------------------------------------------------
@@ -218,19 +223,19 @@ const ST = {
 };
 const CAM = [
   { t:0,                                          d:0,   st:'S0' },
-  { t:snap(we(12) + .1, we(12) + .04, w(13) - .82), d:.80, st:'S1' },   // after "know about."
-  { t:we(35) + .05,                               d:.80, st:'S2' },   // after "not four."
-  { t:we(70) + .02,                               d:.60, st:'S3' },   // after "provider."
-  { t:snap(we(93) + .15, we(93) + .04, w(94) - .82), d:.80, st:'S4' },   // after "notice."
+  { t:we(12) + .02, d:.50, st:'S1' },   // after "know about." — the take is tightened, moves are half a second
+  { t:we(35) + .02, d:.50, st:'S2' },   // after "not four."
+  { t:we(70) + .02, d:.50, st:'S3' },   // after "provider."
+  { t:we(93) + .02, d:.50, st:'S4' },   // after "notice."
 ];
 const BOARD_OUT = [we(126) + .1, w(127) - .05];   /* the board leaves before "Here at NeroPay" */
 
 const BEATS = [
   { name:'0 question',  t:0,               out:CAM[1].t, words:8  },
-  { name:'1 rule',      t:CAM[1].t + .80,  out:CAM[2].t, words:17 },
-  { name:'2 letter',    t:CAM[2].t + .80,  out:CAM[3].t, words:21 },
-  { name:'3 month',     t:CAM[3].t + .60,  out:CAM[4].t, words:9  },
-  { name:'4 compare',   t:CAM[4].t + .80,  out:BOARD_OUT[0], words:21 },
+  { name:'1 rule',      t:CAM[1].t + .50,  out:CAM[2].t, words:17 },
+  { name:'2 letter',    t:CAM[2].t + .50,  out:CAM[3].t, words:21 },
+  { name:'3 month',     t:CAM[3].t + .50,  out:CAM[4].t, words:9  },
+  { name:'4 compare',   t:CAM[4].t + .50,  out:BOARD_OUT[0], words:21 },
   { name:'5 end card',  t:w(127),          out:DURATION, words:16 },
 ];
 const BUILD = 0.55, EXIT = 0.30;
@@ -252,20 +257,20 @@ function show(el, on){ el.style.opacity = on ? 1 : 0; }
 const Q = ['When', 'does', 'your', 'card', 'machine', 'contract', 'actually', 'end?'];
 $('#q').innerHTML = Q.map(x => `<span class="mask"><span>${x}</span></span>`).join('');
 const QW = $$('#q .mask > span');
-const QT = [w(0), w(2), w(3), w(4), w(5), w(6), w(8), w(11)];
+const QT = [BEAT, w(2), w(3), w(4), w(5), w(6), w(8), w(11)];
 
 /* ---- 3D views ---- */
-const V0 = view($('#cv0'), { w:700, h:760, span:10, elev:18, azim:-26, ty:7.5 });   const OLD0 = V0.add(oldTerminal()); OLD0.rotation.y = .2;
+const V0 = view($('#cv0'), { w:700, h:760, span:10.5, elev:18, azim:-26, ty:8 });   const OLD0 = V0.add(oldTerminal()); OLD0.rotation.y = .2;
 const V1 = view($('#cv1'), { w:1400, h:800, span:8.2, elev:22, azim:-28, ty:6.2 });
-const BARS = V1.add(pillars([{ h:6, color:0xF5C518 }, { h:12, color:0xDEDBD2 }, { h:16, color:0xDEDBD2 }], { w:2.6, gap:1.7, depth:2.6 }));
-const V2 = view($('#cv2'), { w:820, h:820, span:7.4, elev:20, azim:-14, ty:4.6 });  const ENV = V2.add(envelope({ w:13, h:9 }));
-const V2b = view($('#cv2b'), { w:660, h:900, span:11, elev:18, azim:-26, ty:7.5 });
+const BARS = V1.add(pillars([{ h:4.5, color:0xF5C518 }, { h:9, color:0xDEDBD2 }, { h:12, color:0xDEDBD2 }], { w:2.6, gap:1.7, depth:2.6 }));   /* 18 : 36 : 48, the tallest inside the frame */
+const V2 = view($('#cv2'), { w:820, h:820, span:8.4, elev:20, azim:-14, ty:5.6 });  const ENV = V2.add(envelope({ w:13, h:9 }));
+const V2b = view($('#cv2b'), { w:660, h:900, span:11.5, elev:18, azim:-26, ty:8.2 });
 const OLD2 = V2b.add(oldTerminal()); OLD2.rotation.y = .2; const NEW2 = V2b.add(neroTerminal()); NEW2.rotation.y = -.15;
 const V3 = view($('#cv3'), { w:1200, h:760, span:5.0, elev:36, azim:-30, shadow:.22 }); const MON = V3.add(tiles(31, { cols:7, size:1, gap:.22, height:.42, color:0xDEDBD2 }));
-const V4 = view($('#cv4'), { w:1300, h:720, span:10.5, elev:18, azim:-22, ty:7 });
+const V4 = view($('#cv4'), { w:1300, h:720, span:11, elev:18, azim:-22, ty:7.8 });
 const OLD4 = V4.add(oldTerminal()); OLD4.position.x = -7.5; OLD4.rotation.y = .35; const NEW4 = V4.add(neroTerminal()); NEW4.position.x = 7.5; NEW4.rotation.y = -.3;
 const V4b = view($('#cv4b'), { w:1300, h:280, span:2.2, elev:34, azim:-24, shadow:.22 }); const YEAR = V4b.add(tiles(12, { cols:12, size:1, gap:.28, height:.42, color:0xDEDBD2 }));
-const V5 = view($('#cv5'), { w:640, h:640, span:9.8, elev:18, azim:-28, ty:7.2 }); const NEW5 = V5.add(neroTerminal()); NEW5.rotation.y = -.35;
+const V5 = view($('#cv5'), { w:640, h:640, span:10.4, elev:18, azim:-28, ty:7.9 }); const NEW5 = V5.add(neroTerminal()); NEW5.rotation.y = -.35;
 
 const at = (cv, p) => ({ x:cv.offsetLeft + p.x, y:cv.offsetTop + p.y });
 
@@ -307,11 +312,11 @@ function applyCam(t){
 /* ---- anchors ---- */
 const A = {
   old0:w(4),
-  h1:w(13), h1b:w(13) + .12, jan:w(14), k1:w(17), bars:w(25), bar18:w(29), hl18:w(29) + .05, p1:w(32), p2:w(35),
-  h2:w(36), h2b:w(36) + .12, env:w(36), flap:w(41), k2:w(43), write:w(47), letter:w(47) + .05, date:w(55), tick:w(65), swapOut:w(65), swapIn:w(67),
-  h3:w(71), h3b:w(71) + .12, mon:w(71) + .2, k3:w(75), wave:w(75), fall:w(79), one:w(91),
-  a1:w(94), a2:w(101), h4:w(108), h4b:w(108) + .12, hlc:w(108) + .1, cmpOld:w(109), cmpNew:w(110), yr:w(118), k4:w(122), gold:w(122),
-  term5:w(127), e1:w(132), e2:w(132) + .12, hlm:w(136), msg:w(140), call:w(145), url:w(147), f1:w(153), follow:w(160),
+  h1:CAM[1].t, h1b:CAM[1].t + .12, jan:CAM[1].t + .3, k1:w(17), bars:w(21), bar18:w(29), hl18:w(29) + .05, p1:w(32), p2:w(35),
+  h2:CAM[2].t, h2b:CAM[2].t + .12, env:w(36), flap:w(41), k2:w(43), write:w(47), letter:w(47) + .05, date:w(55), tick:w(65), swapOut:w(65), swapIn:w(67),
+  h3:CAM[3].t, h3b:CAM[3].t + .12, mon:CAM[3].t, k3:w(75), wave:w(75), fall:w(79), one:w(91),
+  a1:CAM[4].t, a2:w(101), h4:w(108), h4b:w(108) + .12, hlc:w(108) + .1, cmpOld:CAM[4].t, cmpNew:CAM[4].t + .15, yr:w(118), k4:w(122), gold:w(122),
+  term5:BOARD_OUT[0], e1:w(127), e2:w(127) + .12, hlm:w(136), msg:w(140), call:w(145), url:w(147), f1:w(153), follow:w(160),
 };
 
 function setFrame(n){
@@ -323,7 +328,7 @@ function setFrame(n){
 
   /* station 0 — the question types in under the first line; the rented machine drops in beside it */
   QW.forEach((el, i) => maskUp(el, t, QT[i], .38));
-  { const p = eo(seg(t, A.old0, .55)); OLD0.position.y = (1 - p) * 10; OLD0.rotation.y = .2 + .04 * Math.sin(t * 1.1); if (vis('S0')) V0.render(); }
+  { OLD0.rotation.y = .2 + .04 * Math.sin(t * 1.1); if (vis('S0')) V0.render(); }
 
   /* station 1 — the heading, the stamp, the kicker; three pillars: what you might be tied to, then the cap */
   maskUp($('#s1 .h1a'), t, A.h1, .5); maskUp($('#s1 .h1b'), t, A.h1b, .5); hl($('#hl18'), t, A.hl18);
@@ -331,13 +336,13 @@ function setFrame(n){
   { BARS.setRise(1, eo(seg(t, A.bars, .7))); BARS.setRise(2, eo(seg(t, A.bars + .15, .7))); BARS.setRise(0, eo(seg(t, A.bar18, .6)));
     BARS.setSink(1, ease.in(seg(t, A.p1 + .1, .55))); BARS.setSink(2, ease.in(seg(t, A.p2 + .1, .55)));
     if (vis('S1')) V1.render();
-    [['#p0', 0, A.bar18 + .5, 1e9], ['#p1', 1, A.bars + .6, A.p1 + .1], ['#p2', 2, A.bars + .75, A.p2 + .1]].forEach(([sel, i, on, off]) => {
-      const p = at($('#cv1'), V1.project(BARS.top(i))); px($(sel), { left:p.x + 'px', top:(p.y - 24) + 'px' }); show($(sel), t >= on && t < off); }); }
+    [['#p0', 0, A.bar18 + .55, 1e9], ['#p1', 1, A.bars + .65, A.p1 + .1], ['#p2', 2, A.bars + .8, A.p2 + .1]].forEach(([sel, i, on, off]) => {
+      const p = at($('#cv1'), V1.project(BARS.top(i))); px($(sel), { left:p.x + 'px', top:(p.y - 12) + 'px' }); show($(sel), t >= on && t < off); }); }
 
   /* station 2 — the envelope lands, opens on "up", the letter rises on "write"; the old machine leaves, ours arrives, on "switch" */
   maskUp($('#s2 .h2a'), t, A.h2, .5); maskUp($('#s2 .h2b'), t, A.h2b, .5); hl($('#hlw'), t, A.write);
   maskUp($('#s2 .k2'), t, A.k2);
-  { const p = eo(seg(t, A.env, .5)); ENV.position.y = (1 - p) * 10; ENV.open(eo(seg(t, A.flap, .7)));
+  { ENV.open(eo(seg(t, A.flap, .7)));
     if (vis('S2')) V2.render();
     const rise = eo(seg(t, A.letter, .9)), L = $('#letter');
     const [tl, tr] = ENV.frontTop().map(pt => at($('#cv2'), V2.project(pt)));
@@ -347,26 +352,26 @@ function setFrame(n){
     const sh = L.querySelector('.sheen'), q = seg(t, A.letter + .5, .55); px(sh, { transform:`translateX(${-130 + 350 * q}%)`, opacity:q > 0 && q < 1 ? 1 : 0 });
     px($('#letter .d i'), { width:(100 * eo(seg(t, A.date, .35))) + '%' }); $('#letter .d').style.color = t >= A.date ? 'var(--ink)' : 'var(--muted)';
     $('#letter .row').classList.toggle('on', t >= A.tick); }
-  { const o = eio(seg(t, A.swapOut, .7)), i = eo(seg(t, A.swapIn, .7)), d0 = eo(seg(t, A.env, .55));
-    OLD2.position.set(-26 * o, (1 - d0) * 10, 0); OLD2.rotation.y = .2 - .3 * o;
-    NEW2.position.set(26 * (1 - i), 0, 0); NEW2.rotation.y = -.15 + .3 * (1 - i); NEW2.visible = i > 0;
+  { sink(OLD2, ease.in(seg(t, A.swapOut, .55)), 16); OLD2.rotation.y = .2;
+    rise(NEW2, eo(seg(t, A.swapIn, .6)), 16); NEW2.rotation.y = -.15;
     if (vis('S2')) V2b.render(); }
 
   /* station 3 — 31 days drop in; they ripple on "stay", fall away on "leave"; the pill on "one month's" */
   maskUp($('#s3 .h3a'), t, A.h3, .5); maskUp($('#s3 .h3b'), t, A.h3b, .5); hl($('#hln'), t, A.one);
   maskUp($('#s3 .k3'), t, A.k3);
   { for (let i = 0; i < 31; i++){ const r = Math.floor(i / 7), cix = i % 7;
-      MON.setProgress(i, eo(seg(t, A.mon + i * .02, .3)));
-      MON.setLift(i, .5 * Math.sin(Math.PI * seg(t, A.wave + (cix + r) * .045, .45)));
-      MON.setFall(i, ease.in(seg(t, A.fall + .05 + (cix + r) * .035, .5))); }
+      MON.setProgress(i, eo(seg(t, A.mon + i * .018, .3)));
+      const one = i === 0, gold = seg(t, A.one, .2);
+      MON.setLift(i, .5 * Math.sin(Math.PI * seg(t, A.wave + (cix + r) * .045, .45)) + (one ? .6 * eo(gold) : 0));
+      MON.setFall(i, one ? 0 : ease.in(seg(t, A.fall + .05 + (cix + r) * .035, .5)));
+      MON.setColor(i, one && gold > 0 ? 0xF5C518 : 0xDEDBD2); }
     if (vis('S3')) V3.render(); }
   stamp($('#one'), t, A.one);
 
   /* station 4 — the asides, the heading, both machines side by side, and twelve months turning gold */
   maskUp($('#s4 .a1'), t, A.a1, .5); maskUp($('#s4 .a2'), t, A.a2, .5);
   maskUp($('#s4 .h4a'), t, A.h4, .5); maskUp($('#s4 .h4b'), t, A.h4b, .5); hl($('#hlc'), t, A.hlc);
-  { const a = eo(seg(t, A.cmpOld, .55)), b = eo(seg(t, A.cmpNew, .55));
-    OLD4.position.y = (1 - a) * 10; OLD4.visible = a > 0; NEW4.position.y = (1 - b) * 10; NEW4.visible = b > 0;
+  { rise(OLD4, eo(seg(t, A.cmpOld, .6)), 16); rise(NEW4, eo(seg(t, A.cmpNew, .6)), 16);
     if (vis('S4')) V4.render();
     for (let i = 0; i < 12; i++){ YEAR.setProgress(i, eo(seg(t, A.yr + i * .05, .3))); const g = seg(t, A.gold + i * .09, .15);
       YEAR.setColor(i, g > 0 ? 0xF5C518 : 0xDEDBD2); YEAR.setLift(i, .35 * Math.sin(Math.PI * seg(t, A.gold + i * .09, .4))); }
@@ -377,7 +382,7 @@ function setFrame(n){
   maskUp($('#end .e1'), t, A.e1, .5); maskUp($('#end .e2'), t, A.e2, .5); hl($('#hlm'), t, A.hlm);
   stamp($('#msg'), t, A.msg); stamp($('#call'), t, A.call); maskUp($('#end .url'), t, A.url, .45);
   maskUp($('#end .f1'), t, A.f1, .5); stamp($('#follow'), t, A.follow);
-  { const p = eo(seg(t, A.term5, .6)); NEW5.position.y = (1 - p) * 12; NEW5.rotation.y = -.35 + .05 * Math.sin(t * .9);
+  { rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .05 * Math.sin(t * .9);
     $('#cv5').style.opacity = t >= A.term5 ? 1 : 0; if (t >= A.term5) V5.render(); }
 }
 window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport; window.BEAT = BEAT; window.HEAD = HEAD;

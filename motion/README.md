@@ -74,6 +74,7 @@ All shared, all run from the repo root, all take `<series>/<episode>`:
 | Tool | Does | Notes |
 |---|---|---|
 | `python3 motion/verify.py print/mg02` | stage 3 — figures audit + the episode's `checks.py` | hard gate, run first |
+| `node motion/tighten.mjs print/mg02 [--gap .34] [--min .5]` | shrinks every silence in `data/vo.mp3` longer than `--min` to `--gap`, keeps the raw take as `vo-raw.mp3` / `vo_words-raw.json`, rewrites `vo_words.json` and `words.js` | run once after the Whisper pass, before any anchor is set |
 | `node motion/peek.mjs print/mg02 9x16 1.2 8.4 …` | the law report and stills at chosen times, tiled into `out/peek/sheet-<ratio>.jpg` | look before a render; run for 9x16, 16x9 and 1x1 — the crops fail differently |
 | `node motion/render.mjs print/mg02 [--ratio 9x16] [--draft]` | law check, frame scan, then every frame of every crop → `out/<ep>-<ratio>.mp4` (silent) | ~6 min for four crops |
 | `node motion/mix.mjs print/mg02` | `data/mix.json` cues + `data/vo.mp3` + the `bed` (ducked under the voice, looped at `loop_at` if the piece outruns it, faded out) → `out/mix.m4a`, two-pass loudnorm to −14 LUFS with a true-peak limiter | SFX from `video/library/sfx/`, beds from `video/library/bgm/` |

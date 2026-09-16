@@ -31,7 +31,7 @@ export function view(canvas, { w, h, span = 10, dpr = 2, elev = 30, azim = -34, 
   const el = THREE.MathUtils.degToRad(elev), az = THREE.MathUtils.degToRad(azim), R = 60;
   cam.position.set(R * Math.cos(el) * Math.sin(az), ty + R * Math.sin(el), R * Math.cos(el) * Math.cos(az)); cam.lookAt(0, ty, 0);
   scene.add(new THREE.HemisphereLight(0xffffff, 0xE6E4DD, 1.35));
-  const sun = new THREE.DirectionalLight(0xffffff, 2.1); sun.position.set(-7, 12, 7); sun.castShadow = true;
+  const sun = new THREE.DirectionalLight(0xffffff, 2.1); sun.position.set(-4, 16, 5); sun.castShadow = true;
   sun.shadow.mapSize.set(768, 768); sun.shadow.radius = 4; sun.shadow.bias = -0.0006;
   Object.assign(sun.shadow.camera, { left:-span * 1.6, right:span * 1.6, top:span * 1.6, bottom:-span * 1.6, near:1, far:60 });
   scene.add(sun);
@@ -91,9 +91,10 @@ export function terminal({ lean = 62 } = {}) {
   return stand;
 }
 
-/* a run of tiles (months, days): an instanced rounded box, each with its own drop-in progress and colour.
+/* a run of tiles (months, days): an instanced rounded box, each with its own rise-in progress and colour.
+   v5: tiles rise out of the ground (which hides what is below it) — nothing ever enters from above a canvas.
    layout: cols per row, size and gap in world units. Tile i is at row floor(i/cols), col i%cols.
-   setProgress(i, p) drops tile i from above; setColor(i, hex). */
+   setProgress(i, p) raises tile i from the ground; setColor(i, hex). */
 export function tiles(n, { cols = n, size = 1, gap = .18, height = .5, color = C.paper } = {}) {
   const geo = new RoundedBoxGeometry(size, height, size, 3, Math.min(.12, size * .14));
   const m = new THREE.InstancedMesh(geo, mat(color, { roughness:.7 }), n);
@@ -107,7 +108,7 @@ export function tiles(n, { cols = n, size = 1, gap = .18, height = .5, color = C
   const col = new THREE.Color();
   const prog = new Float32Array(n), lift = new Float32Array(n), fall = new Float32Array(n);
   const place = i => { const r = Math.floor(i / cols), c = i % cols, p = prog[i];
-    const y = (p <= 0 || fall[i] >= 1) ? -40 : height / 2 + (1 - p) * 6 + lift[i] - fall[i] * fall[i] * 14;
+    const y = (p <= 0 || fall[i] >= 1) ? -40 : height / 2 - (1 - p) * (height * 2.2 + .6) + lift[i] - fall[i] * fall[i] * 14;
     P.set(ox + c * pitch, y, oz + r * pitch); S.set(1, 1, 1); M.compose(P, Q, S); m.setMatrixAt(i, M); };
   for (let i = 0; i < n; i++) { prog[i] = 0; place(i); m.setColorAt(i, col.set(color)); }
   m.instanceMatrix.needsUpdate = true; m.instanceColor.needsUpdate = true;
@@ -277,3 +278,9 @@ export function pillars(specs, { w = 2.2, gap = 1.1, depth = 2.2 } = {}) {
     visible(i) { return meshes[i].visible; },
   });
 }
+
+/* rise(obj, p, h): an object of height h comes up out of the ground as p goes 0 -> 1. Below the ground it is
+   hidden by the shadow plane, so this never clips against a canvas edge the way a drop from above did. */
+export function rise(obj, p, h = 16) { obj.position.y = -(h + 1) * (1 - p); obj.visible = p > 0; }
+/* sink(obj, p, h): the reverse — down through the paper. */
+export function sink(obj, p, h = 16) { obj.position.y = -(h + 1) * p * p; obj.visible = p < 1; }
