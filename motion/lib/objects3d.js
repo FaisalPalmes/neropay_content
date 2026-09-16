@@ -223,21 +223,32 @@ function contactlessTexture(ink = '#F2F2F0') {
    Soft geometry: big radii, nothing hard-edged. Stands on its foot with a slight lean back. */
 export function neroTerminal({ lean = -6 } = {}) {
   const g = new THREE.Group();
-  const W = 6.4, H = 14.6, D = 1.6, HEAD = 2.6, HD = 2.3, FD = .42;
-  const white = mat(0xF1F1EE, { roughness:.5 }), black = mat(0x1E1F23, { roughness:.4, metalness:.2 }), yellow = mat(0xF5C518, { roughness:.48 });
+  const W = 6.4, H = 14.6, D = 1.6, HEAD = 2.5, FD = .42;
+  const white = mat(0xF1F1EE, { roughness:.5 }), black = mat(0x1E1F23, { roughness:.4, metalness:.2 }), yellow = mat(0xF5C518, { roughness:.7 });
+  /* the rig's sun is ~3x on an upward face, which blows brand yellow out to white; clamp this material's lit colour
+     to a touch above the brand value (linear), so the top reads as the same yellow catching light */
+  yellow.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', 'outgoingLight = min(outgoingLight, vec3(1.0, 0.64, 0.024));\n#include <opaque_fragment>'); };
   /* rear shell, white, the full depth; the black front frame sits on it, a little narrower, so white shows at the sides */
-  const back = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 10, .8), white); back.castShadow = true; back.receiveShadow = true; g.add(back);
-  const front = new THREE.Mesh(new RoundedBoxGeometry(W - .3, H - HEAD + .1, FD, 8, .5), black); front.position.set(0, -HEAD / 2 + .05, D / 2 - FD / 2 + .04); front.castShadow = true; g.add(front);   /* meets the head, a step behind its face */
-  /* the printer head: yellow, deeper at the back, its front flush with the frame */
-  const head = new THREE.Mesh(new RoundedBoxGeometry(W, HEAD, HD, 10, .62), yellow); head.position.set(0, H / 2 - HEAD / 2, D / 2 + .12 - HD / 2); head.castShadow = true; head.receiveShadow = true; g.add(head);
-  const hz = D / 2 + .12 + .01, fz = D / 2 + .04;
+  const back = new THREE.Mesh(new RoundedBoxGeometry(W, H - 1.2, D, 10, .8), white); back.position.y = -.6; back.castShadow = true; back.receiveShadow = true; g.add(back);   /* its top stays inside the head */
+  const front = new THREE.Mesh(new RoundedBoxGeometry(W - .3, H - HEAD - .3, FD, 8, .3), black); front.position.set(0, -HEAD / 2 - .15, D / 2 - FD / 2 + .02); front.castShadow = true; g.add(front);   /* its top sits under the head's front lip */
+  /* the printer head: yellow, shaped from its side profile — a flat front flush with the frame, a rounded
+     top, and a bulge at the back that tapers down into the white shell. Extruded across the width with a
+     bevel, so the ends are soft too. Nothing on it is a separate block. */
+  const fz = D / 2 + .04, bz = -(D / 2 + 1.0), y0 = H / 2 - HEAD, y1 = H / 2, r = .95, yb = y0 - 1.6, b = .5;
+  const prof = new THREE.Shape();
+  prof.moveTo(fz, y0 - .6); prof.lineTo(fz, y1 - r); prof.quadraticCurveTo(fz, y1 - .1, fz - r, y1 - .04); prof.quadraticCurveTo((fz + bz) / 2, y1 + .22, bz + r, y1 - .04); prof.quadraticCurveTo(bz, y1 - .1, bz, y1 - r);
+  prof.lineTo(bz, y0 - .2); prof.quadraticCurveTo(bz, yb, -D / 2, yb); prof.lineTo(-D / 2, y0 - .6); prof.closePath();
+  const hg = new THREE.ExtrudeGeometry(prof, { depth:W - 2 * b, bevelEnabled:true, bevelThickness:b, bevelSize:b - .02, bevelOffset:-(b - .02), bevelSegments:8, curveSegments:28 });   /* bevelOffset keeps the profile where it is drawn; without it the bevel grows the head outward */
+  hg.rotateY(-Math.PI / 2); hg.computeBoundingBox(); hg.translate(-(hg.boundingBox.max.x + hg.boundingBox.min.x) / 2, 0, 0);
+  const head = new THREE.Mesh(hg, yellow); head.castShadow = true; head.receiveShadow = true; g.add(head);
+  const hz = fz + .012;
   /* paper slot along the head's bottom front edge, a sliver of receipt showing */
-  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.8, .14), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD - .04, fz + .03); g.add(paper);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.8, .14), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD - .68, fz + .012); g.add(paper);
   /* the contactless symbol and the wordmark on the head, dark on yellow, as on the product */
-  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.15, 1.15), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
-  cl.position.set(.25, H / 2 - HEAD / 2 + .5, hz); g.add(cl);
-  const hwm = new THREE.Mesh(new THREE.PlaneGeometry(2.3, .58), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, true, 'center', '#141416'), transparent:true }));
-  hwm.position.set(0, H / 2 - HEAD / 2 - .55, hz); g.add(hwm);
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
+  cl.position.set(.2, H / 2 - HEAD / 2 + .42, hz); g.add(cl);
+  const hwm = new THREE.Mesh(new THREE.PlaneGeometry(2.1, .53), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, true, 'center', '#141416'), transparent:true }));
+  hwm.position.set(0, H / 2 - HEAD / 2 - .58, hz); g.add(hwm);
   /* the display: black glass inside the frame, from just under the head to just above the wordmark, the UI in it */
   const SH = H - HEAD - 1.6, SY = -H / 2 + 1.25 + SH / 2;
   const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .9, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
