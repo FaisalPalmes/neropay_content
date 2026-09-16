@@ -201,50 +201,54 @@ function uiTexture() {
   x.fillStyle = '#FFFFFF'; x.font = '700 15px Chivo'; x.fillText('2', 96 + 3 * 132 + 22, 1115);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
-function wordmarkTexture(w = 512, h = 128, dark = false, align = 'center') {
+function wordmarkTexture(w = 512, h = 128, dark = false, align = 'center', pay = null) {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d');
   x.font = '800 84px Chivo'; x.textBaseline = 'middle'; x.letterSpacing = '-4px';
   const nw = x.measureText('Nero').width, pw = x.measureText('Pay').width, x0 = align === 'left' ? 6 : (w - nw - pw) / 2;
   x.fillStyle = dark ? '#141416' : '#FFFFFF'; x.fillText('Nero', x0, h / 2);
-  x.fillStyle = '#F5C518'; x.fillText('Pay', x0 + nw, h / 2);
+  x.fillStyle = pay || '#F5C518'; x.fillText('Pay', x0 + nw, h / 2);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
 /* the contactless symbol: four arcs opening to the right, white line on nothing */
-function contactlessTexture() {
+function contactlessTexture(ink = '#F2F2F0') {
   const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
-  x.strokeStyle = '#F2F2F0'; x.lineWidth = 11; x.lineCap = 'round';
+  x.strokeStyle = ink; x.lineWidth = 11; x.lineCap = 'round';
   for (let i = 0; i < 4; i++) { x.beginPath(); x.arc(78, 128, 28 + i * 30, -Math.PI * .3, Math.PI * .3); x.stroke(); }
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
 
-/* v6, 16 Sep 2026 — the terminal as it is: a standalone slim handheld, no dock, no stand. Graphite body,
-   a full-height display, a receipt-printer head at the top carrying the contactless symbol, the wordmark
-   small at the bottom-left of the front below the screen. Stands on its foot with a slight lean back. */
+/* v6, 16 Sep 2026 — the terminal as it is: a standalone slim handheld, no dock, no stand. A white rear shell,
+   a black front frame around the full-height display, a yellow receipt-printer head at the top carrying the
+   contactless symbol and the wordmark, and the wordmark again bottom-left of the front below the screen.
+   Soft geometry: big radii, nothing hard-edged. Stands on its foot with a slight lean back. */
 export function neroTerminal({ lean = -6 } = {}) {
   const g = new THREE.Group();
-  const W = 6.4, H = 14.6, D = 1.5, HEAD = 2.8, HD = 2.4;
-  const shell = mat(0x313237, { roughness:.36, metalness:.35 });
-  const body = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 8, .55), shell); body.castShadow = true; body.receiveShadow = true; g.add(body);
-  /* printer head: deeper than the body, its top face slightly domed by the rounding, its front a touch proud */
-  const head = new THREE.Mesh(new RoundedBoxGeometry(W, HEAD, HD, 8, .5), shell); head.position.set(0, H / 2 - HEAD / 2, -(HD - D) / 2 + .04);   /* front near-flush with the body, the depth all at the back */ head.castShadow = true; head.receiveShadow = true; g.add(head);
-  /* paper slot along the head's bottom front edge, with a sliver of receipt paper showing */
-  const slot = new THREE.Mesh(new THREE.BoxGeometry(W - 1.2, .1, .3), mat(0x0B0B0D, { roughness:1 })); slot.position.set(0, H / 2 - HEAD + .1, D / 2 + .06); g.add(slot);
-  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.6, .16), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD + .1, D / 2 + .22); g.add(paper);
-  /* the contactless symbol on the head's front, a decal */
-  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), new THREE.MeshBasicMaterial({ map:contactlessTexture(), transparent:true }));
-  cl.position.set(.35, H / 2 - HEAD / 2 + .05, D / 2 + .09); g.add(cl);
-  /* the display: black glass from just under the head to just above the wordmark, the UI inside it */
-  const SH = H - HEAD - 1.35, SY = -H / 2 + 1.1 + SH / 2;
-  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .6, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
-  glass.position.set(0, SY, D / 2 + .02); g.add(glass);
-  const UW = W - 1.05, UH = UW * 1280 / 720;
+  const W = 6.4, H = 14.6, D = 1.6, HEAD = 2.6, HD = 2.3, FD = .42;
+  const white = mat(0xF1F1EE, { roughness:.5 }), black = mat(0x1E1F23, { roughness:.4, metalness:.2 }), yellow = mat(0xF5C518, { roughness:.48 });
+  /* rear shell, white, the full depth; the black front frame sits on it, a little narrower, so white shows at the sides */
+  const back = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 10, .8), white); back.castShadow = true; back.receiveShadow = true; g.add(back);
+  const front = new THREE.Mesh(new RoundedBoxGeometry(W - .3, H - HEAD + .1, FD, 8, .5), black); front.position.set(0, -HEAD / 2 + .05, D / 2 - FD / 2 + .04); front.castShadow = true; g.add(front);   /* meets the head, a step behind its face */
+  /* the printer head: yellow, deeper at the back, its front flush with the frame */
+  const head = new THREE.Mesh(new RoundedBoxGeometry(W, HEAD, HD, 10, .62), yellow); head.position.set(0, H / 2 - HEAD / 2, D / 2 + .12 - HD / 2); head.castShadow = true; head.receiveShadow = true; g.add(head);
+  const hz = D / 2 + .12 + .01, fz = D / 2 + .04;
+  /* paper slot along the head's bottom front edge, a sliver of receipt showing */
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.8, .14), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD - .04, fz + .03); g.add(paper);
+  /* the contactless symbol and the wordmark on the head, dark on yellow, as on the product */
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.15, 1.15), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
+  cl.position.set(.25, H / 2 - HEAD / 2 + .5, hz); g.add(cl);
+  const hwm = new THREE.Mesh(new THREE.PlaneGeometry(2.3, .58), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, true, 'center', '#141416'), transparent:true }));
+  hwm.position.set(0, H / 2 - HEAD / 2 - .55, hz); g.add(hwm);
+  /* the display: black glass inside the frame, from just under the head to just above the wordmark, the UI in it */
+  const SH = H - HEAD - 1.6, SY = -H / 2 + 1.25 + SH / 2;
+  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .9, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
+  glass.position.set(0, SY, fz + .02); g.add(glass);
+  const UW = W - 1.3, UH = UW * 1280 / 720;
   const ui = new THREE.Mesh(new THREE.PlaneGeometry(UW, UH), new THREE.MeshStandardMaterial({ map:uiTexture(), roughness:.3, emissive:0xffffff, emissiveIntensity:.5 }));
-  ui.material.emissiveMap = ui.material.map; ui.position.set(0, SY - (SH - UH) / 2 + .02, D / 2 + .075); g.add(ui);
-  /* camera dot at the top of the glass */
-  const cam = new THREE.Mesh(new THREE.CircleGeometry(.1, 24), mat(0x3A3A3E, { roughness:.3 })); cam.position.set(0, SY + SH / 2 - .28, D / 2 + .075); g.add(cam);
-  /* the wordmark, small, bottom-left of the front */
-  const wm = new THREE.Mesh(new THREE.PlaneGeometry(1.7, .42), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, false, 'left'), transparent:true }));
-  wm.position.set(-W / 2 + .45 + .85, -H / 2 + .52, D / 2 + .075); g.add(wm);
+  ui.material.emissiveMap = ui.material.map; ui.position.set(0, SY - (SH - UH) / 2 + .02, fz + .075); g.add(ui);
+  const cam = new THREE.Mesh(new THREE.CircleGeometry(.1, 24), mat(0x3A3A3E, { roughness:.3 })); cam.position.set(0, SY + SH / 2 - .28, fz + .075); g.add(cam);
+  /* the wordmark, bottom-left of the front */
+  const wm = new THREE.Mesh(new THREE.PlaneGeometry(2.2, .55), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, false, 'left'), transparent:true }));
+  wm.position.set(-W / 2 + .5 + 1.1, -H / 2 + .68, fz + .075); g.add(wm);
   const stand = new THREE.Group();
   g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.set(0, H / 2 * Math.cos(THREE.MathUtils.degToRad(lean)) + .05, 0);
   stand.add(g);
