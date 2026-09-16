@@ -209,11 +209,27 @@ function wordmarkTexture(w = 512, h = 128, dark = false, align = 'center', pay =
   x.fillStyle = pay || '#F5C518'; x.fillText('Pay', x0 + nw, h / 2);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
-/* the contactless symbol: four arcs opening to the right, white line on nothing */
-function contactlessTexture(ink = '#F2F2F0') {
-  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
-  x.strokeStyle = ink; x.lineWidth = 11; x.lineCap = 'round';
-  for (let i = 0; i < 4; i++) { x.beginPath(); x.arc(78, 128, 28 + i * 30, -Math.PI * .3, Math.PI * .3); x.stroke(); }
+/* the contactless indicator as on the product: an ellipse holding four arcs and a hand tapping a card. Drawn to a
+   canvas in ink; a decal on the head. */
+function contactlessTexture(ink = '#141416') {
+  const c = document.createElement('canvas'); c.width = 640; c.height = 380; const x = c.getContext('2d');
+  x.strokeStyle = ink; x.fillStyle = ink; x.lineCap = 'round'; x.lineJoin = 'round';
+  /* the ellipse */
+  x.lineWidth = 15; x.beginPath(); x.ellipse(320, 190, 296, 166, 0, 0, Math.PI * 2); x.stroke();
+  /* four arcs opening to the right */
+  x.lineWidth = 17;
+  for (let i = 0; i < 4; i++) { x.beginPath(); x.arc(118, 190, 46 + i * 38, -Math.PI * .34, Math.PI * .34); x.stroke(); }
+  /* the card, tilted, and the hand holding it from the lower right */
+  x.save(); x.translate(392, 150); x.rotate(-.42);
+  x.lineWidth = 13; x.beginPath(); x.roundRect(-64, -42, 128, 84, 10); x.stroke();
+  /* thumb over the card's near corner */
+  x.beginPath(); x.moveTo(-20, 42); x.quadraticCurveTo(-6, 20, 24, 14); x.stroke();
+  /* fingers under the card */
+  for (let i = 0; i < 3; i++) { x.beginPath(); x.roundRect(-28 + i * 30, 44, 22, 46, 11); x.stroke(); }
+  x.restore();
+  /* wrist to the rim */
+  x.lineWidth = 13; x.beginPath(); x.moveTo(438, 232); x.quadraticCurveTo(470, 290, 545, 318); x.stroke();
+  x.beginPath(); x.moveTo(500, 214); x.quadraticCurveTo(540, 250, 585, 262); x.stroke();
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
 
@@ -245,8 +261,8 @@ export function neroTerminal({ lean = -6 } = {}) {
   /* paper slot along the head's bottom front edge, a sliver of receipt showing */
   const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.8, .14), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD - .68, fz + .012); g.add(paper);
   /* the contactless symbol, large and centred on the head; the wordmark is on the front only (Faisal, 16 Sep) */
-  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 1.7), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
-  cl.position.set(.2, H / 2 - HEAD / 2 - .05, hz); g.add(cl);
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 2.9 * 380 / 640), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
+  cl.position.set(0, H / 2 - HEAD / 2 - .05, hz); g.add(cl);
   /* the display: black glass inside the frame, from just under the head to just above the wordmark, the UI in it */
   const SH = H - HEAD - 1.6, SY = -H / 2 + 1.25 + SH / 2;
   const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .9, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
