@@ -36,7 +36,7 @@ one-clause concession the style requires, followed straight away by the push to 
 full-height display and the till UI on it, a small camera, a white dock; the wordmark sits on the dock and on the
 screen's status line, nothing louder. `oldTerminal()` is a generic older machine — grey, chunky, a small monochrome
 LCD, rubber keys, a paper slot — for "the one you're tied to". No maker's name anywhere, nothing that identifies a
-competitor, and Stripe is not mentioned in any file.
+competitor, and the maker of our own hardware is not named in any file.
 
 ## Board and camera
 
