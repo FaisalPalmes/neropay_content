@@ -45,13 +45,13 @@ function findChrome(){
 }
 const executablePath = findChrome();
 console.log(`  chrome: ${executablePath || 'playwright default'}`);
-const browser = await chromium.launch({ executablePath });
+const browser = await chromium.launch({ executablePath, args:['--allow-file-access-from-files'] });
 
 /* ---- the timing law, asserted before a single frame is written ---- */
 {
   const pg = await browser.newPage({ viewport:{ width:1080, height:1920 } });
   await pg.goto(pathToFileURL(page_).href);
-  await pg.evaluate(() => document.fonts.ready);
+  await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => window.READY !== false && typeof window.setFrame === 'function', null, { timeout:60000 });
   const rows = await pg.evaluate(() => window.lawReport());
   const dur  = await pg.evaluate(() => window.DURATION);
   console.log(`\n  timing law — hold = max(1.5, words x 0.4)\n`);
@@ -74,14 +74,14 @@ const browser = await chromium.launch({ executablePath });
     if (only && ratio !== only) continue;
     const pg = await browser.newPage({ viewport:{ width:W, height:H } });
     await pg.goto(pathToFileURL(page_).href);
-    await pg.evaluate(() => document.fonts.ready);
+    await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => window.READY !== false && typeof window.setFrame === 'function', null, { timeout:60000 });
     await pg.addStyleTag({ content:`#stage{width:${W}px;height:${H}px}` });
     const { fps, dur } = await pg.evaluate(() => ({ fps:window.FPS, dur:window.DURATION }));
     for (let t = 0; t < dur; t += 0.25) {
       await pg.evaluate(f => window.setFrame(f), Math.round(t * fps));
       const bad = await pg.evaluate(([W, H]) => {
         const out = [];
-        const foot = document.querySelector('#footer').getBoundingClientRect();
+        const footEl = document.querySelector('#footer'); const foot = footEl ? footEl.getBoundingClientRect() : { top:Infinity, bottom:Infinity };   /* v3 compositions carry no persistent footer */
         /* board compositions mark the station the camera has landed on with data-active;
            only that station's content is scanned. Between beats (camera moving) nothing on
            the board is active and only stage-level layers are checked. */
@@ -130,7 +130,7 @@ for (const [ratio, [W, H]] of Object.entries(CROPS)) {
 
   const pg = await browser.newPage({ viewport:{ width:W, height:H }, deviceScaleFactor:1 });
   await pg.goto(pathToFileURL(page_).href);
-  await pg.evaluate(() => document.fonts.ready);
+  await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => window.READY !== false && typeof window.setFrame === 'function', null, { timeout:60000 });
   const { fps, dur } = await pg.evaluate(() => ({ fps:window.FPS, dur:window.DURATION }));
   const total = Math.ceil(dur * fps);
   const stage = pg.locator('#stage');

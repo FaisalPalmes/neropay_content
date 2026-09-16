@@ -29,7 +29,11 @@ for line in spec['lines']:
         j = i
         while j < len(words) and not (norm(words[j]['w']) == tgt or tgt.startswith(norm(words[j]['w'])) or norm(words[j]['w']).startswith(tgt)):
             j += 1
-        if j >= len(words):
+        # a short function word Whisper swallowed ("it" in "the date it ends") is skipped rather than
+        # dragging the cue to the next place that word occurs; anything longer is a real mismatch
+        if (j >= len(words) or j - i > 2) and len(tgt) <= 3:
+            continue
+        if j >= len(words) or j - i > 2:
             raise SystemExit(f"could not align '{t}' in: {line}")
         if start is None: start = words[j]['s']
         end = words[j]['e']; i = j + 1

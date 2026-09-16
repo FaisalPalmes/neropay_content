@@ -11,9 +11,9 @@ for r in 9x16 4x5 1x1 16x9; do
   ffmpeg -y -v error -i "$src" -i out/mix.m4a -vf "$VF" -map 0:v -map 1:a -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart "$dst"
   printf "%-8s %s\n" "$r" "$(ffprobe -v error -show_entries stream=width,height:format=duration -of csv=p=0 "$dst" | tr '\n' ' ')"
 done
-ffmpeg -i out/final/$EP-9x16.mp4 -af "loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json" -f null - 2>&1 | grep -E '"input_i"|"input_tp"'
+ffmpeg -i out/final/$EP-9x16.mp4 -af "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json" -f null - 2>&1 | grep -E '"input_i"|"input_tp"'
 rm -f /tmp/claude-0/cs_*.png
-for t in 0.4 2.6 6.6 9.6 13.9 16.2 22.6 26.6 30.0 33.4 39.4 47.6; do ffmpeg -nostdin -y -v error -ss $t -i out/final/$EP-9x16.mp4 -frames:v 1 /tmp/claude-0/cs_$(printf '%05.2f' $t).png; done
+for t in 0.4 1.8 5.6 9.8 14.2 17.4 22.2 24.8 28.2 31.9 34.8 47.4; do ffmpeg -nostdin -y -v error -ss $t -i out/final/$EP-9x16.mp4 -frames:v 1 /tmp/claude-0/cs_$(printf '%05.2f' $t).png; done
 ffmpeg -y -v error -pattern_type glob -i '/tmp/claude-0/cs_*.png' -filter_complex "scale=320:-1,tile=4x3:padding=8:margin=8:color=0x1A1D22" -frames:v 1 out/final/contact.jpg
 ffmpeg -nostdin -v error -i out/final/$EP-9x16.mp4 -vf "scale=270:480,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=/tmp/claude-0/yavg.txt" -f null -
 python3 - <<'PY'

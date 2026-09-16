@@ -11,27 +11,32 @@ Style: Cap,Chivo Medium ExtraBold,54,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.60,0:00:03.66,Cap,,0,0,0,,Your card machine company\Nis legally required
-Dialogue: 0,0:00:03.66,0:00:05.32,Cap,,0,0,0,,to tell you when you can\Nleave.
-Dialogue: 0,0:00:06.26,0:00:07.18,Cap,,0,0,0,,Did you get the message?
-Dialogue: 0,0:00:08.66,0:00:11.14,Cap,,0,0,0,,Since twenty twenty-three,\Nthe payments regulator
-Dialogue: 0,0:00:11.14,0:00:12.88,Cap,,0,0,0,,caps a card terminal lease
-Dialogue: 0,0:00:12.88,0:00:14.76,Cap,,0,0,0,,at eighteen months.
-Dialogue: 0,0:00:15.30,0:00:16.10,Cap,,0,0,0,,Not thirty-six.
-Dialogue: 0,0:00:17.08,0:00:17.82,Cap,,0,0,0,,Not forty-eight.
-Dialogue: 0,0:00:19.10,0:00:20.54,Cap,,0,0,0,,And when that term ends,
-Dialogue: 0,0:00:20.54,0:00:22.70,Cap,,0,0,0,,they have to send you a\Nmessage.
-Dialogue: 0,0:00:23.40,0:00:24.20,Cap,,0,0,0,,In writing.
-Dialogue: 0,0:00:25.08,0:00:26.12,Cap,,0,0,0,,Telling you the date,
-Dialogue: 0,0:00:26.12,0:00:27.64,Cap,,0,0,0,,and telling you to shop\Naround.
-Dialogue: 0,0:00:28.34,0:00:30.84,Cap,,0,0,0,,After that, it rolls month\Nto month.
-Dialogue: 0,0:00:31.34,0:00:32.68,Cap,,0,0,0,,Thirty-one days.
-Dialogue: 0,0:00:33.50,0:00:35.26,Cap,,0,0,0,,You can leave with a\Nmonth's notice,
-Dialogue: 0,0:00:35.56,0:00:36.68,Cap,,0,0,0,,not a year's.
-Dialogue: 0,0:00:37.60,0:00:38.76,Cap,,0,0,0,,If your deal's good,
-Dialogue: 0,0:00:39.14,0:00:39.84,Cap,,0,0,0,,bin the message.
-Dialogue: 0,0:00:40.18,0:00:41.16,Cap,,0,0,0,,Most of them are fine.
-Dialogue: 0,0:00:41.84,0:00:43.66,Cap,,0,0,0,,The point is it's your\Nchoice,
-Dialogue: 0,0:00:43.90,0:00:45.18,Cap,,0,0,0,,on a date you know.
-Dialogue: 0,0:00:45.90,0:00:46.82,Cap,,0,0,0,,Check the letter.
-Dialogue: 0,0:00:47.50,0:00:48.54,Cap,,0,0,0,,Then decide.
+Dialogue: 0,0:00:01.02,0:00:01.80,Cap,,0,0,0,,Quick one.
+Dialogue: 0,0:00:02.06,0:00:03.36,Cap,,0,0,0,,Your card machine company
+Dialogue: 0,0:00:03.36,0:00:04.70,Cap,,0,0,0,,has to tell you
+Dialogue: 0,0:00:04.70,0:00:06.14,Cap,,0,0,0,,when you can walk away.
+Dialogue: 0,0:00:07.10,0:00:07.64,Cap,,0,0,0,,Did they?
+Dialogue: 0,0:00:08.84,0:00:10.40,Cap,,0,0,0,,Since January 2023,
+Dialogue: 0,0:00:10.68,0:00:12.96,Cap,,0,0,0,,the regulator caps a lease\Nterminal
+Dialogue: 0,0:00:12.96,0:00:15.08,Cap,,0,0,0,,at 18 months.
+Dialogue: 0,0:00:15.56,0:00:16.68,Cap,,0,0,0,,Not three years,
+Dialogue: 0,0:00:16.92,0:00:17.76,Cap,,0,0,0,,not four.
+Dialogue: 0,0:00:18.18,0:00:19.72,Cap,,0,0,0,,And when that term ends,
+Dialogue: 0,0:00:19.72,0:00:22.64,Cap,,0,0,0,,the big providers must to\Nwrite you.
+Dialogue: 0,0:00:22.92,0:00:24.08,Cap,,0,0,0,,The date it ends
+Dialogue: 0,0:00:24.52,0:00:26.42,Cap,,0,0,0,,and a nudge to shop\Naround.
+Dialogue: 0,0:00:26.96,0:00:28.82,Cap,,0,0,0,,After that, it rolls\Nmonthly.
+Dialogue: 0,0:00:29.42,0:00:30.32,Cap,,0,0,0,,One month's notice
+Dialogue: 0,0:00:30.32,0:00:32.06,Cap,,0,0,0,,and you're out.
+Dialogue: 0,0:00:33.20,0:00:34.68,Cap,,0,0,0,,Now, if your deal's\Ndecent,
+Dialogue: 0,0:00:34.68,0:00:35.94,Cap,,0,0,0,,ignore all this.
+Dialogue: 0,0:00:35.94,0:00:36.70,Cap,,0,0,0,,Plenty are.
+Dialogue: 0,0:00:36.98,0:00:38.28,Cap,,0,0,0,,But find that letter,
+Dialogue: 0,0:00:38.28,0:00:39.20,Cap,,0,0,0,,check the date.
+Dialogue: 0,0:00:39.48,0:00:40.58,Cap,,0,0,0,,It's your call,
+Dialogue: 0,0:00:40.84,0:00:41.38,Cap,,0,0,0,,not theirs.
+Dialogue: 0,0:00:42.10,0:00:43.36,Cap,,0,0,0,,We're NeroPay,
+Dialogue: 0,0:00:43.36,0:00:45.18,Cap,,0,0,0,,card machines from\NManchester.
+Dialogue: 0,0:00:45.94,0:00:47.40,Cap,,0,0,0,,Follow us for more of this
+Dialogue: 0,0:00:47.40,0:00:48.54,Cap,,0,0,0,,and have a look at
+Dialogue: 0,0:00:48.54,0:00:49.64,Cap,,0,0,0,,neropay.app.

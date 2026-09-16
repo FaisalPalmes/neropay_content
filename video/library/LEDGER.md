@@ -34,10 +34,21 @@ cloned from a real person without written consent, and the narrator voice stays 
 | Piece | Voice | Provider · model | Generated | Account |
 |---|---|---|---|---|
 | `motion/maths/ep01` (The Maths 1, v1 — to be re-voiced) | `jP5jSWhfXz3nfQENMtf4` | ElevenLabs `eleven_multilingual_v2`, then `eleven_v3` demo | 15 Sep 2026 | the ElevenLabs connector on Faisal's Claude account (work admin) — confirm the plan's commercial-use licence before first delivery |
-| `motion/print/mg02` (Small Print 1) | **Verity** `oW8bn5YtBB89X2nJ0DT9` — the series voice from 15 Sep 2026 | ElevenLabs `eleven_v3`, one take, 47.5 s | 15 Sep 2026 | same account; flow `ns3m8FupNDBjPPLIO8eV` |
+| `motion/print/mg02` (Small Print 1, v2 — replaced) | **Verity** `oW8bn5YtBB89X2nJ0DT9` — the series voice from 15 Sep 2026 | ElevenLabs `eleven_v3`, one take, 47.5 s | 15 Sep 2026 | same account; flow `ns3m8FupNDBjPPLIO8eV` |
+| `motion/print/mg02` (Small Print 1, v3 — current) | **Verity** `oW8bn5YtBB89X2nJ0DT9` | ElevenLabs `eleven_v3`, one take, 49.0 s, 658 credits | 16 Sep 2026 | same account; flow `ns3m8FupNDBjPPLIO8eV`, node `GYyqRI1A8tDoXPY7HPjo` |
 
-Used in `motion/print/mg02` (15 Sep 2026): Pixabay impact-bass-1, click, click-soft, pop, whoosh-short,
-key-press, typing, chime. No bed yet — see the open point in `motion/print/CLAUDE.md`.
+## Music beds — `bgm/`
+
+Generated beds are sound files like any other and get a row. Eleven Music output is licensed for commercial
+use on a paid plan — the same plan check as the voice, recorded once per account.
+
+| File | What | Provider · model | Generated | Account · licence |
+|---|---|---|---|---|
+| `bgm/underscore-120-a.mp3` | neutral instrumental underscore, 60 s, measured 117.45 bpm, no vocals (Whisper finds no speech), fades from ~50 s | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 16 Sep 2026 | the ElevenLabs connector on Faisal's Claude account; flow `G5DGJBeWy6NWDdicrEKJ`, node `0oLT5z4eTuohNjfxiG84` — confirm the plan's commercial-use licence before first delivery |
+
+Used in `motion/print/mg02` v3 (16 Sep 2026): the bed above at 0.30 ducked under the voice, and Pixabay
+impact-bass-1, impact-bass-2, pop, whoosh-short, whoosh, whoosh-cinematic, click, click-soft, sparkle, typing,
+key-press, chime, notification, riser, ping — thirty cues, none twice in a row.
 
 ## How to add a sound
 

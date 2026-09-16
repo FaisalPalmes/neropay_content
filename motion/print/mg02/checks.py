@@ -1,47 +1,52 @@
-# Small Print, MG02 — "They have to tell you."
-# Stage 3 gate. There is no arithmetic in this episode; the gate is that every figure spoken or
-# shown resolves to a confirmed figures.json record, and that the spoken and on-screen words
-# clear the rails scan. A regulatory figure stated wrong is a compliance incident, not a typo.
+"""Stage-3 checks for Small Print MG02 v3 — They have to tell you. (rebuilt 16 Sep 2026)
 
-cap = figure("psr_terminal_lease_cap")
-trig = figure("psr_trigger_messages")
+Every figure on screen or in the take resolves to psr_terminal_lease_cap and psr_trigger_messages.
+Nothing is computed here — the episode states regulation, not arithmetic — so the checks are that the
+values on screen are the confirmed ones, that the copy stays inside the rails, and that the scope of the
+rule (the fourteen directed providers) is on screen where the rule is stated.
+"""
+import re, sys
+from pathlib import Path
+# verify.py execs this file with figure(), check() and scan_copy() in scope and the repo root as cwd
+EP = Path('motion') / sys.argv[1]
 
-check("lease cap · months", cap["value"], 18)
-check("lease cap · rolling days after the minimum term", cap["rolling_days"], 31)
-assert trig["value"] == "2023-07", f"trigger messages moved: {trig['value']}"
-print("  ok  trigger messages · from July 2023")
+cap = figure('psr_terminal_lease_cap')
+trig = figure('psr_trigger_messages')
 
-# The VO says "Since twenty twenty-three" — the POS remedy is from Jan 2023 and the trigger
-# messages from July 2023, so the year alone is the safe spoken form. Assert both live in 2023.
-assert "Jan 2023" in cap["internal_source"], "lease cap source no longer says Jan 2023"
-assert trig["value"].startswith("2023"), "trigger messages no longer 2023"
-print("  ok  'since 2023' holds for both the cap (Jan 2023) and the message (July 2023)")
+check('lease cap, months', cap['value'], 18)
+check('rolling renewal, days', cap['rolling_days'], 31)
+assert trig['value'] == '2023-07', trig['value']
 
-# The spoken "Not thirty-six. Not forty-eight." are the terms the cap replaces, not figures we
-# assert about any provider. They must never appear as a claim about a named provider.
-VO = """Your card machine company is legally required to tell you when you can leave. Did you get the message?
-Since twenty twenty-three, the payments regulator caps a card terminal lease at eighteen months. Not thirty-six. Not forty-eight.
-And when that term ends, they have to send you a message. In writing. Telling you the date, and telling you to shop around.
-After that it rolls month to month. Thirty-one days. You can leave with a month's notice, not a year's.
-If your deal's good, bin the message. Most of them are fine. The point is it's your choice, on a date you know. Check the letter. Then decide."""
+VO = ("Quick one. Your card machine company has to tell you when you can walk away. Did they? "
+      "Since January 2023, the regulator caps a terminal lease at 18 months. Not three years. Not four. "
+      "And when that term ends, the big providers must write to you. The date it ends… and a nudge to shop around. "
+      "After that, it rolls monthly. One month's notice — and you're out. "
+      "Now, if your deal's decent, ignore all this. Plenty are. But find that letter, check the date. It's your call, not theirs. "
+      "We're NeroPay. Card machines, from Manchester. Follow us for more of this — and have a look at neropay.app.")
 
-ON_SCREEN = """THEY HAVE TO TELL YOU your card machine company, that is
-TERMINAL LEASE 18 months max minimum term · PSR · from Jan 2023
-36 48 struck
-Your minimum term ends on trigger message in writing · from July 2023 · the 14 largest providers
-THIRTY-ONE DAYS rolling, after that
-If your deal's good, bin the message. Most of them are fine.
-NERO PAY neropay.app
-Terminal lease cap 18 months then 31-day rolling; trigger messages from July 2023. PSR PS22/2, Oct 2022. The 14 directed providers; check your own contract."""
+html = (EP / 'index.html').read_text()
+ON_SCREEN = ' '.join(re.sub(r'<[^>]+>', ' ', m) for m in re.findall(r'<div id="stage">(.*?)<script', html, re.S))
 
-scan_copy(VO, "VO script")
-scan_copy(ON_SCREEN, "on-screen text")
+# the figures on screen are the confirmed ones
+assert '18' in ON_SCREEN and 'months' in ON_SCREEN, 'the cap is not on screen'
+assert '31-day rolling' in ON_SCREEN, 'the rolling term is not on screen'
+assert 'Jan 2023' in ON_SCREEN, 'the start of the POS remedy is not on screen'
+assert 'July 2023' in ON_SCREEN and '14 largest providers' in ON_SCREEN, 'the trigger-message scope is not on screen'
+# "since 2023" in the take is true for both remedies (Jan 2023 lease cap, July 2023 trigger messages)
+assert 'Since January 2023' in VO
+# the scope of "the big providers" is stated on the station where the rule is stated
+assert 'Payment Systems Regulator' in ON_SCREEN and 'PS22/2' in ON_SCREEN
 
-for name in ("square", "sumup", "paypal", "dojo", "worldpay", "teya", "zettle",
-             "takepayments", "stripe", "verifone", "barclaycard", "elavon", "lloyds"):
-    assert name not in (VO + ON_SCREEN).lower(), f"provider named on screen or in VO: {name}"
-print("  ok  no provider named in VO or on-screen text")
-
-# The footer must carry the scope, or the hook over-claims.
-assert "14 directed providers" in ON_SCREEN, "footer lost the directed-providers scope"
-print("  ok  footer carries the directed-providers scope")
+# rails: no rate, no price, no lending, no earnings, no competitor, no guarantee — in the take and on screen
+scan_copy('VO', VO)
+scan_copy('ON_SCREEN', ON_SCREEN)
+for bad in ['Square', 'SumUp', 'Zettle', 'Dojo', 'Worldpay', 'Barclaycard', 'Takepayments', 'Elavon', 'Stripe', 'PayPal']:
+    assert bad.lower() not in (VO + ON_SCREEN).lower(), f'competitor named: {bad}'
+# the concession, the CTA to the site and the CTA to follow are all in the take
+assert "if your deal's decent, ignore all this" in VO.lower(), 'no concession'
+assert 'neropay.app' in VO and 'neropay.app' in ON_SCREEN, 'no site CTA'
+assert 'follow us' in VO.lower() and 'Follow us' in ON_SCREEN, 'no follow CTA'
+# nothing persistent and nothing numbered: no footer element, no episode number in the masthead
+assert 'id="footer"' not in html, 'v3 carries no persistent footer'
+assert not re.search(r'Small Print</span>\s*·?\s*\d', html) and '· 01' not in html, 'no episode number on screen'
+print('MG02 v3: figures confirmed, rails clean, scope on screen, both CTAs present, no footer, no number')

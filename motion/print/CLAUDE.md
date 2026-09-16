@@ -24,7 +24,7 @@ date has a shape you can walk along. The camera moves only between beats.
 
 | # | Warehouse id | Rule | State |
 |---|---|---|---|
-| 1 | MG02 | They have to tell you — the 18-month lease cap and the trigger message (PSR PS22/2) | **Rendered, awaiting Faisal's review** — `motion/print/mg02/`, Verity take 47.5 s, 49.4 s with head and tail, four crops, captioned |
+| 1 | MG02 | They have to tell you — the 18-month lease cap and the trigger message (PSR PS22/2) | **v3 rendered 16 Sep 2026, awaiting Faisal's review** — `motion/print/mg02/`, new Verity take 49 s (51.5 s with head and tail), 3D terminal / calendar / envelope / month on a 2×2 board, Eleven Music bed, both CTAs, four crops, captioned |
 | 2 | MG03 | The tip isn't yours — Employment (Allocation of Tips) Act, 1 Oct 2024 | Clear, figures confirmed |
 | 3 | MG04 | Four times a year — MTD for Income Tax from April 2026 | Clear; carry the "not tax advice" line |
 | 4 | MG05 | That sign — the surcharge ban, 13 Jan 2018 | Clear |
@@ -32,7 +32,11 @@ date has a shape you can walk along. The camera moves only between beats.
 
 ## Open with Faisal
 
-- **"Legally required" in the MG02 hook** is true for the fourteen directed providers, not every
-  reseller. The footer and beat 3 say so on screen. If that's too fine a line for a hook, the fallback
-  is "The regulator makes your card machine company tell you when you can leave."
-- Rail 4 does not bite on MG02 — no Higgsfield plate, everything drawn.
+- **The hook's scope.** v3 says "has to tell you" and "the big providers"; the letter station carries
+  "14 largest providers · July 2023" on screen. Resellers outside the fourteen aren't directed — the
+  copy no longer says "legally required", so the line is fair without a footer.
+- **Verity on "NeroPay".** Whisper heard the brand as "Niropay" in the v3 take. Listen before it ships;
+  if she says it wrong, the fix is a phonetic spelling in the prompt ("Nero-pay") and one more take.
+- Rail 4 does not bite on MG02 — no Higgsfield plate, the 3D objects are primitives, nothing generated.
+- The −14 LUFS master is the `video/AUDIO.md` target; `maths/ep01` is still at −16 and needs remastering
+  when it is re-voiced.

@@ -138,6 +138,26 @@ element under a clamped transform — the `video/b1-rate-you-were-quoted` virtua
 Not every video is a board; a board earns itself when the video has four or more stations that
 relate spatially (a calendar, a receipt, a ledger, a route).
 
+**Real 3D objects — v3, 16 Sep 2026.** The board carries objects, not only type: a card terminal, a run of
+month tiles, an envelope, a day grid. They are built from primitives in `motion/lib/objects3d.js` (three.js,
+vendored at `motion/assets/vendor/`) and drawn into a `<canvas>` that sits on the board like any other element —
+orthographic three-quarter view, matte materials, one soft contact shadow on a transparent ground, so the object
+reads as sitting on the paper. Nothing is generated, so it re-renders deterministically and carries no synthetic-
+content disclosure. Rules: one object per station, doing the job the type can't (the thing itself, the count, the
+letter arriving); objects move on the beat and settle without overshoot like everything else; a DOM element that
+has to meet a 3D edge (a label on a tile, a letter rising out of an envelope) is placed from `view.project()`,
+never eyeballed. The terminal is the only branded object and its screen carries the wordmark.
+
+**What v3 removed.** No episode number on screen — each video has to stand on its own when someone meets it
+cold, so the masthead is the mark and the series name, nothing else. No persistent footer: the source and the
+scope go on the station where the rule is stated (a mono kicker: "Payment Systems Regulator · PS22/2", "14
+largest providers · July 2023") and leave with it. Masks carry room for descenders (`.mask` padding) — the v2
+"cropped text" Faisal saw was descenders clipped by a `line-height: .92` mask.
+
+**Every video closes on two CTAs.** The site (`neropay.app`, spoken and on screen with the underline drawing)
+and, for anything educational, a follow ("Follow us for more of this"). Both are in the take and on screen, and
+`checks.py` asserts both. The end card is the mark, one line about who we are, the follow pill, the URL.
+
 **Higgsfield plates.** Allowed now, for images only, under overlays: a photographic **plate** — a
 card terminal on a counter, a receipt, a street at night, a till drawer — generated in Higgsfield
 (`gpt_image_2_5`, `quality: "high"`, `resolution: "2k"`, 9:16), colour-graded to the ground, sitting
@@ -169,6 +189,13 @@ four stay listed so nobody re-samples them. The voice is `MOTION.voice` in `moti
 Changing the voice later means changing it here, under Pipeline, in `motion/README.md` and in
 `MOTION.voice`, then re-voicing every episode — one voice across every series.
 
+**The script — v3, 16 Sep 2026.** It has to sound like a British person talking to the British public,
+educational, no-brainer stuff, and every line has to have a job. Faisal's word for the v2 read was "AI slop":
+the tell is the one-liner that exists to sound clever. Opens with energy and keeps it — "Quick one." is a tap on
+the shoulder, not a title. Say the rule, the date, what they must do, what that means for you, concede, say who we
+are, ask for the follow, say the URL. Nothing else. Read it aloud before generating: if a line would sound odd
+across a counter in Rusholme, cut it.
+
 **Register.** Real, human, awake. High energy is not shouting — it is *investment*: the narrator
 finds this genuinely interesting and wants you to get it. The tone changes on the phrase: a claim
 lands flat and sure; a number is said like it matters; the concession drops to an aside and a
@@ -195,6 +222,16 @@ the rails → **stage 3 gate** → VO and word timestamps → SFX → build HTML
 real timeline → optional texture beat → composite, burn captions, mix, `loudnorm` → export the crops
 and a contact sheet → **Faisal reviews** → commit and publish only after approval.
 
+**A bed under every video, on a grid.** Nothing ships silent (`video/AUDIO.md`): each episode carries a neutral
+instrumental bed, generated once with Eleven Music v2 through the connector (`creative_generate_in_flow`,
+`node_type: music`, `eleven_music_v2`, ~900–1,700 credits a minute, ask for "no vocals, no hook, constant tempo")
+or taken from the library, committed under `video/library/bgm/` with a ledger row. Measure its tempo (librosa in
+the sandbox), derive `BEAT`, start the bed at composition 0 and put the VO on a beat (`HEAD = 2 × BEAT`).
+Everything not tied to a word lands on the grid — the hook's stamps, the first and last camera moves. Word-anchored
+events stay on their words. `motion/mix.mjs` ducks the bed under the voice (sidechain, 5:1) and masters to
+**−14 LUFS / −1.5 dBTP**, the `video/AUDIO.md` target; the −16 of the first two cuts is retired. Effects: one per
+motivated movement, no sound twice in a row, and never the same whoosh on every camera move.
+
 **Audio before graphics.** Generate the VO first and build the timeline against its real durations and
 word timestamps. Building to estimated timings and generating audio afterwards means hand-nudging
 keyframes, which is the manual work this pipeline exists to remove.
@@ -213,6 +250,11 @@ no credits. No video generation in this style.
 absolute paths in render scripts, always. Never re-attach a screenshot of a previous render to make
 an edit; generation loss stacks, re-render from source. And no CDN scripts — the web container blocks
 them, so vendor fonts (`@fontsource/*` or a local `.woff2`) and libraries.
+
+**Module compositions.** A composition that imports `objects3d.js` is an ES module, so it loads over `file://`
+only with `--allow-file-access-from-files` (`render.mjs` and `peek.mjs` pass it) and it declares
+`window.READY = false` in a classic script first and sets it `true` when the module has built its scenes; the
+renderers wait for it. WebGL runs on SwiftShader in the container — under 5 ms a frame for these scenes.
 
 **Alpha.** PNG sequence with alpha, or ProRes 4444 (`yuva444p10le`). The "build on black + Screen
 blend" workaround is retired, here as everywhere else in the repo.

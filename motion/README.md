@@ -76,16 +76,19 @@ All shared, all run from the repo root, all take `<series>/<episode>`:
 | `python3 motion/verify.py print/mg02` | stage 3 — figures audit + the episode's `checks.py` | hard gate, run first |
 | `node motion/peek.mjs print/mg02 9x16 1.2 8.4 …` | the law report and stills at chosen times, tiled into `out/peek/sheet-<ratio>.jpg` | look before a render; run for 9x16, 16x9 and 1x1 — the crops fail differently |
 | `node motion/render.mjs print/mg02 [--ratio 9x16] [--draft]` | law check, frame scan, then every frame of every crop → `out/<ep>-<ratio>.mp4` (silent) | ~6 min for four crops |
-| `node motion/mix.mjs print/mg02` | `data/mix.json` cues + `data/vo.mp3` → `out/mix.m4a`, two-pass loudnorm to −16 LUFS | SFX from `video/library/sfx/` |
-| `python3 motion/captions.py print/mg02` | `data/captions.json` clauses aligned to `data/vo_words.json` → three `.ass` files | Chivo TTF, box captions, above the footer |
+| `node motion/mix.mjs print/mg02` | `data/mix.json` cues + `data/vo.mp3` + the `bed` (ducked under the voice, faded out) → `out/mix.m4a`, two-pass loudnorm to −14 LUFS with a true-peak limiter | SFX from `video/library/sfx/`, beds from `video/library/bgm/` |
+| `python3 motion/captions.py print/mg02` | `data/captions.json` clauses aligned to `data/vo_words.json` → three `.ass` files | Chivo TTF, box captions; a short word Whisper swallowed is skipped, not chased |
+| `motion/lib/objects3d.js` | the 3D objects: `view()`, `terminal()`, `tiles()`, `envelope()` — three.js vendored in `motion/assets/vendor/` | import from the composition; `lib/test3d.html` is the smoke test |
 | `motion/<series>/<ep>/finish.sh` | burn captions (not 16:9), mux the mix, contact sheet, loudness, spike scan, md5 | per episode; copy and change `EP=` |
+
+**Module compositions** (anything importing `objects3d.js`) need `--allow-file-access-from-files`, which `render.mjs` and `peek.mjs` pass, and they set `window.READY` when built; both renderers wait for it. The frame scan no longer requires a `#footer` — v3 compositions have none.
 
 **Board compositions and the frame scan.** A board (one `#board` under a virtual camera) has content off
 the frame by design, so `render.mjs` scans only the station the camera has landed on: the composition
 sets `data-active` on that station's element while the camera is still, and nothing on the board while
 it moves. A ruler that runs off the edge on purpose is marked `data-noscan`. Anything hidden by a
-masked or faded ancestor is not scanned either. `motion/print/mg02/index.html` is the reference: five
-stations, the camera schedule in `CAM`, the perspective tilt on `#tilt`.
+masked or faded ancestor is not scanned either. `motion/print/mg02/index.html` is the reference: four
+stations in a 2×2 and a pull-back, the camera schedule in `CAM`, the perspective tilt on `#tilt`, a 3D canvas per station.
 
 ## `showcase/` — the HyperFrames route, worked through once
 
