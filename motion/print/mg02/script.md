@@ -70,6 +70,11 @@ voice; two-pass loudnorm to −14 LUFS with a true-peak limiter.
 contact `5fd06a04-f8ac-4737-95d7-3d7c81c4f4de.jpg`. Same mix: −14.44 LUFS / −1.37 dBTP, 55.9 s, no single-frame spikes.
 Captions drawn in the picture (16:9 clean), the terminal as one moulding, glass pills and social tiles.
 
+Drive (16 Sep 2026): `NeroPay Ads › 05 - Video Edits (YouTube) › MG02 - The 18-month rule` (folder `1oeHnyT75J2cmSRM_lDyj6bfULDnkAuuC`),
+laid out like B1 — `03 Finished` holds the READ ME with the four links and the filenames to save them under
+("NeroPay MG02 — Reels 9x16 (1080x1920) v6.mp4" and so on), `Exports` holds the master export note. The MP4s themselves
+cannot pass through the Drive connector; Faisal drops them in.
+
 ## Delivered 16 Sep 2026 (v5, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
 
 9:16 `673173ed-8b08-4c49-bb76-4036e76024b5.mp4` · 16:9 `ef4e3c36-ec9c-4217-8a02-95517843f44e.mp4` ·
