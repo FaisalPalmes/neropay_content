@@ -205,8 +205,9 @@ Faisal drops the files in. Name any future export the same way: product, episode
 
 **Drive layout (Faisal, 16 Sep 2026).** `NeroPay Ads › 05 - Video Edits (YouTube)` now holds two main folders, **MERCHANT
 VIDEOS** and **PARTNER VIDEOS**; inside each, one folder per month the video is made in (`09-2026`, `10-2026` …); inside
-each month, one folder per series named as on the content site (Explained by NeroPay · Behind the Counter · The Maths ·
-Small Print; partners: Explained by NeroPay — partners · Partner programme (motion)); inside each series, one folder per
+each month, one folder per kind of video (Explained by NeroPay · Behind the Counter · Motion graphics — Faisal, 16 Sep:
+every motion graphic in one folder, The Maths and Small Print stay separate series on the site only; partners:
+Explained by NeroPay — partners · Motion graphics); inside each kind, one folder per
 video (`B1 - The rate you were quoted`, `MG02 - The 18-month rule`) with `01 Clips in` (presenter) or `01 Script & voice`
 (motion), `02 Test cut`, `03 Finished`, `04 Exports`. B1 and MG02 were moved into it; the READ ME at the root of
 `05 - Video Edits` describes it. A new video gets its folder there before its first export note.

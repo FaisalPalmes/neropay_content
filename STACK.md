@@ -44,7 +44,7 @@ pasted into a conversation is in that conversation's transcript for good.
 |---|---|
 | **ElevenLabs** | `creative_generate_speech` (voiceover), `creative_list_voices`, `creative_design_voice`, `creative_transcribe_audio`, plus image and video generation. **Authenticated and working in a cloud session with no API key and no allowlist change.** |
 | **Higgsfield** | `sandbox_exec` — a sandbox with open internet, where every B1 render happens; `media_upload` / `media_confirm` for delivering an MP4; `generate_video` / `generate_image` / `generate_audio` for the presenter and stills |
-| **Google Drive** | search, read, create files, move and rename; **cannot carry an MP4** — the connector takes text through the tool call, so exports go to Drive as a note with links. Layout since 16 Sep 2026: `05 - Video Edits (YouTube) › MERCHANT VIDEOS / PARTNER VIDEOS › MM-YYYY › series › video › 01–04` (the READ ME there; `video/PLAYBOOK.md` §6) |
+| **Google Drive** | search, read, create files, move and rename; **cannot carry an MP4** — the connector takes text through the tool call, so exports go to Drive as a note with links. Layout since 16 Sep 2026: `05 - Video Edits (YouTube) › MERCHANT VIDEOS / PARTNER VIDEOS › MM-YYYY › kind (Explained / Behind the Counter / Motion graphics) › video › 01–04` (the READ ME there; `video/PLAYBOOK.md` §6) |
 | **Gmail, Google Calendar, Notion** | inbox, scheduling, workspace docs |
 | **Facebook Ads** | the full ads API. `CLAUDE.md` puts paid campaigns in a separate session — **do not build campaigns from a content session**; ad *copy* is fine |
 | **Anthropic Economic Index** | public usage data; not used by this repo |
