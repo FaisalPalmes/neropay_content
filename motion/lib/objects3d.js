@@ -98,6 +98,9 @@ export function tiles(n, { cols = n, size = 1, gap = .18, height = .5, color = C
   const geo = new RoundedBoxGeometry(size, height, size, 3, Math.min(.12, size * .14));
   const m = new THREE.InstancedMesh(geo, mat(color, { roughness:.7 }), n);
   m.castShadow = true; m.receiveShadow = true;
+  /* never cull: the renderer caches the bounding sphere on the first draw, and on that frame every tile is
+     still parked below the ground — a sequential render would then cull the whole run for good */
+  m.frustumCulled = false;
   const rows = Math.ceil(n / cols), pitch = size + gap;
   const ox = -((Math.min(n, cols) - 1) * pitch) / 2, oz = -((rows - 1) * pitch) / 2;
   const M = new THREE.Matrix4(), P = new THREE.Vector3(), Q = new THREE.Quaternion(), S = new THREE.Vector3(1, 1, 1);
