@@ -233,47 +233,65 @@ function contactlessTexture(ink = '#141416') {
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
 
-/* v6, 16 Sep 2026 — the terminal as it is: a standalone slim handheld, no dock, no stand. A white rear shell,
-   a black front frame around the full-height display, a yellow receipt-printer head at the top carrying the
-   contactless symbol and the wordmark, and the wordmark again bottom-left of the front below the screen.
-   Soft geometry: big radii, nothing hard-edged. Stands on its foot with a slight lean back. */
+/* v6, 16 Sep 2026 — the terminal as it is: a standalone slim handheld, no dock, no stand. One body: a single side
+   profile (flat front, rounded foot, a back that swells at the top for the printer, a domed top) extruded across the
+   width with soft ends, then split at the seam line — yellow above, white below — so the head and the body share
+   every curve and read as one moulding. A black frame sits inset on the front around the full-height display,
+   the contactless indicator on the yellow, the wordmark bottom-left of the front. Slight lean back. */
+function clipPoly(pts, keepAbove, y) {
+  /* Sutherland–Hodgman against the line y = const; pts are Vector2 (x = depth z, y = height) */
+  const out = [], inside = p => keepAbove ? p.y >= y : p.y <= y;
+  for (let i = 0; i < pts.length; i++) { const P = pts[i], Q = pts[(i + 1) % pts.length];
+    const pi = inside(P), qi = inside(Q);
+    if (pi) out.push(P);
+    if (pi !== qi) { const t = (y - P.y) / (Q.y - P.y); out.push(new THREE.Vector2(P.x + (Q.x - P.x) * t, y)); } }
+  return out;
+}
 export function neroTerminal({ lean = -6 } = {}) {
   const g = new THREE.Group();
-  const W = 6.4, H = 14.6, D = 1.6, HEAD = 2.5, FD = .42;
+  const W = 6.4, H = 14.6, D = 1.55, HEAD = 2.7, FD = .42, b = .55;
   const white = mat(0xF1F1EE, { roughness:.5 }), black = mat(0x1E1F23, { roughness:.4, metalness:.2 }), yellow = mat(0xF5C518, { roughness:.7 });
   /* the rig's sun is ~3x on an upward face, which blows brand yellow out to white; clamp this material's lit colour
      to a touch above the brand value (linear), so the top reads as the same yellow catching light */
   yellow.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', 'outgoingLight = min(outgoingLight, vec3(1.0, 0.64, 0.024));\n#include <opaque_fragment>'); };
-  /* rear shell, white, the full depth; the black front frame sits on it, a little narrower, so white shows at the sides */
-  const back = new THREE.Mesh(new RoundedBoxGeometry(W, H - 1.2, D, 10, .8), white); back.position.y = -.6; back.castShadow = true; back.receiveShadow = true; g.add(back);   /* its top stays inside the head */
-  const front = new THREE.Mesh(new RoundedBoxGeometry(W - .3, H - HEAD - .3, FD, 8, .3), black); front.position.set(0, -HEAD / 2 - .15, D / 2 - FD / 2 + .02); front.castShadow = true; g.add(front);   /* its top sits under the head's front lip */
-  /* the printer head: yellow, shaped from its side profile — a flat front flush with the frame, a rounded
-     top, and a bulge at the back that tapers down into the white shell. Extruded across the width with a
-     bevel, so the ends are soft too. Nothing on it is a separate block. */
-  const fz = D / 2 + .04, bz = -(D / 2 + 1.0), y0 = H / 2 - HEAD, y1 = H / 2, r = .95, yb = y0 - 1.6, b = .5;
+  /* the side profile, in (z, y): front is +z */
+  const fz = D / 2, bz0 = -D / 2, bz = -(D / 2 + 1.05), yTop = H / 2, yBot = -H / 2, y0 = yTop - HEAD, rb = .75, rt = 1.0;
   const prof = new THREE.Shape();
-  prof.moveTo(fz, y0 - .6); prof.lineTo(fz, y1 - r); prof.quadraticCurveTo(fz, y1 - .1, fz - r, y1 - .04); prof.quadraticCurveTo((fz + bz) / 2, y1 + .22, bz + r, y1 - .04); prof.quadraticCurveTo(bz, y1 - .1, bz, y1 - r);
-  prof.lineTo(bz, y0 - .2); prof.quadraticCurveTo(bz, yb, -D / 2, yb); prof.lineTo(-D / 2, y0 - .6); prof.closePath();
-  const hg = new THREE.ExtrudeGeometry(prof, { depth:W - 2 * b, bevelEnabled:true, bevelThickness:b, bevelSize:b - .02, bevelOffset:-(b - .02), bevelSegments:8, curveSegments:28 });   /* bevelOffset keeps the profile where it is drawn; without it the bevel grows the head outward */
-  hg.rotateY(-Math.PI / 2); hg.computeBoundingBox(); hg.translate(-(hg.boundingBox.max.x + hg.boundingBox.min.x) / 2, 0, 0);
-  const head = new THREE.Mesh(hg, yellow); head.castShadow = true; head.receiveShadow = true; g.add(head);
-  const hz = fz + .012;
-  /* paper slot along the head's bottom front edge, a sliver of receipt showing */
-  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.8, .14), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD - .68, fz + .012); g.add(paper);
-  /* the contactless symbol, large and centred on the head; the wordmark is on the front only (Faisal, 16 Sep) */
+  prof.moveTo(fz, yBot + rb); prof.lineTo(fz, yTop - rt);
+  prof.quadraticCurveTo(fz, yTop - .08, fz - rt, yTop - .03);                /* front-top corner */
+  prof.quadraticCurveTo((fz + bz) / 2, yTop + .2, bz + rt, yTop - .03);      /* domed top */
+  prof.quadraticCurveTo(bz, yTop - .08, bz, yTop - rt);                      /* back-top corner */
+  prof.lineTo(bz, y0 - .2);
+  prof.bezierCurveTo(bz, y0 - 1.6, bz0, y0 - 1.5, bz0, y0 - 2.6);           /* the printer swell eases into the flat back */
+  prof.lineTo(bz0, yBot + rb);
+  prof.quadraticCurveTo(bz0, yBot, bz0 + rb, yBot); prof.lineTo(fz - rb, yBot); prof.quadraticCurveTo(fz, yBot, fz, yBot + rb);
+  prof.closePath();
+  const pts = prof.getPoints(18);
+  const extrude = (poly, grow) => { const sh = new THREE.Shape(poly);
+    const gm = new THREE.ExtrudeGeometry(sh, { depth:W - 2 * b, bevelEnabled:true, bevelThickness:b, bevelSize:b - .02, bevelOffset:-(b - .02) + grow, bevelSegments:8, curveSegments:4 });
+    gm.rotateY(-Math.PI / 2); gm.computeBoundingBox(); gm.translate(-(gm.boundingBox.max.x + gm.boundingBox.min.x) / 2, 0, 0); return gm; };
+  const shell = new THREE.Mesh(extrude(clipPoly(pts, false, y0 + .3), 0), white); shell.castShadow = true; shell.receiveShadow = true; g.add(shell);
+  const head = new THREE.Mesh(extrude(clipPoly(pts, true, y0), .022), yellow); head.castShadow = true; head.receiveShadow = true; g.add(head);
+  /* the print slot: a fine dark line along the seam */
+  const slot = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.6, .09), mat(0x2A2A2E, { roughness:1 })); slot.position.set(0, y0 - .09, fz + .03); g.add(slot);
+  /* the black frame, inset on the front, up to the seam */
+  const frameH = (y0 - .16) - yBot - .25;
+  const front = new THREE.Mesh(new RoundedBoxGeometry(W - .34, frameH, FD, 8, .3), black); front.position.set(0, yBot + .25 + frameH / 2, fz - FD / 2 + .06); front.castShadow = true; g.add(front);
+  const ffz = fz + .06;
+  /* the contactless indicator, large and centred on the yellow */
   const cl = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 2.9 * 380 / 640), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
-  cl.position.set(0, H / 2 - HEAD / 2 - .05, hz); g.add(cl);
-  /* the display: black glass inside the frame, from just under the head to just above the wordmark, the UI in it */
-  const SH = H - HEAD - 1.6, SY = -H / 2 + 1.25 + SH / 2;
-  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .9, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
-  glass.position.set(0, SY, fz + .02); g.add(glass);
-  const UW = W - 1.3, UH = UW * 1280 / 720;
+  cl.position.set(0, y0 + HEAD / 2 + .02, fz + .022 + .012); g.add(cl);
+  /* the display: black glass inside the frame, from just under the seam to just above the wordmark, the UI in it */
+  const SH = frameH - 1.55, SY = yBot + .25 + 1.2 + SH / 2;
+  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .94, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
+  glass.position.set(0, SY, ffz + .02); g.add(glass);
+  const UW = W - 1.34, UH = UW * 1280 / 720;
   const ui = new THREE.Mesh(new THREE.PlaneGeometry(UW, UH), new THREE.MeshStandardMaterial({ map:uiTexture(), roughness:.3, emissive:0xffffff, emissiveIntensity:.5 }));
-  ui.material.emissiveMap = ui.material.map; ui.position.set(0, SY - (SH - UH) / 2 + .02, fz + .075); g.add(ui);
-  const cam = new THREE.Mesh(new THREE.CircleGeometry(.1, 24), mat(0x3A3A3E, { roughness:.3 })); cam.position.set(0, SY + SH / 2 - .28, fz + .075); g.add(cam);
+  ui.material.emissiveMap = ui.material.map; ui.position.set(0, SY - (SH - UH) / 2 + .02, ffz + .075); g.add(ui);
+  const cam = new THREE.Mesh(new THREE.CircleGeometry(.1, 24), mat(0x3A3A3E, { roughness:.3 })); cam.position.set(0, SY + SH / 2 - .28, ffz + .075); g.add(cam);
   /* the wordmark, bottom-left of the front */
   const wm = new THREE.Mesh(new THREE.PlaneGeometry(2.2, .55), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, false, 'left'), transparent:true }));
-  wm.position.set(-W / 2 + .5 + 1.1, -H / 2 + .68, fz + .075); g.add(wm);
+  wm.position.set(-W / 2 + .5 + 1.1, yBot + .25 + .6, ffz + .075); g.add(wm);
   const stand = new THREE.Group();
   g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.set(0, H / 2 * Math.cos(THREE.MathUtils.degToRad(lean)) + .05, 0);
   stand.add(g);
