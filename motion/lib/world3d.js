@@ -30,7 +30,7 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
   stage.appendChild(canvas);
   const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true, preserveDrawingBuffer:true });
   renderer.setPixelRatio(1);
-  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;   /* v5: PCF, not PCFSoft — the soft filter on a full-frame floor was most of the render cost */
   renderer.outputColorSpace = THREE.SRGBColorSpace; renderer.toneMapping = THREE.NoToneMapping;
   renderer.setClearColor(0x000000, 0);
 
@@ -39,7 +39,7 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
   const probe = new THREE.PerspectiveCamera(fov, 1, near, far);   /* for fitting a section's box, without touching the live camera */
   scene.add(new THREE.HemisphereLight(0xffffff, 0xE6E4DD, 1.35));
   const sun = new THREE.DirectionalLight(0xffffff, 2.1); sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 4; sun.shadow.bias = -0.0008;
+  sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 3; sun.shadow.bias = -0.0008;
   Object.assign(sun.shadow.camera, { left:-34, right:34, top:34, bottom:-34, near:1, far:120 });
   scene.add(sun); scene.add(sun.target);
   const fill = new THREE.DirectionalLight(0xFFF4D6, .35); fill.position.set(8, 4, -6); scene.add(fill);

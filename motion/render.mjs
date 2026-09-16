@@ -1,6 +1,6 @@
 /* Shared renderer for every motion graphics series.
  *
- *   node motion/render.mjs <series>/<episode> [--ratio 9x16] [--draft]
+ *   node motion/render.mjs <series>/<episode> [--ratio 9x16] [--draft] [--jpeg]
  *
  * Drives the composition's setFrame(n) and takes one screenshot per frame, then
  * hands the sequence to ffmpeg. The composition owns the timeline; this file
@@ -23,6 +23,7 @@ const target = args[0];
 if (!target) { console.error('usage: node motion/render.mjs <series>/<episode>'); process.exit(1); }
 const only  = args.includes('--ratio') ? args[args.indexOf('--ratio') + 1] : null;
 const draft = args.includes('--draft');
+const jpeg  = args.includes('--jpeg');   /* frames as JPEG q97 instead of PNG: the PNG encode is two-thirds of a full-frame 3D render's cost */
 
 const epDir = resolve(HERE, target);
 const page_ = resolve(epDir, 'index.html');
@@ -141,14 +142,14 @@ for (const [ratio, [W, H]] of Object.entries(CROPS)) {
   process.stdout.write(`\n  ${ratio}  ${W}x${H}  ${total} frames  `);
   for (let n = 0; n < total; n++) {
     await pg.evaluate(f => window.setFrame(f), n); await settle(pg);
-    await stage.screenshot({ path:resolve(frames, String(n).padStart(5,'0') + '.png') });
+    await stage.screenshot(jpeg ? { path:resolve(frames, String(n).padStart(5,'0') + '.jpg'), type:'jpeg', quality:97 } : { path:resolve(frames, String(n).padStart(5,'0') + '.png') });
     if (n % 150 === 0) process.stdout.write('.');
   }
   await pg.close();
 
   const mp4 = resolve(out, `${basename(epDir)}-${ratio}.mp4`);
   execFileSync('ffmpeg', ['-y','-loglevel','error','-framerate',String(fps),
-    '-i', resolve(frames,'%05d.png'),
+    '-i', resolve(frames, jpeg ? '%05d.jpg' : '%05d.png'),
     '-c:v','libx264','-crf', draft ? '26' : '18','-pix_fmt','yuv420p',
     '-movflags','+faststart', mp4], { stdio:'inherit' });
   console.log(` -> ${mp4.replace(resolve(HERE,'..') + '/','')}`);

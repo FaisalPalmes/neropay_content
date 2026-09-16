@@ -217,8 +217,10 @@ all still work. One perspective camera (28° vertical). The rules that come with
   a screenshot taken straight after `setFrame` can carry the blurry raster from mid-flight. `render.mjs` and
   `peek.mjs` wait two animation frames per frame. Spans inside masks carry no `will-change`.
 - The frame scan marks every sign of the current section `data-active` (several elements now, not one).
-- Cost: a full-frame WebGL scene with soft shadows on SwiftShader renders at roughly 1.5 frames a second per
-  process; four crops in parallel take about 20 minutes. Peek first, always.
+- Cost: a full-frame 3D render is about 0.8 s a frame on this box, and two-thirds of that is Playwright's PNG
+  encode, not WebGL (shadows and MSAA barely register; PCF replaces PCFSoft anyway). `render.mjs --jpeg` writes
+  the frames as JPEG q97 and halves the time — use it for review cuts. Crops run *sequentially*: four processes
+  on four cores thrash SwiftShader and finish later than one after another. Peek first, always.
 
 **Every video closes the same way — the house sign-off, v4.** What to do about it (compare), how to reach us
 ("Get a quote in minutes" · MESSAGE US · CALL US · neropay.app), "That's it for today", then the follow line.
