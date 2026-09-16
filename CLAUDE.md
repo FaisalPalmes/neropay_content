@@ -48,6 +48,11 @@ Facebook profile (21 Aug 2026). Refuse and explain if asked to cross one.
   £69/month, SumUp POS Plus £39+VAT). Post L8 corrects this publicly; don't reintroduce the old line.
 - The video pricing story (0.70% flat) differs from the internal 1.30%+15p / 0.80% floor. Open
   question for Eray, listed on `youtube.html`. Don't reconcile it yourself.
+- **One exception, added 14 Sep 2026:** Faisal released the workhorse tier — 1.30% + 8p, no contract —
+  for The Maths episode 1, recorded as `neropay_workhorse_rate` in `figures.json`. Two things about it
+  are still open and are written into that record: the standard above says 1.30% + **15p**, and "no
+  contract" collides with the unanswered question of whether 8p triggers the 18-month agreement.
+  Every other rate stays unstatable. Don't widen this to the terminal price or any other tier.
 
 ## Voice
 
@@ -78,19 +83,24 @@ from here, and folder uploads silently fail there.
 | `videos.js` | Six videos, every shot prompt | No — generated from `generation-pack.md` |
 | `generation-pack.md` | Source of truth for the video series | Yes, then regenerate videos.js |
 | `style.css`, `app.js` | One stylesheet, one script (sketches, filters, motion) | Only for design changes |
-| `*.html` | Six pages — overview, social, youtube, ideas, calendar, rails | Rarely |
+| `*.html` | Seven pages — overview, social, youtube, motion, ideas, calendar, rails | Rarely |
 | `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes, next briefs | **Yes — hand-edited, copy an episode to add one** |
+| `motion.js` | The motion graphics videos as `window.MOTION` — two series, each video with its hook, the audience need it answers (dated, sourced), format, the narrator's performance and the beats. Renders on `motion.html` | **Yes — this is where motion graphics briefs go** |
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
 | `MOTION-SYSTEM.md` | The motion graphics spec — three camera angles, seven overlay archetypes, the BUILD/HOLD/EXIT timing law, alpha compositing. Read it before any overlay or any shot list | Only when Faisal issues a new version |
 | `STACK.md` | What a session has to work with — connectors and how credentials actually reach a session, the committed skills, the toolchain and versions, the licensed resources, what the network reaches. Hand this to a new session first | Keep current — it is dated, and verified facts go stale |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
+| `figures.json` | The figure register for the motion graphics videos — every number one may state, each dated and sourced, plus the blocked ones and why | **Yes — add a record before a figure goes on screen** |
 | `edit/` | The Remotion editor: assembles a finished Explained-by / Behind-the-Counter video from Higgsfield renders using the data above. Run from a terminal, never uploaded through the web page. `edit/README.md` explains it | Yes, when the series edit needs to change |
 | `video/` | The HyperFrames workspace: HTML-authored videos for everything that isn't the fixed series edit — captioning a talking-head clip, overlays on existing footage, motion graphics, stat cards, Reels, a promo. `video/PLAYBOOK.md` is the brief and `video/LESSONS.md` the fault log — read both before any edit; `video/CLAUDE.md` is HyperFrames' own guide; `video/TOOLS.md` is the register of third-party libraries Faisal has saved, each with a verdict; `video/AUDIO.md` is the sound note — the committed sound library, the mix and the beat grid, the voiceover route and what the container can actually reach | Yes — one folder per piece inside it |
-| `.claude/` | Skills (the HyperFrames pack, committed so every session has it) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
+| `motion/` | The motion graphics style — faceless videos built as HTML and rendered frame by frame, one folder per series (`motion/maths/` is the first). `motion/CLAUDE.md` is the style spec, `verify.py` the stage-3 arithmetic gate | Yes — one folder per series, one per episode inside it |
+| `.claude/` | Skills (the HyperFrames pack and the four Caveman token-saving skills, committed so every session has them — `STACK.md` §3 lists them and what `/caveman` may and may not compress) and the session-start hook that installs both toolchains on the web | Only to add or refresh skills |
 
-The two subfolders are deliberate; everything else stays flat.
+The subfolders are deliberate; the root files stay flat. Content Faisal adds by hand still goes in at
+root, because the GitHub web uploader silently skips folders — that reason hasn't gone away, it just
+doesn't apply to anything Claude Code pushes over git.
 
 On `youtube.html` each video is one timeline: presenter shots in yellow, overlays in purple slotted in
 where they start. Keep that for any new video — don't split overlays into their own list. Above the
@@ -312,3 +322,26 @@ guessing.
 
 Short, plain, present tense. "Add October street posts." "Fix statcard contrast in dark mode."
 Push to `main`; Vercel redeploys automatically.
+
+
+---
+
+## Motion graphics — the third video style
+
+`motion/` holds a third style of video, alongside the presenter-led Explained series
+(`generation-pack.md`, B1–B6) and Behind the Counter (`calls.js`): **faceless motion graphics**, built
+as HTML/CSS and rendered frame by frame, with an ElevenLabs voice and Higgsfield used only for short
+texture beats. No presenter, in any of them.
+
+It is a style, not a single series. Each series gets a folder under `motion/` with its own brief —
+`motion/maths/` (The Maths, one number worked out on screen) is the first, and the partner programme
+is scaffolded but blocked on figures. Anything that explains better as an animated diagram than as a
+person talking belongs here.
+
+**The spec is `motion/CLAUDE.md`.** Read it before touching anything in `motion/`, the same way
+`video/CLAUDE.md` governs `video/`; the series brief beside it carries the episode bank. The rails
+above apply unchanged, plus two of the style's own: never name a competitor, and nothing goes on
+screen without a confirmed `figures.json` record.
+
+Not to be confused with `MOTION-SYSTEM.md`, which is the overlay and camera spec for the *presenter*
+videos. The two share a timing law and nothing else.

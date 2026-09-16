@@ -1,0 +1,6 @@
+node_modules/
+*.log
+.hyperframes/
+**/renders/
+**/snapshots/
+**/assets/sfx/

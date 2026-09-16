@@ -89,6 +89,27 @@ and generates media; `/hyperframes-audio` mixes audio already placed in a compos
 `npx hyperframes skills update <name>`; `HYPERFRAMES_SKIP_SKILLS=1` is set so the CLI leaves the
 committed copies alone.
 
+**Caveman** (added 16 Sep 2026, Faisal's ask — to save tokens): four skills from
+[JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) v2.7.0, copied from its MIT-licensed
+`skills/` folder (licence file kept in `.claude/skills/caveman/`):
+
+```
+caveman  caveman-help  caveman-commit  caveman-review
+```
+
+`/caveman` (or "be brief", "less tokens") puts the session's replies into terse mode — articles, filler
+and hedging go, code, commands, figures and error strings stay exact — until "stop caveman";
+`/caveman lite|full|ultra` sets the level and `/caveman-help` is the card. `/caveman-commit` and
+`/caveman-review` are the terse commit-message and code-review forms. Two things to know: the mode
+compresses *chat replies only* — anything persisted (copy in `posts.js`, scripts, docs, commit bodies,
+anything a merchant or a reviewer reads) stays in normal prose, and the rails in `/CLAUDE.md` and
+`rails.html` are never to be "compressed". The rest of the upstream set was left out on purpose:
+`caveman-compress` rewrites memory files such as `CLAUDE.md` into caveman-speak (our rails must stay
+exact and readable), `caveman-stats` and `cavecrew` need the Claude Code hooks and subagent presets of
+the global installer, and `caveman-setup`/`-discover`/`-learn`/`-manage`/`-optimize`/`-evidence-review`
+drive the Caveman Cloud gateway, which we do not use. Refresh by re-copying from the upstream `skills/`
+folder; nothing here is fetched at session start.
+
 ## 4. The toolchain
 
 | Piece | Version / location | Notes |

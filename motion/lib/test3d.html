@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8">
+<style>
+@font-face{font-family:Chivo;src:url(../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800}
+@font-face{font-family:Chivo;src:url(../assets/fonts/chivo-latin-600-normal.woff2)format("woff2");font-weight:600}
+@font-face{font-family:Chivo;src:url(../assets/fonts/chivo-latin-400-normal.woff2)format("woff2");font-weight:400}
+@font-face{font-family:"Martian Mono";src:url(../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700}
+body{margin:0;background:#FBFAF7} .row{display:flex;gap:20px;padding:20px}
+canvas{width:600px;height:700px;background:transparent}
+</style>
+<div class="row"><canvas id="a"></canvas><canvas id="b"></canvas><canvas id="c"></canvas></div>
+<script type="module">
+import { view, neroTerminal, oldTerminal, tiles, envelope } from './objects3d.js';
+await document.fonts.ready;
+await Promise.all(['800 84px Chivo','600 52px Chivo','500 26px Chivo','700 54px "Martian Mono"'].map(f => document.fonts.load(f)));
+const va = view(document.getElementById('a'), { w:600, h:700, span:9.5, elev:18, azim:-28, ty:7 });
+const nt = va.add(neroTerminal()); nt.rotation.y = -.15;
+const vb = view(document.getElementById('b'), { w:600, h:700, span:10.5, elev:18, azim:-28, ty:7.5 });
+const ot = vb.add(oldTerminal()); ot.rotation.y = .18;
+const vc = view(document.getElementById('c'), { w:600, h:700, span:9.5, elev:18, azim:-28, ty:7 });
+const n2 = vc.add(neroTerminal()); n2.rotation.y = .5;
+window.paint = () => { va.render(); vb.render(); vc.render(); };
+window.READY = true;
+</script>

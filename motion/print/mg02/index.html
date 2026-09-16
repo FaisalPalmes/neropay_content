@@ -1,0 +1,348 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Small Print — The 18-month rule</title>
+<style>
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-500-italic.woff2)format("woff2");font-weight:500;font-style:italic;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-400-italic.woff2)format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-600-italic.woff2)format("woff2");font-weight:600;font-style:italic;font-display:block}
+
+:root{ --ground:#FBFAF7; --ink:#141416; --muted:#7C7C82; --line:#DDDCD6; --accent:#F5C518; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000}
+#stage{ position:relative; width:1080px; height:1920px; overflow:hidden; color:var(--ink);
+  background:radial-gradient(120% 90% at 50% 38%, #FDFCFA 0%, var(--ground) 45%, #F1EFE8 100%);
+  font-family:Poppins,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+#src{position:absolute; left:0; top:0; visibility:hidden}   /* signs are authored here and moved into the world on the first render */
+
+/* ---- type ---- */
+.sign{width:0; height:0}
+.sign>.in{position:absolute; left:0; top:0; transform:translateY(-50%); white-space:nowrap}
+.sign>.in.c{transform:translate(-50%,-50%)}
+.shout{font-family:Poppins; font-weight:700; font-size:120px; letter-spacing:-.035em; line-height:1.02; color:var(--ink); white-space:nowrap}
+.kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.serif{font-family:"Source Serif 4",Georgia,serif; font-style:italic; font-weight:400; color:var(--ink); letter-spacing:-.005em; line-height:1.12}
+.mask{display:block; overflow:hidden; padding:.08em .12em .18em 0; margin:-.08em -.12em -.18em 0}
+.mask>span{display:block}
+.hid{opacity:0}
+.hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 62%; background-size:calc(var(--p) * 100%) .42em; padding:0 .04em; margin:0 -.04em}
+.pill{display:inline-block; padding:12px 24px 10px; border:4px solid var(--accent); border-radius:14px; white-space:nowrap; background:var(--ground);
+  font-family:Poppins; font-weight:600; font-size:30px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
+.pill.solid{background:var(--accent); border-color:var(--accent)}
+.lbl{font-family:"Martian Mono",monospace; font-weight:700; font-size:36px; letter-spacing:-.02em; white-space:nowrap; color:var(--ink)}
+.lbl.m{color:var(--muted); font-weight:400}
+
+#q .in{font-size:96px; line-height:1.08; display:flex; flex-wrap:wrap; gap:0 .28em; width:1000px; white-space:normal}
+#q .mask{padding-right:.06em; margin-right:-.06em}
+.aside{font-size:52px; white-space:nowrap}
+
+/* the end card block: one sign, everything in flow */
+#end .in{width:680px; white-space:normal}
+#end .follow .pill{font-size:26px}
+#end .pills{display:flex; gap:16px; margin-top:26px; flex-wrap:wrap}
+#end .url{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.06em; color:var(--muted); margin-top:26px}
+#end .follow{margin-top:56px}
+#end .follow .l{font-size:50px; color:var(--ink)}
+#end .follow .pill{margin-top:16px}
+</style>
+
+<div id="stage">
+  <div id="src">
+    <!-- section 0: the question -->
+    <div class="sign serif" id="q" data-st="S0"><div class="in"></div></div>
+
+    <!-- section 1: the rule -->
+    <div class="sign" id="jan" data-st="S1"><div class="in"><div class="pill hid" style="--rot:-3deg">Since Jan 2023</div></div></div>
+    <div class="sign" id="h1" data-st="S1"><div class="in">
+      <div class="mask"><span class="shout h1a">The <span class="hl" id="hl18">18-month</span></span></div>
+      <div class="mask"><span class="shout h1b">rule.</span></div>
+    </div></div>
+    <div class="sign" id="k1" data-st="S1"><div class="in"><div class="mask"><span class="kick">Payment Systems Regulator · PS22/2</span></div></div></div>
+    <div class="sign" id="p0" data-st="S1"><div class="in c lbl hid">18 months</div></div>
+    <div class="sign" id="p1" data-st="S1"><div class="in c lbl m hid">3 years</div></div>
+    <div class="sign" id="p2" data-st="S1"><div class="in c lbl m hid">4 years</div></div>
+
+    <!-- section 2: in writing, and the switch -->
+    <div class="sign" id="h2" data-st="S2"><div class="in">
+      <div class="mask"><span class="shout h2a">They have to</span></div>
+      <div class="mask"><span class="shout h2b"><span class="hl" id="hlw">write</span> to you.</span></div>
+    </div></div>
+    <div class="sign" id="k2" data-st="S2"><div class="in"><div class="mask"><span class="kick">14 largest providers · from July 2023</span></div></div></div>
+
+    <!-- section 3: one month -->
+    <div class="sign" id="h3" data-st="S3"><div class="in">
+      <div class="mask"><span class="shout h3a">One month's</span></div>
+      <div class="mask"><span class="shout h3b"><span class="hl" id="hln">notice.</span></span></div>
+    </div></div>
+    <div class="sign" id="k3" data-st="S3"><div class="in"><div class="mask"><span class="kick">if you choose to stay</span></div></div></div>
+    <div class="sign" id="one" data-st="S3"><div class="in c"><div class="pill solid hid" style="--rot:-6deg">1 month</div></div></div>
+
+    <!-- section 4: compare -->
+    <div class="sign" id="a1" data-st="S4"><div class="in"><div class="mask"><span class="serif aside">Some deals are fine as they are.</span></div></div></div>
+    <div class="sign" id="a2" data-st="S4"><div class="in"><div class="mask"><span class="serif aside">But you won't know until you compare.</span></div></div></div>
+    <div class="sign" id="h4" data-st="S4"><div class="in">
+      <div class="mask"><span class="shout h4a"><span class="hl" id="hlc">Compare</span> your</span></div>
+      <div class="mask"><span class="shout h4b">rates.</span></div>
+    </div></div>
+    <div class="sign" id="k4" data-st="S4"><div class="in"><div class="mask"><span class="kick">the difference, over a year</span></div></div></div>
+
+    <!-- section 5: the end card -->
+    <div class="sign" id="end" data-st="S5"><div class="in">
+      <div class="mask"><span class="shout e1">Get a quote</span></div>
+      <div class="mask"><span class="shout e2">in <span class="hl" id="hlm">minutes.</span></span></div>
+      <div class="pills"><div class="pill hid" id="msg" style="--rot:-2deg">Message us</div><div class="pill hid" id="call" style="--rot:2deg">Call us</div></div>
+      <div class="mask"><span class="url">neropay.app</span></div>
+      <div class="follow">
+        <div class="mask"><span class="serif l f1">That's it for today.</span></div>
+        <div class="pill solid hid" id="follow" style="--rot:-2deg">Follow for more videos like this</div>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<script>window.READY = false;</script>
+<script src="data/words.js"></script>
+<script type="module">
+import * as THREE from '../../assets/vendor/three.module.js';
+import { neroTerminal, oldTerminal, tiles, envelope, pillars, rise, sink, ease, seg } from '../../lib/objects3d.js';
+import { world, flight, K } from '../../lib/world3d.js';
+await document.fonts.ready;
+await Promise.all(['700 120px Poppins', '600 40px Poppins', '500 26px Poppins', '800 84px Chivo', '700 60px "Martian Mono"', '400 28px "Martian Mono"', 'italic 400 96px "Source Serif 4"'].map(f => document.fonts.load(f)));
+
+const FPS = 30;
+/* ---------------------------------------------------------------------------
+   v5, 16 Sep 2026 — one 3D world. The same Verity take, timings, captions and mix as v4.1; the picture is
+   rebuilt: six sections stand along a route on one paper floor, the type stands in the scene with the
+   objects, and the camera flies from one to the next inside the narrator's breath. Bed underscore-120-a
+   (117.45 bpm, looped at bar 24) from 0; the voice starts on beat 2. Composition time = HEAD + word time.
+--------------------------------------------------------------------------- */
+const BEAT = 60 / 117.45, HEAD = 2 * BEAT, TAIL = 1.6;
+const WORDS = window.WORDS;
+const w = i => HEAD + WORDS[i].s, we = i => HEAD + WORDS[i].e;
+const DURATION = +(we(168) + TAIL).toFixed(3);
+
+const eo = ease.out, eio = ease.inout;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const px = (el, o) => Object.assign(el.style, o);
+function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
+function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = el.style.getPropertyValue('--rot') || '0deg';
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); }
+function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, start, dur)).toFixed(3)); }
+function show(el, on){ el.style.opacity = on ? 1 : 0; }
+
+/* ---- the world and its six sections, along a route that curves away to the left ---- */
+const stage = $('#stage');
+const Wd = world(stage, { fov:28 });
+/* each section's box is what the camera must keep in frame: x across, y up from the floor, z depth (+ toward the camera).
+   The route: every section stands 60 units to the right of the last and the view turns 29 degrees each time, an arc —
+   so at rest a neighbour is beside the frame, never ahead of it, and each flight is a real turn across the floor. */
+const STEP = 60, TURN = -.5;
+let rx = 0, rz = 0, rry = 0;
+const place = spec => { const S = Wd.section({ x:rx, z:rz, ry:rry, ...spec });
+  rx += STEP * Math.cos(rry) + 6 * Math.sin(rry); rz += -STEP * Math.sin(rry) + 6 * Math.cos(rry); rry += TURN; return S; };
+const S0 = place({ az:-22, el:16, box:{ x:[-11, 10.5],   y:[0, 26.5], z:[-4, 6] },  ty:12 });
+const S1 = place({ az:-20, el:18, box:{ x:[-11.5, 12.5], y:[0, 27.5], z:[-4, 4] },  ty:12.5 });
+const S2 = place({ az:-18, el:18, box:{ x:[-12.5, 14],   y:[0, 25.5], z:[-4, 4] },  ty:12 });
+const S3 = place({ az:-16, el:32, box:{ x:[-11, 13.5],   y:[0, 17.5], z:[-9, 10] }, ty:6 });
+const S4 = place({ az:-20, el:18, box:{ x:[-13, 12],     y:[0, 31.5], z:[-4, 10] }, ty:14 });
+const S5 = place({ az:-16, el:16, box:{ x:[-13, 14.5],   y:[0, 16.5], z:[-2, 4] },  ty:8 });
+const SECS = [S0, S1, S2, S3, S4, S5];
+for (const S of SECS) Wd.mat(S.g.position.x, S.g.position.z, S.bw + 6, 30, { ry:S.g.rotation.y });
+for (let i = 1; i < SECS.length; i++) Wd.route(SECS[i - 1].g.position, SECS[i].g.position);
+
+/* section 0 — the question stands over the rented machine */
+const OLD0 = S0.add(oldTerminal()); OLD0.position.set(-4.5, 0, 3); OLD0.rotation.y = .25;
+const Q = ['When', 'does', 'your', 'card', 'machine', 'contract', 'actually', 'end?'];
+$('#q .in').innerHTML = Q.map(x => `<span class="mask"><span>${x}</span></span>`).join('');
+const QW = $$('#q .in .mask > span');
+const QT = [BEAT, w(2), w(3), w(4), w(5), w(6), w(8), w(11)];
+S0.sign($('#q'), { x:-10, y:21.8, z:-4, face:true });
+
+/* section 1 — the rule: three pillars, 18 : 36 : 48, and the cap */
+const BARS = S1.add(pillars([{ h:4.5, color:0xF5C518 }, { h:9, color:0xDEDBD2 }, { h:12, color:0xDEDBD2 }], { w:3, gap:2, depth:3 })); BARS.position.set(3.5, 0, 2);
+S1.sign($('#jan'), { x:-11, y:26.2, z:-4, face:true });
+S1.sign($('#h1'), { x:-11, y:20.2, z:-4, face:true });
+S1.sign($('#k1'), { x:-11, y:15.4, z:-4, face:true });
+const PL = [$('#p0'), $('#p1'), $('#p2')].map((el, i) => { const t = BARS.top(i); return S1.sign(el, { x:t.x + 3.5, y:t.y + 1.4, z:2, face:true }); });
+
+/* section 2 — the letter comes out of the envelope; the old machine sinks, ours rises */
+const ENV = S2.add(envelope({ w:13, h:9 })); ENV.position.set(-6.5, 0, 2);
+const LETTER = letterCard(); ENV.children[0].add(LETTER); LETTER.position.set(0, -3.4, .62);
+const OLD2 = S2.add(oldTerminal()); OLD2.position.set(9.5, 0, -1); OLD2.rotation.y = .2;
+const NEW2 = S2.add(neroTerminal()); NEW2.position.set(9.5, 0, -1); NEW2.rotation.y = -.15;
+S2.sign($('#h2'), { x:-12, y:21.5, z:-4, face:true });
+S2.sign($('#k2'), { x:-12, y:16.6, z:-4, face:true });
+
+/* section 3 — 31 days on the floor, seen from above */
+const MON = S3.add(tiles(31, { cols:7, size:2.4, gap:.55, height:.9, color:0xDEDBD2 })); MON.position.set(0, 0, 1.5);
+S3.sign($('#h3'), { x:-10.5, y:14.2, z:-8, face:true });
+S3.sign($('#k3'), { x:-10.5, y:9.8, z:-8, face:true });
+S3.sign($('#one'), { x:10, y:1.3, z:8, face:true });
+
+/* section 4 — both machines, the asides, and twelve months turning gold */
+const OLD4 = S4.add(oldTerminal()); OLD4.position.set(-7.5, 0, 0); OLD4.rotation.y = .35;
+const NEW4 = S4.add(neroTerminal()); NEW4.position.set(7.5, 0, 0); NEW4.rotation.y = -.3;
+const YEAR = S4.add(tiles(12, { cols:12, size:1.15, gap:.3, height:.5, color:0xDEDBD2 })); YEAR.position.set(0, 0, 8);
+S4.sign($('#a1'), { x:-12.5, y:30.4, z:-4, face:true });
+S4.sign($('#a2'), { x:-12.5, y:28.4, z:-4, face:true });
+S4.sign($('#h4'), { x:-12.5, y:22.2, z:-4, face:true });
+S4.sign($('#k4'), { x:-12.5, y:17.6, z:-4, face:true });
+
+/* section 5 — the end card: our terminal and the offer */
+const NEW5 = S5.add(neroTerminal()); NEW5.position.set(10.5, 0, 1); NEW5.rotation.y = -.4;
+S5.sign($('#end'), { x:-12.5, y:9.5, z:-1, face:true });
+
+/* the letter: a card drawn to a texture — crisp Poppins and mono, the glass look baked in — on a plane
+   inside the envelope, so the envelope's front really does hide it */
+function letterCard(){
+  const c = document.createElement('canvas'); c.width = 1100; c.height = 880; const x = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(11, 8.8), new THREE.MeshBasicMaterial({ map:tex, transparent:true }));
+  m.userData.state = null;
+  m.draw = ({ date = 0, tick = false, sheen = 0 }) => {
+    const key = `${date.toFixed(2)}|${tick}|${sheen.toFixed(2)}`; if (key === m.userData.state) return; m.userData.state = key;
+    x.clearRect(0, 0, 1100, 880);
+    x.save(); x.shadowColor = 'rgba(20,20,22,.22)'; x.shadowBlur = 60; x.shadowOffsetY = 30;
+    x.fillStyle = '#FFFFFF'; x.beginPath(); x.roundRect(40, 30, 1020, 800, 34); x.fill(); x.restore();
+    const g = x.createLinearGradient(40, 30, 1060, 830); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.5, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(250,246,232,1)');
+    x.fillStyle = g; x.beginPath(); x.roundRect(40, 30, 1020, 800, 34); x.fill();
+    x.strokeStyle = 'rgba(20,20,22,.08)'; x.lineWidth = 2; x.beginPath(); x.roundRect(41, 31, 1018, 798, 33); x.stroke();
+    x.textBaseline = 'alphabetic';
+    x.font = '400 40px "Martian Mono"'; x.fillStyle = '#7C7C82'; x.letterSpacing = '5px'; x.fillText('YOUR MINIMUM TERM ENDED ON', 110, 160);
+    x.font = '700 96px "Martian Mono"'; x.letterSpacing = '-3px'; x.fillStyle = date > 0 ? '#141416' : '#9A9A9E'; x.fillText('DD · MM · YYYY', 110, 300);
+    if (date > 0) { x.fillStyle = '#F5C518'; x.beginPath(); x.roundRect(110, 322, 800 * date, 12, 6); x.fill(); }
+    x.font = '600 66px Poppins'; x.letterSpacing = '-1px';
+    x.strokeStyle = tick ? '#F5C518' : '#DDDCD6'; x.lineWidth = 6; x.fillStyle = tick ? '#F5C518' : 'rgba(0,0,0,0)';
+    x.beginPath(); x.roundRect(112, 470, 76, 76, 16); x.fill(); x.stroke();
+    if (tick) { x.fillStyle = '#141416'; x.font = '800 54px Poppins'; x.textAlign = 'center'; x.fillText('✓', 150, 528); x.textAlign = 'left'; x.font = '600 66px Poppins'; }
+    x.fillStyle = tick ? '#141416' : '#7C7C82'; x.fillText('free to switch provider', 220, 530);
+    if (sheen > 0 && sheen < 1) { x.save(); x.beginPath(); x.roundRect(40, 30, 1020, 800, 34); x.clip();
+      const sx = -500 + 2100 * sheen; const sg = x.createLinearGradient(sx, 0, sx + 500, 300); sg.addColorStop(0, 'rgba(255,255,255,0)'); sg.addColorStop(.5, 'rgba(255,255,255,.75)'); sg.addColorStop(1, 'rgba(255,255,255,0)');
+      x.fillStyle = sg; x.fillRect(sx - 200, 0, 900, 880); x.restore(); }
+    tex.needsUpdate = true; };
+  m.draw({}); return m;
+}
+
+/* ---- the flights ---- */
+const CAM = [
+  { t:0,             d:0,   sec:S0 },
+  { t:we(12) + .02,  d:.8,  sec:S1 },   /* after "know about." */
+  { t:we(35) + .02,  d:.8,  sec:S2 },   /* after "not four." */
+  { t:we(70) + .02,  d:.8,  sec:S3 },   /* after "provider." */
+  { t:we(93) + .02,  d:.8,  sec:S4 },   /* after "notice." */
+  { t:we(126) + .02, d:.8,  sec:S5 },   /* after "over a year." */
+];
+const SECN = new Map([[S0, 'S0'], [S1, 'S1'], [S2, 'S2'], [S3, 'S3'], [S4, 'S4'], [S5, 'S5']]);
+
+const BEATS = [
+  { name:'0 question',  t:0,               out:CAM[1].t, words:8  },
+  { name:'1 rule',      t:CAM[1].t + .40,  out:CAM[2].t, words:17 },
+  { name:'2 letter',    t:CAM[2].t + .40,  out:CAM[3].t, words:21 },
+  { name:'3 month',     t:CAM[3].t + .40,  out:CAM[4].t, words:9  },
+  { name:'4 compare',   t:CAM[4].t + .40,  out:CAM[5].t, words:21 },
+  { name:'5 end card',  t:CAM[5].t + .40,  out:DURATION, words:16 },
+];
+const BUILD = 0.55, EXIT = 0.30;
+function lawReport(){
+  return BEATS.map(b => { const need = Math.max(1.5, b.words * 0.4), have = (b.out - b.t) - BUILD - EXIT;
+    return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need }; });
+}
+
+function camState(t){
+  let cur = CAM[0], prev = null;
+  for (const c of CAM){ if (t >= c.t){ prev = cur; cur = c; } }
+  if (cur.d > 0 && t < cur.t + cur.d && prev){
+    const p = eio(seg(t, cur.t, cur.d)), a = prev.sec.pose(), b = cur.sec.pose();
+    const wideR = Wd.fit(a.target.distanceTo(b.target) + 30, 34, 1.0);   /* both sections in one frame at the top of the arc */
+    return { ...flight(a, b, p, { wideR, high:.55 }), moving:p, sec:null, from:prev.sec, to:cur.sec };
+  }
+  const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
+}
+function applyCam(t){
+  const W = stage.clientWidth, H = stage.clientHeight; const sz = Wd.size();
+  if (sz.W !== W || sz.H !== H) Wd.resize(W, H);
+  const c = camState(t);
+  Wd.setCamera(c.pos, c.target, c.R);
+  $$('[data-active]').forEach(e => e.removeAttribute('data-active'));
+  if (c.sec) $$(`[data-st="${SECN.get(c.sec)}"]`).forEach(e => e.setAttribute('data-active', ''));
+  /* a section's type is on screen while the camera is on it, and every section's while the camera is in the air —
+     at rest, a neighbour's heading seen edge-on at the bottom of a 9:16 frame is clutter */
+  const others = Math.min(1, Math.sin(Math.PI * c.moving) * 2.2);
+  const leaving = 1 - seg(c.moving, .6, .4);   /* the section being left stays whole until it is behind the camera */
+  for (const el of $$('.sign')) { const st = el.dataset.st;
+    el.style.opacity = st === SECN.get(c.to) ? 1 : (c.from && st === SECN.get(c.from)) ? leaving : others; }
+  return c;
+}
+
+/* ---- anchors ---- */
+const A = {
+  h1:CAM[1].t + .35, h1b:CAM[1].t + .47, jan:CAM[1].t + .7, k1:w(17), bars:w(21), bar18:w(29), hl18:w(29) + .05, p1:w(32), p2:w(35),
+  h2:CAM[2].t + .35, h2b:CAM[2].t + .47, flap:w(41), k2:w(43), write:w(47), letter:w(47) + .05, date:w(55), tick:w(65), swapOut:w(65), swapIn:w(67),
+  h3:CAM[3].t + .35, h3b:CAM[3].t + .47, mon:CAM[3].t + .3, k3:w(75), wave:w(75), fall:w(79), one:w(91),
+  a1:CAM[4].t + .35, a2:w(101), h4:w(108), h4b:w(108) + .12, hlc:w(108) + .1, cmpOld:CAM[4].t + .3, cmpNew:CAM[4].t + .45, yr:w(118), k4:w(122), gold:w(122),
+  term5:CAM[5].t + .3, e1:w(127), e2:w(127) + .12, hlm:w(136), msg:w(140), call:w(145), url:w(147), f1:w(153), follow:w(160),
+};
+
+function setFrame(n){
+  const t = n / FPS;
+  applyCam(t);
+
+  /* section 0 — the question types in under the first line; the rented machine is there from frame one */
+  QW.forEach((el, i) => maskUp(el, t, QT[i], .38));
+  OLD0.rotation.y = .25 + .04 * Math.sin(t * 1.1);
+
+  /* section 1 — heading, stamp, kicker; two tall pillars for what you might be tied to, then the cap */
+  maskUp($('#h1 .h1a'), t, A.h1, .5); maskUp($('#h1 .h1b'), t, A.h1b, .5); hl($('#hl18'), t, A.hl18);
+  stamp($('#jan .pill'), t, A.jan); maskUp($('#k1 .kick'), t, A.k1);
+  BARS.setRise(1, eo(seg(t, A.bars, .7))); BARS.setRise(2, eo(seg(t, A.bars + .15, .7))); BARS.setRise(0, eo(seg(t, A.bar18, .6)));
+  BARS.setSink(1, ease.in(seg(t, A.p1 + .1, .55))); BARS.setSink(2, ease.in(seg(t, A.p2 + .1, .55)));
+  [[0, A.bar18 + .55, 1e9], [1, A.bars + .65, A.p1 + .1], [2, A.bars + .8, A.p2 + .1]].forEach(([i, on, off]) => {
+    const tp = BARS.top(i); PL[i].position.y = tp.y + 1.4; show(PL[i].element.firstElementChild, t >= on && t < off); });
+
+  /* section 2 — the envelope opens on "up", the letter rises on "write"; the old machine leaves, ours arrives, on "switch" */
+  maskUp($('#h2 .h2a'), t, A.h2, .5); maskUp($('#h2 .h2b'), t, A.h2b, .5); hl($('#hlw'), t, A.write);
+  maskUp($('#k2 .kick'), t, A.k2);
+  ENV.open(eo(seg(t, A.flap, .7)));
+  LETTER.position.y = -3.4 + 6.9 * eo(seg(t, A.letter, .9));
+  LETTER.draw({ date:eo(seg(t, A.date, .35)), tick:t >= A.tick, sheen:seg(t, A.letter + .5, .55) });
+  sink(OLD2, ease.in(seg(t, A.swapOut, .55)), 16); rise(NEW2, eo(seg(t, A.swapIn, .6)), 16);
+
+  /* section 3 — 31 days rise as we land; they ripple on "stay", fall away on "leave"; one stays and turns gold */
+  maskUp($('#h3 .h3a'), t, A.h3, .5); maskUp($('#h3 .h3b'), t, A.h3b, .5); hl($('#hln'), t, A.one);
+  maskUp($('#k3 .kick'), t, A.k3);
+  for (let i = 0; i < 31; i++){ const r = Math.floor(i / 7), cix = i % 7;
+    MON.setProgress(i, eo(seg(t, A.mon + i * .018, .3)));
+    const one = i === 0, gold = seg(t, A.one, .2);
+    MON.setLift(i, 1.0 * Math.sin(Math.PI * seg(t, A.wave + (cix + r) * .045, .45)) + (one ? 1.2 * eo(gold) : 0));
+    MON.setFall(i, one ? 0 : ease.in(seg(t, A.fall + .05 + (cix + r) * .035, .5)));
+    MON.setColor(i, one && gold > 0 ? 0xF5C518 : 0xDEDBD2); }
+  stamp($('#one .pill'), t, A.one);
+
+  /* section 4 — the asides, the heading, both machines, and twelve months turning gold */
+  maskUp($('#a1 .aside'), t, A.a1, .5); maskUp($('#a2 .aside'), t, A.a2, .5);
+  maskUp($('#h4 .h4a'), t, A.h4, .5); maskUp($('#h4 .h4b'), t, A.h4b, .5); hl($('#hlc'), t, A.hlc);
+  rise(OLD4, eo(seg(t, A.cmpOld, .6)), 16); rise(NEW4, eo(seg(t, A.cmpNew, .6)), 16);
+  for (let i = 0; i < 12; i++){ YEAR.setProgress(i, eo(seg(t, A.yr + i * .05, .3))); const g = seg(t, A.gold + i * .09, .15);
+    YEAR.setColor(i, g > 0 ? 0xF5C518 : 0xDEDBD2); YEAR.setLift(i, .4 * Math.sin(Math.PI * seg(t, A.gold + i * .09, .4))); }
+  maskUp($('#k4 .kick'), t, A.k4);
+
+  /* section 5 — our terminal comes up as we land, the offer on "Here", the two ways to reach us, the URL, the sign-off */
+  maskUp($('#end .e1'), t, A.e1, .5); maskUp($('#end .e2'), t, A.e2, .5); hl($('#hlm'), t, A.hlm);
+  stamp($('#msg'), t, A.msg); stamp($('#call'), t, A.call); maskUp($('#end .url'), t, A.url, .45);
+  maskUp($('#end .f1'), t, A.f1, .5); stamp($('#follow'), t, A.follow);
+  rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .05 * Math.sin(t * .9);
+
+  Wd.render();
+}
+window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport; window.BEAT = BEAT; window.HEAD = HEAD;
+window.CAMS = CAM.map(c => ({ t:+c.t.toFixed(3), d:c.d, st:SECN.get(c.sec) }));
+setFrame(0);
+window.READY = true;
+</script>

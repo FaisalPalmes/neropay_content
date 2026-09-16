@@ -1,0 +1,202 @@
+{
+ "duration": 55.862,
+ "head": 1.0217,
+ "vo": "data/vo.mp3",
+ "target": -14,
+ "tp": -1.5,
+ "bed": {
+  "file": "video/library/bgm/underscore-120-a.mp3",
+  "t": 0,
+  "gain": 0.3,
+  "loop_at": 49.042,
+  "duck": {
+   "threshold": 0.025,
+   "ratio": 5,
+   "attack": 12,
+   "release": 420
+  },
+  "fade": 1.4
+ },
+ "cues": [
+  {
+   "sfx": "click-soft",
+   "t": 0.511,
+   "gain": 0.22
+  },
+  {
+   "sfx": "pop",
+   "t": 1.422,
+   "gain": 0.18
+  },
+  {
+   "sfx": "click-soft",
+   "t": 3.642,
+   "gain": 0.2
+  },
+  {
+   "sfx": "whoosh",
+   "t": 4.282,
+   "gain": 0.15
+  },
+  {
+   "sfx": "click-soft",
+   "t": 4.602,
+   "gain": 0.22
+  },
+  {
+   "sfx": "pop",
+   "t": 4.802,
+   "gain": 0.22
+  },
+  {
+   "sfx": "typing",
+   "t": 9.822,
+   "gain": 0.12
+  },
+  {
+   "sfx": "chime",
+   "t": 10.742,
+   "gain": 0.26
+  },
+  {
+   "sfx": "key-press",
+   "t": 12.602,
+   "gain": 0.28
+  },
+  {
+   "sfx": "key-press",
+   "t": 13.982,
+   "gain": 0.28
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 14.322,
+   "gain": 0.15
+  },
+  {
+   "sfx": "click-soft",
+   "t": 14.642,
+   "gain": 0.22
+  },
+  {
+   "sfx": "click",
+   "t": 15.962,
+   "gain": 0.2
+  },
+  {
+   "sfx": "notification",
+   "t": 17.762,
+   "gain": 0.28
+  },
+  {
+   "sfx": "pop",
+   "t": 20.102,
+   "gain": 0.18
+  },
+  {
+   "sfx": "click-soft",
+   "t": 22.922,
+   "gain": 0.22
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 22.972,
+   "gain": 0.16
+  },
+  {
+   "sfx": "sparkle",
+   "t": 23.422,
+   "gain": 0.22
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 25.042,
+   "gain": 0.15
+  },
+  {
+   "sfx": "typing",
+   "t": 25.142,
+   "gain": 0.12
+  },
+  {
+   "sfx": "sparkle",
+   "t": 26.582,
+   "gain": 0.16
+  },
+  {
+   "sfx": "whoosh",
+   "t": 27.792,
+   "gain": 0.16
+  },
+  {
+   "sfx": "chime",
+   "t": 30.762,
+   "gain": 0.22
+  },
+  {
+   "sfx": "pop",
+   "t": 30.862,
+   "gain": 0.2
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 31.902,
+   "gain": 0.15
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 31.952,
+   "gain": 0.22
+  },
+  {
+   "sfx": "click-soft",
+   "t": 32.222,
+   "gain": 0.18
+  },
+  {
+   "sfx": "click-soft",
+   "t": 36.302,
+   "gain": 0.22
+  },
+  {
+   "sfx": "typing",
+   "t": 39.762,
+   "gain": 0.12
+  },
+  {
+   "sfx": "chime",
+   "t": 41.242,
+   "gain": 0.22
+  },
+  {
+   "sfx": "riser",
+   "t": 40.902,
+   "gain": 0.18
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 43.002,
+   "gain": 0.3
+  },
+  {
+   "sfx": "pop",
+   "t": 46.562,
+   "gain": 0.2
+  },
+  {
+   "sfx": "pop",
+   "t": 47.682,
+   "gain": 0.2
+  },
+  {
+   "sfx": "ping",
+   "t": 48.242,
+   "gain": 0.22
+  },
+  {
+   "sfx": "click-soft",
+   "t": 51.962,
+   "gain": 0.22
+  }
+ ]
+}

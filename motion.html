@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion graphics — NeroPay Content</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
+  <nav class="nlinks" aria-label="Pages">
+    <a class="n" href="index.html">Overview</a>
+    <a class="n" href="social.html">Posts</a>
+    <a class="n" href="youtube.html">Videos</a>
+    <a class="n" href="motion.html" aria-current="page">Motion</a>
+    <a class="n" href="ideas.html">Ideas</a>
+    <a class="n" href="calendar.html">Calendar</a>
+    <a class="n" href="rails.html">Rails</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <span class="kicker" id="kick">Motion graphics</span>
+  <h1>Attention first. <em>Explainer second.</em></h1>
+  <p class="lede">Faceless, rendered short-form. Each video opens on a claim the viewer can't ignore, works the number or the rule after it, and concedes a case where they should do nothing. The narrator's performance is written into the brief. Spec and rails: <code>motion/CLAUDE.md</code>; every figure: <code>figures.json</code>.</p>
+  <div class="facts" id="stats"></div>
+</div></section>
+
+<div class="subbar"><div class="wrap"><div class="row" id="tabs">
+  <button class="f" type="button" data-go="all" aria-pressed="true">All</button>
+  <button class="f" type="button" data-go="MATHS">The Maths</button>
+  <button class="f" type="button" data-go="PRINT">Small Print</button>
+  <span class="sep"></span>
+  <button class="f" type="button" data-status="ready" aria-pressed="false">ready</button>
+  <button class="f" type="button" data-status="flagged" aria-pressed="false">flagged</button>
+  <button class="f" type="button" data-status="brief" aria-pressed="false">brief</button>
+</div></div></div>
+
+<div class="wrap">
+<section id="series-list"></section>
+<section><div class="sec-head"><h2>The videos</h2><p class="sec-sub">Hook · the need it answers · the format · the narrator's performance · the beats. Copy a script to take it to the voice.</p></div>
+  <div class="ideas" id="video-list"></div>
+</section>
+</div>
+
+<footer class="foot"><div class="wrap">Every figure on screen has a dated record in <code>figures.json</code>. Nothing here states a rate except the one Faisal released for episode 1. Draft until reviewed.</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="motion.js"></script>
+<script src="app.js"></script>
+<script>
+(function(){
+  var M = window.MOTION, esc = NP.esc;
+  function st(s){ var k = { production: 'ready', ready: 'ready', flagged: 'p', brief: 'd', blocked: 'blocked' }[s] || 'd'; return '<span class="chip ' + k + '">' + esc(s) + '</span>'; }
+  var byS = {}; M.series.forEach(function(s){ byS[s.id] = s; });
+  document.getElementById('stats').innerHTML =
+    '<div><b>' + M.series.length + '</b><span>series</span></div>' +
+    '<div><b>' + M.videos.length + '</b><span>videos briefed</span></div>' +
+    '<div><b>' + M.videos.filter(function(v){ return v.status === 'ready'; }).length + '</b><span>ready to voice</span></div>' +
+    '<div><b>' + M.videos.filter(function(v){ return (v.format === 'board' || v.format === 'world'); }).length + '</b><span>on a board</span></div>' +
+    '<div><b>' + Math.round(M.videos.reduce(function(a, v){ return a + v.secs; }, 0) / M.videos.length) + 's</b><span>average length</span></div>';
+  document.getElementById('kick').textContent = 'Motion graphics · ' + M.videos.length + ' videos · two series · one voice';
+
+  document.getElementById('series-list').innerHTML = M.series.map(function(s){
+    return '<div class="idea big" data-series="' + esc(s.id) + '" data-status="' + esc(s.status) + '"><div class="ih"><span class="sid">' + esc(s.id) + '</span><h3>' + esc(s.name) + '</h3>' + st(s.status) +
+      '<span class="chip p">' + esc(s.pillar) + '</span><span class="chip d">' + esc(s.channel) + '</span></div>' +
+      '<p class="prem">' + esc(s.premise) + '</p>' +
+      '<div class="kv"><div><span class="lbl">Cadence</span><p>' + esc(s.cadence) + '</p></div><div><span class="lbl">Input</span><p>' + esc(s.input) + '</p></div>' +
+      (s.unique ? '<div><span class="lbl">Why only NeroPay can</span><p>' + esc(s.unique) + '</p></div>' : '') + '<div><span class="lbl">Folder</span><p><code>' + esc(s.folder) + '</code></p></div></div></div>';
+  }).join('');
+
+  document.getElementById('video-list').innerHTML = M.videos.map(function(v){
+    var s = byS[v.series] || {};
+    var script = v.shots.map(function(x){ return x.id + ' · ' + x.secs + 's' + (x.camera ? ' · CAMERA: ' + x.camera : '') + '\nSCREEN: ' + x.screen + '\nSAY: ' + x.say; }).join('\n\n');
+    var vo = v.shots.map(function(x){ return x.say; }).join('\n\n');
+    var h = '<div class="idea big video" data-series="' + esc(v.series) + '" data-status="' + esc(v.status) + '"><div class="ih"><span class="sid">' + esc(v.id) + ' · ' + esc(s.name || v.series) + '</span><h3>' + esc(v.title) + '</h3>' + st(v.status) +
+      '<span class="chip d">' + esc(v.ground) + ' · ' + esc(v.format) + '</span><span class="chip d">~' + v.secs + 's</span></div>';
+    h += '<p class="prem say">“' + esc(v.hook) + '”</p>';
+    h += '<div class="kv"><div><span class="lbl">The need</span><p>' + esc(v.need) + '</p></div><div><span class="lbl">Source</span><p>' + esc(v.source) + '</p></div><div><span class="lbl">The concession</span><p>' + esc(v.concession) + '</p></div>' +
+      (v.board ? '<div><span class="lbl">The board</span><p>' + esc(v.board) + '</p></div>' : '') +
+      '<div><span class="lbl">Higgsfield</span><p>' + esc(v.higgsfield) + '</p></div></div>';
+    if (v.blocked) h += '<div class="note warn"><b>Before publish</b>' + esc(v.blocked) + '</div>';
+    if (v.build) h += '<div class="note"><b>Build</b>' + esc(v.build) + '</div>';
+    if (v.cta) h += '<div class="note"><b>CTA</b>' + esc(v.cta) + '</div>';
+    h += '<div class="note"><b>Narrator · ' + esc(v.narrator.model) + '</b><p><span class="lbl">Energy</span> ' + esc(v.narrator.energy) + '</p><p><span class="lbl">Tags</span> ' + esc(v.narrator.tags) + '</p><p><span class="lbl">The hits</span> <span class="mono">' + esc(v.narrator.hits) + '</span></p></div>';
+    h += '<div class="scroller"><table class="t"><thead><tr><th>Beat</th><th>Secs</th><th>On screen</th><th>Say</th>' + ((v.format === 'board' || v.format === 'world') ? '<th>Camera</th>' : '') + '</tr></thead><tbody>' +
+      v.shots.map(function(x){ return '<tr><td>' + esc(x.id) + '</td><td class="num">' + x.secs + '</td><td>' + esc(x.screen) + '</td><td>“' + esc(x.say) + '”</td>' + ((v.format === 'board' || v.format === 'world') ? '<td>' + esc(x.camera || '') + '</td>' : '') + '</tr>'; }).join('') + '</tbody></table></div>';
+    h += '<div class="btns"><button class="cp" type="button" data-text="' + NP.stash(script) + '">Copy the script</button><button class="cp" type="button" data-text="' + NP.stash(vo) + '">Copy the voice lines only</button></div>';
+    h += '<p class="small" style="margin-top:10px;color:var(--muted)">Figures: <span class="mono">' + esc(v.figures.join(' · ')) + '</span></p>';
+    return h + '</div>';
+  }).join('');
+
+  var tabs = document.getElementById('tabs'), go = 'all', status = null;
+  function apply(){
+    document.querySelectorAll('[data-series]').forEach(function(c){ c.hidden = !((go === 'all' || c.dataset.series === go) && (!status || c.dataset.status === status || !c.classList.contains('video'))); });
+    tabs.querySelectorAll('[data-go]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.go === go ? 'true' : 'false'); });
+    tabs.querySelectorAll('[data-status]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.status === status ? 'true' : 'false'); });
+    document.querySelectorAll('[data-rv]').forEach(function(el){ el.classList.add('in'); });
+  }
+  tabs.addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; if (b.dataset.go) go = b.dataset.go; else if (b.dataset.status) status = status === b.dataset.status ? null : b.dataset.status; apply(); });
+  apply();
+  function navh(){ var nv = document.querySelector('.nav'); if (nv) document.documentElement.style.setProperty('--navh', nv.offsetHeight + 'px'); }
+  navh(); window.addEventListener('resize', navh);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{
+ "duration": 46.4,
+ "head": 3.0,
+ "cues": [
+  {
+   "sfx": "impact-bass-1",
+   "t": 1.0,
+   "gain": 0.45
+  },
+  {
+   "sfx": "click-soft",
+   "t": 8.06,
+   "gain": 0.28
+  },
+  {
+   "sfx": "click-soft",
+   "t": 9.22,
+   "gain": 0.28
+  },
+  {
+   "sfx": "click-soft",
+   "t": 12.42,
+   "gain": 0.28
+  },
+  {
+   "sfx": "click-soft",
+   "t": 14.52,
+   "gain": 0.28
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 16.22,
+   "gain": 0.3
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 18.62,
+   "gain": 0.3
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 24.44,
+   "gain": 0.3
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 25.24,
+   "gain": 0.3
+  },
+  {
+   "sfx": "chime",
+   "t": 30.24,
+   "gain": 0.4
+  }
+ ]
+}
