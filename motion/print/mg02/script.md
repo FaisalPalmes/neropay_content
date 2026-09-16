@@ -1,6 +1,6 @@
 # MG02 — The 18-month rule · Small Print
 
-v4, 16 September 2026. Script rewritten with Faisal line by line (drafts 1 and 2 in the session): plain,
+v5, 16 September 2026: the v4 script and take, the picture rebuilt as one 3D world (see *World and camera*). v4, 16 September 2026. Script rewritten with Faisal line by line (drafts 1 and 2 in the session): plain,
 educational, nothing forced, a question on screen under the opening line, an ending that asks the viewer to
 act, and the sign-off shape every video will share — what to do, how to reach us, "that's it for today", follow.
 
@@ -38,22 +38,25 @@ screen's status line, nothing louder. `oldTerminal()` is a generic older machine
 LCD, rubber keys, a paper slot — for "the one you're tied to". No maker's name anywhere, nothing that identifies a
 competitor, and the maker of our own hardware is not named in any file.
 
-## Board and camera
+## World and camera — v5
 
-| Station | Board centre | What happens | Lands |
+One three.js scene: a paper floor, a mat under each section, a pencil-line route between them, the objects on
+the mats and the type standing in the scene as CSS3D signs. Six sections on an arc, each 60 units to the right of
+the last with the view turning 29°. The camera is fitted to each section's box per crop, and between sections it
+climbs and pulls back to a wide view of both, then settles — 0.8 s, inside the narrator's breath.
+
+| Section | View | What happens | Lands |
 |---|---|---|---|
-| S0 question | 800, 780 | *When does your card machine contract actually end?* types in word by word under the first line; the old machine drops in beside it | 0 s |
-| S1 rule | 2500, 780 | **The 18-month rule.** with a highlighter stroke behind "18-month" on "eighteen" · SINCE JAN 2023 stamp · PSR · PS22/2 kicker · three pillars: 3 years and 4 years rise on "tie you in", 18 months rises gold on "eighteen", the two tall ones sink on "not three years" and "not four" | beat 8 (4.36 s) |
-| S2 letter | 1025, 2280 | **They have to write to you.** · 14 largest providers · from July 2023 · the envelope lands on "When", opens on "up", the glass letter rises on "write": *Your minimum term ended on DD·MM·YYYY* (underline on "date"), ✓ *free to switch provider* on "switch" · the old machine slides out on "switch", ours slides in on "another" | 15.0 s |
-| S3 month | 2900, 2280 | **One month's notice.** · *if you choose to stay* · 31 day tiles drop in, ripple on "stay", fall away on "leave"; the 1 MONTH pill and the highlighter on "notice" on "one month's" | 26.6 s |
-| S4 compare | 1350, 3880 | *Some deals are fine as they are.* / *But you won't know until you compare.* · **Compare your rates.** · both machines side by side on "Comparing terminal rates" · twelve month tiles turn gold in a run on "adds up over a year", kicker *the difference, over a year* | beat 66 (33.85 s) |
-| End card | stage | the NeroPay terminal drops in on "Here" · **Get a quote in minutes.** · MESSAGE US · CALL US pills on the words · neropay.app · *That's it for today.* · FOLLOW FOR MORE VIDEOS LIKE THIS on "follow" | 46.4 s |
+| S0 question | az −22°, el 16° | *When does your card machine contract actually end?* types in word by word, standing over the old machine, which is there from frame one | 0 s |
+| S1 rule | az −20°, el 18° | **The 18-month rule.** with the highlighter on "eighteen" · SINCE JAN 2023 stamp · PSR · PS22/2 kicker · three pillars on the mat: 3 years and 4 years grow on "tie you in", 18 months grows gold on "eighteen", the two tall ones sink on "not three years" and "not four"; labels stand on their tops | 5.1 s |
+| S2 letter | az −18°, el 18° | **They have to write to you.** · 14 largest providers · from July 2023 · the envelope's flap swings back on "up", the letter (a card drawn to a texture) rises out of it on "write": *Your minimum term ended on DD·MM·YYYY* (underline on "date"), ✓ *free to switch provider* on "switch" · the old machine sinks into the paper on "switch", ours rises on "another" | 15.1 s |
+| S3 month | az −16°, el 32° | **One month's notice.** · *if you choose to stay* · 31 day tiles rise out of the mat as the camera lands, ripple on "stay", fall away on "leave"; one stays and turns gold, the 1 MONTH pill stamps beside the grid on "one month's" | 25.8 s |
+| S4 compare | az −20°, el 18° | *Some deals are fine as they are.* / *But you won't know until you compare.* · **Compare your rates.** · both machines rise as the camera lands · twelve month tiles turn gold in a run on "adds up over a year", kicker *the difference, over a year* | 32.7 s |
+| S5 end card | az −16°, el 16° | our terminal rises as the camera lands · **Get a quote in minutes.** on "Here" · MESSAGE US · CALL US pills on the words · neropay.app · *That's it for today.* · FOLLOW FOR MORE VIDEOS LIKE THIS on "follow" | 43.6 s |
 
-Only the station the camera is on is drawn (the one it is leaving fades over the move), so nothing from a
-neighbouring station peeks into the 16:9 frame. No masthead, no footer, no episode number. v4.1: nothing enters
-from above a canvas any more — the old machine sinks into the paper and ours rises out of it on "switch", both
-machines rise as the camera lands on compare, the tiles rise, the tallest pillar fits the frame; headings are up
-when the camera lands; Poppins throughout; camera moves are half a second.
+At rest only the current section's type is on screen; in the air every section's is, so the wide view reads as
+the map of the whole piece. Nothing enters from above; everything that appears comes up out of the paper, and the
+floor is solid to the depth buffer so what is below it is gone. No masthead, no footer, no episode number.
 
 ## Sound
 

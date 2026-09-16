@@ -181,10 +181,44 @@ second and start just after the last word. The heading and stamp of a station ar
 the first word of the opening question is on beat 1, and no frame is ever type-only for long — a station always
 has its object on it.
 
-**Stations are drawn only while the camera is on them.** The board hides every station except the current one
+**Stations are drawn only while the camera is on them (v4 board; v5 keeps the rule for type, see below).** The board hides every station except the current one
 and the one being left (which fades over the move), so a neighbour never peeks into the wide crop and the frame
 scan sees what the viewer sees. A **highlighter** stroke (`.hl`, a marker drawn behind the word the voice is
 hitting) joins the motion vocabulary; the masthead is gone altogether.
+
+**One world, and the camera travels — v5, 16 Sep 2026.** Faisal's direction after v4.1: keep the script, change
+the picture — "that 3D environment vibe, where the camera looks like it's travelling from one section to another".
+So the board is gone. An episode is one three.js scene (`motion/lib/world3d.js`): a paper floor, a mat under each
+section, the objects standing on the mats, and the type standing in the scene with them — DOM signs placed by the
+CSS3D renderer under a transparent WebGL layer, so the type stays crisp Poppins and the highlighter, masks and pills
+all still work. One perspective camera (28° vertical). The rules that come with it:
+
+- **Sections sit along a route**, each 60 units to the right of the last with the view turning 29° — an arc drawn
+  on the floor as a pencil line between the mats. At rest a neighbour is *beside* the frame, never ahead of it,
+  because a 9:16 frame at 18° elevation sees a long way ahead and anything up the route would be in shot.
+- **Each section declares its box** (x across, y up from the floor, z depth) and the camera is fitted to it
+  numerically per crop — the nearest position on the section's view ray that keeps all eight corners in frame
+  with the margin. Elevation, depth and perspective are all in that search; the old bw/bh fit clipped 16:9.
+- **A flight is a journey, not a slide.** Between sections the target slides across, the camera climbs and pulls
+  back to a wide view that holds both sections (`flight()`, `wideR` = the distance that frames them), then settles.
+  0.8 s, eased in-out, starting just after the last word; the next heading rises mid-flight so it is up on landing.
+  In the air every section's type is on screen — that wide view is the map of the world; at rest only the current
+  section's type is (a neighbour's heading seen edge-on at the bottom of a 9:16 frame is clutter).
+- **The floor is solid to the depth buffer and invisible to the eye.** A transparent ground hides nothing in
+  perspective — the tiles parked at −40 showed through the paper. `world3d.js` draws a colour-less occluder at
+  floor level, so `rise()` and `sink()` still mean what they say and everything below the paper is gone.
+- **Nothing on the floor may paint over type.** The WebGL layer sits *over* the CSS one, so mats and the route are
+  DOM planes in the CSS layer, not meshes; the WebGL layer carries only objects and their shadows. Signs stand
+  behind the objects of their section, and anything low (a pill on the floor, a kicker) sits beside the objects,
+  never behind them on screen.
+- **The letter is a texture**, drawn to a canvas (Poppins and mono, the glass look baked in) on a plane inside the
+  envelope, so the envelope's front really hides it and the flap swings *back*, away from the camera.
+- **Settle before you shoot.** The compositor re-rasters a 3D-transformed sign a frame after its transform changes;
+  a screenshot taken straight after `setFrame` can carry the blurry raster from mid-flight. `render.mjs` and
+  `peek.mjs` wait two animation frames per frame. Spans inside masks carry no `will-change`.
+- The frame scan marks every sign of the current section `data-active` (several elements now, not one).
+- Cost: a full-frame WebGL scene with soft shadows on SwiftShader renders at roughly 1.5 frames a second per
+  process; four crops in parallel take about 20 minutes. Peek first, always.
 
 **Every video closes the same way — the house sign-off, v4.** What to do about it (compare), how to reach us
 ("Get a quote in minutes" · MESSAGE US · CALL US · neropay.app), "That's it for today", then the follow line.

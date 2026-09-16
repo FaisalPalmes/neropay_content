@@ -144,7 +144,7 @@ export function envelope({ w = 13, h = 9, lean = -14 } = {}) {
   inner.position.z = -.01; const hinge = new THREE.Group(); hinge.position.set(0, h / 2, t / 2 + .05); hinge.add(flap); hinge.add(inner); g.add(hinge);
   const stand = new THREE.Group(); stand.add(g); g.position.set(0, h / 2 + .6, 0); g.rotation.x = THREE.MathUtils.degToRad(lean);
   return Object.assign(stand, {
-    open(p) { hinge.rotation.x = -THREE.MathUtils.degToRad(128) * p; },
+    open(p) { hinge.rotation.x = THREE.MathUtils.degToRad(128) * p; },   /* v5: swings back, away from the camera, so a letter in front of it is never hidden */
     /* the front panel's top edge, world space */
     frontTop() { const y = -h * .19 + h * .31, z = t + .9 + t / 2; const L = new THREE.Vector3(-w / 2, y, z), R = new THREE.Vector3(w / 2, y, z);
       g.updateWorldMatrix(true, false); return [L.applyMatrix4(g.matrixWorld), R.applyMatrix4(g.matrixWorld)]; },

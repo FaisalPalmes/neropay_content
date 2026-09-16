@@ -57,7 +57,7 @@
     '<div><b>' + M.series.length + '</b><span>series</span></div>' +
     '<div><b>' + M.videos.length + '</b><span>videos briefed</span></div>' +
     '<div><b>' + M.videos.filter(function(v){ return v.status === 'ready'; }).length + '</b><span>ready to voice</span></div>' +
-    '<div><b>' + M.videos.filter(function(v){ return v.format === 'board'; }).length + '</b><span>on a board</span></div>' +
+    '<div><b>' + M.videos.filter(function(v){ return (v.format === 'board' || v.format === 'world'); }).length + '</b><span>on a board</span></div>' +
     '<div><b>' + Math.round(M.videos.reduce(function(a, v){ return a + v.secs; }, 0) / M.videos.length) + 's</b><span>average length</span></div>';
   document.getElementById('kick').textContent = 'Motion graphics · ' + M.videos.length + ' videos · two series · one voice';
 
@@ -83,8 +83,8 @@
     if (v.build) h += '<div class="note"><b>Build</b>' + esc(v.build) + '</div>';
     if (v.cta) h += '<div class="note"><b>CTA</b>' + esc(v.cta) + '</div>';
     h += '<div class="note"><b>Narrator · ' + esc(v.narrator.model) + '</b><p><span class="lbl">Energy</span> ' + esc(v.narrator.energy) + '</p><p><span class="lbl">Tags</span> ' + esc(v.narrator.tags) + '</p><p><span class="lbl">The hits</span> <span class="mono">' + esc(v.narrator.hits) + '</span></p></div>';
-    h += '<div class="scroller"><table class="t"><thead><tr><th>Beat</th><th>Secs</th><th>On screen</th><th>Say</th>' + (v.format === 'board' ? '<th>Camera</th>' : '') + '</tr></thead><tbody>' +
-      v.shots.map(function(x){ return '<tr><td>' + esc(x.id) + '</td><td class="num">' + x.secs + '</td><td>' + esc(x.screen) + '</td><td>“' + esc(x.say) + '”</td>' + (v.format === 'board' ? '<td>' + esc(x.camera || '') + '</td>' : '') + '</tr>'; }).join('') + '</tbody></table></div>';
+    h += '<div class="scroller"><table class="t"><thead><tr><th>Beat</th><th>Secs</th><th>On screen</th><th>Say</th>' + ((v.format === 'board' || v.format === 'world') ? '<th>Camera</th>' : '') + '</tr></thead><tbody>' +
+      v.shots.map(function(x){ return '<tr><td>' + esc(x.id) + '</td><td class="num">' + x.secs + '</td><td>' + esc(x.screen) + '</td><td>“' + esc(x.say) + '”</td>' + ((v.format === 'board' || v.format === 'world') ? '<td>' + esc(x.camera || '') + '</td>' : '') + '</tr>'; }).join('') + '</tbody></table></div>';
     h += '<div class="btns"><button class="cp" type="button" data-text="' + NP.stash(script) + '">Copy the script</button><button class="cp" type="button" data-text="' + NP.stash(vo) + '">Copy the voice lines only</button></div>';
     h += '<p class="small" style="margin-top:10px;color:var(--muted)">Figures: <span class="mono">' + esc(v.figures.join(' · ')) + '</span></p>';
     return h + '</div>';

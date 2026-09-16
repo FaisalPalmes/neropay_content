@@ -47,7 +47,7 @@ window.MOTION = {
         { id: 'MG01-6', secs: 7, screen: 'End card on the board\'s empty corner: NERO white / PAY yellow · serif: Under £20 a sale? Stay put. · neropay.app · the source footer.', say: 'Our rate isn\'t one number. It depends what you sell things for. [warmly] So work that out before anyone quotes you anything. Us included.', camera: 'Still' }
       ] },
 
-    { id: 'MG02', series: 'PRINT', title: 'The 18-month rule.', status: 'production', ground: 'white', format: 'board', secs: 61,
+    { id: 'MG02', series: 'PRINT', title: 'The 18-month rule.', status: 'production', ground: 'white', format: 'world', secs: 56,
       build: 'motion/print/mg02/ — v4, 16 Sep 2026: script rewritten with Faisal, Verity take 58.7 s, the NeroPay terminal modelled from the product photos and a generic old machine for the switch, five stations, looped bed, contact and follow CTAs; four crops, awaiting review',
       hook: 'If you rent your card machine, there\'s a rule you should know about. (On screen: When does your card machine contract actually end?)',
       need: 'Since July 2023 the fourteen biggest acquirers must send a "your minimum term is ending, shop around" message, and terminal leases are capped at 18 months then 31-day rolling. Most owner-operators have never heard this.',

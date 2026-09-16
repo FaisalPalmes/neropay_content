@@ -14,6 +14,8 @@ import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+/* a 3D-transformed sign is re-rastered by the compositor a frame after its transform changes; two animation frames settle it */
+const settle = pg => pg.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
 const CROPS = { '16x9':[1920,1080], '9x16':[1080,1920], '4x5':[1080,1350], '1x1':[1080,1080] };
 
 const args = process.argv.slice(2);
@@ -85,10 +87,10 @@ const browser = await chromium.launch({ executablePath, args:['--allow-file-acce
         /* board compositions mark the station the camera has landed on with data-active;
            only that station's content is scanned. Between beats (camera moving) nothing on
            the board is active and only stage-level layers are checked. */
-        const active = document.querySelector('[data-active]');
+        const active = [...document.querySelectorAll('[data-active]')];   /* v5 worlds mark every sign of the current section */
         for (const el of document.querySelectorAll('#stage *')) {
           if (el.id === 'footer' || el.closest('#footer') || el.id === 'cut') continue;
-          if (el.closest('#board') && !(active && active.contains(el))) continue;
+          if (el.closest('#board') && !active.some(a => a.contains(el))) continue;
           if (el.closest('[data-noscan]')) continue;   /* a ruler that runs off the edge by design */
           /* .layer boxes are inset:0 by design — only leaf content can overflow */
           if (el.classList.contains('layer') || el.children.length) continue;
@@ -138,7 +140,7 @@ for (const [ratio, [W, H]] of Object.entries(CROPS)) {
 
   process.stdout.write(`\n  ${ratio}  ${W}x${H}  ${total} frames  `);
   for (let n = 0; n < total; n++) {
-    await pg.evaluate(f => window.setFrame(f), n);
+    await pg.evaluate(f => window.setFrame(f), n); await settle(pg);
     await stage.screenshot({ path:resolve(frames, String(n).padStart(5,'0') + '.png') });
     if (n % 150 === 0) process.stdout.write('.');
   }
