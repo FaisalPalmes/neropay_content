@@ -256,6 +256,12 @@ only with `--allow-file-access-from-files` (`render.mjs` and `peek.mjs` pass it)
 `window.READY = false` in a classic script first and sets it `true` when the module has built its scenes; the
 renderers wait for it. WebGL runs on SwiftShader in the container — under 5 ms a frame for these scenes.
 
+**A 3D gotcha peeks cannot catch.** three.js caches an instanced mesh's bounding sphere on its first draw. A
+run of tiles first drawn while every tile is parked below the ground (a camera move into the station) is then
+culled for the rest of a sequential render — the stills look right, the video has no tiles. `tiles()` sets
+`frustumCulled = false`; do the same for anything that starts off-frame, and after any 3D change walk the timeline
+in one page before trusting a peek (the contact sheet from `finish.sh` is where this one showed).
+
 **Alpha.** PNG sequence with alpha, or ProRes 4444 (`yuva444p10le`). The "build on black + Screen
 blend" workaround is retired, here as everywhere else in the repo.
 
