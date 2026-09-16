@@ -20,6 +20,14 @@ pop (chips and tags), sparkle (bars rising), click-soft (checklist).
 "Tropicorp Advertisement" by Nancy_Sinclair, CC0, https://freesound.org/apiv2/sounds/561190/ — 82 bpm; the
 build cuts it into `music-intro` (5.4 s) and `music-outro` (18.6 s) with baked fades.
 
+## Kenney SFX — bundled with the `/brag` skill (CC0, https://kenney.nl/)
+
+`.claude/skills/brag/assets/sfx/` carries Kenney's casino, impact, interface and ui packs plus the
+opengameart keyboard set (unicae_games, CC0). Public domain: commercial use, no attribution. Used in
+`video/brag-output/` (16 Sep 2026): impactSoft_medium_001 / _003, card-slide-1, card-place-1, drop_001,
+impactBell_heavy_000. The five ende.app music tracks that ship upstream are **not** in this repo — no verified
+licence — so nothing from that set may be used until one is documented here.
+
 ## Voiceover — the same rule, a different source
 
 A generated voiceover is a sound file in a NeroPay video and gets a ledger line like any other: the provider,

@@ -5,3 +5,7 @@ out/
 **/assets/clips/
 **/snapshots/
 **/renders/
+
+# /brag output: keep the plan, brief, composition and poster; renders and copied music stay out
+brag-output/*.mp4
+brag-output/composition/assets/music/

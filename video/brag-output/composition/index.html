@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Chivo";font-weight:500;src:url(assets/fonts/chivo-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Chivo";font-weight:700;src:url(assets/fonts/chivo-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Chivo";font-weight:900;src:url(assets/fonts/chivo-latin-900-normal.woff2) format("woff2")}
+@font-face{font-family:"Martian Mono";font-weight:400;src:url(assets/fonts/martian-mono-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Martian Mono";font-weight:500;src:url(assets/fonts/martian-mono-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Source Serif 4";font-weight:400;src:url(assets/fonts/source-serif-4-latin-400-normal.woff2) format("woff2")}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#0E0E10}
+body{font-family:"Chivo",system-ui,sans-serif;color:#F4F3F0;-webkit-font-smoothing:antialiased}
+#root{position:relative;width:1920px;height:1080px;background:#0E0E10}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.013) 1px,transparent 1px);background-size:64px 64px}
+.scene{position:absolute;inset:0;padding:120px;opacity:0;visibility:hidden}
+.mono{font-family:"Martian Mono",monospace;font-weight:500;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:#7D7B84}
+.mono b{color:#F5C518;font-weight:500}
+.hide{opacity:0;visibility:hidden}
+/* scene 1 */
+#s1 .kicker{position:absolute;left:120px;top:300px}
+#s1 .h{position:absolute;left:116px;top:372px;font-weight:900;font-size:132px;line-height:1.02;letter-spacing:-.035em}
+#s1 .h .l{display:block}
+#s1 .h .l.two{color:#F5C518}
+#s1 .rule{position:absolute;left:120px;top:812px;width:560px;height:4px;background:#F5C518;transform-origin:0 50%;transform:scaleX(0)}
+/* scene 2 */
+#s2 .lbl{position:absolute;left:120px;top:150px}
+#s2 .cards{position:absolute;left:120px;top:250px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.card{background:#16161A;border:1px solid #24242A;border-radius:22px;padding:38px 40px 40px;height:294px;box-shadow:0 1px 2px rgba(0,0,0,.5),0 10px 30px -14px rgba(0,0,0,.8)}
+.card .ht{display:block;font-weight:700;font-size:42px;letter-spacing:-.02em;color:#F4F3F0;margin-bottom:14px}
+.card .hd{display:block;font-family:"Source Serif 4",Georgia,serif;font-size:25px;line-height:1.42;color:#B8B6B1;min-height:110px}
+.card .hm{display:block;margin-top:14px;font-family:"Martian Mono",monospace;font-size:17px;letter-spacing:.08em;color:#F5C518}
+/* scene 3 */
+#s3 .strip{position:absolute;left:120px;right:120px;top:380px;display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+#s3 .strip div{border-top:1px solid #24242A;padding-top:26px}
+#s3 .strip b{display:block;font-weight:900;font-size:168px;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+#s3 .strip span{display:block;margin-top:16px;font-family:"Martian Mono",monospace;font-size:20px;letter-spacing:.14em;text-transform:uppercase;color:#7D7B84}
+#s3 .sw{position:absolute;left:0;right:0;top:400px;text-align:center}
+#s3 .toggle{display:inline-flex;align-items:center;gap:34px;padding:22px 42px;border:1px solid #3A3A44;border-radius:999px;background:#16161A}
+#s3 .toggle .t{font-family:"Martian Mono",monospace;font-weight:500;font-size:44px;letter-spacing:.12em;color:#7D7B84}
+#s3 .toggle .t.on{color:#F4F3F0}
+#s3 .pill{position:relative;width:150px;height:74px;border-radius:999px;background:#1C1C21;border:1px solid #3A3A44}
+#s3 .pill i{position:absolute;top:6px;left:6px;width:60px;height:60px;border-radius:50%;background:#F5C518}
+#s3 .sen{margin-top:70px;font-family:"Source Serif 4",Georgia,serif;font-size:58px;color:#F4F3F0;letter-spacing:-.01em}
+/* scene 4 */
+#s4 .quote{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;padding:0 140px;text-align:center;font-family:"Source Serif 4",Georgia,serif;font-size:60px;line-height:1.35;color:#F4F3F0}
+#s4 .final{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.wm{font-weight:900;font-size:150px;letter-spacing:-.04em;line-height:1;white-space:nowrap}
+.wm .ch{display:inline-block}
+.wm .pay .ch{color:#F5C518}
+.wm .ct{color:#7D7B84;font-weight:500;font-size:64px;letter-spacing:-.02em;margin-left:22px;vertical-align:8px}
+#s4 .tag{margin-top:38px}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="brag" data-start="0" data-duration="21" data-width="1920" data-height="1080" data-fps="30">
+  <div class="grid"></div>
+
+  <section id="s1" class="scene clip" data-start="0" data-duration="5" data-track-index="1">
+    <div class="kicker mono hide">Content warehouse <b>·</b> September 2026</div>
+    <h1 class="h"><span class="l one hide">Everything NeroPay publishes,</span><span class="l two hide">in one place.</span></h1>
+    <div class="rule"></div>
+  </section>
+
+  <section id="s2" class="scene clip" data-start="4.6" data-duration="5.5" data-track-index="2">
+    <div class="lbl mono hide"><b>00</b> &nbsp;Where things are</div>
+    <div class="cards">
+      <div class="card c0 hide"><span class="ht">Social posts</span><span class="hd">Final copy in feed order, week by week, with the drawn creative under each post.</span><span class="hm">18 posts</span></div>
+      <div class="card c1 hide"><span class="ht">YouTube series</span><span class="hd">Explained by NeroPay for owners and partners, and Behind the Counter. Every shot, every prompt, every graphic.</span><span class="hm">12 videos · 3 series</span></div>
+      <div class="card c2 hide"><span class="ht">Ideas</span><span class="hd">Series proposed, one-offs tied to dates, and the next four Behind the Counter episodes. Each judged by the engine rule.</span><span class="hm">the backlog</span></div>
+      <div class="card c3 hide"><span class="ht">Assets</span><span class="hd">Every on-screen graphic drawn as an exact file: overlays, cards, plates, statements. PNG or SVG.</span><span class="hm">transparent or on black</span></div>
+      <div class="card c4 hide"><span class="ht">Calendar</span><span class="hd">Sixteen weeks, 7 September to 3 January, with the dead week and the dark period marked.</span><span class="hm">16 weeks</span></div>
+      <div class="card c5 hide"><span class="ht">Rails</span><span class="hd">The ten hard rails, what is unconfirmed, and how the channel is measured. Read before writing anything.</span><span class="hm">10 hard rails</span></div>
+    </div>
+  </section>
+
+  <section id="s3" class="scene clip" data-start="9.7" data-duration="6.5" data-track-index="3">
+    <div class="strip hide">
+      <div><b class="n0">0</b><span>posts written</span></div>
+      <div><b class="n1">0</b><span>videos, 3 series</span></div>
+      <div><b class="n2">0</b><span>weeks mapped</span></div>
+      <div><b class="n3">0</b><span>hard rails</span></div>
+    </div>
+    <div class="sw hide">
+      <div class="toggle"><span class="t en on">EN</span><span class="pill"><i></i></span><span class="t tr">TR</span></div>
+      <div class="sen hide">Every script in English and Turkish.</div>
+    </div>
+  </section>
+
+  <section id="s4" class="scene clip" data-start="16" data-duration="5" data-track-index="4">
+    <div class="quote hide">What to post, when, and what they must never say.</div>
+    <div class="final">
+      <div class="wm hide"><span class="nero"><span class="ch">N</span><span class="ch">e</span><span class="ch">r</span><span class="ch">o</span></span><span class="pay"><span class="ch">P</span><span class="ch">a</span><span class="ch">y</span></span><span class="ct">· Content</span></div>
+      <div class="tag mono hide">Everything NeroPay publishes, in one place.</div>
+    </div>
+  </section>
+
+  <audio id="sfx-impact-1" src="assets/sfx/impactSoft_medium_001.ogg" data-start="1.3" data-duration="0.183" data-track-index="20" data-volume="0.36"></audio>
+  <audio id="sfx-slide-0" src="assets/sfx/card-slide-1.ogg" data-start="5.3" data-duration="0.6" data-track-index="21" data-volume="0.32"></audio>
+  <audio id="sfx-slide-1" src="assets/sfx/card-slide-1.ogg" data-start="5.8" data-duration="0.6" data-track-index="22" data-volume="0.32"></audio>
+  <audio id="sfx-slide-2" src="assets/sfx/card-slide-1.ogg" data-start="6.3" data-duration="0.6" data-track-index="23" data-volume="0.32"></audio>
+  <audio id="sfx-slide-3" src="assets/sfx/card-slide-1.ogg" data-start="6.8" data-duration="0.6" data-track-index="24" data-volume="0.32"></audio>
+  <audio id="sfx-slide-4" src="assets/sfx/card-slide-1.ogg" data-start="7.3" data-duration="0.6" data-track-index="25" data-volume="0.32"></audio>
+  <audio id="sfx-place-5" src="assets/sfx/card-place-1.ogg" data-start="7.8" data-duration="0.689" data-track-index="26" data-volume="0.36"></audio>
+  <audio id="sfx-impact-3" src="assets/sfx/impactSoft_medium_003.ogg" data-start="10.2" data-duration="0.14" data-track-index="27" data-volume="0.4"></audio>
+  <audio id="sfx-drop" src="assets/sfx/drop_001.ogg" data-start="13.8" data-duration="0.11" data-track-index="28" data-volume="0.44"></audio>
+  <audio id="sfx-bell" src="assets/sfx/impactBell_heavy_000.ogg" data-start="18.65" data-duration="1.48" data-track-index="29" data-volume="0.52"></audio>
+</div>
+
+<script>
+(function () {
+  window.__timelines = window.__timelines || {};
+  const tl = gsap.timeline({ paused: true });
+  const IR = { immediateRender: false };
+  const fadeIn = (sel, at, d = 0.6) => tl.fromTo(sel, { autoAlpha: 0 }, { autoAlpha: 1, duration: d, ease: "power2.out", ...IR }, at);
+  const fadeOut = (sel, at, d = 0.6) => tl.fromTo(sel, { autoAlpha: 1 }, { autoAlpha: 0, duration: d, ease: "power2.in", ...IR }, at);
+  const rise = (sel, at, y = 60, d = 0.7) => tl.fromTo(sel, { autoAlpha: 0, y }, { autoAlpha: 1, y: 0, duration: d, ease: "power4.out", ...IR }, at);
+  function countUp(sel, to, at, d) {
+    const el = document.querySelector(sel), v = { n: 0 };
+    const f = () => { el.textContent = String(Math.round(v.n)); };
+    tl.fromTo(v, { n: 0 }, { n: to, duration: d, ease: "power2.out", onUpdate: f, ...IR }, at);
+  }
+
+  /* scene 1 — hook (0–5) */
+  fadeIn("#s1", 0, 0.01);
+  fadeIn("#s1 .kicker", 0.3);
+  rise("#s1 .h .one", 0.8);
+  rise("#s1 .h .two", 1.25);
+  tl.fromTo("#s1 .rule", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.out", ...IR }, 1.9);
+  fadeOut("#s1", 4.4);
+
+  /* scene 2 — the six pages (4.6–10.1) */
+  fadeIn("#s2", 4.6);
+  fadeIn("#s2 .lbl", 4.8);
+  for (let k = 0; k < 6; k++) rise("#s2 .card.c" + k, 5.3 + k * 0.5, 40, 0.5);
+  fadeOut("#s2", 9.5);
+
+  /* scene 3 — the numbers, and the switch (9.7–16.2) */
+  fadeIn("#s3", 9.7);
+  rise("#s3 .strip", 10.2, 30, 0.5);
+  countUp("#s3 .n0", 18, 10.2, 1.0);
+  countUp("#s3 .n1", 12, 10.2, 1.0);
+  countUp("#s3 .n2", 16, 10.2, 1.0);
+  countUp("#s3 .n3", 10, 10.2, 1.0);
+  fadeOut("#s3 .strip", 12.7, 0.5);
+  fadeIn("#s3 .sw", 13.1, 0.5);
+  fadeIn("#s3 .sen", 13.3, 0.5);
+  tl.fromTo("#s3 .pill i", { x: 0 }, { x: 76, duration: 0.35, ease: "power2.inOut", ...IR }, 13.8);
+  tl.fromTo("#s3 .t.en", { color: "#F4F3F0" }, { color: "#7D7B84", duration: 0.35, ...IR }, 13.8);
+  tl.fromTo("#s3 .t.tr", { color: "#7D7B84" }, { color: "#F5C518", duration: 0.35, ...IR }, 13.8);
+  fadeOut("#s3", 15.6);
+
+  /* scene 4 — outro (16–21) */
+  fadeIn("#s4", 16, 0.01);
+  fadeIn("#s4 .quote", 16.2);
+  fadeOut("#s4 .quote", 18.1, 0.5);
+  tl.set("#s4 .wm", { autoAlpha: 1 }, 18.6);
+  tl.set("#s4 .wm .ch", { autoAlpha: 0, y: 72 }, 18.6);
+  tl.fromTo("#s4 .wm .ch", { autoAlpha: 0, y: 72 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power4.out", stagger: 0.04, ...IR }, 18.6);
+  tl.fromTo("#s4 .wm .ct", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, ...IR }, 19.0);
+  fadeIn("#s4 .tag", 19.3, 0.5);
+
+  window.__timelines["brag"] = tl;
+})();
+</script>
+</body>
+</html>

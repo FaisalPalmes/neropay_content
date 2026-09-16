@@ -90,6 +90,13 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
     of the footage box, never two; and the frames sheet is looked at *before* `media_confirm` and before the ledger
     row is written. A placeholder snapshot (`npx hyperframes snapshot . --at …`) shows the geometry in a minute —
     run it for every new orientation before the sandbox.
+73. **A headline that wraps moves nothing that is absolutely positioned under it.** The first `/brag` draft set a
+    132 px display line that wrapped to three lines, and the yellow rule at a fixed `top` cut straight through the
+    third — it read as a strike-through on "in one place." The closing sentence orphaned one word for the same
+    reason (fixed padding, no measurement). Both were caught on the draft's contact sheet, not in `check`, which
+    passed clean twice. Rule: anything positioned by a number below wrapping text is measured on a frame, not
+    assumed; and a pure-graphics composition renders locally in under a minute, so there is no excuse for skipping
+    the draft sheet before the high render.
 
 ## 11 Sep 2026 — v7, the first build on MOTION-SYSTEM.md (`b1-v7/`)
 

@@ -1,0 +1,2 @@
+Introducing the NeroPay Content Warehouse: every post, script and publishing date in one place, with the rails attached.
+Static HTML, no build step, English and Turkish side by side.

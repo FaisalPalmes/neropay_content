@@ -78,6 +78,12 @@ general-video  motion-graphics  faceless-explainer  product-launch-video  slides
 embedded-captions  talking-head-recut  remotion-to-hyperframes
 ```
 
+Plus **`/brag`** (latent-spaces/brag, MIT, installed 16 Sep 2026): a 15–25 s launch video of the current
+project — plan → brief → HyperFrames composition → render, with Kenney CC0 SFX bundled. The ende.app music
+tracks are deliberately not committed (licence unverified); `.claude/skills/brag/NEROPAY-NOTE.md` has the
+detail. Output lives in `video/brag-output/`; the first run is the warehouse's own brag, rendered locally in
+45 s because a pure-graphics composition needs no clip extraction.
+
 Start every video request at `/hyperframes` — it routes to the owning workflow. `/media-use` sources
 and generates media; `/hyperframes-audio` mixes audio already placed in a composition. Refresh with
 `npx hyperframes skills update <name>`; `HYPERFRAMES_SKIP_SKILLS=1` is set so the CLI leaves the
