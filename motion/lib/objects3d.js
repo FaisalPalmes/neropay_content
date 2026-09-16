@@ -151,3 +151,129 @@ export function envelope({ w = 13, h = 9, lean = -14 } = {}) {
     slotTop() { g.updateWorldMatrix(true, false); return new THREE.Vector3(0, h / 2, 0).applyMatrix4(g.matrixWorld); },
   });
 }
+
+/* ---------------------------------------------------------------------------------------------
+   v4 terminals, 16 Sep 2026. Two devices, so a video can show the one you are tied to and the
+   one you can switch to without naming anyone:
+     neroTerminal() — NeroPay's smart terminal, modelled on the product photos: a white slab with
+                      a full-height display, a small camera, the till UI on screen, on a white dock.
+                      Branding is the wordmark on the dock and on the screen's status line — subtle.
+     oldTerminal()  — a generic, older machine: grey, chunky, a little monochrome LCD, rubber keys,
+                      a paper slot. No maker's mark, no colour anyone owns.
+   Both stand upright (front = +z) with a slight lean back, feet on the ground plane.
+--------------------------------------------------------------------------------------------- */
+function uiTexture() {
+  const c = document.createElement('canvas'); c.width = 720; c.height = 1280; const x = c.getContext('2d');
+  x.fillStyle = '#FAFAF8'; x.fillRect(0, 0, 720, 1280);
+  /* status line with the wordmark */
+  x.fillStyle = '#F5C518'; x.fillRect(36, 60, 648, 64);
+  x.font = '800 30px Chivo'; x.textBaseline = 'middle'; x.fillStyle = '#141416'; x.fillText('NeroPay', 58, 92);
+  x.font = '500 26px Chivo'; x.fillStyle = '#3A3A3E'; x.fillText('ready to take payments', 200, 93);
+  /* amount */
+  x.font = '800 128px Chivo'; x.textAlign = 'center'; x.fillStyle = '#141416'; x.fillText('£0.00', 360, 230);
+  /* keypad 3x4 + an ops column */
+  const keys = [['1','2','3'],['4','5','6'],['7','8','9'],['C','0','←']];
+  x.font = '600 52px Chivo';
+  for (let r = 0; r < 4; r++) for (let k = 0; k < 3; k++) {
+    const kx = 52 + k * 176, ky = 330 + r * 150;
+    x.fillStyle = '#EEEEEC'; x.beginPath(); x.roundRect(kx, ky, 150, 122, 22); x.fill();
+    x.fillStyle = '#141416'; x.fillText(keys[r][k], kx + 75, ky + 63);
+  }
+  const ops = ['C', '+', '−', '÷', '×', '='];
+  x.font = '600 40px Chivo';
+  for (let i = 0; i < 6; i++) { const ky = 330 + i * 96;
+    x.fillStyle = i === 5 ? '#F5C518' : '#EEEEEC'; x.beginPath(); x.roundRect(600, ky, 84, 76, 16); x.fill();
+    x.fillStyle = '#141416'; x.fillText(ops[i], 642, ky + 40); }
+  /* charge button */
+  x.fillStyle = '#141416'; x.beginPath(); x.roundRect(52, 950, 632, 104, 18); x.fill();
+  x.font = '700 40px Chivo'; x.fillStyle = '#FFFFFF'; x.fillText('CHARGE', 368, 1004);
+  /* bottom nav: five simple glyphs with labels */
+  const nav = ['Link', 'Card', 'Sales', 'Alerts', 'More'];
+  x.font = '500 22px Chivo';
+  for (let i = 0; i < 5; i++) { const nx = 100 + i * 130;
+    x.fillStyle = '#141416'; x.beginPath(); x.roundRect(nx - 22, 1120, 44, 34, 8); x.fill();
+    x.fillStyle = '#6F6F74'; x.fillText(nav[i], nx, 1188); }
+  x.fillStyle = '#F5C518'; x.beginPath(); x.arc(100 + 3 * 130 + 18, 1118, 9, 0, Math.PI * 2); x.fill();
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
+}
+function wordmarkTexture(w = 512, h = 128, dark = false) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d');
+  x.font = '800 84px Chivo'; x.textBaseline = 'middle'; x.letterSpacing = '-4px';
+  const nw = x.measureText('Nero').width, pw = x.measureText('Pay').width, x0 = (w - nw - pw) / 2;
+  x.fillStyle = dark ? '#141416' : '#FFFFFF'; x.fillText('Nero', x0, h / 2);
+  x.fillStyle = '#F5C518'; x.fillText('Pay', x0 + nw, h / 2);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
+}
+
+export function neroTerminal({ lean = -8 } = {}) {
+  const g = new THREE.Group();
+  const W = 6.8, H = 14.0, D = 1.15;
+  const shell = mat(0xF3F3F1, { roughness:.42 });
+  const body = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 8, .62), shell); body.castShadow = true; body.receiveShadow = true; g.add(body);
+  /* the display: a black glass panel nearly edge to edge, the UI inside it */
+  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .7, H - 1.0, .08, 4, .42), mat(0x0B0B0D, { roughness:.18, metalness:.1 }));
+  glass.position.z = D / 2 + .02; g.add(glass);
+  const ui = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.25, (W - 1.25) * 1280 / 720), new THREE.MeshStandardMaterial({ map:uiTexture(), roughness:.3, emissive:0xffffff, emissiveIntensity:.5, emissiveMap:null }));
+  ui.material.emissiveMap = ui.material.map;
+  ui.position.set(0, -.15, D / 2 + .075); g.add(ui);
+  /* camera dot */
+  const cam = new THREE.Mesh(new THREE.CircleGeometry(.14, 24), mat(0x2A2A2E, { roughness:.3 })); cam.position.set(1.3, H / 2 - .6, D / 2 + .075); g.add(cam);
+  /* wordmark on the lower bezel, tiny */
+  const wm = new THREE.Mesh(new THREE.PlaneGeometry(1.7, .42), new THREE.MeshBasicMaterial({ map:wordmarkTexture(), transparent:true }));
+  wm.position.set(0, -H / 2 + .58, D / 2 + .075); g.add(wm);
+  /* the dock: a white wedge the terminal stands in, wordmark on its front */
+  const dock = new THREE.Mesh(new RoundedBoxGeometry(W + .6, 1.6, 4.2, 6, .5), shell); dock.position.set(0, .8, .9); dock.castShadow = true; dock.receiveShadow = true;
+  const dwm = new THREE.Mesh(new THREE.PlaneGeometry(2.2, .55), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, true), transparent:true }));
+  dwm.position.set(0, .75, 3.01); 
+  const stand = new THREE.Group();
+  g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.set(0, 1.5 + H / 2 * Math.cos(THREE.MathUtils.degToRad(lean)), -0.2);
+  stand.add(g); stand.add(dock); stand.add(dwm);
+  return stand;
+}
+
+export function oldTerminal({ lean = -12 } = {}) {
+  const g = new THREE.Group();
+  const W = 7.2, H = 15.5, D = 3.0;
+  const grey = mat(0x5A5B60, { roughness:.85 }), light = mat(0xC9C9C4, { roughness:.9 });
+  const body = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 6, .5), grey); body.castShadow = true; body.receiveShadow = true; g.add(body);
+  /* paper slot and a curl of receipt at the top */
+  const slot = new THREE.Mesh(new THREE.BoxGeometry(W - 1.6, .12, .8), mat(0x1A1A1C)); slot.position.set(0, H / 2 - .3, D / 2 - .5); g.add(slot);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 2.4, 1.3), mat(C.paper, { side:THREE.DoubleSide, roughness:.95 }));
+  paper.position.set(0, H / 2 + .55, D / 2 - .55); paper.rotation.x = -.3; g.add(paper);
+  /* a small monochrome LCD */
+  const lc = document.createElement('canvas'); lc.width = 512; lc.height = 224; const x = lc.getContext('2d');
+  x.fillStyle = '#B9C7A6'; x.fillRect(0, 0, 512, 224); x.fillStyle = '#2C3A2A'; x.font = '700 54px "Martian Mono"'; x.textBaseline = 'middle';
+  x.fillText('ENTER AMOUNT', 34, 80); x.fillText('£ ______', 34, 150);
+  const ltex = new THREE.CanvasTexture(lc); ltex.colorSpace = THREE.SRGBColorSpace;
+  const bezel = new THREE.Mesh(new RoundedBoxGeometry(W - 1.4, 3.2, .1, 3, .2), mat(0x2E2F33, { roughness:.6 })); bezel.position.set(0, H / 2 - 3.2, D / 2 + .03); g.add(bezel);
+  const lcd = new THREE.Mesh(new THREE.PlaneGeometry(W - 2.2, 2.4), new THREE.MeshStandardMaterial({ map:ltex, roughness:.7 })); lcd.position.set(0, H / 2 - 3.2, D / 2 + .09); g.add(lcd);
+  /* rubber keys: 3 x 4, a red and a green on the bottom row */
+  const key = new RoundedBoxGeometry(1.5, 1.05, .45, 3, .18);
+  for (let r = 0; r < 4; r++) for (let k = 0; k < 3; k++) {
+    const m = r === 3 && k === 0 ? mat(0xB8352F, { roughness:.8 }) : r === 3 && k === 2 ? mat(0x3D8A46, { roughness:.8 }) : light;
+    const kk = new THREE.Mesh(key, m); kk.position.set(-1.9 + k * 1.9, H / 2 - 6.6 - r * 1.5, D / 2 + .2); kk.castShadow = true; g.add(kk);
+  }
+  /* a card swipe groove down the right side */
+  const groove = new THREE.Mesh(new THREE.BoxGeometry(.12, H - 2, .3), mat(0x2A2A2E)); groove.position.set(W / 2 - .01, 0, D / 2 - .9); g.add(groove);
+  const stand = new THREE.Group();
+  g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.set(0, H / 2 * Math.cos(THREE.MathUtils.degToRad(lean)) + .1, 0);
+  stand.add(g);
+  return stand;
+}
+
+/* pillars: a small bar chart in the round. specs = [{ h, color }]; setRise(i, p) grows pillar i from the
+   ground, setSink(i, p) drops it through the floor. top(i) is the top-centre for a DOM label. */
+export function pillars(specs, { w = 2.2, gap = 1.1, depth = 2.2 } = {}) {
+  const g = new THREE.Group(); const n = specs.length, pitch = w + gap, ox = -((n - 1) * pitch) / 2;
+  const meshes = specs.map((s, i) => {
+    const m = new THREE.Mesh(new RoundedBoxGeometry(w, s.h, depth, 4, .22), mat(s.color, { roughness:.7 }));
+    m.castShadow = true; m.receiveShadow = true; m.position.set(ox + i * pitch, s.h / 2, 0); m.userData = { h:s.h, rise:0, sink:0 }; g.add(m); return m; });
+  const place = m => { const { h, rise, sink } = m.userData; const sc = Math.max(rise, .001); m.scale.y = sc; m.position.y = h * sc / 2 - sink * sink * (h + 4); m.visible = sink < 1 && rise > 0; };
+  meshes.forEach(place);
+  return Object.assign(g, {
+    setRise(i, p) { meshes[i].userData.rise = p; place(meshes[i]); },
+    setSink(i, p) { meshes[i].userData.sink = p; place(meshes[i]); },
+    top(i) { const m = meshes[i]; return new THREE.Vector3(m.position.x, m.userData.h * Math.max(m.userData.rise, .001), 0); },
+    visible(i) { return meshes[i].visible; },
+  });
+}

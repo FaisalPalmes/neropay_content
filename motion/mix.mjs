@@ -38,7 +38,9 @@ if (spec.bed) {
   if (!existsSync(f)) throw new Error(`no such bed: ${b.file}`);
   inputs.push('-i', f);
   const ms = Math.round((b.t || 0) * 1000), fade = b.fade ?? 1.2;
-  chains.push(`[${n}:a]adelay=${ms}|${ms},volume=${b.gain},afade=t=out:st=${(spec.duration - fade).toFixed(3)}:d=${fade}[bed0]`);
+  /* loop_at: repeat the bed from 0 at a bar boundary so a bed shorter than the piece keeps the grid */
+  const loop = b.loop_at ? `atrim=0:${b.loop_at},asetpts=N/SR/TB,aloop=loop=3:size=${Math.round(b.loop_at * 48000)},` : '';
+  chains.push(`[${n}:a]aresample=48000,${loop}adelay=${ms}|${ms},volume=${b.gain},afade=t=out:st=${(spec.duration - fade).toFixed(3)}:d=${fade}[bed0]`);
   if (b.duck) {
     /* a copy of the delayed VO keys the compressor; the compressed bed is what goes to the mix */
     chains[0] = chains[0].replace('[v]', '[v0]'); chains.push('[v0]asplit=2[v][vk]');

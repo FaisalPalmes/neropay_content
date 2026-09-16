@@ -1,64 +1,58 @@
-# MG02 — They have to tell you. · Small Print
+# MG02 — The 18-month rule · Small Print
 
-Rebuilt 16 September 2026 (v3) from Faisal's notes on the 15 Sep cut: the read must open with energy and keep
-it, the script must sound like a British person talking to the British public with a purpose to every line, a
-CTA to neropay.app and a CTA to follow, real 3D objects on the board, no episode number, no persistent footer,
-a music bed matched to the beat, and no repetitive effects.
+v4, 16 September 2026. Script rewritten with Faisal line by line (drafts 1 and 2 in the session): plain,
+educational, nothing forced, a question on screen under the opening line, an ending that asks the viewer to
+act, and the sign-off shape every video will share — what to do, how to reach us, "that's it for today", follow.
 
-Voice: Verity (`oW8bn5YtBB89X2nJ0DT9`), `eleven_v3`, one take, 49.04 s (ElevenLabs flow `ns3m8FupNDBjPPLIO8eV`,
-node `GYyqRI1A8tDoXPY7HPjo`, 16 Sep 2026). Word timings: faster-whisper `small.en` in the Higgsfield sandbox →
-`data/vo_words.json` → `data/words.js`. Bed: `video/library/bgm/underscore-120-a.mp3`, Eleven Music v2, measured
-117.45 bpm → BEAT 0.511 s. HEAD = 2 beats (1.022 s), TAIL 1.5 s → 51.48 s. Ground: white editorial. Format: board,
-four stations in a 2×2 and a pull-back.
+Voice: Verity (`oW8bn5YtBB89X2nJ0DT9`), `eleven_v3`, one take, 58.7 s (flow `ns3m8FupNDBjPPLIO8eV`, node
+`vijJnXSSffXJtTJCwsVJ`, 952 credits). Word timings: faster-whisper `small.en` in the Higgsfield sandbox.
+Bed: `video/library/bgm/underscore-120-a.mp3`, 117.45 bpm, looped at bar 24 so it runs under the whole minute.
+HEAD = 2 beats, TAIL 1.6 s → 61.06 s. White editorial. Board, five stations, no pull-back; the end card is stage level.
 
-## The take, as generated (tags in place)
+## The take, as generated
 
-> [excited] Quick one. Your card machine company has to tell you when you can walk away. Did they?
+> [excited] If you rent your card machine, there's a rule you should know about.
 >
-> [serious] Since January twenty twenty-three, the regulator caps a terminal lease at EIGHTEEN months. Not three years. Not four.
+> [serious] Since January twenty twenty-three, the payments regulator says a terminal lease can only tie you in for eighteen months. Not three years. Not four.
 >
-> And when that term ends, the big providers must write to you. The date it ends… and a nudge to shop around.
+> When those eighteen months are up, the big providers have to write and tell you. The letter gives the date your minimum term ended, and that you're free to switch to another card machine provider.
 >
-> After that, it rolls monthly. One month's notice — and you're OUT.
+> If you choose to stay, you can still leave at any time after that, as long as you give them one month's notice.
 >
-> [warmly] Now, if your deal's decent, ignore all this. Plenty are. But find that letter, check the date. It's your call, not theirs.
+> [warmly] Some deals are fine as they are. But you won't know until you compare. [excited] Comparing terminal rates is easy, it doesn't take long, and the difference between providers adds up over a year.
 >
-> [excited] We're NeroPay. Card machines, from Manchester. Follow us for more of this — and have a look at neropay dot app.
+> Here at NeroPay you can get a quote in minutes. Drop us a message or give us a call and speak to someone from our team.
+>
+> That's it for today. Give us a follow to keep up with more videos like this.
 
-Every line has a job: hook (a claim that costs you something to ignore) · the rule with its date · what they
-must do · what that means for you · the concession · who we are · follow · site. Nothing is a one-liner for its
-own sake. Whisper heard "NeroPay" as "Niropay" — listen for how Verity says the name before this ships.
+Two rails held in the edit: "could save hundreds if not thousands" was left out (rails 2 and 8 — no money
+figure, no promised saving; "adds up over a year" carries the point), and "Some deals are fine as they are" is the
+one-clause concession the style requires, followed straight away by the push to compare. Whisper heard the brand as
+"Niropay" again — listen before it ships.
+
+## The objects
+
+`motion/lib/objects3d.js` v4: `neroTerminal()` is the product from Faisal's photos — a white slab with a
+full-height display and the till UI on it, a small camera, a white dock; the wordmark sits on the dock and on the
+screen's status line, nothing louder. `oldTerminal()` is a generic older machine — grey, chunky, a small monochrome
+LCD, rubber keys, a paper slot — for "the one you're tied to". No maker's name anywhere, nothing that identifies a
+competitor, and Stripe is not mentioned in any file.
 
 ## Board and camera
 
-| Station | Board centre | 3D object | Type | Lands |
-|---|---|---|---|---|
-| S1 hook | 800, 780 | the card terminal, drops in on beat 0 | QUICK ONE pill (beat 1) · THEY HAVE (beat 2) / TO TELL YOU. (beat 3) · when you can / WALK AWAY. · …did they? | 0 s |
-| S2 calendar | 2500, 780 | 48 month tiles in four rows of twelve; the first 18 turn gold; years 3 and 4 are struck and fall away | JAN 2023 stamp · Payment Systems Regulator · PS22/2 · 18 / months · year 1–4 · 36 · 48 | beat 15 (7.66 s), after "did they?" |
-| S3 letter | 800, 2280 | the envelope lands, the flap opens on "term ends", the glass letter rises out of it on "write" | 14 largest providers · July 2023 · IN WRITING. · letter: Minimum term ends on / DD · MM · YYYY / ✓ the date / ✓ shop around | 17.62 s, after "not four." |
-| S4 month | 2500, 2280 | 31 day tiles; ripple on "rolls"; every tile falls away on "out" | 31-day rolling · ONE MONTH'S / NOTICE. · OUT stamp | 26.32 s, after "shop around." |
-| Pull-back | 1650, 1600 | the whole board at 35% | Deal's decent? Ignore this. · Plenty are. · Find the letter. Check the date. · Your call. Not theirs. | beat 63 (32.18 s), after "you're out." |
-| End card | stage | the terminal comes back, bottom right | Nero/Pay · Card machines, from Manchester. · FOLLOW US FOR MORE · neropay.app | 42.60 s, on "NeroPay" |
+| Station | Board centre | What happens | Lands |
+|---|---|---|---|
+| S0 question | 800, 780 | *When does your card machine contract actually end?* types in word by word under the first line; the old machine drops in beside it | 0 s |
+| S1 rule | 2500, 780 | **The 18-month rule.** with a highlighter stroke behind "18-month" on "eighteen" · SINCE JAN 2023 stamp · PSR · PS22/2 kicker · three pillars: 3 years and 4 years rise on "tie you in", 18 months rises gold on "eighteen", the two tall ones sink on "not three years" and "not four" | beat 8 (4.36 s) |
+| S2 letter | 1025, 2280 | **They have to write to you.** · 14 largest providers · from July 2023 · the envelope lands on "When", opens on "up", the glass letter rises on "write": *Your minimum term ended on DD·MM·YYYY* (underline on "date"), ✓ *free to switch provider* on "switch" · the old machine slides out on "switch", ours slides in on "another" | 15.0 s |
+| S3 month | 2900, 2280 | **One month's notice.** · *if you choose to stay* · 31 day tiles drop in, ripple on "stay", fall away on "leave"; the 1 MONTH pill and the highlighter on "notice" on "one month's" | 26.6 s |
+| S4 compare | 1350, 3880 | *Some deals are fine as they are.* / *But you won't know until you compare.* · **Compare your rates.** · both machines side by side on "Comparing terminal rates" · twelve month tiles turn gold in a run on "adds up over a year", kicker *the difference, over a year* | beat 66 (33.85 s) |
+| End card | stage | the NeroPay terminal drops in on "Here" · **Get a quote in minutes.** · MESSAGE US · CALL US pills on the words · neropay.app · *That's it for today.* · FOLLOW FOR MORE VIDEOS LIKE THIS on "follow" | 46.4 s |
 
-Camera moves only inside Verity's pauses (0.56–0.9 s), eased in-out, a 2–3° perspective tilt in the direction
-of travel that lands flat; the first and last moves start on a beat of the bed.
-
-## Word anchors (index into `data/vo_words.json`)
-
-quick BEAT · h1 2·BEAT · h2 3·BEAT · lead 10 "when" · WALK AWAY 13 "walk" · ask 15 "Did" · JAN 18 "January" ·
-tiles 17 "Since" · kicker 21 "regulator" · gold + 18 27 "18" · months 28 · years 22 "caps" · strike 36 30 "three" ·
-strike 48 33 "four" · envelope 34 "And" · flap 37 "term" · kicker 40 "big" · IN WRITING + letter 43 "write" ·
-date 46 "The" · tick 47 "date" · tick 53 "shop" · tiles 55 "After" · kicker + ripple 58 "rolls" · notice 60/61 ·
-OUT 65 "out" · close 67 "if" / 74 "Plenty" / 77 "find" / 83 "It's" · mark 89 "NeroPay" · tag 90 "card" ·
-follow 94 "Follow" · url 105 "neropay".
+Only the station the camera is on is drawn (the one it is leaving fades over the move), so nothing from a
+neighbouring station peeks into the 16:9 frame. No masthead, no footer, no episode number.
 
 ## Sound
 
-30 cues from 15 distinct effects, every one motivated by something moving (`data/mix.json`), the bed at 0.30
-ducked 5:1 under the voice, two-pass loudnorm to −14 LUFS / −1.5 dBTP with a limiter on the true peak.
-
-## Delivered 16 Sep 2026 (v3, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
-
-9:16 `66955a11-5aaa-447f-ba41-020a5e913171.mp4` · 16:9 `f21efce1-ea10-4070-9739-4337961a63ff.mp4` ·
-4:5 `a7181fc1-dd06-4be1-a84c-e7815bbe8ed4.mp4` · 1:1 `fd8194f3-ab8a-48e5-af5a-8aff835fdd98.mp4` ·
-contact `c73d72a2-e6a1-45d9-ab58-cbc4ad261d33.jpg`. Master −14.67 LUFS / −1.36 dBTP, 51.5 s, no single-frame spikes.
+36 cues, 15 distinct effects, each on something moving (`data/mix.json`); the bed at 0.30 ducked 5:1 under the
+voice; two-pass loudnorm to −14 LUFS with a true-peak limiter.

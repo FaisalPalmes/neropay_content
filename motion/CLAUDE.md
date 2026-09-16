@@ -86,8 +86,10 @@ the register. This section replaces it. The rules below are the ruling for every
 
 **Two jobs, in this order.** A short-form video is an **attention grab first** and an explainer
 second. The first 1.5 seconds carry the hook — spoken, on screen, or both — and the hook is never
-"here is a number". It is a claim that costs the viewer something to ignore: *"That sign in your
-window has been illegal since 2018."* The maths earns its place after that, or it doesn't appear.
+"here is a number". **v4 ruling, 16 Sep 2026:** the on-screen hook is a *question the owner has to
+think about*, typed in under the narrator's first line — *When does your card machine contract actually
+end?* — not a slogan and not a dare. The spoken line under it is plain: who this is for and that there's
+something worth knowing. No "Quick one", no "Did they?", nothing that exists to sound clever.
 
 ## Style — v2, editorial
 
@@ -154,6 +156,22 @@ scope go on the station where the rule is stated (a mono kicker: "Payment System
 largest providers · July 2023") and leave with it. Masks carry room for descenders (`.mask` padding) — the v2
 "cropped text" Faisal saw was descenders clipped by a `line-height: .92` mask.
 
+**Two machines, never a name — v4.** `neroTerminal()` is our product, modelled on the product photos (white
+slab, full-height display with the till UI, a small camera, a white dock; the wordmark on the dock and on the
+screen's status line and nowhere louder). `oldTerminal()` is the generic older machine — grey, chunky, a small
+monochrome LCD, rubber keys, a paper slot — for "the one you're tied to" and for any side-by-side. No maker's mark
+on either, and the maker of our hardware is never named in any file, on screen or in a take. The old one appears
+when the script is about being stuck; ours when it is about switching or getting a quote.
+
+**Stations are drawn only while the camera is on them.** The board hides every station except the current one
+and the one being left (which fades over the move), so a neighbour never peeks into the wide crop and the frame
+scan sees what the viewer sees. A **highlighter** stroke (`.hl`, a marker drawn behind the word the voice is
+hitting) joins the motion vocabulary; the masthead is gone altogether.
+
+**Every video closes the same way — the house sign-off, v4.** What to do about it (compare), how to reach us
+("Get a quote in minutes" · MESSAGE US · CALL US · neropay.app), "That's it for today", then the follow line.
+The middle of the sign-off changes with the video; the shape does not.
+
 **Every video closes on two CTAs.** The site (`neropay.app`, spoken and on screen with the underline drawing)
 and, for anything educational, a follow ("Follow us for more of this"). Both are in the take and on screen, and
 `checks.py` asserts both. The end card is the mark, one line about who we are, the follow pill, the URL.
@@ -189,12 +207,14 @@ four stay listed so nobody re-samples them. The voice is `MOTION.voice` in `moti
 Changing the voice later means changing it here, under Pipeline, in `motion/README.md` and in
 `MOTION.voice`, then re-voicing every episode — one voice across every series.
 
-**The script — v3, 16 Sep 2026.** It has to sound like a British person talking to the British public,
-educational, no-brainer stuff, and every line has to have a job. Faisal's word for the v2 read was "AI slop":
-the tell is the one-liner that exists to sound clever. Opens with energy and keeps it — "Quick one." is a tap on
-the shoulder, not a title. Say the rule, the date, what they must do, what that means for you, concede, say who we
-are, ask for the follow, say the URL. Nothing else. Read it aloud before generating: if a line would sound odd
-across a counter in Rusholme, cut it.
+**The script — v4, 16 Sep 2026.** Written *with* Faisal, draft by draft, and approved before the take is
+generated; that is the process from now on. It has to sound like a British person explaining something to
+another, not performing: plain words, nothing forced, no line that exists to sound clever (v3's "Quick one" and
+"Did they?" were cut for exactly that). Order: who this is for · the rule and its date · what they must do · what
+that means for you · a one-clause concession, then straight into the push to act · how to reach us · "that's it
+for today" · follow. Rails still hold in the room: a savings figure ("hundreds if not thousands") does not go in,
+however it is asked for — say "adds up over a year" and stop. Read it aloud before generating: if a line would
+sound odd across a counter in Rusholme, cut it.
 
 **Register.** Real, human, awake. High energy is not shouting — it is *investment*: the narrator
 finds this genuinely interesting and wants you to get it. The tone changes on the phrase: a claim
