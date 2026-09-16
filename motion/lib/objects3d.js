@@ -32,15 +32,19 @@ export function view(canvas, { w, h, span = 10, dpr = 2, elev = 30, azim = -34, 
   cam.position.set(R * Math.cos(el) * Math.sin(az), ty + R * Math.sin(el), R * Math.cos(el) * Math.cos(az)); cam.lookAt(0, ty, 0);
   scene.add(new THREE.HemisphereLight(0xffffff, 0xE6E4DD, 1.35));
   const sun = new THREE.DirectionalLight(0xffffff, 2.1); sun.position.set(-7, 12, 7); sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 5; sun.shadow.bias = -0.0006;
+  sun.shadow.mapSize.set(768, 768); sun.shadow.radius = 4; sun.shadow.bias = -0.0006;
   Object.assign(sun.shadow.camera, { left:-span * 1.6, right:span * 1.6, top:span * 1.6, bottom:-span * 1.6, near:1, far:60 });
   scene.add(sun);
   const fill = new THREE.DirectionalLight(0xFFF4D6, .35); fill.position.set(8, 4, -6); scene.add(fill);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ opacity:shadow, transparent:true }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+  let ratio = dpr;
   const v = { renderer, scene, cam, ground, w, h, dpr,
     add: o => (scene.add(o), o),
     render: () => renderer.render(scene, cam),
+    /* the backing store follows the on-screen scale: a canvas the camera shows at 0.3x needs no 2x pixels.
+       SwiftShader raster is the render's whole cost, so this is what makes a 3D board affordable. */
+    setScale(k) { const r = Math.min(dpr, Math.max(.4, k * 1.5)); if (Math.abs(r - ratio) / ratio > .08) { ratio = r; renderer.setPixelRatio(r); renderer.setSize(w, h, false); } },
     /* world -> canvas CSS px, for DOM elements that have to meet a 3D edge */
     project: p => { const q = p.clone().project(cam); return { x:(q.x + 1) / 2 * w, y:(1 - q.y) / 2 * h }; } };
   return v;

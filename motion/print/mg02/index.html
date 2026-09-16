@@ -277,7 +277,7 @@ function applyCam(t){
   const dim = .65 * eo(seg(t, BOARD_DIM[0], BOARD_DIM[1] - BOARD_DIM[0]));
   const out = eo(seg(t, BOARD_OUT[0], BOARD_OUT[1] - BOARD_OUT[0]));
   $('#board').style.opacity = (1 - dim) * (1 - out);
-  return c;
+  return { ...c, k, gone: out >= 1 };
 }
 
 /* ---- anchors (indices into WORDS — the table is in script.md) ---- */
@@ -293,7 +293,9 @@ const A = {
 function setFrame(n){
   const t = n / FPS;
   const c = applyCam(t);
-  const vis = st => c.st === st || c.moving > 0 || c.st === 'PULL';
+  const vis = st => !c.gone && (c.st === st || c.moving > 0 || c.st === 'PULL');
+  for (const V of [V1, V2, V3, V4]) V.setScale(c.k);
+  V5.setScale($('#cv5').clientWidth / 600);
 
   /* station 1 — the terminal drops in on beat 0, the kicker on beat 1, the shout on beats 2 and 3 */
   { const p = eo(seg(t, A.term, .5)); TERM.position.y = (1 - p) * 9; TERM.rotation.y = -.35 + .05 * Math.sin(t * 1.1);
