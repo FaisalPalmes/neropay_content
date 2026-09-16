@@ -244,11 +244,9 @@ export function neroTerminal({ lean = -6 } = {}) {
   const hz = fz + .012;
   /* paper slot along the head's bottom front edge, a sliver of receipt showing */
   const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.8, .14), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD - .68, fz + .012); g.add(paper);
-  /* the contactless symbol and the wordmark on the head, dark on yellow, as on the product */
-  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.05, 1.05), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
-  cl.position.set(.2, H / 2 - HEAD / 2 + .42, hz); g.add(cl);
-  const hwm = new THREE.Mesh(new THREE.PlaneGeometry(2.1, .53), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, true, 'center', '#141416'), transparent:true }));
-  hwm.position.set(0, H / 2 - HEAD / 2 - .58, hz); g.add(hwm);
+  /* the contactless symbol, large and centred on the head; the wordmark is on the front only (Faisal, 16 Sep) */
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 1.7), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
+  cl.position.set(.2, H / 2 - HEAD / 2 - .05, hz); g.add(cl);
   /* the display: black glass inside the frame, from just under the head to just above the wordmark, the UI in it */
   const SH = H - HEAD - 1.6, SY = -H / 2 + 1.25 + SH / 2;
   const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .9, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
