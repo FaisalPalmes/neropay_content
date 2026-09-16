@@ -42,7 +42,8 @@ node ../library/fetch-sounds.mjs --into ./assets/sfx --placeholder # web contain
 allows commercial use.** Add the source URL and licence there in the same commit as the file. That
 is the rule that keeps a track from being claimed on YouTube.
 
-There is no committed music bed. B1's intro and outro beats are cut from one CC0 Freesound track
+One bed is committed since 16 Sep 2026: `library/bgm/underscore-120-a.mp3`, an Eleven Music v2 underscore
+(117.45 bpm, no vocals) generated for `motion/print/mg02` and listed in `LEDGER.md`. B1's intro and outro beats are cut from one CC0 Freesound track
 (`music`, 82 bpm) into `music-intro` (5.4 s) and `music-outro` (18.6 s) by the `derived` block in
 `sounds.json`. If a motion-graphics series needs a bed of its own, add it to `sounds.json` and the
 ledger — do not reach for something unlicensed because it is to hand.

@@ -1,0 +1,20 @@
+{
+  "project": "showcase",
+  "category": "stat",
+  "asset_needs": [],
+  "canvas": { "width": 1080, "height": 1920, "fps": 30, "duration": 24.88 },
+  "grid": { "bpm": 82, "beat": 0.731707, "beats": 34, "bed_ends_on_beat": 28 },
+  "brief": "A payments company argues against itself. 3.30% lands on beat 0 with the bed and the slab; the editorial line calls it terrible; the £4 card shows us losing in grey; the £40 card is the turn and the one yellow thing on screen; £20.51 is the number that decides it; the end card concedes.",
+  "beats": [
+    { "id": "A", "start_beat": 0,  "beats": 6, "on_screen": "3.30% · A £4 COFFEE, WITH US · It's terrible.", "words": 8,  "yellow": "none" },
+    { "id": "B", "start_beat": 6,  "beats": 8, "on_screen": "£4.00 SALE · us 13.2p · flat rate, no fee 6.8p · We lose.", "words": 9, "yellow": "none — ours is --loss grey" },
+    { "id": "C", "start_beat": 14, "beats": 8, "on_screen": "£40.00 SALE · us 60.0p · flat rate, no fee 67.6p · Here we don't.", "words": 9, "yellow": "our bar, as it lands" },
+    { "id": "D", "start_beat": 22, "beats": 6, "on_screen": "£20.51 · where the fixed fee stops hurting", "words": 7, "yellow": "the figure" },
+    { "id": "E", "start_beat": 28, "beats": 6, "on_screen": "NeroPay · Under £20 a sale? Stay where you are. · neropay.app", "words": 10, "yellow": "Pay" }
+  ],
+  "sound": {
+    "bed": { "file": "music-showcase.m4a", "role": "music", "gain": 0.40, "starts": 0, "ends_beat": 28 },
+    "effects": "impact-bass on beat 0 and the £20.51 and end-card landings; whoosh-short on each panel entrance; sparkle on each bar drawing; chime when our bar turns yellow; click-soft on each editorial line; riser (last 3 s of the file) into £20.51"
+  },
+  "law": "hold = max(1.5, words x 0.4), asserted by lawReport() in the composition and checked by law.mjs before render"
+}

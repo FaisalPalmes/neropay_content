@@ -1,0 +1,364 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Small Print — They have to tell you.</title>
+<style>
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-400-italic.woff2)format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-600-italic.woff2)format("woff2");font-weight:600;font-style:italic;font-display:block}
+
+:root{ --ground:#FBFAF7; --ink:#141416; --muted:#7C7C82; --line:#DDDCD6; --accent:#F5C518; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000}
+#stage{ container-type:size; container-name:v; position:relative; overflow:hidden; background:var(--ground); color:var(--ink);
+  font-family:Chivo,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+
+/* ---- camera: perspective on the stage, tilt on the wrapper, travel + zoom on the board ---- */
+#cam{position:absolute; inset:0; perspective:1900px; overflow:hidden}
+#tilt{position:absolute; inset:0; transform-style:preserve-3d}
+#board{position:absolute; left:0; top:0; width:0; height:0; transform-origin:0 0; will-change:transform}
+#paper{position:absolute; left:-3000px; top:-3000px; width:10000px; height:10000px;
+  background-image:radial-gradient(rgba(20,20,22,.10) 1.6px,transparent 1.8px); background-size:120px 120px}
+.st{position:absolute}
+canvas{position:absolute; display:block}
+
+/* ---- type: three faces, each with a job. Masks carry room for descenders — nothing is ever cropped ---- */
+.shout{font-family:Chivo; font-weight:800; letter-spacing:-.04em; line-height:1; color:var(--ink); white-space:nowrap}
+.mono{font-family:"Martian Mono",monospace; font-weight:700; letter-spacing:-.03em; font-variant-numeric:tabular-nums; color:var(--ink); white-space:nowrap}
+.kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.serif{font-family:"Source Serif 4",Georgia,serif; font-style:italic; font-weight:400; color:var(--ink); letter-spacing:-.005em; line-height:1.12}
+.mask{display:block; overflow:hidden; padding:.08em .1em .18em 0; margin:-.08em -.1em -.18em 0}
+.mask>span{display:block; will-change:transform}
+.hid{opacity:0}
+.pill{position:absolute; padding:12px 22px 10px; border:4px solid var(--accent); border-radius:12px; white-space:nowrap; background:var(--ground);
+  font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
+.pill.solid{background:var(--accent); border-color:var(--accent)}
+.strike{position:absolute; height:10px; background:var(--ink); transform-origin:0 50%; border-radius:5px; width:0}
+
+/* ---- liquid glass on white: the frosted slab, for the one element that carries data ---- */
+.lglass{position:absolute; border-radius:26px; overflow:hidden; isolation:isolate;
+  background:linear-gradient(135deg,rgba(255,255,255,.90) 0%,rgba(255,255,255,.72) 50%,rgba(255,255,255,.84) 100%);
+  box-shadow:0 44px 70px -30px rgba(20,20,22,.28),0 8px 16px -8px rgba(20,20,22,.12)}
+.lglass .tint{position:absolute; inset:0; z-index:1; display:block; pointer-events:none;
+  background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.8),transparent 55%),radial-gradient(70% 60% at 100% 100%,rgba(245,197,24,.14),transparent 60%)}
+.lglass .sheen{position:absolute; top:-20%; left:0; width:45%; height:140%; display:block; z-index:2; pointer-events:none; transform:translateX(-130%);
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.08) 35%,rgba(255,255,255,.6) 50%,rgba(255,255,255,.08) 65%,transparent 100%)}
+.lglass .rim{position:absolute; inset:0; z-index:4; display:block; border-radius:inherit; pointer-events:none;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.9),inset 0 -1px 0 rgba(20,20,22,.06)}
+.lglass .body{position:absolute; inset:0; z-index:3}
+
+/* ---- station 1: the hook ---- */
+#s1{left:300px; top:200px; width:1000px; height:1300px}
+#s1 .h{font-size:150px}
+#s1 .lead{font-size:54px; color:var(--muted); margin-top:26px}
+#s1 .h3{color:var(--accent)}
+#s1 .ask{font-size:60px; color:var(--ink)}
+#quick{left:0; top:20px; --rot:-4deg}
+#cv1{left:280px; top:640px; width:720px; height:660px}
+
+/* ---- station 2: four years of months ---- */
+#s2{left:1800px; top:275px; width:1400px; height:1150px}
+#jan{left:0; top:24px; --rot:-3deg}
+#big18{position:absolute; left:930px; top:0; font-size:250px; line-height:1}
+#cv2{left:0; top:360px; width:1400px; height:760px}
+.yr{position:absolute; font-family:"Martian Mono",monospace; font-weight:400; font-size:24px; letter-spacing:.1em; color:var(--muted); white-space:nowrap; transform:translate(-100%,-50%)}
+.rowno{position:absolute; font-size:56px; color:var(--muted); transform:translate(0,-50%)}
+
+/* ---- station 3: in writing ---- */
+#s3{left:300px; top:1700px; width:1000px; height:1300px}
+#s3 .h{font-size:140px}
+#cv3{left:0; top:340px; width:1000px; height:900px}
+#letter{left:190px; top:470px; width:620px; height:470px}
+#letter .body{padding:36px 42px}
+#letter .k{font-size:24px}
+#letter .d{position:relative; display:inline-block; font-size:58px; margin-top:16px; color:var(--muted); padding-bottom:10px}
+#letter .d i{position:absolute; left:0; bottom:0; height:6px; width:0; background:var(--accent); border-radius:3px}
+#letter .rows{margin-top:30px; display:grid; gap:16px}
+#letter .row{display:flex; align-items:center; gap:18px; font-weight:600; font-size:40px; letter-spacing:-.02em; color:var(--muted)}
+#letter .row.on{color:var(--ink)}
+#letter .row b{width:40px; height:40px; border:3px solid var(--line); border-radius:9px; display:grid; place-items:center; font-size:28px; font-weight:800; flex:none; color:transparent}
+#letter .row.on b{background:var(--accent); border-color:var(--accent); color:var(--ink)}
+
+/* ---- station 4: one month's notice ---- */
+#s4{left:1950px; top:1725px; width:1100px; height:1250px}
+#cv4{left:0; top:80px; width:1100px; height:720px}
+#s4 .h{font-size:126px}
+#s4 .stack{position:absolute; left:0; top:860px}
+#out{left:690px; top:930px; padding:18px 34px 14px; font-family:Chivo; font-weight:800; font-size:120px; letter-spacing:-.03em; --rot:-9deg; border-radius:18px}
+
+/* ---- stage level: the mast, the close, the end card ---- */
+#mast{position:absolute; left:6cqw; top:4cqmin; display:flex; align-items:baseline; gap:1.4cqmin; font-family:"Martian Mono",monospace; font-weight:400; font-size:2.1cqmin; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+#mast b{font-family:Chivo; font-weight:800; letter-spacing:-.03em; text-transform:none; font-size:2.9cqmin; color:var(--ink)} #mast b i{font-style:normal; color:var(--accent)}
+#close{position:absolute; left:7cqw; right:7cqw; top:36cqh}
+#close .l{font-size:6.1cqmin; line-height:1.1}
+#close .l.m{color:var(--muted)}
+#close .l.y i{font-style:italic; color:var(--accent)}
+#end{position:absolute; left:7cqw; right:7cqw; top:32cqh}
+#end .mark{font-family:Chivo; font-weight:800; font-size:13cqmin; letter-spacing:-.04em; line-height:1; color:var(--ink)}
+#end .mark i{font-style:normal; color:var(--accent)}
+#end .tag{font-size:4.4cqmin; color:var(--ink); margin-top:1.2cqmin; max-width:54cqmin; text-wrap:balance}
+#follow{position:relative; display:inline-block; margin-top:4cqmin; padding:1.1cqmin 2cqmin .9cqmin; font-size:2.5cqmin; border-width:.35cqmin; border-radius:1cqmin}
+#end .url{position:relative; display:inline-block; font-family:Chivo; font-weight:800; font-size:8.6cqmin; letter-spacing:-.035em; line-height:1; color:var(--ink); margin-top:3cqmin}
+#end .url i{position:absolute; left:0; bottom:-.9cqmin; height:.9cqmin; width:0; background:var(--accent); border-radius:.4cqmin}
+#cv5{position:absolute; right:-9cqmin; bottom:-7cqmin; width:50cqmin; height:50cqmin}
+</style>
+
+<div id="stage">
+  <div id="cam"><div id="tilt"><div id="board"><div id="paper"></div>
+
+    <div class="st" id="s1">
+      <div class="pill hid" id="quick">Quick one</div>
+      <div class="mask" style="margin-top:130px"><span class="shout h h1">THEY HAVE</span></div>
+      <div class="mask"><span class="shout h h2">TO TELL YOU.</span></div>
+      <div class="mask"><span class="serif lead">when you can</span></div>
+      <div class="mask"><span class="shout h h3">WALK AWAY.</span></div>
+      <canvas id="cv1"></canvas>
+      <div class="mask" style="position:absolute;left:0;top:1030px;width:420px"><span class="serif ask">…did they?</span></div>
+    </div>
+
+    <div class="st" id="s2">
+      <div class="pill hid" id="jan">Jan 2023</div>
+      <div class="mask" style="position:absolute;left:0;top:130px"><span class="kick k2">Payment Systems Regulator · PS22/2</span></div>
+      <div class="mono hid" id="big18">18</div>
+      <div class="mask" style="position:absolute;left:940px;top:262px"><span class="shout" id="months" style="font-size:60px">months</span></div>
+      <canvas id="cv2"></canvas>
+      <div class="yr hid" data-y="0">year 1</div><div class="yr hid" data-y="1">year 2</div><div class="yr hid" data-y="2">year 3</div><div class="yr hid" data-y="3">year 4</div>
+      <div class="mono rowno hid" id="no36">36</div><div class="mono rowno hid" id="no48">48</div>
+      <div class="strike" id="st36"></div><div class="strike" id="st48"></div>
+    </div>
+
+    <div class="st" id="s3">
+      <div class="mask" style="position:absolute;left:0;top:24px"><span class="kick k3">14 largest providers · July 2023</span></div>
+      <div class="mask" style="position:absolute;left:0;top:90px"><span class="shout h">IN WRITING.</span></div>
+      <canvas id="cv3"></canvas>
+      <div class="lglass" id="letter"><i class="tint"></i><i class="sheen"></i><div class="body">
+        <div class="kick k">Minimum term ends on</div>
+        <div class="mono d">DD · MM · YYYY<i></i></div>
+        <div class="rows">
+          <div class="row" data-r="0"><b>✓</b><span>the date</span></div>
+          <div class="row" data-r="1"><b>✓</b><span>shop around</span></div>
+        </div></div><i class="rim"></i></div>
+    </div>
+
+    <div class="st" id="s4">
+      <div class="mask" style="position:absolute;left:0;top:24px"><span class="kick k4">31-day rolling</span></div>
+      <canvas id="cv4"></canvas>
+      <div class="stack">
+        <div class="mask"><span class="shout h h4a">ONE MONTH'S</span></div>
+        <div class="mask"><span class="shout h h4b">NOTICE.</span></div>
+      </div>
+      <div class="pill solid hid" id="out">OUT</div>
+    </div>
+
+  </div></div></div>
+
+  <div id="mast"><b>Nero<i>Pay</i></b><span>Small Print</span></div>
+
+  <div class="layer" id="close">
+    <div class="mask"><span class="serif l c1">Deal's decent? Ignore this.</span></div>
+    <div class="mask"><span class="serif l m c2">Plenty are.</span></div>
+    <div class="mask" style="margin-top:2cqmin"><span class="serif l c3">Find the letter. Check the date.</span></div>
+    <div class="mask"><span class="serif l y c4"><i>Your call.</i> Not theirs.</span></div>
+  </div>
+
+  <div class="layer" id="end">
+    <div class="mask"><span class="mark">Nero<i>Pay</i></span></div>
+    <div class="mask"><span class="serif tag">Card machines, from Manchester.</span></div>
+    <div><div class="pill hid" id="follow">Follow us for more</div></div>
+    <div class="mask"><span class="url">neropay.app<i></i></span></div>
+    <canvas id="cv5"></canvas>
+  </div>
+</div>
+
+<script>window.READY = false;</script>
+<script src="data/words.js"></script>
+<script type="module">
+import { view, terminal, tiles, envelope, ease, seg } from '../../lib/objects3d.js';
+await document.fonts.ready;
+await Promise.all(['800 150px Chivo', '600 40px Chivo', '700 60px "Martian Mono"', '400 28px "Martian Mono"', 'italic 400 60px "Source Serif 4"'].map(f => document.fonts.load(f)));
+
+const FPS = 30;
+/* ---------------------------------------------------------------------------
+   Timeline. The bed (video/library/bgm/underscore-120-a.mp3, measured 117.45 bpm) starts at 0, so
+   BEAT is the grid. The VO starts on beat 2. Every in-point is a word onset from data/words.js
+   (faster-whisper small.en on the Verity take, 16 Sep 2026): composition time = HEAD + word time.
+   Camera moves only inside the narrator's own pauses, and start on a beat where the pause allows.
+--------------------------------------------------------------------------- */
+const BEAT = 60 / 117.45, HEAD = 2 * BEAT, TAIL = 1.5;
+const WORDS = window.WORDS;
+const w = i => HEAD + WORDS[i].s, we = i => HEAD + WORDS[i].e;
+const DURATION = +(we(106) + TAIL).toFixed(3);
+const snap = (t, lo, hi) => { const s = Math.round(t / BEAT) * BEAT; return s >= lo && s <= hi ? s : t; };
+
+/* stations: centre in board px, the box the camera fits (with 8% air), the focal height on the stage */
+const ST = {
+  S1:  { x:800,  y:780,  bw:1000, bh:1440, fy:.47 },
+  S2:  { x:2500, y:780,  bw:1400, bh:1290, fy:.47 },
+  S3:  { x:800,  y:2280, bw:1000, bh:1440, fy:.47 },
+  S4:  { x:2500, y:2280, bw:1100, bh:1390, fy:.47 },
+  PULL:{ x:1650, y:1600, bw:3400, bh:3100, fy:.40 },
+};
+const CAM = [
+  { t:0,                                              d:0,   st:'S1'  },
+  { t:snap(7.62, we(16) + .05, w(17) - .85),          d:.80, st:'S2'  },   // after "did they?"
+  { t:we(33) - .02,                                   d:.56, st:'S3'  },   // after "not four." — the shortest pause in the take
+  { t:we(54) + .02,                                   d:.62, st:'S4'  },   // after "shop around."
+  { t:snap(32.0, we(65) + .05, w(66) - .95),          d:.90, st:'PULL'},   // after "you're out." — the pull-back, on a beat
+];
+const BOARD_DIM = [CAM[4].t, CAM[4].t + .9];      /* the board drops to 35% under the close */
+const BOARD_OUT = [w(88) - .1, w(89)];            /* and goes fully on "We're NeroPay" */
+
+/* on-screen word counts per beat, for the timing law */
+const BEATS = [
+  { name:'1 hook',       t:0,                 out:CAM[1].t, words:14 },
+  { name:'2 calendar',   t:CAM[1].t + .80,    out:CAM[2].t, words:19 },
+  { name:'3 letter',     t:CAM[2].t + .56,    out:CAM[3].t, words:16 },
+  { name:'4 month',      t:CAM[3].t + .62,    out:CAM[4].t, words:6  },
+  { name:'5 close',      t:CAM[4].t + .90,    out:BOARD_OUT[0], words:14 },
+  { name:'6 end card',   t:w(89),             out:DURATION, words:10 },
+];
+const BUILD = 0.55, EXIT = 0.30;
+function lawReport(){
+  return BEATS.map(b => { const need = Math.max(1.5, b.words * 0.4), have = (b.out - b.t) - BUILD - EXIT;
+    return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need }; });
+}
+
+const eo = ease.out, eio = ease.inout;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const px = (el, o) => Object.assign(el.style, o);
+function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
+function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = getComputedStyle(el).getPropertyValue('--rot').trim() || '0deg';
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); }
+function show(el, on){ el.style.opacity = on ? 1 : 0; }
+
+/* ---- the 3D views: one per canvas, sharing nothing but the library ---- */
+const V1 = view($('#cv1'), { w:720, h:660, span:7.6, elev:24, azim:-28, ty:4.6 });
+const TERM = V1.add(terminal());
+const V2 = view($('#cv2'), { w:1400, h:760, span:4.9, elev:34, azim:-30, shadow:.22 });
+const CAL = V2.add(tiles(48, { cols:12, size:1, gap:.2, height:.42 }));
+const V3 = view($('#cv3'), { w:1000, h:900, span:7.4, elev:20, azim:-14, ty:4.6 });
+const ENV = V3.add(envelope({ w:13, h:9 }));
+const V4 = view($('#cv4'), { w:1100, h:720, span:5.0, elev:36, azim:-30, shadow:.22 });
+const MON = V4.add(tiles(31, { cols:7, size:1, gap:.22, height:.42, color:0xDEDBD2 }));
+const V5 = view($('#cv5'), { w:600, h:600, span:8.6, elev:24, azim:-30, ty:4.6 });
+const TERM2 = V5.add(terminal());
+
+/* DOM labels that have to meet 3D geometry: canvas px -> station px */
+const at = (cv, p) => ({ x:cv.offsetLeft + p.x, y:cv.offsetTop + p.y });
+const line = (el, a, b) => { const dx = b.x - a.x, dy = b.y - a.y; px(el, { left:a.x + 'px', top:a.y + 'px', transform:`rotate(${Math.atan2(dy, dx)}rad)` }); return Math.hypot(dx, dy); };
+const off = (v, dx) => { v.x += dx; return v; };   /* top() returns a fresh Vector3 */
+
+/* ---- camera ---- */
+function camState(t){
+  let cur = CAM[0], prev = null;
+  for (const c of CAM){ if (t >= c.t){ prev = cur; cur = c; } }
+  const to = ST[cur.st];
+  if (cur.d > 0 && t < cur.t + cur.d && prev){
+    const p = eio(seg(t, cur.t, cur.d)), from = ST[prev.st];
+    const L = (a, b) => a + (b - a) * p;
+    return { x:L(from.x, to.x), y:L(from.y, to.y), bw:Math.exp(L(Math.log(from.bw), Math.log(to.bw))), bh:Math.exp(L(Math.log(from.bh), Math.log(to.bh))),
+             fy:L(from.fy, to.fy), moving:p, dx:Math.sign(to.x - from.x), dy:Math.sign(to.y - from.y), st:null };
+  }
+  return { ...to, moving:0, dx:0, dy:0, st:cur.st };
+}
+function applyCam(t){
+  const stW = $('#stage').clientWidth, stH = $('#stage').clientHeight, S = Math.min(stW, stH) / 1000;
+  const c = camState(t);
+  const z = Math.min(stW / (S * c.bw * 1.08), stH / (S * c.bh * 1.08));
+  const k = z * S, fx = stW / 2, fy = stH * c.fy;
+  px($('#board'), { transform:`translate(${(fx - c.x * k).toFixed(2)}px, ${(fy - c.y * k).toFixed(2)}px) scale(${k.toFixed(5)})` });
+  const s = Math.sin(Math.PI * c.moving);
+  px($('#tilt'), { transformOrigin:`${fx}px ${fy}px`, transform:`rotateY(${(-c.dx * 3.0 * s).toFixed(3)}deg) rotateX(${(c.dy * 2.2 * s).toFixed(3)}deg)` });
+  $$('[data-active]').forEach(e => e.removeAttribute('data-active'));
+  const map = { S1:'#s1', S2:'#s2', S3:'#s3', S4:'#s4' };
+  if (c.st && map[c.st]) $(map[c.st]).setAttribute('data-active', '');
+  const dim = .65 * eo(seg(t, BOARD_DIM[0], BOARD_DIM[1] - BOARD_DIM[0]));
+  const out = eo(seg(t, BOARD_OUT[0], BOARD_OUT[1] - BOARD_OUT[0]));
+  $('#board').style.opacity = (1 - dim) * (1 - out);
+  return { ...c, k, gone: out >= 1 };
+}
+
+/* ---- anchors (indices into WORDS — the table is in script.md) ---- */
+const A = {
+  term:0, quick:BEAT, h1:2 * BEAT, h2:3 * BEAT, lead:w(10), walk:w(13), ask:w(15), nudge:w(15),
+  jan:w(18), cal:w(17), kick2:w(21), gold:w(27), big18:w(27), months:w(28), yrs:w(22), s36:w(30), s48:w(33),
+  env:w(34), flap:w(37), kick3:w(40), write:w(43), letter:w(43) + .05, date:w(46), tick0:w(47), tick1:w(53),
+  mon:w(55), kick4:w(58), wave:w(58), notice:w(60), notice2:w(61), out:w(65),
+  c1:w(67), c2:w(74), c3:w(77), c4:w(83), closeOut:BOARD_OUT[0],
+  mark:w(89), tag:w(90), follow:w(94), url:w(105), term2:w(89) - .1,
+};
+
+function setFrame(n){
+  const t = n / FPS;
+  const c = applyCam(t);
+  const vis = st => !c.gone && (c.st === st || c.moving > 0 || c.st === 'PULL');
+  for (const V of [V1, V2, V3, V4]) V.setScale(c.k);
+  V5.setScale($('#cv5').clientWidth / 600);
+
+  /* station 1 — the terminal drops in on beat 0, the kicker on beat 1, the shout on beats 2 and 3 */
+  { const p = eo(seg(t, A.term, .5)); TERM.position.y = (1 - p) * 9; TERM.rotation.y = -.35 + .05 * Math.sin(t * 1.1);
+    const nod = Math.sin(Math.PI * seg(t, A.nudge, .5)); TERM.rotation.z = -.06 * nod; TERM.rotation.x = .03 * nod;
+    if (vis('S1')) V1.render(); }
+  stamp($('#quick'), t, A.quick);
+  maskUp($('#s1 .h1'), t, A.h1, .5); maskUp($('#s1 .h2'), t, A.h2, .5);
+  maskUp($('#s1 .lead'), t, A.lead); maskUp($('#s1 .h3'), t, A.walk, .5); maskUp($('#s1 .ask'), t, A.ask, .5);
+
+  /* station 2 — 48 months drop in as a run; the first 18 turn gold on "eighteen"; years 3 and 4 are struck and fall */
+  { for (let i = 0; i < 48; i++){ const r = Math.floor(i / 12);
+      CAL.setProgress(i, eo(seg(t, A.cal + i * .018, .32)));
+      const g = seg(t, A.gold + i * .02, .12); CAL.setColor(i, i < 18 && g > 0 ? 0xF5C518 : 0xDEDBD2);
+      const f = r === 2 ? ease.in(seg(t, A.s36 + .25 + (i % 12) * .02, .5)) : r === 3 ? ease.in(seg(t, A.s48 + .25 + (i % 12) * .02, .5)) : 0;
+      CAL.setFall(i, f); }
+    if (vis('S2')) V2.render();
+    $$('#s2 .yr').forEach(el => { const y = +el.dataset.y, p = at($('#cv2'), V2.project(off(CAL.top(y * 12), -.9)));
+      px(el, { left:p.x + 'px', top:p.y + 'px', opacity:t >= A.yrs + y * .12 ? 1 : 0 }); });
+    for (const [no, st, row, start] of [['#no36', '#st36', 2, A.s36], ['#no48', '#st48', 3, A.s48]]){
+      const a = at($('#cv2'), V2.project(off(CAL.top(row * 12), -.7))), b = at($('#cv2'), V2.project(off(CAL.top(row * 12 + 11), .7)));
+      const len = line($(st), a, b); px($(st), { width:(len * eo(seg(t, start, .22))) + 'px' });
+      px($(no), { left:(b.x + 40) + 'px', top:b.y + 'px' }); show($(no), t >= start); } }
+  stamp($('#jan'), t, A.jan); maskUp($('#s2 .k2'), t, A.kick2);
+  { const p = eo(seg(t, A.big18, .18)); px($('#big18'), { opacity:p < .01 ? 0 : 1, transform:`scale(${1.08 - .08 * p})` }); }
+  maskUp($('#months'), t, A.months, .4);
+
+  /* station 3 — the envelope lands, the flap opens on "term ends", the letter rises out of it on "write" */
+  { const p = eo(seg(t, A.env, .5)); ENV.position.y = (1 - p) * 10; ENV.open(eo(seg(t, A.flap, .7)));
+    if (vis('S3')) V3.render();
+    const rise = eo(seg(t, A.letter, .9)), L = $('#letter');
+    const [tl, tr] = ENV.frontTop().map(pt => at($('#cv3'), V3.project(pt)));
+    const top = 690 - 330 * rise; px(L, { top:top + 'px', opacity:t >= A.letter ? 1 : 0 });
+    /* clip everything below the front panel's top edge, in the letter's own px */
+    const lx = L.offsetLeft, W = 620, yAt = x => tl.y + (tr.y - tl.y) * ((x - tl.x) / (tr.x - tl.x));
+    const yL = yAt(lx - 60) - top, yR = yAt(lx + W + 60) - top;
+    L.style.clipPath = `polygon(-60px -800px, ${W + 60}px -800px, ${W + 60}px ${yR.toFixed(1)}px, -60px ${yL.toFixed(1)}px)`;
+    const sh = L.querySelector('.sheen'), q = seg(t, A.letter + .5, .55); px(sh, { transform:`translateX(${-130 + 350 * q}%)`, opacity:q > 0 && q < 1 ? 1 : 0 });
+    px($('#letter .d i'), { width:(100 * eo(seg(t, A.date, .35))) + '%' }); $('#letter .d').style.color = t >= A.date ? 'var(--ink)' : 'var(--muted)';
+    $$('#letter .row').forEach(r => r.classList.toggle('on', t >= [A.tick0, A.tick1][+r.dataset.r])); }
+  maskUp($('#s3 .k3'), t, A.kick3); maskUp($('#s3 .h'), t, A.write, .5);
+
+  /* station 4 — 31 days drop in, ripple on "rolls", the notice lands, and on "out" every tile falls away */
+  { for (let i = 0; i < 31; i++){ const r = Math.floor(i / 7), cix = i % 7;
+      MON.setProgress(i, eo(seg(t, A.mon + i * .02, .3)));
+      MON.setLift(i, .5 * Math.sin(Math.PI * seg(t, A.wave + (cix + r) * .045, .45)));
+      MON.setFall(i, ease.in(seg(t, A.out + .1 + (cix + r) * .035, .5))); }
+    if (vis('S4')) V4.render(); }
+  maskUp($('#s4 .k4'), t, A.kick4); maskUp($('#s4 .h4a'), t, A.notice, .5); maskUp($('#s4 .h4b'), t, A.notice2, .5);
+  stamp($('#out'), t, A.out);
+
+  /* the close — serif over the dimmed board; every line stays until the end card */
+  const co = eo(seg(t, A.closeOut, .35));
+  for (const [sel, start] of [['.c1', A.c1], ['.c2', A.c2], ['.c3', A.c3], ['.c4', A.c4]]){ const el = $('#close ' + sel); maskUp(el, t, start, .55);
+    if (t >= A.closeOut) px(el, { opacity:1 - co, transform:`translateY(${-14 * co}px)` }); }
+
+  /* the end card — mark on "NeroPay", the line, the follow, the URL; the terminal comes back for the bow */
+  maskUp($('#end .mark'), t, A.mark, .5); maskUp($('#end .tag'), t, A.tag, .5); stamp($('#follow'), t, A.follow);
+  maskUp($('#end .url'), t, A.url, .5); px($('#end .url i'), { width:(100 * eo(seg(t, A.url + .3, .4))) + '%' });
+  { const p = eo(seg(t, A.term2, .55)); TERM2.position.y = (1 - p) * 12; TERM2.rotation.y = -.55 + .06 * Math.sin(t * .9);
+    $('#cv5').style.opacity = t >= A.term2 ? 1 : 0; if (t >= A.term2) V5.render(); }
+}
+window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport; window.BEAT = BEAT; window.HEAD = HEAD;
+window.CAMS = CAM.map(c => ({ t:+c.t.toFixed(3), d:c.d, st:c.st }));
+setFrame(0);
+window.READY = true;
+</script>

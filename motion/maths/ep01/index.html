@@ -1,0 +1,293 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The Maths · EP01 — Don't switch to us</title>
+<style>
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+
+:root{
+  --ground:#0E1013; --surface:#1A1D22; --ink:#FFFFFF;
+  --muted:#8A9099; --accent:#F5C518; --loss:#6B7280;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000}
+
+#stage{
+  container-type:size; container-name:v;
+  position:relative; overflow:hidden;
+  background:var(--ground); color:var(--ink);
+  font-family:Chivo,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* every layer fills the stage; setFrame decides what is visible */
+.layer{position:absolute; inset:0; display:grid; place-items:center;
+  padding:0 7cqw 14cqmin; will-change:opacity,transform}
+
+/* ---- persistent source footer: on screen the whole duration ---- */
+#footer{
+  position:absolute; left:0; right:0; bottom:0;
+  padding:0 6cqw calc(3.2cqmin + env(safe-area-inset-bottom,0px));
+  font-size:2.35cqmin; font-weight:400; line-height:1.45; letter-spacing:.005em;
+  color:var(--muted); text-align:center; text-wrap:balance;
+}
+/* ---- beat 1 + 2: the cold open ---- */
+#b1 .fig{font-family:"Martian Mono",monospace; font-weight:700;
+  font-size:23cqmin; letter-spacing:-.045em; line-height:.9;
+  font-variant-numeric:tabular-nums}
+#b1 .rule{height:.85cqmin; background:var(--accent); margin:4.5cqmin auto 0; width:0}
+#b1 .sub{margin-top:4cqmin; font-size:3.5cqmin; font-weight:400; color:var(--muted);
+  max-width:64cqw; line-height:1.5; text-wrap:balance}
+.mask{display:block; overflow:hidden}
+.mask>span{display:block}
+
+/* ---- beat 3: the stack ---- */
+#b3 .stack{display:grid; gap:3.6cqmin; justify-items:start; width:82cqw}
+#b3 .row{font-family:"Martian Mono",monospace; font-weight:700;
+  font-size:5.0cqmin; letter-spacing:-.03em; font-variant-numeric:tabular-nums;
+  white-space:nowrap}
+#b3 .row.k{color:var(--accent)}
+
+/* ---- beats 4 + 5: the bars ---- */
+.bars{width:80cqw; display:grid; gap:7cqmin}
+.bars .head{font-size:3.3cqmin; font-weight:600; letter-spacing:.14em;
+  color:var(--muted); text-transform:uppercase; margin-bottom:1cqmin}
+.bar .lab{display:flex; justify-content:space-between; align-items:baseline;
+  font-size:2.9cqmin; font-weight:600; letter-spacing:.11em; color:var(--muted);
+  text-transform:uppercase; margin-bottom:1.9cqmin; gap:3cqw}
+.bar .amt{text-transform:none; font-family:"Martian Mono",monospace; font-weight:700; font-size:4.4cqmin;
+  letter-spacing:-.02em; color:var(--ink); font-variant-numeric:tabular-nums}
+.bar .track{height:5.2cqmin; background:#22262C; border-radius:.6cqmin}
+.bar .fill{height:100%; width:0; border-radius:.6cqmin; background:var(--loss)}
+.note{margin-top:1cqmin; font-size:3.2cqmin; color:var(--muted); font-weight:400}
+
+/* ---- beat 6: the crossover ---- */
+#b6 .fig{font-family:"Martian Mono",monospace; font-weight:700; font-size:18cqmin;
+  letter-spacing:-.045em; color:var(--accent); line-height:.95;
+  font-variant-numeric:tabular-nums}
+#b6 .sub{margin-top:4.4cqmin; font-size:3.5cqmin; color:var(--muted); font-weight:400;
+  max-width:62cqw; line-height:1.5; text-wrap:balance}
+
+/* ---- beat 7: the recap ---- */
+#b7 .pair{display:grid; gap:6.5cqmin; width:74cqw}
+#b7 .tk{display:flex; justify-content:space-between; align-items:baseline; gap:4cqw;
+  border-top:.22cqmin solid #2A2E35; padding-top:2.8cqmin}
+#b7 .tk b{font-family:"Martian Mono",monospace; font-weight:700; font-size:5.6cqmin;
+  letter-spacing:-.03em; font-variant-numeric:tabular-nums}
+#b7 .tk i{font-style:normal; font-size:3.1cqmin; font-weight:600; letter-spacing:.12em;
+  color:var(--muted); text-transform:uppercase}
+#b7 .cap{margin-top:7cqmin; font-size:3.5cqmin; color:var(--muted); font-weight:400;
+  max-width:66cqw; line-height:1.5; text-wrap:balance; text-align:center}
+
+/* ---- beat 8: end card ---- */
+#b8 .mark{font-weight:800; font-size:12.5cqmin; letter-spacing:-.035em; line-height:1}
+#b8 .mark i{font-style:normal; color:var(--accent)}
+#b8 .url{margin-top:3.6cqmin; font-size:3.6cqmin; font-weight:600; color:var(--muted);
+  letter-spacing:.02em}
+
+#cut{position:absolute; inset:0; background:#000; opacity:0}
+</style>
+
+<div id="stage">
+  <div class="layer" id="b1">
+    <div style="text-align:center">
+      <div class="fig" id="b1fig">0.00%</div>
+      <div class="rule" id="b1rule"></div>
+      <div class="sub mask"><span id="b1sub">what you'd pay NeroPay on a £4 coffee</span></div>
+    </div>
+  </div>
+
+  <div class="layer" id="b3">
+    <div class="stack">
+      <div class="mask"><span class="row" data-i="0">1.30% × £4.00 = 5.2p</span></div>
+      <div class="mask"><span class="row" data-i="1">+ 8p fixed</span></div>
+      <div class="mask"><span class="row" data-i="2">= 13.2p</span></div>
+      <div class="mask"><span class="row k" data-i="3">= 3.30%</span></div>
+    </div>
+  </div>
+
+  <div class="layer" id="b45">
+    <div class="bars">
+      <div class="head mask"><span id="bhead">£4.00 SALE</span></div>
+      <div class="bar">
+        <div class="lab"><span>Us</span><span class="amt" id="amtA">13.2p</span></div>
+        <div class="track"><div class="fill" id="fillA"></div></div>
+      </div>
+      <div class="bar">
+        <div class="lab"><span>A flat rate, no fixed fee</span><span class="amt" id="amtB">6.8p</span></div>
+        <div class="track"><div class="fill" id="fillB"></div></div>
+        <div class="note" id="bnote">we lose</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer" id="b6">
+    <div style="text-align:center">
+      <div class="fig mask"><span id="b6fig">£20.51</span></div>
+      <div class="sub mask"><span id="b6sub">where the fixed fee stops hurting</span></div>
+    </div>
+  </div>
+
+  <div class="layer" id="b7">
+    <div>
+      <div class="pair">
+        <div class="tk"><i>£4.00 sale</i><b>3.30%</b></div>
+        <div class="tk"><i>£40.00 sale</i><b>1.50%</b></div>
+      </div>
+      <div class="cap">same rate card</div>
+    </div>
+  </div>
+
+  <div class="layer" id="b8">
+    <div style="text-align:center">
+      <div class="mark mask"><span>Nero<i>Pay</i></span></div>
+      <div class="url" id="b8url">neropay.app</div>
+    </div>
+  </div>
+
+  <div id="cut"></div>
+  <div id="footer">Our rate: 1.30% + 8p, no contract. Comparison: an illustrative flat 1.69% with no fixed fee. Correct 14 September 2026.</div>
+</div>
+
+<script>
+const FPS = 30;
+
+/* ---------------------------------------------------------------------------
+   Timeline. Built from the VO's real word timings (out/vo_words.json — Whisper
+   small.en on the ElevenLabs take, 15 Sep 2026), not from nominal times. Every
+   beat is anchored to a word. HEAD is the 3.0 s of silence padded before the VO
+   in the mix, so composition time = HEAD + word time.
+--------------------------------------------------------------------------- */
+const HEAD = 3.0, TAIL = 1.5;
+const WORDS = [{"w":"That's","s":0.0,"e":0.28},{"w":"our","s":0.28,"e":0.5},{"w":"rate","s":0.5,"e":0.8},{"w":"on","s":0.8,"e":1.32},{"w":"a","s":1.32,"e":1.42},{"w":"four","s":1.42,"e":1.68},{"w":"pound","s":1.68,"e":1.96},{"w":"coffee.","s":1.96,"e":2.44},{"w":"It's","s":2.84,"e":3.34},{"w":"terrible.","s":3.34,"e":3.76},{"w":"One","s":5.06,"e":5.16},{"w":"point","s":5.16,"e":5.32},{"w":"three","s":5.32,"e":5.56},{"w":"percent,","s":5.56,"e":5.94},{"w":"plus","s":6.22,"e":6.5},{"w":"eight","s":6.5,"e":6.9},{"w":"pence.","s":6.9,"e":7.24},{"w":"On","s":8.26,"e":8.36},{"w":"four","s":8.36,"e":8.58},{"w":"pounds,","s":8.58,"e":9.0},{"w":"that's","s":9.42,"e":9.68},{"w":"thirteen","s":9.68,"e":9.96},{"w":"pence.","s":9.96,"e":10.38},{"w":"Which","s":11.52,"e":11.72},{"w":"is","s":11.72,"e":11.86},{"w":"three","s":11.86,"e":12.08},{"w":"point","s":12.08,"e":12.24},{"w":"three","s":12.24,"e":12.46},{"w":"percent.","s":12.46,"e":12.8},{"w":"A","s":13.12,"e":13.22},{"w":"flat","s":13.22,"e":13.44},{"w":"rate","s":13.44,"e":13.8},{"w":"with","s":13.8,"e":14.22},{"w":"no","s":14.22,"e":14.46},{"w":"fixed","s":14.46,"e":14.76},{"w":"fee","s":14.76,"e":15.04},{"w":"would","s":15.04,"e":15.2},{"w":"charge","s":15.2,"e":15.46},{"w":"you","s":15.46,"e":15.62},{"w":"half","s":15.62,"e":15.82},{"w":"that.","s":15.82,"e":16.14},{"w":"On","s":17.26,"e":17.46},{"w":"a","s":17.46,"e":17.56},{"w":"four","s":17.56,"e":17.74},{"w":"pound","s":17.74,"e":18.0},{"w":"sale,","s":18.0,"e":18.46},{"w":"we","s":18.92,"e":19.04},{"w":"lose.","s":19.04,"e":19.36},{"w":"Same","s":20.34,"e":20.42},{"w":"rate","s":20.42,"e":20.62},{"w":"card.","s":20.62,"e":21.0},{"w":"Forty","s":21.44,"e":21.66},{"w":"pound","s":21.66,"e":22.04},{"w":"sale.","s":22.04,"e":22.44},{"w":"One","s":23.52,"e":23.64},{"w":"point","s":23.64,"e":23.88},{"w":"five","s":23.88,"e":24.44},{"w":"percent.","s":24.44,"e":24.86},{"w":"Now","s":25.46,"e":25.52},{"w":"we're","s":25.52,"e":25.88},{"w":"the","s":25.88,"e":25.96},{"w":"cheaper","s":25.96,"e":26.18},{"w":"one.","s":26.18,"e":26.46},{"w":"The","s":27.24,"e":27.4},{"w":"fixed","s":27.4,"e":27.64},{"w":"fee","s":27.64,"e":27.9},{"w":"is","s":27.9,"e":28.22},{"w":"what","s":28.22,"e":28.46},{"w":"moves.","s":28.46,"e":28.74},{"w":"It","s":28.74,"e":29.46},{"w":"stops","s":29.46,"e":29.64},{"w":"hurting","s":29.64,"e":29.94},{"w":"at","s":29.94,"e":30.1},{"w":"about","s":30.1,"e":30.34},{"w":"twenty","s":30.34,"e":31.02},{"w":"pounds","s":31.02,"e":31.58},{"w":"fifty","s":31.58,"e":32.14},{"w":"a","s":32.14,"e":32.34},{"w":"sale.","s":32.34,"e":32.56},{"w":"Our","s":33.4,"e":33.64},{"w":"rate","s":33.64,"e":33.82},{"w":"isn't","s":33.82,"e":34.26},{"w":"one","s":34.26,"e":34.58},{"w":"number.","s":34.58,"e":34.88},{"w":"It","s":35.66,"e":35.94},{"w":"depends","s":35.94,"e":36.16},{"w":"entirely","s":36.16,"e":36.54},{"w":"on","s":36.54,"e":36.82},{"w":"what","s":36.82,"e":36.98},{"w":"you","s":36.98,"e":37.12},{"w":"sell","s":37.12,"e":37.3},{"w":"things","s":37.3,"e":37.52},{"w":"for.","s":37.52,"e":37.9},{"w":"So","s":38.5,"e":38.66},{"w":"work","s":38.66,"e":38.9},{"w":"that","s":38.9,"e":39.08},{"w":"out","s":39.08,"e":39.34},{"w":"before","s":39.34,"e":39.66},{"w":"anyone","s":39.66,"e":39.92},{"w":"quotes","s":39.92,"e":40.24},{"w":"you","s":40.24,"e":40.46},{"w":"anything.","s":40.46,"e":40.82},{"w":"Us","s":41.48,"e":41.54},{"w":"included.","s":41.54,"e":41.9}];
+const COUNTS = [10, 19, 19, 15, 16, 14, 11];         // words per VO line, L1..L7
+const LINES = []; { let i = 0; COUNTS.forEach((n, k) => { const ws = WORDS.slice(i, i + n);
+  LINES.push({ id: 'L' + (k + 1), t: HEAD + ws[0].s, end: HEAD + ws[n - 1].e }); i += n; }); }
+const at  = id => LINES.find(l => l.id === id).t;
+const end = id => LINES.find(l => l.id === id).end;
+const W   = i  => HEAD + WORDS[i].s;                  // a word's onset, composition time
+const DURATION = +(end('L7') + TAIL).toFixed(3);
+
+/* on-screen word counts, for the timing law */
+const BEATS = [
+  { name:'1 cold open',  t:0.2,        out:at('L2'),        words:9  },
+  { name:'3 stack',      t:at('L2'),   out:at('L3'),        words:12 },
+  { name:'4 £4 bars',    t:at('L3'),   out:at('L4'),        words:11 },
+  { name:'5 £40 bars',   t:at('L4'),   out:at('L5'),        words:9  },
+  { name:'6 crossover',  t:at('L5'),   out:at('L6'),        words:7  },
+  { name:'7 recap',      t:at('L6'),   out:at('L7'),        words:8  },
+  { name:'8 end card',   t:at('L7'),   out:DURATION,        words:3  },
+];
+const BUILD = 0.55, EXIT = 0.30;
+function lawReport(){
+  return BEATS.map(b => {
+    const need = Math.max(1.5, b.words * 0.4);
+    const have = (b.out - b.t) - BUILD - EXIT;
+    return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need };
+  });
+}
+
+/* ---- easing: everything eases out, nothing overshoots ---- */
+const clamp = p => p < 0 ? 0 : p > 1 ? 1 : p;
+const seg = (t, s, d) => clamp((t - s) / d);
+const eo  = p => 1 - Math.pow(1 - p, 3);
+const eo2 = p => 1 - Math.pow(1 - p, 2);
+const $ = s => document.querySelector(s);
+const px = (el, o) => Object.assign(el.style, o);
+function maskUp(el, t, start, dur = 0.42){
+  const p = eo(seg(t, start, dur));
+  px(el, { transform:`translateY(${(1 - p) * 105}%)`, opacity: p < 0.02 ? 0 : 1 });
+}
+function show(el, on){ el.style.opacity = on ? 1 : 0; }
+
+/* word anchors, by index into WORDS (see script.md for the table) */
+const A = {
+  stack:   [W(10), W(14), W(20), W(23)],   // One… / plus… / that's thirteen… / Which is…
+  barA4:   W(29) + 0.10,                   // "A flat rate" — ours draws
+  barB4:   W(39),                          // "half" — the benchmark draws
+  lose:    W(46),                          // "we lose"
+  flip:    W(48),                          // "Same rate card" — header flips, bars retract
+  barA40:  W(51),                          // "Forty" — ours redraws
+  barB40:  W(53) + 0.20,                   // "sale." — benchmark redraws
+  yellow:  W(56),                          // "five" — ours turns yellow as it lands
+  cheaper: W(58),                          // "Now we're the cheaper one"
+  cut:     at('L5'),                       // "The fixed fee is what moves" — the hard cut
+  sub:     W(70),                          // "stops hurting"
+  recap:   [W(79), W(82)], recapCap: W(84),
+  endUrl:  W(102),                         // "Us included"
+};
+
+function setFrame(n){
+  const t = n / FPS;
+  const vis = {
+    b1: t < at('L2'),
+    b3: t >= at('L2') && t < at('L3'),
+    b45:t >= at('L3') && t < at('L5'),
+    b6: t >= at('L5') && t < at('L6'),
+    b7: t >= at('L6') && t < at('L7'),
+    b8: t >= at('L7'),
+  };
+  for (const k in vis) show($('#' + k), vis[k]);
+
+  /* ---------- beat 1: count up 0.00 -> 3.30 over 0.8s, then dead still --- */
+  if (vis.b1){
+    const p = eo2(seg(t, 0.2, 0.8));
+    $('#b1fig').textContent = (3.30 * p).toFixed(2) + '%';
+    maskUp($('#b1sub'), t, 1.05);
+    const w = eo(seg(t, at('L1'), 0.4));            /* beat 2: the rule on "That's our rate" */
+    px($('#b1rule'), { width: (w * 34) + 'cqmin' });
+  }
+
+  /* ---------- beat 3: the stack builds line by line, each on its own words ---------- */
+  if (vis.b3){
+    document.querySelectorAll('#b3 .row').forEach(r => maskUp(r, t, A.stack[+r.dataset.i]));
+  }
+
+  /* ---------- beats 4 and 5: bars draw from their origin, never scale ---- */
+  if (vis.b45){
+    const four = t < A.flip;
+    const s = four ? at('L3') : A.flip;
+    maskUp($('#bhead'), t, s, 0.34);
+    $('#bhead').textContent = four ? '£4.00 SALE' : '£40.00 SALE';
+    const Aw = four ? 100 : 88.8, Bw = four ? 51.2 : 100;      /* proportional to cost — checks.py */
+    const pA = four ? eo(seg(t, A.barA4, 0.65)) : eo(seg(t, A.barA40, 0.65));
+    const pB = four ? eo(seg(t, A.barB4, 0.65)) : eo(seg(t, A.barB40, 0.65));
+    px($('#fillA'), { width:(Aw * pA) + '%' });
+    px($('#fillB'), { width:(Bw * pB) + '%' });
+    $('#amtA').textContent = four ? '13.2p' : '60.0p';
+    $('#amtB').textContent = four ? '6.8p'  : '67.6p';
+    show($('#amtA'), pA > 0.9); show($('#amtB'), pB > 0.9);
+    $('#fillA').style.background = four ? 'var(--loss)'
+      : `color-mix(in srgb, var(--accent) ${Math.round(eo(seg(t, A.yellow, 0.4)) * 100)}%, var(--loss))`;
+    $('#fillB').style.background = '#4E5561';
+    $('#bnote').textContent = four ? 'we lose' : 'here we do not';
+    show($('#bnote'), four ? t >= A.lose : t >= A.cheaper);
+  }
+
+  /* ---------- beat 6: the only hard cut in the video, 3 frames of black --- */
+  $('#cut').style.opacity = (t >= A.cut - 0.10 && t < A.cut) ? 1 : 0;
+  if (vis.b6){
+    maskUp($('#b6fig'), t, A.cut + 0.02, 0.5);
+    maskUp($('#b6sub'), t, A.sub);
+  }
+
+  /* ---------- beat 7: the recap, on "Our rate isn't one number" ---------- */
+  if (vis.b7){
+    document.querySelectorAll('#b7 .tk').forEach((r, i) => {
+      const p = eo(seg(t, A.recap[i], 0.45));
+      px(r, { opacity:p, transform:`translateY(${(1 - p) * 14}px)` });
+    });
+    px($('#b7 .cap'), { opacity: eo(seg(t, A.recapCap, 0.4)) });
+  }
+
+  /* ---------- beat 8: wordmark on "So work that out", URL on "Us included" ------ */
+  if (vis.b8){
+    maskUp($('#b8 .mark span'), t, at('L7'), 0.46);
+    px($('#b8url'), { opacity: eo(seg(t, A.endUrl, 0.45)) });
+  }
+}
+window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport;
+setFrame(0);
+</script>

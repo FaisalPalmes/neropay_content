@@ -1,0 +1,42 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1080
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Chivo Medium ExtraBold,54,&H00FFFFFF,&H00FFFFFF,&H00000000,&HA0000000,-1,0,0,0,100,100,-1,0,3,17,0,2,75,75,140,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:01.02,0:00:01.80,Cap,,0,0,0,,Quick one.
+Dialogue: 0,0:00:02.06,0:00:03.36,Cap,,0,0,0,,Your card machine company
+Dialogue: 0,0:00:03.36,0:00:04.70,Cap,,0,0,0,,has to tell you
+Dialogue: 0,0:00:04.70,0:00:06.14,Cap,,0,0,0,,when you can walk away.
+Dialogue: 0,0:00:07.10,0:00:07.64,Cap,,0,0,0,,Did they?
+Dialogue: 0,0:00:08.84,0:00:10.40,Cap,,0,0,0,,Since January 2023,
+Dialogue: 0,0:00:10.68,0:00:12.96,Cap,,0,0,0,,the regulator caps a lease\Nterminal
+Dialogue: 0,0:00:12.96,0:00:15.08,Cap,,0,0,0,,at 18 months.
+Dialogue: 0,0:00:15.56,0:00:16.68,Cap,,0,0,0,,Not three years,
+Dialogue: 0,0:00:16.92,0:00:17.76,Cap,,0,0,0,,not four.
+Dialogue: 0,0:00:18.18,0:00:19.72,Cap,,0,0,0,,And when that term ends,
+Dialogue: 0,0:00:19.72,0:00:22.64,Cap,,0,0,0,,the big providers must to\Nwrite you.
+Dialogue: 0,0:00:22.92,0:00:24.08,Cap,,0,0,0,,The date it ends
+Dialogue: 0,0:00:24.52,0:00:26.42,Cap,,0,0,0,,and a nudge to shop\Naround.
+Dialogue: 0,0:00:26.96,0:00:28.82,Cap,,0,0,0,,After that, it rolls\Nmonthly.
+Dialogue: 0,0:00:29.42,0:00:30.32,Cap,,0,0,0,,One month's notice
+Dialogue: 0,0:00:30.32,0:00:32.06,Cap,,0,0,0,,and you're out.
+Dialogue: 0,0:00:33.20,0:00:34.68,Cap,,0,0,0,,Now, if your deal's\Ndecent,
+Dialogue: 0,0:00:34.68,0:00:35.94,Cap,,0,0,0,,ignore all this.
+Dialogue: 0,0:00:35.94,0:00:36.70,Cap,,0,0,0,,Plenty are.
+Dialogue: 0,0:00:36.98,0:00:38.28,Cap,,0,0,0,,But find that letter,
+Dialogue: 0,0:00:38.28,0:00:39.20,Cap,,0,0,0,,check the date.
+Dialogue: 0,0:00:39.48,0:00:40.58,Cap,,0,0,0,,It's your call,
+Dialogue: 0,0:00:40.84,0:00:41.38,Cap,,0,0,0,,not theirs.
+Dialogue: 0,0:00:42.10,0:00:43.36,Cap,,0,0,0,,We're NeroPay,
+Dialogue: 0,0:00:43.36,0:00:45.18,Cap,,0,0,0,,card machines from\NManchester.
+Dialogue: 0,0:00:45.94,0:00:47.40,Cap,,0,0,0,,Follow us for more of this
+Dialogue: 0,0:00:47.40,0:00:48.54,Cap,,0,0,0,,and have a look at
+Dialogue: 0,0:00:48.54,0:00:49.64,Cap,,0,0,0,,neropay.app.

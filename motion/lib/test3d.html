@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8">
+<style>
+@font-face{font-family:Chivo;src:url(../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800}
+@font-face{font-family:"Martian Mono";src:url(../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400}
+body{margin:0;background:#FBFAF7;font-family:Chivo} .row{display:flex;gap:20px;padding:20px}
+canvas{width:600px;height:600px;background:transparent} .lbl{font:800 40px Chivo;color:#141416}
+</style>
+<div class="row"><canvas id="a"></canvas><canvas id="b"></canvas><canvas id="c"></canvas></div>
+<div class="lbl">Chivo test — descenders gyp</div>
+<script type="module">
+import { view, terminal, tiles, envelope, ease } from './objects3d.js';
+await document.fonts.load('800 92px Chivo'); await document.fonts.load('400 30px "Martian Mono"');
+const va = view(document.getElementById('a'), { w:600, h:600, span:9 });
+const term = va.add(terminal()); term.rotation.y = -.25;
+const vb = view(document.getElementById('b'), { w:600, h:600, span:9, elev:38 });
+const T = vb.add(tiles(48, { cols:12, size:1, gap:.2, height:.45 }));
+for (let i = 0; i < 48; i++){ T.setProgress(i, 1); if (i < 18) T.setColor(i, 0xF5C518); }
+const vc = view(document.getElementById('c'), { w:600, h:600, span:9 });
+const env = vc.add(envelope()); env.open(.9);
+window.paint = () => { const t0 = performance.now(); va.render(); vb.render(); vc.render(); return performance.now() - t0; };
+window.READY = true;
+</script>
