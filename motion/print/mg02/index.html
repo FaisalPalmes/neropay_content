@@ -261,9 +261,9 @@ function camState(t){
   if (cur.d > 0 && t < cur.t + cur.d && prev){
     const p = eio(seg(t, cur.t, cur.d)), a = prev.sec.pose(), b = cur.sec.pose();
     const wideR = Wd.fit(a.target.distanceTo(b.target) + 30, 34, 1.0);   /* both sections in one frame at the top of the arc */
-    return { ...flight(a, b, p, { wideR, high:.55 }), moving:p, sec:null };
+    return { ...flight(a, b, p, { wideR, high:.55 }), moving:p, sec:null, from:prev.sec, to:cur.sec };
   }
-  const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec };
+  const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
 }
 function applyCam(t){
   const W = stage.clientWidth, H = stage.clientHeight; const sz = Wd.size();
@@ -275,7 +275,9 @@ function applyCam(t){
   /* a section's type is on screen while the camera is on it, and every section's while the camera is in the air —
      at rest, a neighbour's heading seen edge-on at the bottom of a 9:16 frame is clutter */
   const others = Math.min(1, Math.sin(Math.PI * c.moving) * 2.2);
-  for (const el of $$('.sign')) el.style.opacity = (c.sec && el.dataset.st === SECN.get(c.sec)) ? 1 : others;
+  const leaving = 1 - seg(c.moving, .6, .4);   /* the section being left stays whole until it is behind the camera */
+  for (const el of $$('.sign')) { const st = el.dataset.st;
+    el.style.opacity = st === SECN.get(c.to) ? 1 : (c.from && st === SECN.get(c.from)) ? leaving : others; }
   return c;
 }
 
