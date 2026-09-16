@@ -164,71 +164,90 @@ export function envelope({ w = 13, h = 9, lean = -14 } = {}) {
    Both stand upright (front = +z) with a slight lean back, feet on the ground plane.
 --------------------------------------------------------------------------------------------- */
 function uiTexture() {
+  /* the till screen, as on the product: a banner, the amount, a keypad with an operator column, CHARGE, a nav row */
   const c = document.createElement('canvas'); c.width = 720; c.height = 1280; const x = c.getContext('2d');
-  x.fillStyle = '#FAFAF8'; x.fillRect(0, 0, 720, 1280);
-  /* status line with the wordmark */
-  x.fillStyle = '#F5C518'; x.fillRect(36, 60, 648, 64);
-  x.font = '800 30px Chivo'; x.textBaseline = 'middle'; x.fillStyle = '#141416'; x.fillText('NeroPay', 58, 92);
-  x.font = '500 26px Chivo'; x.fillStyle = '#3A3A3E'; x.fillText('ready to take payments', 200, 93);
+  x.fillStyle = '#EDEDEB'; x.fillRect(0, 0, 720, 1280);
+  /* banner */
+  x.fillStyle = '#F5C518'; x.beginPath(); x.roundRect(40, 56, 640, 70, 12); x.fill();
+  x.font = '800 30px Chivo'; x.textBaseline = 'middle'; x.fillStyle = '#141416'; x.fillText('PAYOUT', 64, 92);
+  x.font = '400 26px Chivo'; x.fillStyle = '#3A3A3E'; x.fillText('see your daily total', 210, 93);
   /* amount */
-  x.font = '800 128px Chivo'; x.textAlign = 'center'; x.fillStyle = '#141416'; x.fillText('£0.00', 360, 230);
-  /* keypad 3x4 + an ops column */
+  x.font = '800 124px Chivo'; x.textAlign = 'center'; x.fillStyle = '#141416'; x.fillText('£0.00', 360, 226);
+  /* keypad 4 x 3, white keys with a soft edge, and an operator column */
   const keys = [['1','2','3'],['4','5','6'],['7','8','9'],['C','0','←']];
-  x.font = '600 52px Chivo';
+  x.font = '600 50px Chivo';
   for (let r = 0; r < 4; r++) for (let k = 0; k < 3; k++) {
-    const kx = 52 + k * 176, ky = 330 + r * 150;
-    x.fillStyle = '#EEEEEC'; x.beginPath(); x.roundRect(kx, ky, 150, 122, 22); x.fill();
-    x.fillStyle = '#141416'; x.fillText(keys[r][k], kx + 75, ky + 63);
+    const kx = 44 + k * 178, ky = 318 + r * 146;
+    x.fillStyle = '#D6D6D3'; x.beginPath(); x.roundRect(kx, ky + 5, 158, 122, 22); x.fill();
+    x.fillStyle = '#FFFFFF'; x.beginPath(); x.roundRect(kx, ky, 158, 122, 22); x.fill();
+    x.fillStyle = '#141416'; x.fillText(keys[r][k], kx + 79, ky + 63);
   }
+  x.strokeStyle = '#D9D9D6'; x.lineWidth = 2; x.beginPath(); x.moveTo(596, 318); x.lineTo(596, 900); x.stroke();
   const ops = ['C', '+', '−', '÷', '×', '='];
   x.font = '600 40px Chivo';
-  for (let i = 0; i < 6; i++) { const ky = 330 + i * 96;
-    x.fillStyle = i === 5 ? '#F5C518' : '#EEEEEC'; x.beginPath(); x.roundRect(600, ky, 84, 76, 16); x.fill();
-    x.fillStyle = '#141416'; x.fillText(ops[i], 642, ky + 40); }
-  /* charge button */
-  x.fillStyle = '#141416'; x.beginPath(); x.roundRect(52, 950, 632, 104, 18); x.fill();
-  x.font = '700 40px Chivo'; x.fillStyle = '#FFFFFF'; x.fillText('CHARGE', 368, 1004);
-  /* bottom nav: five simple glyphs with labels */
-  const nav = ['Link', 'Card', 'Sales', 'Alerts', 'More'];
-  x.font = '500 22px Chivo';
-  for (let i = 0; i < 5; i++) { const nx = 100 + i * 130;
-    x.fillStyle = '#141416'; x.beginPath(); x.roundRect(nx - 22, 1120, 44, 34, 8); x.fill();
-    x.fillStyle = '#6F6F74'; x.fillText(nav[i], nx, 1188); }
-  x.fillStyle = '#F5C518'; x.beginPath(); x.arc(100 + 3 * 130 + 18, 1118, 9, 0, Math.PI * 2); x.fill();
+  for (let i = 0; i < 6; i++) { const ky = 318 + i * 97;
+    x.fillStyle = i === 5 ? '#F5C518' : '#FFFFFF'; x.beginPath(); x.roundRect(606, ky, 74, 80, 16); x.fill();
+    x.fillStyle = '#141416'; x.fillText(ops[i], 643, ky + 41); }
+  /* charge: inactive grey until an amount is keyed, as on the product */
+  x.fillStyle = '#C9C9CE'; x.beginPath(); x.roundRect(44, 936, 636, 104, 18); x.fill();
+  x.font = '700 40px Chivo'; x.fillStyle = '#FFFFFF'; x.fillText('CHARGE', 362, 990);
+  /* nav: five glyphs with labels, a badge on notifications */
+  const nav = ['Link Pay', 'QR Pay', 'Transactions', 'Notifications', 'Menu'];
+  x.font = '500 20px Chivo';
+  for (let i = 0; i < 5; i++) { const nx = 96 + i * 132;
+    x.fillStyle = '#141416'; x.beginPath(); x.roundRect(nx - 20, 1116, 40, 32, 8); x.fill();
+    x.fillStyle = '#6F6F74'; x.fillText(nav[i], nx, 1182); }
+  x.fillStyle = '#D6322A'; x.beginPath(); x.arc(96 + 3 * 132 + 22, 1114, 11, 0, Math.PI * 2); x.fill();
+  x.fillStyle = '#FFFFFF'; x.font = '700 15px Chivo'; x.fillText('2', 96 + 3 * 132 + 22, 1115);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
-function wordmarkTexture(w = 512, h = 128, dark = false) {
+function wordmarkTexture(w = 512, h = 128, dark = false, align = 'center') {
   const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d');
   x.font = '800 84px Chivo'; x.textBaseline = 'middle'; x.letterSpacing = '-4px';
-  const nw = x.measureText('Nero').width, pw = x.measureText('Pay').width, x0 = (w - nw - pw) / 2;
+  const nw = x.measureText('Nero').width, pw = x.measureText('Pay').width, x0 = align === 'left' ? 6 : (w - nw - pw) / 2;
   x.fillStyle = dark ? '#141416' : '#FFFFFF'; x.fillText('Nero', x0, h / 2);
   x.fillStyle = '#F5C518'; x.fillText('Pay', x0 + nw, h / 2);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
+/* the contactless symbol: four arcs opening to the right, white line on nothing */
+function contactlessTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d');
+  x.strokeStyle = '#F2F2F0'; x.lineWidth = 11; x.lineCap = 'round';
+  for (let i = 0; i < 4; i++) { x.beginPath(); x.arc(78, 128, 28 + i * 30, -Math.PI * .3, Math.PI * .3); x.stroke(); }
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
+}
 
-export function neroTerminal({ lean = -8 } = {}) {
+/* v6, 16 Sep 2026 — the terminal as it is: a standalone slim handheld, no dock, no stand. Graphite body,
+   a full-height display, a receipt-printer head at the top carrying the contactless symbol, the wordmark
+   small at the bottom-left of the front below the screen. Stands on its foot with a slight lean back. */
+export function neroTerminal({ lean = -6 } = {}) {
   const g = new THREE.Group();
-  const W = 6.8, H = 14.0, D = 1.15;
-  const shell = mat(0xF3F3F1, { roughness:.42 });
-  const body = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 8, .62), shell); body.castShadow = true; body.receiveShadow = true; g.add(body);
-  /* the display: a black glass panel nearly edge to edge, the UI inside it */
-  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .7, H - 1.0, .08, 4, .42), mat(0x0B0B0D, { roughness:.18, metalness:.1 }));
-  glass.position.z = D / 2 + .02; g.add(glass);
-  const ui = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.25, (W - 1.25) * 1280 / 720), new THREE.MeshStandardMaterial({ map:uiTexture(), roughness:.3, emissive:0xffffff, emissiveIntensity:.5, emissiveMap:null }));
-  ui.material.emissiveMap = ui.material.map;
-  ui.position.set(0, -.15, D / 2 + .075); g.add(ui);
-  /* camera dot */
-  const cam = new THREE.Mesh(new THREE.CircleGeometry(.14, 24), mat(0x2A2A2E, { roughness:.3 })); cam.position.set(1.3, H / 2 - .6, D / 2 + .075); g.add(cam);
-  /* wordmark on the lower bezel, tiny */
-  const wm = new THREE.Mesh(new THREE.PlaneGeometry(1.7, .42), new THREE.MeshBasicMaterial({ map:wordmarkTexture(), transparent:true }));
-  wm.position.set(0, -H / 2 + .58, D / 2 + .075); g.add(wm);
-  /* the dock: a white wedge the terminal stands in, wordmark on its front */
-  const dock = new THREE.Mesh(new RoundedBoxGeometry(W + .6, 1.6, 4.2, 6, .5), shell); dock.position.set(0, .8, .9); dock.castShadow = true; dock.receiveShadow = true;
-  const dwm = new THREE.Mesh(new THREE.PlaneGeometry(2.2, .55), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, true), transparent:true }));
-  dwm.position.set(0, .75, 3.01); 
+  const W = 6.4, H = 14.6, D = 1.5, HEAD = 2.8, HD = 2.4;
+  const shell = mat(0x313237, { roughness:.36, metalness:.35 });
+  const body = new THREE.Mesh(new RoundedBoxGeometry(W, H, D, 8, .55), shell); body.castShadow = true; body.receiveShadow = true; g.add(body);
+  /* printer head: deeper than the body, its top face slightly domed by the rounding, its front a touch proud */
+  const head = new THREE.Mesh(new RoundedBoxGeometry(W, HEAD, HD, 8, .5), shell); head.position.set(0, H / 2 - HEAD / 2, -(HD - D) / 2 + .04);   /* front near-flush with the body, the depth all at the back */ head.castShadow = true; head.receiveShadow = true; g.add(head);
+  /* paper slot along the head's bottom front edge, with a sliver of receipt paper showing */
+  const slot = new THREE.Mesh(new THREE.BoxGeometry(W - 1.2, .1, .3), mat(0x0B0B0D, { roughness:1 })); slot.position.set(0, H / 2 - HEAD + .1, D / 2 + .06); g.add(slot);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.6, .16), mat(C.paper, { roughness:.95 })); paper.position.set(0, H / 2 - HEAD + .1, D / 2 + .22); g.add(paper);
+  /* the contactless symbol on the head's front, a decal */
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), new THREE.MeshBasicMaterial({ map:contactlessTexture(), transparent:true }));
+  cl.position.set(.35, H / 2 - HEAD / 2 + .05, D / 2 + .09); g.add(cl);
+  /* the display: black glass from just under the head to just above the wordmark, the UI inside it */
+  const SH = H - HEAD - 1.35, SY = -H / 2 + 1.1 + SH / 2;
+  const glass = new THREE.Mesh(new RoundedBoxGeometry(W - .6, SH, .08, 4, .34), mat(0x0A0A0C, { roughness:.16, metalness:.1 }));
+  glass.position.set(0, SY, D / 2 + .02); g.add(glass);
+  const UW = W - 1.05, UH = UW * 1280 / 720;
+  const ui = new THREE.Mesh(new THREE.PlaneGeometry(UW, UH), new THREE.MeshStandardMaterial({ map:uiTexture(), roughness:.3, emissive:0xffffff, emissiveIntensity:.5 }));
+  ui.material.emissiveMap = ui.material.map; ui.position.set(0, SY - (SH - UH) / 2 + .02, D / 2 + .075); g.add(ui);
+  /* camera dot at the top of the glass */
+  const cam = new THREE.Mesh(new THREE.CircleGeometry(.1, 24), mat(0x3A3A3E, { roughness:.3 })); cam.position.set(0, SY + SH / 2 - .28, D / 2 + .075); g.add(cam);
+  /* the wordmark, small, bottom-left of the front */
+  const wm = new THREE.Mesh(new THREE.PlaneGeometry(1.7, .42), new THREE.MeshBasicMaterial({ map:wordmarkTexture(512, 128, false, 'left'), transparent:true }));
+  wm.position.set(-W / 2 + .45 + .85, -H / 2 + .52, D / 2 + .075); g.add(wm);
   const stand = new THREE.Group();
-  g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.set(0, 1.5 + H / 2 * Math.cos(THREE.MathUtils.degToRad(lean)), -0.2);
-  stand.add(g); stand.add(dock); stand.add(dwm);
+  g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.set(0, H / 2 * Math.cos(THREE.MathUtils.degToRad(lean)) + .05, 0);
+  stand.add(g);
   return stand;
 }
 
