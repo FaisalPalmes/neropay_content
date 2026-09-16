@@ -24,7 +24,7 @@ date has a shape you can walk along. The camera moves only between beats.
 
 | # | Warehouse id | Rule | State |
 |---|---|---|---|
-| 1 | MG02 | The 18-month rule — the lease cap and the trigger message (PSR PS22/2) | **v5 rendered 16 Sep 2026, awaiting Faisal's review** — `motion/print/mg02/`, the v4 script and the tightened Verity take unchanged, the picture rebuilt as one 3D world the camera flies through (six sections on an arc, type standing in the scene), Poppins, looped bed, four crops, captioned |
+| 1 | MG02 | The 18-month rule — the lease cap and the trigger message (PSR PS22/2) | **v6 rendered 16 Sep 2026, awaiting Faisal's review** — `motion/print/mg02/`, the v4 script and tightened Verity take unchanged, the v5 world with the terminal as it is (one moulding, yellow head), captions drawn in the picture with the spoken word marked, glass pills and social tiles, a room environment and haze, four crops |
 | 2 | MG03 | The tip isn't yours — Employment (Allocation of Tips) Act, 1 Oct 2024 | Clear, figures confirmed |
 | 3 | MG04 | Four times a year — MTD for Income Tax from April 2026 | Clear; carry the "not tax advice" line |
 | 4 | MG05 | That sign — the surcharge ban, 13 Jan 2018 | Clear |

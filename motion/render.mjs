@@ -23,6 +23,7 @@ const target = args[0];
 if (!target) { console.error('usage: node motion/render.mjs <series>/<episode>'); process.exit(1); }
 const only  = args.includes('--ratio') ? args[args.indexOf('--ratio') + 1] : null;
 const draft = args.includes('--draft');
+const pageURL = ratio => pathToFileURL(page_).href + (ratio === '16x9' ? '?caps=0' : '');   /* v6: captions live in the composition; the 16:9 master stays clean */
 const jpeg  = args.includes('--jpeg');   /* frames as JPEG q97 instead of PNG: the PNG encode is two-thirds of a full-frame 3D render's cost */
 
 const epDir = resolve(HERE, target);
@@ -76,7 +77,7 @@ const browser = await chromium.launch({ executablePath, args:['--allow-file-acce
   for (const [ratio, [W, H]] of Object.entries(CROPS)) {
     if (only && ratio !== only) continue;
     const pg = await browser.newPage({ viewport:{ width:W, height:H } });
-    await pg.goto(pathToFileURL(page_).href);
+    await pg.goto(pageURL(ratio));
     await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => window.READY !== false && typeof window.setFrame === 'function', null, { timeout:60000 });
     await pg.addStyleTag({ content:`#stage{width:${W}px;height:${H}px}` });
     const { fps, dur } = await pg.evaluate(() => ({ fps:window.FPS, dur:window.DURATION }));
@@ -132,7 +133,7 @@ for (const [ratio, [W, H]] of Object.entries(CROPS)) {
   mkdirSync(frames, { recursive:true });
 
   const pg = await browser.newPage({ viewport:{ width:W, height:H }, deviceScaleFactor:1 });
-  await pg.goto(pathToFileURL(page_).href);
+  await pg.goto(pageURL(ratio));
   await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => window.READY !== false && typeof window.setFrame === 'function', null, { timeout:60000 });
   const { fps, dur } = await pg.evaluate(() => ({ fps:window.FPS, dur:window.DURATION }));
   const total = Math.ceil(dur * fps);

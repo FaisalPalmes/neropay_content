@@ -120,8 +120,8 @@ never two glass objects competing, never as decoration. On white it is the frost
 | **Martian Mono 700 / 400** | Every figure, date and deadline; the small uppercase kickers | Counts, ticks, or stamps; never fades |
 | **Source Serif 4 italic** | The human line — the opening question, the aside, the concession | Rises softly, half a beat late |
 
-Chivo 800 survives only inside the terminal's screen texture (the wordmark). Captions burn in Poppins Bold
-(`motion/assets/fonts-ttf/Poppins-Bold.ttf`).
+Chivo 800 survives only inside the terminal's screen texture (the wordmark). Captions are drawn by the composition
+in Poppins 700 (v6); the `.ass` files and `Poppins-Bold.ttf` remain for anything that still burns.
 
 Colour by phrase, not by rule: the thing the voice is *hitting* is the thing that's yellow. A word
 the voice throws away is `--muted` and small. Italic is the voice dropping to an aside. Caps and
@@ -221,6 +221,30 @@ all still work. One perspective camera (28° vertical). The rules that come with
   encode, not WebGL (shadows and MSAA barely register; PCF replaces PCFSoft anyway). `render.mjs --jpeg` writes
   the frames as JPEG q97 and halves the time — use it for review cuts. Crops run *sequentially*: four processes
   on four cores thrash SwiftShader and finish later than one after another. Peek first, always.
+
+**v6, 16 Sep 2026 — captions in the picture, glass, a room, the terminal as it is.** Faisal's notes on v5:
+
+- **Captions are drawn by the composition, not burned.** No black box, no fixed strap. A stage-level layer
+  (`#caps`, appended *after* the world's two layers so nothing paints over it) shows one caption line at a time
+  from `data/caps.js` (the lines of `captions.json` aligned to word indices), grey Poppins 700, the word being
+  spoken in ink on a yellow marker, spoken words a shade darker after. A line that carries the section's figure or
+  action is *big* (`BIG` regex) and sits a little higher. Lines rise in over 0.24 s and fade out in 0.12 s. The
+  16:9 master renders without them (`?caps=0` on the page URL; `render.mjs` and `peek.mjs` add it), so YouTube
+  stays clean and nothing is burned in `finish.sh` any more.
+- **Liquid glass, kept to the rule.** The pills are frosted slabs — even white tint, thin rim, soft drop shadow,
+  one sheen pass on entrance (`--sh`, driven from `stamp()`) — and the solid pill is the same slab tinted yellow.
+  The end card adds four glass tiles with the social marks drawn as inline SVG in ink (Instagram, Facebook,
+  TikTok, YouTube), stamping in on "follow". Still one glass object per idea, never glass for its own sake.
+- **A room and a haze.** `world3d.js` builds a `RoomEnvironment` PMREM as `scene.environment` at low intensity
+  (`env`, 0.32) so the glass, the shells and the tile tops carry real reflections, with the hemisphere eased to
+  compensate; a faint paper-coloured fog from 140 to 520 units sits the far end of a flight back in the world.
+  Subtle by design — the look is still paper and ink.
+- **The terminal is one moulding.** `neroTerminal()` v6: a single side profile (flat front, rounded foot, a back
+  that swells at the top for the printer, a domed top) extruded across the width with soft ends, then split at the
+  seam into a yellow head and a white shell so both share every curve; a black frame inset on the front around the
+  full-height display; the contactless indicator (ellipse, arcs, hand and card) large on the yellow; the wordmark
+  once, bottom-left. No dock, no stand. The yellow material clamps its lit colour so the top stays brand yellow
+  under the sun. `motion/lib/preview-terminal.html` + `motion/still.mjs` are the sign-off loop for any object.
 
 **Every video closes the same way — the house sign-off, v4.** What to do about it (compare), how to reach us
 ("Get a quote in minutes" · MESSAGE US · CALL US · neropay.app), "That's it for today", then the follow line.

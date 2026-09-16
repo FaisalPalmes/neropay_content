@@ -17,11 +17,12 @@
  */
 import * as THREE from '../assets/vendor/three.module.js';
 import { CSS3DObject, CSS3DRenderer } from '../assets/vendor/CSS3DRenderer.js';
+import { RoomEnvironment } from '../assets/vendor/RoomEnvironment.js';
 
 export const K = 1 / 40;            /* world units per DOM px: a 120px heading is 3 units tall, a 14-unit terminal 560px */
 const d2r = THREE.MathUtils.degToRad;
 
-export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grain = .07 } = {}) {
+export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grain = .07, env = .32, haze = true } = {}) {
   /* CSS3D under, WebGL over */
   const css = new CSS3DRenderer();
   css.domElement.id = 'board'; Object.assign(css.domElement.style, { position:'absolute', left:0, top:0 });
@@ -37,7 +38,11 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(fov, 1, near, far);
   const probe = new THREE.PerspectiveCamera(fov, 1, near, far);   /* for fitting a section's box, without touching the live camera */
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xE6E4DD, 1.35));
+  /* v6: a room environment for reflections on the glass and the shells (subtle, most of the light is still the
+     hemisphere and the sun), and a faint paper-coloured haze so the far end of a flight sits back in the world */
+  if (env > 0) { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture; scene.environmentIntensity = env; pm.dispose(); }
+  if (haze) scene.fog = new THREE.Fog(0xF6F4EE, 140, 520);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xE6E4DD, env > 0 ? 1.15 : 1.35));
   const sun = new THREE.DirectionalLight(0xffffff, 2.1); sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 3; sun.shadow.bias = -0.0008;
   Object.assign(sun.shadow.camera, { left:-34, right:34, top:34, bottom:-34, near:1, far:120 });

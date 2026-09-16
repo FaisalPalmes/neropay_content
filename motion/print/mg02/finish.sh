@@ -1,5 +1,5 @@
 #!/bin/bash
-# Burn captions into 9:16, 4:5 and 1:1 (16:9 stays clean for YouTube), mux the loudnormed mix into
+# v6: captions are drawn by the composition (16:9 renders without them), so nothing is burned here; mux the loudnormed mix into
 # every crop, contact sheet, loudness + single-frame spike report. Nothing published.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -7,7 +7,7 @@ EP=mg02; FONTS=../../assets/fonts-ttf
 mkdir -p out/final
 for r in 9x16 4x5 1x1 16x9; do
   src=out/$EP-$r.mp4; dst=out/final/$EP-$r.mp4
-  if [ "$r" = 16x9 ]; then VF="null"; else VF="ass=data/captions-$r.ass:fontsdir=$FONTS"; fi
+  VF="null"
   ffmpeg -y -v error -i "$src" -i out/mix.m4a -vf "$VF" -map 0:v -map 1:a -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart "$dst"
   printf "%-8s %s\n" "$r" "$(ffprobe -v error -show_entries stream=width,height:format=duration -of csv=p=0 "$dst" | tr '\n' ' ')"
 done
