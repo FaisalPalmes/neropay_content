@@ -56,3 +56,9 @@ follow 94 "Follow" · url 105 "neropay".
 
 30 cues from 15 distinct effects, every one motivated by something moving (`data/mix.json`), the bed at 0.30
 ducked 5:1 under the voice, two-pass loudnorm to −14 LUFS / −1.5 dBTP with a limiter on the true peak.
+
+## Delivered 16 Sep 2026 (v3, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
+
+9:16 `66955a11-5aaa-447f-ba41-020a5e913171.mp4` · 16:9 `f21efce1-ea10-4070-9739-4337961a63ff.mp4` ·
+4:5 `a7181fc1-dd06-4be1-a84c-e7815bbe8ed4.mp4` · 1:1 `fd8194f3-ab8a-48e5-af5a-8aff835fdd98.mp4` ·
+contact `c73d72a2-e6a1-45d9-ab58-cbc4ad261d33.jpg`. Master −14.67 LUFS / −1.36 dBTP, 51.5 s, no single-frame spikes.
