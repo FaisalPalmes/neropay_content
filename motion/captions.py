@@ -48,7 +48,9 @@ def wrap(s, n=26):
     if len(s) <= n: return s
     ws, a, b = s.split(), [], []
     for w in ws:
-        (a if len(' '.join(a + [w])) <= n or not a else b).append(w)
+        # once a word has spilled to the second line, every later word follows it — never reorder
+        if b or (a and len(' '.join(a + [w])) > n): b.append(w)
+        else: a.append(w)
     if not b: return s
     return ' '.join(a) + r'\N' + ' '.join(b)
 

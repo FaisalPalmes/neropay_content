@@ -59,6 +59,6 @@ voice; two-pass loudnorm to −14 LUFS with a true-peak limiter.
 
 ## Delivered 16 Sep 2026 (v4, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
 
-9:16 `7a2b8008-9eae-4fff-b671-da0f25bc310d.mp4` · 16:9 `77184997-b750-409b-ade2-b7f779fbc104.mp4` ·
-4:5 `99bb4407-e6dc-4a6b-ab4a-417a166d1b89.mp4` · 1:1 `2072e8d6-84e5-4593-8fbb-5b0a737fcbe5.mp4` ·
-contact `f5da9cc8-10b7-403a-a9b9-466cf6212c4b.jpg`. Master −14.64 LUFS / −1.17 dBTP, 61.1 s, no single-frame spikes.
+9:16 `163db0df-7fb4-44f4-aea9-e2cfba052a5b.mp4` · 16:9 `77184997-b750-409b-ade2-b7f779fbc104.mp4` ·
+4:5 `ebd7a25e-4c31-4000-9286-cd1d6d3683e1.mp4` · 1:1 `d0c2bad1-6363-4807-9010-d16a0faa7542.mp4` ·
+contact `aa235c41-0ff3-4543-b75f-f607be8a33b1.jpg`. Master −14.64 LUFS / −1.17 dBTP, 61.1 s, no single-frame spikes.
