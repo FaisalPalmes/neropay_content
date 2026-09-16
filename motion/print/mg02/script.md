@@ -56,3 +56,9 @@ neighbouring station peeks into the 16:9 frame. No masthead, no footer, no episo
 
 36 cues, 15 distinct effects, each on something moving (`data/mix.json`); the bed at 0.30 ducked 5:1 under the
 voice; two-pass loudnorm to −14 LUFS with a true-peak limiter.
+
+## Delivered 16 Sep 2026 (v4, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
+
+9:16 `7a2b8008-9eae-4fff-b671-da0f25bc310d.mp4` · 16:9 `77184997-b750-409b-ade2-b7f779fbc104.mp4` ·
+4:5 `99bb4407-e6dc-4a6b-ab4a-417a166d1b89.mp4` · 1:1 `2072e8d6-84e5-4593-8fbb-5b0a737fcbe5.mp4` ·
+contact `f5da9cc8-10b7-403a-a9b9-466cf6212c4b.jpg`. Master −14.64 LUFS / −1.17 dBTP, 61.1 s, no single-frame spikes.
