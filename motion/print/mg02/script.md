@@ -63,6 +63,12 @@ floor is solid to the depth buffer so what is below it is gone. No masthead, no 
 36 cues, 15 distinct effects, each on something moving (`data/mix.json`); the bed at 0.30 ducked 5:1 under the
 voice; two-pass loudnorm to −14 LUFS with a true-peak limiter.
 
+## Delivered 16 Sep 2026 (v5, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
+
+9:16 `673173ed-8b08-4c49-bb76-4036e76024b5.mp4` · 16:9 `ef4e3c36-ec9c-4217-8a02-95517843f44e.mp4` ·
+4:5 `9e41b26c-2b01-4b5c-b913-aa7f4d0d7a94.mp4` · 1:1 `dfe115be-e49f-4c61-ae4a-1f95c7e7f24e.mp4` ·
+contact `a540666d-4f82-4251-85ca-ca7de9135c67.jpg`. Same mix as v4.1: −14.44 LUFS / −1.37 dBTP, 55.9 s, no single-frame spikes.
+
 ## Delivered 16 Sep 2026 (v4.1, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
 
 9:16 `f4b3d009-2c0b-47e3-8127-482a7df48f09.mp4` · 16:9 `84ce9938-099a-4d45-8862-9ee5dd612389.mp4` ·
