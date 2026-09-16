@@ -60,8 +60,8 @@ when the camera lands; Poppins throughout; camera moves are half a second.
 36 cues, 15 distinct effects, each on something moving (`data/mix.json`); the bed at 0.30 ducked 5:1 under the
 voice; two-pass loudnorm to −14 LUFS with a true-peak limiter.
 
-## Delivered 16 Sep 2026 (v4, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
+## Delivered 16 Sep 2026 (v4.1, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
 
-9:16 `163db0df-7fb4-44f4-aea9-e2cfba052a5b.mp4` · 16:9 `77184997-b750-409b-ade2-b7f779fbc104.mp4` ·
-4:5 `ebd7a25e-4c31-4000-9286-cd1d6d3683e1.mp4` · 1:1 `d0c2bad1-6363-4807-9010-d16a0faa7542.mp4` ·
-contact `aa235c41-0ff3-4543-b75f-f607be8a33b1.jpg`. Master −14.64 LUFS / −1.17 dBTP, 61.1 s, no single-frame spikes.
+9:16 `f4b3d009-2c0b-47e3-8127-482a7df48f09.mp4` · 16:9 `84ce9938-099a-4d45-8862-9ee5dd612389.mp4` ·
+4:5 `ea95d0bc-feab-4cf6-b380-bb8ce9976e2d.mp4` · 1:1 `e50245ae-f89b-4998-b6bf-5f7b9abc7240.mp4` ·
+contact `6acf0d0c-5f9a-4b0f-bacb-56c0e7b2383b.jpg`. Master −14.44 LUFS / −1.37 dBTP, 55.9 s, no single-frame spikes.
