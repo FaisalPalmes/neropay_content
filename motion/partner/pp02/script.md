@@ -74,3 +74,22 @@ Your road`, README v1. Analysis: the timing law passes on all eight beats (13 / 
 frame scan clean; 0 single-frame luma spikes and 0 frame-to-frame jumps over 12 across 1,474 frames; the stage-3 gate
 passes; the contact sheet checked at 30 points — the receipt and the lamp-post signs clear of every heading, the van on
 the road at 22.6 s, the shutters down for the quiet month, the terminal clear of the compliance line.
+
+## v2, 17 Sep 2026 — grand figures, a fuller frame, every stop arriving
+
+Faisal's notes on v1: the small "£100–£300" on the receipt beside the big one was wrong — money and stats are grand and
+large, once; too much empty sky at the top at times; clipping and artefacts to go; the counting number should move in and
+settle as the scene sets; the priority is dynamic, 3D→4D, large but subtle. So: the hero figure centred at 164 px with
+PER MERCHANT and the condition in large serif under it; both receipts print PAID and carry the tier line only as small
+print; the climb is a big "3 → 20%" … "111+ → 40%" in the frame, ACTIVE PARTNER hangs from the bunting; the tally is a
+number that flies in large from below, pops on every count and hands over to a question mark that scales in (no rolling
+glyphs); every stop's type slides up and settles as the camera lands (`settle()` composed onto the anchor transform);
+the leaving stop fades in the first third of the walk; the drift and breath are stronger; the box is lower and shallower
+(y to 17.4, elevation 11°) and the street bigger so the frame is fuller; headings 100 px, the nameplate 82 px; the card
+is gone from this video. The frame scan caught the typed question two pixels over the right edge at 62 px; 56 px.
+
+**Delivered (v2, 4:5):** `out/final/pp02-4x5.mp4`, 49.1 s, 1,474 frames, md5 `70cbcb711eb5a879dcbb31f7f59c53e3`;
+stereo, −13.99 LUFS / −1.21 dBTP. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/4497b38d-a4e5-49dc-89d7-d1be36a1d1c3.mp4`
+(contact `…/46e62e45-53c1-4171-9720-22c62e1b9c45.jpg`). Drive: README v2 (`1X67fhjrybpimYQKgqHgX81rVWxnDOj4ENg4uNjt4LsQ`),
+v1 renamed superseded. Law passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; contact sheet at 30 points.

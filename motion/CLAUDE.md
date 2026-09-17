@@ -353,6 +353,13 @@ per-word pop on the captions. Two rules learnt: a WebGL object placed near a hea
 receipt went to the shop on the far side of the type; the lamp-post signs rose above the projected shop tops), and a
 frame with the street in it needs a shallower box (y to 18, elevation 12°) or the shops read as a strip at the bottom.
 
+**PP02 v2 — grand figures, once (Faisal, 17 Sep 2026).** Money and stats are the hero of their frame: one figure, large
+(the 164 px hero on the marker, the 130 px climb row), with its condition in readable type beneath — never a second, small
+copy of the same figure elsewhere in the frame (the receipt beside the hero was the fault). The count that opens a video
+flies in large and settles as the scene sets, pops on each change, and hands over to the next mark; no rolling digit
+columns (partial glyphs read as clipping). Every stop's type slides up and settles as the camera lands, and the box sits
+low and shallow enough that the frame is full — empty sky at the top is a fault. These are standing rules.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**
