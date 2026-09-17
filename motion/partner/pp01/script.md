@@ -73,7 +73,21 @@ under the voice; 35 cues, 12 distinct effects, no effect twice in a row, one sof
 Timing law (hold = max(1.5 s, words × 0.4)) passes on all seven beats, the compliance super counted as its own beat.
 Duration 70.4 s. Frame scan clean at all four crops.
 
-## Delivered 17 Sep 2026 (DRAFT, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
+## Delivered 17 Sep 2026 — v2, final figures, 4:5 first (Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
+
+4:5 `b69e0423-b0aa-4732-a5c2-9d22889df4ec.mp4` (md5 `c2aaf03bbf390fd97f9d22fae2e37347`, 24.4 MB) · contact
+`84903f50-9e26-4cc9-9c84-537a7c1673b6.jpg`. −14.92 LUFS / −1.21 dBTP, 70.4 s, 0 single-frame spikes, no frame-to-frame
+jump outside a camera move, frame scan clean. Faisal asked for the 4:5 Meta version only; 9:16, 1:1 and 16:9 of v2 on
+request (about 35 minutes a crop). Drive: the READ ME "PP01 v2 final" in `03 Finished`; the v1 note is renamed superseded.
+
+**Analysis before hand-over (v2).** Stage 3 passed on the confirmed records. Timing law: all seven beats hold. Frame scan:
+no overflow. 24-frame contact sheet reviewed: the section-3 kicker that ran into the climb slab in the first v2 render was
+moved (kicker up, slab down) and re-rendered before sending; nothing else touches. Freeze-frames of the Bonus Dial and the
+Rate Climb are unchanged from v1 (the modules are the same code): the bonus and volume are together at every frame, the £200
+step lands on "two hundred" with "£20,000+", no threshold skipped, both rest frames carry their conditions. Compliance super
+on screen 7.1 s. Audio unchanged from v1.
+
+## Delivered 17 Sep 2026 — v1, the dark draft, superseded (Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
 
 9:16 `b7b12bbc-f92b-4f76-9ae1-b45e94eb2233.mp4` (md5 `c41f6d08ddb2eb6ef9e748670e821f1d`, 9.3 MB) · contact
 `7b92cd96-cd37-40f9-b09b-4a2bf2f56c82.jpg`. Master −14.92 LUFS / −1.21 dBTP, 70.4 s, 0 single-frame spikes, frame scan
