@@ -113,9 +113,13 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
     section({ x = 0, z = 0, ry = 0, az = -20, el = 18, box = { x:[-13, 13], y:[0, 30], z:[-4, 6] }, ty = null, margin = 1.08 } = {}) {
       const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; scene.add(g);
       const bw = box.x[1] - box.x[0], bh = box.y[1] - box.y[0], tyv = ty ?? bh / 2;
-      const corners = []; for (const cx of box.x) for (const cy of box.y) for (const cz of box.z) corners.push(new THREE.Vector3(cx, cy, cz));
+      let corners = [];
+      const setBox = b => { corners = []; for (const cx of b.x) for (const cy of b.y) for (const cz of b.z) corners.push(new THREE.Vector3(cx, cy, cz)); };
+      setBox(box);
       const sec = { g, az, el, bw, bh, box, ty:tyv, margin,
         add: o => (g.add(o), o),
+        /* refit to another box — a squarer crop drops y[0] below the floor so the captions have room under the objects */
+        setBox,
         sign: (elm, opts = {}) => v.sign(elm, g, { ry:(opts.face ? d2r(az) * .55 : 0), ...opts }),
         local: (lx, ly, lz) => (g.updateWorldMatrix(true, false), g.localToWorld(new THREE.Vector3(lx, ly, lz))),
         /* the camera pose that frames this section for the current aspect */

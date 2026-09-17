@@ -12,7 +12,7 @@ Don't mix the styles and don't reuse presenter assets here. Nothing in `motion/`
 |---|---|---|
 | The Maths | `motion/maths/` | One number out of a merchant's life, worked out on screen |
 | Small Print | `motion/print/` | The law, the deadline and the rule a card machine touches — tips, contracts, surcharges, disputes, HMRC. White editorial, a stamp on the date, and "if this doesn't apply to you, do nothing". Briefed in `motion.js` |
-| Partner Programme | `motion/partner/` | The partner programme — what a partner earns and the condition, on the brief's dark ground. Briefed by Faisal in `motion/partner/BRIEF.md` (16 Sep 2026). **Draft builds only** until Eray clears the three CONFIRM items: the figures are `status: "draft"` in `figures.json`, every export is `-DRAFT`, nothing posts. `motion/partner/pp01/` is the first video |
+| Partner Programme | `motion/partner/` | The partner programme — what a partner earns and the condition, said condition-first, in the white world. Briefed by Faisal in `motion/partner/BRIEF.md` (v4 final, 17 Sep 2026); the figures are confirmed records in `figures.json`. `motion/partner/pp01/` is the first video |
 
 Adding a series: a folder in `motion/`, a `CLAUDE.md` in it carrying the premise, the spec and the
 episode bank, and episodes beneath that. Everything below applies to all of them.
@@ -263,14 +263,29 @@ deep (no bokeh, MOTION-SYSTEM §1), and one plate per beat at most. A plate is a
 beat*, never the body of the video. Rail 4: an AI image under a caption is synthetic content — the
 upload disclosure applies as it does for the presenter series; raise it once per series.
 
-**PP01, 16–17 Sep 2026 — the dark ground, a UGC read, and the draft gate.** The first partner video, built from
-Faisal's brief (`motion/partner/BRIEF.md`) and his notes on the first take. What it added:
+**Light mode only — Faisal, 17 Sep 2026.** NeroPay content is white: the off-white ground, ink type, the yellow as the
+accent, and a little blush or lilac where a graphic earns it. PP01 was first built on the partner brief's dark ground and
+Faisal rejected it outright ("no more black background theme"). `world({ dark:true })` stays in `world3d.js` as a
+switch, but nothing in `motion/` uses it and nothing new should. The charcoal ground listed under Style above is
+retired with it.
 
-- **`world({ dark:true })`** — the charcoal ground for the money videos, as one switch: the brief's `#0A0B0D`, mats
-  `#141619`, a near-invisible route line, light grain, the haze the colour of the ground, a deeper floor shadow. On dark the
-  highlighter is a thick yellow underline (white type stays white), the caption marker is a full yellow block with
-  ink type on it, and the glass is the dark slab: pale tint, thin bright rim, deep shadow, one sheen. Poppins stays the
-  family; the brief's Inter and DejaVu Mono are not adopted (house ruling of the same day).
+**PP01, 16–17 Sep 2026 — the white world that keeps moving, a UGC read, the two modules as glass.** The first partner
+video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on the first two cuts. What it added:
+
+- **Movement the whole time.** The camera never stops: a slow orbit and breath around the target, a continuous function
+  of time, so a flight starts and ends without a jump. Shaded spheres (yellow, a few blush and lilac) float over every
+  section and bob; objects sway a few degrees; the field of tiles breathes. The reference's rule — cuts land on motion.
+- **Variety in the frame.** Sections alternate: the view swings left (az −22) then right (az +20) then centre, and the
+  type is anchored to match (`.in`, `.in.r`, `.in.c`), so nothing sits in the same corner twice running.
+- **Phrases become graphics.** "Found it in the terms" is a terms sheet with one line highlighted; "you introduce them"
+  draws connector paths on the floor from a YOU pill to the three shops with a dot running each; "we set them up" lands
+  a small terminal beside each shop; "every month you hit it" ticks four month chips; "quiet month … only bring one"
+  ticks one of four weeks. Badges (brief 03's value badge: ink fill, white type) slam in with two frames of sparks.
+- **The reference, borrowed.** The Bonus Dial is a stack: the ledger row tilted above the dial slab. The close turns
+  three arc rings at their own rates behind the address (the converge). Poppins stays the family; the brief's Inter and
+  DejaVu Mono are not adopted (house ruling of the same day).
+- **Squarer crops get room under the objects.** With captions on and the aspect over 0.7, the section boxes drop 6
+  units below the floor (`setBox`) so the caption never sits over a pillar or a tile.
 - **The brief's two modules as glass slabs.** The Bonus Dial (bonus above the marker, volume below, thresholds appearing
   as they are passed, the rest frame with "£40,000+" and "per merchant" and the only permitted "up to") and the Rate
   Climb (count beside rate, chips lighting as each step is passed, "111+ · 40%" and "Most partners start at 20%: three a
@@ -284,10 +299,10 @@ Faisal's brief (`motion/partner/BRIEF.md`) and his notes on the first take. What
 - **An upbeat bed, generated.** `bgm/partner-upbeat-118.mp3` (Eleven Music v2, no vocals — checked with Whisper),
   tempo measured with `motion/tempo.py` (numpy onset autocorrelation; librosa isn't in the sandbox), extended past the
   cut at a bar boundary with a crossfade rather than looped from 0.
-- **The draft gate.** `figures.json` gained `status: "draft"` and `verify.py` a `draft_figure()`: a draft record
-  passes stage 3 but marks the build DRAFT, `finish.sh` names every export `-DRAFT`, and a draft mark sits on every
-  frame. `checks.py` scans for the brief's banned register (Part 6) and asserts every pound figure sits with the
-  condition that earns it.
+- **The draft gate, for next time.** `figures.json` can carry `status: "draft"` and `verify.py` a `draft_figure()`: a
+  draft record passes stage 3 but marks the build DRAFT for exports named `-DRAFT` that do not post. PP01 used it for
+  a day; the partner figures were confirmed final on 17 Sep 2026 and are ordinary confirmed records now. `checks.py`
+  scans for the brief's banned register (Part 6) and asserts every pound figure sits with the condition that earns it.
 - **The voice is per video when Faisal says so.** Verity stays the merchant series voice; PP01 is **Olivia — Warm,
   British Female** (`pPoztmvzd5p26S3MsNrV`) at Faisal's request mid-build. Record any such choice in the ledger and in
   the episode's `script.md`.

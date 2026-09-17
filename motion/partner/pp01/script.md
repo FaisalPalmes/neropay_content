@@ -1,4 +1,4 @@
-# PP01 — The Partner Programme, how it pays · DRAFT
+# PP01 — The Partner Programme, how it pays
 
 Built 16–17 September 2026 from `motion/partner/BRIEF.md` (Faisal, 16 Sep 2026). One complete social video, not the
 brief's hook + body + close modules: Faisal's note after the first take was that the brief was fine but the copy
@@ -7,9 +7,9 @@ no breaths" — so the script below was written as one continuous piece of talki
 touch and breath-gated. Voice: **Olivia — Warm, British Female** (`pPoztmvzd5p26S3MsNrV`), Faisal's choice for this
 video, in place of the merchant series' Verity.
 
-**DRAFT.** The figures are the brief's, released for a draft build only — `figures.json` carries them as
-`status: "draft"` with what is still open with Eray. Every export is named `-DRAFT`, a draft mark sits on every frame,
-and nothing posts until the three CONFIRM items in Part 7 of the brief are closed.
+**The figures are final.** Faisal's v4 brief of 17 Sep 2026 confirmed every tier and condition; `figures.json` carries
+them as confirmed records and the exports carry no draft mark. (v1, the night before, was a DRAFT build on the same
+figures while three items were open — that day is over.)
 
 ## The take, as generated (eleven_v3, one take)
 
@@ -43,13 +43,21 @@ not kept in the repo.
 breath above −40 dBFS); five gaps whose peak was above −18 dBFS were left alone as word edges Whisper had timed late.
 Word timings: faster-whisper `small.en` in the Higgsfield sandbox, the script as the initial prompt.
 
-## The picture — one world, dark ground
+## The picture — v2, the white world that keeps moving (17 Sep 2026)
 
-`motion/lib/world3d.js` with `dark:true` (the first use): the partner brief's ground `#0A0B0D`, mats `#141619`, white
-ink, `#8A8F97` dim, the yellow as the one accent, green only for LIVE. Poppins is the family (house ruling, 16 Sep) in
-place of the brief's Inter; Martian Mono where the brief says DejaVu Mono. Six sections on the arc, 60 units apart,
-the view turning 29°; captions drawn in the picture with the spoken word on a yellow block; a draft mark top-left on
-every frame. Bed **partner-upbeat-118** (Eleven Music v2, 117.84 bpm measured with `motion/tempo.py`, no vocals —
+v1 was built on the partner brief's dark ground and Faisal rejected it the same night: light mode only, keep the 3D but
+make it move the whole time, vary where things sit, turn the phrases into graphics, borrow from the Webflow reference.
+So v2 is the merchant videos' white world (`#FBFAF7`, ink, the yellow accent, blush and lilac in the spheres and the
+glass tint) with: a camera that never stops (a slow orbit and breath around the target, continuous through the flights);
+shaded spheres floating and bobbing over every section; the view swinging left (S0), right (S1), centre (S2), right
+(S3), left (S4), centre (S5) with the type anchored to match; the terms sheet on "terms"; connector paths drawn on the
+floor from a YOU pill to the three shops on "introduce", a dot running each; a small terminal landing beside each shop
+on "set them up"; the ledger row tilted above the dial as a stack; ink value badges slamming in with two frames of
+sparks on the pillars and on "pays you"; four month chips ticking on "every month you hit it"; one of four weeks on
+"only bring one"; three arc rings turning at their own rates behind the address. Poppins is the family (house ruling,
+16 Sep) in place of the brief's Inter; Martian Mono where the brief says DejaVu Mono. Six sections on the arc, 60 units
+apart; captions drawn in the picture with the spoken word on a yellow marker; in 4:5 and 1:1 the section boxes drop 6
+units below the floor so the captions sit under the objects. Bed **partner-upbeat-118** (Eleven Music v2, 117.84 bpm measured with `motion/tempo.py`, no vocals —
 Whisper finds no speech) from 0, extended past 65 s at a bar boundary with a 0.3 s crossfade (`data/bed.mp3`), ducked 5:1
 under the voice; 35 cues, 12 distinct effects, no effect twice in a row, one soft thud on the CTA landing.
 

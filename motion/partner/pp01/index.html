@@ -13,64 +13,81 @@
 @font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-400-italic.woff2)format("woff2");font-weight:400;font-style:italic;font-display:block}
 @font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-600-italic.woff2)format("woff2");font-weight:600;font-style:italic;font-display:block}
 
-/* the partner brief's dark ground: #0A0B0D, ink white, dim #8A8F97, one accent, card #141619, green only for "live" */
-:root{ --ground:#0A0B0D; --ink:#FFFFFF; --muted:#8A8F97; --line:#2A2E35; --accent:#F5C518; --good:#2FBF71; --card:#141619; }
+/* the white world (Faisal, 17 Sep 2026: light mode, white environment, yellow accents, a little pink or lilac where it earns it) */
+:root{ --ground:#FBFAF7; --ink:#141416; --muted:#7C7C82; --line:#DDDCD6; --accent:#F5C518; --good:#2FBF71; --blush:#F4BDB6; --lilac:#C9B8F5; }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#000}
-#stage{ position:relative; container-type:size; width:1080px; height:1920px; overflow:hidden; color:var(--ink);
-  background:radial-gradient(120% 90% at 50% 36%, #191B20 0%, var(--ground) 52%, #050506 100%);
+#stage{ position:relative; container-type:size; width:1080px; height:1350px; overflow:hidden; color:var(--ink);
+  background:radial-gradient(120% 90% at 50% 38%, #FFFFFF 0%, var(--ground) 45%, #F1EFE8 100%);
   font-family:Poppins,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
 #src{position:absolute; left:0; top:0; visibility:hidden}
 
-/* ---- type ---- */
+/* ---- type: left, right or centre anchored ---- */
 .sign{width:0; height:0}
 .sign>.in{position:absolute; left:0; top:0; transform:translateY(-50%); white-space:nowrap}
+.sign>.in.r{transform:translate(-100%,-50%); text-align:right}
+.sign>.in.c{transform:translate(-50%,-50%); text-align:center}
 .shout{font-family:Poppins; font-weight:700; font-size:120px; letter-spacing:-.035em; line-height:1.02; color:var(--ink); white-space:nowrap}
 .shout.s{font-size:84px}
 .kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
 .serif{font-family:"Source Serif 4",Georgia,serif; font-style:italic; font-weight:400; color:var(--ink); letter-spacing:-.005em; line-height:1.12}
-.serif.dim{color:#B9BCC2}
+.serif.dim{color:#5E5E64}
 .mask{display:block; overflow:hidden; padding:.08em .12em .18em 0; margin:-.08em -.12em -.18em 0}
+.in.r .mask{padding:.08em 0 .18em .12em; margin:-.08em 0 -.18em -.12em}
 .mask>span{display:block}
 .hid{opacity:0}
-/* the highlighter on a dark ground is a thick yellow underline drawn behind the word, so white type stays white */
-.hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 94%; background-size:calc(var(--p) * 100%) .14em; padding:0 .02em; margin:0 -.02em}
+.hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 62%; background-size:calc(var(--p) * 100%) .42em; padding:0 .04em; margin:0 -.04em}
 .mark{font-family:Chivo; font-weight:800; font-size:64px; letter-spacing:-.02em; color:var(--ink)}
 .mark b{color:var(--accent); font-weight:800}
 .lbl{font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; letter-spacing:.04em; white-space:nowrap; color:var(--ink)}
 .lbl.m{color:var(--muted); font-weight:400}
-.lbl.y{color:var(--accent)}
 
-/* liquid glass on charcoal: the dark slab — an even pale tint, a thin bright rim, a deep soft shadow, one sheen pass */
-.pill,.slab,.row{--sh:0; position:relative; overflow:hidden;
-  background:linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.12) 100%);
-  border:1.5px solid rgba(255,255,255,.26);
-  box-shadow:0 26px 40px -22px rgba(0,0,0,.85),0 2px 6px -2px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.25)}
-.pill::after,.slab::after,.row::after{content:''; position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
-  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.05) 35%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.05) 65%,transparent 100%);
+/* liquid glass on white: the frosted slab — even white tint, thin bright rim, soft shadow, one sheen pass; a breath of
+   yellow-to-blush in the tint so the surfaces are not flat (the reference's signature gradient, at a whisper) */
+.pill,.slab,.row,.chip,.sheet{--sh:0; position:relative; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(255,250,236,.66) 55%,rgba(252,238,236,.78) 100%);
+  border:1.5px solid rgba(255,255,255,.95);
+  box-shadow:0 22px 34px -20px rgba(20,20,22,.38),0 2px 6px -2px rgba(20,20,22,.10),inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(20,20,22,.06)}
+.pill::after,.slab::after,.row::after,.sheet::after{content:''; position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.1) 65%,transparent 100%);
   transform:translateX(calc(-140% + var(--sh) * 400%))}
 .pill{display:inline-block; padding:13px 26px 11px; border-radius:18px; white-space:nowrap; font-family:Poppins; font-weight:600; font-size:30px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
-.pill.solid{background:linear-gradient(135deg,rgba(245,197,24,.98) 0%,rgba(245,197,24,.84) 55%,rgba(250,214,80,.95) 100%); border-color:rgba(255,242,190,.9); color:#141416}
+.pill.solid{background:linear-gradient(135deg,rgba(245,197,24,.96) 0%,rgba(245,197,24,.78) 55%,rgba(250,214,80,.92) 100%); border-color:rgba(255,242,190,.95)}
 .pill.solid::after{background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.6) 50%,rgba(255,255,255,.1) 65%,transparent 100%)}
 .pills{display:flex; gap:16px}
 .slab{width:800px; padding:30px 38px 28px; border-radius:30px; transform-origin:50% 50%}
 .row{width:760px; padding:18px 30px; border-radius:22px; display:flex; align-items:center; gap:22px; transform-origin:50% 50%}
 .row .who{font-family:Poppins; font-weight:600; font-size:30px; color:var(--ink); letter-spacing:-.01em}
 .row .ev{font-family:Poppins; font-weight:400; font-size:28px; color:var(--muted); flex:1}
-.row .st{font-family:"Martian Mono",monospace; font-weight:700; font-size:20px; letter-spacing:.1em; padding:8px 14px 6px; border-radius:12px; background:rgba(255,255,255,.1); color:var(--muted); display:flex; align-items:center; gap:10px}
+.row .st{font-family:"Martian Mono",monospace; font-weight:700; font-size:20px; letter-spacing:.1em; padding:8px 14px 6px; border-radius:12px; background:rgba(20,20,22,.06); color:var(--muted); display:flex; align-items:center; gap:10px}
 .row .st i{width:12px; height:12px; border-radius:50%; background:var(--muted); display:inline-block}
-.row .st.live{background:rgba(47,191,113,.16); color:var(--good)} .row .st.live i{background:var(--good)}
-.row .bonus{font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; color:var(--accent); letter-spacing:-.02em}
-.row.dim .who,.row.dim .ev{color:#6E737B} .row.dim{border-color:rgba(255,255,255,.14)}
+.row .st.live{background:rgba(47,191,113,.14); color:#1E8F52} .row .st.live i{background:var(--good)}
+.row .bonus{font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; color:var(--ink); letter-spacing:-.02em}
+/* the value badge (brief 03): ink fill, white type, a stamp with two frames of sparks */
+.badge{position:relative; display:inline-block; padding:12px 22px 10px; border-radius:16px; background:var(--ink); color:#fff; font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; letter-spacing:-.01em; white-space:nowrap; transform-origin:50% 50%; box-shadow:0 18px 30px -18px rgba(20,20,22,.5)}
+.badge small{display:block; font-family:Poppins; font-weight:500; font-size:20px; letter-spacing:.02em; color:rgba(255,255,255,.72); margin-top:2px}
+.spark{position:absolute; left:50%; top:50%; width:0; height:0; opacity:0}
+.spark i{position:absolute; left:-2px; top:-46px; width:4px; height:22px; border-radius:2px; background:var(--ink); transform-origin:2px 46px}
+/* chips: months, weeks */
+.chips{display:flex; gap:12px}
+.chip{padding:10px 16px 8px; border-radius:14px; font-family:"Martian Mono",monospace; font-weight:700; font-size:24px; letter-spacing:.04em; color:var(--muted); white-space:nowrap}
+.chip.on{color:var(--ink)} .chip.on b{color:#1E8F52}
+.chip b{font-weight:700; margin-left:8px; color:transparent}
+/* the terms sheet: a small card of grey lines with one line highlighted */
+.sheet{width:300px; padding:26px 26px 22px; border-radius:20px; transform-origin:50% 50%}
+.sheet i{display:block; height:10px; border-radius:5px; background:rgba(20,20,22,.14); margin:12px 0}
+.sheet i.y{background:var(--accent); width:62%}
+.sheet i.s{width:78%}
 
 /* the Bonus Dial */
 .d-kick,.c-kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:22px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
-.d-bonus{font-family:Poppins; font-weight:700; font-size:150px; line-height:1; letter-spacing:-.04em; color:var(--accent); margin-top:4px; font-variant-numeric:tabular-nums}
-.d-track{position:relative; height:14px; border-radius:7px; background:rgba(255,255,255,.12); margin:22px 0 46px}
+.d-bonus{font-family:Poppins; font-weight:700; font-size:150px; line-height:1; letter-spacing:-.04em; color:var(--ink); margin-top:4px; font-variant-numeric:tabular-nums}
+.d-bonus b{font-weight:700; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 78%; background-size:100% .22em}
+.d-track{position:relative; height:14px; border-radius:7px; background:rgba(20,20,22,.1); margin:22px 0 46px}
 .d-fill{position:absolute; left:0; top:0; height:100%; width:0; border-radius:7px; background:var(--accent)}
-.d-mark{position:absolute; top:50%; left:0; width:34px; height:34px; border-radius:50%; background:var(--accent); transform:translate(-50%,-50%); box-shadow:0 0 0 6px rgba(245,197,24,.18)}
+.d-mark{position:absolute; top:50%; left:0; width:34px; height:34px; border-radius:50%; background:var(--accent); border:3px solid #fff; transform:translate(-50%,-50%); box-shadow:0 6px 14px -4px rgba(20,20,22,.4)}
 .d-th{position:absolute; top:22px; transform:translateX(-50%); font-family:"Martian Mono",monospace; font-weight:400; font-size:22px; color:var(--muted); letter-spacing:.04em; opacity:0}
-.d-th i{display:block; width:2px; height:12px; background:rgba(255,255,255,.35); margin:-14px auto 8px}
+.d-th i{display:block; width:2px; height:12px; background:rgba(20,20,22,.3); margin:-14px auto 8px}
 .d-th.last{transform:translateX(-100%)}
 .d-vol{font-family:"Martian Mono",monospace; font-weight:700; font-size:44px; letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap}
 .d-vol span{font-weight:400; font-size:26px; letter-spacing:0; color:var(--muted); margin-left:14px}
@@ -79,35 +96,39 @@ html,body{background:#000}
 /* the Rate Climb */
 .c-row{display:flex; align-items:baseline; gap:34px; margin-top:6px}
 .c-count{font-family:"Martian Mono",monospace; font-weight:700; font-size:118px; line-height:1; letter-spacing:-.05em; color:var(--ink); font-variant-numeric:tabular-nums; min-width:250px}
-.c-rate{font-family:Poppins; font-weight:700; font-size:118px; line-height:1; letter-spacing:-.04em; color:var(--accent); font-variant-numeric:tabular-nums}
+.c-rate{font-family:Poppins; font-weight:700; font-size:118px; line-height:1; letter-spacing:-.04em; color:var(--ink); font-variant-numeric:tabular-nums; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 80%; background-size:100% .2em}
 .c-note{font-family:Poppins; font-weight:500; font-size:28px; color:var(--muted); margin-top:14px; white-space:nowrap}
 .c-steps{display:flex; gap:12px; margin-top:26px}
-.c-steps span{font-family:"Martian Mono",monospace; font-weight:400; font-size:19px; letter-spacing:.02em; padding:7px 10px 5px; border-radius:12px; background:rgba(255,255,255,.06); color:#5E636B; white-space:nowrap}
-.c-steps span.past{color:var(--ink); background:rgba(255,255,255,.12)}
+.c-steps span{font-family:"Martian Mono",monospace; font-weight:400; font-size:19px; letter-spacing:.02em; padding:7px 10px 5px; border-radius:12px; background:rgba(20,20,22,.05); color:#A3A3A8; white-space:nowrap}
+.c-steps span.past{color:var(--ink); background:rgba(20,20,22,.09)}
 .c-steps span.now{color:#141416; background:var(--accent)}
 .c-rest{font-family:Poppins; font-weight:500; font-size:28px; color:var(--ink); margin-top:22px; white-space:nowrap}
 
 /* the close */
 #end .in{width:900px; white-space:normal}
-.url{font-family:Poppins; font-weight:700; font-size:72px; letter-spacing:-.035em; color:var(--accent); white-space:nowrap}
-.comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:24px; line-height:1.55; letter-spacing:.01em; color:#B4B8BF; width:700px; white-space:normal}
+.url{font-family:Poppins; font-weight:700; font-size:72px; letter-spacing:-.035em; color:var(--ink); white-space:nowrap; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 82%; background-size:100% .2em}
+.comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:24px; line-height:1.55; letter-spacing:.01em; color:#5E5E64; width:720px; white-space:normal; margin:0 auto}
+/* the reference's converge: three arc rings turning at their own rates behind the close */
+#rings svg{width:900px; height:900px; overflow:visible}
+#rings circle{fill:none; stroke-linecap:round}
+/* connector paths on the floor: you → the three shops, drawn on "introduce" */
+#paths svg{width:1100px; height:700px; overflow:visible}
+#paths path{fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; opacity:.55}
+#paths circle{fill:var(--accent); stroke:#fff; stroke-width:3}
 
-/* the draft mark — on every frame until the figures are confirmed */
-#draft{position:absolute; left:3.2cqw; top:2.4cqh; font-family:"Martian Mono",monospace; font-weight:700; font-size:1.55cqmin; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); opacity:.92}
-
-/* ---- captions: one line at a time, the spoken word on a yellow marker ---- */
+/* ---- captions ---- */
 #caps{position:absolute; inset:0; pointer-events:none}
 .cap{position:absolute; left:50%; bottom:7.5cqh; width:86cqw; transform:translateX(-50%); text-align:center; opacity:0;
-  font-family:Poppins; font-weight:700; font-size:4.3cqmin; line-height:1.18; letter-spacing:-.02em; color:#A7AAB0; text-wrap:balance}
+  font-family:Poppins; font-weight:700; font-size:4.3cqmin; line-height:1.18; letter-spacing:-.02em; color:#8E8E94; text-wrap:balance}
 .cap.big{font-size:6cqmin; bottom:8.5cqh; letter-spacing:-.03em; line-height:1.08}
 .cap .w{display:inline-block; padding:0 .06em; margin:0 -.06em; border-radius:.12em}
-.cap .w.on{color:#141416; background:var(--accent); border-radius:.14em; padding:0 .1em; margin:0 -.1em}
-.cap .w.past{color:#7C8087}
+.cap .w.on{color:var(--ink); background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 60%; background-size:100% .5em}
+.cap .w.past{color:#6B6B71}
 </style>
 
 <div id="stage">
   <div id="src">
-    <!-- section 0: the catch, up front -->
+    <!-- section 0: the catch, up front (left) -->
     <div class="sign" id="q0" data-st="S0"><div class="in"><div class="mask"><span class="serif dim" style="font-size:54px">We'll tell you the condition first.</span></div></div></div>
     <div class="sign" id="c0" data-st="S0"><div class="in"><div class="mask"><span class="shout s">The <span class="hl" id="hlc0">catch,</span> up front.</span></div></div></div>
     <div class="sign" id="h0" data-st="S0"><div class="in"><div class="mask"><span class="shout"><span class="hl" id="hl3">Three</span> a month.</span></div></div></div>
@@ -116,51 +137,57 @@ html,body{background:#000}
       <div class="mask"><span class="kick">3+ new active merchants in a month</span></div>
     </div></div>
     <div class="sign" id="h0b" data-st="S0"><div class="in"><div class="mask"><span class="shout s">The bonus has <span class="hl" id="hlnc">no catch.</span></span></div></div></div>
+    <div class="sign" id="terms" data-st="S0"><div class="in c"><div class="sheet hid" style="--rot:6deg"><i class="s"></i><i></i><i class="y"></i><i></i><i class="s"></i></div></div></div>
 
-    <!-- section 1: how it works -->
-    <div class="sign" id="wm" data-st="S1"><div class="in"><div class="mask"><span class="mark">Nero<b>Pay</b></span></div></div></div>
-    <div class="sign" id="h1" data-st="S1"><div class="in">
+    <!-- section 1: how it works (right) -->
+    <div class="sign" id="wm" data-st="S1"><div class="in r"><div class="mask"><span class="mark">Nero<b>Pay</b></span></div></div></div>
+    <div class="sign" id="h1" data-st="S1"><div class="in r">
       <div class="mask"><span class="shout h1a">Partner</span></div>
       <div class="mask"><span class="shout h1b">Programme.</span></div>
     </div></div>
-    <div class="sign" id="p1" data-st="S1"><div class="in"><div class="pills">
+    <div class="sign" id="p1" data-st="S1"><div class="in r"><div class="pills" style="justify-content:flex-end">
       <div class="pill solid hid" id="pIntro" style="--rot:-2deg">You introduce</div>
       <div class="pill hid" id="pSet" style="--rot:2deg">We set up</div>
       <div class="pill hid" id="pSup" style="--rot:-1deg">We support</div>
     </div></div></div>
-    <div class="sign" id="a1" data-st="S1"><div class="in"><div class="mask"><span class="serif" style="font-size:50px">you don't touch any of it.</span></div></div></div>
-    <div class="sign" id="l0" data-st="S1"><div class="in lbl m hid">Café</div></div>
-    <div class="sign" id="l1" data-st="S1"><div class="in lbl m hid">Takeaway</div></div>
-    <div class="sign" id="l2" data-st="S1"><div class="in lbl m hid">Barber</div></div>
+    <div class="sign" id="a1" data-st="S1"><div class="in r"><div class="mask"><span class="serif" style="font-size:50px">you don't touch any of it.</span></div></div></div>
+    <div class="sign" id="l0" data-st="S1"><div class="in c lbl m hid">Café</div></div>
+    <div class="sign" id="l1" data-st="S1"><div class="in c lbl m hid">Takeaway</div></div>
+    <div class="sign" id="l2" data-st="S1"><div class="in c lbl m hid">Barber</div></div>
+    <div class="sign" id="you" data-st="S1"><div class="in c"><div class="pill solid hid" id="pYou" style="--rot:-3deg">You</div></div></div>
+    <div class="sign" id="paths" data-st="S1"><div class="in"><svg viewBox="0 0 1100 700">
+      <path id="pth0" pathLength="1" d="M 550 640 C 550 420, 200 420, 190 150"/>
+      <path id="pth1" pathLength="1" d="M 550 640 C 550 380, 550 380, 550 150"/>
+      <path id="pth2" pathLength="1" d="M 550 640 C 550 420, 900 420, 910 150"/>
+      <circle id="dot0" r="9" cx="550" cy="640"/><circle id="dot1" r="9" cx="550" cy="640"/><circle id="dot2" r="9" cx="550" cy="640"/>
+    </svg></div></div>
 
-    <!-- section 2: the bonus, per merchant, on the dial -->
-    <div class="sign" id="h2" data-st="S2"><div class="in">
-      <div class="mask"><span class="shout h2a">A bonus on</span></div>
-      <div class="mask"><span class="shout h2b"><span class="hl" id="hlev">every</span> one.</span></div>
-    </div></div>
-    <div class="sign" id="r2" data-st="S2"><div class="in"><div class="row hid" id="row2" style="--rot:-1deg">
+    <!-- section 2: the bonus (centre) — the stack: the row on top, the dial beneath it -->
+    <div class="sign" id="h2" data-st="S2"><div class="in c"><div class="mask"><span class="shout">A bonus on <span class="hl" id="hlev">every</span> one.</span></div></div></div>
+    <div class="sign" id="r2" data-st="S2"><div class="in c"><div class="row hid" id="row2" style="--rot:-1deg">
       <span class="who">Café · Stockport</span><span class="ev">went live</span><span class="st" id="st2"><i></i><span>PENDING</span></span>
     </div></div></div>
-    <div class="sign" id="d2" data-st="S2"><div class="in"><div class="slab hid" id="dial" style="--rot:1deg">
+    <div class="sign" id="d2" data-st="S2"><div class="in c"><div class="slab hid" id="dial" style="--rot:1deg">
       <div class="d-kick">Bonus · per merchant</div>
-      <div class="d-bonus" id="dBonus">£100</div>
+      <div class="d-bonus" id="dBonus"><b>£100</b></div>
       <div class="d-track"><div class="d-fill" id="dFill"></div>
         <div class="d-th" id="th1" style="left:50%"><i></i>£20,000</div><div class="d-th last" id="th2" style="left:100%"><i></i>£40,000</div>
         <div class="d-mark" id="dMark"></div></div>
       <div class="d-vol"><span id="dVol" style="font-weight:700;font-size:44px;color:var(--ink);margin:0;letter-spacing:-.03em">£0</span><span>in their first 30 days</span></div>
       <div class="d-rest hid" id="dRest">up to £300 per merchant — £40,000+ in their first 30 days</div>
     </div></div></div>
+    <div class="sign" id="b2" data-st="S2"><div class="in"><div class="badge hid" id="bPays" style="--rot:-3deg">£100–£300 per merchant<small>every business you introduce · first 30 days</small><div class="spark"><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
     <div class="sign" id="k2" data-st="S2"><div class="in"><div class="pills"><div class="pill hid" id="pNo" style="--rot:-2deg">Nothing to unlock</div></div></div></div>
-    <div class="sign" id="pl0" data-st="S2"><div class="in lbl hid" style="transform:translate(-50%,-50%)">£100</div></div>
-    <div class="sign" id="pl1" data-st="S2"><div class="in lbl hid" style="transform:translate(-50%,-50%)">£200</div></div>
-    <div class="sign" id="pl2" data-st="S2"><div class="in lbl hid" style="transform:translate(-50%,-50%)">£300</div></div>
+    <div class="sign" id="pl0" data-st="S2"><div class="in c"><div class="badge hid" style="font-size:26px;padding:8px 16px 6px">£100<div class="spark"><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
+    <div class="sign" id="pl1" data-st="S2"><div class="in c"><div class="badge hid" style="font-size:26px;padding:8px 16px 6px">£200<div class="spark"><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
+    <div class="sign" id="pl2" data-st="S2"><div class="in c"><div class="badge hid" style="font-size:26px;padding:8px 16px 6px">£300<div class="spark"><i></i><i></i><i></i><i></i><i></i></div></div></div></div>
 
-    <!-- section 3: the revenue share, on the climb -->
-    <div class="sign" id="h3" data-st="S3"><div class="in">
+    <!-- section 3: the revenue share (right) -->
+    <div class="sign" id="h3" data-st="S3"><div class="in r">
       <div class="mask"><span class="shout h3a">Active</span></div>
       <div class="mask"><span class="shout h3b">Partner.</span></div>
     </div></div>
-    <div class="sign" id="k3" data-st="S3"><div class="in">
+    <div class="sign" id="k3" data-st="S3"><div class="in r">
       <div class="mask"><span class="kick">a share of what your merchants'</span></div>
       <div class="mask"><span class="kick">card payments earn NeroPay</span></div>
     </div></div>
@@ -171,23 +198,33 @@ html,body{background:#000}
       <div class="c-steps"><span id="s3">3 · 20%</span><span id="s21">21 · 25%</span><span id="s36">36 · 30%</span><span id="s61">61 · 35%</span><span id="s111">111 · 40%</span></div>
       <div class="c-rest hid" id="cRest">Most partners start at 20%: three a month.</div>
     </div></div></div>
-    <div class="sign" id="b3" data-st="S3"><div class="in"><div class="pill solid hid" id="pAct" style="--rot:-3deg">Active Partner</div></div></div>
+    <div class="sign" id="b3" data-st="S3"><div class="in r"><div class="pill solid hid" id="pAct" style="--rot:-3deg">Active Partner</div></div></div>
+    <div class="sign" id="m3" data-st="S3"><div class="in"><div class="chips">
+      <div class="chip" id="mo0">Month 1<b>✓</b></div><div class="chip" id="mo1">Month 2<b>✓</b></div><div class="chip" id="mo2">Month 3<b>✓</b></div><div class="chip" id="mo3">Month 4<b>✓</b></div>
+    </div></div></div>
 
-    <!-- section 4: either way -->
+    <!-- section 4: either way (left) -->
     <div class="sign" id="r4" data-st="S4"><div class="in"><div class="row hid" id="row4" style="--rot:1deg">
       <span class="who">Barber · Longsight</span><span class="ev">went live</span><span class="st" id="st4"><i></i><span>PENDING</span></span><span class="bonus hid" id="bn4">£100</span>
     </div></div></div>
+    <div class="sign" id="w4" data-st="S4"><div class="in"><div class="chips">
+      <div class="chip" id="wk0">Week 1<b>✓</b></div><div class="chip" id="wk1">Week 2<b>✓</b></div><div class="chip" id="wk2">Week 3<b>✓</b></div><div class="chip" id="wk3">Week 4<b>✓</b></div>
+    </div></div></div>
     <div class="sign" id="h4" data-st="S4"><div class="in"><div class="mask"><span class="serif" style="font-size:66px">Your bonus is <span class="hl" id="hlyours">yours</span> either way.</span></div></div></div>
 
-    <!-- section 5: the close -->
-    <div class="sign" id="end" data-st="S5"><div class="in">
+    <!-- section 5: the close (centre) -->
+    <div class="sign" id="rings" data-st="S5"><div class="in c"><svg viewBox="-450 -450 900 900">
+      <g id="rg0"><circle r="170" stroke="#F5C518" stroke-width="10" stroke-dasharray="120 60 40 90 200 110" opacity=".55"/></g>
+      <g id="rg1"><circle r="270" stroke="#F4BDB6" stroke-width="8" stroke-dasharray="300 90 60 160 220 130" opacity=".55"/></g>
+      <g id="rg2"><circle r="380" stroke="#C9B8F5" stroke-width="6" stroke-dasharray="90 220 400 140 60 300" opacity=".45"/></g>
+    </svg></div></div>
+    <div class="sign" id="end" data-st="S5"><div class="in c">
       <div class="mask"><span class="serif dim e0" style="font-size:54px">Someone come to mind?</span></div>
       <div class="mask" style="margin-top:22px"><span class="url e1">partners.neropay.app</span></div>
-      <div class="pills" style="margin-top:26px"><div class="pill hid" id="pFree" style="--rot:-2deg">Free to join</div><div class="pill hid" id="pLink" style="--rot:2deg">Get your link</div></div>
+      <div class="pills" style="margin-top:26px;justify-content:center"><div class="pill hid" id="pFree" style="--rot:-2deg">Free to join</div><div class="pill solid hid" id="pLink" style="--rot:2deg">Get your link</div></div>
       <div class="mask" style="margin-top:44px"><span class="comp e2">£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: partners.neropay.app</span></div>
     </div></div>
   </div>
-  <div id="draft">Draft · figures pending confirmation · not for posting</div>
   <div id="caps"></div>
 </div>
 
@@ -203,9 +240,10 @@ await Promise.all(['700 120px Poppins', '600 30px Poppins', '500 26px Poppins', 
 
 const FPS = 30;
 /* ---------------------------------------------------------------------------
-   PP01, 16 Sep 2026 — the partner programme, one world, dark ground. Olivia's take (eleven_v3), tightened and
-   breath-gated; bed partner-upbeat-118 (117.84 bpm measured) from 0, the voice on beat 2. Composition time =
-   HEAD + word time. Every anchor is found by the word, not by index, so a re-take re-times the whole piece.
+   PP01 v2, 17 Sep 2026 — the white world. Faisal's notes on v1: light mode only; keep the 3D but make it move
+   the whole time; vary where things sit (left, right, centre) and which way they face; turn the phrases into
+   graphics; borrow from the Webflow reference (stacked glass, connector paths, the converge). Same Olivia take,
+   timings, captions and mix as v1. Composition time = HEAD + word time; every anchor is found by the word.
 --------------------------------------------------------------------------- */
 const BEAT = 60 / 117.84, HEAD = 2 * BEAT, TAIL = 3.8;
 const WORDS = window.WORDS;
@@ -217,8 +255,8 @@ function find(phrase, nth = 0){ const alts = Array.isArray(phrase) ? phrase : [p
       for (let k = 0; k < ws.length; k++) if (norm(WORDS[i + k].w) !== ws[k]) { ok = false; break; }
       if (ok) { if (hits === nth) return i; hits++; } } }
   throw new Error('no such words in the take: ' + alts.join(' | ')); }
-const at = (p, n = 0) => w(find(p, n));                                                    /* start of a phrase */
-const end = (p, n = 0) => { const a = Array.isArray(p) ? p[0] : p; return we(find(p, n) + a.split(' ').length - 1); };   /* end of it */
+const at = (p, n = 0) => w(find(p, n));
+const end = (p, n = 0) => { const a = Array.isArray(p) ? p[0] : p; return we(find(p, n) + a.split(' ').length - 1); };
 const LAST = WORDS.length - 1;
 const DURATION = +(we(LAST) + TAIL).toFixed(3);
 
@@ -228,80 +266,108 @@ const px = (el, o) => Object.assign(el.style, o);
 function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
 function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = el.style.getPropertyValue('--rot') || '0deg';
   px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); el.style.setProperty('--sh', seg(t, start + .1, .55).toFixed(3)); }
+/* a badge lands harder: 1.15 -> 1 and two frames of sparks (brief 03) */
+function slam(el, t, start){ const p = eo(seg(t, start, .14)), rot = el.style.getPropertyValue('--rot') || '0deg';
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.15 - .15 * p})` });
+  const sp = el.querySelector('.spark'); if (sp){ const q = seg(t, start + .1, .08); sp.style.opacity = q > 0 && q < 1 ? 1 : 0;
+    [...sp.children].forEach((i, k) => i.style.transform = `rotate(${k * 72 + 20}deg) translateY(${-18 * q}px) scaleY(${1 - q * .7})`); } }
 function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, start, dur)).toFixed(3)); }
 function show(el, on){ el.style.opacity = on ? 1 : 0; }
 const gbp = n => '£' + Math.round(n).toLocaleString('en-GB');
 
-/* ---- the world: six sections along the arc, on the dark ground ---- */
+/* ---- the world: six sections along the arc; the view swings left and right from one to the next ---- */
 const stage = $('#stage');
-const Wd = world(stage, { fov:28, dark:true });
-stage.appendChild($('#draft')); stage.appendChild($('#caps'));
+const Wd = world(stage, { fov:28 });
+stage.appendChild($('#caps'));
 const STEP = 60, TURN = -.5;
 let rx = 0, rz = 0, rry = 0;
 const place = spec => { const S = Wd.section({ x:rx, z:rz, ry:rry, ...spec });
   rx += STEP * Math.cos(rry) + 6 * Math.sin(rry); rz += -STEP * Math.sin(rry) + 6 * Math.cos(rry); rry += TURN; return S; };
-const S0 = place({ az:-22, el:16, box:{ x:[-11.5, 11.5], y:[0, 27.5], z:[-4, 6] },  ty:12.5 });
-const S1 = place({ az:-20, el:18, box:{ x:[-12.5, 12.5], y:[0, 29.5], z:[-4, 6] },  ty:13 });
-const S2 = place({ az:-18, el:20, box:{ x:[-12.5, 12],   y:[0, 33],   z:[-5, 6] },  ty:15 });
-const S3 = place({ az:-18, el:20, box:{ x:[-13, 12.5],   y:[0, 32],   z:[-5, 7] },  ty:14.5 });
-const S4 = place({ az:-20, el:18, box:{ x:[-12.5, 12],   y:[0, 25.5], z:[-4, 6] },  ty:11.5 });
-const S5 = place({ az:-16, el:16, box:{ x:[-13.5, 16.5], y:[0, 25.5], z:[-3, 5] },  ty:11 });
+const S0 = place({ az:-22, el:16, box:{ x:[-12, 12.5],   y:[0, 24],   z:[-4, 7] },  ty:11 });
+const S1 = place({ az:20,  el:18, box:{ x:[-12.5, 12.5], y:[0, 25.5], z:[-4, 7] },  ty:11.5 });
+const S2 = place({ az:-14, el:20, box:{ x:[-13, 13],     y:[0, 28],   z:[-5, 7] },  ty:13 });
+const S3 = place({ az:18,  el:20, box:{ x:[-13, 13],     y:[0, 27.5], z:[-5, 7] },  ty:12.5 });
+const S4 = place({ az:-20, el:18, box:{ x:[-12.5, 12.5], y:[0, 22.5], z:[-4, 7] },  ty:10.5 });
+const S5 = place({ az:12,  el:16, box:{ x:[-13.5, 16.5], y:[0, 24],   z:[-6, 5] },  ty:11 });
 const SECS = [S0, S1, S2, S3, S4, S5];
 for (const S of SECS) Wd.mat(S.g.position.x, S.g.position.z, S.bw + 6, 30, { ry:S.g.rotation.y });
 for (let i = 1; i < SECS.length; i++) Wd.route(SECS[i - 1].g.position, SECS[i].g.position);
 
-/* section 0 — the condition first: three shops come up and light 1-2-3 under "three" */
-const SH0 = S0.add(shops(3)); SH0.position.set(0, 0, 2);
-S0.sign($('#q0'), { x:-11, y:25.6, z:-4, face:true });
-S0.sign($('#c0'), { x:-11, y:21.6, z:-4, face:true });
-S0.sign($('#h0'), { x:-11, y:17, z:-4, face:true });
-S0.sign($('#k0'), { x:-11, y:12.7, z:-4, face:true });
-S0.sign($('#h0b'), { x:-11, y:8.4, z:-4, face:true });
+/* ambient: shaded yellow spheres (and a few blush and lilac) floating over every section, always moving */
+const SPH = [];
+const sphereMat = c => new THREE.MeshStandardMaterial({ color:c, roughness:.45, metalness:0 });
+const MATS = { y:sphereMat(0xF5C518), b:sphereMat(0xF4BDB6), l:sphereMat(0xC9B8F5) };
+function spheres(S, list){ for (const [x, y, z, r, c] of list){
+  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 24), MATS[c]); m.castShadow = true; m.position.set(x, y, z); S.add(m);
+  SPH.push({ m, y, w:.6 + Math.random() * .5, p:Math.random() * 6.28, spin:(Math.random() - .5) * .2 }); } }
+const LIGHT = 0xE9E6DD, SHOP = 0xEDEAE2;
 
-/* section 1 — the programme: the mark, the heading, a café / takeaway / barber rising on their words, who does what */
-const SH1 = S1.add(shops(3)); SH1.position.set(0, 0, 2);
-S1.sign($('#wm'), { x:-12, y:27.8, z:-4, face:true });
-S1.sign($('#h1'), { x:-12, y:22.4, z:-4, face:true });
-S1.sign($('#p1'), { x:-12, y:15.6, z:-4, face:true });
-S1.sign($('#a1'), { x:-12, y:11.8, z:-4, face:true });
-const SL = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => { const t = SH1.top(i); return S1.sign(el, { x:t.x - 2.2, y:t.y + 1.7, z:2, face:true }); });
+/* section 0 — the catch (left): the terms sheet, three shops lighting 1-2-3 under "three" */
+const SH0 = S0.add(shops(3, { color:SHOP })); SH0.position.set(-1, 0, 2.5);
+S0.sign($('#q0'), { x:-11.5, y:22.4, z:-4, face:true });
+S0.sign($('#c0'), { x:-11.5, y:18.8, z:-4, face:true });
+S0.sign($('#h0'), { x:-11.5, y:14.6, z:-4, face:true });
+S0.sign($('#k0'), { x:-11.5, y:10.7, z:-4, face:true });
+S0.sign($('#h0b'), { x:-11.5, y:7, z:-4, face:true });
+S0.sign($('#terms'), { x:9.8, y:9.5, z:0, face:true });
+spheres(S0, [[13, 23, -9, 1.0, 'y'], [-12, 4, 6, .6, 'b'], [4, 25.5, -9, .7, 'l'], [13, 3, 5, .5, 'y']]);
 
-/* section 2 — the bonus: a ledger row goes live, the dial runs, three steps rise on the floor */
-const BARS = S2.add(pillars([{ h:2.6, color:0x2A2E36 }, { h:5.2, color:0x2A2E36 }, { h:7.8, color:0x2A2E36 }], { w:2.4, gap:1.2, depth:2.4 })); BARS.position.set(0, 0, 3.2);
-S2.sign($('#h2'), { x:-12, y:29.2, z:-4, face:true });
-S2.sign($('#r2'), { x:-12, y:24.1, z:-4, face:true });
-S2.sign($('#d2'), { x:-12, y:16.4, z:-4, face:true });
-S2.sign($('#k2'), { x:-12, y:10.2, z:-4, face:true });
-const PL = [$('#pl0'), $('#pl1'), $('#pl2')].map((el, i) => { const t = BARS.top(i); return S2.sign(el, { x:t.x, y:t.y + 1.3, z:3.2, face:true }); });
+/* section 1 — the programme (right): the shops rise with labels, a small terminal lands beside each on "set them up",
+   and paths draw from "You" to the three on "introduce" */
+const SH1 = S1.add(shops(3, { color:SHOP })); SH1.position.set(-2, 0, 2);
+const TM1 = [0, 1, 2].map(i => { const tm = S1.add(neroTerminal()); tm.scale.setScalar(.3); tm.position.set(SH1.top(i).x - 2 + 3.6, 0, 2 + 3.2); tm.rotation.y = -.5; tm.visible = false; return tm; });
+S1.sign($('#wm'), { x:12, y:24, z:-4, face:true });
+S1.sign($('#h1'), { x:12, y:19.2, z:-4, face:true });
+S1.sign($('#p1'), { x:12, y:13.4, z:-4, face:true });
+S1.sign($('#a1'), { x:12, y:10, z:-4, face:true });
+const SL = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => { const t = SH1.top(i); return S1.sign(el, { x:t.x - 2, y:t.y + 1.7, z:2, face:true }); });
+S1.sign($('#you'), { x:-2, y:1.2, z:9.5, face:true });
+S1.sign($('#paths'), { x:-2 - 13.75, y:.03, z:9.5, rx:-Math.PI / 2 });
+spheres(S1, [[-12, 17, -8, .9, 'y'], [13, 5, 6, .6, 'l'], [-6, 24, -9, .7, 'y'], [11, 27, -9, .5, 'b']]);
 
-/* section 3 — the revenue share: the count climbs, the path of tiles lights, the rate steps beside it */
-const PATH = S3.add(tiles(12, { cols:12, size:1.5, gap:.36, height:.6, color:0x2A2E36 })); PATH.position.set(0, 0, 3.6);
-S3.sign($('#h3'), { x:-12.5, y:28.6, z:-4, face:true });
-S3.sign($('#b3'), { x:1.5, y:29.6, z:-4, face:true });
-S3.sign($('#k3'), { x:-12.5, y:23.2, z:-4, face:true });
-S3.sign($('#c3'), { x:-12.5, y:14.6, z:-4, face:true });
+/* section 2 — the bonus (centre): the row above the dial, the steps on the right with badges, the pays-you badge left */
+const BARS = S2.add(pillars([{ h:2.2, color:LIGHT }, { h:4.4, color:LIGHT }, { h:6.6, color:LIGHT }], { w:2.2, gap:1.1, depth:2.2 })); BARS.position.set(8.5, 0, 3);
+S2.sign($('#h2'), { x:0, y:25.6, z:-4, face:true });
+S2.sign($('#r2'), { x:0, y:21.6, z:-1.5, face:true, rx:-.16 });
+S2.sign($('#d2'), { x:0, y:13.8, z:-4, face:true });
+S2.sign($('#b2'), { x:-12.5, y:6.4, z:-2, face:true });
+S2.sign($('#k2'), { x:-12.5, y:2.8, z:-2, face:true });
+const PL = [$('#pl0'), $('#pl1'), $('#pl2')].map((el, i) => { const t = BARS.top(i); return S2.sign(el, { x:t.x, y:t.y + 1.6, z:3, face:true }); });
+spheres(S2, [[-13, 20, -8, 1.0, 'y'], [12, 26, -9, .7, 'b'], [13.5, 10, 5, .55, 'y'], [-9, 27, -9, .55, 'l']]);
 
-/* section 4 — either way: one shop, its bonus row, the line */
-const SH4 = S4.add(shops(1)); SH4.position.set(6.5, 0, 2.5);
-S4.sign($('#r4'), { x:-12, y:19.4, z:-4, face:true });
-S4.sign($('#h4'), { x:-12, y:12.6, z:-4, face:true });
+/* section 3 — the share (right): the climb slab left, the field of tiles, the months */
+const PATH = S3.add(tiles(12, { cols:6, size:1.6, gap:.5, height:.7, color:LIGHT })); PATH.position.set(3, 0, 4);
+S3.sign($('#h3'), { x:12.5, y:24.4, z:-4, face:true });
+S3.sign($('#b3'), { x:12.5, y:18.9, z:-4, face:true });
+S3.sign($('#k3'), { x:12.5, y:15.5, z:-4, face:true });
+S3.sign($('#c3'), { x:-12.5, y:10.4, z:-4, face:true });
+S3.sign($('#m3'), { x:-12.5, y:2.2, z:-2, face:true });
+spheres(S3, [[-12, 22, -8, .9, 'l'], [13, 7, 6, .6, 'y'], [-3, 26, -9, .7, 'y'], [13, 26, -9, .5, 'b']]);
 
-/* section 5 — the close: our terminal, the address, the compliance line */
-const NEW5 = S5.add(neroTerminal()); NEW5.position.set(13.2, 0, 1); NEW5.rotation.y = -.4;
-S5.sign($('#end'), { x:-13, y:13.2, z:-1, face:true });
+/* section 4 — either way (left): one shop and its terminal, the weeks, the line */
+const SH4 = S4.add(shops(1, { color:SHOP })); SH4.position.set(7.5, 0, 2.5);
+const TM4 = S4.add(neroTerminal()); TM4.scale.setScalar(.3); TM4.position.set(11.2, 0, 5.2); TM4.rotation.y = -.5; TM4.visible = false;
+S4.sign($('#r4'), { x:-12, y:19.6, z:-4, face:true });
+S4.sign($('#w4'), { x:-12, y:15.2, z:-4, face:true });
+S4.sign($('#h4'), { x:-12, y:10.2, z:-4, face:true });
+spheres(S4, [[-12, 4, 6, .7, 'y'], [12, 18, -8, .9, 'b'], [2, 24, -9, .6, 'y']]);
+
+/* section 5 — the close (centre): the rings turn behind the address; our terminal at the right */
+const NEW5 = S5.add(neroTerminal()); NEW5.position.set(13.5, 0, 0); NEW5.rotation.y = -.35;
+S5.sign($('#rings'), { x:0, y:14.5, z:-7, face:true });
+S5.sign($('#end'), { x:0, y:14.2, z:-1, face:true });
+spheres(S5, [[-13, 22, -9, .9, 'y'], [-10, 3, 6, .55, 'l'], [5, 25, -10, .6, 'b']]);
 
 /* ---- the anchors, all by the word ---- */
 const A = {
-  q0:.12, c0:at('catch'), shops0:at('here\'s'), three:at('three'), k0:at('revenue'), k0b:at('kicks'), h0b:at('bonus'), nc:at('no catch'),
-  wm:0, h1:0, cafe:at(['cafe', 'café']), take:at('takeaway'), barber:at('barber'), intro:at('introduce them'), pset:at('set them'), psup:at('support'), a1:at('touch'),
+  q0:.12, c0:at('catch'), terms:at('terms'), shops0:at("here's"), three:at('three'), k0:at('revenue'), k0b:at('kicks'), h0b:at('bonus'), nc:at('no catch'),
+  wm:0, h1:0, cafe:at(['cafe', 'café']), take:at('takeaway'), barber:at('barber'), you:at('you introduce'), intro:at('introduce them'), pset:at('set them'), psup:at('support'), a1:at('touch'),
   h2:0, row:at('go live'), live:at('live'), dial:at('bonus', 1), b100:at('hundred pounds'), t1:at('goes to'), b200:at('two hundred'), th1:at(['twenty thousand', '20,000']),
-  t2:at('and three hundred'), b300:at('three hundred'), th2:at(['over forty', 'over 40']), rest2:end(['over forty', 'over 40']) + .3, ev:at('every business'), pno:at('unlock'),
-  h3:0, cnt:at('three or more'), act:at('active partner'), climb:at('a share of'), rest3:at('card payments earn'), k3:at('what all'),
-  q4:0, row4:0, live4:at('only bring one'), h4:at('still'), yours:at('yours'),
+  t2:at('and three hundred'), b300:at('three hundred'), th2:at(['over forty', 'over 40']), rest2:end(['over forty', 'over 40']) + .3, ev:at('every business'), pays:at('pays you'), pno:at('unlock'),
+  h3:0, cnt:at('three or more'), act:at('active partner'), climb:at('a share of'), rest3:at('card payments earn'), k3:at('what all'), months:at('every month'),
+  row4:0, weeks:at('quiet month'), one:at('only bring one'), live4:at('still get'), h4:at('still'), yours:at('yours'),
   e0:0, url:at('partners'), free:at('free'), link:at('get your link'), comp:at('partners') + 1.0, term5:0,
 };
-
-/* ---- the flights: each starts just after the last word of the section; the dial and the climb keep their rest frames ---- */
 const CAM = [
   { t:0,                                 d:0,  sec:S0 },
   { t:end('at all') + .02,               d:.8, sec:S1 },
@@ -310,12 +376,13 @@ const CAM = [
   { t:end('hit it') + .02,               d:.8, sec:S4 },
   { t:end('either way') + 1.5,           d:.8, sec:S5 },
 ];
-A.wm = CAM[1].t + .3; A.h1 = CAM[1].t + .38; A.h2 = CAM[2].t + .35; A.h3 = CAM[3].t + .35; A.q4 = CAM[4].t + .35; A.row4 = CAM[4].t + .45; A.e0 = CAM[5].t + .35; A.term5 = CAM[5].t + .3;
+A.wm = CAM[1].t + .3; A.h1 = CAM[1].t + .38; A.h2 = CAM[2].t + .35; A.h3 = CAM[3].t + .35; A.row4 = CAM[4].t + .45; A.e0 = CAM[5].t + .35; A.term5 = CAM[5].t + .3;
 const SECN = new Map([[S0, 'S0'], [S1, 'S1'], [S2, 'S2'], [S3, 'S3'], [S4, 'S4'], [S5, 'S5']]);
+let PAD = 0;
 
 const BEATS = [
   { name:'0 the catch',   t:0,              out:CAM[1].t, words:27 },
-  { name:'1 how it works', t:CAM[1].t + .40, out:CAM[2].t, words:17 },
+  { name:'1 how it works', t:CAM[1].t + .40, out:CAM[2].t, words:18 },
   { name:'2 the bonus',   t:CAM[2].t + .40,  out:CAM[3].t, words:30 },
   { name:'3 the share',   t:CAM[3].t + .40,  out:CAM[4].t, words:26 },
   { name:'4 either way',  t:CAM[4].t + .40,  out:CAM[5].t, words:12 },
@@ -338,10 +405,18 @@ function camState(t){
   }
   const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
 }
+const UP = new THREE.Vector3(0, 1, 0);
 function applyCam(t){
   const W = stage.clientWidth, H = stage.clientHeight; const sz = Wd.size();
   if (sz.W !== W || sz.H !== H) Wd.resize(W, H);
+  const pad = CAPS_ON && (W / H) > .7 ? -6 : 0;
+  if (pad !== PAD) { PAD = pad; for (const S of SECS) S.setBox({ x:S.box.x, y:[pad, S.box.y[1]], z:S.box.z }); }
   const c = camState(t);
+  /* the camera never stops: a slow orbit and breath around the target, a continuous function of time so a flight
+     starts and ends without a jump (the reference's rule — cuts land on motion) */
+  const off = c.pos.clone().sub(c.target); const L = off.length();
+  off.applyAxisAngle(UP, .035 * Math.sin(t * .42)); off.y += L * .014 * Math.sin(t * .29 + 1); off.setLength(L * (1 + .012 * Math.sin(t * .23 + 2)));
+  c.pos = c.target.clone().add(off);
   Wd.setCamera(c.pos, c.target, c.R);
   $$('[data-active]').forEach(e => e.removeAttribute('data-active'));
   if (c.sec) $$(`[data-st="${SECN.get(c.sec)}"]`).forEach(e => e.setAttribute('data-active', ''));
@@ -374,20 +449,17 @@ function captions(t){
   }
 }
 
-/* ---- the Bonus Dial: volume and bonus always on screen together; the marker travels, the bonus steps at the thresholds ---- */
+/* ---- the Bonus Dial ---- */
 const TIER = v => v >= 40000 ? 300 : v > 20000 ? 200 : 100;
 function dial(t){
   const on = t >= A.dial; stamp($('#dial'), t, A.dial); if (!on) return;
-  /* travel 1: £0 -> £20,000 landing on "two hundred"; travel 2: £20,000 -> £40,000 landing on "three hundred" */
   const d1 = Math.max(.6, A.b200 - A.t1), d2 = Math.max(.6, A.b300 - A.t2);
-  /* travel 1 lands just past £20,000 on "two hundred" — the tier starts at £20,000.01, so the readout says "£20,000+"
-     and the bonus flips on the word; travel 2 lands on £40,000 on "three hundred" and the rest frame says "£40,000+" */
   let v = 0;
   if (t >= A.t2) v = 20000.5 + 19999.5 * eo(seg(t, A.t2, d2));
   else if (t >= A.t1) v = 20000.5 * eo(seg(t, A.t1, d1));
   const rest = t >= A.rest2;
   const bonus = TIER(v);
-  $('#dBonus').textContent = gbp(bonus);
+  $('#dBonus b').textContent = gbp(bonus);
   $('#dVol').textContent = rest ? '£40,000+' : (v > 20000 && v < 20001) ? '£20,000+' : gbp(v);
   const p = Math.min(1, v / 40000);
   $('#dFill').style.width = (p * 100).toFixed(2) + '%'; $('#dMark').style.left = (p * 100).toFixed(2) + '%';
@@ -398,13 +470,13 @@ function dial(t){
   maskUp($('#dRest'), t, A.rest2 + .1, .4);
 }
 
-/* ---- the Rate Climb: the count never skips a threshold; each step holds; the rest frame carries 111+ and the 20% line ---- */
+/* ---- the Rate Climb ---- */
 const RATE = c => c >= 111 ? 40 : c >= 61 ? 35 : c >= 36 ? 30 : c >= 21 ? 25 : c >= 3 ? 20 : 0;
-const STEPS = [[3, .0, .0], [21, .55, .28], [36, .38, .28], [61, .38, .28], [111, .5, 0]];   /* [count, travel, hold] from the previous step */
+const STEPS = [[3, .0, .0], [21, .55, .28], [36, .38, .28], [61, .38, .28], [111, .5, 0]];
 function climb(t){
   stamp($('#climb'), t, CAM[3].t + .45); if (t < CAM[3].t + .45) return;
   let c = 0;
-  if (t >= A.cnt) c = Math.min(3, Math.floor(seg(t, A.cnt, .9) * 3.999));                 /* 1-2-3 under "three or more" */
+  if (t >= A.cnt) c = Math.min(3, Math.floor(seg(t, A.cnt, .9) * 3.999));
   if (t >= A.climb){ let tt = A.climb, prev = 3; c = 3;
     for (let i = 1; i < STEPS.length; i++){ const [n, tr, hold] = STEPS[i];
       if (t >= tt){ c = Math.round(prev + (n - prev) * eo(seg(t, tt, tr))); } tt += tr + hold; prev = n; } }
@@ -418,38 +490,50 @@ function climb(t){
   const pop = b => `scale(${(1 + .08 * Math.sin(Math.PI * seg(t, b, .28))).toFixed(3)})`;
   $('#cRate').style.transform = pop(A.act); $('#cRate').style.transformOrigin = '0 80%';
   maskUp($('#cRest'), t, A.rest3 + .15, .4);
-  /* the path: three tiles for the gate, the rest as the count climbs; the whole run lifts once on "every month" */
+  /* the field: three tiles for the gate, the rest as the count climbs; every tile breathes; the run lifts once on "every month" */
   for (let i = 0; i < 12; i++){
     PATH.setProgress(i, eo(seg(t, CAM[3].t + .3 + i * .03, .35)));
     const need = i < 3 ? i + 1 : 3 + Math.round((i - 2) * (108 / 9));
-    const lit = c >= need; PATH.setColor(i, lit ? 0xF5C518 : 0x2A2E36);
-    PATH.setLift(i, .45 * Math.sin(Math.PI * seg(t, at('every month') + i * .04, .4)));
+    const lit = c >= need; PATH.setColor(i, lit ? 0xF5C518 : LIGHT);
+    PATH.setLift(i, .18 * Math.sin(t * 1.3 + i * .9) + .55 * Math.sin(Math.PI * seg(t, A.months + i * .04, .4)));
   }
+  [0, 1, 2, 3].forEach(i => { const el = $('#mo' + i); el.style.opacity = t >= A.months - .3 + i * .08 ? 1 : 0; el.className = 'chip' + (t >= A.months + .15 + i * .16 ? ' on' : ''); });
 }
+
+/* the connector paths from You to the shops, and a dot that runs each one */
+const PTH = [0, 1, 2].map(i => ({ p:$('#pth' + i), d:$('#dot' + i), len:$('#pth' + i).getTotalLength() }));
+function paths(t){ for (let i = 0; i < 3; i++){ const q = eo(seg(t, A.intro + i * .12, .7)); const P = PTH[i];
+  P.p.style.strokeDasharray = '1'; P.p.style.strokeDashoffset = String(1 - q); const pt = P.p.getPointAtLength(q * P.len);
+  P.d.setAttribute('cx', pt.x); P.d.setAttribute('cy', pt.y); P.d.style.opacity = q > 0 ? 1 : 0; P.p.style.opacity = q > 0 ? .55 : 0; } }
 
 function setFrame(n){
   const t = n / FPS;
   applyCam(t);
+  for (const s of SPH){ s.m.position.y = s.y + .45 * Math.sin(t * s.w + s.p); s.m.rotation.y += 0; }
 
   /* section 0 */
   maskUp($('#q0 .serif'), t, A.q0, .5); maskUp($('#c0 .shout'), t, A.c0, .5); hl($('#hlc0'), t, A.c0 + .15); maskUp($('#h0 .shout'), t, A.three, .5); hl($('#hl3'), t, A.three + .1);
   maskUp($('#k0 .mask:nth-child(1) .kick'), t, A.k0, .42); maskUp($('#k0 .mask:nth-child(2) .kick'), t, A.k0b, .42);
   maskUp($('#h0b .shout'), t, A.h0b, .5); hl($('#hlnc'), t, A.nc);
+  stamp($('#terms .sheet'), t, A.terms); $('#terms .sheet').style.transform += ` translateY(${(4 * Math.sin(t * 1.1)).toFixed(1)}px)`;
   for (let i = 0; i < 3; i++){ SH0.setProgress(i, eo(seg(t, A.shops0 + .2 + i * .14, .55))); SH0.light(i, eo(seg(t, A.three + i * .22, .3))); }
+  SH0.rotation.y = .06 * Math.sin(t * .5);
 
   /* section 1 */
   maskUp($('#wm .mark'), t, A.wm, .45); maskUp($('#h1 .h1a'), t, A.h1, .5); maskUp($('#h1 .h1b'), t, A.h1 + .12, .5);
-  [A.cafe, A.take, A.barber].forEach((a, i) => { SH1.setProgress(i, eo(seg(t, a, .5))); show(SL[i].element.firstElementChild, t >= a + .25); SH1.light(i, eo(seg(t, A.intro + i * .18, .3))); });
+  [A.cafe, A.take, A.barber].forEach((a, i) => { SH1.setProgress(i, eo(seg(t, a, .5))); show(SL[i].element.firstElementChild, t >= a + .25); SH1.light(i, eo(seg(t, A.intro + i * .18, .3)));
+    rise(TM1[i], eo(seg(t, A.pset + i * .15, .5)), 5); });
+  stamp($('#pYou'), t, A.you); paths(t);
   stamp($('#pIntro'), t, A.intro); stamp($('#pSet'), t, A.pset); stamp($('#pSup'), t, A.psup);
   maskUp($('#a1 .serif'), t, A.a1, .5);
 
   /* section 2 */
-  maskUp($('#h2 .h2a'), t, A.h2, .5); maskUp($('#h2 .h2b'), t, A.h2 + .12, .5); hl($('#hlev'), t, A.ev);
+  maskUp($('#h2 .shout'), t, A.h2, .5); hl($('#hlev'), t, A.ev);
   stamp($('#row2'), t, A.row); const live = t >= A.live + .1; $('#st2').className = 'st' + (live ? ' live' : ''); $('#st2 span').textContent = live ? 'LIVE' : 'PENDING';
   dial(t);
-  [[0, A.b100], [1, A.b200], [2, A.b300]].forEach(([i, a]) => { BARS.setRise(i, eo(seg(t, a, .55))); const tp = BARS.top(i); PL[i].position.y = tp.y + 1.3;
-    show(PL[i].element.firstElementChild, t >= a + .35); });
-  stamp($('#pNo'), t, A.pno);
+  [[0, A.b100], [1, A.b200], [2, A.b300]].forEach(([i, a]) => { BARS.setRise(i, eo(seg(t, a, .55))); const tp = BARS.top(i); PL[i].position.y = tp.y + 1.6; slam(PL[i].element.querySelector('.badge'), t, a + .3); });
+  slam($('#bPays'), t, A.pays); stamp($('#pNo'), t, A.pno);
+  BARS.rotation.y = .05 * Math.sin(t * .6);
 
   /* section 3 */
   maskUp($('#h3 .h3a'), t, A.h3, .5); maskUp($('#h3 .h3b'), t, A.h3 + .12, .5);
@@ -458,14 +542,18 @@ function setFrame(n){
   climb(t);
 
   /* section 4 */
-  SH4.setProgress(0, eo(seg(t, CAM[4].t + .3, .5))); SH4.light(0, eo(seg(t, A.live4, .3)));
+  SH4.setProgress(0, eo(seg(t, CAM[4].t + .3, .5))); SH4.light(0, eo(seg(t, A.one, .3))); rise(TM4, eo(seg(t, A.one + .1, .5)), 5);
   stamp($('#row4'), t, A.row4); const l4 = t >= A.live4 + .1; $('#st4').className = 'st' + (l4 ? ' live' : ''); $('#st4 span').textContent = l4 ? 'LIVE' : 'PENDING'; show($('#bn4'), l4);
+  [0, 1, 2, 3].forEach(i => { const el = $('#wk' + i); el.style.opacity = t >= A.weeks + i * .1 ? 1 : 0; el.className = 'chip' + (i === 1 && t >= A.one ? ' on' : ''); });
   maskUp($('#h4 .serif'), t, A.h4, .5); hl($('#hlyours'), t, A.yours + .05);
 
   /* section 5 */
   maskUp($('#end .e0'), t, A.e0, .5); maskUp($('#end .e1'), t, A.url, .5);
   stamp($('#pFree'), t, A.free); stamp($('#pLink'), t, A.link); maskUp($('#end .e2'), t, A.comp, .5);
-  rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .05 * Math.sin(t * .9);
+  rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .06 * Math.sin(t * .8);
+  const rq = eo(seg(t, CAM[5].t + .2, 1.2));
+  $('#rg0').style.transform = `rotate(${(t * 9).toFixed(2)}deg) scale(${rq})`; $('#rg1').style.transform = `rotate(${(-t * 6).toFixed(2)}deg) scale(${rq})`; $('#rg2').style.transform = `rotate(${(t * 3.5).toFixed(2)}deg) scale(${rq})`;
+  $('#rings svg').style.opacity = rq;
 
   captions(t);
   Wd.render();

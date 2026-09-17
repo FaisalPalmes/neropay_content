@@ -2,9 +2,9 @@
 
 **For:** the Claude Code session that owns `/root/neropay-video/` (edit.py, anim.py, endcards).
 **From:** Faisal Palmes, Operations & Growth, NeroPay (Nero Panda Ltd, Stockport).
-**Date:** 16 September 2026. English first; Turkish versions later from the same scripts.
+**Date:** 17 September 2026 (v4, final). English first; Turkish versions later from the same scripts.
 
-This brief is self-contained. It has everything you need about the programme, the rules that must not be broken, the brand system, and two production briefs: **A — social short-form** (many versions, hook-led) and **B — one long-form explainer** for the website, docs and YouTube. Read Part 1 and Part 2 before touching Part 3 or 4. Where something is marked **CONFIRM**, build with the value given but do not export a final until Faisal clears it.
+This brief is self-contained. It has everything you need about the programme, the rules that must not be broken, the brand system, and two production briefs: **A — social short-form** (many versions, hook-led) and **B — one long-form explainer** for the website, docs and YouTube. Read Part 1 and Part 2 before touching Part 3 or 4. **Every figure and rule in Part 1 is final and approved.** Nothing in this brief is awaiting confirmation; build to it and export finals.
 
 ---
 
@@ -30,7 +30,7 @@ Calculated from the merchant's total successful card processing in their **first
 
 Introduce one merchant, get one bonus. Introduce ten, get ten. Nothing to unlock. This is the headline and the honest emotional core of every video: *every business you introduce pays you*.
 
-**CONFIRM before final export:** older NeroPay material says "up to £500". The current tier table caps at £300. Build with £100–£300. If Eray confirms a £500 tier exists, the top row changes and nothing else.
+**These tiers are final.** £300 is the top bonus. If you see "up to £500" in any older NeroPay material, it is superseded — never carry it into a video.
 
 **2. Revenue share on the partner's whole network. Conditional, re-qualified every calendar month.**
 
@@ -44,13 +44,13 @@ Introduce one merchant, get one bonus. Introduce ten, get ten. Nothing to unlock
 
 The rate is set by how many **new** active merchants were introduced that month, but it is paid on the activity of **every** merchant in the partner's network — not just the new three. A partner with forty merchants who introduces three more this month earns 20% across all forty. Three a month is a **gate**, not a cap. We call meeting it being an **Active Partner**.
 
-An **active merchant** is one whose account is enabled and has taken at least one successful payment. **CONFIRM:** the exact definition (registered that month vs. transacted in the last 48 hours) is being settled in the T&Cs. Videos say "active" and never define it more precisely than "live and taking payments".
+An **active merchant** is one whose account is enabled and has taken at least one successful payment. Videos say "active" or "live and taking payments" and leave the precise definition to the T&Cs, which is where it belongs.
 
-**What the percentage is a share of.** It is a share of **NeroPay's earnings from those merchants' card payments** — the revenue their processing generates for NeroPay. It is **not** a share of the merchants' turnover. Never say "a share of everything they process" or "20% of their sales"; say "a share of what your merchants' card payments earn NeroPay" or "a share of the revenue your network generates". **CONFIRM the exact base with Eray** — the wording above is safe either way, a figure in pounds is not.
+**What the percentage is a share of.** It is a share of **NeroPay's earnings from those merchants' card payments** — the revenue their processing generates for NeroPay. It is **not** a share of the merchants' turnover. Never say "a share of everything they process" or "20% of their sales"; say "a share of what your merchants' card payments earn NeroPay" or "a share of the revenue your network generates". This wording is the approved wording; use it as written.
 
-**No pound figure for revenue share exists yet.** NeroPay has not published an average monthly revenue share per active merchant. Until it does, revenue share is described as a percentage with its condition, never as "£X a month". Bonus arithmetic can be shown because it is per-unit and fixed.
+**Revenue share is always expressed as a percentage with its condition, never as "£X a month".** It varies with each network, so no average pound figure is used in any video. Bonus arithmetic can be shown because it is per-unit and fixed.
 
-Payouts show in the partner dashboard as **Partner Revenue Share** transactions. Bonuses are paid once the merchant's first 30 days are complete and the merchant is verified active. **CONFIRM** payout timing and method before any video says "paid monthly" or "paid to your bank".
+Payouts show in the partner dashboard as **Partner Revenue Share** transactions. Bonuses are paid once the merchant's first 30 days are complete and the merchant is verified active. Videos do not describe payout timing or method — "paid to your partner account" is as specific as any script goes.
 
 ### Who partners actually are
 
@@ -272,7 +272,7 @@ Each hook is 3–5 seconds, ends on a cut to B1. Written by **situation and sett
 | A3 | Hospitality | Every restaurant you've ever worked in is worth up to three hundred pounds to you. | "Up to £300 each · £40,000+ first 30 days" | Per-merchant bonus, top tier at £40k+ first-month volume. The super carries the condition. | Restaurant tiles lighting; Bonus Dial resting frame appears. |
 | A4 | Broad | You don't sell anything. You don't set anything up. You still get paid. | "Introduce. That's it." | NeroPay onboards and supports; the partner introduces. | Three-column "We onboard · We support · You introduce" with the third column lit. |
 | A5 | Skeptics | There's a catch, and we're going to say it in the first three seconds: three a month. | "The catch: 3 a month." | The revenue-share gate is the only condition; bonuses have none. | The number 3 with "a month" beneath, then the calendar strip. |
-| A6 | Existing partners / warm | Your network is worth more this month than it was last month, and you did nothing. | "We raised the bonus." | The bonus tiers were increased in September 2026. | Old figure dims, new figure counts up. **CONFIRM the old figure before use.** |
+| A6 | Existing partners / warm | Your network is worth more this month than it was last month, and you did nothing. | "We raised the bonus." | The bonus tiers were increased in September 2026. | "Bonus" label with the new top figure counting up to £300; no old figure is shown. |
 | A7 | Broad | Three introductions a month is less than one a week. We checked. | "3 ÷ 4 = less than 1." | Arithmetic. | The sum typed out in mono. |
 | A8 | Community connectors | The person who introduced your local kebab shop to its card machine got paid for it. Could have been you. | "Could have been you." | Partners are paid per introduction; this is how the programme works. Do not imply a specific real shop. | Kebab tile lit; a ledger row with a dim "someone else" that flips to "you". |
 
@@ -332,16 +332,12 @@ Run this on every export. A single fail is a fail.
 3. The compliance super holds ≥ 65 frames in 16:9 and ≥ 75 in 9:16.
 4. Revenue share is never expressed in pounds, and never as a share of merchant turnover.
 5. "Your bonus is yours either way" (or equivalent) appears in every body and in the long-form.
-6. `claims.md` lists every figure with source = this brief, Part 1, dated 16 Sept 2026, and the CONFIRM items are marked open or closed.
+6. `claims.md` lists every figure with source = this brief, Part 1, dated 16 Sept 2026, marked final.
 7. Contact sheet reviewed; captions match VO word for word; loudness normalised.
-8. Faisal has cleared the three CONFIRM items (£300 vs £500 top tier · definition of active · revenue-share base and payout timing) — or the export is marked `-DRAFT` in the filename and does not post.
+8. Exports are finals. No `-DRAFT` suffix, no holding for sign-off — the figures are approved. Faisal is updating the partner landing page and leaflets to the same figures so the video and the page say the same thing on the same day.
 
 ---
 
-## Part 7 — Open with Eray (Faisal is asking; do not resolve these yourself)
+## Part 7 — Status
 
-1. Is £300 the top bonus tier, or does a £500 tier exist? Our live leaflets and landing page say £500.
-2. One definition of "active merchant" for the T&Cs.
-3. Revenue share: a share of exactly what — NeroPay's net processing revenue from the merchant? — and when and how it is paid.
-4. An average monthly revenue share per active merchant, so the revenue share can eventually be expressed honestly in pounds. Until then it stays a percentage.
-5. Sign-off that the landing page and the leaflets will be corrected **before** these videos post, so the video and the page say the same thing on the same day.
+All figures, tiers, conditions and wording in this brief were confirmed final by Faisal on 17 September 2026. There are no open questions. If a future change to the programme is made, Faisal will issue a revised brief; until then this document is the single source of truth for every partner-programme video.

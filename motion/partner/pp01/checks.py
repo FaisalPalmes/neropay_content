@@ -1,8 +1,7 @@
-"""Stage-3 checks for the Partner Programme episode PP01 — DRAFT build (16 Sep 2026).
+"""Stage-3 checks for the Partner Programme episode PP01 (16–17 Sep 2026).
 
-Every figure on screen resolves to the three draft records Faisal released with motion/partner/BRIEF.md:
-partner_bonus_tiers, partner_revenue_share_tiers, partner_active_gate. They are drafts (three items open with
-Eray — BRIEF.md Part 7), so verify.py marks the build DRAFT and every export carries -DRAFT.
+Every figure on screen resolves to partner_bonus_tiers, partner_revenue_share_tiers and partner_active_gate —
+confirmed final by Faisal on 17 Sep 2026 (motion/partner/BRIEF.md v4, Part 7: no open questions).
 
 What is asserted: the thresholds the composition steps at are the ones in figures.json; every pound figure on
 screen sits in the same element as the condition that earns it; the two rest frames carry their conditions and
@@ -14,9 +13,9 @@ import re, sys
 from pathlib import Path
 EP = Path('motion') / sys.argv[1]
 
-bonus = draft_figure('partner_bonus_tiers')
-share = draft_figure('partner_revenue_share_tiers')
-gate = draft_figure('partner_active_gate')
+bonus = figure('partner_bonus_tiers')
+share = figure('partner_revenue_share_tiers')
+gate = figure('partner_active_gate')
 
 html = (EP / 'index.html').read_text()
 ON_SCREEN = ' '.join(re.sub(r'<[^>]+>', ' ', m) for m in re.findall(r'<div id="stage">(.*?)<script', html, re.S))
@@ -54,7 +53,7 @@ assert 'Most partners start at 20%: three a month.' in ON_SCREEN, 'the mandatory
 assert 'not yet — 3 to qualify' in ON_SCREEN, 'the climb must start below the gate'
 assert 'Barber · Longsight' in ON_SCREEN and 'went live' in ON_SCREEN, 'the £100 row has lost "went live"'
 assert '£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: partners.neropay.app' in ON_SCREEN, 'compliance super, short form, verbatim'
-assert 'Draft · figures pending confirmation · not for posting' in ON_SCREEN, 'a DRAFT build carries the draft mark'
+assert 'draft' not in ON_SCREEN.lower(), 'the figures are final — no draft mark'
 # no total, no monthly sum, no pound figure for revenue share (rules 2 and 4)
 assert not re.search(r'£\s?\d[\d,]*\s*(a|per)\s*month', (VO + ON_SCREEN).lower()), 'a monthly pound figure crept in'
 assert not re.search(r'£(9|6)00', ON_SCREEN), 'no summed bonus on screen in the short'
