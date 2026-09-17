@@ -90,7 +90,10 @@ These are his words turned into rules. They beat any general instinct.
     viewer, the compliance line held.
 13. **A full analysis before hand-over, every time.** Timing law, frame scan, spike scan, contact sheet, loudness. He
     reads it.
-14. **Never delete a previous note on Drive.** Rename it "superseded" and add a new one.
+14. **Money and stats are grand, once.** One large figure per frame with its condition under it in readable type; never a
+    second small copy of the same figure (a receipt repeating the hero figure was rejected). Counts fly in large and
+    settle; no rolling digit columns. No empty sky: the frame is full.
+15. **Never delete a previous note on Drive.** Rename it "superseded" and add a new one.
 
 ---
 
