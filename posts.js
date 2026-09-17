@@ -392,7 +392,7 @@ window.POSTS = [
 },
 {
   id: "L12", channel: "linkedin", pillar: "Partner", format: "Video · 16:9 · 88s + text",
-  date: "Tue 22 Sep", blocked: "Faisal reviews the NC01 16:9 render (motion/neroconnect/nc01) and approves it for posting.",
+  date: "Tue 22 Sep", blocked: "Faisal reviews the NC01 v2 16:9 render (motion/neroconnect/nc01, delivered 17 Sep 2026) and approves it for posting.",
   title: "NeroConnect — the intro video",
   copy: "You don't have to build a payments company to run one.\n\nThe terminals, the till software, the settlement, the compliance and the support desk already exist. We built them for NeroPay. NeroConnect lets a software company, an EPOS installer or anyone looking after a group of merchants run all of it under their own name: one dashboard, your logo, your domain, your branding on the terminal.\n\nTwo ways to set it up. Either your platform pays NeroPay's processing fee and bills your merchants yourself, or each merchant pays it directly with your fee on top. Either way, you set what your merchants pay.\n\nWho it isn't for: three cafés. That's the partner programme, one introduction and nothing to run. And depending on the setup there can be regulatory questions on your side, which is a conversation before a contract, not after.\n\nEighty-five seconds on how it fits together. The documentation is public at docs.neropay.app.\n\nVoice generated with AI.",
   creative: "The NC01 motion graphics intro, 16:9 master without burnt captions (motion/neroconnect/nc01, Olivia, 87.5 s), uploaded natively. No AI wording inside the video; the disclosure is the last line of the post (rail 4 at upload). Cover: the first frame with the statement fully risen (about 3.5 s).",

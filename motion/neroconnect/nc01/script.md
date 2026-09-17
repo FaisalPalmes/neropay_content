@@ -75,4 +75,15 @@ picture. Master: `mix.mjs` to −14 LUFS / −1.5 dBTP.
 
 ## Delivery
 
-See the v2 block appended below once the render is through `finish.sh`. 4:5, 9:16 and 1:1 on request (~35 minutes each).
+**v2, 17 Sep 2026, for Faisal's review.**
+
+- `out/final/nc01-16x9.mp4` — 1920×1080, 84.50 s, 2,535 frames, md5 `13fcd904ce9adec401323191ebab25aa`. Loudness −14.38 LUFS,
+  −2.18 dBTP (the mix ceiling is set to −2.4 in `mix.json` because the AAC true-peak read lands ~0.9 dB over the limiter's
+  target; v1's −1.5 ceiling gave −0.64 on this mix). Single-frame luma spikes: 0. Frame-to-frame jumps over 12 luma: 0.
+  Contact sheet `out/final/contact.jpg`, 24 stills.
+- Higgsfield media store: https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/d7d50f7c-9fcb-4930-9a70-a297ba1a1d2f.mp4
+  (media `d7d50f7c-9fcb-4930-9a70-a297ba1a1d2f`). A 13.5 MB review encode (`-crf 24`) went to Faisal in chat with the sheet.
+- v1 (media `5218d858-c4b5-45b0-9e4d-683772da5de8`) is withdrawn: wrong on the modes, and the design faults listed at the top.
+- Not yet rendered: 4:5 (Meta, with captions), 9:16, 1:1. About 35 minutes each, on request.
+- Warehouse: `posts.js` L12 carries the video on Tue 22 Sep, blocked until Faisal approves this render; L9 and M11 (the
+  two-arrangement carousel) were corrected to the same facts and re-rendered to `social/out/`.
