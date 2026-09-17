@@ -94,6 +94,13 @@ These are his words turned into rules. They beat any general instinct.
     second small copy of the same figure (a receipt repeating the hero figure was rejected). Counts fly in large and
     settle; no rolling digit columns. No empty sky: the frame is full.
 15. **Never delete a previous note on Drive.** Rename it "superseded" and add a new one.
+16. **The voice leads; nothing is on screen before it is said.** Every graphic lands on the word that earns it: headings
+    rise word by spoken word, a typewriter types each word as it is said, a shop lights on the word that names it, a
+    phone types on "name" and "number", a van stops on "close it". The overlays should feel as if the narrator is pointing
+    at them. Anchoring a graphic to the camera landing (so it is already there when she gets to it) was rejected.
+17. **The opening count is the hook, with a purpose.** Large, in a glass tile, counting something visible, and flipping
+    into the question mark of the question itself — never a lone "?". Liquid glass is used sparingly, under what matters.
+    A vehicle that delivers stops in the frame; nothing branded is cut by the frame edge.
 
 ---
 

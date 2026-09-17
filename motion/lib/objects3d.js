@@ -465,15 +465,48 @@ export function receipt({ w = 3.4, h = 6.4, lean = -14 } = {}) {
   });
 }
 
-/* a small unbranded white van: body, cab, dark glass, four wheels, a thin yellow band. drives along its own x. */
+/* a small unbranded white van (v3, PP02): body and cab, a windscreen with pillars, cab side windows, a grille and two
+   headlights, tail lights, bumpers, wing mirrors, hub caps, a thin yellow band both sides and across the back, and a
+   sliding side door on the +z (camera) side that opens on to a dark load bay. roll(dist) turns the wheels by distance
+   travelled; open(p) slides the door back. Drives along its own x; the cab is the +x end. No name on it. */
 export function van({ L = 6.2, color = 0xF4F2EC, band = C.accent } = {}) {
   const g = new THREE.Group(); const W = 2.6, H = 2.2, R = .46;
-  const body = new THREE.Mesh(new RoundedBoxGeometry(L * .62, H, W, 4, .22), mat(color, { roughness:.55 })); body.position.set(-L * .19, R + H / 2, 0); body.castShadow = true; g.add(body);
-  const cab = new THREE.Mesh(new RoundedBoxGeometry(L * .38, H * .82, W, 4, .3), mat(color, { roughness:.55 })); cab.position.set(L * .31, R + H * .41, 0); cab.castShadow = true; g.add(cab);
-  const glass = new THREE.Mesh(new RoundedBoxGeometry(.18, H * .36, W * .9, 2, .06), mat(0x1E2026, { roughness:.25, metalness:.2 })); glass.position.set(L * .5 - .04, R + H * .6, 0); g.add(glass);
-  const side = new THREE.Mesh(new THREE.PlaneGeometry(L * .3, H * .3), mat(0x1E2026, { roughness:.25 })); side.position.set(L * .3, R + H * .62, W / 2 + .01); g.add(side);
-  const bandM = new THREE.Mesh(new THREE.PlaneGeometry(L * .6, .18), mat(band, { roughness:.6 })); bandM.position.set(-L * .19, R + H * .28, W / 2 + .01); g.add(bandM);
-  const wheelG = new THREE.CylinderGeometry(R, R, .5, 20); const wheelM = mat(0x232428, { roughness:.8 });
-  for (const [x, z] of [[L * .3, W / 2], [L * .3, -W / 2], [-L * .3, W / 2], [-L * .3, -W / 2]]) { const wh = new THREE.Mesh(wheelG, wheelM); wh.rotation.x = Math.PI / 2; wh.position.set(x, R, z); wh.castShadow = true; g.add(wh); }
-  return g;
+  const paint = mat(color, { roughness:.5 }), dark = mat(0x1E2026, { roughness:.25, metalness:.2 }), trim = mat(0x2A2B30, { roughness:.6 });
+  const body = new THREE.Mesh(new RoundedBoxGeometry(L * .62, H, W, 4, .22), paint); body.position.set(-L * .19, R + H / 2, 0); body.castShadow = true; g.add(body);
+  const cab = new THREE.Mesh(new RoundedBoxGeometry(L * .38, H * .82, W, 4, .3), paint); cab.position.set(L * .31, R + H * .41, 0); cab.castShadow = true; g.add(cab);
+  /* the windscreen, raked, with a dark pillar each side; the cab's side windows */
+  const wsc = new THREE.Mesh(new RoundedBoxGeometry(.16, H * .34, W * .86, 2, .05), dark); wsc.position.set(L * .5 - .02, R + H * .6, 0); wsc.rotation.z = -.28; g.add(wsc);
+  for (const zz of [W / 2, -W / 2]) { const side = new THREE.Mesh(new THREE.PlaneGeometry(L * .26, H * .3), dark); side.position.set(L * .3, R + H * .62, zz + Math.sign(zz) * .012); if (zz < 0) side.rotation.y = Math.PI; g.add(side); }
+  /* grille, bumpers, two headlights, two tail lights */
+  const grille = new THREE.Mesh(new RoundedBoxGeometry(.14, .3, W * .5, 2, .05), trim); grille.position.set(L * .5 + .02, R + H * .22, 0); g.add(grille);
+  const bF = new THREE.Mesh(new RoundedBoxGeometry(.22, .22, W + .1, 2, .08), trim); bF.position.set(L * .5, R + .02, 0); g.add(bF);
+  const bB = bF.clone(); bB.position.x = -L * .5; g.add(bB);
+  const lampM = new THREE.MeshStandardMaterial({ color:0xFFF4D2, emissive:0xFFE39A, emissiveIntensity:.7, roughness:.35 });
+  for (const zz of [W * .34, -W * .34]) { const hl = new THREE.Mesh(new RoundedBoxGeometry(.12, .26, .42, 2, .05), lampM); hl.position.set(L * .5 + .04, R + H * .36, zz); g.add(hl);
+    const tl = new THREE.Mesh(new RoundedBoxGeometry(.1, .4, .3, 2, .05), new THREE.MeshStandardMaterial({ color:0xE0433A, emissive:0xB4231C, emissiveIntensity:.5, roughness:.4 })); tl.position.set(-L * .5 - .02, R + H * .5, zz); g.add(tl); }
+  /* wing mirrors */
+  for (const zz of [W / 2 + .2, -W / 2 - .2]) { const m = new THREE.Mesh(new RoundedBoxGeometry(.16, .28, .22, 2, .05), trim); m.position.set(L * .44, R + H * .62, zz); g.add(m); }
+  /* the band, both sides and across the back */
+  for (const zz of [W / 2 + .01, -W / 2 - .01]) { const bm = new THREE.Mesh(new THREE.PlaneGeometry(L * .96, .18), mat(band, { roughness:.6 })); bm.position.set(-L * .02, R + H * .28, zz); if (zz < 0) bm.rotation.y = Math.PI; g.add(bm); }
+  { const bm = new THREE.Mesh(new THREE.PlaneGeometry(W * .9, .18), mat(band, { roughness:.6 })); bm.position.set(-L * .5 - .01, R + H * .28, 0); bm.rotation.y = -Math.PI / 2; g.add(bm); }
+  /* the sliding door on the camera side: a bay cut as a dark panel, the door a paint panel that slides back over the body */
+  const bay = new THREE.Mesh(new THREE.PlaneGeometry(L * .3, H * .78), mat(0x15161A, { roughness:.9 })); bay.position.set(-L * .04, R + H * .47, W / 2 + .005); g.add(bay);
+  const door = new THREE.Group(); door.position.set(-L * .04, R + H * .47, W / 2 + .03);
+  const dp = new THREE.Mesh(new RoundedBoxGeometry(L * .31, H * .8, .05, 2, .02), paint); door.add(dp);
+  const seam = new THREE.Mesh(new THREE.PlaneGeometry(L * .31, H * .8), new THREE.MeshStandardMaterial({ color:0x000000, transparent:true, opacity:.0 })); door.add(seam);
+  const dband = new THREE.Mesh(new THREE.PlaneGeometry(L * .31, .18), mat(band, { roughness:.6 })); dband.position.set(0, R + H * .28 - (R + H * .47), .03); door.add(dband);
+  const handle = new THREE.Mesh(new RoundedBoxGeometry(.5, .08, .06, 2, .02), trim); handle.position.set(L * .1, .1, .04); door.add(handle);
+  const dwin = new THREE.Mesh(new THREE.PlaneGeometry(L * .2, H * .26), dark); dwin.position.set(0, H * .16, .03); door.add(dwin);
+  g.add(door);
+  /* wheels on axles, hub caps, wheel arches suggested by a darker ring */
+  const wheelG = new THREE.CylinderGeometry(R, R, .5, 24); const wheelM = mat(0x232428, { roughness:.85 }); const hubG = new THREE.CylinderGeometry(R * .5, R * .5, .54, 16); const hubM = mat(0xD9D6CE, { roughness:.5, metalness:.3 });
+  const axles = [];
+  for (const [x, z] of [[L * .3, W / 2], [L * .3, -W / 2], [-L * .3, W / 2], [-L * .3, -W / 2]]) { const pv = new THREE.Group(); pv.position.set(x, R, z);
+    const wh = new THREE.Mesh(wheelG, wheelM); wh.rotation.x = Math.PI / 2; wh.castShadow = true; pv.add(wh);
+    const hb = new THREE.Mesh(hubG, hubM); hb.rotation.x = Math.PI / 2; pv.add(hb); g.add(pv); axles.push(pv); }
+  return Object.assign(g, {
+    L, W, H, R,
+    roll(dist) { for (const pv of axles) pv.rotation.z = -dist / R; },
+    open(p) { door.position.x = -L * .04 - L * .27 * p; },
+  });
 }

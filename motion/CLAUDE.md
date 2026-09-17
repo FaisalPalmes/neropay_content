@@ -360,6 +360,19 @@ flies in large and settles as the scene sets, pops on each change, and hands ove
 columns (partial glyphs read as clipping). Every stop's type slides up and settles as the camera lands, and the box sits
 low and shallow enough that the frame is full — empty sky at the top is a fault. These are standing rules.
 
+**PP02 v3 — the voice leads (Faisal, 17 Sep 2026).** Nothing is on screen before she has said it. Every graphic is
+anchored to the start of the word that earns it, not to the camera landing: a heading that mirrors the take rises word by
+*spoken* word (`sync(el, t, times('pays you'))`), a typewriter types each word across the time she takes to say it
+(`typeSync`), a shop lights on the word that names it, the phone types on "name" and "number", the van stops on "close",
+the strike lands as she finishes the claim. A stop's camera walk is timed so it has landed by the first word that puts
+something on it; "things that wait for the camera" is retired as an anchor. The overlays must feel as if she is pointing at
+them. Two more from the same review: the opening count is the hook — large, in a glass tile, counting the shops the view
+rides past, flipping into a large question mark that is the question's own (the kicker retypes under it), never a lone
+"?"; and liquid glass is used sparingly and only under what matters (three slabs in PP02: the count, the money, the climb),
+tilting in on a perspective with a sheen that passes now and then. A vehicle that delivers stops in frame; a terminal at
+the edge sits inside the frame, never cut by it. The type sits high — the frame above the box is real space, and the
+4:5 frame's top third must not be sky.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**
