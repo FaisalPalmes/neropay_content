@@ -63,6 +63,16 @@ the contact sheet checked at 27 points. Two mixer faults found and fixed on the 
 stopped a linear gain — `mix.mjs` now makes every input stereo and puts a limiter at the ceiling before the measured
 pass when the peaks would otherwise hold it back. `finish.sh` copies the AAC instead of re-encoding it.
 
+## v4, in build — glass pieces, generated plates (Faisal, 17 Sep 2026)
+
+Faisal's notes on v3: no 3D balls; a few subtle fintech elements for texture and lift, with the liquid-glass look
+(light hitting the glass, a mark set inside it) from his reference; and certain beats may sit on clips he generates in
+a video tool (no people; objects, models, textures), with our overlays, captions and graphics around them. The pipeline
+stays ours. Done now: `motion/lib/glass.js` and the six placements in `index.html` — a card with the contactless wave and
+a ring on the hook; a ring and a £ coin on who we are; a chip card and a £ coin on the bonus; a % tile and a ring on the
+share; a tick tile and a sparkline card on the quiet month; a wave card and a ring on the close. Peeked at 4.6 / 13.2 /
+30 / 46 / 52 / 60 s. Waiting: the seven plates in `AI-PLATES.md`; then the final 4:5 render.
+
 ## v2 — the take (superseded by v3 above)
 
 > [warmly] Okay, here's the catch first, because we'd rather you heard it from us than found it in the terms: the

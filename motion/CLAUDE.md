@@ -311,9 +311,19 @@ video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on th
   loudnorm pass stops short of the target when the peaks would cross the ceiling (v3 landed 1.1 LU under): when the
   measured gain would push the true peak over `tp`, the mixer now runs a limiter at the ceiling first and measures again.
   `finish.sh` copies the mastered AAC into the crops rather than encoding it a second time.
-- **The big spheres, v3.** Faisal's note on v2: no small spheres floating about. Each section carries two very large pale
-  spheres (radius 5.5–9, yellow, blush or lilac, no shadow) placed at the edges so they sit half in the frame, bobbing
-  slowly. Decoration is few and large, never a scatter.
+- **Glass fintech pieces, not balls — v4, 17 Sep 2026.** Faisal's note on v3: no 3D balls; a few subtle fintech elements
+  to give the space texture and lift, with the liquid-glass look from his reference (light catching the glass, a mark
+  set inside it). `motion/lib/glass.js`: a payment-card slab, a ring, a coin, a square tile — pale yellow, blush or
+  lilac glass (a near-mirror clearcoat reflecting the room environment, low opacity so the paper shows through, a dark
+  back-face rim so a pale object reads on a pale ground) with a mark etched inside: the contactless wave, £, %, a tick,
+  a sparkline, a chip. **Never a number in the glass**, never a brand, never a card number. Two per section, at the
+  edges, half in frame, drifting and turning slowly from a deterministic seed. Refraction (`transmission`) is not used:
+  the WebGL layer draws over a transparent clear, so a refracting material samples nothing and goes dark. The v3 spheres
+  are gone.
+- **Generated plates, for certain beats — v4.** Faisal generates clips in a video tool (no people, no text, no brand, the
+  white world, the specs in `motion/partner/pp01/AI-PLATES.md`) and we composite our type, captions and modules over
+  them; frames are pulled with ffmpeg and loaded per frame so the render stays deterministic. Texture for a beat, never
+  the body; the upload disclosure covers them.
 - **The gate, leniently.** The v2 settings (`tighten --gap .2 --min .3 --tempo 1.06`, `gate --inset .06 --max -18`)
   clipped into words. The ruling: `--gap .32 --min .45 --tempo 1.03` and `--inset .12 --max -30` — a split second of
   gap is allowed, 120 ms either side of every word is never touched.

@@ -14,13 +14,13 @@ on screen sits with the volume or count that earns it, at every frame.
 **Channel.** Meta and TikTok for the social short-form (4:5 first for Meta, then 9:16 and 1:1), the partner landing
 page, docs and YouTube for the long-form (16:9). LinkedIn carries the 16:9 and 4:5 cuts.
 
-**Ground.** The white world — `#FBFAF7`, ink type, the yellow as the accent, a little blush and lilac in the spheres and
-the glass tint. Never dark: Faisal rejected the dark-ground first cut on 17 Sep 2026 ("no more black background
+**Ground.** The white world — `#FBFAF7`, ink type, the yellow as the accent, a little blush and lilac in the glass
+pieces and the glass tint. Never dark: Faisal rejected the dark-ground first cut on 17 Sep 2026 ("no more black background
 theme"); the partner brief's dark tokens are not used. Poppins is the family, Martian Mono for figures and kickers,
 Source Serif 4 italic for the human line — the merchant videos' fonts. Captions drawn in the picture, the spoken word
 on a yellow marker.
 
-**Movement.** The camera never stops (a slow orbit and breath); spheres float and bob over every section; objects sway;
+**Movement.** The camera never stops (a slow orbit and breath); two liquid-glass fintech pieces (`motion/lib/glass.js`) drift and turn at the edges of every section; objects sway;
 every phrase that can be a graphic is one. The view swings left, right and centre from section to section so the
 type is never in the same place twice running.
 
@@ -48,7 +48,7 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 
 | # | Folder | What | State |
 |---|---|---|---|
-| 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v3 rendered 17 Sep 2026, 4:5 first** — `script.md` and `claims.md` in the folder |
+| 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v3 delivered 17 Sep 2026 (4:5); v4 in build** — glass pieces in place of the spheres, waiting on Faisal's generated plates (`pp01/AI-PLATES.md`) before the final render — `script.md` and `claims.md` in the folder |
 | — | | Brief A's hook library (37 hooks × two bodies) as swappable openings on a shared body, per BRIEF.md Part 4 | Not started — the body would be cut from PP01's script once its register is approved |
 | — | | Brief B, the 2:30–3:00 long-form explainer, chaptered for YouTube | Not started |
 | — | | Turkish pass | After the English set has run clean for two weeks (BRIEF.md Part 2) |
