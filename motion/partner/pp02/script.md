@@ -154,3 +154,9 @@ shop, a yellow header band, a slow bob; the CTA stack is Free to join 22.7 · na
 15.8 · compliance 11.7, three shops lit, the van coming along the road from "NeroPay dot app" and stopping; the van sits
 flat on the road (the pitch and wobble were rotating it about its ground origin and lifting the wheels); a soft text
 shadow under the type and a deeper one under the plates. The money slab grows with its words. 48 cues.
+
+**Delivered (v4, 4:5):** `out/final/pp02-4x5.mp4`, 49.1 s, 1,474 frames, md5 `dc509d946241b46f4fc90f37b866fded`;
+stereo, −13.99 LUFS / −1.36 dBTP. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/623e5e5b-2c72-4b7e-be84-63953a5e1f38.mp4`
+(contact `…/24ff807f-cc63-45ec-8091-d890a7980ec8.jpg`). Drive: README v4 in the PP02 folder, v3 renamed superseded. Law
+passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 32 points.
