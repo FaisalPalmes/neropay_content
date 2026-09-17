@@ -57,16 +57,17 @@ window.POSTS = [
 },
 {
   id: "L4", channel: "linkedin", pillar: "Partner", format: "Video + text",
-  date: "Mon 28 Sep", blocked: "Eray must sign off the partner incentive model, and the Stripe agreement question on third-party introducers is still open. No figures in the post either way.",
+  date: "Mon 28 Sep", blocked: false,
+  note: "Unblocked 17 Sep 2026: Faisal confirmed the partner programme final. The post still carries no figures by design — they live at partners.neropay.app. The Stripe question on third-party introducers stays on youtube.html as Eray's.",
   title: "The objection nobody says out loud",
   copy: "A question we ask wholesalers: what happens to your customer after you introduce them to a supplier?\n\nIt's the objection nobody says out loud. Fifteen-year accounts. The money isn't the worry. Losing the relationship is.\n\nSo, plainly:\n\nYou make an introduction. That's the whole ask. No selling, no paperwork.\n\nWe talk to them. If their current deal is good, we tell them and they stay put. We don't get paid for those. We do it anyway.\n\nIf they move, they're still yours. We don't see who else you supply, we don't market to your list, we never contact anyone you haven't introduced.\n\nTerms and the numbers are at partners.neropay.app. Better read at your own pace than in a post.\n\nSupply independent hospitality in Greater Manchester? Message us.",
-  creative: "Video A3, vertical cut, 60–90s. That video was built for exactly this objection. AI-presenter caption visible in the first three seconds. Native upload, not a YouTube link — LinkedIn buries external links. The cover below is the opening frame.",
+  creative: "Video A3, vertical cut, 60–90s. That video was built for exactly this objection. No AI wording inside the video (Faisal, 9 Sep 2026) — the disclosure is made at upload: LinkedIn has no synthetic-content toggle, so it goes as a line in the post. Native upload, not a YouTube link — LinkedIn buries external links. The cover below is the opening frame.",
   why: "Leads with the partner's real fear instead of the incentive. Every number lives behind a link, which is both better persuasion and the compliance position.",
   sketch: { type: "reel", subject: "presenter", alt: "presenter to camera, partner objection",
     beats: ["hook: what happens to your customer", "the honest answer", "you keep the relationship", "link, no figures"],
     cap: "Vertical cut of A3. Presenter centred, eyes to lens. No figures on screen anywhere — they live behind the link." },
   assets: [
-    { t: "cover", size: "st", ai: true, title: "What happens to your customer after you introduce them?", sub: "Explained by NeroPay · partners" },
+    { t: "cover", size: "st", title: "What happens to your customer after you introduce them?", sub: "Explained by NeroPay · partners" },
     { t: "ref", id: "AI/9x16" }
   ]
 },
@@ -129,13 +130,13 @@ window.POSTS = [
   date: "Tue 8 Sep", blocked: false,
   title: "The only number that compares",
   copy: "The rate on the front of your statement isn't what you pay.\n\nTotal charged ÷ total card takings × 100. That's your effective rate. The only number that compares one provider to another.\n\nLine by line on YouTube. Link in bio.\n\nIllustrative example, not a real statement. Correct as of 18 Aug 2026.",
-  creative: "Vertical cut from B1. Open on the cover frame, presenter enters at 3s. Burned-in subtitles — most of this is watched on mute. AI-presenter disclosure in the first three seconds. No music bed under the presenter. The formula overlay from B1 is the end frame.",
+  creative: "Vertical cut from B1. Open on the cover frame, presenter enters at 3s. Burned-in subtitles — most of this is watched on mute. No AI wording inside the video (Faisal, 9 Sep 2026): tick the platform's AI-generated content setting and put the disclosure line in the caption. No music bed under the presenter. The formula overlay from B1 is the end frame.",
   why: "Lead Reel of the whole plan. Publish the week B1 goes live so 'link in bio' actually resolves to something.",
   sketch: { type: "reel", subject: "graphic", alt: "statement figures building",
     beats: ["hook: not what you're paying", "the sum, on screen", "effective rate revealed", "link in bio"],
     cap: "9:16. Statement fills the frame, figures build row by row, presenter cuts in at 3s. Subtitles always on." },
   assets: [
-    { t: "cover", size: "st", ai: true, title: "The rate on the front isn't the rate you pay.", sub: "Explained by NeroPay" },
+    { t: "cover", size: "st", title: "The rate on the front isn't the rate you pay.", sub: "Explained by NeroPay" },
     { t: "ref", id: "B1/OV-4" },
     { t: "ref", id: "AI/9x16" }
   ]
@@ -184,7 +185,7 @@ window.POSTS = [
     beats: ["£6 vs £60 side by side", "fixed fee added to both", "effective rates diverge", "crossover figure held"],
     cap: "Two columns, figures climbing on one side. Hold the crossover number for two full seconds." },
   assets: [
-    { t: "cover", size: "st", ai: true, title: "A £6 coffee and a £60 dinner are not the same transaction.", sub: "Explained by NeroPay" },
+    { t: "cover", size: "st", title: "A £6 coffee and a £60 dinner are not the same transaction.", sub: "Explained by NeroPay" },
     { t: "ref", id: "B2/OV-2" },
     { t: "ref", id: "B2/OV-3" }
   ]
@@ -286,6 +287,107 @@ window.POSTS = [
     cap: "Reuse M3 or M5 footage. Only the subtitles change. Elif checks terminology first." },
   assets: [
     { t: "cover", size: "st", title: "Aylık yazılım ücreti yok.", sub: "Kart terminali · yazarkasa yazılımı dahil" }
+  ]
+},
+/* ============================ ADDED 17 SEP 2026 — NeroConnect · partner programme · card machines ============================ */
+{
+  id: "L9", channel: "linkedin", pillar: "Partner", format: "Document · 6 cards + text",
+  date: "Tue 22 Sep", blocked: false,
+  title: "NeroConnect — your brand on the terminal",
+  copy: "Three kinds of business have asked us the same thing this year: whether the card payments could carry their name instead of ours.\n\nEPOS installers who fit tills for a living. Software companies with a few hundred restaurants on their platform. Anyone looking after a group of merchants who is tired of six logins.\n\nNeroConnect is the answer to that. One dashboard for every merchant you look after. Your logo, your domain, your merchant pricing, set above a floor so nothing sells below cost. We run the card acquiring, the settlement and the compliance underneath. You keep the relationship.\n\nTwo ways in. Connected mode: you work under the NeroPay name and we set the merchant rates. Platform mode: your brand, your pricing, and more of the responsibility, including disputes.\n\nTwo things it isn't. If you look after three cafés, this is the wrong door. The partner programme is built for that: one introduction, no platform to run. And platform mode may need its own regulatory permissions, which is a conversation before a contract, not after.\n\nThe documentation is public. docs.neropay.app, the NeroConnect section. Read it before you talk to us. It is more use than the sales call.",
+  creative: "A six-card carousel on the light stage, uploaded to LinkedIn as a document (one PDF, 1080×1350 pages). No product screenshot: Connect Reports and the pricing screens carry figures that never go public (docs build plan §8). No figure anywhere on the cards.",
+  why: "Answers the question installers and platforms actually ask, names the two modes plainly, and concedes twice: too small for it, and the regulatory point. The concessions are what make the product description credible on a partner channel.",
+  sketch: { type: "carousel", cards: ["title", "who it's for", "one dashboard", "…+3"],
+    cap: "Six cards. Title, who, what you get, what we do, two modes, not for." },
+  assets: [
+    { t: "cards", size: "pt", alt: "A six-card carousel on a light background describing NeroConnect, NeroPay's white-label payments platform for installers and software platforms. Plain text on frosted panels, NeroPay wordmark bottom left.", cards: [
+      { h: "Card payments under your own brand.", b: "NeroConnect, from NeroPay." },
+      { n: "Who it's for", h: "Installers, platforms, groups.", b: "EPOS installers. Software with merchants on it. Anyone running more than a handful of tills." },
+      { n: "What you get", h: "One dashboard for every merchant.", b: "Your logo, your domain, your merchant pricing. Onboarding, statements and support in one place." },
+      { n: "What we do", h: "The rails underneath.", b: "Card acquiring, settlement, compliance. You keep the relationship." },
+      { n: "Two modes", h: "Under our name, or yours.", b: "Connected: NeroPay brand, we set merchant rates. Platform: your brand, your pricing, more of the responsibility." },
+      { n: "Not for", h: "A single shop.", b: "If you look after three cafés, the partner programme is the door. One introduction, no platform to run." }
+    ] }
+  ]
+},
+{
+  id: "M11", channel: "meta", pillar: "Product", format: "Carousel · 6 cards",
+  date: "Wed 23 Sep", blocked: false,
+  title: "NeroConnect — for installers and platforms",
+  copy: "NeroConnect. NeroPay's card payments under your own brand.\n\nFor EPOS installers, software platforms and anyone looking after a group of merchants. One dashboard, your logo, your domain. We run the payments underneath.\n\nNot for a single shop. That's what the terminal is for.\n\ndocs.neropay.app",
+  creative: "The same six cards as L9 at 4:5, posted as a multi-image carousel. Same files, second channel — the engine rule, not a new build.",
+  why: "Installers and software founders are on Instagram too, and the post is short enough to be read in the feed. The last line sends a single shop to the right product instead of the wrong one.",
+  sketch: { type: "carousel", cards: ["title", "who it's for", "one dashboard", "…+3"],
+    cap: "L9's cards, 4:5. Nothing new drawn." },
+  assets: [
+    { t: "cards", size: "pt", alt: "A six-card carousel on a light background describing NeroConnect, NeroPay's white-label payments platform for installers and software platforms. Plain text on frosted panels, NeroPay wordmark bottom left.", cards: [
+      { h: "Card payments under your own brand.", b: "NeroConnect, from NeroPay." },
+      { n: "Who it's for", h: "Installers, platforms, groups.", b: "EPOS installers. Software with merchants on it. Anyone running more than a handful of tills." },
+      { n: "What you get", h: "One dashboard for every merchant.", b: "Your logo, your domain, your merchant pricing. Onboarding, statements and support in one place." },
+      { n: "What we do", h: "The rails underneath.", b: "Card acquiring, settlement, compliance. You keep the relationship." },
+      { n: "Two modes", h: "Under our name, or yours.", b: "Connected: NeroPay brand, we set merchant rates. Platform: your brand, your pricing, more of the responsibility." },
+      { n: "Not for", h: "A single shop.", b: "If you look after three cafés, the partner programme is the door. One introduction, no platform to run." }
+    ] }
+  ]
+},
+{
+  id: "L10", channel: "linkedin", pillar: "Partner", format: "Document · 6 cards + text",
+  date: "Tue 6 Oct", blocked: false,
+  title: "The partner programme, in the order people ask",
+  copy: "The NeroPay partner programme, in the order people actually ask about it.\n\nWhat do I have to do? Make an introduction. A name and a number is enough. We make the call, do the setup, train the staff and take the support. You don't sell anything and you don't quote a rate.\n\nWhat's it worth? Two separate things. A bonus for every merchant you introduce who goes live: £100, £200 or £300, set by their card takings in their first 30 days. And a share of what your merchants' card payments earn NeroPay, from 20% once you've introduced three new active merchants in a calendar month, rising with the count that month.\n\nWhat happens to my customer? They stay yours. We never see your list and we never tell you who signed. You get a count, not names.\n\nWhat we tell some of them. To stay put. If their statement is already good we say so, and nobody gets paid for that one. It's the only way an introduction from you stays safe.\n\nWhere we're weaker. We're small. If your customers want a name they already recognise behind the counter, that isn't us. What they get instead is someone fifteen minutes down the road who picks up.\n\nTerms in full at partners.neropay.app. Three new active merchants a month is the gate for the share; the bonus is yours either way.",
+  creative: "A six-card carousel on the light stage, uploaded as a LinkedIn document. The two figures appear once each, in body type on their own card, each in the same sentence as its condition, per merchant, never a total. No figure is ever the big element (rail 2, partner brief rule 2). No lifestyle imagery, no person.",
+  why: "Figures confirmed final by Faisal on 17 Sep 2026 (figures.json: partner_bonus_tiers, partner_revenue_share_tiers, partner_active_gate). Leads with the job, not the money; volunteers the gate as a selling point; concedes twice. Timed for w/c 5 Oct, when the calendar starts the partner push.",
+  sketch: { type: "carousel", cards: ["title", "what you do", "the bonus", "…+3"],
+    cap: "Six cards. Figures in body type only, each with its condition." },
+  assets: [
+    { t: "cards", size: "pt", alt: "A six-card carousel on a light background explaining the NeroPay partner programme: what a partner does, how the bonus and the share are set, what happens to the partner's customer, and the case where NeroPay tells a merchant to stay put.", cards: [
+      { h: "One introduction. That's the job.", b: "The NeroPay partner programme." },
+      { n: "What you do", h: "Send us a name and a number.", b: "We make the call, do the setup, train the staff, take the support. You don't sell and you don't quote." },
+      { n: "The bonus", h: "One for every merchant who goes live.", b: "£100, £200 or £300, set by their card takings in their first 30 days. Per merchant, never a total." },
+      { n: "The share", h: "Once you're introducing three a month.", b: "A share of what your merchants' card payments earn NeroPay, from 20% with three new active merchants in a calendar month." },
+      { n: "Your customer", h: "Stays yours.", b: "We never see your list. You get a count, not names." },
+      { n: "Some of them", h: "We tell to stay put.", b: "If their statement is already good, we say so. Nobody gets paid for that one. Terms: partners.neropay.app" }
+    ] }
+  ]
+},
+{
+  id: "L11", channel: "linkedin", pillar: "Product", format: "Document · 6 cards + text",
+  date: "Mon 12 Oct", blocked: false,
+  title: "Four kinds of card machine",
+  copy: "Four kinds of card machine get sold to the same takeaway, and most of the difference is where the payment happens.\n\nCountertop. Plugged in by the till, wired or wi-fi, never moves. The right answer for a counter with a queue.\n\nPortable. Talks to a base by the till and walks to the table. Restaurants with table service. Its range is the room, not the street.\n\nMobile. Its own SIM, works anywhere with signal, prints a receipt. Market stalls, deliveries, a pop-up. Ours in this class is the Flex: 5.5 inch screen, printer built in, wi-fi, 4G and offline.\n\nPhone-based reader. A small reader paired to an app on a phone. No printer, no till. The customer taps the reader and the receipt goes by text.\n\nWhere the smaller box wins. If the business takes twenty payments a day on a stall, a phone-based reader is fine and there is no reason to carry more. The case for a terminal starts when the machine has to do more than take the payment: run the till, split a bill, print, keep working when the wi-fi drops.\n\nThe question to ask before anything else: where does the payment happen, and what else does the machine have to do while it's there?",
+  creative: "A six-card carousel on the light stage, uploaded as a LinkedIn document. One machine per card, the concession on the last. No price, no rate, no competitor named, no photograph of a competitor's reader.",
+  why: "Installers and accountants get asked this by every new client. A plain taxonomy with the concession built in is the kind of thing that gets saved and forwarded. Ends on a question, which is where a question belongs.",
+  sketch: { type: "carousel", cards: ["title", "countertop", "portable", "…+3"],
+    cap: "Six cards. One machine per card, the concession last." },
+  assets: [
+    { t: "cards", size: "pt", alt: "A six-card carousel on a light background describing four kinds of card machine, countertop, portable, mobile and phone-based reader, and when a smaller reader is the better choice. Plain text on frosted panels, NeroPay wordmark bottom left.", cards: [
+      { h: "Four kinds of card machine.", b: "Most of the difference is where the payment happens." },
+      { n: "Countertop", h: "By the till. Never moves.", b: "Wired or wi-fi. The right answer for a counter with a queue." },
+      { n: "Portable", h: "Walks to the table.", b: "Talks to a base by the till. Table service. Its range is the room, not the street." },
+      { n: "Mobile", h: "Its own SIM. Prints a receipt.", b: "Stalls, deliveries, pop-ups. Ours is the Flex: 5.5in screen, printer built in, wi-fi, 4G and offline." },
+      { n: "Phone reader", h: "A reader and an app.", b: "No printer, no till. The customer taps the reader, the receipt goes by text." },
+      { n: "Where the smaller box wins", h: "Twenty payments a day on a stall? A phone reader is fine.", b: "A terminal earns its place when it also has to run the till, split a bill, print, and keep working when the wi-fi drops." }
+    ] }
+  ]
+},
+{
+  id: "M12", channel: "meta", pillar: "Product", format: "Carousel · 6 cards",
+  date: "Mon 28 Sep", blocked: false,
+  title: "Four kinds of card machine",
+  copy: "Four kinds of card machine. Most of the difference is where the payment happens.\n\nCountertop: by the till, never moves.\nPortable: walks to the table, talks to a base.\nMobile: its own SIM, prints a receipt, works on a stall. That's the Flex.\nPhone reader: a small reader and an app. No printer, no till.\n\nTwenty payments a day on a stall and a phone reader is fine. A terminal makes sense when it has to run the till as well.\n\nneropay.app",
+  creative: "L11's six cards at 4:5 as a multi-image post. Same files, second channel.",
+  why: "The most-asked question at the counter, answered without a price. Concedes the phone reader case in the caption and on the last card.",
+  sketch: { type: "carousel", cards: ["title", "countertop", "portable", "…+3"],
+    cap: "L11's cards, 4:5. Nothing new drawn." },
+  assets: [
+    { t: "cards", size: "pt", alt: "A six-card carousel on a light background describing four kinds of card machine, countertop, portable, mobile and phone-based reader, and when a smaller reader is the better choice. Plain text on frosted panels, NeroPay wordmark bottom left.", cards: [
+      { h: "Four kinds of card machine.", b: "Most of the difference is where the payment happens." },
+      { n: "Countertop", h: "By the till. Never moves.", b: "Wired or wi-fi. The right answer for a counter with a queue." },
+      { n: "Portable", h: "Walks to the table.", b: "Talks to a base by the till. Table service. Its range is the room, not the street." },
+      { n: "Mobile", h: "Its own SIM. Prints a receipt.", b: "Stalls, deliveries, pop-ups. Ours is the Flex: 5.5in screen, printer built in, wi-fi, 4G and offline." },
+      { n: "Phone reader", h: "A reader and an app.", b: "No printer, no till. The customer taps the reader, the receipt goes by text." },
+      { n: "Where the smaller box wins", h: "Twenty payments a day on a stall? A phone reader is fine.", b: "A terminal earns its place when it also has to run the till, split a bill, print, and keep working when the wi-fi drops." }
+    ] }
   ]
 }
 
