@@ -94,6 +94,33 @@ export function glassCoin({ r = 5, d = .8, tint = 'y', mark = 'pound', markScale
   g.userData.kind = 'coin'; return g;
 }
 
+/* a real payment card — v4.1 (Faisal, 17 Sep 2026): not floating shapes, one real asset relevant to payments per section,
+   large, subtly in the frame, hinting at a card without becoming the focus. Bank-card proportions (85.6 × 54), an ivory
+   matte body with a soft sheen, a gold chip, the contactless wave, a thin yellow band on the back edge. No number, no
+   name, no expiry, no scheme mark, no brand — never a NeroPay card (the terminal is the only branded object). */
+export function paymentCard({ w = 20, tint = 0xF3F0E8, band = 0xF5C518 } = {}) {
+  const h = w * 54 / 85.6, d = w * .022;
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 6, w * .045),
+    new THREE.MeshPhysicalMaterial({ color:tint, roughness:.42, metalness:0, clearcoat:.6, clearcoatRoughness:.25, envMapIntensity:1.6 }));
+  body.castShadow = false; g.add(body);
+  /* the chip: a small gold slab with the contact grid pressed into it */
+  const chip = new THREE.Mesh(new RoundedBoxGeometry(w * .13, w * .10, d * .6, 3, w * .012),
+    new THREE.MeshStandardMaterial({ color:0xD8B65E, roughness:.32, metalness:.75, envMapIntensity:2 }));
+  chip.position.set(-w * .30, h * .12, d / 2 + d * .2); chip.castShadow = false; g.add(chip);
+  const grid = new THREE.Mesh(new THREE.PlaneGeometry(w * .13, w * .10), new THREE.MeshBasicMaterial({ map:etchTexture(MARKS.chip, 256), transparent:true, opacity:.55, depthWrite:false }));
+  grid.position.set(-w * .30, h * .12, d / 2 + d * .52); g.add(grid);
+  /* the contactless wave, pressed into the face */
+  const wave = new THREE.Mesh(new THREE.PlaneGeometry(w * .16, w * .16), new THREE.MeshBasicMaterial({ map:etchTexture(MARKS.wave, 256), transparent:true, opacity:.5, depthWrite:false }));
+  wave.position.set(-w * .10, h * .12, d / 2 + .01); wave.rotation.z = 0; g.add(wave);
+  /* a thin band of the accent along the bottom edge of the face, and the signature-side stripe on the back */
+  const bandM = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, h * .055), new THREE.MeshStandardMaterial({ color:band, roughness:.5 }));
+  bandM.position.set(0, -h * .40, d / 2 + .01); g.add(bandM);
+  const stripe = new THREE.Mesh(new THREE.PlaneGeometry(w, h * .18), new THREE.MeshStandardMaterial({ color:0x2A2B30, roughness:.6 }));
+  stripe.position.set(0, h * .28, -d / 2 - .01); stripe.rotation.y = Math.PI; g.add(stripe);
+  g.userData.kind = 'pay'; return g;
+}
+
 /* per-frame drift: a slow bob and a slow turn, deterministic from the object's seed (no Math.random — renders must repeat) */
 export function drift(o, t) {
   const { y0, x0, seed = 0, turn = .12, bob = .35 } = o.userData;
@@ -105,7 +132,7 @@ export function drift(o, t) {
 
 /* place a list of glass objects on a section: [kind, x, y, z, { rx, ry, rz, ...opts }] */
 export function place(section, list, out = []) {
-  const make = { card:glassCard, tile:glassTile, ring:glassRing, coin:glassCoin };
+  const make = { card:glassCard, tile:glassTile, ring:glassRing, coin:glassCoin, pay:paymentCard };
   list.forEach(([kind, x, y, z, opts = {}], i) => {
     const { rx = 0, ry = 0, rz = 0, ...rest } = opts;
     const g = make[kind](rest); g.position.set(x, y, z); g.rotation.set(rx, ry, rz);

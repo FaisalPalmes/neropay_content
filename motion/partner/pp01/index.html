@@ -282,9 +282,8 @@ const SECS = [S0, S1, S2, S3, S4, S5];
 for (const S of SECS) Wd.mat(S.g.position.x, S.g.position.z, S.bw + 6, 30, { ry:S.g.rotation.y });
 for (let i = 1; i < SECS.length; i++) Wd.route(SECS[i - 1].g.position, SECS[i].g.position);
 
-/* ambient, v4 (Faisal, 17 Sep 2026): no balls. A few large liquid-glass fintech pieces per section — a card slab with the
-   contactless wave set into it, a ring, a coin with a pound sign, a tile with a percent or a tick — pale blush, lilac
-   and yellow, sitting half in the frame at the edges, drifting and turning slowly. Texture for the space, never a figure. */
+/* ambient, v4.1 (Faisal, 17 Sep 2026): no floating shapes. One real payment card per section — large, at the edge, half
+   out of the frame, turning slowly — a hint of a card that adds to the frame and is never the focus. No number, no brand. */
 const GLASS = [];
 const P = Math.PI;
 const LIGHT = 0xE9E6DD, SHOP = 0xEDEAE2;
@@ -296,7 +295,7 @@ S0.sign($('#e0'), { x:-11.5, y:21.2, z:-4, face:true });
 S0.sign($('#e0b'), { x:-11.5, y:16.6, z:-4, face:true });
 S0.sign($('#k0'), { x:-11.5, y:12.3, z:-4, face:true });
 S0.sign($('#q0'), { x:-11.5, y:8.6, z:-4, face:true });
-placeGlass(S0, [['card', -20, 12, -10, { w:17, h:11, tint:'y', mark:'wave', markScale:.6, markX:3.5, rx:-.18, ry:.55, rz:-.35 }], ['ring', 20, 27, -16, { R:7, r:1.4, tint:'b', rx:.9, ry:-.4 }]], GLASS);
+placeGlass(S0, [['pay', 26, 24, -9, { w:22, rx:-.22, ry:-.62, rz:.42 }]], GLASS);
 
 /* section 1 — the programme (right): the shops rise with labels, a small terminal lands beside each on "set them up",
    and paths draw from "You" to the three on "introduce" */
@@ -309,7 +308,7 @@ S1.sign($('#a1'), { x:12, y:10, z:-4, face:true });
 const SL = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => { const t = SH1.top(i); return S1.sign(el, { x:t.x - 2, y:t.y + 1.7, z:2, face:true }); });
 S1.sign($('#you'), { x:-2, y:1.2, z:9.5, face:true });
 S1.sign($('#paths'), { x:-2 - 13.75, y:.03, z:9.5, rx:-Math.PI / 2 });
-placeGlass(S1, [['ring', 23, 11, -8, { R:8, r:1.6, tint:'l', rx:1.1, ry:.5 }], ['coin', -19, 28, -16, { r:5.5, tint:'y', mark:'pound', rx:.2, ry:-.5 }]], GLASS);
+placeGlass(S1, [['pay', -26, 22, -8, { w:22, rx:-.18, ry:.58, rz:-.38 }]], GLASS);
 
 /* section 2 — the bonus (centre): the row above the dial, the steps on the right with badges, the pays-you badge left */
 const BARS = S2.add(pillars([{ h:2.2, color:LIGHT }, { h:4.4, color:LIGHT }, { h:6.6, color:LIGHT }], { w:2.2, gap:1.1, depth:2.2 })); BARS.position.set(8.5, 0, 3);
@@ -319,7 +318,7 @@ S2.sign($('#d2'), { x:0, y:13.8, z:-4, face:true });
 S2.sign($('#b2'), { x:-12.5, y:6.4, z:-2, face:true });
 S2.sign($('#k2'), { x:-12.5, y:2.8, z:-2, face:true });
 const PL = [$('#pl0'), $('#pl1'), $('#pl2')].map((el, i) => { const t = BARS.top(i); return S2.sign(el, { x:t.x, y:t.y + 1.6, z:3, face:true }); });
-placeGlass(S2, [['card', -21, 13, -11, { w:18, h:11.5, tint:'b', mark:'chip', markScale:.5, markX:-4, markY:2, rx:-.12, ry:.6, rz:.25 }], ['coin', 22, 29, -18, { r:5, tint:'y', mark:'pound', rx:.3, ry:.6 }]], GLASS);
+placeGlass(S2, [['pay', -24, 30, -10, { w:23, rx:-.15, ry:.55, rz:.30 }]], GLASS);
 
 /* section 3 — the share (right): the climb slab left, the field of tiles, the months */
 const PATH = S3.add(tiles(12, { cols:6, size:1.6, gap:.5, height:.7, color:LIGHT })); PATH.position.set(3, 0, 4);
@@ -327,7 +326,7 @@ S3.sign($('#h3'), { x:12.5, y:25, z:-4, face:true });
 S3.sign($('#b3'), { x:12.5, y:19.6, z:-4, face:true });
 S3.sign($('#c3'), { x:-12.5, y:9.2, z:-4, face:true });
 S3.sign($('#m3'), { x:-12.5, y:2.2, z:-2, face:true });
-placeGlass(S3, [['tile', 22, 12, -10, { s:12, tint:'y', mark:'percent', rx:-.15, ry:-.6, rz:.2 }], ['ring', -21, 28, -16, { R:6.5, r:1.3, tint:'l', rx:1.2, ry:.3 }]], GLASS);
+placeGlass(S3, [['pay', 26, 9, -6, { w:22, rx:-.2, ry:-.6, rz:-.35 }]], GLASS);
 
 /* section 4 — either way (left): one shop and its terminal, the weeks, the line */
 const SH4 = S4.add(shops(1, { color:SHOP })); SH4.position.set(7.5, 0, 2.5);
@@ -335,13 +334,13 @@ const TM4 = S4.add(neroTerminal()); TM4.scale.setScalar(.3); TM4.position.set(11
 S4.sign($('#r4'), { x:-12, y:19.6, z:-4, face:true });
 S4.sign($('#w4'), { x:-12, y:15.2, z:-4, face:true });
 S4.sign($('#h4'), { x:-12, y:10.2, z:-4, face:true });
-placeGlass(S4, [['tile', -21, 11, -9, { s:11, tint:'y', mark:'tick', rx:-.1, ry:.55, rz:-.2 }], ['card', 21, 26, -15, { w:13, h:8.5, tint:'b', mark:'spark', markScale:.7, rx:.25, ry:-.6, rz:.3 }]], GLASS);
+placeGlass(S4, [['pay', 26, 24, -9, { w:22, rx:-.25, ry:-.55, rz:.4 }]], GLASS);
 
 /* section 5 — the close (centre): the rings turn behind the address; our terminal at the right */
 const NEW5 = S5.add(neroTerminal()); NEW5.position.set(13.5, 0, 0); NEW5.rotation.y = -.35;
 const SH5 = S5.add(shops(3, { color:SHOP })); SH5.position.set(-4, 0, 3);
 S5.sign($('#end'), { x:-1, y:15.4, z:-3, face:true });
-placeGlass(S5, [['card', -21, 12, -10, { w:18, h:11.5, tint:'l', mark:'wave', markScale:.6, markX:3.5, rx:-.15, ry:.5, rz:-.3 }], ['ring', 23, 27, -16, { R:7, r:1.4, tint:'y', rx:.9, ry:-.5 }]], GLASS);
+placeGlass(S5, [['pay', -26, 24, -10, { w:23, rx:-.18, ry:.6, rz:-.3 }]], GLASS);
 
 /* ---- the anchors, all by the word ---- */
 const A = {

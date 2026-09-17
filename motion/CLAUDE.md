@@ -320,6 +320,14 @@ video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on th
   edges, half in frame, drifting and turning slowly from a deterministic seed. Refraction (`transmission`) is not used:
   the WebGL layer draws over a transparent clear, so a refracting material samples nothing and goes dark. The v3 spheres
   are gone.
+- **One real card, not shapes — v4.1, the same day.** Faisal's note on the glass pieces: no floating shapes; one real asset
+  relevant to payments per section, large, subtly in the frame, hinting at a card without becoming the focus.
+  `paymentCard()` in `glass.js`: bank-card proportions, an ivory matte body with a soft sheen, a gold chip with its
+  contact grid, the contactless wave pressed into the face, a thin yellow band, a dark stripe on the back. No number,
+  no name, no expiry, no scheme mark, and never a NeroPay card. One per section, at the edge, a third to a half out of
+  the frame, drifting and turning slowly, placed clear of every heading (the WebGL layer draws over the type, so a card
+  that crosses a heading hides it — S2's card went above the heading, S3's beside the slab). The glass ring, coin and
+  tile builders stay in `glass.js` unused.
 - **Generated plates, for certain beats — v4.** Faisal generates clips in a video tool (no people, no text, no brand, the
   white world, the specs in `motion/partner/pp01/AI-PLATES.md`) and we composite our type, captions and modules over
   them; frames are pulled with ffmpeg and loaded per frame so the render stays deterministic. Texture for a beat, never

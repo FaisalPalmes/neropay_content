@@ -20,7 +20,7 @@ theme"); the partner brief's dark tokens are not used. Poppins is the family, Ma
 Source Serif 4 italic for the human line — the merchant videos' fonts. Captions drawn in the picture, the spoken word
 on a yellow marker.
 
-**Movement.** The camera never stops (a slow orbit and breath); two liquid-glass fintech pieces (`motion/lib/glass.js`) drift and turn at the edges of every section; objects sway;
+**Movement.** The camera never stops (a slow orbit and breath); one real payment card (`paymentCard()`, `motion/lib/glass.js`) drifts and turns at the edge of every section, half out of frame, never the focus; objects sway;
 every phrase that can be a graphic is one. The view swings left, right and centre from section to section so the
 type is never in the same place twice running.
 
