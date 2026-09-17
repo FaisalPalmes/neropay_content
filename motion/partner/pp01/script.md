@@ -73,6 +73,15 @@ a card, large, subtly in frame, not the focus"), replaced by `paymentCard()` in 
 per section with a gold chip, the contactless wave and a yellow band, no number and no brand, at the edge and a third to a
 half out of the frame, placed clear of every heading. Peeked at 4.6 / 13.2 / 27 / 30 / 42 / 46 / 52 / 60 s. Waiting: the seven plates in `AI-PLATES.md`; then the final 4:5 render.
 
+**Delivered, 17 Sep 2026 (v4, 4:5) — the final from what the pipeline has; the plates did not arrive today.**
+`out/final/pp01-4x5.mp4`, 1080×1350, 68.1 s, 2,043 frames, md5 `2b747a617cd8f815f38f42692d458c3a`; stereo AAC 192k,
+−14.12 LUFS / −1.36 dBTP. Higgsfield media store:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/4a729d5b-051f-49ab-b2ba-0a9480f161e6.mp4`
+(contact sheet `…/b1024c67-4eb5-4c47-bc20-d898ba7cf84c.jpg`). Drive: README v4 in `03 Finished`
+(`18TAn1QZJG6teVoQe1PMWtsV2E7w7y2VORyDRh7xK71w`); the v3 README is renamed superseded. Analysis: the law passes on all
+seven beats; frame scan clean; 0 single-frame spikes and 0 jumps over 12 across 2,043 frames; the contact sheet checked
+at 27 points with the card clear of every heading. When the plates arrive: fit them per `AI-PLATES.md` and re-render.
+
 ## v2 — the take (superseded by v3 above)
 
 > [warmly] Okay, here's the catch first, because we'd rather you heard it from us than found it in the terms: the

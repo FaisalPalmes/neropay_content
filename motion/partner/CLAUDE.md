@@ -48,7 +48,7 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 
 | # | Folder | What | State |
 |---|---|---|---|
-| 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v3 delivered 17 Sep 2026 (4:5); v4 in build** — glass pieces in place of the spheres, waiting on Faisal's generated plates (`pp01/AI-PLATES.md`) before the final render — `script.md` and `claims.md` in the folder |
+| 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v4 delivered 17 Sep 2026 (4:5)** — one real card per section in place of the spheres; Faisal's generated plates (`pp01/AI-PLATES.md`) still to come, and the video re-renders when they do — `script.md` and `claims.md` in the folder |
 | — | | Brief A's hook library (37 hooks × two bodies) as swappable openings on a shared body, per BRIEF.md Part 4 | Not started — the body would be cut from PP01's script once its register is approved |
 | — | | Brief B, the 2:30–3:00 long-form explainer, chaptered for YouTube | Not started |
 | — | | Turkish pass | After the English set has run clean for two weeks (BRIEF.md Part 2) |
@@ -57,6 +57,6 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 
 - Length: PP01 runs 68 s against the brief's 22–28 s social module. The rewrite asked for a complete, engaging
   piece; if the short modules are still wanted, the hook + body + close are cut from this script.
-- The other crops of v2 (9:16, 1:1, 16:9) — rendered on request, about 35 minutes each.
+- The other crops of v4 (9:16, 1:1, 16:9) — rendered on request, about 35 minutes each.
 
 **The partner link is `neropay.app/partners`** (Faisal, 17 Sep 2026) — in the take, on screen and in the compliance super; the brief's `partners.neropay.app` is not used.
