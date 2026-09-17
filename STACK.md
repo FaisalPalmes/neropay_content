@@ -5,6 +5,9 @@ session at this and it knows what tools exist, what is already licensed and comm
 reach from where, and what it must not do. Everything here was verified in a live session on the
 date shown, not recalled.
 
+A session that will own the social posts reads `SOCIAL-HANDOVER.md` before this file; it is the
+social cut of everything below.
+
 Read order for a session that will touch video: this file → `CLAUDE.md` (the rails) →
 `video/PLAYBOOK.md` (the standing brief) → `video/LESSONS.md` (the fault log) → `video/AUDIO.md`
 (sound) → `video/TOOLS.md` (third-party libraries).
