@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>NeroPay social — stat</title>
+<link rel="stylesheet" href="stage.css">
+<style>
+  .lglass .body{display:flex;flex-direction:column;gap:34px}
+  .big{margin-bottom:6px;white-space:nowrap}
+</style></head>
+<body data-post>
+<div class="stage">
+  <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
+  <div class="kick" data-f="kick">Statement</div>
+  <div class="lglass"><i class="tint"></i><i class="sheen"></i>
+    <div class="body">
+      <div class="big" data-f="big" data-len="6">51% → 16%</div>
+      <i class="rule"></i>
+      <div class="line" data-f="line">independent hospitality operators describing themselves as optimistic, February to August 2026</div>
+    </div>
+  <i class="rim"></i></div>
+  <div class="wm">NeroPay<span class="dot"></span></div>
+  <div class="src" data-f="src">Correct as of 18 Aug 2026</div>
+</div>
+<script>
+/* The renderer calls fill({size, kick, big, line, src}). Sizes: sq 1080×1080 · pt 1080×1350 · st 1080×1920. */
+window.fill = function (d) {
+  var R = document.documentElement.style, SZ = { sq: [1080, 1080, 90, 90, 90], pt: [1080, 1350, 90, 90, 90], st: [1080, 1920, 100, 270, 340] };
+  var s = SZ[d.size] || SZ.sq;
+  R.setProperty('--w', s[0] + 'px'); R.setProperty('--h', s[1] + 'px'); R.setProperty('--m', s[2] + 'px');
+  R.setProperty('--top', s[3] + 'px'); R.setProperty('--bot', s[4] + 'px');
+  var set = function (k, v) { var el = document.querySelector('[data-f="' + k + '"]'); if (el) el.textContent = v == null ? '' : String(v); };
+  set('kick', d.kick || 'Statement'); set('big', d.big); set('line', d.line); set('src', d.src || '');
+  var n = String(d.big || '').length, big = document.querySelector('[data-f="big"]');
+  big.setAttribute('data-len', n <= 3 ? '3' : n <= 6 ? '6' : n <= 12 ? '12' : 'x');
+  /* the figure never wraps: shrink it until it fits the slab body */
+  return document.fonts.ready.then(function () {
+    var px = parseFloat(getComputedStyle(big).fontSize), avail = big.parentElement.clientWidth;
+    while (px > 60 && big.scrollWidth > avail) { px -= 4; big.style.fontSize = px + 'px'; }
+  });
+};
+</script>
+</body></html>

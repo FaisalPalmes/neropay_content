@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>NeroPay social — Reel cover</title>
+<link rel="stylesheet" href="stage.css">
+<style>
+  /* a cover is a single big line on the stage itself, no slab: kicker, three-line headline, italic sub, wordmark */
+  .head{position:absolute;left:var(--m);right:var(--m);top:50%;transform:translateY(-54%);display:flex;flex-direction:column;gap:36px}
+  .head .h{font-size:96px;line-height:1.04}
+  .tag{display:none}
+  .stage.ai .tag{display:block}
+</style></head>
+<body data-post>
+<div class="stage">
+  <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
+  <div class="kick" data-f="kick">Explained by NeroPay</div>
+  <div class="tag">AI-generated presenter</div>
+  <div class="head">
+    <div class="h l" data-f="title">The rate on the front isn't the rate you pay.</div>
+    <i class="rule"></i>
+    <div class="sub" data-f="sub">Explained by NeroPay</div>
+  </div>
+  <div class="wm">NeroPay<span class="dot"></span></div>
+</div>
+<script>
+/* fill({size, kick, title, sub, ai}). ai:true draws the presenter tag — Behind the Counter only (brief §4, rail 4). */
+window.fill = function (d) {
+  var R = document.documentElement.style, SZ = { sq: [1080, 1080, 90, 90, 90], pt: [1080, 1350, 90, 90, 90], st: [1080, 1920, 100, 270, 340] };
+  var s = SZ[d.size] || SZ.st;
+  R.setProperty('--w', s[0] + 'px'); R.setProperty('--h', s[1] + 'px'); R.setProperty('--m', s[2] + 'px');
+  R.setProperty('--top', s[3] + 'px'); R.setProperty('--bot', s[4] + 'px');
+  var set = function (k, v) { var el = document.querySelector('[data-f="' + k + '"]'); if (el) el.textContent = v == null ? '' : String(v); };
+  set('kick', d.kick || ''); set('title', d.title); set('sub', d.sub || '');
+  document.querySelector('.stage').classList.toggle('ai', !!d.ai);
+  var h = document.querySelector('[data-f="title"]'), n = String(d.title || '').length;
+  h.style.fontSize = n <= 28 ? '104px' : n <= 60 ? '88px' : '72px';
+  return document.fonts.ready;
+};
+</script>
+</body></html>

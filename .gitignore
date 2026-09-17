@@ -20,3 +20,6 @@ motion/*/*/out/
 
 # headless exports of the social creative (export-assets.mjs) — handed to Faisal, not committed
 social-out/
+
+# light-stage renders of the social creative (social/render.mjs) — handed to Faisal, not committed
+social/out/

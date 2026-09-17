@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>NeroPay social — carousel card</title>
+<link rel="stylesheet" href="stage.css">
+<style>
+  .lglass .body{display:flex;flex-direction:column;gap:32px;min-height:520px;justify-content:center}
+  .n{font-size:26px;font-weight:600;text-transform:uppercase;letter-spacing:.3em;color:var(--kick);line-height:1.3}
+  .n:empty{display:none}
+  .stage.first .h{font-size:92px}
+  .stage.first .bodytxt{font-size:42px;color:var(--ink)}
+</style></head>
+<body data-post>
+<div class="stage">
+  <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
+  <div class="kick" data-f="kick">Statement</div>
+  <div class="tr" data-f="tr">1 / 5</div>
+  <div class="lglass"><i class="tint"></i><i class="sheen"></i>
+    <div class="body">
+      <div class="n" data-f="n"></div>
+      <div class="h m" data-f="h">Four things to find on your statement</div>
+      <i class="rule"></i>
+      <div class="bodytxt" data-f="b">Swipe. Then open last month's.</div>
+    </div>
+  <i class="rim"></i></div>
+  <div class="wm">NeroPay<span class="dot"></span></div>
+  <div class="next" data-f="next">next</div>
+</div>
+<script>
+/* fill({size, kick, i, total, card:{n, h, b}}). Card 0 is the title card: bigger heading, ink body, no label.
+   Every card carries "i / total" top-right in mono and a "next" cue except the last (brief §4). */
+window.fill = function (d) {
+  var R = document.documentElement.style, SZ = { sq: [1080, 1080, 90, 90, 90], pt: [1080, 1350, 90, 90, 90], st: [1080, 1920, 100, 270, 340] };
+  var s = SZ[d.size] || SZ.pt;
+  R.setProperty('--w', s[0] + 'px'); R.setProperty('--h', s[1] + 'px'); R.setProperty('--m', s[2] + 'px');
+  R.setProperty('--top', s[3] + 'px'); R.setProperty('--bot', s[4] + 'px');
+  var set = function (k, v) { var el = document.querySelector('[data-f="' + k + '"]'); if (el) el.textContent = v == null ? '' : String(v); };
+  var c = d.card || {}, first = d.i === 0, last = d.i === d.total - 1;
+  document.querySelector('.stage').classList.toggle('first', first);
+  set('kick', d.kick || 'Statement'); set('tr', (d.i + 1) + ' / ' + d.total);
+  set('n', first ? '' : (c.n || '')); set('h', c.h || ''); set('b', c.b || '');
+  var nx = document.querySelector('[data-f="next"]'); nx.style.display = last ? 'none' : '';
+  var h = document.querySelector('[data-f="h"]'), n = String(c.h || '').length;
+  if (!first) h.style.fontSize = n <= 34 ? '68px' : n <= 60 ? '58px' : '50px';
+  else h.style.fontSize = n <= 30 ? '92px' : n <= 50 ? '80px' : '68px';
+  return document.fonts.ready;
+};
+</script>
+</body></html>

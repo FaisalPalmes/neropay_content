@@ -87,6 +87,10 @@ tracks are deliberately not committed (licence unverified); `.claude/skills/brag
 detail. Output lives in `video/brag-output/`; the first run is the warehouse's own brag, rendered locally in
 45 s because a pure-graphics composition needs no clip extraction.
 
+**`/linkedin-post`** (added 17 Sep 2026): the LinkedIn writing and audit rules distilled from two MIT skills
+(sergebulaev/linkedin-skills, marian-kamenistak/linkedin-post-writing-skill) and re-cut to NeroPay's rails —
+"we" never "I", no earnings register, figures with conditions. Read it before any LinkedIn copy.
+
 Start every video request at `/hyperframes` — it routes to the owning workflow. `/media-use` sources
 and generates media; `/hyperframes-audio` mixes audio already placed in a composition. Refresh with
 `npx hyperframes skills update <name>`; `HYPERFRAMES_SKIP_SKILLS=1` is set so the CLI leaves the
