@@ -55,7 +55,7 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 
 ## Open with Faisal
 
-- Length: PP01 runs 70 s against the brief's 22–28 s social module. The rewrite asked for a complete, engaging
+- Length: PP01 runs 68 s against the brief's 22–28 s social module. The rewrite asked for a complete, engaging
   piece; if the short modules are still wanted, the hook + body + close are cut from this script.
 - The other crops of v2 (9:16, 1:1, 16:9) — rendered on request, about 35 minutes each.
 

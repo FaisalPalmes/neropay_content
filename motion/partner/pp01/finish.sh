@@ -10,7 +10,7 @@ for r in ${@:-9x16 4x5 1x1 16x9}; do
   src=out/$EP-$r.mp4; dst=out/final/$EP-$r.mp4
   [ -f "$src" ] || { echo "$r not rendered yet"; continue; }
   VF="null"
-  ffmpeg -y -v error -i "$src" -i out/mix.m4a -vf "$VF" -map 0:v -map 1:a -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart "$dst"
+  ffmpeg -y -v error -i "$src" -i out/mix.m4a -vf "$VF" -map 0:v -map 1:a -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -c:a copy -shortest -movflags +faststart "$dst"
   printf "%-8s %s\n" "$r" "$(ffprobe -v error -show_entries stream=width,height:format=duration -of csv=p=0 "$dst" | tr '\n' ' ')"
 done
 [ -f out/final/$EP-9x16.mp4 ] || exit 0

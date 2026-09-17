@@ -25,14 +25,16 @@ const target = spec.target ?? -16, tp = spec.tp ?? -1.5;
 const inputs = ['-i', resolve(ep, spec.vo || 'data/vo.mp3')];
 /* the VO is padded to the piece's length: it keys the bed's compressor, and sidechaincompress stops when its key runs out —
    an unpadded VO cut the bed off at the last word (PP01's 3.8 s tail was silent until this) */
-const chains = [`[0:a]adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},volume=1.0,apad=whole_dur=${spec.duration}[v]`];
+/* everything is made stereo before amix: amix takes the first input's layout, and a mono VO first in line folded the
+   stereo bed to mono (PP01 v3) */
+const chains = [`[0:a]aformat=channel_layouts=stereo,adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},volume=1.0,apad=whole_dur=${spec.duration}[v]`];
 let n = 1; const labels = ['[v]'];
 for (const c of spec.cues) {
   const f = resolve(SFX, `${c.sfx}.mp3`);
   if (!existsSync(f)) throw new Error(`no such sfx: ${c.sfx}`);
   inputs.push('-i', f);
   const ms = Math.round(c.t * 1000);
-  chains.push(`[${n}:a]adelay=${ms}|${ms},volume=${c.gain}[s${n}]`);
+  chains.push(`[${n}:a]aformat=channel_layouts=stereo,adelay=${ms}|${ms},volume=${c.gain}[s${n}]`);
   labels.push(`[s${n}]`); n++;
 }
 if (spec.bed) {
@@ -42,7 +44,7 @@ if (spec.bed) {
   const ms = Math.round((b.t || 0) * 1000), fade = b.fade ?? 1.2;
   /* loop_at: repeat the bed from 0 at a bar boundary so a bed shorter than the piece keeps the grid */
   const loop = b.loop_at ? `atrim=0:${b.loop_at},asetpts=N/SR/TB,aloop=loop=3:size=${Math.round(b.loop_at * 48000)},` : '';
-  chains.push(`[${n}:a]aresample=48000,${loop}adelay=${ms}|${ms},volume=${b.gain},afade=t=out:st=${(spec.duration - fade).toFixed(3)}:d=${fade}[bed0]`);
+  chains.push(`[${n}:a]aresample=48000,aformat=channel_layouts=stereo,${loop}adelay=${ms}|${ms},volume=${b.gain},afade=t=out:st=${(spec.duration - fade).toFixed(3)}:d=${fade}[bed0]`);
   if (b.duck) {
     /* a copy of the delayed VO keys the compressor; the compressed bed is what goes to the mix */
     chains[0] = chains[0].replace('[v]', '[v0]'); chains.push('[v0]asplit=2[v][vk]');
@@ -55,9 +57,20 @@ const raw = resolve(out, 'mix-raw.wav');
 execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-filter_complex', chains.join(';'), '-map', '[mix]', '-ar', '48000', raw], { stdio: 'inherit' });
 
 /* pass 1: measure */
-const j = measure(['-i', raw, '-af', `loudnorm=I=${target}:TP=${tp}:LRA=11:print_format=json`, '-f', 'null', '-']);
+let j = measure(['-i', raw, '-af', `loudnorm=I=${target}:TP=${tp}:LRA=11:print_format=json`, '-f', 'null', '-']);
+/* if the peaks would stop a linear gain reaching the target (PP01 v3 landed 1.1 LU under), take the peaks down
+   first with a limiter at the ceiling and measure again — the linear pass then has the headroom it needs */
+let src = raw;
+const need = target - +j.input_i;
+if (+j.input_tp + need > tp + 0.05) {
+  src = resolve(out, 'mix-lim.wav');
+  const lim = `volume=${need.toFixed(2)}dB,alimiter=limit=${Math.pow(10, (tp - 0.1) / 20).toFixed(4)}:attack=5:release=80:level=false`;
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', raw, '-af', lim, '-ar', '48000', src], { stdio: 'inherit' });
+  j = measure(['-i', src, '-af', `loudnorm=I=${target}:TP=${tp}:LRA=11:print_format=json`, '-f', 'null', '-']);
+  console.log(`limiter: peaks needed ${need.toFixed(2)} dB of gain; after limiting ${j.input_i} LUFS ${j.input_tp} dBTP`);
+}
 /* pass 2: apply with the measured values */
 const ln = `loudnorm=I=${target}:TP=${tp}:LRA=11:measured_I=${j.input_i}:measured_TP=${j.input_tp}:measured_LRA=${j.input_lra}:measured_thresh=${j.input_thresh}:offset=${j.target_offset}:linear=true:print_format=summary`;
-execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', raw, '-af', ln, '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', resolve(out, 'mix.m4a')], { stdio: 'inherit' });
+execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', src, '-af', ln, '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', resolve(out, 'mix.m4a')], { stdio: 'inherit' });
 const k = measure(['-i', resolve(out, 'mix.m4a'), '-af', 'loudnorm=print_format=json', '-f', 'null', '-']);
 console.log(`mix.m4a  ${spec.duration}s  ${spec.cues.length} cues${spec.bed ? '  + bed' : ''}  ${k.input_i} LUFS  ${k.input_tp} dBTP  (target ${target})`);

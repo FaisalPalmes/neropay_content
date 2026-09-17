@@ -306,6 +306,20 @@ video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on th
 - **The voice is per video when Faisal says so.** Verity stays the merchant series voice; PP01 is **Olivia — Warm,
   British Female** (`pPoztmvzd5p26S3MsNrV`) at Faisal's request mid-build. Record any such choice in the ledger and in
   the episode's `script.md`.
+- **Two mixer faults, found on the v3 master.** `amix` takes the first input's channel layout, and the VO is mono, so
+  every mix before 17 Sep 2026 folded its stereo bed to mono; `mix.mjs` now makes every input stereo first. And a linear
+  loudnorm pass stops short of the target when the peaks would cross the ceiling (v3 landed 1.1 LU under): when the
+  measured gain would push the true peak over `tp`, the mixer now runs a limiter at the ceiling first and measures again.
+  `finish.sh` copies the mastered AAC into the crops rather than encoding it a second time.
+- **The big spheres, v3.** Faisal's note on v2: no small spheres floating about. Each section carries two very large pale
+  spheres (radius 5.5–9, yellow, blush or lilac, no shadow) placed at the edges so they sit half in the frame, bobbing
+  slowly. Decoration is few and large, never a scatter.
+- **The gate, leniently.** The v2 settings (`tighten --gap .2 --min .3 --tempo 1.06`, `gate --inset .06 --max -18`)
+  clipped into words. The ruling: `--gap .32 --min .45 --tempo 1.03` and `--inset .12 --max -30` — a split second of
+  gap is allowed, 120 ms either side of every word is never touched.
+- **The hook, for a stranger.** v3 leads with what an introduction pays, per merchant with the condition on the same
+  frame, as if the viewer has never heard of NeroPay; who we are comes second. The v2 "here's the catch" opening assumed
+  they already knew us.
 - The timing law counts the words a viewer has to *read* — sentences, kickers, the rest-frame lines — not the numerals
   and chips they glance at; the compliance super is its own beat.
 

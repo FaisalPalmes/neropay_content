@@ -52,6 +52,17 @@ half in the frame at the edges, bobbing slowly, no shadow. The share section's k
 carries the approved wording; the slab's note says "a share of the whole network"). 42 cues re-timed from the anchors.
 Duration 68.1 s.
 
+**Delivered, 17 Sep 2026 (4:5).** `out/final/pp01-4x5.mp4`, 1080×1350, 68.1 s, 2,043 frames, md5
+`eaba691b0c41e8f880903cd1430c87f5`; stereo AAC 192k, −14.1 LUFS / −1.36 dBTP. Higgsfield media store:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/ee09fc57-1a19-4bd6-989b-20d069a6e5d7.mp4`
+(contact sheet `…/ab0c1fb4-9e82-4f0e-b840-f246e2e5ec71.jpg`). Drive: README v3 in `03 Finished`
+(`1d5a0997nuCHW6eYoPG8KLNu7nCPWS-c9x8nfTCOfWO0`); the v2 README is renamed superseded. Analysis: the timing law passes on
+all seven beats; frame scan clean; 0 single-frame luma spikes and 0 frame-to-frame jumps over 12 across 2,043 frames;
+the contact sheet checked at 27 points. Two mixer faults found and fixed on the way: the mix had been folded to mono
+(amix takes the first input's layout, and the VO is mono) and the master landed 1.1 LU under target because the peaks
+stopped a linear gain — `mix.mjs` now makes every input stereo and puts a limiter at the ceiling before the measured
+pass when the peaks would otherwise hold it back. `finish.sh` copies the AAC instead of re-encoding it.
+
 ## v2 — the take (superseded by v3 above)
 
 > [warmly] Okay, here's the catch first, because we'd rather you heard it from us than found it in the terms: the
