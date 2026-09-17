@@ -63,6 +63,7 @@ use on a paid plan — the same plan check as the voice, recorded once per accou
 | `bgm/partner-upbeat-118.mp3` | upbeat indie-pop instrumental (plucked acoustic guitar, clean electric, hand claps, pad, driving mid-tempo beat), 65 s, measured 117.84 bpm (`motion/tempo.py`), no vocals (Whisper finds no speech), −13.5 LUFS / −0.13 dBTP as delivered; `motion/partner/pp01/data/bed.mp3` is the same file extended to 126 s at a bar boundary (61.7 s) with a 0.3 s crossfade | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 16 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `X6Usek6cfyOmHaLTUmX4` — confirm the plan's commercial-use licence before first delivery |
 
 | `bgm/partner-walk-108.mp3` | light acoustic indie-pop bed (plucked acoustic guitar, hand claps, shaker, upright-bass pulse, muted electric), 60 s, measured 107.90 bpm (`motion/tempo.py`), no vocals (Whisper finds no speech), −15.8 LUFS / −0.77 dBTP as delivered | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `mCKUUYWqyar5irQm0BcR` — confirm the plan's commercial-use licence before first delivery |
+| `bgm/neroconnect-pulse-100.mp3` | light warm electronic pulse for the NeroConnect series (muted synth pulse, gentle bass, shaker, soft kick, pad swells), 105 s, measured 99.85 bpm (`motion/tempo.py`), no vocals (Whisper finds no speech) | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `8UpOxk6BwCzC1IF9i35S` — confirm the plan's commercial-use licence before first delivery |
 
 Used in `motion/print/mg02` v4 (16 Sep 2026): the bed above at 0.30, looped at bar 24 and ducked under the voice, and
 Pixabay impact-bass-1, impact-bass-2, pop, whoosh-short, whoosh, whoosh-cinematic, click, click-soft, sparkle, typing,
@@ -97,3 +98,5 @@ CC0. The API route is used when the token is present. Every file is normalised t
 - `impact` — "Impact Hit at soft but big material" by Nox_Sound, 1.34s, https://freesound.org/apiv2/sounds/728515/ — title and end card landing
 - `bounce` — "Energy Bounce 1" by Aleks41, 1.21s, https://freesound.org/apiv2/sounds/523088/ — the 'more than double' tag
 - `music` — "Tropicorp Advertisement" by Nancy_Sinclair, 37.65s, https://freesound.org/apiv2/sounds/561190/ — intro and outro beats — corporate, claps, bright
+
+Used in `motion/neroconnect/nc01` (17 Sep 2026): `neroconnect-pulse-100` at 0.20 ducked under the voice, and Pixabay sparkle, impact-bass-1/2, whoosh, whoosh-short, whoosh-cinematic, pop, click, click-soft, key-press, typing, chime, ping, notification — 65 cues, none twice in a row.

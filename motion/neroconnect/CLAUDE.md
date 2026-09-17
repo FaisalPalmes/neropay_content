@@ -48,7 +48,7 @@ instrumental bed per video from Eleven Music v2, ledger row before it ships.
 
 | # | Folder | What | State |
 |---|---|---|---|
-| 1 | `nc01/` | The intro: you don't have to build a payments company to run one — the stack that already exists, the name swap, the rails underneath, the two modes, who it's for and isn't, the docs | **proposal 17 Sep 2026, awaiting Faisal** — `PROPOSAL.md` |
+| 1 | `nc01/` | The intro: you don't have to build a payments company to run one — the stack that already exists, the name roll, the rails underneath, the two modes, who it's for and isn't, the docs, the whole world; Olivia, 87.5 s | **script approved and 16:9 rendering, 17 Sep 2026** — `PROPOSAL.md`, `script.md`, `claims.md`, `checks.py`, `objects-nc.js` in the folder |
 | 2 | — | The two modes, in depth: one decision, a row at a time | not started — cut from NC01 once approved |
 | 3 | — | A day on the platform: a merchant is created, goes live, takes a payment, the money lands, the statement is generated | not started |
 | 4 | — | The wrong door: NeroConnect or the partner programme | not started |

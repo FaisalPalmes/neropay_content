@@ -292,11 +292,11 @@ window.POSTS = [
 /* ============================ ADDED 17 SEP 2026 — NeroConnect · partner programme · card machines ============================ */
 {
   id: "L9", channel: "linkedin", pillar: "Partner", format: "Document · 6 cards + text",
-  date: "Tue 22 Sep", blocked: false,
+  date: "Wed 30 Sep", blocked: false,
   title: "NeroConnect — your brand on the terminal",
   copy: "Three kinds of business have asked us the same thing this year: whether the card payments could carry their name instead of ours.\n\nEPOS installers who fit tills for a living. Software companies with a few hundred restaurants on their platform. Anyone looking after a group of merchants who is tired of six logins.\n\nNeroConnect is the answer to that. One dashboard for every merchant you look after. Your logo, your domain, your merchant pricing, set above a floor so nothing sells below cost. We run the card acquiring, the settlement and the compliance underneath. You keep the relationship.\n\nTwo ways in. Connected mode: you work under the NeroPay name and we set the merchant rates. Platform mode: your brand, your pricing, and more of the responsibility, including disputes.\n\nTwo things it isn't. If you look after three cafés, this is the wrong door. The partner programme is built for that: one introduction, no platform to run. And platform mode may need its own regulatory permissions, which is a conversation before a contract, not after.\n\nThe documentation is public. docs.neropay.app, the NeroConnect section. Read it before you talk to us. It is more use than the sales call.",
   creative: "A six-card carousel on the light stage, uploaded to LinkedIn as a document (one PDF, 1080×1350 pages). No product screenshot: Connect Reports and the pricing screens carry figures that never go public (docs build plan §8). No figure anywhere on the cards.",
-  why: "Answers the question installers and platforms actually ask, names the two modes plainly, and concedes twice: too small for it, and the regulatory point. The concessions are what make the product description credible on a partner channel.",
+  why: "The follow-up to the NC01 intro video (L12): the two modes as a document to keep. Names them plainly and concedes twice: too small for it, and the regulatory point. Moved from Tue 22 Sep to the week after the video, 17 Sep 2026.",
   sketch: { type: "carousel", cards: ["title", "who it's for", "one dashboard", "…+3"],
     cap: "Six cards. Title, who, what you get, what we do, two modes, not for." },
   assets: [
@@ -388,6 +388,20 @@ window.POSTS = [
       { n: "Phone reader", h: "A reader and an app.", b: "No printer, no till. The customer taps the reader, the receipt goes by text." },
       { n: "Where the smaller box wins", h: "Twenty payments a day on a stall? A phone reader is fine.", b: "A terminal earns its place when it also has to run the till, split a bill, print, and keep working when the wi-fi drops." }
     ] }
+  ]
+},
+{
+  id: "L12", channel: "linkedin", pillar: "Partner", format: "Video · 16:9 · 88s + text",
+  date: "Tue 22 Sep", blocked: "Faisal reviews the NC01 16:9 render (motion/neroconnect/nc01) and approves it for posting.",
+  title: "NeroConnect — the intro video",
+  copy: "You don't have to build a payments company to run one.\n\nThe terminals, the till software, the settlement, the compliance and the support desk already exist. We built them for NeroPay. NeroConnect lets a software company, an EPOS installer or anyone looking after a group of merchants run all of it under their own name: one dashboard, your logo, your domain, your branding on the terminal.\n\nTwo ways in. Connected mode, under the NeroPay name, is the simpler start. Platform mode is your brand and your pricing, with more of the responsibility.\n\nWho it isn't for: three cafés. That's the partner programme, one introduction and nothing to run. And platform mode can need its own regulatory permissions, which is a conversation before a contract, not after.\n\nNinety seconds on how it fits together. The documentation is public at docs.neropay.app.\n\nVoice generated with AI.",
+  creative: "The NC01 motion graphics intro, 16:9 master without burnt captions (motion/neroconnect/nc01, Olivia, 87.5 s), uploaded natively. No AI wording inside the video; the disclosure is the last line of the post (rail 4 at upload). Cover: the first frame with the statement fully risen (about 3.5 s).",
+  why: "The anchor for the NeroConnect run on LinkedIn. Everything after it (L9 the two modes, the wrong-door post, the docs post) is a cut of this video. Business-minded framing, no figure anywhere, the concession stated twice.",
+  sketch: { type: "reel", subject: "graphic", alt: "the stack rising out of the paper, the nameplate rolling to your brand",
+    beats: ["the statement", "the stack rises, the name rolls", "the dashboard and what's underneath", "two modes, who it isn't for, the docs"],
+    cap: "16:9, no captions on the LinkedIn master. The stack rising is the shot." },
+  assets: [
+    { t: "cover", size: "sq", kick: "NeroConnect", alt: "A light card with the line: You don't have to build a payments company to run one. NeroPay wordmark bottom left.", title: "You don't have to build a payments company to run one.", sub: "NeroConnect, from NeroPay" }
   ]
 }
 
