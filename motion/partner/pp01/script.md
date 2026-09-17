@@ -65,6 +65,23 @@ under the voice; 35 cues, 12 distinct effects, no effect twice in a row, one sof
 Timing law (hold = max(1.5 s, words × 0.4)) passes on all seven beats, the compliance super counted as its own beat.
 Duration 70.4 s. Frame scan clean at all four crops.
 
-## Delivered
+## Delivered 17 Sep 2026 (DRAFT, Higgsfield CDN, prefix `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/`)
 
-*(filled in after the render — see the Higgsfield links and md5s below)*
+9:16 `b7b12bbc-f92b-4f76-9ae1-b45e94eb2233.mp4` (md5 `c41f6d08ddb2eb6ef9e748670e821f1d`, 9.3 MB) · contact
+`7b92cd96-cd37-40f9-b09b-4a2bf2f56c82.jpg`. Master −14.92 LUFS / −1.21 dBTP, 70.4 s, 0 single-frame spikes, frame scan
+clean, no frame-to-frame jump outside a camera move. 1:1, 16:9 and 4:5 follow as they render (about 35 minutes a crop).
+
+Drive: `NeroPay Ads › 05 - Video Edits (YouTube) › PARTNER VIDEOS › 09-2026 › Motion graphics › PP01 - Partner Programme (DRAFT)`
+(folder `11gSOA2be260FQlJcRUN2ZxPvMwn4AtUU`): `01 Script & voice` (this file and `claims.md`), `02 Test cut`, `03 Finished`
+(the READ ME with the links, the post copy and the filenames — "NeroPay PP01 — Reels 9x16 (1080x1920) DRAFT.mp4" and so on),
+`04 Exports`. The MP4s cannot pass through the Drive connector; Faisal drops them in.
+
+**Analysis before hand-over.** Stage 3 passed (DRAFT). Timing law: all seven beats hold. Frame scan: no overflow at any crop.
+Freeze-frame of the Bonus Dial every half second: the bonus and the volume that earns it are on screen together at
+every frame; the step to £200 lands on "two hundred" with "£20,000+" under it (the first render had it sitting at
+£100 on exactly £20,000 for three seconds — fixed and re-rendered); the rest frame carries "£300 · £40,000+ in their
+first 30 days · per merchant" and the "up to" line. Freeze-frame of the Rate Climb: 0 → 1 → 2 → 3 (20%) → 11 (20%) →
+21 (25%) → 33 (25%) → 36 (30%) → 51 (30%) → 61 (35%) → 111+ (40%); no step skipped; "Most partners start at 20%: three
+a month." on the rest frame. Compliance super on screen 7.1 s (213 frames at 30 fps; the brief asks ≥ 75). Audio: two
+gaps over 0.3 s left in the voice (0.32 s and 0.34 s, sentence breaks); the bed runs from frame 0 to the fade; peak
+−1.25 dBFS, flat factor 0 (no clipping); LRA 3.0. Captions are the take word for word, built from the timings.
