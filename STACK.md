@@ -113,6 +113,11 @@ the global installer, and `caveman-setup`/`-discover`/`-learn`/`-manage`/`-optim
 drive the Caveman Cloud gateway, which we do not use. Refresh by re-copying from the upstream `skills/`
 folder; nothing here is fetched at session start.
 
+**`/slopmonster`** (added 17 Sep 2026, MIT, upstream ItsssssJack/SlopMonster) lints copy for AI tells
+and scores it out of five; run it on every caption before it ships. The rival-model cleanse step needs
+the `codex` CLI and is not available here; the lint is. `.claude/skills/slopmonster/NEROPAY-NOTE.md`
+records the install and what outranks it.
+
 ## 4. The toolchain
 
 | Piece | Version / location | Notes |

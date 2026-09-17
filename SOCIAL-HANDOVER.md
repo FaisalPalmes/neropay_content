@@ -264,7 +264,9 @@ allowlist; `video/AUDIO.md` §2 lists the hosts to add. Not needed for the socia
 
 ## 9. Delivery — what "done" looks like for one post
 
-1. The object in `posts.js` is final and pushed. Caption text is the `copy` field, verbatim.
+1. The object in `posts.js` is final and pushed. Caption text is the `copy` field, verbatim, and it
+   scores 5/5 on `/slopmonster` (`python3 .claude/skills/slopmonster/tools/deslop.py --text "…"`, with
+   `--allow-proof` when the figure is sourced) — or the note says why the one lost point stays.
 2. The creative is in the `assets` field and exported: PNG per card, named by post id, at the size
    the channel needs. A Reel is an MP4 delivered by `media_upload` or chat attachment, with its
    cover PNG.
