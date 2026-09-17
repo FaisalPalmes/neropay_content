@@ -1,39 +1,27 @@
-# SlopMonster in this repo — how it was installed and how to use it here
+# /slopmonster in this repo — what is different from upstream
 
-Installed 17 Sep 2026 from https://github.com/ItsssssJack/SlopMonster at commit `f261dbf`
-(7 Sep 2026), MIT licence (`LICENSE` is beside this note). Two deviations from upstream:
+Installed 17 Sep 2026 from https://github.com/ItsssssJack/SlopMonster (MIT, licence kept beside this file)
+into `.claude/skills/slopmonster/`, at Faisal's ask, so every session has it. `SKILL.md`, `references/`,
+`prompts/`, `tools/` and `examples/` are upstream's own; the mascot images and the GitHub Action were left out.
+Both regression suites pass here (`python3 tools/test_deslop.py`, `bash tools/test_cleanse.sh`).
 
-- `docs/img/` (3 MB of README illustrations) and `.github/workflows/slop.yml` are not copied.
-  The workflow is a build gate for a repo whose product is copy; ours is a static site with
-  no CI, and the gate would fail on every page that quotes a competitor figure.
-- Nothing else changed. `tools/deslop.py` is stdlib Python, no network, no writes.
+Four things to know before using it on NeroPay copy:
 
-## What it does here
+1. **The rails win.** The linter scores for AI tells; it knows nothing about s.21 FSMA, the earnings-claim
+   register or "we, never I". A 5/5 is not clearance to post. `/CLAUDE.md`, `rails.html` and
+   `/linkedin-post` still decide, and the rewrite passes must not soften a figure's condition or move a
+   concession out of a post.
+2. **Our numbers are real, so use `--allow-proof`.** The "invented proof" rule flags any number-plus-noun.
+   On the first live run, post L1 scored 4/5 only because "98 food businesses" tripped it — a NeroPay
+   count, sourced in `/CLAUDE.md`. Every figure we publish carries a date and a source, so score with
+   `python3 .claude/skills/slopmonster/tools/deslop.py --allow-proof --text "…"` and let the other four
+   rules do the work. A figure that is *not* in the register does not get `--allow-proof`; it gets cut.
+3. **The cleanse step sends the draft to another model.** `tools/cleanse.sh` looks for a `codex` CLI (then
+   `claude`); neither is on the web container, so it prints the prompt for pasting. Marketing copy is fine to
+   paste into another chat; anything under rail 10 (negotiated rates, partner terms, margins) or rail 7 (real
+   data) is not, and never was going to be in a post anyway.
+4. **Score the words a reader sees.** For a post, pass the `copy` field; for a page, the built HTML. The
+   catalogue is English only — the Turkish scripts score 5/5 because the scorer cannot read them.
 
-`/slopmonster` lints copy for AI tells and scores it out of five: vocabulary, constructions,
-punctuation cadence, rule-of-three rhythm, invented proof. Run it on every caption before it
-ships and on any draft that reads too smoothly:
-
-```bash
-python3 .claude/skills/slopmonster/tools/deslop.py --text "paste the caption"
-node -e "global.window={};require('./posts.js');process.stdout.write(window.POSTS.find(p=>p.id==='L3').copy)" \
-  | python3 .claude/skills/slopmonster/tools/deslop.py --text "$(cat)"
-```
-
-Measured on the warehouse the day it was installed: L8 and M4 score 5/5; L3 loses a point for
-one three-item list; L1 loses a point for "98 food businesses", which is our own count and
-therefore a false positive. Use `--allow-proof` when the figure is sourced in `CLAUDE.md` or
-`figures.json`.
-
-## What outranks it
-
-- **The rails in `CLAUDE.md` outrank the linter.** A concession sentence, a dated competitor
-  figure or a "correct as of" line stays even if the scorer dislikes its shape.
-- **The invented-proof rule is ours already** (rails 5 and 7). Anything it flags that is not in
-  `CLAUDE.md` §"Numbers you can use" or `figures.json` does not ship.
-- **The house prose in this repo uses em dashes freely.** That is documentation, not copy.
-  Post copy follows the linter on this: at most one em dash per post, usually none.
-- **Step 3, the rival-model cleanse, does not run in a cloud session.** `tools/cleanse.sh`
-  needs the `codex` CLI, which is not installed, and it correctly refuses to route a Claude draft
-  back to `claude`. It prints the prompt instead; paste it into a non-Anthropic model yourself if
-  a piece needs the second opinion. Steps 1, 2 and 4 work as written.
+Where it sits in the loop: draft → `/linkedin-post` audit (or the rails read for Meta) → `/slopmonster` score
+and rewrite → rails read again → Faisal reviews. It is a second opinion on register, not a gate on truth.

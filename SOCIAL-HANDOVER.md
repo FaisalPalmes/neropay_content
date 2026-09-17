@@ -52,18 +52,22 @@ written where a synthetic voice or presenter is in the piece.
 10. Only when a Reel or a video creative comes up: `video/PLAYBOOK.md`, `video/LESSONS.md`,
    `video/AUDIO.md`, then the `/hyperframes` skill.
 
-## 3. The warehouse as it stands, 17 Sep 2026
+## 3. The warehouse as it stands, 17 Sep 2026 (evening)
 
-Eighteen posts, L1–L8 on LinkedIn and M1–M10 on Meta, dated Mon 7 Sep to Fri 16 Oct. Pillars:
-Statement 8, Street 4, Product 3, Partner 2, Merchant 1. Every one carries a `sketch`; **none yet
-carries `assets`**, which means no post has a drawn, downloadable creative on the site — that is
-the first gap you fill (§5).
+Twenty-three posts: L1–L11 on LinkedIn and M1–M12 on Meta, dated Mon 7 Sep to Fri 16 Oct. Every one
+carries a `sketch` and an `assets` entry, so every post has a drawn creative on the site and a light-stage
+file from `social/render.mjs`. Added 17 Sep: L9 and M11 (NeroConnect), L10 (the partner programme, figures
+final), L11 and M12 (four kinds of card machine). **Nothing has been published yet** — Faisal, 17 Sep: no
+posts uploaded. The `posted` field is still to be added as they go out.
 
-Four are blocked, each with the reason in its `blocked` string:
+The partner programme is final (Faisal, 17 Sep 2026; `figures.json` `partner_*` records confirmed), so L4 is
+unblocked. Three Explained-series covers (M1, M4, L4) carried `ai: true` against the 9 Sep ruling and were
+corrected the same day; only Behind the Counter covers carry the tag.
+
+Three are blocked, each with the reason in its `blocked` string:
 
 | Post | What has to happen first |
 |---|---|
-| L4 | Eray signs off the partner incentive model. No figures in the post either way. |
 | M8 | Arman's written consent — filming, his name, the business name, every channel — signed before the shoot. |
 | M9 | Flex pricing is unconfirmed. The caption carries no price; keep it that way. |
 | M10 | Posts from the NeroPay Page only. Elif's personal profile restriction lifts 18 Sep; nothing commercial goes from a personal profile regardless. |
@@ -145,12 +149,15 @@ under about 25 words or it wraps below the wordmark — check the preview.
 
 ### 5.3 Exporting the finished file
 
-The download buttons on `social.html` give you the charcoal preview. The finished file is the
-light-stage render from `SOCIAL-BRIEF.md` §6: templates in `social/templates/`, `social/render.mjs`
-reading the same `assets` object and screenshotting each card at its exact pixels in Playwright's
-Chromium (`/opt/pw-browsers/chromium-1194` in a cloud session; Playwright 1.56 is installed globally),
-into `social/out/<post id>/`, git-ignored. Neither exists yet — building them is the first creative
-task, and after that a card is filled, not designed.
+The download buttons on `social.html` give you the charcoal preview. `export-assets.mjs` at root (added
+17 Sep 2026) renders that preview headlessly to `social-out/<post id>/` — useful for checking a post's
+assets, not the deliverable. The finished file is the light-stage render from `SOCIAL-BRIEF.md` §6:
+templates in `social/templates/`, `social/render.mjs` reading the same `assets` object and screenshotting
+each card at its exact pixels in Playwright's Chromium (`/opt/pw-browsers/chromium-1194` in a cloud
+session; Playwright 1.56 is installed globally), into `social/out/<post id>/`, git-ignored. One thing
+both scripts handle: the cloud container's Chromium does not trust the outbound proxy's certificate, so
+anything fetched from the network has to be served to the page from Node — the light-stage templates
+avoid the question by loading the committed woff2 fonts by relative path.
 
 ### 5.4 Reels and anything with motion
 
@@ -282,14 +289,15 @@ allowlist; `video/AUDIO.md` §2 lists the hosts to add. Not needed for the socia
 - [ ] Ask Faisal which posts are already live and add the `posted` field to those.
 - [ ] Add `assets` to every unblocked post that has a stat card, carousel or cover in its `sketch`,
       so the site draws them. L2, M2, M5, M7 first.
-- [ ] Build the `social/` templates and renderer from `SOCIAL-BRIEF.md` §6 and export the week's creative.
+- [x] Write `export-assets.mjs` (§5.3) for the charcoal preview. *Done 17 Sep 2026.*
+- [x] Build the `social/` templates and renderer from `SOCIAL-BRIEF.md` §6 and export the week's creative. *Done 17 Sep 2026: `social/templates/` (stat, quote, cards, cover) and `social/render.mjs`, with the LinkedIn PDF pass and the contact sheet.*
 - [ ] Confirm which ElevenLabs account the connector is signed into before any voiced piece.
 - [ ] Note the competitor-register date (18 Aug) and raise the refresh with Faisal.
 
 ## 11. Open questions to bring to Faisal — do not resolve them yourself
 
 - Which September posts are already published, and on which channel.
-- L4: has Eray signed off the partner incentive model? Until then it stays blocked.
+- ~~L4: has Eray signed off the partner incentive model?~~ Final, 17 Sep 2026. L4 is unblocked; the Stripe introducer question stays on `youtube.html`.
 - M8: is Arman's consent form signed? Until then it stays blocked.
 - Flex pricing — still unconfirmed; M9 stays priceless.
 - The 0.70% video rate versus the internal ladder is Eray's question, listed on `youtube.html`.

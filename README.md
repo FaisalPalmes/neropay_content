@@ -74,6 +74,13 @@ the presenter disclosure), `ref` (an asset that already exists on `youtube.html`
 `sq` 1080×1080, `pt` 1080×1350, `st` 1080×1920. Charcoal ground, white type, yellow accent, wordmark
 bottom-left. No money figure ever dominates an image — that is the rule that got the profile restricted.
 
+**The finished files** — `node social/render.mjs L9 M11` (or no ids for every unblocked post) renders each
+post's `assets` on the light stage from the templates in `social/templates/` (`SOCIAL-BRIEF.md` §6) into
+`social/out/<id>/`: a PNG per card, a PDF for a LinkedIn carousel, `caption.txt`, `alt.txt`, and a
+`contact-sheet.png` to review before anything is sent. An optional `alt` on an asset becomes its alt text.
+`node export-assets.mjs` still exports the charcoal on-site preview to `social-out/`. Both need Playwright;
+both output folders are git-ignored.
+
 **Sketch types** — `reel`, `carousel`, `statcard`, `photo`, `none`.
 
 ```js

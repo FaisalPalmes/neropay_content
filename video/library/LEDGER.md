@@ -47,7 +47,11 @@ cloned from a real person without written consent, and the narrator voice stays 
 | `motion/print/mg02` (Small Print 1, v4 — current) | **Verity** `oW8bn5YtBB89X2nJ0DT9` | ElevenLabs `eleven_v3`, one take, 58.7 s, 952 credits | 16 Sep 2026 | same account; flow `ns3m8FupNDBjPPLIO8eV`, node `vijJnXSSffXJtTJCwsVJ` |
 | `motion/partner/pp01` (Partner Programme 1 — two superseded takes, not kept) | **Verity** `oW8bn5YtBB89X2nJ0DT9` | ElevenLabs `eleven_v3`: the brief's H12 + body-1 script, 46.1 s, 735 credits (flow `lzSodLHV3P99DZcXCvAL`); the rewritten script, 73.4 s, 1,165 credits (flow `V5Z2DUgxnS9rAnIxR1yP`, node `XfW0r6pZ09qU7FiEvdPM`) | 16 Sep 2026 | same account |
 | `motion/partner/pp01` (Partner Programme 1, v1/v2 — superseded) | **Olivia — Warm, British Female** `pPoztmvzd5p26S3MsNrV`, Faisal's choice for this video | ElevenLabs `eleven_v3`, one take, 79.5 s raw → 65.8 s tightened at 1.06× and breath-gated, 1,165 credits | 16 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `Q0mFCXt6o7lFGSMlqA1E` |
+| `motion/partner/pp02` (Partner Programme 2, your road — current) | **Olivia — Warm, British Female** `pPoztmvzd5p26S3MsNrV` | ElevenLabs `eleven_v3`, one take of the approved v3 script, 45.7 s raw → 39.9 s at 1.03× with the lenient gate, 730 credits | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `e4KeXcEdS13PY7UoVzTJ` — confirm the plan's commercial-use licence before first delivery |
 | `motion/partner/pp01` (Partner Programme 1, v3 — current) | **Olivia — Warm, British Female** `pPoztmvzd5p26S3MsNrV` | ElevenLabs `eleven_v3`, one take of the v3 script, 69.0 s raw → 62.6 s at 1.03× with a gentle gate, 1,137 credits | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `f2AhMX604HdfokuGr0Fj` — confirm the plan's commercial-use licence before first delivery |
+| `motion/neroconnect/nc01` (NeroConnect intro, take 1 — review) | **Olivia — Warm, British Female** `pPoztmvzd5p26S3MsNrV` | ElevenLabs `eleven_v3`, one take of the proposal script, 95.8 s raw, 1,535 credits; the closing sentence was generated garbled by a prompt error and is replaced by the take below at 83.10 s | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `Jo9eDqzSmwcJIwVmFSuz` — confirm the plan's commercial-use licence before first delivery |
+| `motion/neroconnect/nc01` (NeroConnect intro, closing line) | **Olivia — Warm, British Female** `pPoztmvzd5p26S3MsNrV` | ElevenLabs `eleven_v3`, one take of the closing sentence only, 9.0 s, 140 credits; spliced onto take 1 as `data/vo-review.mp3` (92.4 s) | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `TbC1LYLwdHlQB9mK91Q7` |
+| `motion/neroconnect/nc01` (NeroConnect intro, take 2 — v2, the take that ships) | **Olivia — Warm, British Female** `pPoztmvzd5p26S3MsNrV` | ElevenLabs `eleven_v3`, one take of the v2 script (the two arrangements as the September docs describe them, the regulatory line generalised), 92.1 s raw, 1,429 credits; `data/vo-v2-raw.mp3`, tightened and gated to `data/vo.mp3` (75.5 s) | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `yI3Up4DDCjpXBD7CPXSE`, generation `tyKk9Md8Z3LXnBfkSomI` — confirm the plan's commercial-use licence before first delivery |
 
 ## Music beds — `bgm/`
 
@@ -59,9 +63,16 @@ use on a paid plan — the same plan check as the voice, recorded once per accou
 | `bgm/underscore-120-a.mp3` | neutral instrumental underscore, 60 s, measured 117.45 bpm, no vocals (Whisper finds no speech), fades from ~50 s | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 16 Sep 2026 | the ElevenLabs connector on Faisal's Claude account; flow `G5DGJBeWy6NWDdicrEKJ`, node `0oLT5z4eTuohNjfxiG84` — confirm the plan's commercial-use licence before first delivery |
 | `bgm/partner-upbeat-118.mp3` | upbeat indie-pop instrumental (plucked acoustic guitar, clean electric, hand claps, pad, driving mid-tempo beat), 65 s, measured 117.84 bpm (`motion/tempo.py`), no vocals (Whisper finds no speech), −13.5 LUFS / −0.13 dBTP as delivered; `motion/partner/pp01/data/bed.mp3` is the same file extended to 126 s at a bar boundary (61.7 s) with a 0.3 s crossfade | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 16 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `X6Usek6cfyOmHaLTUmX4` — confirm the plan's commercial-use licence before first delivery |
 
+| `bgm/partner-walk-108.mp3` | light acoustic indie-pop bed (plucked acoustic guitar, hand claps, shaker, upright-bass pulse, muted electric), 60 s, measured 107.90 bpm (`motion/tempo.py`), no vocals (Whisper finds no speech), −15.8 LUFS / −0.77 dBTP as delivered | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `mCKUUYWqyar5irQm0BcR` — confirm the plan's commercial-use licence before first delivery |
+| `bgm/neroconnect-pulse-100.mp3` | light warm electronic pulse for the NeroConnect series (muted synth pulse, gentle bass, shaker, soft kick, pad swells), 105 s, measured 99.85 bpm (`motion/tempo.py`), no vocals (Whisper finds no speech) | ElevenLabs Eleven Music v2 (`eleven_music_v2`), 900 credits | 17 Sep 2026 | same account; flow `V5Z2DUgxnS9rAnIxR1yP`, node `8UpOxk6BwCzC1IF9i35S` — confirm the plan's commercial-use licence before first delivery |
+
 Used in `motion/print/mg02` v4 (16 Sep 2026): the bed above at 0.30, looped at bar 24 and ducked under the voice, and
 Pixabay impact-bass-1, impact-bass-2, pop, whoosh-short, whoosh, whoosh-cinematic, click, click-soft, sparkle, typing,
 key-press, chime, notification, riser, ping — thirty-six cues, none twice in a row.
+
+Used in `motion/partner/pp02` (17 Sep 2026): `partner-walk-108` at 0.20 ducked under the voice, and Pixabay typing, click-soft,
+key-press, pop, whoosh-short, sparkle, ping, click, whoosh, whoosh-cinematic, notification, chime, impact-bass-1/2 — forty cues,
+none twice in a row.
 
 ## How to add a sound
 
@@ -88,3 +99,5 @@ CC0. The API route is used when the token is present. Every file is normalised t
 - `impact` — "Impact Hit at soft but big material" by Nox_Sound, 1.34s, https://freesound.org/apiv2/sounds/728515/ — title and end card landing
 - `bounce` — "Energy Bounce 1" by Aleks41, 1.21s, https://freesound.org/apiv2/sounds/523088/ — the 'more than double' tag
 - `music` — "Tropicorp Advertisement" by Nancy_Sinclair, 37.65s, https://freesound.org/apiv2/sounds/561190/ — intro and outro beats — corporate, claps, bright
+
+Used in `motion/neroconnect/nc01` v2 (17 Sep 2026): `neroconnect-pulse-100` at 0.20 ducked under the voice, and Pixabay sparkle, impact-bass-1/2, whoosh, whoosh-short, whoosh-cinematic, pop, click, click-soft, key-press, typing, chime, ping, notification — 54 cues generated from the composition's anchors by `mkmix.mjs`, none twice in a row.

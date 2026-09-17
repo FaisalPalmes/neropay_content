@@ -13,6 +13,7 @@ Don't mix the styles and don't reuse presenter assets here. Nothing in `motion/`
 | The Maths | `motion/maths/` | One number out of a merchant's life, worked out on screen |
 | Small Print | `motion/print/` | The law, the deadline and the rule a card machine touches — tips, contracts, surcharges, disputes, HMRC. White editorial, a stamp on the date, and "if this doesn't apply to you, do nothing". Briefed in `motion.js` |
 | Partner Programme | `motion/partner/` | The partner programme — what a partner earns and the condition, said condition-first, in the white world. Briefed by Faisal in `motion/partner/BRIEF.md` (v4 final, 17 Sep 2026); the figures are confirmed records in `figures.json`. `motion/partner/pp01/` is the first video |
+| NeroConnect | `motion/neroconnect/` | The white-label platform, for business-minded viewers — the network model that already exists, run under someone else's name. Briefed in `motion/neroconnect/CLAUDE.md`; NC01 is the intro, proposal 17 Sep 2026 |
 
 Adding a series: a folder in `motion/`, a `CLAUDE.md` in it carrying the premise, the spec and the
 episode bank, and episodes beneath that. Everything below applies to all of them.
@@ -340,6 +341,51 @@ video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on th
   they already knew us.
 - The timing law counts the words a viewer has to *read* — sentences, kickers, the rest-frame lines — not the numerals
   and chips they glance at; the compliance super is its own beat.
+
+**PP02, 17 Sep 2026 — one street, the camera walks it, the type moves word by word.** The second partner video
+(`motion/partner/pp02/`). What it added: `street()` (a long row of paper shopfronts of mixed heights with shutters, built
+once at scene level behind every stop), `lampPost()`, `phone()` (a canvas screen the composition draws into per frame),
+`receipt()` (paper printing out of a slot through a **local clipping plane** — `renderer.localClippingEnabled` — so the
+print stays sharp) and `van()`; a straight dolly between stops (`walk()`, no pull-back, the stops facing alternately left
+and right); the pavement, kerb and road as DOM planes. Type: word-by-word rise with a stagger and a tracking settle,
+a typewriter whose caret follows the last character, an odometer that snaps digit to digit, strikes, hanging signs, a
+per-word pop on the captions. Two rules learnt: a WebGL object placed near a heading hides it whatever its depth (the
+receipt went to the shop on the far side of the type; the lamp-post signs rose above the projected shop tops), and a
+frame with the street in it needs a shallower box (y to 18, elevation 12°) or the shops read as a strip at the bottom.
+
+**PP02 v2 — grand figures, once (Faisal, 17 Sep 2026).** Money and stats are the hero of their frame: one figure, large
+(the 164 px hero on the marker, the 130 px climb row), with its condition in readable type beneath — never a second, small
+copy of the same figure elsewhere in the frame (the receipt beside the hero was the fault). The count that opens a video
+flies in large and settles as the scene sets, pops on each change, and hands over to the next mark; no rolling digit
+columns (partial glyphs read as clipping). Every stop's type slides up and settles as the camera lands, and the box sits
+low and shallow enough that the frame is full — empty sky at the top is a fault. These are standing rules.
+
+**PP02 v3 — the voice leads (Faisal, 17 Sep 2026).** Nothing is on screen before she has said it. Every graphic is
+anchored to the start of the word that earns it, not to the camera landing: a heading that mirrors the take rises word by
+*spoken* word (`sync(el, t, times('pays you'))`), a typewriter types each word across the time she takes to say it
+(`typeSync`), a shop lights on the word that names it, the phone types on "name" and "number", the van stops on "close",
+the strike lands as she finishes the claim. A stop's camera walk is timed so it has landed by the first word that puts
+something on it; "things that wait for the camera" is retired as an anchor. The overlays must feel as if she is pointing at
+them. Two more from the same review: the opening count is the hook — large, in a glass tile, counting the shops the view
+rides past, flipping into a large question mark that is the question's own (the kicker retypes under it), never a lone
+"?"; and liquid glass is used sparingly and only under what matters (three slabs in PP02: the count, the money, the climb),
+tilting in on a perspective with a sheen that passes now and then. A vehicle that delivers stops in frame; a terminal at
+the edge sits inside the frame, never cut by it. The type sits high — the frame above the box is real space, and the
+4:5 frame's top third must not be sky.
+
+**PP02 v4 — floating objects, red strikes, room in the stack (Faisal, 17 Sep 2026).** The phone, the terminals and the
+receipts float in the upper half of the frame, above the roofs, with a slow bob and turn — never on the pavement in front
+of a shop, never intersecting one, never cut by the frame. A van sits flat on the road: rotating it about its ground origin
+lifted its wheels and read as hovering. A count that opens a video stands bare — no glass, no marker under the question
+mark — with its line typed well below it. Strikes are red and animated (the claim shakes and greys). A climb runs
+continuously in a fixed-width slot with the rate rolling up on each threshold; numbers never teleport. A stack of panels
+keeps at least a unit of clear space between items, and nothing sits behind another overlay. Type and panels carry a
+soft shadow for depth, never a hard one.
+
+**PP02 v5 — the diagram over a ghosted street (Faisal, 17 Sep 2026).** When a stop explains a figure, the explanation is a
+diagram — bars, large, centred, just above the caption — and the street behind it fades to a trace for that stop only
+(`street().fade(i, p)`), so the figures carry the frame; the other stops keep the street solid. A panel with a large
+figure gets one short condition line with real clearance below it, not two serif lines under the slab's edge.
 
 ## Narration — the performance
 

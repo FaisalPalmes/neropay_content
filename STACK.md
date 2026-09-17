@@ -87,6 +87,22 @@ tracks are deliberately not committed (licence unverified); `.claude/skills/brag
 detail. Output lives in `video/brag-output/`; the first run is the warehouse's own brag, rendered locally in
 45 s because a pure-graphics composition needs no clip extraction.
 
+**`/linkedin-post`** (added 17 Sep 2026): the LinkedIn writing and audit rules distilled from two MIT skills
+(sergebulaev/linkedin-skills, marian-kamenistak/linkedin-post-writing-skill) and re-cut to NeroPay's rails —
+"we" never "I", no earnings register, figures with conditions. Read it before any LinkedIn copy.
+
+**`/slopmonster`** (added 17 Sep 2026, Faisal's ask): [ItsssssJack/SlopMonster](https://github.com/ItsssssJack/SlopMonster)
+(MIT, Jack Roberts), copied whole into `.claude/skills/slopmonster/`. `tools/deslop.py` scores any copy out of 5 for AI
+tells (vocabulary, `not just X but Y` shapes, punctuation cadence, rule-of-three rhythm, invented proof) with stdlib
+Python only and exits non-zero below 5, so it can gate a build; `tools/cleanse.sh` hands a draft to a rival model
+family through the `codex` or `claude` CLI, or prints the prompt when neither is installed (neither is, in the web
+container). Trigger: `/slopmonster`, "does this sound like AI", "de-slop this". Run
+`python3 .claude/skills/slopmonster/tools/deslop.py --allow-proof --text "…"` on every caption and every script before
+it goes to Faisal — `--allow-proof` because our figures are real and sourced (post L1 lost a point on install only for
+"98 food businesses"); the NC01 v2 take scored 5/5. NeroPay's rails and `/linkedin-post` still decide what posts — the
+scorer knows nothing about s.21 FSMA; `.claude/skills/slopmonster/NEROPAY-NOTE.md` has the four things to know. Both of
+its test suites pass here. Refresh by re-cloning the upstream repo.
+
 Start every video request at `/hyperframes` — it routes to the owning workflow. `/media-use` sources
 and generates media; `/hyperframes-audio` mixes audio already placed in a composition. Refresh with
 `npx hyperframes skills update <name>`; `HYPERFRAMES_SKIP_SKILLS=1` is set so the CLI leaves the
@@ -112,11 +128,6 @@ exact and readable), `caveman-stats` and `cavecrew` need the Claude Code hooks a
 the global installer, and `caveman-setup`/`-discover`/`-learn`/`-manage`/`-optimize`/`-evidence-review`
 drive the Caveman Cloud gateway, which we do not use. Refresh by re-copying from the upstream `skills/`
 folder; nothing here is fetched at session start.
-
-**`/slopmonster`** (added 17 Sep 2026, MIT, upstream ItsssssJack/SlopMonster) lints copy for AI tells
-and scores it out of five; run it on every caption before it ships. The rival-model cleanse step needs
-the `codex` CLI and is not available here; the lint is. `.claude/skills/slopmonster/NEROPAY-NOTE.md`
-records the install and what outranks it.
 
 ## 4. The toolchain
 

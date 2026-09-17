@@ -1,0 +1,321 @@
+{
+ "duration": 49.101,
+ "head": 1.11214,
+ "vo": "data/vo.mp3",
+ "target": -14,
+ "tp": -1.5,
+ "bed": {
+  "file": "video/library/bgm/partner-walk-108.mp3",
+  "t": 0,
+  "gain": 0.2,
+  "duck": {
+   "threshold": 0.025,
+   "ratio": 5,
+   "attack": 12,
+   "release": 420
+  },
+  "fade": 2.4
+ },
+ "cues": [
+  {
+   "sfx": "whoosh-short",
+   "t": 0.15,
+   "gain": 0.14,
+   "why": "the count tile flies in"
+  },
+  {
+   "sfx": "typing",
+   "t": 1.93,
+   "gain": 0.1,
+   "why": "the kicker types \"business owners on your road\""
+  },
+  {
+   "sfx": "click-soft",
+   "t": 3.77,
+   "gain": 0.22,
+   "why": "the count flips to the question mark on \"know\""
+  },
+  {
+   "sfx": "ping",
+   "t": 4.47,
+   "gain": 0.18,
+   "why": "the marker under the question mark"
+  },
+  {
+   "sfx": "key-press",
+   "t": 4.918,
+   "gain": 0.22,
+   "why": "the caf\u00e9 lights on its word"
+  },
+  {
+   "sfx": "pop",
+   "t": 5.675,
+   "gain": 0.2,
+   "why": "the barber"
+  },
+  {
+   "sfx": "key-press",
+   "t": 6.432,
+   "gain": 0.22,
+   "why": "the takeaway"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 6.84,
+   "gain": 0.16,
+   "why": "the walk to the paid stop"
+  },
+  {
+   "sfx": "click",
+   "t": 7.345,
+   "gain": 0.18,
+   "why": "the first shop lights on \"every\""
+  },
+  {
+   "sfx": "pop",
+   "t": 9.015,
+   "gain": 0.22,
+   "why": "the terminal lands at the door on \"NeroPay\""
+  },
+  {
+   "sfx": "sparkle",
+   "t": 9.597,
+   "gain": 0.2,
+   "why": "\"pays\" rises on the word"
+  },
+  {
+   "sfx": "ping",
+   "t": 10.52,
+   "gain": 0.22,
+   "why": "\u00a3100 lands in its glass on \"hundred\""
+  },
+  {
+   "sfx": "typing",
+   "t": 12.51,
+   "gain": 0.14,
+   "why": "the receipt prints on \"once\""
+  },
+  {
+   "sfx": "click",
+   "t": 14.724,
+   "gain": 0.18,
+   "why": "the condition lands on \"thirty days\""
+  },
+  {
+   "sfx": "whoosh",
+   "t": 15.531,
+   "gain": 0.16,
+   "why": "the walk to you don't"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 16.857,
+   "gain": 0.24,
+   "why": "strike one, as she finishes \"anything\""
+  },
+  {
+   "sfx": "key-press",
+   "t": 18.371,
+   "gain": 0.24,
+   "why": "strike two"
+  },
+  {
+   "sfx": "click",
+   "t": 20.235,
+   "gain": 0.24,
+   "why": "strike three"
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 20.405,
+   "gain": 0.14,
+   "why": "the walk to the phone"
+  },
+  {
+   "sfx": "pop",
+   "t": 20.665,
+   "gain": 0.2,
+   "why": "the phone stands up on \"send\""
+  },
+  {
+   "sfx": "typing",
+   "t": 20.918,
+   "gain": 0.14,
+   "why": "the name types on \"name\""
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 21.15,
+   "gain": 0.16,
+   "why": "the van comes in along the road"
+  },
+  {
+   "sfx": "key-press",
+   "t": 21.481,
+   "gain": 0.16,
+   "why": "the number types on \"number\""
+  },
+  {
+   "sfx": "notification",
+   "t": 22.394,
+   "gain": 0.24,
+   "why": "SENT on \"close\""
+  },
+  {
+   "sfx": "click-soft",
+   "t": 22.65,
+   "gain": 0.18,
+   "why": "the van stops and its door slides"
+  },
+  {
+   "sfx": "pop",
+   "t": 22.801,
+   "gain": 0.22,
+   "why": "the terminal lands at the door on \"it\""
+  },
+  {
+   "sfx": "key-press",
+   "t": 22.995,
+   "gain": 0.2,
+   "why": "the shop lights on \"for you\""
+  },
+  {
+   "sfx": "pop",
+   "t": 24.238,
+   "gain": 0.18,
+   "why": "tick one on \"three\""
+  },
+  {
+   "sfx": "key-press",
+   "t": 24.378,
+   "gain": 0.18,
+   "why": "tick two"
+  },
+  {
+   "sfx": "pop",
+   "t": 24.518,
+   "gain": 0.18,
+   "why": "tick three"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 25.295,
+   "gain": 0.16,
+   "why": "the walk to Active Partner"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 25.653,
+   "gain": 0.2,
+   "why": "the bunting hangs as the camera lands"
+  },
+  {
+   "sfx": "chime",
+   "t": 25.811,
+   "gain": 0.26,
+   "why": "ACTIVE PARTNER hangs in on the words"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 27.44,
+   "gain": 0.2,
+   "why": "bar one rises on \"share\""
+  },
+  {
+   "sfx": "key-press",
+   "t": 27.86,
+   "gain": 0.18,
+   "why": "bar two"
+  },
+  {
+   "sfx": "pop",
+   "t": 28.28,
+   "gain": 0.18,
+   "why": "bar three"
+  },
+  {
+   "sfx": "click",
+   "t": 30.18,
+   "gain": 0.18,
+   "why": "the rest frame on \"every month\""
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 31.512,
+   "gain": 0.14,
+   "why": "the walk to the quiet month"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 32.413,
+   "gain": 0.2,
+   "why": "the shutters come down on \"quiet\""
+  },
+  {
+   "sfx": "key-press",
+   "t": 33.578,
+   "gain": 0.2,
+   "why": "the one shop lights on \"one\""
+  },
+  {
+   "sfx": "typing",
+   "t": 34.238,
+   "gain": 0.12,
+   "why": "its receipt prints on \"bonus\""
+  },
+  {
+   "sfx": "ping",
+   "t": 35.377,
+   "gain": 0.2,
+   "why": "the marker on \"yours\""
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 35.75,
+   "gain": 0.16,
+   "why": "the walk to the end of the road"
+  },
+  {
+   "sfx": "pop",
+   "t": 36.05,
+   "gain": 0.2,
+   "why": "our terminal rises"
+  },
+  {
+   "sfx": "chime",
+   "t": 36.2,
+   "gain": 0.22,
+   "why": "FREE TO JOIN on the words"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 37.345,
+   "gain": 0.2,
+   "why": "the nameplate hangs on \"NeroPay dot app\""
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 37.9,
+   "gain": 0.14,
+   "why": "the van comes along the road at the end"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 38.665,
+   "gain": 0.3,
+   "why": "the marker on \"partners\""
+  },
+  {
+   "sfx": "sparkle",
+   "t": 39.165,
+   "gain": 0.14,
+   "why": "the compliance line"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 40.219,
+   "gain": 0.2,
+   "why": "YOUR OWN LINK on \"get your link\""
+  }
+ ]
+}

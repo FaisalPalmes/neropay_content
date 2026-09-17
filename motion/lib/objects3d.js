@@ -378,3 +378,138 @@ export function shops(n, { w = 4.4, h = 3.6, d = 3.2, gap = 1.5, color = 0x1D202
 export function rise(obj, p, h = 16) { obj.position.y = -(h + 1) * (1 - p); obj.visible = p > 0; }
 /* sink(obj, p, h): the reverse — down through the paper. */
 export function sink(obj, p, h = 16) { obj.position.y = -(h + 1) * p * p; obj.visible = p < 1; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   PP02 — the street (17 Sep 2026). One long row of paper shopfronts of mixed heights and widths, a few with shutters,
+   no names and no place — any English high street. light(i, p) as shops(); shutter(i, p) rolls a shutter down over
+   the front; label positions from top(i). Built once for the whole world, not per section.
+--------------------------------------------------------------------------------------------------------------- */
+export function street(n, { pitch = 6.6, x0 = 0, color = 0xEDEAE2, lit = C.accent, seed = 3, scale = 1 } = {}) {
+  const g = new THREE.Group();
+  const cLit = new THREE.Color(lit), cWin = new THREE.Color(0x2B2F38), cAwn = new THREE.Color(0x3C4049), cGlow = new THREE.Color(lit).multiplyScalar(.5), black = new THREE.Color(0);
+  let s = seed; const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  const items = [];
+  for (let i = 0; i < n; i++) {
+    const w = (4.2 + rnd() * 1.4) * scale, h = (3.3 + rnd() * 1.6) * scale, d = 3.2 * scale;
+    const sh = new THREE.Group(); sh.position.x = x0 + i * pitch;
+    const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, .2), mat(color, { roughness:.78 })); body.position.y = h / 2; body.castShadow = body.receiveShadow = true; sh.add(body);
+    const winM = new THREE.MeshStandardMaterial({ color:cWin.clone(), emissive:0x000000, roughness:.35, metalness:.05 });
+    const win = new THREE.Mesh(new THREE.PlaneGeometry(w * .56, h * .42), winM); win.position.set(-w * .12, h * .5, d / 2 + .015); sh.add(win);
+    const door = new THREE.Mesh(new THREE.PlaneGeometry(w * .18, h * .58), new THREE.MeshStandardMaterial({ color:0x0E1013, roughness:.8 })); door.position.set(w * .3, h * .29, d / 2 + .015); sh.add(door);
+    const awnM = mat(0x3C4049, { roughness:.6 });
+    const awn = new THREE.Mesh(new RoundedBoxGeometry(w * .94, .26, 1.25, 2, .08), awnM); awn.position.set(0, h * .8, d / 2 + .45); awn.castShadow = true; sh.add(awn);
+    /* a shutter: a ribbed grey plane that slides down from under the awning over the window and the door */
+    const shut = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, h * .76), mat(0xC9C7C0, { roughness:.9 }));
+    shut.position.set(0, h * .78 - (h * .76) / 2, d / 2 + .03); shut.scale.y = .001; shut.visible = false; sh.add(shut);
+    /* a couple of roof details so the row is not one silhouette: a parapet on some, a step on others */
+    const mats = [body.material, winM, door.material, awnM, shut.material]; const casters = [body, awn];
+    if (rnd() > .5) { const par = new THREE.Mesh(new RoundedBoxGeometry(w * .6, .5, d * .6, 2, .1), mat(color, { roughness:.8 })); par.position.set((rnd() - .5) * w * .3, h + .25, 0); par.castShadow = true; sh.add(par); mats.push(par.material); casters.push(par); }
+    g.add(sh); items.push({ sh, w, h, d, winM, awnM, shut, door:door.position.clone(), mats, casters });
+  }
+  const tmp = new THREE.Color();
+  return Object.assign(g, {
+    pitch, n,
+    light(i, p) { const it = items[i]; it.winM.color.copy(tmp.copy(cWin).lerp(cLit, p)); it.winM.emissive.copy(tmp.copy(black).lerp(cGlow, p)); it.awnM.color.copy(tmp.copy(cAwn).lerp(cLit, p)); },
+    /* v4 (PP02): ghost a shop — p 0 = solid, 1 = a faint trace, its shadow gone — so a diagram can stand in front */
+    fade(i, p) { const it = items[i]; for (const m of it.mats) { m.transparent = p > .001; m.opacity = 1 - .88 * p; m.depthWrite = p < .5; } for (const c of it.casters) c.castShadow = p < .5; },
+    /* the shutter rolls down from the awning: p 0 = up, 1 = down to the pavement */
+    shutter(i, p) { const it = items[i]; const H = it.h * .76; it.shut.visible = p > .002; it.shut.scale.y = Math.max(.001, p); it.shut.position.y = it.h * .78 - (H * p) / 2; },
+    /* local position of shop i's top-centre, and of its door's top (for the receipt) */
+    top(i) { const it = items[i]; return new THREE.Vector3(it.sh.position.x, it.h, 0); },
+    doorTop(i) { const it = items[i]; return new THREE.Vector3(it.sh.position.x + it.door.x, it.h * .58, it.d / 2); },
+    x(i) { return items[i].sh.position.x; },
+    height(i) { return items[i].h; },
+  });
+}
+
+/* a lamp post: a slim pole, a short arm and a lamp head; signs (DOM) hang beside the arm */
+export function lampPost({ h = 12, color = 0x2A2B30 } = {}) {
+  const g = new THREE.Group();
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(.16, .22, h, 16), mat(color, { roughness:.55 })); pole.position.y = h / 2; pole.castShadow = true; g.add(pole);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(.42, .5, .5, 16), mat(color, { roughness:.6 })); base.position.y = .25; base.castShadow = true; g.add(base);
+  const arm = new THREE.Mesh(new THREE.CylinderGeometry(.11, .11, 2.4, 12), mat(color, { roughness:.55 })); arm.rotation.z = Math.PI / 2; arm.position.set(1.2, h - .2, 0); g.add(arm);
+  const head = new THREE.Mesh(new RoundedBoxGeometry(1.1, .5, .7, 3, .12), mat(color, { roughness:.5 })); head.position.set(2.4, h - .35, 0); head.castShadow = true; g.add(head);
+  const lamp = new THREE.Mesh(new THREE.PlaneGeometry(.9, .5), new THREE.MeshStandardMaterial({ color:0xFFF1C2, emissive:0xFFE08A, emissiveIntensity:.6, roughness:.4 })); lamp.rotation.x = Math.PI / 2; lamp.position.set(2.4, h - .61, 0); g.add(lamp);
+  g.userData.h = h; return g;
+}
+
+/* a phone standing on the pavement, leaning back a touch; the screen is a canvas texture the composition draws into
+   (draw(fn) — fn(ctx, W, H)), so a contact card can type in frame by frame. No maker's mark, no UI chrome but ours. */
+export function phone({ w = 4.2, lean = -8 } = {}) {
+  const h = w * 2.1, d = w * .085;
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 5, w * .11), mat(0x1E1F23, { roughness:.35, metalness:.15 })); body.castShadow = true; g.add(body);
+  const c = document.createElement('canvas'); c.width = 720; c.height = 1512; const ctx = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+  const scr = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, h * .93), new THREE.MeshStandardMaterial({ map:tex, emissive:0xffffff, emissiveIntensity:.55, emissiveMap:tex, roughness:.3 }));
+  scr.position.z = d / 2 + .012; g.add(scr);
+  const stand = new THREE.Group(); g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.y = h / 2 * Math.cos(THREE.MathUtils.degToRad(lean)) + .04; stand.add(g);
+  return Object.assign(stand, { w, h, draw(fn) { ctx.save(); fn(ctx, c.width, c.height); ctx.restore(); tex.needsUpdate = true; } });
+}
+
+/* a till receipt printing up out of a slot: a paper plane whose visible height grows from the slot (a local clipping
+   plane, so the print stays sharp and unstretched), leaning toward the camera. draw(fn) paints the paper. */
+export function receipt({ w = 3.4, h = 6.4, lean = -14 } = {}) {
+  const g = new THREE.Group();
+  const c = document.createElement('canvas'); c.width = 680; c.height = Math.round(680 * h / w); const ctx = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+  const clip = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map:tex, roughness:.9, side:THREE.DoubleSide, clippingPlanes:[clip], clipShadows:true }));
+  paper.position.y = h / 2; paper.castShadow = true; g.add(paper);
+  const slot = new THREE.Mesh(new RoundedBoxGeometry(w + .5, .28, .6, 2, .1), mat(0x2A2B30, { roughness:.6 })); slot.position.y = 0; g.add(slot);
+  g.rotation.x = THREE.MathUtils.degToRad(lean);
+  const wp = new THREE.Vector3();
+  return Object.assign(g, {
+    w, h,
+    draw(fn) { ctx.save(); fn(ctx, c.width, c.height); ctx.restore(); tex.needsUpdate = true; },
+    /* p 0..1 of the paper out of the slot — the clip is set in world space each frame */
+    setProgress(p) { g.updateWorldMatrix(true, false); paper.visible = p > .005;
+      const top = g.localToWorld(wp.set(0, h * p, 0)); clip.constant = top.y; },
+  });
+}
+
+/* a small unbranded white van (v3, PP02): body and cab, a windscreen with pillars, cab side windows, a grille and two
+   headlights, tail lights, bumpers, wing mirrors, hub caps, a thin yellow band both sides and across the back, and a
+   sliding side door on the +z (camera) side that opens on to a dark load bay. roll(dist) turns the wheels by distance
+   travelled; open(p) slides the door back. Drives along its own x; the cab is the +x end. No name on it. */
+export function van({ L = 6.2, color = 0xF4F2EC, band = C.accent } = {}) {
+  const g = new THREE.Group(); const W = 2.6, H = 2.2, R = .46;
+  const paint = mat(color, { roughness:.5 }), dark = mat(0x1E2026, { roughness:.25, metalness:.2 }), trim = mat(0x2A2B30, { roughness:.6 });
+  const body = new THREE.Mesh(new RoundedBoxGeometry(L * .62, H, W, 4, .22), paint); body.position.set(-L * .19, R + H / 2, 0); body.castShadow = true; g.add(body);
+  const cab = new THREE.Mesh(new RoundedBoxGeometry(L * .38, H * .82, W, 4, .3), paint); cab.position.set(L * .31, R + H * .41, 0); cab.castShadow = true; g.add(cab);
+  /* the windscreen, raked, with a dark pillar each side; the cab's side windows */
+  const wsc = new THREE.Mesh(new RoundedBoxGeometry(.16, H * .34, W * .86, 2, .05), dark); wsc.position.set(L * .5 - .02, R + H * .6, 0); wsc.rotation.z = -.28; g.add(wsc);
+  for (const zz of [W / 2, -W / 2]) { const side = new THREE.Mesh(new THREE.PlaneGeometry(L * .26, H * .3), dark); side.position.set(L * .3, R + H * .62, zz + Math.sign(zz) * .012); if (zz < 0) side.rotation.y = Math.PI; g.add(side); }
+  /* grille, bumpers, two headlights, two tail lights */
+  const grille = new THREE.Mesh(new RoundedBoxGeometry(.14, .3, W * .5, 2, .05), trim); grille.position.set(L * .5 + .02, R + H * .22, 0); g.add(grille);
+  const bF = new THREE.Mesh(new RoundedBoxGeometry(.22, .22, W + .1, 2, .08), trim); bF.position.set(L * .5, R + .02, 0); g.add(bF);
+  const bB = bF.clone(); bB.position.x = -L * .5; g.add(bB);
+  const lampM = new THREE.MeshStandardMaterial({ color:0xFFF4D2, emissive:0xFFE39A, emissiveIntensity:.7, roughness:.35 });
+  for (const zz of [W * .34, -W * .34]) { const hl = new THREE.Mesh(new RoundedBoxGeometry(.12, .26, .42, 2, .05), lampM); hl.position.set(L * .5 + .04, R + H * .36, zz); g.add(hl);
+    const tl = new THREE.Mesh(new RoundedBoxGeometry(.1, .4, .3, 2, .05), new THREE.MeshStandardMaterial({ color:0xE0433A, emissive:0xB4231C, emissiveIntensity:.5, roughness:.4 })); tl.position.set(-L * .5 - .02, R + H * .5, zz); g.add(tl); }
+  /* wing mirrors */
+  for (const zz of [W / 2 + .2, -W / 2 - .2]) { const m = new THREE.Mesh(new RoundedBoxGeometry(.16, .28, .22, 2, .05), trim); m.position.set(L * .44, R + H * .62, zz); g.add(m); }
+  /* the band, both sides and across the back */
+  for (const zz of [W / 2 + .01, -W / 2 - .01]) { const bm = new THREE.Mesh(new THREE.PlaneGeometry(L * .96, .18), mat(band, { roughness:.6 })); bm.position.set(-L * .02, R + H * .28, zz); if (zz < 0) bm.rotation.y = Math.PI; g.add(bm); }
+  { const bm = new THREE.Mesh(new THREE.PlaneGeometry(W * .9, .18), mat(band, { roughness:.6 })); bm.position.set(-L * .5 - .01, R + H * .28, 0); bm.rotation.y = -Math.PI / 2; g.add(bm); }
+  /* the sliding door on the camera side: a bay cut as a dark panel, the door a paint panel that slides back over the body */
+  const bay = new THREE.Mesh(new THREE.PlaneGeometry(L * .3, H * .78), mat(0x15161A, { roughness:.9 })); bay.position.set(-L * .04, R + H * .47, W / 2 + .005); g.add(bay);
+  const door = new THREE.Group(); door.position.set(-L * .04, R + H * .47, W / 2 + .03);
+  const dp = new THREE.Mesh(new RoundedBoxGeometry(L * .31, H * .8, .05, 2, .02), paint); door.add(dp);
+  const seam = new THREE.Mesh(new THREE.PlaneGeometry(L * .31, H * .8), new THREE.MeshStandardMaterial({ color:0x000000, transparent:true, opacity:.0 })); door.add(seam);
+  const dband = new THREE.Mesh(new THREE.PlaneGeometry(L * .31, .18), mat(band, { roughness:.6 })); dband.position.set(0, R + H * .28 - (R + H * .47), .03); door.add(dband);
+  const handle = new THREE.Mesh(new RoundedBoxGeometry(.5, .08, .06, 2, .02), trim); handle.position.set(L * .1, .1, .04); door.add(handle);
+  const dwin = new THREE.Mesh(new THREE.PlaneGeometry(L * .2, H * .26), dark); dwin.position.set(0, H * .16, .03); door.add(dwin);
+  g.add(door);
+  /* wheels on axles, hub caps, wheel arches suggested by a darker ring */
+  const wheelG = new THREE.CylinderGeometry(R, R, .5, 24); const wheelM = mat(0x232428, { roughness:.85 }); const hubG = new THREE.CylinderGeometry(R * .5, R * .5, .54, 16); const hubM = mat(0xD9D6CE, { roughness:.5, metalness:.3 });
+  const axles = [];
+  for (const [x, z] of [[L * .3, W / 2], [L * .3, -W / 2], [-L * .3, W / 2], [-L * .3, -W / 2]]) { const pv = new THREE.Group(); pv.position.set(x, R, z);
+    const wh = new THREE.Mesh(wheelG, wheelM); wh.rotation.x = Math.PI / 2; wh.castShadow = true; pv.add(wh);
+    const hb = new THREE.Mesh(hubG, hubM); hb.rotation.x = Math.PI / 2; pv.add(hb); g.add(pv); axles.push(pv); }
+  return Object.assign(g, {
+    L, W, H, R,
+    roll(dist) { for (const pv of axles) pv.rotation.z = -dist / R; },
+    open(p) { door.position.x = -L * .04 - L * .27 * p; },
+  });
+}
