@@ -13,6 +13,7 @@ Don't mix the styles and don't reuse presenter assets here. Nothing in `motion/`
 | The Maths | `motion/maths/` | One number out of a merchant's life, worked out on screen |
 | Small Print | `motion/print/` | The law, the deadline and the rule a card machine touches — tips, contracts, surcharges, disputes, HMRC. White editorial, a stamp on the date, and "if this doesn't apply to you, do nothing". Briefed in `motion.js` |
 | Partner Programme | `motion/partner/` | The partner programme — what a partner earns and the condition, said condition-first, in the white world. Briefed by Faisal in `motion/partner/BRIEF.md` (v4 final, 17 Sep 2026); the figures are confirmed records in `figures.json`. `motion/partner/pp01/` is the first video |
+| NeroConnect | `motion/neroconnect/` | The white-label platform, for business-minded viewers — the network model that already exists, run under someone else's name. Briefed in `motion/neroconnect/CLAUDE.md`; NC01 is the intro, proposal 17 Sep 2026 |
 
 Adding a series: a folder in `motion/`, a `CLAUDE.md` in it carrying the premise, the spec and the
 episode bank, and episodes beneath that. Everything below applies to all of them.
