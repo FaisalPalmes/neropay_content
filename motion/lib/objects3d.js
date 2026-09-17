@@ -402,13 +402,16 @@ export function street(n, { pitch = 6.6, x0 = 0, color = 0xEDEAE2, lit = C.accen
     const shut = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, h * .76), mat(0xC9C7C0, { roughness:.9 }));
     shut.position.set(0, h * .78 - (h * .76) / 2, d / 2 + .03); shut.scale.y = .001; shut.visible = false; sh.add(shut);
     /* a couple of roof details so the row is not one silhouette: a parapet on some, a step on others */
-    if (rnd() > .5) { const par = new THREE.Mesh(new RoundedBoxGeometry(w * .6, .5, d * .6, 2, .1), mat(color, { roughness:.8 })); par.position.set((rnd() - .5) * w * .3, h + .25, 0); par.castShadow = true; sh.add(par); }
-    g.add(sh); items.push({ sh, w, h, d, winM, awnM, shut, door:door.position.clone() });
+    const mats = [body.material, winM, door.material, awnM, shut.material]; const casters = [body, awn];
+    if (rnd() > .5) { const par = new THREE.Mesh(new RoundedBoxGeometry(w * .6, .5, d * .6, 2, .1), mat(color, { roughness:.8 })); par.position.set((rnd() - .5) * w * .3, h + .25, 0); par.castShadow = true; sh.add(par); mats.push(par.material); casters.push(par); }
+    g.add(sh); items.push({ sh, w, h, d, winM, awnM, shut, door:door.position.clone(), mats, casters });
   }
   const tmp = new THREE.Color();
   return Object.assign(g, {
     pitch, n,
     light(i, p) { const it = items[i]; it.winM.color.copy(tmp.copy(cWin).lerp(cLit, p)); it.winM.emissive.copy(tmp.copy(black).lerp(cGlow, p)); it.awnM.color.copy(tmp.copy(cAwn).lerp(cLit, p)); },
+    /* v4 (PP02): ghost a shop — p 0 = solid, 1 = a faint trace, its shadow gone — so a diagram can stand in front */
+    fade(i, p) { const it = items[i]; for (const m of it.mats) { m.transparent = p > .001; m.opacity = 1 - .88 * p; m.depthWrite = p < .5; } for (const c of it.casters) c.castShadow = p < .5; },
     /* the shutter rolls down from the awning: p 0 = up, 1 = down to the pavement */
     shutter(i, p) { const it = items[i]; const H = it.h * .76; it.shut.visible = p > .002; it.shut.scale.y = Math.max(.001, p); it.shut.position.y = it.h * .78 - (H * p) / 2; },
     /* local position of shop i's top-centre, and of its door's top (for the receipt) */

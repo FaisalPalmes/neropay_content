@@ -217,9 +217,21 @@
   },
   {
    "sfx": "sparkle",
-   "t": 27.19,
+   "t": 27.44,
    "gain": 0.2,
-   "why": "the climb in its glass on \"share\""
+   "why": "bar one rises on \"share\""
+  },
+  {
+   "sfx": "key-press",
+   "t": 27.86,
+   "gain": 0.18,
+   "why": "bar two"
+  },
+  {
+   "sfx": "pop",
+   "t": 28.28,
+   "gain": 0.18,
+   "why": "bar three"
   },
   {
    "sfx": "click",
@@ -280,6 +292,12 @@
    "t": 37.345,
    "gain": 0.2,
    "why": "the nameplate hangs on \"NeroPay dot app\""
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 37.9,
+   "gain": 0.14,
+   "why": "the van comes along the road at the end"
   },
   {
    "sfx": "impact-bass-1",

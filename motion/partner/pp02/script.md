@@ -132,3 +132,49 @@ stereo, −13.99 LUFS / −1.31 dBTP. Higgsfield:
 `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/360391df-95bf-4928-b7b2-63ffde5575f0.mp4`
 (contact `…/9b532774-abdb-4c98-9cb6-6e4c8a7ca1ec.jpg`). Drive: README v3 in the PP02 folder, v2 renamed superseded. Law
 passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 32 points.
+
+## v4, 17 Sep 2026 — the review of v3
+
+Faisal's notes: the count and its line must never touch, and that stop needs no glass — the mark on its own, the line
+revealed beneath it, no yellow bar; the strikes should carry the feeling (animated, red); "Send us a name and a number"
+grander, a different face; the phone and the terminals never in the bottom half or over the shops — float them in the
+upper half; the Active Partner climb was choppy and clipped (numbers teleporting); colour on the arrow, more life in the
+week chips; the receipts clipped inside the shops — float them, colour them, animate them; the end screen's text sat
+behind its overlays — lay it out in the top half with the terminal, some shops lit, the van on the road; the van must sit
+on the road, never hover; then more space in the CTA stack and a subtle depth on the assets.
+
+So: the count is a bare 400 px number that flips into the question mark, the kicker 44 px below; the strikes are red
+(`#E0433A`), shake the claim as they land and grey it behind them; the name-and-number heading is Chivo 800 uppercase
+at 96 px with NAME and NUMBER on the marker; the phone floats at the left above the roofs (`hover()`: up from below, a
+slow bob and turn), the terminals float above the shop they serve (`above()`), the end terminal floats at the right
+below the nameplate; the climb runs continuously 3 → 111 in a fixed 4-character slot with the rate rolling up on each
+threshold (thresholds solved from the easing at init, `STEPT`), the arrow yellow, the week chips swinging in on a damped
+curve with ticked chips turning yellow and the tick bouncing; the receipts print upward from a slot floating above the
+shop, a yellow header band, a slow bob; the CTA stack is Free to join 22.7 · nameplate 19.3 (74 px) · Your own link
+15.8 · compliance 11.7, three shops lit, the van coming along the road from "NeroPay dot app" and stopping; the van sits
+flat on the road (the pitch and wobble were rotating it about its ground origin and lifting the wheels); a soft text
+shadow under the type and a deeper one under the plates. The money slab grows with its words. 48 cues.
+
+**Delivered (v4, 4:5):** `out/final/pp02-4x5.mp4`, 49.1 s, 1,474 frames, md5 `dc509d946241b46f4fc90f37b866fded`;
+stereo, −13.99 LUFS / −1.36 dBTP. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/623e5e5b-2c72-4b7e-be84-63953a5e1f38.mp4`
+(contact `…/24ff807f-cc63-45ec-8091-d890a7980ec8.jpg`). Drive: README v4 in the PP02 folder, v3 renamed superseded. Law
+passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 32 points.
+
+## v5, 17 Sep 2026 — the money stop and the revenue-share stop, redone
+
+Faisal's notes on v4: the money slab was covering the text beneath it and the stop was tight; the revenue share wanted a
+better graphic — a visual one, bars for 20%, 30% and 40% against the merchants that earn them, large and in the middle
+above the caption, the shops ghosted into the background for that stop only, nothing overlapping.
+
+So: the money stop keeps "pays you" and the large £100 – £300 in its slab, and the condition is one kicker line well
+below it — PER MERCHANT on "pounds", · PAID AFTER 30 DAYS WITH US on "thirty days" (`sync()` with a tracking range that
+keeps the kicker's spacing) — the two serif lines are gone; the receipt is smaller (3.6 × 4.4) and floats lower above the
+first shop. The revenue-share stop is a bar chart (`chart()`): three bars rising one after another from "share", each
+percentage counting up as its bar grows and popping as it lands, the count that earns it beneath (3+ · 36+ · 111+
+merchants a month), the whole chart lifting a touch on "every month"; the rest line "Most partners start at 20%: three a
+month." centred beneath; the ACTIVE PARTNER pill hangs below the bunting at the right; and the shops behind are ghosted
+for this stop only — `street().fade(i, p)` in `objects3d.js` turns each shop's materials translucent and drops its shadow,
+in over the landing and back out over the walk to the quiet month. The chart shows three of the five tiers; the full
+ladder stays in `figures.json` and the compliance line, and `checks.py` now asserts `TIERS` against the register and that
+each bar carries its count. 50 cues.

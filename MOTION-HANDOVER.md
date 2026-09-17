@@ -101,6 +101,10 @@ These are his words turned into rules. They beat any general instinct.
 17. **The opening count is the hook, with a purpose.** Large, in a glass tile, counting something visible, and flipping
     into the question mark of the question itself — never a lone "?". Liquid glass is used sparingly, under what matters.
     A vehicle that delivers stops in the frame; nothing branded is cut by the frame edge.
+18. **Objects float in the upper half; vehicles sit flat.** The phone, the terminals and the receipts hover above the
+    street, never in front of a shop or in the bottom half. A van never hovers or pitches. Red, animated strikes. A
+    climb never teleports: fixed-width digits, the rate rolling into place. Panels in a stack keep clear space between
+    them. A soft shadow under type and panels for depth, never a hard one.
 
 ---
 
