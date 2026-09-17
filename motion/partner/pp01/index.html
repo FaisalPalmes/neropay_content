@@ -292,7 +292,7 @@ S5.sign($('#end'), { x:-13, y:13.2, z:-1, face:true });
 
 /* ---- the anchors, all by the word ---- */
 const A = {
-  q0:BEAT, c0:at('catch'), shops0:at('here\'s'), three:at('three'), k0:at('revenue'), k0b:at('kicks'), h0b:at('bonus'), nc:at('no catch'),
+  q0:.12, c0:at('catch'), shops0:at('here\'s'), three:at('three'), k0:at('revenue'), k0b:at('kicks'), h0b:at('bonus'), nc:at('no catch'),
   wm:0, h1:0, cafe:at(['cafe', 'café']), take:at('takeaway'), barber:at('barber'), intro:at('introduce them'), pset:at('set them'), psup:at('support'), a1:at('touch'),
   h2:0, row:at('go live'), live:at('live'), dial:at('bonus', 1), b100:at('hundred pounds'), t1:at('goes to'), b200:at('two hundred'), th1:at(['twenty thousand', '20,000']),
   t2:at('and three hundred'), b300:at('three hundred'), th2:at(['over forty', 'over 40']), rest2:end(['over forty', 'over 40']) + .3, ev:at('every business'), pno:at('unlock'),
@@ -380,13 +380,15 @@ function dial(t){
   const on = t >= A.dial; stamp($('#dial'), t, A.dial); if (!on) return;
   /* travel 1: £0 -> £20,000 landing on "two hundred"; travel 2: £20,000 -> £40,000 landing on "three hundred" */
   const d1 = Math.max(.6, A.b200 - A.t1), d2 = Math.max(.6, A.b300 - A.t2);
+  /* travel 1 lands just past £20,000 on "two hundred" — the tier starts at £20,000.01, so the readout says "£20,000+"
+     and the bonus flips on the word; travel 2 lands on £40,000 on "three hundred" and the rest frame says "£40,000+" */
   let v = 0;
-  if (t >= A.t2) v = 20000 + 20000 * eo(seg(t, A.t2, d2));
-  else if (t >= A.t1) v = 20000 * eo(seg(t, A.t1, d1));
+  if (t >= A.t2) v = 20000.5 + 19999.5 * eo(seg(t, A.t2, d2));
+  else if (t >= A.t1) v = 20000.5 * eo(seg(t, A.t1, d1));
   const rest = t >= A.rest2;
   const bonus = TIER(v);
   $('#dBonus').textContent = gbp(bonus);
-  $('#dVol').textContent = rest ? '£40,000+' : gbp(v);
+  $('#dVol').textContent = rest ? '£40,000+' : (v > 20000 && v < 20001) ? '£20,000+' : gbp(v);
   const p = Math.min(1, v / 40000);
   $('#dFill').style.width = (p * 100).toFixed(2) + '%'; $('#dMark').style.left = (p * 100).toFixed(2) + '%';
   show($('#th1'), v >= 20000); show($('#th2'), v >= 40000);
