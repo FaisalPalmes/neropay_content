@@ -143,14 +143,14 @@ assets: [{ t: "cards", size: "sq", cards: [
 Card one is the title card (bigger heading). Every card carries "n / total" top-right. Keep the body
 under about 25 words or it wraps below the wordmark — check the preview.
 
-### 5.3 Exporting without a browser in front of you
+### 5.3 Exporting the finished file
 
-The download buttons need someone clicking them. For a batch, render headlessly: in a cloud session
-Playwright 1.56 is installed globally and its Chromium is at `/opt/pw-browsers/chromium-1194`. Load
-`social.html` over `file://`, then for each post call `window.OVERLAY_ART.postAssets("M2")` to get its
-asset ids and `window.OVERLAY_ART.toPng(id, {})` for each, and write the blobs to
-`social-out/<post id>/`. No such script exists yet — writing `export-assets.mjs` at root and
-git-ignoring `social-out/` is a good first task. Until then, click.
+The download buttons on `social.html` give you the charcoal preview. The finished file is the
+light-stage render from `SOCIAL-BRIEF.md` §6: templates in `social/templates/`, `social/render.mjs`
+reading the same `assets` object and screenshotting each card at its exact pixels in Playwright's
+Chromium (`/opt/pw-browsers/chromium-1194` in a cloud session; Playwright 1.56 is installed globally),
+into `social/out/<post id>/`, git-ignored. Neither exists yet — building them is the first creative
+task, and after that a card is filled, not designed.
 
 ### 5.4 Reels and anything with motion
 
