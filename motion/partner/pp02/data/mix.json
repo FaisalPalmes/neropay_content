@@ -1,0 +1,261 @@
+{
+ "duration": 49.101,
+ "head": 1.11214,
+ "vo": "data/vo.mp3",
+ "target": -14,
+ "tp": -1.5,
+ "bed": {
+  "file": "video/library/bgm/partner-walk-108.mp3",
+  "t": 0,
+  "gain": 0.2,
+  "duck": {
+   "threshold": 0.025,
+   "ratio": 5,
+   "attack": 12,
+   "release": 420
+  },
+  "fade": 2.4
+ },
+ "cues": [
+  {
+   "sfx": "typing",
+   "t": 1.2,
+   "gain": 0.1,
+   "why": "the question types in"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 4.468,
+   "gain": 0.22,
+   "why": "the full stop: the tally flips to a question mark"
+  },
+  {
+   "sfx": "key-press",
+   "t": 4.918,
+   "gain": 0.22,
+   "why": "the caf\u00e9 lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 5.675,
+   "gain": 0.2,
+   "why": "the barber"
+  },
+  {
+   "sfx": "key-press",
+   "t": 6.432,
+   "gain": 0.22,
+   "why": "the takeaway"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 6.91,
+   "gain": 0.16,
+   "why": "the walk to the paid stop"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 7.41,
+   "gain": 0.2,
+   "why": "\"pays you\" rises"
+  },
+  {
+   "sfx": "typing",
+   "t": 9.747,
+   "gain": 0.14,
+   "why": "the receipt prints"
+  },
+  {
+   "sfx": "ping",
+   "t": 10.768,
+   "gain": 0.22,
+   "why": "\u00a3100\u2013\u00a3300 on the marker"
+  },
+  {
+   "sfx": "click",
+   "t": 14.824,
+   "gain": 0.18,
+   "why": "the 30-day strip fills"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 15.531,
+   "gain": 0.16,
+   "why": "the walk to you don't"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 16.416,
+   "gain": 0.24,
+   "why": "strike one"
+  },
+  {
+   "sfx": "key-press",
+   "t": 17.806,
+   "gain": 0.24,
+   "why": "strike two"
+  },
+  {
+   "sfx": "click",
+   "t": 19.853,
+   "gain": 0.24,
+   "why": "strike three"
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 20.805,
+   "gain": 0.14,
+   "why": "the walk to the phone"
+  },
+  {
+   "sfx": "typing",
+   "t": 20.868,
+   "gain": 0.14,
+   "why": "the name types in"
+  },
+  {
+   "sfx": "pop",
+   "t": 21.205,
+   "gain": 0.2,
+   "why": "the phone stands up"
+  },
+  {
+   "sfx": "key-press",
+   "t": 21.431,
+   "gain": 0.16,
+   "why": "the number types in"
+  },
+  {
+   "sfx": "notification",
+   "t": 22.444,
+   "gain": 0.24,
+   "why": "SENT"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 22.894,
+   "gain": 0.2,
+   "why": "the van passes"
+  },
+  {
+   "sfx": "pop",
+   "t": 23.344,
+   "gain": 0.22,
+   "why": "the terminal lands at the door"
+  },
+  {
+   "sfx": "key-press",
+   "t": 24.388,
+   "gain": 0.2,
+   "why": "shop one"
+  },
+  {
+   "sfx": "pop",
+   "t": 24.588,
+   "gain": 0.2,
+   "why": "shop two"
+  },
+  {
+   "sfx": "key-press",
+   "t": 24.788,
+   "gain": 0.2,
+   "why": "shop three"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 25.395,
+   "gain": 0.16,
+   "why": "the walk to Active Partner"
+  },
+  {
+   "sfx": "chime",
+   "t": 25.811,
+   "gain": 0.26,
+   "why": "ACTIVE PARTNER hangs in"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 25.945,
+   "gain": 0.2,
+   "why": "the bunting hangs"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 27.39,
+   "gain": 0.2,
+   "why": "the climb starts"
+  },
+  {
+   "sfx": "click",
+   "t": 30.28,
+   "gain": 0.18,
+   "why": "the rest frame"
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 31.512,
+   "gain": 0.14,
+   "why": "the walk to the quiet month"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 32.563,
+   "gain": 0.2,
+   "why": "the shutters come down"
+  },
+  {
+   "sfx": "key-press",
+   "t": 33.364,
+   "gain": 0.2,
+   "why": "the one shop lights"
+  },
+  {
+   "sfx": "typing",
+   "t": 34.288,
+   "gain": 0.12,
+   "why": "its receipt prints anyway"
+  },
+  {
+   "sfx": "ping",
+   "t": 35.057,
+   "gain": 0.2,
+   "why": "yours"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 36.851,
+   "gain": 0.16,
+   "why": "the walk to the end of the road"
+  },
+  {
+   "sfx": "pop",
+   "t": 37.451,
+   "gain": 0.2,
+   "why": "our terminal rises"
+  },
+  {
+   "sfx": "chime",
+   "t": 37.751,
+   "gain": 0.22,
+   "why": "FREE TO JOIN"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 38.715,
+   "gain": 0.3,
+   "why": "the nameplate hangs in"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 39.265,
+   "gain": 0.14,
+   "why": "the compliance line"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 40.219,
+   "gain": 0.2,
+   "why": "YOUR OWN LINK"
+  }
+ ]
+}

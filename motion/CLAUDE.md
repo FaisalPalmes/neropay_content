@@ -341,6 +341,17 @@ video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on th
 - The timing law counts the words a viewer has to *read* — sentences, kickers, the rest-frame lines — not the numerals
   and chips they glance at; the compliance super is its own beat.
 
+**PP02, 17 Sep 2026 — one street, the camera walks it, the type moves word by word.** The second partner video
+(`motion/partner/pp02/`). What it added: `street()` (a long row of paper shopfronts of mixed heights with shutters, built
+once at scene level behind every stop), `lampPost()`, `phone()` (a canvas screen the composition draws into per frame),
+`receipt()` (paper printing out of a slot through a **local clipping plane** — `renderer.localClippingEnabled` — so the
+print stays sharp) and `van()`; a straight dolly between stops (`walk()`, no pull-back, the stops facing alternately left
+and right); the pavement, kerb and road as DOM planes. Type: word-by-word rise with a stagger and a tracking settle,
+a typewriter whose caret follows the last character, an odometer that snaps digit to digit, strikes, hanging signs, a
+per-word pop on the captions. Two rules learnt: a WebGL object placed near a heading hides it whatever its depth (the
+receipt went to the shop on the far side of the type; the lamp-post signs rose above the projected shop tops), and a
+frame with the street in it needs a shallower box (y to 18, elevation 12°) or the shops read as a strip at the bottom.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**
