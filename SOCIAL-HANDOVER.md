@@ -41,14 +41,15 @@ written where a synthetic voice or presenter is in the piece.
 
 1. `CLAUDE.md` — the ten rails and the list of things that are unconfirmed. Not optional, not skimmable.
 2. `rails.html` — the same rails as the site shows them, with what to measure and what to ignore.
-3. `index.html` — what social is for, the three channels, the five pillars, the engine rule.
-4. `calendar.html` — the sixteen weeks and the seasonality.
-5. `posts.js` — all eighteen posts. Read L1, L3 and L8 twice; that is the register.
-6. `README.md` §"Adding a social post" — the object shape, the `sketch` and `assets` formats.
-7. `STACK.md` — connectors, credentials, skills, toolchain, what the network reaches.
-8. `generation-pack.md` — skim the six scripts and the competitor register. Most Reels and carousels
+3. `SOCIAL-BRIEF.md` — the look, the type, the archetypes, what ships with each post, the route.
+4. `index.html` — what social is for, the three channels, the five pillars, the engine rule.
+5. `calendar.html` — the sixteen weeks and the seasonality.
+6. `posts.js` — all eighteen posts. Read L1, L3 and L8 twice; that is the register.
+7. `README.md` §"Adding a social post" — the object shape, the `sketch` and `assets` formats.
+8. `STACK.md` — connectors, credentials, skills, toolchain, what the network reaches.
+9. `generation-pack.md` — skim the six scripts and the competitor register. Most Reels and carousels
    are cuts of these.
-9. Only when a Reel or a video creative comes up: `video/PLAYBOOK.md`, `video/LESSONS.md`,
+10. Only when a Reel or a video creative comes up: `video/PLAYBOOK.md`, `video/LESSONS.md`,
    `video/AUDIO.md`, then the `/hyperframes` skill.
 
 ## 3. The warehouse as it stands, 17 Sep 2026
@@ -103,9 +104,11 @@ Every change to `posts.js` ends the same way: `node --check posts.js`, a short p
 
 ## 5. Making the creative
 
-The site already knows how to draw four kinds of creative from a post's `assets` field, at the three
-feed sizes, in the brand: charcoal ground `#141416`, white type, yellow `#F5C518` as the one accent,
-wordmark bottom-left, Poppins. This is the route for everything that is not a photograph or a video.
+**The look is `SOCIAL-BRIEF.md`** — light stage, black type, yellow through frost, light-glass slabs,
+Poppins plus one editorial secondary, the archetypes and the production route. Read it before making
+anything. What follows is the data side: the `assets` field on a post is the single source for a
+creative, and the site draws it in the old charcoal drawer as a preview. The finished file comes from
+the brief's templates and renderer (`social/`), on the light stage, from the same `assets` object.
 
 ### 5.1 Stat card, quote card, Reel cover — one `assets` entry each
 
@@ -140,18 +143,17 @@ assets: [{ t: "cards", size: "sq", cards: [
 Card one is the title card (bigger heading). Every card carries "n / total" top-right. Keep the body
 under about 25 words or it wraps below the wordmark — check the preview.
 
-### 5.3 Exporting without a browser in front of you
+### 5.3 Exporting the finished file
 
-The download buttons need someone clicking them. For a batch, render headlessly: in a cloud session
-Playwright 1.56 is installed globally and its Chromium is at `/opt/pw-browsers/chromium-1194`. Load
-`social.html` over `file://`, then for each post call `window.OVERLAY_ART.postAssets("M2")` to get its
-asset ids and `window.OVERLAY_ART.toPng(id, {})` for each, and write the blobs to
-`social-out/<post id>/`. That script is `export-assets.mjs` at root (added 17 Sep 2026; `social-out/` is
-git-ignored): `node export-assets.mjs L2 M2` for named posts, no arguments for every unblocked post,
-`--all` for the blocked ones too. It writes each PNG, the SVG and a `caption.txt` per post. One thing it
-handles that a plain Playwright script would not: the cloud container's Chromium does not trust the
-outbound proxy's certificate, so the Google Fonts requests are served to the page from Node — otherwise
-Chivo silently falls back to a system sans and the export doesn't match the preview.
+The download buttons on `social.html` give you the charcoal preview. `export-assets.mjs` at root (added
+17 Sep 2026) renders that preview headlessly to `social-out/<post id>/` — useful for checking a post's
+assets, not the deliverable. The finished file is the light-stage render from `SOCIAL-BRIEF.md` §6:
+templates in `social/templates/`, `social/render.mjs` reading the same `assets` object and screenshotting
+each card at its exact pixels in Playwright's Chromium (`/opt/pw-browsers/chromium-1194` in a cloud
+session; Playwright 1.56 is installed globally), into `social/out/<post id>/`, git-ignored. One thing
+both scripts handle: the cloud container's Chromium does not trust the outbound proxy's certificate, so
+anything fetched from the network has to be served to the page from Node — the light-stage templates
+avoid the question by loading the committed woff2 fonts by relative path.
 
 ### 5.4 Reels and anything with motion
 
@@ -276,12 +278,13 @@ allowlist; `video/AUDIO.md` §2 lists the hosts to add. Not needed for the socia
 
 ## 10. First-day checklist
 
-- [ ] Read the nine files in §2 in order.
+- [ ] Read the ten files in §2 in order.
 - [ ] `git pull origin main`; `node --check posts.js ideas.js`.
 - [ ] Ask Faisal which posts are already live and add the `posted` field to those.
 - [ ] Add `assets` to every unblocked post that has a stat card, carousel or cover in its `sketch`,
       so the site draws them. L2, M2, M5, M7 first.
-- [x] Write `export-assets.mjs` (§5.3) and export the week's creative. *Done 17 Sep 2026.*
+- [x] Write `export-assets.mjs` (§5.3) for the charcoal preview. *Done 17 Sep 2026.*
+- [ ] Build the `social/` templates and renderer from `SOCIAL-BRIEF.md` §6 and export the week's creative.
 - [ ] Confirm which ElevenLabs account the connector is signed into before any voiced piece.
 - [ ] Note the competitor-register date (18 Aug) and raise the refresh with Faisal.
 

@@ -28,8 +28,8 @@ type is never in the same place twice running.
 16 Sep 2026. Verity stays the merchant series voice. The read is UGC: one continuous piece of talking, condition
 first, no one-liners, tightened gently (`tighten.mjs --gap .32 --min .45 --tempo 1.03`) and gated only where nothing louder than −30 dBFS sits between words (`gate.py --inset .12 --max -30`) — the v2 settings clipped words.
 
-**Sound.** An upbeat instrumental bed throughout (`video/library/bgm/partner-upbeat-118.mp3`, Eleven Music v2,
-117.84 bpm, no vocals), ducked under the voice; effects only on something moving, no effect twice in a row, one
+**Sound.** An upbeat instrumental bed throughout (PP01: `video/library/bgm/partner-upbeat-118.mp3`, 117.84 bpm; PP02:
+`partner-walk-108.mp3`, 107.9 bpm — both Eleven Music v2, no vocals), ducked under the voice; effects only on something moving, no effect twice in a row, one
 soft thud on the CTA landing.
 
 ## Two rulings for every partner video — Faisal, 17 Sep 2026
@@ -60,6 +60,7 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 | # | Folder | What | State |
 |---|---|---|---|
 | 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v4 delivered 17 Sep 2026 (4:5)** — one real card per section in place of the spheres; Faisal's generated plates (`pp01/AI-PLATES.md`) still to come, and the video re-renders when they do — `script.md` and `claims.md` in the folder |
+| 2 | `pp02/` | Your road — the network angle as one walk down one English high street, no place named; the hook question, the receipt, the three strikes, the phone and the van, the lamp-post signs, the quiet month, the nameplate; Olivia, 49 s | **rendering 17 Sep 2026, 4:5 first** — `PROPOSAL.md`, `script.md`, `claims.md` in the folder |
 | — | | Brief A's hook library (37 hooks × two bodies) as swappable openings on a shared body, per BRIEF.md Part 4 | Not started — the body would be cut from PP01's script once its register is approved |
 | — | | Brief B, the 2:30–3:00 long-form explainer, chaptered for YouTube | Not started |
 | — | | Turkish pass | After the English set has run clean for two weeks (BRIEF.md Part 2) |

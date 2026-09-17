@@ -1,0 +1,499 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Partner Programme — your road</title>
+<style>
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-400-italic.woff2)format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-600-italic.woff2)format("woff2");font-weight:600;font-style:italic;font-display:block}
+
+/* the white world — light mode, yellow accents, a little blush and lilac where a graphic earns it */
+:root{ --ground:#FBFAF7; --ink:#141416; --muted:#7C7C82; --line:#DDDCD6; --accent:#F5C518; --good:#2FBF71; --blush:#F4BDB6; --lilac:#C9B8F5; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000}
+#stage{ position:relative; container-type:size; width:1080px; height:1350px; overflow:hidden; color:var(--ink);
+  background:radial-gradient(120% 90% at 50% 38%, #FFFFFF 0%, var(--ground) 45%, #F1EFE8 100%);
+  font-family:Poppins,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+#src{position:absolute; left:0; top:0; visibility:hidden}
+
+/* ---- type: left, right or centre anchored ---- */
+.sign{width:0; height:0}
+.sign>.in{position:absolute; left:0; top:0; transform:translateY(-50%); white-space:nowrap}
+.sign>.in.r{transform:translate(-100%,-50%); text-align:right}
+.sign>.in.c{transform:translate(-50%,-50%); text-align:center}
+.shout{font-family:Poppins; font-weight:700; font-size:120px; letter-spacing:-.035em; line-height:1.02; color:var(--ink); white-space:nowrap}
+.shout.s{font-size:84px}
+.shout.xs{font-size:66px}
+.kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.serif{font-family:"Source Serif 4",Georgia,serif; font-style:italic; font-weight:400; color:var(--ink); letter-spacing:-.005em; line-height:1.12}
+.serif.dim{color:#5E5E64}
+.mask{display:block; overflow:hidden; padding:.08em .12em .18em 0; margin:-.08em -.12em -.18em 0}
+.in.r .mask{padding:.08em 0 .18em .12em; margin:-.08em 0 -.18em -.12em}
+.mask>span{display:block}
+/* v2 type animation: a heading is a run of word masks, each word rising a beat after the last */
+.wds{display:flex; gap:.24em; white-space:nowrap}
+.wds .mask{display:inline-block}
+.wds .mask>span{display:inline-block; will-change:auto}
+.hid{opacity:0}
+.hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 62%; background-size:calc(var(--p) * 100%) .42em; padding:0 .04em; margin:0 -.04em}
+/* a strike drawn through a claim as it is retracted */
+.strike{--s:0; position:relative; display:inline-block}
+.strike::after{content:''; position:absolute; left:-.04em; top:54%; height:.11em; width:calc(var(--s) * 108%); background:var(--ink); border-radius:.06em; transform:rotate(-2deg); transform-origin:0 50%}
+/* the typewriter: every character pre-laid, revealed one by one so nothing reflows */
+.type .ch{opacity:0}
+.type .ch.on{opacity:1}
+.caret{display:inline-block; width:.06em; height:.9em; background:var(--ink); vertical-align:-.12em; margin-left:.04em; opacity:0}
+/* the odometer: two digit columns rolling in tabular mono */
+.odo{display:inline-flex; align-items:flex-start; font-family:"Martian Mono",monospace; font-weight:700; font-size:150px; letter-spacing:-.06em; line-height:1; color:var(--ink); height:1em; overflow:hidden}
+.odo .col{display:inline-block; height:1em; overflow:hidden}
+.odo .col>div{display:flex; flex-direction:column}
+.odo .col span{display:block; height:1em; line-height:1}
+.mark{font-family:Chivo; font-weight:800; font-size:64px; letter-spacing:-.02em; color:var(--ink)}
+.mark b{color:var(--accent); font-weight:800}
+.lbl{font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; letter-spacing:.04em; white-space:nowrap; color:var(--ink)}
+.lbl.m{color:var(--muted); font-weight:400}
+
+/* liquid glass on white: the frosted slab — even white tint, thin bright rim, soft shadow, one sheen pass */
+.pill,.slab,.chip,.plate{--sh:0; position:relative; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(255,250,236,.66) 55%,rgba(252,238,236,.78) 100%);
+  border:1.5px solid rgba(255,255,255,.95);
+  box-shadow:0 22px 34px -20px rgba(20,20,22,.38),0 2px 6px -2px rgba(20,20,22,.10),inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(20,20,22,.06)}
+.pill::after,.slab::after,.plate::after{content:''; position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.1) 65%,transparent 100%);
+  transform:translateX(calc(-140% + var(--sh) * 400%))}
+.pill{display:inline-block; padding:13px 26px 11px; border-radius:18px; white-space:nowrap; font-family:Poppins; font-weight:600; font-size:30px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transform-origin:50% 0}
+.pill.solid{background:linear-gradient(135deg,rgba(245,197,24,.96) 0%,rgba(245,197,24,.78) 55%,rgba(250,214,80,.92) 100%); border-color:rgba(255,242,190,.95)}
+.pill.solid::after{background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.6) 50%,rgba(255,255,255,.1) 65%,transparent 100%)}
+.pill.big{font-size:38px; padding:18px 34px 15px; border-radius:22px}
+/* a hanging sign: a string above, the sign swinging in from a hinge at the top */
+.hang{position:relative; display:inline-block; transform-origin:50% -60px}
+.hang::before{content:''; position:absolute; left:50%; top:-60px; width:2px; height:60px; background:rgba(20,20,22,.35)}
+/* the value badge (brief 03): ink fill, white type */
+.badge{position:relative; display:inline-block; padding:12px 22px 10px; border-radius:16px; background:var(--ink); color:#fff; font-family:"Martian Mono",monospace; font-weight:700; font-size:34px; letter-spacing:-.01em; white-space:nowrap; transform-origin:50% 0; box-shadow:0 18px 30px -18px rgba(20,20,22,.5); font-variant-numeric:tabular-nums}
+.badge small{display:block; font-family:Poppins; font-weight:500; font-size:20px; letter-spacing:.02em; color:rgba(255,255,255,.72); margin-top:2px}
+/* the month bunting: four week chips hung on one string */
+.bunt{position:relative; display:flex; gap:26px; padding-top:34px}
+.bunt::before{content:''; position:absolute; left:-30px; right:-30px; top:0; height:60px; border-top:2px solid rgba(20,20,22,.35); border-radius:50% 50% 0 0 / 100% 100% 0 0}
+.chip{padding:10px 18px 8px; border-radius:14px; font-family:"Martian Mono",monospace; font-weight:700; font-size:26px; letter-spacing:.04em; color:var(--muted); white-space:nowrap; transform-origin:50% -34px}
+.chip.on{color:var(--ink)} .chip.on b{color:#1E8F52}
+.chip b{font-weight:700; margin-left:8px; color:transparent}
+/* the 30-day strip */
+.days{display:flex; gap:6px}
+.days i{display:block; width:22px; height:22px; border-radius:6px; background:rgba(20,20,22,.1)}
+.days i.on{background:var(--accent)}
+/* the street nameplate */
+.plate{display:inline-block; padding:22px 40px 18px; border-radius:14px; border:3px solid var(--ink); background:#fff; font-family:Poppins; font-weight:700; font-size:66px; letter-spacing:-.035em; color:var(--ink); white-space:nowrap; transform-origin:50% 0; box-shadow:0 26px 40px -24px rgba(20,20,22,.45)}
+.plate b{font-weight:700; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 82%; background-size:100% .2em}
+.comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:26px; line-height:1.55; letter-spacing:.01em; color:#5E5E64; width:470px; white-space:normal}
+
+/* ---- captions ---- */
+#caps{position:absolute; inset:0; pointer-events:none}
+.cap{position:absolute; left:50%; bottom:7.5cqh; width:86cqw; transform:translateX(-50%); text-align:center; opacity:0;
+  font-family:Poppins; font-weight:700; font-size:4.3cqmin; line-height:1.18; letter-spacing:-.02em; color:#8E8E94; text-wrap:balance}
+.cap.big{font-size:6cqmin; bottom:8.5cqh; letter-spacing:-.03em; line-height:1.08}
+.cap .w{display:inline-block; padding:0 .06em; margin:0 -.06em; border-radius:.12em; transform-origin:50% 70%}
+.cap .w.on{color:var(--ink); background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 60%; background-size:100% .5em}
+.cap .w.past{color:#6B6B71}
+</style>
+
+<div id="stage">
+  <div id="src">
+    <!-- S0: your road — the tally, the question typed, the three named shops -->
+    <div class="sign" id="tally" data-st="S0"><div class="in"><div class="odo" id="odo"><span class="col"><div id="tens"><span> </span><span>1</span><span>2</span></div></span><span class="col"><div id="units"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>0</span></div></span></div></div></div>
+    <div class="sign" id="qm" data-st="S0"><div class="in"><div class="mask"><span class="shout" style="font-family:'Martian Mono';font-weight:700;font-size:150px;letter-spacing:-.06em">?</span></div></div></div>
+    <div class="sign" id="q0" data-st="S0"><div class="in">
+      <div class="serif dim type" style="font-size:54px" data-text="How many of the business owners"></div>
+      <div class="serif dim type" style="font-size:54px" data-text="on your road actually know your name?"></div>
+    </div></div>
+    <div class="sign" id="l0" data-st="S0"><div class="in c"><div class="lbl m hang hid">Café</div></div></div>
+    <div class="sign" id="l1" data-st="S0"><div class="in c"><div class="lbl m hang hid">Barber</div></div></div>
+    <div class="sign" id="l2" data-st="S0"><div class="in c"><div class="lbl m hang hid">Takeaway</div></div></div>
+
+    <!-- S1: paid — the heading and the figure, the receipt prints out of the door, the 30-day strip -->
+    <div class="sign" id="h1" data-st="S1"><div class="in"><div class="wds shout s" id="h1w">pays you</div></div></div>
+    <div class="sign" id="f1" data-st="S1"><div class="in"><div class="mask"><span class="shout" style="font-size:104px"><span class="hl" id="hlF">£100–£300</span></span></div></div></div>
+    <div class="sign" id="k1" data-st="S1"><div class="in"><div class="mask"><span class="kick">per merchant</span></div></div></div>
+    <div class="sign" id="d1" data-st="S1"><div class="in"><div class="days" id="days"></div></div></div>
+    
+    <!-- S2: you don't — three claims, each struck through as she says it -->
+    <div class="sign" id="y2" data-st="S2"><div class="in"><div class="mask"><span class="serif dim" style="font-size:54px">You don't</span></div></div></div>
+    <div class="sign" id="s2a" data-st="S2"><div class="in"><div class="wds shout s" id="s2aw"><span class="strike" id="stA">sell anything.</span></div></div></div>
+    <div class="sign" id="s2b" data-st="S2"><div class="in"><div class="wds shout s" id="s2bw"><span class="strike" id="stB">set anything up.</span></div></div></div>
+    <div class="sign" id="s2c" data-st="S2"><div class="in"><div class="wds shout s" id="s2cw"><span class="strike" id="stC">make the call.</span></div></div></div>
+
+    <!-- S3: a name and a number — the phone, the van, the terminal -->
+    <div class="sign" id="h3" data-st="S3"><div class="in r"><div class="wds shout s" id="h3w">Send us a name</div></div></div>
+    <div class="sign" id="h3b" data-st="S3"><div class="in r"><div class="wds shout s" id="h3bw">and a number.</div></div></div>
+
+    <!-- S4: Active Partner — the bunting, the lamp-post signs, the climb -->
+    <div class="sign" id="b4" data-st="S4"><div class="in"><div class="bunt">
+      <div class="chip hid" id="wk0">Week 1<b>✓</b></div><div class="chip hid" id="wk1">Week 2<b>✓</b></div><div class="chip hid" id="wk2">Week 3<b>✓</b></div><div class="chip hid" id="wk3">Week 4<b>✓</b></div>
+    </div></div></div>
+    <div class="sign" id="a4" data-st="S4"><div class="in r"><div class="pill solid big hang hid" id="pAct">Active Partner</div></div></div>
+    <div class="sign" id="r4" data-st="S4"><div class="in r"><div class="badge hang hid" id="climb"><span id="cCount">3</span> · <span id="cRate">20%</span><small id="cNote">new active merchants · this month</small></div></div></div>
+
+    <!-- S5: the quiet month — shutters down, one shop open, the receipt prints anyway -->
+    <div class="sign" id="h5" data-st="S5"><div class="in"><div class="mask"><span class="serif" style="font-size:64px">Your bonus is <span class="hl" id="hlY">yours</span> either way.</span></div></div></div>
+
+    <!-- S6: the end of the road -->
+    <div class="sign" id="p6" data-st="S6"><div class="in"><div class="pill big hang hid" id="pFree">Free to join</div></div></div>
+    <div class="sign" id="n6" data-st="S6"><div class="in"><div class="plate hang hid" id="plate">neropay.app/<b>partners</b></div></div></div>
+    <div class="sign" id="l6" data-st="S6"><div class="in"><div class="pill solid hang hid" id="pLink">Your own link</div></div></div>
+    <div class="sign" id="c6" data-st="S6"><div class="in"><div class="mask"><span class="comp">£100–£300 per merchant, paid after 30 days with us. Revenue share needs 3+ new active merchants per calendar month. Terms: neropay.app/partners</span></div></div></div>
+  </div>
+  <div id="caps"></div>
+</div>
+
+<script>window.READY = false;</script>
+<script src="data/words.js"></script>
+<script src="data/caps.js"></script>
+<script type="module">
+import * as THREE from '../../assets/vendor/three.module.js';
+import { neroTerminal, street, lampPost, phone, receipt, van, rise, sink, ease, seg } from '../../lib/objects3d.js';
+import { world, K } from '../../lib/world3d.js';
+import { place as placeGlass, drift as driftGlass } from '../../lib/glass.js';
+await document.fonts.ready;
+await Promise.all(['700 120px Poppins', '600 30px Poppins', '500 26px Poppins', '400 28px Poppins', '800 64px Chivo', '700 44px "Martian Mono"', '400 26px "Martian Mono"', 'italic 400 54px "Source Serif 4"'].map(f => document.fonts.load(f)));
+
+const FPS = 30;
+/* ---------------------------------------------------------------------------
+   PP02, 17 Sep 2026 — your road. One long English high street of paper shopfronts; the camera walks it, turning to
+   face each stop. Olivia's take, tightened gently; composition time = HEAD + word time; every anchor by the word.
+   Faisal's rulings: the bonus is said as paid, only delayed (the tier condition on screen, never in the sentence);
+   nothing may sound like work for the partner — a name and a number is enough and we close it.
+--------------------------------------------------------------------------- */
+const BPM = 107.90, BEAT = 60 / BPM, HEAD = 2 * BEAT, TAIL = 8.3;
+const WORDS = window.WORDS;
+const w = i => HEAD + WORDS[i].s, we = i => HEAD + WORDS[i].e;
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+function find(phrase, nth = 0){ const alts = Array.isArray(phrase) ? phrase : [phrase];
+  for (const ph of alts){ const ws = ph.split(' ').map(norm); let hits = 0;
+    for (let i = 0; i + ws.length <= WORDS.length; i++){ let ok = true;
+      for (let k = 0; k < ws.length; k++) if (norm(WORDS[i + k].w) !== ws[k]) { ok = false; break; }
+      if (ok) { if (hits === nth) return i; hits++; } } }
+  throw new Error('no such words in the take: ' + alts.join(' | ')); }
+const at = (p, n = 0) => w(find(p, n));
+const end = (p, n = 0) => { const a = Array.isArray(p) ? p[0] : p; return we(find(p, n) + a.split(' ').length - 1); };
+const LAST = WORDS.length - 1;
+const DURATION = +(we(LAST) + TAIL).toFixed(3);
+
+const eo = ease.out, eio = ease.inout;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const px = (el, o) => Object.assign(el.style, o);
+function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
+/* v2 type: a heading rises word by word, and its tracking settles from wide to tight as it lands */
+function wrapWords(el){ const text = el.textContent.trim(); const inner = el.querySelector('.strike');
+  const words = text.split(/\s+/); el.innerHTML = words.map(x => `<span class="mask"><span>${x}</span></span>`).join('');
+  if (inner){ const s = document.createElement('span'); s.className = 'strike'; s.id = inner.id; el.replaceChildren(); s.innerHTML = words.map(x => `<span class="mask"><span>${x}</span></span>`).join(''); s.style.display = 'inline-flex'; s.style.gap = '.24em'; el.appendChild(s); }
+  el.dataset.n = words.length; }
+function wordsUp(el, t, start, stagger = .05, dur = .42){ const sp = [...el.querySelectorAll('.mask>span')];
+  sp.forEach((s, i) => { const p = eo(seg(t, start + i * stagger, dur));
+    px(s, { transform:`translateY(${(1 - p) * 140}%)`, opacity:p < .02 ? 0 : 1, letterSpacing:(.03 - .065 * p).toFixed(3) + 'em' }); }); }
+/* the typewriter: characters revealed on a schedule between start and stop; the caret blinks while typing */
+function prepType(el){ const s = el.dataset.text; el.innerHTML = [...s].map(c => `<span class="ch">${c === ' ' ? '&nbsp;' : c}</span>`).join('') + '<span class="caret"></span>'; el.dataset.n = s.length; }
+function typeIn(el, t, start, stop){ const n = +el.dataset.n; const k = t < start ? 0 : t >= stop ? n : Math.floor(n * (t - start) / (stop - start));
+  const ch = el.querySelectorAll('.ch'); ch.forEach((c, i) => c.className = 'ch' + (i < k ? ' on' : ''));
+  const car = el.querySelector('.caret'); if (k > 0 && k < n) ch[k - 1].after(car); else if (k === 0) el.prepend(car); else el.append(car);
+  car.style.opacity = (t >= start - .3 && t < stop + .5 && (t * 3) % 1 < .55) ? 1 : 0; }
+function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = el.style.getPropertyValue('--rot') || '0deg';
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); el.style.setProperty('--sh', seg(t, start + .1, .55).toFixed(3)); }
+/* a hanging sign swings in from its string and settles, no overshoot */
+function hang(el, t, start, dur = .5){ const p = eo(seg(t, start, dur));
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${((1 - p) * -14).toFixed(2)}deg) translateY(${((1 - p) * -30).toFixed(1)}px)` }); el.style.setProperty('--sh', seg(t, start + .2, .55).toFixed(3)); }
+function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, start, dur)).toFixed(3)); }
+function strike(el, t, start, dur = .32){ el.style.setProperty('--s', eo(seg(t, start, dur)).toFixed(3)); }
+function show(el, on){ el.style.opacity = on ? 1 : 0; }
+$$('.wds').forEach(wrapWords); $$('.type').forEach(prepType);
+for (let i = 0; i < 30; i++) $('#days').appendChild(document.createElement('i'));
+
+/* ---- the world: seven stops along one straight street; the view swings left and right from one to the next ---- */
+const stage = $('#stage');
+const Wd = world(stage, { fov:28 });
+Wd.renderer.localClippingEnabled = true;
+stage.appendChild($('#caps'));
+const STEP = 48;
+const mk = (i, spec) => Wd.section({ x:i * STEP, z:0, ry:0, el:12, box:{ x:[-12.5, 12.5], y:[0, 18], z:[-9, 8] }, ty:8.5, ...spec });
+const S0 = mk(0, { az:16 }), S1 = mk(1, { az:-14 }), S2 = mk(2, { az:14 }), S3 = mk(3, { az:-16 }), S4 = mk(4, { az:14 }), S5 = mk(5, { az:-12 }), S6 = mk(6, { az:10, box:{ x:[-12.5, 18], y:[0, 18], z:[-9, 8] } });
+const SECS = [S0, S1, S2, S3, S4, S5, S6];
+const SECN = new Map(SECS.map((S, i) => [S, 'S' + i]));
+/* the pavement, the kerb, the road with its dashes — all DOM planes, so nothing on the floor paints over type */
+Wd.mat(150, 0, 440, 22, { tone:'#EFECE4', r:.6 });
+Wd.mat(150, 17.5, 440, 13, { tone:'#E3E0D8', r:.6 });
+Wd.route(new THREE.Vector3(-70, 0, 11), new THREE.Vector3(370, 0, 11), { w:.34, tone:'#CFCCC3' });
+for (let x = -68; x < 370; x += 6) Wd.route(new THREE.Vector3(x, 0, 17.5), new THREE.Vector3(x + 3, 0, 17.5), { w:.26, tone:'#F7F5EE' });
+/* the street itself: one row of shopfronts behind every stop, scene-level */
+const ST = street(52, { pitch:8.2, x0:-44, scale:1.3 }); ST.position.z = -7.5; Wd.scene.add(ST);
+const shopAt = xw => { let best = 0, bd = 1e9; for (let i = 0; i < ST.n; i++){ const d = Math.abs(ST.x(i) - xw); if (d < bd){ bd = d; best = i; } } return best; };
+const local = (S, i) => ST.x(i) - S.g.position.x;   /* a street shop's x in a section's frame */
+const GLASS = [];
+const SHOP = 0xEDEAE2;
+
+/* S0 — your road: the tally, the question, the three named shops (in the street, in this view) */
+S0.sign($('#tally'), { x:-11.5, y:16.6, z:-2, face:true });
+S0.sign($('#qm'), { x:-11.5, y:16.6, z:-2, face:true });
+S0.sign($('#q0'), { x:-11.5, y:11.4, z:-2, face:true });
+const N0 = [shopAt(-7), shopAt(0), shopAt(7)];
+const SL0 = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => S0.sign(el, { x:local(S0, N0[i]), y:ST.height(N0[i]) + 3.1, z:-7.5, face:true }));
+placeGlass(S0, [['pay', 24, 17, -8, { w:20, rx:-.22, ry:-.62, rz:.42 }]], GLASS);
+
+/* S1 — paid: the lit shop's door prints the receipt; the figure and its condition stand to the right */
+const N1 = shopAt(STEP + 11);
+const RC = S1.add(receipt({ w:5.6, h:10.4 })); { const d = ST.doorTop(N1); RC.position.set(local(S1, N1) + (d.x - ST.x(N1)), d.y + .1, -7.5 + d.z + .2); }
+RC.draw((c, W, H) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.fillStyle = '#141416'; c.textAlign = 'center';
+  c.font = '400 30px "Martian Mono"'; c.letterSpacing = '4px'; c.fillText('BONUS · PER MERCHANT', W / 2, 110);
+  c.font = '700 138px Poppins'; c.letterSpacing = '-6px'; c.fillText('£100–£300', W / 2, 280);
+  c.fillStyle = '#F5C518'; c.fillRect(W * .12, 300, W * .76, 16); c.fillStyle = '#141416';
+  c.font = '500 40px Poppins'; c.letterSpacing = '0px'; c.fillText('paid after 30 days', W / 2, 400); c.fillText('of card payments with us', W / 2, 452);
+  c.setLineDash([8, 10]); c.strokeStyle = 'rgba(20,20,22,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(W * .1, 520); c.lineTo(W * .9, 520); c.stroke(); c.setLineDash([]);
+  c.fillStyle = '#5E5E64'; c.font = '400 30px "Martian Mono"'; c.fillText('£100 · £200 · £300', W / 2, 600); c.fillText('by their first 30 days’ takings', W / 2, 650);
+  c.font = '400 28px "Martian Mono"'; c.fillText('THANK YOU', W / 2, 760);
+  /* the tear along the top */
+  c.fillStyle = '#F1EFE8'; for (let x = 0; x < W; x += 28){ c.beginPath(); c.moveTo(x, 0); c.lineTo(x + 14, 22); c.lineTo(x + 28, 0); c.fill(); } });
+S1.sign($('#h1'), { x:-11.5, y:17.4, z:-2, face:true });
+S1.sign($('#f1'), { x:-11.5, y:13.6, z:-2, face:true });
+S1.sign($('#k1'), { x:-11.5, y:10.4, z:-2, face:true });
+S1.sign($('#d1'), { x:-11.5, y:8.6, z:-2, face:true });
+
+/* S2 — you don't: three claims and three strikes; a lamp post at the edge for the street's sake */
+S2.sign($('#y2'), { x:-11.5, y:17.6, z:-2, face:true });
+S2.sign($('#s2a'), { x:-11.5, y:14.2, z:-2, face:true });
+S2.sign($('#s2b'), { x:-11.5, y:11.2, z:-2, face:true });
+S2.sign($('#s2c'), { x:-11.5, y:8.2, z:-2, face:true });
+const LP2 = S2.add(lampPost({ h:9.5 })); LP2.position.set(12.4, 0, 4); LP2.rotation.y = Math.PI;
+
+/* S3 — a name and a number: the phone on the pavement, the van from our end of the road, the terminal at the door */
+const PH = S3.add(phone({ w:4.6 })); PH.position.set(-6.5, 0, 4); PH.rotation.y = .35;
+const N3 = shopAt(3 * STEP + 6);
+const VAN = S3.add(van()); VAN.position.set(-60, 0, 12.5); VAN.visible = false;
+const TM3 = S3.add(neroTerminal()); TM3.scale.setScalar(.34); { const d = ST.doorTop(N3); TM3.position.set(local(S3, N3) + (d.x - ST.x(N3)) - 2.0, 0, -7.5 + d.z + 1.8); } TM3.rotation.y = -.3; TM3.visible = false;
+S3.sign($('#h3'), { x:12, y:16.6, z:-2, face:true });
+S3.sign($('#h3b'), { x:12, y:13.2, z:-2, face:true });
+
+/* S4 — Active Partner: bunting overhead, the signs on the lamp post, three shops lighting */
+S4.sign($('#b4'), { x:-11.5, y:17.6, z:-2, face:true });
+const LP4 = S4.add(lampPost({ h:16 })); LP4.position.set(12.4, 0, 3); LP4.rotation.y = Math.PI;
+S4.sign($('#a4'), { x:10.2, y:14.3, z:2.4, face:true });
+S4.sign($('#r4'), { x:10.2, y:11.0, z:2.4, face:true });
+const N4 = [shopAt(4 * STEP - 8), shopAt(4 * STEP - 1), shopAt(4 * STEP + 6)];
+
+/* S5 — the quiet month: shutters down on every shop in view but one; that one's receipt prints anyway */
+const N5 = [shopAt(5 * STEP - 14), shopAt(5 * STEP - 7), shopAt(5 * STEP), shopAt(5 * STEP + 7), shopAt(5 * STEP + 14)];
+const OPEN5 = N5[2];
+const RC5 = S5.add(receipt({ w:5.2, h:9.6 })); { const d = ST.doorTop(OPEN5); RC5.position.set(local(S5, OPEN5) + (d.x - ST.x(OPEN5)), d.y + .1, -7.5 + d.z + .2); }
+RC5.draw((c, W, H) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.fillStyle = '#141416'; c.textAlign = 'center';
+  c.font = '400 30px "Martian Mono"'; c.letterSpacing = '4px'; c.fillText('BONUS · PER MERCHANT', W / 2, 110);
+  c.font = '700 138px Poppins'; c.letterSpacing = '-6px'; c.fillText('£100–£300', W / 2, 280);
+  c.fillStyle = '#F5C518'; c.fillRect(W * .12, 300, W * .76, 16); c.fillStyle = '#141416';
+  c.font = '500 40px Poppins'; c.letterSpacing = '0px'; c.fillText('one introduction', W / 2, 400); c.fillText('still paid', W / 2, 452);
+  c.setLineDash([8, 10]); c.strokeStyle = 'rgba(20,20,22,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(W * .1, 520); c.lineTo(W * .9, 520); c.stroke(); c.setLineDash([]);
+  c.fillStyle = '#5E5E64'; c.font = '400 30px "Martian Mono"'; c.fillText('paid after 30 days', W / 2, 600); c.fillText('of card payments with us', W / 2, 650);
+  c.fillStyle = '#F1EFE8'; for (let x = 0; x < W; x += 28){ c.beginPath(); c.moveTo(x, 0); c.lineTo(x + 14, 22); c.lineTo(x + 28, 0); c.fill(); } });
+S5.sign($('#h5'), { x:-11.5, y:16.0, z:-2, face:true });
+
+/* S6 — the end of the road: the street runs out, the nameplate, our terminal at the kerb, the compliance line */
+S6.sign($('#p6'), { x:-11.5, y:18.4, z:-2, face:true });
+S6.sign($('#n6'), { x:-11.5, y:14.4, z:-2, face:true });
+S6.sign($('#l6'), { x:-11.5, y:10.6, z:-2, face:true });
+S6.sign($('#c6'), { x:-11.5, y:6.6, z:-2, face:true });
+const TM6 = S6.add(neroTerminal()); TM6.position.set(18.5, 0, -2); TM6.rotation.y = -.3;
+
+/* ---- anchors, by the word ---- */
+const A = {
+  qEnd:end('name'), cafe:at('cafe'), barber:at('barber'), take:at('takeaway'),
+  pays:at('pays you'), fig:at('hundred to three'), once:at('once'), thirty:at('thirty days'), daysEnd:end('thirty days'),
+  dont:at('and you dont'), sell:at('sell'), setup:at('set anything'), call:at('make the call'),
+  send:at('send us'), name:at('a name'), number:at('a number'), close:at('well close'), foryou:end('for you'),
+  three:at('three times'), month:at('in a month'), act:at('active partner'), share:at('a share'), every:at('every month'), hit:end('hit it'),
+  quiet:at('quiet'), one:at('bring one'), bonus:at('that bonus'), yours:at('still yours'),
+  free:at('free to join'), url:at('slash partners'), link:at('get your link'), comp:0,
+};
+A.comp = A.url + .5;
+const CAM = [
+  { t:0,                        d:0,  sec:S0 },
+  { t:end('takeaway') + .05,    d:.75, sec:S1 },
+  { t:A.daysEnd + .05,          d:.75, sec:S2 },
+  { t:end('the call') + .45,    d:.75, sec:S3 },
+  { t:end('a month') + .05,     d:.75, sec:S4 },
+  { t:A.hit + .05,              d:.75, sec:S5 },
+  { t:end('join') + .05,        d:.75, sec:S6 },
+];
+/* things that must wait for the camera to land */
+A.h1 = CAM[1].t + .45; A.y2 = CAM[2].t + .45; A.h3 = CAM[3].t + .45; A.bunt = CAM[4].t + .5; A.h5 = Math.max(A.bonus - .4, CAM[5].t + .5); A.term6 = CAM[6].t + .3;
+A.free = Math.max(A.free, CAM[6].t + .9);
+let PAD = 0;
+
+const BEATS = [
+  { name:'0 your road',      t:0,               out:CAM[1].t, words:13 },
+  { name:'1 paid',           t:CAM[1].t + .40,  out:CAM[2].t, words:13 },
+  { name:'2 you don\'t',     t:CAM[2].t + .40,  out:CAM[3].t, words:10 },
+  { name:'3 name and number', t:CAM[3].t + .40, out:CAM[4].t, words:7 },
+  { name:'4 active partner', t:CAM[4].t + .40,  out:CAM[5].t, words:10 },
+  { name:'5 quiet month',    t:CAM[5].t + .40,  out:CAM[6].t, words:6 },
+  { name:'6 the close',      t:CAM[6].t + .40,  out:DURATION, words:7 },
+  { name:'6 compliance',     t:A.comp,          out:DURATION, words:21 },
+];
+const BUILD = 0.55, EXIT = 0.30;
+function lawReport(){
+  return BEATS.map(b => { const need = Math.max(1.5, b.words * 0.4), have = (b.out - b.t) - BUILD - EXIT;
+    return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need }; });
+}
+
+/* the walk: between stops the camera dollies along the pavement — target and position slide, a small step up and
+   down in the middle, no pull-back to a wide view. The stops face alternately left and right across the street. */
+function walk(a, b, p){ const target = a.target.clone().lerp(b.target, p); const pos = a.pos.clone().lerp(b.pos, p);
+  pos.y += 1.4 * Math.sin(Math.PI * p); return { pos, target, R:a.R + (b.R - a.R) * p }; }
+function camState(t){
+  let cur = CAM[0], prev = null;
+  for (const c of CAM){ if (t >= c.t){ prev = cur; cur = c; } }
+  if (cur.d > 0 && t < cur.t + cur.d && prev){
+    const p = eio(seg(t, cur.t, cur.d)), a = prev.sec.pose(), b = cur.sec.pose();
+    return { ...walk(a, b, p), moving:p, sec:null, from:prev.sec, to:cur.sec };
+  }
+  const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
+}
+const UP = new THREE.Vector3(0, 1, 0);
+function applyCam(t){
+  const W = stage.clientWidth, H = stage.clientHeight; const sz = Wd.size();
+  if (sz.W !== W || sz.H !== H) Wd.resize(W, H);
+  const pad = CAPS_ON && (W / H) > .7 ? -6 : 0;
+  if (pad !== PAD) { PAD = pad; for (const S of SECS) S.setBox({ x:S.box.x, y:[pad, S.box.y[1]], z:S.box.z }); }
+  const c = camState(t);
+  /* the camera never stops: a slow drift and breath, continuous in time so a walk starts and ends without a jump */
+  const off = c.pos.clone().sub(c.target); const L = off.length();
+  off.applyAxisAngle(UP, .03 * Math.sin(t * .42)); off.y += L * .012 * Math.sin(t * .29 + 1); off.setLength(L * (1 + .01 * Math.sin(t * .23 + 2)));
+  c.pos = c.target.clone().add(off);
+  Wd.setCamera(c.pos, c.target, c.R);
+  $$('[data-active]').forEach(e => e.removeAttribute('data-active'));
+  if (c.sec) $$(`[data-st="${SECN.get(c.sec)}"]`).forEach(e => e.setAttribute('data-active', ''));
+  const leaving = 1 - seg(c.moving, .5, .4);
+  for (const el of $$('.sign')) { const st = el.dataset.st;
+    el.style.opacity = st === SECN.get(c.to) ? 1 : (c.from && st === SECN.get(c.from)) ? leaving : 0; }
+  return c;
+}
+
+/* ---- captions, with a pop on the word being said ---- */
+const CAPS_ON = new URLSearchParams(location.search).get('caps') !== '0';
+const BIG = /hundred to three hundred pounds|close it for you|active partner|still yours|slash partners|know your name/i;
+const CAPL = (CAPS_ON ? window.CAPS : []).map((L, i, all) => {
+  const el = document.createElement('div'); el.className = 'cap' + (BIG.test(L.text) ? ' big' : '');
+  const toks = L.text.split(' ');
+  const ix = L.tok || L.idx.map(i => [i, i]);
+  el.innerHTML = toks.map((tk, k) => { const r = ix[Math.min(k, ix.length - 1)]; return `<span class="w" data-i="${r[0]}-${r[1]}">${tk}</span>`; }).join(' ');
+  $('#caps').appendChild(el);
+  const start = w(L.idx[0]) - .08, next = all[i + 1] ? w(all[i + 1].idx[0]) - .08 : Infinity;
+  return { el, start, end:Math.min(next, we(L.idx[L.idx.length - 1]) + .7), words:[...el.querySelectorAll('.w')] };
+});
+function captions(t){
+  let ci = -1; for (let i = 0; i < WORDS.length; i++){ if (t >= w(i)) ci = i; else break; }
+  for (const L of CAPL){
+    const on = t >= L.start && t < L.end; if (!on){ L.el.style.opacity = 0; continue; }
+    const pin = eo(seg(t, L.start, .24)), pout = 1 - seg(t, L.end - .12, .12);
+    L.el.style.opacity = Math.min(pin, pout).toFixed(3);
+    L.el.style.transform = `translateX(-50%) translateY(${((1 - pin) * 18).toFixed(1)}px) scale(${(.94 + .06 * pin).toFixed(3)})`;
+    for (const sp of L.words){ const [ia, ib] = sp.dataset.i.split('-').map(Number); const cur = ci >= ia && ci <= ib;
+      sp.className = 'w' + (cur ? ' on' : ci > ib ? ' past' : '');
+      sp.style.transform = cur ? `scale(${(1.07 - .07 * eo(seg(t, w(ia), .14))).toFixed(3)})` : ''; }
+  }
+}
+
+/* ---- the tally: an odometer rolling as the shops pass, then a question mark ---- */
+function tally(t){
+  const p = seg(t, .3, A.qEnd - .5); const v = 1 + 13 * p;           /* 1 → 14 as she asks, snapping to each digit */
+  const k = Math.floor(v), f = v - k, vs = k + eo(Math.min(1, f * 2.5));
+  const tens = Math.floor(vs / 10), units = vs % 10;
+  $('#tens').style.transform = `translateY(${(-tens).toFixed(3)}em)`; $('#units').style.transform = `translateY(${(-units).toFixed(3)}em)`;
+  const flip = eo(seg(t, A.qEnd - .15, .35));
+  px($('#odo'), { opacity:1 - flip, transform:`translateY(${(-flip * 40).toFixed(1)}%)` });
+  maskUp($('#qm .shout'), t, A.qEnd - .1, .4);
+}
+
+/* ---- the phone screen: a contact card typing in, then SENT ---- */
+function phoneScreen(t){
+  const kName = Math.floor(4 * seg(t, A.name - .05, .5)), kNum = Math.floor(11 * seg(t, A.number - .05, .55)), sent = eo(seg(t, A.close, .3));
+  PH.draw((c, W, H) => { c.fillStyle = '#FBFAF7'; c.fillRect(0, 0, W, H);
+    c.fillStyle = '#141416'; c.font = '600 44px Poppins'; c.textAlign = 'left'; c.fillText('New lead', 60, 150);
+    c.fillStyle = '#F5C518'; c.fillRect(60, 175, 120, 10);
+    const card = (y, label, val, k) => { c.fillStyle = '#FFFFFF'; c.strokeStyle = 'rgba(20,20,22,.12)'; c.lineWidth = 3; c.beginPath(); c.roundRect(60, y, W - 120, 150, 26); c.fill(); c.stroke();
+      c.fillStyle = '#7C7C82'; c.font = '400 26px "Martian Mono"'; c.letterSpacing = '4px'; c.fillText(label, 96, y + 52);
+      c.fillStyle = '#141416'; c.font = '600 54px Poppins'; c.letterSpacing = '0px'; c.fillText(val.slice(0, k), 96, y + 115);
+      if (k > 0 && k < val.length && (t * 3) % 1 < .55){ const wdt = c.measureText(val.slice(0, k)).width; c.fillRect(96 + wdt + 6, y + 68, 4, 54); } };
+    card(240, 'NAME', 'Café', kName); card(430, 'NUMBER', '07··· ··· ···', kNum);
+    if (sent > 0){ c.save(); c.globalAlpha = sent; const s = 1.1 - .1 * sent; c.translate(W / 2, 720); c.scale(s, s);
+      c.fillStyle = '#2FBF71'; c.beginPath(); c.roundRect(-150, -46, 300, 92, 46); c.fill();
+      c.fillStyle = '#fff'; c.font = '700 36px Poppins'; c.textAlign = 'center'; c.letterSpacing = '4px'; c.fillText('SENT', 16, 13);
+      c.strokeStyle = '#fff'; c.lineWidth = 7; c.lineCap = 'round'; c.beginPath(); c.moveTo(-92, 2); c.lineTo(-74, 20); c.lineTo(-44, -14); c.stroke(); c.restore(); }
+  });
+}
+
+/* ---- the climb on the lamp-post sign ---- */
+const RATE = c => c >= 111 ? 40 : c >= 61 ? 35 : c >= 36 ? 30 : c >= 21 ? 25 : c >= 3 ? 20 : 0;
+const STEPS = [[3, 0, 0], [21, .5, .25], [36, .35, .25], [61, .35, .25], [111, .45, 0]];
+function climb(t){
+  let c = 3;
+  if (t >= A.share){ let tt = A.share, prev = 3;
+    for (let i = 1; i < STEPS.length; i++){ const [n, tr, hold] = STEPS[i]; if (t >= tt) c = Math.round(prev + (n - prev) * eo(seg(t, tt, tr))); tt += tr + hold; prev = n; } }
+  const rest = t >= A.every; if (rest) c = 111;
+  $('#cCount').textContent = rest ? '111+' : String(c); $('#cRate').textContent = RATE(c) + '%';
+  $('#cNote').textContent = rest ? 'Most partners start at 20%: three a month.' : 'new active merchants · this month';
+}
+
+function setFrame(n){
+  const t = n / FPS;
+  applyCam(t);
+  for (const g of GLASS) driftGlass(g, t);
+
+  /* S0 */
+  tally(t);
+  const q = $$('#q0 .type'); typeIn(q[0], t, HEAD, at('owners') + .1); typeIn(q[1], t, at('on your road'), A.qEnd);
+  [[N0[0], A.cafe], [N0[1], A.barber], [N0[2], A.take]].forEach(([i, a], k) => { ST.light(i, eo(seg(t, a, .3))); hang(SL0[k].element.firstElementChild, t, a - .05); });
+
+  /* S1 */
+  wordsUp($('#h1w'), t, A.h1); maskUp($('#f1 .shout'), t, Math.max(A.fig, A.h1 + .15), .5); hl($('#hlF'), t, Math.max(A.fig, A.h1 + .15) + .25, .5);
+  maskUp($('#k1 .kick'), t, Math.max(A.fig, A.h1 + .15) + .25, .42);
+  ST.light(N1, eo(seg(t, A.h1, .35)));
+  RC.setProgress(eo(seg(t, A.pays + .1, 1.4)));
+  const dk = Math.floor(30 * seg(t, A.once + .2, A.daysEnd - A.once - .1)); [...$('#days').children].forEach((el, i) => { el.className = i < dk ? 'on' : ''; el.style.opacity = t >= A.once ? 1 : 0; });
+
+  /* S2 */
+  maskUp($('#y2 .serif'), t, A.y2, .45);
+  wordsUp($('#s2aw'), t, Math.max(A.sell - .35, A.y2 + .1)); strike($('#stA'), t, A.sell + .1);
+  wordsUp($('#s2bw'), t, A.setup - .3); strike($('#stB'), t, A.setup + .15);
+  wordsUp($('#s2cw'), t, A.call - .35); strike($('#stC'), t, A.call + .1);
+  LP2.rotation.z = .01 * Math.sin(t * .7);
+
+  /* S3 */
+  wordsUp($('#h3w'), t, Math.max(A.h3, A.send - .1)); wordsUp($('#h3bw'), t, Math.max(A.h3 + .2, A.number - .35));
+  rise(PH, eo(seg(t, A.h3 - .1, .6)), 10); phoneScreen(t);
+  { const p = eio(seg(t, A.close - .1, 1.5)); VAN.visible = p > 0 && p < 1; VAN.position.x = -60 + 74 * p; ST.light(N3, eo(seg(t, A.close + .9, .35))); }
+  rise(TM3, eo(seg(t, A.close + .85, .5)), 6);
+
+  /* S4 */
+  [0, 1, 2, 3].forEach(i => { const el = $('#wk' + i); hang(el, t, A.bunt + i * .08); el.className = 'chip' + (t >= A.three + .1 + i * .2 && i < 3 ? ' on' : ''); });
+  N4.forEach((i, k) => ST.light(i, eo(seg(t, A.three + .1 + k * .2, .3))));
+  hang($('#pAct'), t, A.act); hang($('#climb'), t, A.share - .1); climb(t);
+  LP4.rotation.z = .01 * Math.sin(t * .7 + 1);
+
+  /* S5 */
+  N5.forEach((i, k) => { if (i === OPEN5) return; ST.shutter(i, eo(seg(t, A.quiet + .1 + k * .12, .55))); });
+  ST.light(OPEN5, eo(seg(t, A.one, .3))); RC5.setProgress(eo(seg(t, A.bonus, 1.2)));
+  maskUp($('#h5 .serif'), t, A.h5, .5); hl($('#hlY'), t, A.yours + .05);
+
+  /* S6 */
+  hang($('#pFree'), t, A.free); hang($('#plate'), t, A.url); hang($('#pLink'), t, A.link); maskUp($('#c6 .comp'), t, A.comp, .5);
+  rise(TM6, eo(seg(t, A.term6, .7)), 16); TM6.rotation.y = -.3 + .06 * Math.sin(t * .8);
+
+  captions(t);
+  Wd.render();
+}
+window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport; window.BEAT = BEAT; window.HEAD = HEAD;
+window.CAMS = CAM.map(c => ({ t:+c.t.toFixed(3), d:c.d, st:SECN.get(c.sec) }));
+window.ANCHORS = Object.fromEntries(Object.entries(A).map(([k, v]) => [k, +(+v).toFixed(3)]));
+setFrame(0);
+window.READY = true;
+</script>

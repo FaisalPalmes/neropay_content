@@ -378,3 +378,102 @@ export function shops(n, { w = 4.4, h = 3.6, d = 3.2, gap = 1.5, color = 0x1D202
 export function rise(obj, p, h = 16) { obj.position.y = -(h + 1) * (1 - p); obj.visible = p > 0; }
 /* sink(obj, p, h): the reverse — down through the paper. */
 export function sink(obj, p, h = 16) { obj.position.y = -(h + 1) * p * p; obj.visible = p < 1; }
+
+/* ---------------------------------------------------------------------------------------------------------------
+   PP02 — the street (17 Sep 2026). One long row of paper shopfronts of mixed heights and widths, a few with shutters,
+   no names and no place — any English high street. light(i, p) as shops(); shutter(i, p) rolls a shutter down over
+   the front; label positions from top(i). Built once for the whole world, not per section.
+--------------------------------------------------------------------------------------------------------------- */
+export function street(n, { pitch = 6.6, x0 = 0, color = 0xEDEAE2, lit = C.accent, seed = 3, scale = 1 } = {}) {
+  const g = new THREE.Group();
+  const cLit = new THREE.Color(lit), cWin = new THREE.Color(0x2B2F38), cAwn = new THREE.Color(0x3C4049), cGlow = new THREE.Color(lit).multiplyScalar(.5), black = new THREE.Color(0);
+  let s = seed; const rnd = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  const items = [];
+  for (let i = 0; i < n; i++) {
+    const w = (4.2 + rnd() * 1.4) * scale, h = (3.3 + rnd() * 1.6) * scale, d = 3.2 * scale;
+    const sh = new THREE.Group(); sh.position.x = x0 + i * pitch;
+    const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, .2), mat(color, { roughness:.78 })); body.position.y = h / 2; body.castShadow = body.receiveShadow = true; sh.add(body);
+    const winM = new THREE.MeshStandardMaterial({ color:cWin.clone(), emissive:0x000000, roughness:.35, metalness:.05 });
+    const win = new THREE.Mesh(new THREE.PlaneGeometry(w * .56, h * .42), winM); win.position.set(-w * .12, h * .5, d / 2 + .015); sh.add(win);
+    const door = new THREE.Mesh(new THREE.PlaneGeometry(w * .18, h * .58), new THREE.MeshStandardMaterial({ color:0x0E1013, roughness:.8 })); door.position.set(w * .3, h * .29, d / 2 + .015); sh.add(door);
+    const awnM = mat(0x3C4049, { roughness:.6 });
+    const awn = new THREE.Mesh(new RoundedBoxGeometry(w * .94, .26, 1.25, 2, .08), awnM); awn.position.set(0, h * .8, d / 2 + .45); awn.castShadow = true; sh.add(awn);
+    /* a shutter: a ribbed grey plane that slides down from under the awning over the window and the door */
+    const shut = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, h * .76), mat(0xC9C7C0, { roughness:.9 }));
+    shut.position.set(0, h * .78 - (h * .76) / 2, d / 2 + .03); shut.scale.y = .001; shut.visible = false; sh.add(shut);
+    /* a couple of roof details so the row is not one silhouette: a parapet on some, a step on others */
+    if (rnd() > .5) { const par = new THREE.Mesh(new RoundedBoxGeometry(w * .6, .5, d * .6, 2, .1), mat(color, { roughness:.8 })); par.position.set((rnd() - .5) * w * .3, h + .25, 0); par.castShadow = true; sh.add(par); }
+    g.add(sh); items.push({ sh, w, h, d, winM, awnM, shut, door:door.position.clone() });
+  }
+  const tmp = new THREE.Color();
+  return Object.assign(g, {
+    pitch, n,
+    light(i, p) { const it = items[i]; it.winM.color.copy(tmp.copy(cWin).lerp(cLit, p)); it.winM.emissive.copy(tmp.copy(black).lerp(cGlow, p)); it.awnM.color.copy(tmp.copy(cAwn).lerp(cLit, p)); },
+    /* the shutter rolls down from the awning: p 0 = up, 1 = down to the pavement */
+    shutter(i, p) { const it = items[i]; const H = it.h * .76; it.shut.visible = p > .002; it.shut.scale.y = Math.max(.001, p); it.shut.position.y = it.h * .78 - (H * p) / 2; },
+    /* local position of shop i's top-centre, and of its door's top (for the receipt) */
+    top(i) { const it = items[i]; return new THREE.Vector3(it.sh.position.x, it.h, 0); },
+    doorTop(i) { const it = items[i]; return new THREE.Vector3(it.sh.position.x + it.door.x, it.h * .58, it.d / 2); },
+    x(i) { return items[i].sh.position.x; },
+    height(i) { return items[i].h; },
+  });
+}
+
+/* a lamp post: a slim pole, a short arm and a lamp head; signs (DOM) hang beside the arm */
+export function lampPost({ h = 12, color = 0x2A2B30 } = {}) {
+  const g = new THREE.Group();
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(.16, .22, h, 16), mat(color, { roughness:.55 })); pole.position.y = h / 2; pole.castShadow = true; g.add(pole);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(.42, .5, .5, 16), mat(color, { roughness:.6 })); base.position.y = .25; base.castShadow = true; g.add(base);
+  const arm = new THREE.Mesh(new THREE.CylinderGeometry(.11, .11, 2.4, 12), mat(color, { roughness:.55 })); arm.rotation.z = Math.PI / 2; arm.position.set(1.2, h - .2, 0); g.add(arm);
+  const head = new THREE.Mesh(new RoundedBoxGeometry(1.1, .5, .7, 3, .12), mat(color, { roughness:.5 })); head.position.set(2.4, h - .35, 0); head.castShadow = true; g.add(head);
+  const lamp = new THREE.Mesh(new THREE.PlaneGeometry(.9, .5), new THREE.MeshStandardMaterial({ color:0xFFF1C2, emissive:0xFFE08A, emissiveIntensity:.6, roughness:.4 })); lamp.rotation.x = Math.PI / 2; lamp.position.set(2.4, h - .61, 0); g.add(lamp);
+  g.userData.h = h; return g;
+}
+
+/* a phone standing on the pavement, leaning back a touch; the screen is a canvas texture the composition draws into
+   (draw(fn) — fn(ctx, W, H)), so a contact card can type in frame by frame. No maker's mark, no UI chrome but ours. */
+export function phone({ w = 4.2, lean = -8 } = {}) {
+  const h = w * 2.1, d = w * .085;
+  const g = new THREE.Group();
+  const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 5, w * .11), mat(0x1E1F23, { roughness:.35, metalness:.15 })); body.castShadow = true; g.add(body);
+  const c = document.createElement('canvas'); c.width = 720; c.height = 1512; const ctx = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+  const scr = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, h * .93), new THREE.MeshStandardMaterial({ map:tex, emissive:0xffffff, emissiveIntensity:.55, emissiveMap:tex, roughness:.3 }));
+  scr.position.z = d / 2 + .012; g.add(scr);
+  const stand = new THREE.Group(); g.rotation.x = THREE.MathUtils.degToRad(lean); g.position.y = h / 2 * Math.cos(THREE.MathUtils.degToRad(lean)) + .04; stand.add(g);
+  return Object.assign(stand, { w, h, draw(fn) { ctx.save(); fn(ctx, c.width, c.height); ctx.restore(); tex.needsUpdate = true; } });
+}
+
+/* a till receipt printing up out of a slot: a paper plane whose visible height grows from the slot (a local clipping
+   plane, so the print stays sharp and unstretched), leaning toward the camera. draw(fn) paints the paper. */
+export function receipt({ w = 3.4, h = 6.4, lean = -14 } = {}) {
+  const g = new THREE.Group();
+  const c = document.createElement('canvas'); c.width = 680; c.height = Math.round(680 * h / w); const ctx = c.getContext('2d');
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+  const clip = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map:tex, roughness:.9, side:THREE.DoubleSide, clippingPlanes:[clip], clipShadows:true }));
+  paper.position.y = h / 2; paper.castShadow = true; g.add(paper);
+  const slot = new THREE.Mesh(new RoundedBoxGeometry(w + .5, .28, .6, 2, .1), mat(0x2A2B30, { roughness:.6 })); slot.position.y = 0; g.add(slot);
+  g.rotation.x = THREE.MathUtils.degToRad(lean);
+  const wp = new THREE.Vector3();
+  return Object.assign(g, {
+    w, h,
+    draw(fn) { ctx.save(); fn(ctx, c.width, c.height); ctx.restore(); tex.needsUpdate = true; },
+    /* p 0..1 of the paper out of the slot — the clip is set in world space each frame */
+    setProgress(p) { g.updateWorldMatrix(true, false); paper.visible = p > .005;
+      const top = g.localToWorld(wp.set(0, h * p, 0)); clip.constant = top.y; },
+  });
+}
+
+/* a small unbranded white van: body, cab, dark glass, four wheels, a thin yellow band. drives along its own x. */
+export function van({ L = 6.2, color = 0xF4F2EC, band = C.accent } = {}) {
+  const g = new THREE.Group(); const W = 2.6, H = 2.2, R = .46;
+  const body = new THREE.Mesh(new RoundedBoxGeometry(L * .62, H, W, 4, .22), mat(color, { roughness:.55 })); body.position.set(-L * .19, R + H / 2, 0); body.castShadow = true; g.add(body);
+  const cab = new THREE.Mesh(new RoundedBoxGeometry(L * .38, H * .82, W, 4, .3), mat(color, { roughness:.55 })); cab.position.set(L * .31, R + H * .41, 0); cab.castShadow = true; g.add(cab);
+  const glass = new THREE.Mesh(new RoundedBoxGeometry(.18, H * .36, W * .9, 2, .06), mat(0x1E2026, { roughness:.25, metalness:.2 })); glass.position.set(L * .5 - .04, R + H * .6, 0); g.add(glass);
+  const side = new THREE.Mesh(new THREE.PlaneGeometry(L * .3, H * .3), mat(0x1E2026, { roughness:.25 })); side.position.set(L * .3, R + H * .62, W / 2 + .01); g.add(side);
+  const bandM = new THREE.Mesh(new THREE.PlaneGeometry(L * .6, .18), mat(band, { roughness:.6 })); bandM.position.set(-L * .19, R + H * .28, W / 2 + .01); g.add(bandM);
+  const wheelG = new THREE.CylinderGeometry(R, R, .5, 20); const wheelM = mat(0x232428, { roughness:.8 });
+  for (const [x, z] of [[L * .3, W / 2], [L * .3, -W / 2], [-L * .3, W / 2], [-L * .3, -W / 2]]) { const wh = new THREE.Mesh(wheelG, wheelM); wh.rotation.x = Math.PI / 2; wh.position.set(x, R, z); wh.castShadow = true; g.add(wh); }
+  return g;
+}
