@@ -65,6 +65,16 @@ row (`data/mix.json`, checked). Master: `mix.mjs` with the limiter stage — −
 
 16:9 first (LinkedIn, no burnt captions), rendered 17 Sep 2026 with `--jpeg`. 4:5 and 9:16 on request (~35 minutes each).
 
-## Delivery
+## Delivery — v1, 17 Sep 2026, for Faisal's review
 
-Recorded here when the 16:9 master has been reviewed and sent.
+- `out/final/nc01-16x9.mp4` — 1920×1080, 87.57 s, 2,627 frames, md5 `5245f549e2f3d361177670eab524eb4c`. Loudness −14.21 LUFS,
+  −1.25 dBTP (the ceiling is −1.5; PP02 shipped at −1.2 — the AAC true-peak read runs a shade over the limiter's target).
+  Single-frame luma spikes: 0. Frame-to-frame jumps over 12 luma: 0. Contact sheet `out/final/contact.jpg`, 23 stills.
+- Higgsfield media store: https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/5218d858-c4b5-45b0-9e4d-683772da5de8.mp4
+  (media `5218d858-c4b5-45b0-9e4d-683772da5de8`). An 11 MB review encode (`-crf 24`) went to Faisal in chat with the sheet.
+- **Known fault carried to v2:** in S4 the serif aside *may need its own regulatory permissions* was partly hidden by the
+  Platform-side terminal standing in front of it; the sign now sits at x 2.5, z 6 (`index.html`), clear of it. Not
+  re-rendered yet — v2 collects Faisal's notes with it.
+- Not yet rendered: 4:5 (Meta, with captions), 9:16, 1:1. About 35 minutes each, on request.
+- Warehouse: `posts.js` L12 carries the video on Tue 22 Sep, blocked until the render is approved; L9 (the two-modes
+  document) moved to Wed 30 Sep as the follow-up.
