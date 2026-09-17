@@ -382,6 +382,11 @@ continuously in a fixed-width slot with the rate rolling up on each threshold; n
 keeps at least a unit of clear space between items, and nothing sits behind another overlay. Type and panels carry a
 soft shadow for depth, never a hard one.
 
+**PP02 v5 — the diagram over a ghosted street (Faisal, 17 Sep 2026).** When a stop explains a figure, the explanation is a
+diagram — bars, large, centred, just above the caption — and the street behind it fades to a trace for that stop only
+(`street().fade(i, p)`), so the figures carry the frame; the other stops keep the street solid. A panel with a large
+figure gets one short condition line with real clearance below it, not two serif lines under the slab's edge.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**

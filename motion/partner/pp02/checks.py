@@ -38,8 +38,11 @@ check('bonus tier 3, £', max(b), 300)
 r = {int(round(row[2] * 100)): row[0] for row in share['value']}
 for pct, n in [(20, 3), (25, 21), (30, 36), (35, 61), (40, 111)]:
     check(f'revenue share {pct}% from', r[pct], n)
-assert 'c >= 111 ? 40 : c >= 61 ? 35 : c >= 36 ? 30 : c >= 21 ? 25 : c >= 3 ? 20 : 0' in html, 'the climb steps at other counts than the register'
-assert '[[3, 0, 0], [21, .5, .25], [36, .35, .25], [61, .35, .25], [111, .45, 0]]' in html, 'the climb must pass every step'
+assert 'const TIERS = [[3, 20], [21, 25], [36, 30], [61, 35], [111, 40]];' in html, 'the chart tiers must be the register'
+assert 'const BARS = [0, 2, 4];' in html, 'the chart shows 20% from 3, 30% from 36, 40% from 111+'
+for n, pct in [(3, 20), (36, 30), (111, 40)]:
+    assert f'>{n}+</b> merchants' in ON_SCREEN or f'<b>{n}+</b>' in html, f'bar {pct}% must carry its count {n}+'
+    assert f'>{pct}%<' in html, f'bar {pct}% label'
 check('Active Partner gate, new merchants', gate['value'], 3)
 
 # ruling 1: the figure is paid after 30 days, the tier condition on screen, never "based on" in the take

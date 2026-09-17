@@ -118,6 +118,14 @@ html,body{background:#000}
 .big3{font-family:Chivo; font-weight:800; font-size:96px; letter-spacing:-.015em; line-height:1.04; text-transform:uppercase; color:var(--ink); white-space:nowrap}
 .big3 .hl{background-position:0 70%; background-size:calc(var(--p) * 100%) .5em}
 .mask.pad{padding:.16em .22em .26em .12em; margin:-.16em -.22em -.26em -.12em}
+.kick.wds{display:flex; gap:.55em}
+/* v5: the revenue share as a bar chart — three tiers rising, the percentage on top, who earns it beneath */
+.chart{display:flex; align-items:flex-end; gap:60px}
+.col{display:flex; flex-direction:column; align-items:center; width:262px}
+.pct{font-family:Poppins; font-weight:700; font-size:112px; letter-spacing:-.045em; line-height:1; color:var(--ink); font-variant-numeric:tabular-nums; margin-bottom:16px; transform-origin:50% 100%}
+.bar{width:262px; height:0; border-radius:26px 26px 14px 14px; background:linear-gradient(180deg,#FBD44A 0%,#F5C518 70%,#E8B70F 100%); box-shadow:0 26px 40px -22px rgba(20,20,22,.45),inset 0 2px 0 rgba(255,255,255,.55)}
+.who{margin-top:18px; font-family:"Martian Mono",monospace; font-weight:400; font-size:24px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:center; line-height:1.35; white-space:nowrap}
+.who b{font-weight:700; color:var(--ink)}
 .c-count{width:4ch; text-align:right}
 .c-arrow{font-family:Poppins; font-weight:700; font-size:110px; line-height:1; color:var(--accent)}
 .chip.on{background:linear-gradient(135deg,rgba(245,197,24,.96) 0%,rgba(250,214,80,.86) 100%); border-color:rgba(255,242,190,.95); color:var(--ink)} .chip.on b{color:var(--ink)}
@@ -148,8 +156,7 @@ html,body{background:#000}
     <!-- S1: paid — the heading on its words, the figure in glass on its words, the receipt on "once", the condition on "thirty days" -->
     <div class="sign" id="h1" data-st="S1"><div class="in c"><div class="wds shout s" id="h1w" style="justify-content:center">pays you</div></div></div>
     <div class="sign" id="f1" data-st="S1"><div class="in c"><div class="slab" id="slabF"><div class="wds hero" id="f1w" style="justify-content:flex-start">£100 – £300</div></div></div></div>
-    <div class="sign" id="k1" data-st="S1"><div class="in c"><div class="mask"><span class="kick">per merchant</span></div></div></div>
-    <div class="sign" id="d1" data-st="S1"><div class="in c"><div class="mask"><span class="serif dim d1a" style="font-size:52px">paid after 30 days</span></div><div class="mask"><span class="serif dim d1b" style="font-size:52px">of card payments with us.</span></div></div></div>
+    <div class="sign" id="k1" data-st="S1"><div class="in c"><div class="kick wds" id="k1w" style="justify-content:center">per merchant · paid after 30 days with us</div></div></div>
 
     <!-- S2: you don't — three claims, each word on its word, struck as she finishes it -->
     <div class="sign" id="s2a" data-st="S2"><div class="in"><div class="wds shout s" id="s2aw"><span class="strike" id="stA">sell anything.</span></div></div></div>
@@ -164,9 +171,13 @@ html,body{background:#000}
     <div class="sign" id="b4" data-st="S4"><div class="in"><div class="bunt">
       <div class="chip hid" id="wk0">Week 1<b>✓</b></div><div class="chip hid" id="wk1">Week 2<b>✓</b></div><div class="chip hid" id="wk2">Week 3<b>✓</b></div><div class="chip hid" id="wk3">Week 4<b>✓</b></div>
     </div></div></div>
-    <div class="sign" id="a4" data-st="S4"><div class="in r"><div class="pill solid big hang hid" id="pAct">Active Partner</div></div></div>
-    <div class="sign" id="r4" data-st="S4"><div class="in"><div class="slab" id="slabR"><div class="c-row"><span class="mask"><span class="c-count" id="cCount">3</span></span><span class="mask"><span class="c-arrow" id="cArrow">→</span></span><span class="mask pad"><span class="c-rate" id="cRate">20%</span></span></div><div class="mask"><span class="kick" id="cNote">new active merchants · this month</span></div></div></div></div>
-    <div class="sign" id="m4" data-st="S4"><div class="in"><div class="mask"><span class="serif" style="font-size:46px">Most partners start at 20%: three a month.</span></div></div></div>
+    <div class="sign" id="a4" data-st="S4"><div class="in r"><div class="pill solid hang hid" id="pAct">Active Partner</div></div></div>
+    <div class="sign" id="ch4" data-st="S4"><div class="in c"><div class="chart" id="chart">
+      <div class="col"><div class="pct" id="pct0">20%</div><div class="bar" id="bar0"></div><div class="who" id="who0"><b>3+</b> merchants<br>a month</div></div>
+      <div class="col"><div class="pct" id="pct1">30%</div><div class="bar" id="bar1"></div><div class="who" id="who1"><b>36+</b> merchants<br>a month</div></div>
+      <div class="col"><div class="pct" id="pct2">40%</div><div class="bar" id="bar2"></div><div class="who" id="who2"><b>111+</b> merchants<br>a month</div></div>
+    </div></div></div>
+    <div class="sign" id="m4" data-st="S4"><div class="in c"><div class="mask"><span class="serif" style="font-size:46px">Most partners start at 20%: three a month.</span></div></div></div>
 
     <!-- S5: the quiet month — shutters on "quiet", one shop on "one", the receipt on "bonus", the line on its words -->
     <div class="sign" id="h5" data-st="S5"><div class="in"><div class="wds serif" id="h5w" style="font-size:80px">Your bonus is <span class="hl" id="hlY">yours</span></div><div class="mask"><span class="serif h5b" style="font-size:80px">either way.</span></div></div></div>
@@ -228,9 +239,9 @@ function wrapWords(el){ const inner = el.querySelector('.strike'); const hlw = e
   if (inner){ const s = document.createElement('span'); s.className = 'strike'; s.id = inner.id; el.replaceChildren(); s.innerHTML = words.map(m).join(''); s.style.display = 'inline-flex'; s.style.gap = '.24em'; el.appendChild(s); }
   el.dataset.n = words.length; }
 /* v3: each word of a heading rises on its own spoken time; the tracking settles from wide to tight as it lands */
-function sync(el, t, ts, dur = .38){ const sp = [...el.querySelectorAll('.mask>span')];
+function sync(el, t, ts, dur = .38, ls = [.03, -.035]){ const sp = [...el.querySelectorAll('.mask>span')];
   sp.forEach((s, i) => { const p = eo(seg(t, ts[Math.min(i, ts.length - 1)], dur));
-    px(s, { transform:`translateY(${(1 - p) * 140}%)`, opacity:p < .02 ? 0 : 1, letterSpacing:(.03 - .065 * p).toFixed(3) + 'em' }); }); }
+    px(s, { transform:`translateY(${(1 - p) * 140}%)`, opacity:p < .02 ? 0 : 1, letterSpacing:(ls[0] + (ls[1] - ls[0]) * p).toFixed(3) + 'em' }); }); }
 /* the typewriter, v3: every character pre-laid and tagged with its word; a word's characters reveal across the time
    she takes to say it, so the line is never ahead of her */
 function prepType(el){ const words = el.dataset.text.split(' '); let html = '';
@@ -291,7 +302,7 @@ const COUNTED = [shopAt(-19), shopAt(-11), shopAt(-3), shopAt(5)];   /* the shop
 const N1S = [shopAt(STEP - 9), shopAt(STEP - 1), shopAt(STEP + 7)];
 const N1 = shopAt(STEP + 11);
 const above = (S, i, dy = .8, z = -5.4) => [local(S, i), ST.height(i) + dy, z];
-const RC = S1.add(receipt({ w:4.4, h:6.8 })); RC.position.set(...above(S1, N1S[0])); RC.userData.y0 = RC.position.y;
+const RC = S1.add(receipt({ w:3.6, h:4.4 })); RC.position.set(...above(S1, N1S[0], .2)); RC.userData.y0 = RC.position.y;
 const paper = (c, W, H, l1, l2, s1, s2) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.textAlign = 'center';
   c.fillStyle = '#F5C518'; c.fillRect(0, 0, W, 340); c.fillStyle = '#141416';
   c.font = '400 30px "Martian Mono"'; c.letterSpacing = '4px'; c.fillText('BONUS · PER MERCHANT', W / 2, 110);
@@ -302,10 +313,9 @@ const paper = (c, W, H, l1, l2, s1, s2) => { c.fillStyle = '#FBF9F2'; c.fillRect
   c.fillStyle = '#F1EFE8'; for (let x = 0; x < W; x += 28){ c.beginPath(); c.moveTo(x, 0); c.lineTo(x + 14, 22); c.lineTo(x + 28, 0); c.fill(); } };
 RC.draw((c, W, H) => paper(c, W, H, 'after 30 days', 'of card payments with us', '£100 · £200 · £300', 'by their first 30 days’ takings'));
 const TM1 = S1.add(neroTerminal()); { const a = above(S1, N1S[2], 1.0, -6); TM1.position.set(a[0], a[1], a[2]); } TM1.userData = { ry:.3, y0:TM1.position.y }; TM1.visible = false;
-S1.sign($('#h1'), { x:0, y:22.4, z:-2, face:true });
-S1.sign($('#f1'), { x:0, y:18.3, z:-1, face:true });
-S1.sign($('#k1'), { x:0, y:15.3, z:-2, face:true });
-S1.sign($('#d1'), { x:0, y:13.2, z:-2, face:true });
+S1.sign($('#h1'), { x:0, y:22.6, z:-2, face:true });
+S1.sign($('#f1'), { x:0, y:18.4, z:-1, face:true });
+S1.sign($('#k1'), { x:0, y:13.9, z:-2, face:true });
 
 /* S2 — you don't */
 S2.sign($('#s2a'), { x:-11.5, y:20.5, z:-1, face:true });
@@ -323,11 +333,16 @@ S3.sign($('#h3'), { x:11.5, y:21.0, z:-1, face:true });
 S3.sign($('#h3b'), { x:11.5, y:18.2, z:-1, face:true });
 
 /* S4 — Active Partner */
-S4.sign($('#b4'), { x:-12, y:22.0, z:-2, face:true });
-S4.sign($('#a4'), { x:12, y:20.1, z:-1, face:true });
-S4.sign($('#r4'), { x:-11.5, y:16.0, z:-1, face:true });
-S4.sign($('#m4'), { x:-11.5, y:10.9, z:-2, face:true });
+S4.sign($('#b4'), { x:-12.5, y:22.5, z:-2, face:true });
+S4.sign($('#a4'), { x:12, y:20.3, z:-1, face:true });
+S4.sign($('#ch4'), { x:0, y:12.1, z:-1, face:true });
+S4.sign($('#m4'), { x:0, y:4.4, z:-1, face:true });
 const N4 = [shopAt(4 * STEP - 8), shopAt(4 * STEP - 1), shopAt(4 * STEP + 6)];
+const GHOST = []; for (let i = shopAt(4 * STEP - 30); i <= shopAt(4 * STEP + 30); i++) GHOST.push(i);   /* the row behind the chart, ghosted for this stop only */
+/* the register, and the three tiers the chart shows (the full ladder stays in figures.json and the compliance line) */
+const TIERS = [[3, 20], [21, 25], [36, 30], [61, 35], [111, 40]];
+const BARS = [0, 2, 4];
+const PX_PER_PCT = 8;
 
 /* S5 — the quiet month */
 const N5 = [shopAt(5 * STEP - 14), shopAt(5 * STEP - 7), shopAt(5 * STEP), shopAt(5 * STEP + 7), shopAt(5 * STEP + 14)];
@@ -353,6 +368,7 @@ const T = {
   sell:times('sell anything'), setup:times('set anything up'), call:times('make the call'),
   send:times('send us a name'), number:times('and a number'),
   bonus:[at('that bonus'), w(find('that bonus') + 1), w(find('that bonus') + 2), at('still yours') + .12],
+  cond:[at('pounds'), at('pounds') + .06, at('thirty days'), at('thirty days') + .05, at('thirty days') + .1, at('thirty days') + .15, at('thirty days') + .2, at('thirty days') + .25, at('thirty days') + .3],
 };
 const A = {
   qEnd:end('name'), cafe:at('cafe'), barber:at('barber'), take:at('takeaway'),
@@ -378,7 +394,7 @@ let PAD = 0;
 
 const BEATS = [
   { name:'0 your road',      t:0,               out:CAM[1].t, words:9 },
-  { name:'1 paid',           t:CAM[1].t + .40,  out:CAM[2].t, words:14 },
+  { name:'1 paid',           t:CAM[1].t + .40,  out:CAM[2].t, words:12 },
   { name:'2 you don\'t',     t:CAM[2].t + .40,  out:CAM[3].t, words:8 },
   { name:'3 name and number', t:CAM[3].t + .40, out:CAM[4].t, words:7 },
   { name:'4 active partner', t:CAM[4].t + .40,  out:CAM[5].t, words:12 },
@@ -511,19 +527,16 @@ function vanDrive(t){
 /* ---- the climb in glass ---- */
 const RATE = c => c >= 111 ? 40 : c >= 61 ? 35 : c >= 36 ? 30 : c >= 21 ? 25 : c >= 3 ? 20 : 0;
 const STEPS = [[3, 0, 0], [21, .5, .25], [36, .35, .25], [61, .35, .25], [111, .45, 0]];
-/* v4: the count runs continuously from 3 to 111 in a fixed-width slot, so the digits never jump; the rate rolls up
-   into place on each threshold; the rest pops once */
-const C0 = A.share + .75, C1 = A.every - .3;
-const cnt = t => 3 + 108 * eio(seg(t, C0, C1 - C0));
-const STEPT = [21, 36, 61, 111].map(n => { let lo = C0, hi = C1; for (let i = 0; i < 30; i++){ const m = (lo + hi) / 2; if (cnt(m) >= n - .5) hi = m; else lo = m; } return hi; });
-function climb(t){
-  const rest = t >= A.every; const c = rest ? 111 : Math.round(cnt(t)); const r = RATE(c);
-  $('#cCount').textContent = rest ? '111+' : String(c); $('#cRate').textContent = r + '%';
-  $('#cNote').textContent = rest ? '111+ new active merchants in one month' : 'new active merchants · this month';
-  if (t < C0) return;
-  const last = [...STEPT, A.every].filter(x => t >= x).pop(); const p = last === undefined ? 1 : eo(seg(t, last, .3));
-  const pr = 1 + .06 * Math.sin(Math.PI * seg(t, A.every, .35));
-  px($('#cRate'), { transform:`translateY(${((1 - p) * 70).toFixed(1)}%) scale(${pr.toFixed(3)})`, opacity:p < .04 ? 0 : 1, transformOrigin:'0 80%' });
+/* v5: the revenue share as three bars rising on "share", one after another, the percentage counting up with each;
+   the rest line lands on "every month". Every bar carries the count that earns it. */
+function chart(t){
+  BARS.forEach((k, j) => { const [n, pct] = TIERS[k]; const start = A.share + .25 + j * .42; const p = eo(seg(t, start, .8));
+    const bar = $('#bar' + j), lab = $('#pct' + j), who = $('#who' + j);
+    bar.style.height = (pct * PX_PER_PCT * p).toFixed(1) + 'px';
+    lab.textContent = Math.round(pct * p) + '%'; const pop = 1 + .06 * Math.sin(Math.PI * seg(t, start + .7, .25));
+    px(lab, { opacity:p < .02 ? 0 : 1, transform:`translateY(${((1 - p) * 40).toFixed(1)}px) scale(${pop.toFixed(3)})` });
+    const q = eo(seg(t, start + .45, .4)); px(who, { opacity:q.toFixed(3), transform:`translateY(${((1 - q) * 16).toFixed(1)}px)` }); });
+  const lift = 1 + .025 * Math.sin(Math.PI * seg(t, A.every, .5)); $('#chart').style.transform = `scale(${lift.toFixed(3)})`; $('#chart').style.transformOrigin = '50% 100%';
 }
 
 function setFrame(n){
@@ -542,9 +555,8 @@ function setFrame(n){
   glass($('#slabF'), t, T.fig[0] - .05, .6, 1.3); sync($('#f1w'), t, T.fig, .4);
   /* the slab grows with the words: its width is the padding plus each word's width as it lands */
   { const rev = T.fig.map(ts => eo(seg(t, ts, .4))); let wdt = SLAB_PAD; FW.forEach((fw, i) => wdt += (fw + (i ? FGAP : 0)) * rev[i]); $('#slabF').style.width = wdt.toFixed(1) + 'px'; }
-  maskUp($('#k1 .kick'), t, A.pounds, .42);
+  sync($('#k1w'), t, T.cond, .4, [.22, .12]);
   RC.setProgress(eo(seg(t, A.once, 1.3))); RC.position.y = RC.userData.y0 + .12 * Math.sin(t * 1.1); RC.rotation.y = .1 * Math.sin(t * .5);
-  maskUp($('#d1 .d1a'), t, A.thirty, .5); maskUp($('#d1 .d1b'), t, A.thirty + .14, .5);
 
   /* S2 */
   sync($('#s2aw'), t, T.sell); strike($('#stA'), t, A.sellE - .1);
@@ -562,8 +574,8 @@ function setFrame(n){
   [0, 1, 2, 3].forEach(i => { const el = $('#wk' + i); swing(el, t, A.land4 + i * .09); const tk = A.land4 + .3 + i * .16; const on = t >= tk && i < 3; el.className = 'chip' + (on ? ' on' : '');
     el.querySelector('b').style.transform = on ? `scale(${(1 + .7 * Math.sin(Math.PI * seg(t, tk, .32))).toFixed(3)})` : ''; });
   hang($('#pAct'), t, A.act);
-  glass($('#slabR'), t, A.share, .6, 2.1); maskUp($('#cCount'), t, A.share + .1, .45); maskUp($('#cArrow'), t, A.share + .15, .45); maskUp($('#cRate'), t, A.share + .2, .45); maskUp($('#cNote'), t, A.share + .3, .42);
-  maskUp($('#m4 .serif'), t, A.every + .1, .45); climb(t);
+  chart(t); maskUp($('#m4 .serif'), t, A.every + .1, .45);
+  { const g = seg(t, CAM[4].t + .1, .55) * (1 - seg(t, CAM[5].t, .5)); GHOST.forEach(i => ST.fade(i, g)); }
 
   /* S5 */
   N5.forEach((i, k) => { if (i === OPEN5) return; ST.shutter(i, eo(seg(t, A.quiet + k * .1, .55))); });
