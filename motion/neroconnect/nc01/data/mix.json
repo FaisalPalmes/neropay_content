@@ -1,5 +1,5 @@
 {
- "duration": 87.54,
+ "duration": 84.47,
  "head": 1.202,
  "vo": "data/vo.mp3",
  "target": -14,
@@ -8,73 +8,338 @@
   "file": "video/library/bgm/neroconnect-pulse-100.mp3",
   "t": 0,
   "gain": 0.2,
-  "duck": { "threshold": 0.025, "ratio": 5, "attack": 12, "release": 420 },
+  "duck": {
+   "threshold": 0.025,
+   "ratio": 5,
+   "attack": 12,
+   "release": 420
+  },
   "fade": 2.6
  },
  "cues": [
-  { "sfx": "sparkle",         "t": 1.2,   "gain": 0.16, "why": "the statement rises word by word" },
-  { "sfx": "impact-bass-2",   "t": 3.35,  "gain": 0.2,  "why": "\"to run one.\" lands" },
-  { "sfx": "whoosh-short",    "t": 4.865, "gain": 0.14, "why": "the flight to the stack" },
-  { "sfx": "pop",             "t": 6.35,  "gain": 0.2,  "why": "the terminal rises" },
-  { "sfx": "click-soft",      "t": 7.4,   "gain": 0.2,  "why": "the till rises" },
-  { "sfx": "pop",             "t": 8.5,   "gain": 0.18, "why": "the ledger rises" },
-  { "sfx": "click",           "t": 9.06,  "gain": 0.16, "why": "SETTLED stamps" },
-  { "sfx": "key-press",       "t": 9.36,  "gain": 0.2,  "why": "the document rises" },
-  { "sfx": "click-soft",      "t": 9.92,  "gain": 0.16, "why": "COMPLIANCE stamps" },
-  { "sfx": "pop",             "t": 10.1,  "gain": 0.18, "why": "the phone rises" },
-  { "sfx": "notification",    "t": 11.22, "gain": 0.14, "why": "the nameplate hangs in: NeroPay." },
-  { "sfx": "sparkle",         "t": 15.33, "gain": 0.22, "why": "the plate rolls to YOUR BRAND; the terminal re-badges" },
-  { "sfx": "whoosh",          "t": 15.87, "gain": 0.14, "why": "the flight to the dashboard" },
-  { "sfx": "pop",             "t": 17.25, "gain": 0.18, "why": "the dashboard rises" },
-  { "sfx": "click-soft",      "t": 20.1,  "gain": 0.14, "why": "merchant row 1" },
-  { "sfx": "key-press",       "t": 20.35, "gain": 0.14, "why": "merchant row 2" },
-  { "sfx": "click-soft",      "t": 20.6,  "gain": 0.14, "why": "merchant row 3" },
-  { "sfx": "key-press",       "t": 20.85, "gain": 0.14, "why": "merchant row 4" },
-  { "sfx": "click-soft",      "t": 21.1,  "gain": 0.14, "why": "merchant row 5" },
-  { "sfx": "key-press",       "t": 21.35, "gain": 0.14, "why": "merchant row 6" },
-  { "sfx": "chime",           "t": 21.9,  "gain": 0.14, "why": "the logo slot fills" },
-  { "sfx": "typing",          "t": 23.42, "gain": 0.12, "why": "the address bar types pay.yourbrand.co.uk" },
-  { "sfx": "ping",            "t": 26.19, "gain": 0.16, "why": "\"your branding\" pill on the terminal" },
-  { "sfx": "sparkle",         "t": 28.28, "gain": 0.16, "why": "the merchants light" },
-  { "sfx": "pop",             "t": 28.4,  "gain": 0.14, "why": "terminal at door 1" },
-  { "sfx": "click-soft",      "t": 28.54, "gain": 0.14, "why": "terminal at door 2" },
-  { "sfx": "pop",             "t": 28.68, "gain": 0.14, "why": "terminal at door 3" },
-  { "sfx": "click-soft",      "t": 28.82, "gain": 0.14, "why": "terminal at door 4" },
-  { "sfx": "whoosh-short",    "t": 29.1,  "gain": 0.14, "why": "the flight under the platform" },
-  { "sfx": "impact-bass-1",   "t": 29.3,  "gain": 0.16, "why": "the platform slab rises" },
-  { "sfx": "pop",             "t": 31.2,  "gain": 0.18, "why": "ACQUIRING grows" },
-  { "sfx": "click-soft",      "t": 32.31, "gain": 0.18, "why": "SETTLEMENT grows" },
-  { "sfx": "sparkle",         "t": 32.45, "gain": 0.14, "why": "the payment path draws" },
-  { "sfx": "chime",           "t": 32.95, "gain": 0.16, "why": "their account lights" },
-  { "sfx": "pop",             "t": 33.79, "gain": 0.18, "why": "COMPLIANCE grows" },
-  { "sfx": "click-soft",      "t": 34.54, "gain": 0.18, "why": "SUPPORT grows" },
-  { "sfx": "whoosh",          "t": 35.1,  "gain": 0.14, "why": "the flight to the two modes" },
-  { "sfx": "pop",             "t": 36.9,  "gain": 0.18, "why": "the Connected table" },
-  { "sfx": "click-soft",      "t": 38.72, "gain": 0.16, "why": "Brand: NeroPay" },
-  { "sfx": "key-press",       "t": 40.39, "gain": 0.16, "why": "Rates: ours" },
-  { "sfx": "click-soft",      "t": 41.53, "gain": 0.16, "why": "Disputes: ours" },
-  { "sfx": "sparkle",         "t": 43.1,  "gain": 0.16, "why": "Start: simpler, on the marker" },
-  { "sfx": "pop",             "t": 44.13, "gain": 0.18, "why": "the Platform table" },
-  { "sfx": "click-soft",      "t": 45.05, "gain": 0.16, "why": "Brand: yours" },
-  { "sfx": "key-press",       "t": 45.94, "gain": 0.16, "why": "Pricing: yours" },
-  { "sfx": "click-soft",      "t": 48.39, "gain": 0.16, "why": "Disputes: yours" },
-  { "sfx": "sparkle",         "t": 50.78, "gain": 0.16, "why": "your name on everything, on the marker" },
-  { "sfx": "whoosh-short",    "t": 51.43, "gain": 0.14, "why": "the flight to who it's for" },
-  { "sfx": "pop",             "t": 52.6,  "gain": 0.18, "why": "the installer's van" },
-  { "sfx": "sparkle",         "t": 54.15, "gain": 0.16, "why": "the software tiles" },
-  { "sfx": "pop",             "t": 58.0,  "gain": 0.18, "why": "the group of shops" },
-  { "sfx": "chime",           "t": 58.65, "gain": 0.14, "why": "the group lights" },
-  { "sfx": "whoosh-cinematic","t": 59.16, "gain": 0.12, "why": "the three sink into the paper" },
-  { "sfx": "pop",             "t": 61.1,  "gain": 0.18, "why": "three cafés rise" },
-  { "sfx": "notification",    "t": 62.35, "gain": 0.14, "why": "PARTNER PROGRAMME sign hangs in" },
-  { "sfx": "click-soft",      "t": 66.4,  "gain": 0.16, "why": "the document rises" },
-  { "sfx": "click",           "t": 67.97, "gain": 0.2,  "why": "PERMISSIONS? stamps" },
-  { "sfx": "whoosh",          "t": 72.36, "gain": 0.14, "why": "the flight to the docs" },
-  { "sfx": "pop",             "t": 72.6,  "gain": 0.18, "why": "the re-badged terminal at the kerb" },
-  { "sfx": "notification",    "t": 74.72, "gain": 0.16, "why": "docs.neropay.app hangs in" },
-  { "sfx": "click-soft",      "t": 76.87, "gain": 0.16, "why": "Then talk to us" },
-  { "sfx": "whoosh-cinematic","t": 77.6,  "gain": 0.16, "why": "the pull-back to the whole world" },
-  { "sfx": "impact-bass-1",   "t": 78.1,  "gain": 0.22, "why": "the end card lands" },
-  { "sfx": "chime",           "t": 79.0,  "gain": 0.14, "why": "Follow us for more" }
+  {
+   "sfx": "sparkle",
+   "t": 1.202,
+   "gain": 0.16,
+   "why": "the statement rises word by word"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 1.992,
+   "gain": 0.12,
+   "why": "the card arcs in"
+  },
+  {
+   "sfx": "ping",
+   "t": 2.85,
+   "gain": 0.2,
+   "why": "the tap: the ripple, the tiles rise"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 3.685,
+   "gain": 0.2,
+   "why": "\"to run one.\" lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 5.295,
+   "gain": 0.14,
+   "why": "the flight to S1"
+  },
+  {
+   "sfx": "pop",
+   "t": 6.422,
+   "gain": 0.2,
+   "why": "the terminal rises"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 7.393,
+   "gain": 0.2,
+   "why": "the till rises"
+  },
+  {
+   "sfx": "pop",
+   "t": 8.403,
+   "gain": 0.18,
+   "why": "the ledger rises"
+  },
+  {
+   "sfx": "click",
+   "t": 9.003,
+   "gain": 0.16,
+   "why": "SETTLED stamps"
+  },
+  {
+   "sfx": "key-press",
+   "t": 9.219,
+   "gain": 0.2,
+   "why": "the document rises"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 9.819,
+   "gain": 0.16,
+   "why": "COMPLIANCE stamps"
+  },
+  {
+   "sfx": "pop",
+   "t": 10.053,
+   "gain": 0.18,
+   "why": "the phone rises"
+  },
+  {
+   "sfx": "notification",
+   "t": 11.241,
+   "gain": 0.14,
+   "why": "the nameplate hangs in: NeroPay."
+  },
+  {
+   "sfx": "sparkle",
+   "t": 14.864,
+   "gain": 0.22,
+   "why": "the plate rolls to YOUR BRAND; the terminal re-badges"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 15.33,
+   "gain": 0.14,
+   "why": "the flight to S2"
+  },
+  {
+   "sfx": "pop",
+   "t": 16.669,
+   "gain": 0.18,
+   "why": "the dashboard rises"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 21.066,
+   "gain": 0.16,
+   "why": "Your logo"
+  },
+  {
+   "sfx": "typing",
+   "t": 22.678,
+   "gain": 0.16,
+   "why": "the address bar types"
+  },
+  {
+   "sfx": "click",
+   "t": 25.26,
+   "gain": 0.16,
+   "why": "Your branding"
+  },
+  {
+   "sfx": "pop",
+   "t": 27.363,
+   "gain": 0.14,
+   "why": "merchant 1 lights"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 27.503,
+   "gain": 0.14,
+   "why": "merchant 2 lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 27.643,
+   "gain": 0.14,
+   "why": "merchant 3 lights"
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 28.087,
+   "gain": 0.14,
+   "why": "the flight to S3"
+  },
+  {
+   "sfx": "ping",
+   "t": 29.321,
+   "gain": 0.18,
+   "why": "the card taps"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 30.212,
+   "gain": 0.16,
+   "why": "pillar 1 grows"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 31.241,
+   "gain": 0.16,
+   "why": "pillar 2 grows"
+  },
+  {
+   "sfx": "chime",
+   "t": 31.882,
+   "gain": 0.18,
+   "why": "the bank lights: their account"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 32.852,
+   "gain": 0.16,
+   "why": "pillar 3 grows"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 33.61,
+   "gain": 0.16,
+   "why": "pillar 4 grows"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 34.145,
+   "gain": 0.14,
+   "why": "the flight to S4"
+  },
+  {
+   "sfx": "click",
+   "t": 36.134,
+   "gain": 0.16,
+   "why": "table one"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 37.28,
+   "gain": 0.14,
+   "why": "row"
+  },
+  {
+   "sfx": "click",
+   "t": 39.202,
+   "gain": 0.14,
+   "why": "row"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 40.697,
+   "gain": 0.16,
+   "why": "table two"
+  },
+  {
+   "sfx": "click",
+   "t": 41.552,
+   "gain": 0.14,
+   "why": "row"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 42.717,
+   "gain": 0.14,
+   "why": "row"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 43.862,
+   "gain": 0.14,
+   "why": "the serif: yours either way"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 46.262,
+   "gain": 0.14,
+   "why": "the flight to S5"
+  },
+  {
+   "sfx": "pop",
+   "t": 47.59,
+   "gain": 0.18,
+   "why": "the van rises"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 49.085,
+   "gain": 0.16,
+   "why": "the tiles"
+  },
+  {
+   "sfx": "pop",
+   "t": 52.83,
+   "gain": 0.18,
+   "why": "the group rises"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 53.976,
+   "gain": 0.12,
+   "why": "they sink"
+  },
+  {
+   "sfx": "pop",
+   "t": 55.879,
+   "gain": 0.18,
+   "why": "the cafés rise"
+  },
+  {
+   "sfx": "notification",
+   "t": 57.183,
+   "gain": 0.14,
+   "why": "the partner sign"
+  },
+  {
+   "sfx": "key-press",
+   "t": 61.141,
+   "gain": 0.18,
+   "why": "the document rises"
+  },
+  {
+   "sfx": "click",
+   "t": 62.964,
+   "gain": 0.16,
+   "why": "AGREED FIRST stamps"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 68.339,
+   "gain": 0.14,
+   "why": "the flight to S6"
+  },
+  {
+   "sfx": "pop",
+   "t": 70.481,
+   "gain": 0.16,
+   "why": "the docs page rises"
+  },
+  {
+   "sfx": "notification",
+   "t": 71.005,
+   "gain": 0.16,
+   "why": "docs.neropay.app hangs in"
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 73.982,
+   "gain": 0.14,
+   "why": "the flight to S7"
+  },
+  {
+   "sfx": "chime",
+   "t": 74.482,
+   "gain": 0.18,
+   "why": "the end card lands"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 74.982,
+   "gain": 0.12,
+   "why": "a row ticks in"
+  },
+  {
+   "sfx": "click",
+   "t": 75.162,
+   "gain": 0.12,
+   "why": "a row ticks in"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 75.342,
+   "gain": 0.12,
+   "why": "a row ticks in"
+  }
  ]
 }

@@ -1,5 +1,7 @@
 # NC01 — proposal (draft for Faisal, 17 Sep 2026 — nothing generated until approved)
 
+> **Superseded in part, 17 Sep 2026 (v2).** The two-modes passage below carried the June playbook's story; the video now says what the September docs say (who pays NeroPay's processing fee, merchant pricing the platform's in both) and names neither mode. `script.md` is the record of what ships.
+
 The NeroConnect intro. The white world, ink type, the yellow accent, Poppins, Olivia, captions in the picture on the
 social crops, none on the 16:9 LinkedIn master. About 80 seconds. No number in it.
 

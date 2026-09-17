@@ -93,10 +93,12 @@ html,body{background:#000}
 #end .kick{font-size:min(2cqmin,24px); display:block}
 #end .h{font-family:Poppins; font-weight:700; font-size:min(5.6cqmin,68px); letter-spacing:-.035em; line-height:1.02; color:var(--ink); margin:1.6cqmin 0 1.4cqmin; text-wrap:balance}
 #end .serif{font-size:min(2.9cqmin,34px); color:#5E5E64; margin-bottom:3cqmin; text-wrap:balance}
-#end .row{display:flex; align-items:baseline; gap:2.2cqmin; padding:1.5cqmin 0 1.3cqmin; border-top:1.5px solid rgba(20,20,22,.10); opacity:0}
+#end .row{display:flex; align-items:baseline; gap:2.2cqmin; flex-wrap:nowrap; padding:1.5cqmin 0 1.3cqmin; border-top:1.5px solid rgba(20,20,22,.10); opacity:0}
 #end .row .k{font-family:"Martian Mono",monospace; font-weight:400; font-size:min(1.9cqmin,22px); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); width:8.5cqmin; flex:none}
 #end .row .v{font-family:Poppins; font-weight:700; font-size:min(3.3cqmin,40px); letter-spacing:-.03em; color:var(--ink)}
 #end .row .v.u{background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 84%; background-size:100% .16em}
+#end .socials{display:inline-flex; gap:1.1cqmin; margin-left:auto; align-self:center}
+#end .socials svg{width:min(3.4cqmin,42px); height:min(3.4cqmin,42px); fill:var(--ink); background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,250,236,.7)); border:1.5px solid #fff; border-radius:22%; padding:.55cqmin; box-shadow:0 8px 14px -8px rgba(20,20,22,.35)}
 #end .mark.sm{position:absolute; right:4.6cqmin; top:4.2cqmin; font-size:min(3.2cqmin,40px)}
 #end .comp{position:absolute; left:6cqw; bottom:4cqh; width:min(70cqw,1300px); text-align:left; font-size:min(1.9cqmin,22px); line-height:1.5; color:#5E5E64}
 
@@ -142,10 +144,9 @@ html,body{background:#000}
 
     <!-- S3: underneath — the platform on four glass pillars, the payment path to the bank -->
     <div class="sign" id="b3" data-st="S3"><div class="in r"><div class="board n r hid" id="board3">
-      <div class="kick">Underneath</div>
+      <div class="kick">Underneath, it's NeroPay</div>
       <div class="wds shout" id="h3w">And underneath, it's us.</div>
     </div></div></div>
-    <div class="sign" id="k3a" data-st="S3"><div class="in c"><div class="lbl m hang hid" id="kTap">The tap</div></div></div>
     <div class="sign" id="k3b" data-st="S3"><div class="in c"><div class="lbl m hang hid" id="kBank">Their account</div></div></div>
 
     <!-- S4: two ways to set it up — who pays our processing fee; merchant pricing is the platform's in both -->
@@ -198,7 +199,13 @@ html,body{background:#000}
       <div class="serif">The terminals, the till, the settlement and the support already exist. You run them under your name.</div>
       <div class="row"><span class="k">Read</span><span class="v u">docs.neropay.app</span></div>
       <div class="row"><span class="k">Talk</span><span class="v">neropay.app</span></div>
-      <div class="row"><span class="k">Follow</span><span class="v">NeroPay on LinkedIn</span></div>
+      <div class="row"><span class="k">Follow</span><span class="v">NeroPay on social media</span>
+        <span class="socials">
+          <svg viewBox="0 0 24 24"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.3-3.6a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M6.4 8.6H3.2V21h3.2V8.6zM4.8 3a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8zM21 13.4c0-3.3-1.8-5-4.3-5-1.9 0-2.9 1-3.4 1.8V8.6h-3.2V21h3.2v-6.2c0-1.6.4-3.2 2.4-3.2 2 0 2.1 1.9 2.1 3.3V21H21v-7.6z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M22.5 7.2s-.2-1.5-.9-2.1c-.8-.8-1.7-.8-2.1-.9C16.6 4 12 4 12 4s-4.6 0-7.5.2c-.4.1-1.3.1-2.1.9-.7.6-.9 2.1-.9 2.1S1.3 8.9 1.3 10.6v1.6c0 1.7.2 3.4.2 3.4s.2 1.5.9 2.1c.8.8 1.9.8 2.4.9 1.7.2 7.2.2 7.2.2s4.6 0 7.5-.2c.4-.1 1.3-.1 2.1-.9.7-.6.9-2.1.9-2.1s.2-1.7.2-3.4v-1.6c0-1.7-.2-3.4-.2-3.4zM9.8 14.6V8.7l5.8 3-5.8 2.9z"/></svg>
+        </span></div>
     </div>
     <div class="comp" id="comp">NeroConnect is provided by NeroPay, the trading name of Nero Panda Ltd.</div>
   </div>
@@ -276,7 +283,7 @@ const mk = (i, spec) => Wd.section({ x:i * STEP, z:0, ry:0, el:15, box:{ x:[-17,
 const S0 = mk(0, { az:-8, box:{ x:[-19, 19.5], y:[0, 19.5], z:[-6.5, 7] }, ty:9 });
 const S1 = mk(1, { az:10, box:{ x:[-18, 18], y:[0, 19], z:[-6.5, 7] } });
 const S2 = mk(2, { az:-10, box:{ x:[-18, 21], y:[0, 18.5], z:[-6.5, 7] } });
-const S3 = mk(3, { az:6, el:12, box:{ x:[-20, 22], y:[0, 20.5], z:[-6.5, 8.5] }, ty:9 });
+const S3 = mk(3, { az:6, el:12, box:{ x:[-21, 22], y:[0, 20.5], z:[-6.5, 8.5] }, ty:9 });
 const S4 = mk(4, { az:8, box:{ x:[-18, 19], y:[0, 19], z:[-6.5, 7] } });
 const S5 = mk(5, { az:-9, box:{ x:[-19, 20], y:[0, 17], z:[-6.5, 7] }, ty:7.5 });
 const S6 = mk(6, { az:7, box:{ x:[-17, 17], y:[0, 18.5], z:[-6.5, 7] } });
@@ -381,18 +388,17 @@ placeGlass(S2, [['pay', -19.5, 4.6, 7, { w:9, rx:-.3, ry:.8, rz:.25 }]], GLASS);
 
 /* S3 — underneath: the platform (a small street of theirs, under your name) floats; four glass pillars grow under it
    on their words and catch it; a card is tapped at the left, the payment pulses along the floor to their bank */
-S3.sign($('#b3'), { x:19, y:16.4, z:BZ });
-const PLX = [-13.5, -8.2, -2.9, 2.4], PLH = 12;
+S3.sign($('#b3'), { x:21, y:15.2, z:BZ });
+const PLX = [-15.5, -10.4, -5.3, -.2], PLH = 12;
 const PILS = [['wave', 'Acquiring'], ['pound', 'Settlement'], ['tick', 'Compliance'], ['spark', 'Support']].map(([m, l], i) => { const p = S3.add(glassPillar({ h:PLH, w:3.6, d:3.2, mark:m, label:l })); p.position.set(PLX[i], 0, 0); return p; });
-const PLAT = S3.add(shelf({ w:22, d:8, h:.8, mark:true })); PLAT.position.set(-5.5, PLH + .9, 0);
-const PSH = S3.add(shopGroup(3, { w:2.6, h:2.2, d:2.2, gap:.3 })); PSH.position.set(-9.5, PLH + .9 + .8, -.4);
-const PTM = S3.add(brandTerminal()); PTM.scale.setScalar(.27); PTM.brand(1); PTM.position.set(-1.2, PLH + .9 + .8, .6); PTM.rotation.y = -.3;
-const TAPTM = S3.add(brandTerminal()); TAPTM.scale.setScalar(.32); TAPTM.brand(1); TAPTM.position.set(-17.5, 0, 5.2); TAPTM.rotation.y = .55;
+const PLAT = S3.add(shelf({ w:22, d:8, h:.8, mark:true })); PLAT.position.set(-7.85, PLH + .9, 0);
+const PSH = S3.add(shopGroup(3, { w:2.6, h:2.2, d:2.2, gap:.3 })); PSH.position.set(-12, PLH + .9 + .8, -.4);
+const PTM = S3.add(brandTerminal()); PTM.scale.setScalar(.27); PTM.brand(1); PTM.position.set(-3.6, PLH + .9 + .8, .6); PTM.rotation.y = -.3;
+const TAPTM = S3.add(brandTerminal()); TAPTM.scale.setScalar(.32); TAPTM.brand(1); TAPTM.position.set(-18.2, 0, 6.2); TAPTM.rotation.y = .55;
 const CARD3 = S3.add(paymentCard({ w:4.2 })); CARD3.rotation.set(-.5, .4, .1);
-const BANK = S3.add(bank()); BANK.position.set(16, 0, 4.5); BANK.rotation.y = -.28;
-const PATH = S3.add(pathLine({ x:-16.2, z:7.6 }, { x:14, z:7.6 })); PATH.set(0);
-S3.sign($('#k3a'), { x:-17.5, y:8.2, z:5.2 });
-S3.sign($('#k3b'), { x:16, y:10.4, z:4.5 });
+const BANK = S3.add(bank()); BANK.position.set(15.5, 0, 4.5); BANK.rotation.y = -.28;
+const PATH = S3.add(pathLine({ x:-16.8, z:8.2 }, { x:13.5, z:8.2 })); PATH.set(0);
+S3.sign($('#k3b'), { x:15.5, y:10.2, z:4.5 });
 
 /* S4 — two arrangements: the board says what changes (who pays our processing fee), the tables say it row by row,
    the serif says what does not change; one card at the edge */
@@ -440,13 +446,13 @@ const A = {
   every:at('everything'), exists:end('already exists'), term:at('card terminals'), till:at('till software'), settle:at('the settlement'), comp:at('the compliance'), supp:at('support desk'),
   built:at('we built'), npay:at('for neropay'), ncon:at('neroconnect'), own:at('own name'), ownEnd:end('own name'),
   how:at('heres how'), sign:at('sign up'), dash:at('one dashboard'), everyM:at('every merchant'), lookEnd:end('look after'),
-  logo:at('your logo'), dom:at('your domain'), addr:at('address bar'), brand:at('your branding'), termSelf:at('terminal itself'), bring:at('you bring'), merchEnd:end('the merchants'),
+  logo:at('your logo'), dom:at('your domain'), addr:at('address bar'), brand:at(['your branding', 'youre branding']), termSelf:at('terminal itself'), bring:at('you bring'), merchEnd:end('the merchants'),
   under:at('and underneath'), us:at('its us'), acq:at('card acquiring'), money:at('money landing'), account:at('their account'), paper:at('paperwork'), supp2:at('the support', 1), supp2End:end('the support', 1),
-  two:at('two ways'), conn:at('connected mode'), npName:at('neropay name'), rates:at('merchant rates'), disp:at('handle the disputes'), simpler:at('simpler start'),
-  plat:at('platform mode'), yourBrand:at('your brand'), pricing:at('your pricing'), resp:at('responsibility'), disp2:at('disputes included'), everything:at('on everything'), everythingEnd:end('on everything'),
+  two:at('two ways'), platPays:at('either your platform'), npFee:at('neropays processing'), bills:at(['bills your merchants', 'builds your merchants']),
+  merchPays:at('or each merchant'), direct:at('pays it directly'), onTop:at('your fee on top'), either:at('either way'), youSet:at('you set what'), everythingEnd:end('merchants pay'),
   who:at('who its for'), epos:at('epos installers'), soft:at('software companies'), group:at('group of merchants'), groupEnd:end('of merchants'),
-  isnt:at('who it isnt'), cafes:at('three cafes'), partner:at('partner program'), door:at('right door'), intro:at('one introduction'), nothing:at('nothing to run'),
-  plat2:at('platform mode', 1), reg:at('regulatory permissions'), conv:at('a conversation'), before:at('before a contract'), notAfter:end('not after'),
+  isnt:at('who it isnt'), cafes:at('three cafes'), partner:at(['partner programme', 'partner program']), door:at('right door'), intro:at('one introduction'), nothing:at('nothing to run'),
+  setup:at('depending on the setup'), reg:at('regulatory questions'), conv:at('a conversation'), before:at('before a contract'), notAfter:end('not after'),
   docs:at('documentation'), publicEnd:end('is public'), read:at('read it'), url:at('docs'), urlEnd:end(['docs neropay app', 'docs neropay app'], 0), talk:at('talk to us'), talkEnd:end('talk to us'),
   thats:at('thats it'), follow:at('follow us'), lastEnd:we(LAST),
 };
@@ -470,10 +476,10 @@ const BEATS = [
   { name:'1 the stack',      t:CAM[1].t + .40,   out:CAM[2].t + .4, words:15 },
   { name:'2 the dashboard',  t:CAM[2].t + .40,   out:CAM[3].t + .4, words:17 },
   { name:'3 underneath',     t:CAM[3].t + .40,   out:CAM[4].t + .4, words:12 },
-  { name:'4 two ways',       t:CAM[4].t + .40,   out:CAM[5].t + .4, words:31 },
+  { name:'4 two ways',       t:CAM[4].t + .40,   out:CAM[5].t + .4, words:26 },
   { name:'5 for and not',    t:CAM[5].t + .40,   out:CAM[6].t + .4, words:38 },
   { name:'6 the docs',       t:CAM[6].t + .40,   out:CAM[7].t + .4, words:11 },
-  { name:'7 the end card',   t:A.end,            out:DURATION, words:14 },
+  { name:'7 the end card',   t:A.end,            out:DURATION, words:16 },
   { name:'7 the footer',     t:A.end,            out:DURATION, words:13 },
 ];
 const BUILD = 0.55, EXIT = 0.30;
@@ -515,7 +521,7 @@ function applyCam(t){
 
 /* ---- captions, with a pop on the word being said ---- */
 const CAPS_ON = new URLSearchParams(location.search).get('caps') !== '0';
-const BIG = /to run one|your own name|connected mode|platform mode|docs|who it isn't/i;
+const BIG = /to run one|your own name|two ways|either way|docs|who it isn't/i;
 const CAPL = (CAPS_ON ? window.CAPS : []).map((L, i, all) => {
   const el = document.createElement('div'); el.className = 'cap' + (BIG.test(L.text) ? ' big' : '');
   const toks = L.text.split(' ');
@@ -580,14 +586,14 @@ function setFrame(n){
   { let maxR = 0; [A.acq, A.money, A.paper, A.supp2].forEach((a, i) => { const r = eo(seg(t, a, .6)); PILS[i].setRise(r); maxR = Math.max(maxR, r); });
     const bob = .35 * Math.sin(t * .6) * (1 - maxR); PLAT.position.y = PLH + .9 + bob; PSH.position.y = PLH + 1.7 + bob; PTM.position.y = PLH + 1.7 + bob;
     PSH.light(eo(seg(t, A.us + .2, .5)));
-    const p = tap(CARD3, t, A.h3 + .1, { x:-21, y:6.5, z:9 }, { x:-16.3, y:3.4, z:6.4 }); hang($('#kTap'), t, A.h3 + .7);
+    const p = tap(CARD3, t, A.us + .1, { x:-22, y:7, z:9.5 }, { x:-17, y:3.5, z:7.4 });
     PATH.set(eo(seg(t, A.acq + .1, 1.3))); PATH.pulse(t); BANK.light(eo(seg(t, A.account, .45))); hang($('#kBank'), t, A.account + .1); }
 
   /* S4 — two arrangements (anchored to v1's words for now) */
   boardIn($('#board4'), t, A.h4 - .3); wordsUp($('#h4w'), t, Math.max(A.h4, A.two), .06);
-  table('#slabC', t, [Math.max(A.h4 + .1, A.conn), A.npName, A.rates]);
-  table('#slabP', t, [A.plat, A.yourBrand, A.pricing]);
-  maskUp($('#s4 .serif'), t, A.resp + .35, .5);
+  table('#slabC', t, [A.platPays, A.npFee, A.bills]);
+  table('#slabP', t, [A.merchPays, A.direct, A.onTop]);
+  maskUp($('#s4 .serif'), t, A.either, .5);
 
   /* S5 — for, and not for */
   boardIn($('#board5a'), t, A.h5 - .3); wordsUp($('#h5aw'), t, Math.max(A.h5, A.who), .06);
@@ -600,7 +606,7 @@ function setFrame(n){
   boardIn($('#board5b'), t, A.isnt - .1); wordsUp($('#h5bw'), t, A.isnt + .1, .06);
   rise(CAF5, eo(seg(t, A.cafes - .1, .6)), 5); CAF5.light(eo(seg(t, A.cafes + .3, .4)));
   hang($('#pPartner'), t, A.partner); maskUp($('#s5a .serif'), t, A.intro, .5);
-  rise(DOC5, eo(seg(t, A.plat2 - .1, .6)), 11); drawDoc5(eo(seg(t, A.reg + .15, .4)));
+  rise(DOC5, eo(seg(t, A.setup - .1, .6)), 11); drawDoc5(eo(seg(t, A.reg + .15, .4)));
   maskUp($('#s5b .serif'), t, A.conv, .5);
 
   /* S6 — the docs */

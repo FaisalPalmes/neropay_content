@@ -16,7 +16,7 @@ done
 M=out/final/$EP-16x9.mp4; [ -f "$M" ] || M=out/final/$EP-4x5.mp4; [ -f "$M" ] || exit 0
 ffmpeg -i "$M" -af "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json" -f null - 2>&1 | grep -E '"input_i"|"input_tp"'
 T=/tmp/claude-0/nc01; mkdir -p $T; rm -f $T/cs_*.png
-for t in 1 3.2 6.5 9.5 12 15.4 19 24 28.5 31 33.5 38 44 49 53 57 62 67 71 75 78.5 82 86; do ffmpeg -nostdin -y -v error -ss $t -i "$M" -frames:v 1 $T/cs_$(printf '%05.2f' $t).png; done
+for t in 1 3.4 6.5 9.5 12 14.8 18 23 27 30 33 36 40 44 48 52 56 60 64 68 72 76 80 84; do ffmpeg -nostdin -y -v error -ss $t -i "$M" -frames:v 1 $T/cs_$(printf '%05.2f' $t).png; done
 ffmpeg -y -v error -pattern_type glob -i "$T/cs_*.png" -filter_complex "scale=480:-1,tile=4x6:padding=8:margin=8:color=0x1A1D22" -frames:v 1 out/final/contact.jpg
 ffmpeg -nostdin -v error -i "$M" -vf "scale=480:270,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=$T/yavg.txt" -f null -
 python3 - <<PY
