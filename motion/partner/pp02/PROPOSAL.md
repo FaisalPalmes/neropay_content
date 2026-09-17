@@ -55,8 +55,8 @@ street of paper shopfronts, turning to face each stop, never still. The type sta
 ## Type animation — the upgrade
 
 - **Per-word rise with a stagger** for every heading: words mask up one after another, 40 ms apart, not the whole line at once.
-- **Typewriter** for the hook question and the phone messages, with the full stop landing on a tick.
-- **Odometer roll** for 98 and the climb: digits roll vertically in tabular mono, never fade or count in place.
+- **Typewriter** for the hook question, with the full stop landing on a tick.
+- **Odometer roll** for the tally and the climb: digits roll vertically in tabular mono, never fade or count in place.
 - **Tracking settle** on the big words: letter-spacing tightens from wide to tight over 300 ms as the word lands.
 - **The highlighter draws** left to right under the hit word, on the beat, instead of appearing.
 - **A strike** through "sell", drawn as she says it.
@@ -66,7 +66,7 @@ street of paper shopfronts, turning to face each stop, never still. The type sta
 ## New objects (three.js, `objects3d.js`)
 
 A long street with mixed shopfronts and shutters (`street()`), a kerb and road with a dashed centre line, a lamp post with
-hanging signs, a phone slab with our screen texture, a receipt strip that prints and curls, a small unbranded van, a
+hanging signs, a receipt strip that prints and curls, a small unbranded van, a
 street nameplate. One card at the edge as PP01, or none if it competes with the street.
 
 ## Sound
@@ -77,7 +77,7 @@ on the full stop. None twice in a row.
 
 ## Length and crops
 
-About 45 seconds, shorter than PP01's 68. 4:5 first for Meta, then 9:16 and 1:1 if wanted.
+About 42 seconds, shorter than PP01's 68. 4:5 first for Meta, then 9:16 and 1:1 if wanted.
 
 ## What I need from Faisal
 
