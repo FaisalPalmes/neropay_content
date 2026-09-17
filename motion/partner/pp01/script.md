@@ -11,7 +11,48 @@ video, in place of the merchant series' Verity.
 them as confirmed records and the exports carry no draft mark. (v1, the night before, was a DRAFT build on the same
 figures while three items were open — that day is over.)
 
-## The take, as generated (eleven_v3, one take)
+## v3, 17 Sep 2026 — the earnings hook, the new close, the big spheres, a gentler tighten
+
+Faisal's notes on v2: the hook assumed the viewer already knew us — lead with the potential earnings instead, as if they
+know nothing about NeroPay, then how and why it is easy; redo the ending, copy and picture, the link is
+**neropay.app/partners**; no small spheres floating about, a few very large ones half in the frame instead; the breath
+gate was clipping words — be lenient, a split second of gap is fine. So v3 is a new script and a new take, the same world.
+
+**The v3 take (Olivia, eleven_v3, one take, 69.0 s raw, 1,137 credits, flow `V5Z2DUgxnS9rAnIxR1yP`, node `f2AhMX604HdfokuGr0Fj`):**
+
+> [excited] You could be earning a hundred to three hundred pounds for every café, takeaway or barber you introduce to
+> a card machine company. Here's how it works, and why you don't need to sell anything. We're NeroPay, we do card
+> terminals with free till software for UK businesses. You know a business that takes card payments, you introduce them
+> to us, and that's your whole job, because we go and set them up and we do the support. [warmly] When they go live you
+> get a bonus for that one business, a hundred pounds if they take up to twenty thousand in their first month, two
+> hundred over that, and three hundred once they're over forty thousand. Every one you introduce pays you, and there's
+> nothing to unlock. Then if you bring three or more in the same month, you're an Active Partner, and you also get a
+> share of what all your merchants' card payments earn us, not just the new three, every month you hit it. And if you
+> only bring one that month, you still get your bonus, it's yours either way. It's free to join, and you get your own
+> link to share. Go to NeroPay dot app slash partners, and think about who you'd introduce first.
+
+The hook is the brief's "you could be earning" shape (Part 4): per merchant, with "£100–£300 · per merchant · based on
+their first 30 days" on the same frame. "Why you don't need to sell anything" is the brief's A4 line. "Free till
+software" is the one merchant-side claim the brief permits. No banned register; the gate passes.
+
+**The read, gently.** `tighten.mjs --gap .32 --min .45 --tempo 1.03`: 14 gaps cut to 0.32 s (4.5 s removed), the
+take at 1.03× — 69.0 s → 64.5 s → 62.6 s. `gate.py --inset .12 --max -30`: only nine gaps muted, with 120 ms of every
+word left untouched either side, and nothing louder than −30 dBFS touched. The two v2 settings that clipped words
+(inset 60 ms, max −18) are not used again.
+
+**The picture, v3.** S0 is the hook: *You could be earning* → **£100–£300** on a yellow marker → *for every business you
+introduce.* → the condition kicker → *How it works, and why you don't sell anything.*; the three shops light on café,
+takeaway, barber. S1 is who we are: the NeroPay mark, **Card terminals. Free till software.**, the shops rising on
+"business that takes card payments" with the paths from YOU on "introduce them to us", the pills, a terminal beside each
+shop on "set them up", *that's your whole job.* S2–S4 as v2. S5 is the new close: FREE TO JOIN · YOUR OWN LINK TO
+SHARE, **neropay.app/partners** with the marker drawing on "slash partners", *Who would you introduce first?*, the three
+shops coming back and lighting one by one on "introduce first", our terminal at the right, the compliance super with
+the new link. The small spheres are gone; each section has two very large pale ones (yellow, blush or lilac) sitting
+half in the frame at the edges, bobbing slowly, no shadow. The share section's kicker was dropped (the spoken sentence
+carries the approved wording; the slab's note says "a share of the whole network"). 42 cues re-timed from the anchors.
+Duration 68.1 s.
+
+## v2 — the take (superseded by v3 above)
 
 > [warmly] Okay, here's the catch first, because we'd rather you heard it from us than found it in the terms: the
 > revenue share only kicks in when you're introducing three businesses a month, and the bonus has no catch at all.

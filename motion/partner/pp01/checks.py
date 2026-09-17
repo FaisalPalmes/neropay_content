@@ -20,16 +20,15 @@ gate = figure('partner_active_gate')
 html = (EP / 'index.html').read_text()
 ON_SCREEN = ' '.join(re.sub(r'<[^>]+>', ' ', m) for m in re.findall(r'<div id="stage">(.*?)<script', html, re.S))
 ON_SCREEN = re.sub(r'\s+', ' ', ON_SCREEN)
-VO = ("Okay, here's the catch first, because we'd rather you heard it from us than found it in the terms: the revenue share "
-      "only kicks in when you're introducing three businesses a month, and the bonus has no catch at all. So here's how the "
-      "whole thing works. You know a café, or a takeaway, or a barber that takes card payments, and you introduce them to "
-      "NeroPay. We go and set them up, we do the support, you don't touch any of it. And when they go live you get a bonus "
-      "for that one business, which starts at a hundred pounds, goes to two hundred if they take over twenty thousand in their "
-      "first month, and three hundred if they take over forty. So every business you introduce pays you, and there's nothing "
-      "to unlock. Then if you introduce three or more in the same month, you're an Active Partner, which means you also get a "
-      "share of what all your merchants' card payments earn us, not just the new three, every month you hit it. And if you "
-      "have a quiet month and only bring one, you still get that bonus, it's yours either way. So if someone's already come to "
-      "mind, go to partners dot NeroPay dot app, it's free to join, and get your link.")
+VO = ("You could be earning a hundred to three hundred pounds for every café, takeaway or barber you introduce to a card machine "
+      "company. Here's how it works, and why you don't need to sell anything. We're NeroPay, we do card terminals with free till "
+      "software for UK businesses. You know a business that takes card payments, you introduce them to us, and that's your whole "
+      "job, because we go and set them up and we do the support. When they go live you get a bonus for that one business, a hundred "
+      "pounds if they take up to twenty thousand in their first month, two hundred over that, and three hundred once they're over "
+      "forty thousand. Every one you introduce pays you, and there's nothing to unlock. Then if you bring three or more in the same "
+      "month, you're an Active Partner, and you also get a share of what all your merchants' card payments earn us, not just the new "
+      "three, every month you hit it. And if you only bring one that month, you still get your bonus, it's yours either way. It's "
+      "free to join, and you get your own link to share. Go to NeroPay dot app slash partners, and think about who you'd introduce first.")
 
 # the tiers the composition steps at are the register's
 b = {row[2]: (row[0], row[1]) for row in bonus['value']}
@@ -52,7 +51,7 @@ assert '111+ new active merchants in one month' in html, 'the climb rest frame h
 assert 'Most partners start at 20%: three a month.' in ON_SCREEN, 'the mandatory "most partners" line is missing'
 assert 'not yet — 3 to qualify' in ON_SCREEN, 'the climb must start below the gate'
 assert 'Barber · Longsight' in ON_SCREEN and 'went live' in ON_SCREEN, 'the £100 row has lost "went live"'
-assert '£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: partners.neropay.app' in ON_SCREEN, 'compliance super, short form, verbatim'
+assert '£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: neropay.app/partners' in ON_SCREEN, 'compliance super, short form, with the partner link Faisal gave'
 assert 'draft' not in ON_SCREEN.lower(), 'the figures are final — no draft mark'
 # no total, no monthly sum, no pound figure for revenue share (rules 2 and 4)
 assert not re.search(r'£\s?\d[\d,]*\s*(a|per)\s*month', (VO + ON_SCREEN).lower()), 'a monthly pound figure crept in'
@@ -74,8 +73,10 @@ for bad in ['Square', 'SumUp', 'Zettle', 'Dojo', 'Worldpay', 'Barclaycard', 'Tak
 assert '!' not in ON_SCREEN, 'no exclamation marks in supers'
 
 # the concession, the gate said first, and the CTA are in the take
-assert "here's the catch first" in VO.lower() and 'three businesses a month' in VO.lower(), 'the condition is not said first'
+assert 'hundred to three hundred pounds for every' in VO.lower(), 'the hook is per merchant (brief Part 4, "you could be earning")'
+assert '£100–£300' in ON_SCREEN and 'per merchant · based on their first 30 days' in ON_SCREEN, 'the hook super must carry the condition on the same frame'
+assert 'three or more in the same month' in VO.lower(), 'the gate is said with the share'
 assert 'yours either way' in VO.lower() and 'yours' in ON_SCREEN and 'either way' in ON_SCREEN, '"your bonus is yours either way" must be in every body'
-assert 'partners dot neropay dot app' in VO.lower() and 'partners.neropay.app' in ON_SCREEN, 'no CTA'
+assert 'neropay dot app slash partners' in VO.lower() and 'neropay.app/partners' in ON_SCREEN, 'no CTA'
 assert 'we go and set them up' in VO.lower() and 'You introduce' in ON_SCREEN and 'We set up' in ON_SCREEN and 'We support' in ON_SCREEN
 print('  ok  PP01: tiers match the register, every figure sits with its condition, rest frames complete, rails clean, CTA present')

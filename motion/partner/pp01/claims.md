@@ -7,7 +7,7 @@ final, Part 1, confirmed by Faisal on 17 September 2026 (Part 7: no open questio
 
 | Figure | Where it appears | Condition shown with it | Status |
 |---|---|---|---|
-| Bonus £100 per merchant | Dial (£100 above the marker at £0–£20,000), pillar badge, S4 ledger row, "£100–£300 per merchant" badge, compliance super | "Bonus · per merchant" · volume readout "in their first 30 days" · badge "every business you introduce · first 30 days" · S4 row "went live" | final |
+| Bonus £100 per merchant | Hook "£100–£300", dial (£100 above the marker at £0–£20,000), pillar badge, S4 ledger row, "£100–£300 per merchant" badge, compliance super | hook kicker "per merchant · based on their first 30 days" on the same frame · "Bonus · per merchant" · volume readout "in their first 30 days" · badge "every business you introduce · first 30 days" · S4 row "went live" | final |
 | Bonus £200 per merchant | Dial as the marker passes £20,000 ("£20,000+"); pillar badge | volume readout, threshold label "£20,000" | final |
 | Bonus £300 per merchant | Dial as the marker passes £40,000; rest frame; pillar badge; compliance super | rest frame "£40,000+ in their first 30 days" and "up to £300 per merchant — £40,000+ in their first 30 days" in one line | final |
 | Revenue share 20% | Climb rate at count 3; chip "3 · 20%"; "Most partners start at 20%: three a month." | count "3" beside it; "New active merchants · this month" | final |
@@ -17,7 +17,7 @@ final, Part 1, confirmed by Faisal on 17 September 2026 (Part 7: no open questio
 | First 30 days | Dial kicker and readout; "in their first month" in the take | — | final |
 | NeroPay does the setup and the support; the partner introduces | Pills YOU INTRODUCE · WE SET UP · WE SUPPORT; the terminals landing beside the shops; take | — | stated in the brief |
 | Free to join | Pill FREE TO JOIN; take | — | stated in the brief |
-| partners.neropay.app | URL, compliance super, take | — | stated in the brief |
+| neropay.app/partners | URL, compliance super, take (Faisal, 17 Sep 2026: the partner link is neropay.app/partners) | — | stated by Faisal |
 
 **Not on screen, by rule:** any monthly total, any pound figure for revenue share, any share of merchant turnover, "up to
 40%" alone, £500 (superseded), any merchant price or rate, any real merchant, partner, name or balance. The merchants

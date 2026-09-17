@@ -7,7 +7,7 @@ short-form system with its hook library (Part 4), the long-form explainer (Part 
 figure in it is final and approved; there are no open questions. This file is only what is particular to building
 it here.
 
-**Premise.** What a partner earns and the condition, said condition-first, as an animated diagram: the street of
+**Premise.** What a partner earns, led by the potential (per merchant, its condition on the same frame) for a viewer who has never heard of us, then how it works and why there is nothing to sell, as an animated diagram: the street of
 shopfronts that light when introduced, the ledger row that goes live, the Bonus Dial, the Rate Climb. Every number
 on screen sits with the volume or count that earns it, at every frame.
 
@@ -26,7 +26,7 @@ type is never in the same place twice running.
 
 **Voice.** **Olivia — Warm, British Female** (`pPoztmvzd5p26S3MsNrV`, `eleven_v3`), chosen by Faisal for PP01 on
 16 Sep 2026. Verity stays the merchant series voice. The read is UGC: one continuous piece of talking, condition
-first, no one-liners, tightened at 1.06× and breath-gated (`motion/tighten.mjs --tempo`, `motion/gate.py`).
+first, no one-liners, tightened gently (`tighten.mjs --gap .32 --min .45 --tempo 1.03`) and gated only where nothing louder than −30 dBFS sits between words (`gate.py --inset .12 --max -30`) — the v2 settings clipped words.
 
 **Sound.** An upbeat instrumental bed throughout (`video/library/bgm/partner-upbeat-118.mp3`, Eleven Music v2,
 117.84 bpm, no vocals), ducked under the voice; effects only on something moving, no effect twice in a row, one
@@ -48,7 +48,7 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 
 | # | Folder | What | State |
 |---|---|---|---|
-| 1 | `pp01/` | The programme, complete, condition first — one continuous UGC script, Olivia, the white world, six sections, 70 s | **v2 rendered 17 Sep 2026, 4:5 first** — `script.md` and `claims.md` in the folder |
+| 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v3 rendered 17 Sep 2026, 4:5 first** — `script.md` and `claims.md` in the folder |
 | — | | Brief A's hook library (37 hooks × two bodies) as swappable openings on a shared body, per BRIEF.md Part 4 | Not started — the body would be cut from PP01's script once its register is approved |
 | — | | Brief B, the 2:30–3:00 long-form explainer, chaptered for YouTube | Not started |
 | — | | Turkish pass | After the English set has run clean for two weeks (BRIEF.md Part 2) |
@@ -58,3 +58,5 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 - Length: PP01 runs 70 s against the brief's 22–28 s social module. The rewrite asked for a complete, engaging
   piece; if the short modules are still wanted, the hook + body + close are cut from this script.
 - The other crops of v2 (9:16, 1:1, 16:9) — rendered on request, about 35 minutes each.
+
+**The partner link is `neropay.app/partners`** (Faisal, 17 Sep 2026) — in the take, on screen and in the compliance super; the brief's `partners.neropay.app` is not used.

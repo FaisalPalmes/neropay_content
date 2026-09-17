@@ -109,8 +109,6 @@ html,body{background:#000}
 .url{font-family:Poppins; font-weight:700; font-size:72px; letter-spacing:-.035em; color:var(--ink); white-space:nowrap; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 82%; background-size:100% .2em}
 .comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:24px; line-height:1.55; letter-spacing:.01em; color:#5E5E64; width:720px; white-space:normal; margin:0 auto}
 /* the reference's converge: three arc rings turning at their own rates behind the close */
-#rings svg{width:900px; height:900px; overflow:visible}
-#rings circle{fill:none; stroke-linecap:round}
 /* connector paths on the floor: you → the three shops, drawn on "introduce" */
 #paths svg{width:1100px; height:700px; overflow:visible}
 #paths path{fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; opacity:.55}
@@ -128,29 +126,28 @@ html,body{background:#000}
 
 <div id="stage">
   <div id="src">
-    <!-- section 0: the catch, up front (left) -->
-    <div class="sign" id="q0" data-st="S0"><div class="in"><div class="mask"><span class="serif dim" style="font-size:54px">We'll tell you the condition first.</span></div></div></div>
-    <div class="sign" id="c0" data-st="S0"><div class="in"><div class="mask"><span class="shout s">The <span class="hl" id="hlc0">catch,</span> up front.</span></div></div></div>
-    <div class="sign" id="h0" data-st="S0"><div class="in"><div class="mask"><span class="shout"><span class="hl" id="hl3">Three</span> a month.</span></div></div></div>
-    <div class="sign" id="k0" data-st="S0"><div class="in">
-      <div class="mask"><span class="kick">for the revenue share ·</span></div>
-      <div class="mask"><span class="kick">3+ new active merchants in a month</span></div>
+    <!-- section 0: the hook — the potential, per merchant, with its condition on the same frame (left) -->
+    <div class="sign" id="y0" data-st="S0"><div class="in"><div class="mask"><span class="serif dim" style="font-size:54px">You could be earning</span></div></div></div>
+    <div class="sign" id="e0" data-st="S0"><div class="in"><div class="mask"><span class="shout"><span class="hl" id="hlE">£100–£300</span></span></div></div></div>
+    <div class="sign" id="e0b" data-st="S0"><div class="in">
+      <div class="mask"><span class="shout s e0b1">for every business</span></div>
+      <div class="mask"><span class="shout s e0b2">you introduce.</span></div>
     </div></div>
-    <div class="sign" id="h0b" data-st="S0"><div class="in"><div class="mask"><span class="shout s">The bonus has <span class="hl" id="hlnc">no catch.</span></span></div></div></div>
-    <div class="sign" id="terms" data-st="S0"><div class="in c"><div class="sheet hid" style="--rot:6deg"><i class="s"></i><i></i><i class="y"></i><i></i><i class="s"></i></div></div></div>
+    <div class="sign" id="k0" data-st="S0"><div class="in"><div class="mask"><span class="kick">per merchant · based on their first 30 days</span></div></div></div>
+    <div class="sign" id="q0" data-st="S0"><div class="in"><div class="mask"><span class="serif dim" style="font-size:50px">How it works, and why you don't sell anything.</span></div></div></div>
 
     <!-- section 1: how it works (right) -->
     <div class="sign" id="wm" data-st="S1"><div class="in r"><div class="mask"><span class="mark">Nero<b>Pay</b></span></div></div></div>
     <div class="sign" id="h1" data-st="S1"><div class="in r">
-      <div class="mask"><span class="shout h1a">Partner</span></div>
-      <div class="mask"><span class="shout h1b">Programme.</span></div>
+      <div class="mask"><span class="shout s h1a">Card terminals.</span></div>
+      <div class="mask"><span class="shout s h1b">Free till software.</span></div>
     </div></div>
     <div class="sign" id="p1" data-st="S1"><div class="in r"><div class="pills" style="justify-content:flex-end">
       <div class="pill solid hid" id="pIntro" style="--rot:-2deg">You introduce</div>
       <div class="pill hid" id="pSet" style="--rot:2deg">We set up</div>
       <div class="pill hid" id="pSup" style="--rot:-1deg">We support</div>
     </div></div></div>
-    <div class="sign" id="a1" data-st="S1"><div class="in r"><div class="mask"><span class="serif" style="font-size:50px">you don't touch any of it.</span></div></div></div>
+    <div class="sign" id="a1" data-st="S1"><div class="in r"><div class="mask"><span class="serif" style="font-size:50px">that's your whole job.</span></div></div></div>
     <div class="sign" id="l0" data-st="S1"><div class="in c lbl m hid">Café</div></div>
     <div class="sign" id="l1" data-st="S1"><div class="in c lbl m hid">Takeaway</div></div>
     <div class="sign" id="l2" data-st="S1"><div class="in c lbl m hid">Barber</div></div>
@@ -187,10 +184,6 @@ html,body{background:#000}
       <div class="mask"><span class="shout h3a">Active</span></div>
       <div class="mask"><span class="shout h3b">Partner.</span></div>
     </div></div>
-    <div class="sign" id="k3" data-st="S3"><div class="in r">
-      <div class="mask"><span class="kick">a share of what your merchants'</span></div>
-      <div class="mask"><span class="kick">card payments earn NeroPay</span></div>
-    </div></div>
     <div class="sign" id="c3" data-st="S3"><div class="in"><div class="slab hid" id="climb" style="--rot:-1deg">
       <div class="c-kick">New active merchants · this month</div>
       <div class="c-row"><span class="c-count" id="cCount">0</span><span class="c-rate" id="cRate">—</span></div>
@@ -213,16 +206,11 @@ html,body{background:#000}
     <div class="sign" id="h4" data-st="S4"><div class="in"><div class="mask"><span class="serif" style="font-size:66px">Your bonus is <span class="hl" id="hlyours">yours</span> either way.</span></div></div></div>
 
     <!-- section 5: the close (centre) -->
-    <div class="sign" id="rings" data-st="S5"><div class="in c"><svg viewBox="-450 -450 900 900">
-      <g id="rg0"><circle r="170" stroke="#F5C518" stroke-width="10" stroke-dasharray="120 60 40 90 200 110" opacity=".55"/></g>
-      <g id="rg1"><circle r="270" stroke="#F4BDB6" stroke-width="8" stroke-dasharray="300 90 60 160 220 130" opacity=".55"/></g>
-      <g id="rg2"><circle r="380" stroke="#C9B8F5" stroke-width="6" stroke-dasharray="90 220 400 140 60 300" opacity=".45"/></g>
-    </svg></div></div>
     <div class="sign" id="end" data-st="S5"><div class="in c">
-      <div class="mask"><span class="serif dim e0" style="font-size:54px">Someone come to mind?</span></div>
-      <div class="mask" style="margin-top:22px"><span class="url e1">partners.neropay.app</span></div>
-      <div class="pills" style="margin-top:26px;justify-content:center"><div class="pill hid" id="pFree" style="--rot:-2deg">Free to join</div><div class="pill solid hid" id="pLink" style="--rot:2deg">Get your link</div></div>
-      <div class="mask" style="margin-top:44px"><span class="comp e2">£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: partners.neropay.app</span></div>
+      <div class="pills" style="justify-content:center"><div class="pill hid" id="pFree" style="--rot:-2deg">Free to join</div><div class="pill solid hid" id="pLink" style="--rot:2deg">Your own link to share</div></div>
+      <div class="mask" style="margin-top:26px"><span class="url e1">neropay.app/partners</span></div>
+      <div class="mask" style="margin-top:22px"><span class="serif dim e5" style="font-size:54px">Who would you introduce first?</span></div>
+      <div class="mask" style="margin-top:40px"><span class="comp e2">£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: neropay.app/partners</span></div>
     </div></div>
   </div>
   <div id="caps"></div>
@@ -245,7 +233,7 @@ const FPS = 30;
    graphics; borrow from the Webflow reference (stacked glass, connector paths, the converge). Same Olivia take,
    timings, captions and mix as v1. Composition time = HEAD + word time; every anchor is found by the word.
 --------------------------------------------------------------------------- */
-const BEAT = 60 / 117.84, HEAD = 2 * BEAT, TAIL = 3.8;
+const BEAT = 60 / 117.84, HEAD = 2 * BEAT, TAIL = 4.8;
 const WORDS = window.WORDS;
 const w = i => HEAD + WORDS[i].s, we = i => HEAD + WORDS[i].e;
 const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -283,7 +271,7 @@ const STEP = 60, TURN = -.5;
 let rx = 0, rz = 0, rry = 0;
 const place = spec => { const S = Wd.section({ x:rx, z:rz, ry:rry, ...spec });
   rx += STEP * Math.cos(rry) + 6 * Math.sin(rry); rz += -STEP * Math.sin(rry) + 6 * Math.cos(rry); rry += TURN; return S; };
-const S0 = place({ az:-22, el:16, box:{ x:[-12, 12.5],   y:[0, 24],   z:[-4, 7] },  ty:11 });
+const S0 = place({ az:-22, el:16, box:{ x:[-12, 12.5],   y:[0, 26],   z:[-4, 7] },  ty:12 });
 const S1 = place({ az:20,  el:18, box:{ x:[-12.5, 12.5], y:[0, 25.5], z:[-4, 7] },  ty:11.5 });
 const S2 = place({ az:-14, el:20, box:{ x:[-13, 13],     y:[0, 28],   z:[-5, 7] },  ty:13 });
 const S3 = place({ az:18,  el:20, box:{ x:[-13, 13],     y:[0, 27.5], z:[-5, 7] },  ty:12.5 });
@@ -296,21 +284,21 @@ for (let i = 1; i < SECS.length; i++) Wd.route(SECS[i - 1].g.position, SECS[i].g
 /* ambient: shaded yellow spheres (and a few blush and lilac) floating over every section, always moving */
 const SPH = [];
 const sphereMat = c => new THREE.MeshStandardMaterial({ color:c, roughness:.45, metalness:0 });
-const MATS = { y:sphereMat(0xF5C518), b:sphereMat(0xF4BDB6), l:sphereMat(0xC9B8F5) };
+/* v3 (Faisal): no small spheres floating about — two very large ones per section, pale, sitting half in the frame */
+const MATS = { y:sphereMat(0xFFDC74), b:sphereMat(0xF7CFC9), l:sphereMat(0xD9CCF8) };
 function spheres(S, list){ for (const [x, y, z, r, c] of list){
-  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 24), MATS[c]); m.castShadow = true; m.position.set(x, y, z); S.add(m);
+  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 48, 32), MATS[c]); m.castShadow = false; m.position.set(x, y, z); S.add(m);
   SPH.push({ m, y, w:.6 + Math.random() * .5, p:Math.random() * 6.28, spin:(Math.random() - .5) * .2 }); } }
 const LIGHT = 0xE9E6DD, SHOP = 0xEDEAE2;
 
 /* section 0 — the catch (left): the terms sheet, three shops lighting 1-2-3 under "three" */
 const SH0 = S0.add(shops(3, { color:SHOP })); SH0.position.set(-1, 0, 2.5);
-S0.sign($('#q0'), { x:-11.5, y:22.4, z:-4, face:true });
-S0.sign($('#c0'), { x:-11.5, y:18.8, z:-4, face:true });
-S0.sign($('#h0'), { x:-11.5, y:14.6, z:-4, face:true });
-S0.sign($('#k0'), { x:-11.5, y:10.7, z:-4, face:true });
-S0.sign($('#h0b'), { x:-11.5, y:7, z:-4, face:true });
-S0.sign($('#terms'), { x:9.8, y:9.5, z:0, face:true });
-spheres(S0, [[13, 23, -9, 1.0, 'y'], [-12, 4, 6, .6, 'b'], [4, 25.5, -9, .7, 'l'], [13, 3, 5, .5, 'y']]);
+S0.sign($('#y0'), { x:-11.5, y:24.6, z:-4, face:true });
+S0.sign($('#e0'), { x:-11.5, y:21.2, z:-4, face:true });
+S0.sign($('#e0b'), { x:-11.5, y:16.6, z:-4, face:true });
+S0.sign($('#k0'), { x:-11.5, y:12.3, z:-4, face:true });
+S0.sign($('#q0'), { x:-11.5, y:8.6, z:-4, face:true });
+spheres(S0, [[-24, 13, -10, 8, 'y'], [19, 27, -16, 6, 'b']]);
 
 /* section 1 — the programme (right): the shops rise with labels, a small terminal lands beside each on "set them up",
    and paths draw from "You" to the three on "introduce" */
@@ -323,7 +311,7 @@ S1.sign($('#a1'), { x:12, y:10, z:-4, face:true });
 const SL = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => { const t = SH1.top(i); return S1.sign(el, { x:t.x - 2, y:t.y + 1.7, z:2, face:true }); });
 S1.sign($('#you'), { x:-2, y:1.2, z:9.5, face:true });
 S1.sign($('#paths'), { x:-2 - 13.75, y:.03, z:9.5, rx:-Math.PI / 2 });
-spheres(S1, [[-12, 17, -8, .9, 'y'], [13, 5, 6, .6, 'l'], [-6, 24, -9, .7, 'y'], [11, 27, -9, .5, 'b']]);
+spheres(S1, [[24, 12, -8, 8, 'l'], [-18, 28, -16, 6, 'y']]);
 
 /* section 2 — the bonus (centre): the row above the dial, the steps on the right with badges, the pays-you badge left */
 const BARS = S2.add(pillars([{ h:2.2, color:LIGHT }, { h:4.4, color:LIGHT }, { h:6.6, color:LIGHT }], { w:2.2, gap:1.1, depth:2.2 })); BARS.position.set(8.5, 0, 3);
@@ -333,16 +321,15 @@ S2.sign($('#d2'), { x:0, y:13.8, z:-4, face:true });
 S2.sign($('#b2'), { x:-12.5, y:6.4, z:-2, face:true });
 S2.sign($('#k2'), { x:-12.5, y:2.8, z:-2, face:true });
 const PL = [$('#pl0'), $('#pl1'), $('#pl2')].map((el, i) => { const t = BARS.top(i); return S2.sign(el, { x:t.x, y:t.y + 1.6, z:3, face:true }); });
-spheres(S2, [[-13, 20, -8, 1.0, 'y'], [12, 26, -9, .7, 'b'], [13.5, 10, 5, .55, 'y'], [-9, 27, -9, .55, 'l']]);
+spheres(S2, [[-25, 14, -11, 9, 'b'], [21, 29, -18, 6, 'y']]);
 
 /* section 3 — the share (right): the climb slab left, the field of tiles, the months */
 const PATH = S3.add(tiles(12, { cols:6, size:1.6, gap:.5, height:.7, color:LIGHT })); PATH.position.set(3, 0, 4);
 S3.sign($('#h3'), { x:12.5, y:25, z:-4, face:true });
 S3.sign($('#b3'), { x:12.5, y:19.6, z:-4, face:true });
-S3.sign($('#k3'), { x:12.5, y:17, z:-4, face:true });
 S3.sign($('#c3'), { x:-12.5, y:9.2, z:-4, face:true });
 S3.sign($('#m3'), { x:-12.5, y:2.2, z:-2, face:true });
-spheres(S3, [[-12, 22, -8, .9, 'l'], [13, 7, 6, .6, 'y'], [-3, 26, -9, .7, 'y'], [13, 26, -9, .5, 'b']]);
+spheres(S3, [[25, 13, -10, 8.5, 'y'], [-20, 28, -16, 6, 'l']]);
 
 /* section 4 — either way (left): one shop and its terminal, the weeks, the line */
 const SH4 = S4.add(shops(1, { color:SHOP })); SH4.position.set(7.5, 0, 2.5);
@@ -350,43 +337,45 @@ const TM4 = S4.add(neroTerminal()); TM4.scale.setScalar(.3); TM4.position.set(11
 S4.sign($('#r4'), { x:-12, y:19.6, z:-4, face:true });
 S4.sign($('#w4'), { x:-12, y:15.2, z:-4, face:true });
 S4.sign($('#h4'), { x:-12, y:10.2, z:-4, face:true });
-spheres(S4, [[-12, 4, 6, .7, 'y'], [12, 18, -8, .9, 'b'], [2, 24, -9, .6, 'y']]);
+spheres(S4, [[-24, 12, -9, 8, 'y'], [19, 26, -15, 5.5, 'b']]);
 
 /* section 5 — the close (centre): the rings turn behind the address; our terminal at the right */
 const NEW5 = S5.add(neroTerminal()); NEW5.position.set(13.5, 0, 0); NEW5.rotation.y = -.35;
-S5.sign($('#rings'), { x:0, y:14.5, z:-7, face:true });
-S5.sign($('#end'), { x:0, y:14.2, z:-1, face:true });
-spheres(S5, [[-13, 22, -9, .9, 'y'], [-10, 3, 6, .55, 'l'], [5, 25, -10, .6, 'b']]);
+const SH5 = S5.add(shops(3, { color:SHOP })); SH5.position.set(-4, 0, 3);
+S5.sign($('#end'), { x:-1, y:15.4, z:-3, face:true });
+spheres(S5, [[-25, 13, -10, 9, 'l'], [22, 27, -16, 6, 'y']]);
 
 /* ---- the anchors, all by the word ---- */
 const A = {
-  q0:.12, c0:at('catch'), terms:at('terms'), shops0:at("here's"), three:at('three'), k0:at('revenue'), k0b:at('kicks'), h0b:at('bonus'), nc:at('no catch'),
-  wm:0, h1:0, cafe:at(['cafe', 'café']), take:at('takeaway'), barber:at('barber'), you:at('you introduce'), intro:at('introduce them'), pset:at('set them'), psup:at('support'), a1:at('touch'),
-  h2:0, row:at('go live'), live:at('live'), dial:at('bonus', 1), b100:at('hundred pounds'), t1:at('goes to'), b200:at('two hundred'), th1:at(['twenty thousand', '20,000']),
-  t2:at('and three hundred'), b300:at('three hundred'), th2:at(['over forty', 'over 40']), rest2:end(['over forty', 'over 40']) + .3, ev:at('every business'), pays:at('pays you'), pno:at('unlock'),
+  e0:at(['hundred to three', 'hundred to 300', '100 to 300']), e0b:at('for every'), cafe0:at(['cafe', 'café']), take0:at('takeaway'), barber0:at('barber'), k0:at('you introduce to'), q0:at(["here's how", 'heres how']),
+  wm:at(["we're neropay", 'were neropay', 'we are neropay']), h1:at('card terminals'), h1b:at('free till'), shops1:at('business that takes'), you:at('you introduce them'), intro:at('you introduce them') + .1, pset:at('set them up'), psup:at('support'), a1:at('whole job'),
+  h2:0, row:at('go live'), live:at('live'), dial:at('bonus'), b100:at('hundred pounds', 1), t1:at('if they take'), b200:at('two hundred'), th1:at(['twenty thousand', '20,000']),
+  t2:at('and three hundred'), b300:at('three hundred', 1), th2:at(['forty thousand', '40,000']), rest2:end(['forty thousand', '40,000']) + .3, ev:at('every one'), pays:at('pays you'), pno:at('unlock'),
   h3:0, cnt:at('three or more'), act:at('active partner'), climb:at('a share of'), rest3:at('card payments earn'), k3:at('what all'), months:at('every month'),
-  row4:0, weeks:at('quiet month'), one:at('only bring one'), live4:at('still get'), h4:at('still'), yours:at('yours'),
-  e0:0, url:at('partners'), free:at('free'), link:at('get your link'), comp:at('partners') + 1.0, term5:0,
+  row4:0, weeks:at('only bring one'), one:at('one that month'), live4:at('still get'), h4:at('still'), yours:at('yours'),
+  free:at('free to join'), link:at('own link'), url:at('slash partners'), q5:at('think about'), shops5:at('introduce first'), comp:at('slash partners') + 1.0, term5:0,
 };
 const CAM = [
   { t:0,                                 d:0,  sec:S0 },
-  { t:end('at all') + .02,               d:.8, sec:S1 },
-  { t:end('any of it') + .02,            d:.8, sec:S2 },
+  { t:end('sell anything') + .02,        d:.8, sec:S1 },
+  { t:end('the support') + .02,          d:.8, sec:S2 },
   { t:end('to unlock') + .02,            d:.8, sec:S3 },
   { t:end('hit it') + .02,               d:.8, sec:S4 },
-  { t:end('either way') + 1.5,           d:.8, sec:S5 },
+  { t:end('either way') + 1.3,           d:.8, sec:S5 },
 ];
-A.wm = CAM[1].t + .3; A.h1 = CAM[1].t + .38; A.h2 = CAM[2].t + .35; A.h3 = CAM[3].t + .35; A.row4 = CAM[4].t + .45; A.e0 = CAM[5].t + .35; A.term5 = CAM[5].t + .3;
+A.h2 = CAM[2].t + .35; A.h3 = CAM[3].t + .35; A.row4 = CAM[4].t + .45; A.term5 = CAM[5].t + .3;
+/* the close's pills wait for the camera to land, even if the words come a touch earlier */
+A.free = Math.max(A.free, CAM[5].t + .95); A.link = Math.max(A.link, CAM[5].t + 1.15);
 const SECN = new Map([[S0, 'S0'], [S1, 'S1'], [S2, 'S2'], [S3, 'S3'], [S4, 'S4'], [S5, 'S5']]);
 let PAD = 0;
 
 const BEATS = [
-  { name:'0 the catch',   t:0,              out:CAM[1].t, words:27 },
-  { name:'1 how it works', t:CAM[1].t + .40, out:CAM[2].t, words:18 },
+  { name:'0 the hook',    t:0,              out:CAM[1].t, words:26 },
+  { name:'1 who we are',  t:CAM[1].t + .40,  out:CAM[2].t, words:19 },
   { name:'2 the bonus',   t:CAM[2].t + .40,  out:CAM[3].t, words:30 },
-  { name:'3 the share',   t:CAM[3].t + .40,  out:CAM[4].t, words:26 },
+  { name:'3 the share',   t:CAM[3].t + .40,  out:CAM[4].t, words:17 },
   { name:'4 either way',  t:CAM[4].t + .40,  out:CAM[5].t, words:12 },
-  { name:'5 the close',   t:CAM[5].t + .40,  out:DURATION, words:8 },
+  { name:'5 the close',   t:CAM[5].t + .40,  out:DURATION, words:13 },
   { name:'5 compliance',  t:A.comp,          out:DURATION, words:15 },
 ];
 const BUILD = 0.55, EXIT = 0.30;
@@ -429,11 +418,13 @@ function applyCam(t){
 
 /* ---- captions ---- */
 const CAPS_ON = new URLSearchParams(location.search).get('caps') !== '0';
-const BIG = /three businesses a month|no catch|you get a bonus|hundred pounds|two hundred|three hundred|active partner|every month you hit it|yours either way|partners dot neropay dot app/i;
+const BIG = /hundred to three hundred pounds|you get a bonus|hundred pounds|two hundred|three hundred|active partner|every month you hit it|yours either way|slash partners/i;
 const CAPL = (CAPS_ON ? window.CAPS : []).map((L, i, all) => {
   const el = document.createElement('div'); el.className = 'cap' + (BIG.test(L.text) ? ' big' : '');
   const toks = L.text.split(' ');
-  el.innerHTML = toks.map((tk, k) => `<span class="w" data-i="${L.idx[Math.min(k, L.idx.length - 1)]}">${tk}</span>`).join(' ');
+  /* a token maps to one word index, or to a range "a-b" when Whisper split what the caption shows as one word (the URL) */
+  const ix = L.tok || L.idx.map(i => [i, i]);
+  el.innerHTML = toks.map((tk, k) => { const r = ix[Math.min(k, ix.length - 1)]; return `<span class="w" data-i="${r[0]}-${r[1]}">${tk}</span>`; }).join(' ');
   $('#caps').appendChild(el);
   const start = w(L.idx[0]) - .08, next = all[i + 1] ? w(all[i + 1].idx[0]) - .08 : Infinity;
   return { el, start, end:Math.min(next, we(L.idx[L.idx.length - 1]) + .7), words:[...el.querySelectorAll('.w')] };
@@ -444,8 +435,9 @@ function captions(t){
     const pin = eo(seg(t, L.start, .24)), pout = 1 - seg(t, L.end - .12, .12);
     L.el.style.opacity = Math.min(pin, pout).toFixed(3);
     L.el.style.transform = `translateX(-50%) translateY(${((1 - pin) * 18).toFixed(1)}px) scale(${(.94 + .06 * pin).toFixed(3)})`;
-    for (const sp of L.words){ const i = +sp.dataset.i; const cur = t >= w(i) && (i + 1 >= WORDS.length || t < w(i + 1));
-      sp.className = 'w' + (cur ? ' on' : t >= w(i) ? ' past' : ''); }
+    let ci = -1; for (let i = 0; i < WORDS.length; i++){ if (t >= w(i)) ci = i; else break; }
+    for (const sp of L.words){ const [ia, ib] = sp.dataset.i.split('-').map(Number);
+      sp.className = 'w' + (ci >= ia && ci <= ib ? ' on' : ci > ib ? ' past' : ''); }
   }
 }
 
@@ -509,19 +501,18 @@ function paths(t){ for (let i = 0; i < 3; i++){ const q = eo(seg(t, A.intro + i 
 function setFrame(n){
   const t = n / FPS;
   applyCam(t);
-  for (const s of SPH){ s.m.position.y = s.y + .45 * Math.sin(t * s.w + s.p); s.m.rotation.y += 0; }
+  for (const s of SPH){ s.m.position.y = s.y + .35 * Math.sin(t * s.w * .5 + s.p); s.m.position.x += .004 * Math.sin(t * .3 + s.p); }
 
   /* section 0 */
-  maskUp($('#q0 .serif'), t, A.q0, .5); maskUp($('#c0 .shout'), t, A.c0, .5); hl($('#hlc0'), t, A.c0 + .15); maskUp($('#h0 .shout'), t, A.three, .5); hl($('#hl3'), t, A.three + .1);
-  maskUp($('#k0 .mask:nth-child(1) .kick'), t, A.k0, .42); maskUp($('#k0 .mask:nth-child(2) .kick'), t, A.k0b, .42);
-  maskUp($('#h0b .shout'), t, A.h0b, .5); hl($('#hlnc'), t, A.nc);
-  stamp($('#terms .sheet'), t, A.terms); $('#terms .sheet').style.transform += ` translateY(${(4 * Math.sin(t * 1.1)).toFixed(1)}px)`;
-  for (let i = 0; i < 3; i++){ SH0.setProgress(i, eo(seg(t, A.shops0 + .2 + i * .14, .55))); SH0.light(i, eo(seg(t, A.three + i * .22, .3))); }
+  maskUp($('#y0 .serif'), t, .12, .5); maskUp($('#e0 .shout'), t, A.e0, .5); hl($('#hlE'), t, A.e0 + .2, .5);
+  maskUp($('#e0b .e0b1'), t, A.e0b, .5); maskUp($('#e0b .e0b2'), t, A.e0b + .12, .5);
+  maskUp($('#k0 .kick'), t, A.k0, .42); maskUp($('#q0 .serif'), t, A.q0, .5);
+  [A.cafe0, A.take0, A.barber0].forEach((a, i) => { SH0.setProgress(i, eo(seg(t, .3 + i * .14, .55))); SH0.light(i, eo(seg(t, a, .3))); });
   SH0.rotation.y = .06 * Math.sin(t * .5);
 
   /* section 1 */
-  maskUp($('#wm .mark'), t, A.wm, .45); maskUp($('#h1 .h1a'), t, A.h1, .5); maskUp($('#h1 .h1b'), t, A.h1 + .12, .5);
-  [A.cafe, A.take, A.barber].forEach((a, i) => { SH1.setProgress(i, eo(seg(t, a, .5))); show(SL[i].element.firstElementChild, t >= a + .25); SH1.light(i, eo(seg(t, A.intro + i * .18, .3)));
+  maskUp($('#wm .mark'), t, A.wm, .45); maskUp($('#h1 .h1a'), t, A.h1, .5); maskUp($('#h1 .h1b'), t, A.h1b, .5);
+  [0, 1, 2].forEach(i => { const a = A.shops1 + i * .16; SH1.setProgress(i, eo(seg(t, a, .5))); show(SL[i].element.firstElementChild, t >= a + .25); SH1.light(i, eo(seg(t, A.intro + i * .18, .3)));
     rise(TM1[i], eo(seg(t, A.pset + i * .15, .5)), 5); });
   stamp($('#pYou'), t, A.you); paths(t);
   stamp($('#pIntro'), t, A.intro); stamp($('#pSet'), t, A.pset); stamp($('#pSup'), t, A.psup);
@@ -537,7 +528,6 @@ function setFrame(n){
 
   /* section 3 */
   maskUp($('#h3 .h3a'), t, A.h3, .5); maskUp($('#h3 .h3b'), t, A.h3 + .12, .5);
-  maskUp($('#k3 .mask:nth-child(1) .kick'), t, A.k3, .42); maskUp($('#k3 .mask:nth-child(2) .kick'), t, A.k3 + .1, .42);
   stamp($('#pAct'), t, A.act);
   climb(t);
 
@@ -548,12 +538,11 @@ function setFrame(n){
   maskUp($('#h4 .serif'), t, A.h4, .5); hl($('#hlyours'), t, A.yours + .05);
 
   /* section 5 */
-  maskUp($('#end .e0'), t, A.e0, .5); maskUp($('#end .e1'), t, A.url, .5);
-  stamp($('#pFree'), t, A.free); stamp($('#pLink'), t, A.link); maskUp($('#end .e2'), t, A.comp, .5);
+  stamp($('#pFree'), t, A.free); stamp($('#pLink'), t, A.link); maskUp($('#end .e1'), t, A.url, .5);
+  maskUp($('#end .e5'), t, A.q5, .5); maskUp($('#end .e2'), t, A.comp, .5);
   rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .06 * Math.sin(t * .8);
-  const rq = eo(seg(t, CAM[5].t + .2, 1.2));
-  $('#rg0').style.transform = `rotate(${(t * 9).toFixed(2)}deg) scale(${rq})`; $('#rg1').style.transform = `rotate(${(-t * 6).toFixed(2)}deg) scale(${rq})`; $('#rg2').style.transform = `rotate(${(t * 3.5).toFixed(2)}deg) scale(${rq})`;
-  $('#rings svg').style.opacity = rq;
+  for (let i = 0; i < 3; i++){ SH5.setProgress(i, eo(seg(t, A.shops5 - .3 + i * .14, .5))); SH5.light(i, eo(seg(t, A.shops5 + .35 + i * .22, .3))); }
+  SH5.rotation.y = .05 * Math.sin(t * .45 + 1);
 
   captions(t);
   Wd.render();
