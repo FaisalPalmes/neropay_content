@@ -41,14 +41,15 @@ written where a synthetic voice or presenter is in the piece.
 
 1. `CLAUDE.md` — the ten rails and the list of things that are unconfirmed. Not optional, not skimmable.
 2. `rails.html` — the same rails as the site shows them, with what to measure and what to ignore.
-3. `index.html` — what social is for, the three channels, the five pillars, the engine rule.
-4. `calendar.html` — the sixteen weeks and the seasonality.
-5. `posts.js` — all eighteen posts. Read L1, L3 and L8 twice; that is the register.
-6. `README.md` §"Adding a social post" — the object shape, the `sketch` and `assets` formats.
-7. `STACK.md` — connectors, credentials, skills, toolchain, what the network reaches.
-8. `generation-pack.md` — skim the six scripts and the competitor register. Most Reels and carousels
+3. `SOCIAL-BRIEF.md` — the look, the type, the archetypes, what ships with each post, the route.
+4. `index.html` — what social is for, the three channels, the five pillars, the engine rule.
+5. `calendar.html` — the sixteen weeks and the seasonality.
+6. `posts.js` — all eighteen posts. Read L1, L3 and L8 twice; that is the register.
+7. `README.md` §"Adding a social post" — the object shape, the `sketch` and `assets` formats.
+8. `STACK.md` — connectors, credentials, skills, toolchain, what the network reaches.
+9. `generation-pack.md` — skim the six scripts and the competitor register. Most Reels and carousels
    are cuts of these.
-9. Only when a Reel or a video creative comes up: `video/PLAYBOOK.md`, `video/LESSONS.md`,
+10. Only when a Reel or a video creative comes up: `video/PLAYBOOK.md`, `video/LESSONS.md`,
    `video/AUDIO.md`, then the `/hyperframes` skill.
 
 ## 3. The warehouse as it stands, 17 Sep 2026
@@ -103,9 +104,11 @@ Every change to `posts.js` ends the same way: `node --check posts.js`, a short p
 
 ## 5. Making the creative
 
-The site already knows how to draw four kinds of creative from a post's `assets` field, at the three
-feed sizes, in the brand: charcoal ground `#141416`, white type, yellow `#F5C518` as the one accent,
-wordmark bottom-left, Poppins. This is the route for everything that is not a photograph or a video.
+**The look is `SOCIAL-BRIEF.md`** — light stage, black type, yellow through frost, light-glass slabs,
+Poppins plus one editorial secondary, the archetypes and the production route. Read it before making
+anything. What follows is the data side: the `assets` field on a post is the single source for a
+creative, and the site draws it in the old charcoal drawer as a preview. The finished file comes from
+the brief's templates and renderer (`social/`), on the light stage, from the same `assets` object.
 
 ### 5.1 Stat card, quote card, Reel cover — one `assets` entry each
 
@@ -272,12 +275,12 @@ allowlist; `video/AUDIO.md` §2 lists the hosts to add. Not needed for the socia
 
 ## 10. First-day checklist
 
-- [ ] Read the nine files in §2 in order.
+- [ ] Read the ten files in §2 in order.
 - [ ] `git pull origin main`; `node --check posts.js ideas.js`.
 - [ ] Ask Faisal which posts are already live and add the `posted` field to those.
 - [ ] Add `assets` to every unblocked post that has a stat card, carousel or cover in its `sketch`,
       so the site draws them. L2, M2, M5, M7 first.
-- [ ] Write `export-assets.mjs` (§5.3) and export the week's creative.
+- [ ] Build the `social/` templates and renderer from `SOCIAL-BRIEF.md` §6 and export the week's creative.
 - [ ] Confirm which ElevenLabs account the connector is signed into before any voiced piece.
 - [ ] Note the competitor-register date (18 Aug) and raise the refresh with Faisal.
 
