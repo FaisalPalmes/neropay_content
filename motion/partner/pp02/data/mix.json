@@ -282,6 +282,12 @@
    "why": "the nameplate hangs on \"NeroPay dot app\""
   },
   {
+   "sfx": "whoosh-short",
+   "t": 37.9,
+   "gain": 0.14,
+   "why": "the van comes along the road at the end"
+  },
+  {
    "sfx": "impact-bass-1",
    "t": 38.665,
    "gain": 0.3,

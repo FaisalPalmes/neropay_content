@@ -42,6 +42,10 @@ soft thud on the CTA landing.
 2. **Every video portrays how little the partner does.** We handle everything: the partner does not sell, does not set
    up, and does not even have to make the call — a name and a phone number is enough and we close it for them. No copy
    may sound like work for the partner (PP02's "walk down your road and count" was cut for this).
+4. **Objects float; nothing sits on the shops or in the bottom half (17 Sep 2026, PP02 v4).** The phone, the terminals
+   and the receipts hover above the street in the upper half of the frame, never in front of a shop and never cut by a
+   frame edge. A vehicle sits flat on the road — no pitch, no wobble. Strikes are red and carry the feeling. A stack of
+   overlays keeps clear space between its items. A soft shadow under the type and the panels, never a hard one.
 3. **The voice leads (17 Sep 2026, PP02 v3).** Nothing is on screen before she has said it; every graphic is anchored to
    the word that earns it, so the overlays feel guided by her. Headings that mirror the take rise word by spoken word,
    the typewriter types on her words, a shop lights on the word that names it. The camera lands before the first word
@@ -64,7 +68,7 @@ Rail 10 still covers anything beyond the public tiers: negotiated partner terms,
 | # | Folder | What | State |
 |---|---|---|---|
 | 1 | `pp01/` | The programme, complete — the earnings hook, who we are, the bonus, the share, the quiet month, the close on neropay.app/partners; one continuous UGC script, Olivia, the white world, six sections, 68 s | **v4 delivered 17 Sep 2026 (4:5)** — one real card per section in place of the spheres; Faisal's generated plates (`pp01/AI-PLATES.md`) still to come, and the video re-renders when they do — `script.md` and `claims.md` in the folder |
-| 2 | `pp02/` | Your road — the network angle as one walk down one English high street, no place named; the hook question, the receipt, the three strikes, the phone and the van, the lamp-post signs, the quiet month, the nameplate; Olivia, 49 s | **v3 delivered 17 Sep 2026 (4:5)** — the voice leads: every graphic on its word; the count tile that flips into the question; glass under the money and the climb; the detailed van that stops at the shop; `PROPOSAL.md`, `script.md`, `claims.md` in the folder; location lines for ads not yet recorded |
+| 2 | `pp02/` | Your road — the network angle as one walk down one English high street, no place named; the hook question, the receipt, the three strikes, the phone and the van, the lamp-post signs, the quiet month, the nameplate; Olivia, 49 s | **v4 delivered 17 Sep 2026 (4:5)** — the voice leads: every graphic on its word; a bare count that flips into the question; red strikes; the phone, the terminals and the receipts floating above the street; the continuous climb; the van flat on the road; the CTA stack spaced; `PROPOSAL.md`, `script.md`, `claims.md` in the folder; location lines for ads not yet recorded |
 | — | | Brief A's hook library (37 hooks × two bodies) as swappable openings on a shared body, per BRIEF.md Part 4 | Not started — the body would be cut from PP01's script once its register is approved |
 | — | | Brief B, the 2:30–3:00 long-form explainer, chaptered for YouTube | Not started |
 | — | | Turkish pass | After the English set has run clean for two weeks (BRIEF.md Part 2) |

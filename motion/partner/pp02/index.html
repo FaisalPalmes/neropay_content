@@ -23,6 +23,10 @@ html,body{background:#000}
 #src{position:absolute; left:0; top:0; visibility:hidden}
 
 /* ---- type: left, right or centre anchored ---- */
+/* v4: a subtle depth on everything that stands in the world — a soft shadow well under the letters and the panels */
+.shout,.hero,.big3,.tally,.serif,.kick,.lbl,.comp{text-shadow:0 16px 30px rgba(20,20,22,.16),0 2px 3px rgba(20,20,22,.05)}
+.plate{box-shadow:0 30px 44px -22px rgba(20,20,22,.5),0 4px 10px -4px rgba(20,20,22,.12)}
+.pill,.chip{box-shadow:0 24px 36px -20px rgba(20,20,22,.42),0 3px 7px -3px rgba(20,20,22,.12),inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(20,20,22,.06)}
 .sign{width:0; height:0}
 .sign>.in{position:absolute; left:0; top:0; transform:translateY(-50%); white-space:nowrap}
 .sign>.in.r{transform:translate(-100%,-50%); text-align:right}
@@ -96,7 +100,7 @@ html,body{background:#000}
 /* the street nameplate */
 .plate{display:inline-block; padding:22px 40px 18px; border-radius:16px; border:3px solid var(--ink); background:#fff; font-family:Poppins; font-weight:700; font-size:74px; letter-spacing:-.035em; color:var(--ink); white-space:nowrap; transform-origin:50% 0; box-shadow:0 26px 40px -24px rgba(20,20,22,.45)}
 .plate b{font-weight:700; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 82%; background-size:100% .2em}
-.comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:26px; line-height:1.55; letter-spacing:.01em; color:#5E5E64; width:470px; white-space:normal}
+.comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:26px; line-height:1.5; letter-spacing:.01em; color:#5E5E64; width:640px; white-space:normal}
 
 /* v3: the liquid-glass slab — the money and the count sit in it; it tilts in on a perspective, floats, and a sheen
    passes over it now and then. Tasteful: three in the whole video. */
@@ -333,11 +337,11 @@ RC5.draw((c, W, H) => paper(c, W, H, 'one introduction', 'still paid', 'paid aft
 S5.sign($('#h5'), { x:-11.5, y:18.8, z:-1, face:true });
 
 /* S6 — the end of the road */
-S6.sign($('#p6'), { x:-11.5, y:22.6, z:-2, face:true });
-S6.sign($('#n6'), { x:-11.5, y:19.6, z:-1, face:true });
-S6.sign($('#l6'), { x:-11.5, y:16.9, z:-2, face:true });
-S6.sign($('#c6'), { x:-11.5, y:12.6, z:-2, face:true });
-const TM6 = S6.add(neroTerminal()); TM6.position.set(12.6, 10.6, -2); TM6.userData = { ry:-.3, y0:10.6 }; TM6.visible = false;
+S6.sign($('#p6'), { x:-11.5, y:22.7, z:-2, face:true });
+S6.sign($('#n6'), { x:-11.5, y:19.3, z:-1, face:true });
+S6.sign($('#l6'), { x:-11.5, y:15.8, z:-2, face:true });
+S6.sign($('#c6'), { x:-11.5, y:11.5, z:-2, face:true });
+const TM6 = S6.add(neroTerminal()); TM6.position.set(12.8, 10.4, -2); TM6.userData = { ry:-.3, y0:10.4 }; TM6.visible = false;
 const N6 = [shopAt(6 * STEP - 9), shopAt(6 * STEP - 1), shopAt(6 * STEP + 8)];
 const VAN6 = S6.add(van()); VAN6.position.set(-60, -.06, 12.5); VAN6.visible = false;
 

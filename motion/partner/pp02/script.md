@@ -132,3 +132,25 @@ stereo, −13.99 LUFS / −1.31 dBTP. Higgsfield:
 `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/360391df-95bf-4928-b7b2-63ffde5575f0.mp4`
 (contact `…/9b532774-abdb-4c98-9cb6-6e4c8a7ca1ec.jpg`). Drive: README v3 in the PP02 folder, v2 renamed superseded. Law
 passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 32 points.
+
+## v4, 17 Sep 2026 — the review of v3
+
+Faisal's notes: the count and its line must never touch, and that stop needs no glass — the mark on its own, the line
+revealed beneath it, no yellow bar; the strikes should carry the feeling (animated, red); "Send us a name and a number"
+grander, a different face; the phone and the terminals never in the bottom half or over the shops — float them in the
+upper half; the Active Partner climb was choppy and clipped (numbers teleporting); colour on the arrow, more life in the
+week chips; the receipts clipped inside the shops — float them, colour them, animate them; the end screen's text sat
+behind its overlays — lay it out in the top half with the terminal, some shops lit, the van on the road; the van must sit
+on the road, never hover; then more space in the CTA stack and a subtle depth on the assets.
+
+So: the count is a bare 400 px number that flips into the question mark, the kicker 44 px below; the strikes are red
+(`#E0433A`), shake the claim as they land and grey it behind them; the name-and-number heading is Chivo 800 uppercase
+at 96 px with NAME and NUMBER on the marker; the phone floats at the left above the roofs (`hover()`: up from below, a
+slow bob and turn), the terminals float above the shop they serve (`above()`), the end terminal floats at the right
+below the nameplate; the climb runs continuously 3 → 111 in a fixed 4-character slot with the rate rolling up on each
+threshold (thresholds solved from the easing at init, `STEPT`), the arrow yellow, the week chips swinging in on a damped
+curve with ticked chips turning yellow and the tick bouncing; the receipts print upward from a slot floating above the
+shop, a yellow header band, a slow bob; the CTA stack is Free to join 22.7 · nameplate 19.3 (74 px) · Your own link
+15.8 · compliance 11.7, three shops lit, the van coming along the road from "NeroPay dot app" and stopping; the van sits
+flat on the road (the pitch and wobble were rotating it about its ground origin and lifting the wheels); a soft text
+shadow under the type and a deeper one under the plates. The money slab grows with its words. 48 cues.

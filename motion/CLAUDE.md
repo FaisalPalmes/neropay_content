@@ -373,6 +373,15 @@ tilting in on a perspective with a sheen that passes now and then. A vehicle tha
 the edge sits inside the frame, never cut by it. The type sits high — the frame above the box is real space, and the
 4:5 frame's top third must not be sky.
 
+**PP02 v4 — floating objects, red strikes, room in the stack (Faisal, 17 Sep 2026).** The phone, the terminals and the
+receipts float in the upper half of the frame, above the roofs, with a slow bob and turn — never on the pavement in front
+of a shop, never intersecting one, never cut by the frame. A van sits flat on the road: rotating it about its ground origin
+lifted its wheels and read as hovering. A count that opens a video stands bare — no glass, no marker under the question
+mark — with its line typed well below it. Strikes are red and animated (the claim shakes and greys). A climb runs
+continuously in a fixed-width slot with the rate rolling up on each threshold; numbers never teleport. A stack of panels
+keeps at least a unit of clear space between items, and nothing sits behind another overlay. Type and panels carry a
+soft shadow for depth, never a hard one.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**
