@@ -63,3 +63,14 @@ van passing, the terminal landing, the bunting, the chime on ACTIVE PARTNER, the
 Only the first sentence changes ("… in Manchester …", "… in London …", "… on your high street …"): one more Olivia take
 of that line, spliced at the sentence boundary, the words re-timed, and the composition re-times itself. Not recorded
 yet — Faisal to say which.
+
+## Delivered, 17 Sep 2026 (v1, 4:5)
+
+`out/final/pp02-4x5.mp4`, 1080×1350, 49.1 s, 1,474 frames, md5 `7162d9bf73d7eab6cd4ec47fc97989e0`; stereo AAC 192k,
+−13.99 LUFS / −1.21 dBTP. Higgsfield media store:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/f75b4167-7c13-487c-a6eb-4d892128d3ce.mp4`
+(contact sheet `…/9ca848c3-5a63-47a6-8518-d851ac3c547d.jpg`). Drive: `PARTNER VIDEOS › 09-2026 › Motion graphics › PP02 -
+Your road`, README v1. Analysis: the timing law passes on all eight beats (13 / 13 / 10 / 7 / 10 / 6 / 7 / 21 words);
+frame scan clean; 0 single-frame luma spikes and 0 frame-to-frame jumps over 12 across 1,474 frames; the stage-3 gate
+passes; the contact sheet checked at 30 points — the receipt and the lamp-post signs clear of every heading, the van on
+the road at 22.6 s, the shutters down for the quiet month, the terminal clear of the compliance line.
