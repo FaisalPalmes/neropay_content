@@ -118,8 +118,11 @@ assets: [
 ```
 
 Sizes: `sq` 1080×1080 (feed), `pt` 1080×1350 (4:5 Meta), `st` 1080×1920 (Reel/Story). `ai: true` on
-a cover draws the presenter-disclosure tag; use it on any Reel that has a synthetic presenter, and
-still make the disclosure at upload (rail 4 is per upload).
+a cover draws an "AI-generated presenter" tag on the frame. Use it **only for Behind the Counter**
+(series C), which carries its disclosure on screen. Explained-series Reels (B1–B6) do not: Faisal
+decided on 9 Sep 2026 that no AI wording goes inside those videos, and the disclosure is made at
+upload instead — the platform's synthetic-content setting plus a line in the description, per upload,
+per language. Rail 4 in `CLAUDE.md` has the wording.
 
 Add the entry, push, open `social.html` — the creative appears under the post with **PNG** and
 **SVG** download buttons. Fonts are embedded in the export so the PNG matches the preview.
