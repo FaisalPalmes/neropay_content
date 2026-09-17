@@ -23,3 +23,4 @@ social-out/
 
 # light-stage renders of the social creative (social/render.mjs) — handed to Faisal, not committed
 social/out/
+__pycache__/

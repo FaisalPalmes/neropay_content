@@ -91,13 +91,17 @@ detail. Output lives in `video/brag-output/`; the first run is the warehouse's o
 (sergebulaev/linkedin-skills, marian-kamenistak/linkedin-post-writing-skill) and re-cut to NeroPay's rails —
 "we" never "I", no earnings register, figures with conditions. Read it before any LinkedIn copy.
 
-**`/slopmonster`** (added 17 Sep 2026, Faisal's ask): ItsssssJack/SlopMonster (MIT, Jack Roberts), copied whole into
-`.claude/skills/slopmonster/`. `tools/deslop.py` scores any copy out of 5 for AI tells (vocabulary, constructions,
-punctuation cadence, rule-of-three, invented proof) with stdlib Python only and exits non-zero below 5, so it can gate a
-build; `tools/cleanse.sh` hands a draft to a rival model family through the `codex` or `claude` CLI, or prints the prompt
-when neither is installed (neither is, in the web container). Run `python3 .claude/skills/slopmonster/tools/deslop.py --text "…"`
-on every caption and every script before it goes to Faisal; the NC01 v2 take scored 5/5 on install. NeroPay's rails still
-win where the two disagree — the scorer knows nothing about s.21 FSMA. Refresh by re-cloning the upstream repo.
+**`/slopmonster`** (added 17 Sep 2026, Faisal's ask): [ItsssssJack/SlopMonster](https://github.com/ItsssssJack/SlopMonster)
+(MIT, Jack Roberts), copied whole into `.claude/skills/slopmonster/`. `tools/deslop.py` scores any copy out of 5 for AI
+tells (vocabulary, `not just X but Y` shapes, punctuation cadence, rule-of-three rhythm, invented proof) with stdlib
+Python only and exits non-zero below 5, so it can gate a build; `tools/cleanse.sh` hands a draft to a rival model
+family through the `codex` or `claude` CLI, or prints the prompt when neither is installed (neither is, in the web
+container). Trigger: `/slopmonster`, "does this sound like AI", "de-slop this". Run
+`python3 .claude/skills/slopmonster/tools/deslop.py --allow-proof --text "…"` on every caption and every script before
+it goes to Faisal — `--allow-proof` because our figures are real and sourced (post L1 lost a point on install only for
+"98 food businesses"); the NC01 v2 take scored 5/5. NeroPay's rails and `/linkedin-post` still decide what posts — the
+scorer knows nothing about s.21 FSMA; `.claude/skills/slopmonster/NEROPAY-NOTE.md` has the four things to know. Both of
+its test suites pass here. Refresh by re-cloning the upstream repo.
 
 Start every video request at `/hyperframes` — it routes to the owning workflow. `/media-use` sources
 and generates media; `/hyperframes-audio` mixes audio already placed in a composition. Refresh with

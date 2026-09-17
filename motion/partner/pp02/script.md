@@ -178,3 +178,10 @@ for this stop only — `street().fade(i, p)` in `objects3d.js` turns each shop's
 in over the landing and back out over the walk to the quiet month. The chart shows three of the five tiers; the full
 ladder stays in `figures.json` and the compliance line, and `checks.py` now asserts `TIERS` against the register and that
 each bar carries its count. 50 cues.
+
+**Delivered (v5, 4:5):** `out/final/pp02-4x5.mp4`, 49.1 s, 1,474 frames, md5 `575fba3256d9adcd6abf96685fafe6a8`;
+stereo, −13.99 LUFS / −1.34 dBTP. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/a6441514-97c2-41ce-b8c9-72363527263a.mp4`
+(contact `…/6bec7093-9687-4642-8a08-b16ab156c900.jpg`). Drive: README v5 (`1ijqYxKwh44FGyiwrJfLtL_VHjCXq4qUFYLVYXE7HFoo`),
+v4 renamed superseded. Law passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes;
+contact sheet at 32 points.
