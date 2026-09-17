@@ -97,6 +97,19 @@ html,body{background:#000}
 .plate b{font-weight:700; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 82%; background-size:100% .2em}
 .comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:26px; line-height:1.55; letter-spacing:.01em; color:#5E5E64; width:470px; white-space:normal}
 
+/* v3: the liquid-glass slab — the money and the count sit in it; it tilts in on a perspective, floats, and a sheen
+   passes over it now and then. Tasteful: three in the whole video. */
+.slab{display:inline-block; padding:26px 48px 22px; border-radius:38px; transform-origin:50% 60%; will-change:transform}
+.slab::before{content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; background:radial-gradient(70% 60% at 18% 0%,rgba(255,255,255,.75),transparent 62%),radial-gradient(50% 40% at 92% 100%,rgba(201,184,245,.28),transparent 60%)}
+/* the count tile: the number and the question mark share one slot and flip like a board; the kicker retypes under it */
+.flip{position:relative; width:2.3em; height:1em; font-size:290px; perspective:1400px}
+.flip .tally{position:absolute; left:0; top:0; width:100%; text-align:center; display:block; font-size:1em; backface-visibility:hidden; transform-origin:50% 50%}
+.flip .tally.q{color:var(--ink); padding:0 .06em; margin:0 -.06em; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 78%; background-size:calc(var(--p) * 100%) .16em}
+.kicks{position:relative; height:1.4em; margin-top:14px; font-size:25px}
+.kicks .kick{position:absolute; left:0; right:0; top:0; text-align:center}
+.kick.big{font-size:25px}
+.hero.wds{gap:.12em}
+.plate b{background-size:calc(var(--p) * 100%) .2em}
 /* ---- captions ---- */
 #caps{position:absolute; inset:0; pointer-events:none}
 .cap{position:absolute; left:50%; bottom:7.5cqh; width:86cqw; transform:translateX(-50%); text-align:center; opacity:0;
@@ -109,47 +122,44 @@ html,body{background:#000}
 
 <div id="stage">
   <div id="src">
-    <!-- S0: your road — the tally, the question typed, the three named shops -->
-    <div class="sign" id="tally" data-st="S0"><div class="in"><div class="tally" id="odo">1</div></div></div>
-    <div class="sign" id="qm" data-st="S0"><div class="in"><div class="tally" id="qmark" style="opacity:0">?</div></div></div>
-    <div class="sign" id="q0" data-st="S0"><div class="in">
-      <div class="serif dim type" style="font-size:56px" data-text="How many of the business owners"></div>
-      <div class="serif dim type" style="font-size:56px" data-text="on your road actually know your name?"></div>
-    </div></div>
-    <div class="sign" id="l0" data-st="S0"><div class="in c"><div class="lbl m hang hid">Café</div></div></div>
-    <div class="sign" id="l1" data-st="S0"><div class="in c"><div class="lbl m hang hid">Barber</div></div></div>
-    <div class="sign" id="l2" data-st="S0"><div class="in c"><div class="lbl m hang hid">Takeaway</div></div></div>
+    <!-- S0: your road — the count in its glass, flipping to the question; the three named shops -->
+    <div class="sign" id="tl" data-st="S0"><div class="in"><div class="slab" id="tile">
+      <div class="flip"><div class="tally" id="odo">1</div><div class="tally q" id="qmark" style="--p:0">?</div></div>
+      <div class="kicks"><div class="kick big type" id="tk0" data-text="business owners on your road"></div><div class="kick big type" id="tk1" data-text="know your name?"></div></div>
+    </div></div></div>
+    <div class="sign" id="l0" data-st="S0"><div class="in c"><div class="lbl hang hid">Café</div></div></div>
+    <div class="sign" id="l1" data-st="S0"><div class="in c"><div class="lbl hang hid">Barber</div></div></div>
+    <div class="sign" id="l2" data-st="S0"><div class="in c"><div class="lbl hang hid">Takeaway</div></div></div>
 
-    <!-- S1: paid — the heading and the figure, the receipt prints out of the door, the 30-day strip -->
+    <!-- S1: paid — the heading on its words, the figure in glass on its words, the receipt on "once", the condition on "thirty days" -->
     <div class="sign" id="h1" data-st="S1"><div class="in c"><div class="wds shout s" id="h1w" style="justify-content:center">pays you</div></div></div>
-    <div class="sign" id="f1" data-st="S1"><div class="in c"><div class="mask"><span class="hero"><span class="hl" id="hlF">£100–£300</span></span></div></div></div>
+    <div class="sign" id="f1" data-st="S1"><div class="in c"><div class="slab" id="slabF"><div class="wds hero" id="f1w" style="justify-content:center">£100 – £300</div></div></div></div>
     <div class="sign" id="k1" data-st="S1"><div class="in c"><div class="mask"><span class="kick">per merchant</span></div></div></div>
     <div class="sign" id="d1" data-st="S1"><div class="in c"><div class="mask"><span class="serif dim d1a" style="font-size:52px">paid after 30 days</span></div><div class="mask"><span class="serif dim d1b" style="font-size:52px">of card payments with us.</span></div></div></div>
-    
-    <!-- S2: you don't — three claims, each struck through as she says it -->
-    <div class="sign" id="y2" data-st="S2"><div class="in"><div class="mask"><span class="serif dim" style="font-size:54px">You don't</span></div></div></div>
+
+    <!-- S2: you don't — three claims, each word on its word, struck as she finishes it -->
     <div class="sign" id="s2a" data-st="S2"><div class="in"><div class="wds shout s" id="s2aw"><span class="strike" id="stA">sell anything.</span></div></div></div>
     <div class="sign" id="s2b" data-st="S2"><div class="in"><div class="wds shout s" id="s2bw"><span class="strike" id="stB">set anything up.</span></div></div></div>
     <div class="sign" id="s2c" data-st="S2"><div class="in"><div class="wds shout s" id="s2cw"><span class="strike" id="stC">make the call.</span></div></div></div>
 
-    <!-- S3: a name and a number — the phone, the van, the terminal -->
-    <div class="sign" id="h3" data-st="S3"><div class="in r"><div class="wds shout s" id="h3w">Send us a name</div></div></div>
-    <div class="sign" id="h3b" data-st="S3"><div class="in r"><div class="wds shout s" id="h3bw">and a number.</div></div></div>
+    <!-- S3: a name and a number — the phone, the van that stops, the terminal -->
+    <div class="sign" id="h3" data-st="S3"><div class="in r"><div class="wds shout s" id="h3w" style="justify-content:flex-end">Send us a name</div></div></div>
+    <div class="sign" id="h3b" data-st="S3"><div class="in r"><div class="wds shout s" id="h3bw" style="justify-content:flex-end">and a number.</div></div></div>
 
-    <!-- S4: Active Partner — the bunting, the lamp-post signs, the climb -->
+    <!-- S4: Active Partner — the bunting, the pill, the climb in glass -->
     <div class="sign" id="b4" data-st="S4"><div class="in"><div class="bunt">
       <div class="chip hid" id="wk0">Week 1<b>✓</b></div><div class="chip hid" id="wk1">Week 2<b>✓</b></div><div class="chip hid" id="wk2">Week 3<b>✓</b></div><div class="chip hid" id="wk3">Week 4<b>✓</b></div>
     </div></div></div>
     <div class="sign" id="a4" data-st="S4"><div class="in r"><div class="pill solid big hang hid" id="pAct">Active Partner</div></div></div>
-    <div class="sign" id="r4" data-st="S4"><div class="in"><div class="c-row"><span class="mask"><span class="c-count" id="cCount">3</span></span><span class="mask"><span class="c-count" id="cArrow" style="color:var(--muted);font-weight:400">→</span></span><span class="mask"><span class="c-rate" id="cRate">20%</span></span></div><div class="mask"><span class="kick" id="cNote">new active merchants · this month</span></div></div></div>
+    <div class="sign" id="r4" data-st="S4"><div class="in"><div class="slab" id="slabR"><div class="c-row"><span class="mask"><span class="c-count" id="cCount">3</span></span><span class="mask"><span class="c-count" id="cArrow" style="color:var(--muted);font-weight:400">→</span></span><span class="mask"><span class="c-rate" id="cRate">20%</span></span></div><div class="mask"><span class="kick" id="cNote">new active merchants · this month</span></div></div></div></div>
     <div class="sign" id="m4" data-st="S4"><div class="in"><div class="mask"><span class="serif" style="font-size:46px">Most partners start at 20%: three a month.</span></div></div></div>
 
-    <!-- S5: the quiet month — shutters down, one shop open, the receipt prints anyway -->
-    <div class="sign" id="h5" data-st="S5"><div class="in"><div class="mask"><span class="serif" style="font-size:80px">Your bonus is <span class="hl" id="hlY">yours</span></span></div><div class="mask"><span class="serif h5b" style="font-size:80px">either way.</span></div></div></div>
+    <!-- S5: the quiet month — shutters on "quiet", one shop on "one", the receipt on "bonus", the line on its words -->
+    <div class="sign" id="h5" data-st="S5"><div class="in"><div class="wds serif" id="h5w" style="font-size:80px">Your bonus is <span class="hl" id="hlY">yours</span></div><div class="mask"><span class="serif h5b" style="font-size:80px">either way.</span></div></div></div>
 
     <!-- S6: the end of the road -->
     <div class="sign" id="p6" data-st="S6"><div class="in"><div class="pill big hang hid" id="pFree">Free to join</div></div></div>
-    <div class="sign" id="n6" data-st="S6"><div class="in"><div class="plate hang hid" id="plate">neropay.app/<b>partners</b></div></div></div>
+    <div class="sign" id="n6" data-st="S6"><div class="in"><div class="plate hang hid" id="plate" style="--p:0">neropay.app/<b>partners</b></div></div></div>
     <div class="sign" id="l6" data-st="S6"><div class="in"><div class="pill solid hang hid" id="pLink">Your own link</div></div></div>
     <div class="sign" id="c6" data-st="S6"><div class="in"><div class="mask"><span class="comp">£100–£300 per merchant, paid after 30 days with us. Revenue share needs 3+ new active merchants per calendar month. Terms: neropay.app/partners</span></div></div></div>
   </div>
@@ -163,16 +173,18 @@ html,body{background:#000}
 import * as THREE from '../../assets/vendor/three.module.js';
 import { neroTerminal, street, lampPost, phone, receipt, van, rise, sink, ease, seg } from '../../lib/objects3d.js';
 import { world, K } from '../../lib/world3d.js';
-import { place as placeGlass, drift as driftGlass } from '../../lib/glass.js';
 await document.fonts.ready;
 await Promise.all(['700 120px Poppins', '600 30px Poppins', '500 26px Poppins', '400 28px Poppins', '800 64px Chivo', '700 44px "Martian Mono"', '400 26px "Martian Mono"', 'italic 400 54px "Source Serif 4"'].map(f => document.fonts.load(f)));
 
 const FPS = 30;
 /* ---------------------------------------------------------------------------
-   PP02, 17 Sep 2026 — your road. One long English high street of paper shopfronts; the camera walks it, turning to
-   face each stop. Olivia's take, tightened gently; composition time = HEAD + word time; every anchor by the word.
-   Faisal's rulings: the bonus is said as paid, only delayed (the tier condition on screen, never in the sentence);
-   nothing may sound like work for the partner — a name and a number is enough and we close it.
+   PP02 v3, 17 Sep 2026 — your road. One long English high street of paper shopfronts; the camera walks it, turning
+   to face each stop. Olivia's take, tightened gently; composition time = HEAD + word time.
+   v3 rule (Faisal): nothing is on screen before she has said it. Every heading rises word by word on the word being
+   spoken (sync()), the typewriter types each word as it is said (typeSync()), a shop lights on the word that names it,
+   the phone types on "name" and "number", the van stops on "close it". The count is the hook: it flies in large in its
+   glass, counts the shops as the camera walks, then flips into the question mark on "know your name".
+   Standing rulings: the bonus is said as paid, only delayed; nothing sounds like work; figures grand and once.
 --------------------------------------------------------------------------- */
 const BPM = 107.90, BEAT = 60 / BPM, HEAD = 2 * BEAT, TAIL = 8.3;
 const WORDS = window.WORDS;
@@ -186,6 +198,8 @@ function find(phrase, nth = 0){ const alts = Array.isArray(phrase) ? phrase : [p
   throw new Error('no such words in the take: ' + alts.join(' | ')); }
 const at = (p, n = 0) => w(find(p, n));
 const end = (p, n = 0) => { const a = Array.isArray(p) ? p[0] : p; return we(find(p, n) + a.split(' ').length - 1); };
+/* the start times of each word of a phrase, in order — a heading that mirrors the take rises on exactly these */
+const times = (p, n = 0) => { const i = find(p, n); return p.split(' ').map((_, k) => w(i + k)); };
 const LAST = WORDS.length - 1;
 const DURATION = +(we(LAST) + TAIL).toFixed(3);
 
@@ -193,30 +207,35 @@ const eo = ease.out, eio = ease.inout;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const px = (el, o) => Object.assign(el.style, o);
 function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
-/* v2 type: a heading rises word by word, and its tracking settles from wide to tight as it lands */
-function wrapWords(el){ const text = el.textContent.trim(); const inner = el.querySelector('.strike');
-  const words = text.split(/\s+/); el.innerHTML = words.map(x => `<span class="mask"><span>${x}</span></span>`).join('');
-  if (inner){ const s = document.createElement('span'); s.className = 'strike'; s.id = inner.id; el.replaceChildren(); s.innerHTML = words.map(x => `<span class="mask"><span>${x}</span></span>`).join(''); s.style.display = 'inline-flex'; s.style.gap = '.24em'; el.appendChild(s); }
+function wrapWords(el){ const inner = el.querySelector('.strike'); const hlw = el.querySelector('.hl');
+  const text = el.textContent.trim(); const words = text.split(/\s+/);
+  const m = x => `<span class="mask"><span${hlw && hlw.textContent.trim() === x ? ` class="hl" id="${hlw.id}"` : ''}>${x}</span></span>`;
+  el.innerHTML = words.map(m).join('');
+  if (inner){ const s = document.createElement('span'); s.className = 'strike'; s.id = inner.id; el.replaceChildren(); s.innerHTML = words.map(m).join(''); s.style.display = 'inline-flex'; s.style.gap = '.24em'; el.appendChild(s); }
   el.dataset.n = words.length; }
-function wordsUp(el, t, start, stagger = .05, dur = .42){ const sp = [...el.querySelectorAll('.mask>span')];
-  sp.forEach((s, i) => { const p = eo(seg(t, start + i * stagger, dur));
+/* v3: each word of a heading rises on its own spoken time; the tracking settles from wide to tight as it lands */
+function sync(el, t, ts, dur = .38){ const sp = [...el.querySelectorAll('.mask>span')];
+  sp.forEach((s, i) => { const p = eo(seg(t, ts[Math.min(i, ts.length - 1)], dur));
     px(s, { transform:`translateY(${(1 - p) * 140}%)`, opacity:p < .02 ? 0 : 1, letterSpacing:(.03 - .065 * p).toFixed(3) + 'em' }); }); }
-/* the typewriter: characters revealed on a schedule between start and stop; the caret blinks while typing */
-function prepType(el){ const s = el.dataset.text; el.innerHTML = [...s].map(c => `<span class="ch">${c === ' ' ? '&nbsp;' : c}</span>`).join('') + '<span class="caret"></span>'; el.dataset.n = s.length; }
-function typeIn(el, t, start, stop){ const n = +el.dataset.n; const k = t < start ? 0 : t >= stop ? n : Math.floor(n * (t - start) / (stop - start));
-  const ch = el.querySelectorAll('.ch'); ch.forEach((c, i) => c.className = 'ch' + (i < k ? ' on' : ''));
-  const car = el.querySelector('.caret'); if (k > 0 && k < n) ch[k - 1].after(car); else if (k === 0) el.prepend(car); else el.append(car);
-  car.style.opacity = (t >= start - .3 && t < stop + .5 && (t * 3) % 1 < .55) ? 1 : 0; }
-function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = el.style.getPropertyValue('--rot') || '0deg';
-  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); el.style.setProperty('--sh', seg(t, start + .1, .55).toFixed(3)); }
-/* a hanging sign swings in from its string and settles, no overshoot */
+/* the typewriter, v3: every character pre-laid and tagged with its word; a word's characters reveal across the time
+   she takes to say it, so the line is never ahead of her */
+function prepType(el){ const words = el.dataset.text.split(' '); let html = '';
+  words.forEach((wd, j) => { if (j) html += `<span class="ch" data-w="${j - 1}" data-q="1">&nbsp;</span>`; [...wd].forEach((c, q) => html += `<span class="ch" data-w="${j}" data-q="${(q / wd.length).toFixed(3)}">${c}</span>`); });
+  el.innerHTML = html + '<span class="caret"></span>'; el.dataset.nw = words.length; }
+function typeSync(el, t, ts, te){ const ch = [...el.querySelectorAll('.ch')]; let last = -1;
+  ch.forEach((c, i) => { const j = +c.dataset.w, q = +c.dataset.q; const on = t >= ts[j] + (te[j] - ts[j]) * q * .85; c.className = 'ch' + (on ? ' on' : ''); if (on) last = i; });
+  const car = el.querySelector('.caret'); if (last >= 0) ch[last].after(car); else el.prepend(car);
+  const typing = t >= ts[0] - .25 && t < te[te.length - 1] + .45; car.style.opacity = typing && (t * 3) % 1 < .55 ? 1 : 0; }
 function hang(el, t, start, dur = .5){ const p = eo(seg(t, start, dur));
   px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${((1 - p) * -14).toFixed(2)}deg) translateY(${((1 - p) * -30).toFixed(1)}px)` }); el.style.setProperty('--sh', seg(t, start + .2, .55).toFixed(3)); }
+/* v3: the glass slab tilts in on a perspective, floats a little, and a sheen passes over it every few seconds */
+function glass(el, t, start, dur = .6, ph = 0, out = Infinity){ const p = eo(seg(t, start, dur)) * (1 - eo(seg(t, out, .3))); const u = t - start - .25; const sh = u < 0 ? 0 : Math.min(1, (u % 3.8) / .8);
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`perspective(1400px) rotateX(${((1 - p) * 24).toFixed(2)}deg) rotateY(${((1 - p) * -12 + 1.2 * Math.sin(t * .9 + ph)).toFixed(2)}deg) translateY(${((1 - p) * 90 + 3 * Math.sin(t * 1.1 + ph)).toFixed(1)}px) scale(${(.86 + .14 * p).toFixed(3)})` });
+  el.style.setProperty('--sh', sh.toFixed(3)); }
 const BASE = el => el.classList.contains('r') ? 'translate(-100%,-50%)' : el.classList.contains('c') ? 'translate(-50%,-50%)' : 'translateY(-50%)';
 function settle(el, p){ el.style.transform = `${BASE(el)} translate(${((1 - p) * -28).toFixed(1)}px, ${((1 - p) * 90).toFixed(1)}px) scale(${(.94 + .06 * p).toFixed(3)})`; }
 function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, start, dur)).toFixed(3)); }
-function strike(el, t, start, dur = .32){ el.style.setProperty('--s', eo(seg(t, start, dur)).toFixed(3)); }
-function show(el, on){ el.style.opacity = on ? 1 : 0; }
+function strike(el, t, start, dur = .3){ el.style.setProperty('--s', eo(seg(t, start, dur)).toFixed(3)); }
 $$('.wds').forEach(wrapWords); $$('.type').forEach(prepType);
 
 /* ---- the world: seven stops along one straight street; the view swings left and right from one to the next ---- */
@@ -229,28 +248,25 @@ const mk = (i, spec) => Wd.section({ x:i * STEP, z:0, ry:0, el:11, box:{ x:[-12,
 const S0 = mk(0, { az:16 }), S1 = mk(1, { az:-14 }), S2 = mk(2, { az:14 }), S3 = mk(3, { az:-16 }), S4 = mk(4, { az:14 }), S5 = mk(5, { az:-12 }), S6 = mk(6, { az:10, box:{ x:[-12, 17.5], y:[0, 18.2], z:[-9, 8] } });
 const SECS = [S0, S1, S2, S3, S4, S5, S6];
 const SECN = new Map(SECS.map((S, i) => [S, 'S' + i]));
-/* the pavement, the kerb, the road with its dashes — all DOM planes, so nothing on the floor paints over type */
 Wd.mat(150, 0, 440, 22, { tone:'#EFECE4', r:.6 });
 Wd.mat(150, 17.5, 440, 13, { tone:'#E3E0D8', r:.6 });
 Wd.route(new THREE.Vector3(-70, 0, 11), new THREE.Vector3(370, 0, 11), { w:.34, tone:'#CFCCC3' });
 for (let x = -68; x < 370; x += 6) Wd.route(new THREE.Vector3(x, 0, 17.5), new THREE.Vector3(x + 3, 0, 17.5), { w:.26, tone:'#F7F5EE' });
-/* the street itself: one row of shopfronts behind every stop, scene-level */
 const ST = street(52, { pitch:8.2, x0:-44, scale:1.3 }); ST.position.z = -7.5; Wd.scene.add(ST);
 const shopAt = xw => { let best = 0, bd = 1e9; for (let i = 0; i < ST.n; i++){ const d = Math.abs(ST.x(i) - xw); if (d < bd){ bd = d; best = i; } } return best; };
-const local = (S, i) => ST.x(i) - S.g.position.x;   /* a street shop's x in a section's frame */
-const GLASS = [];
-const SHOP = 0xEDEAE2;
+const local = (S, i) => ST.x(i) - S.g.position.x;
+const doorOf = (S, i, dz = .2) => { const d = ST.doorTop(i); return [local(S, i) + (d.x - ST.x(i)), d.y + .1, -7.5 + d.z + dz]; };
 
-/* S0 — your road: the tally, the question, the three named shops (in the street, in this view) */
-S0.sign($('#tally'), { x:-11.5, y:14.2, z:-1, face:true });
-S0.sign($('#qm'), { x:-11.5, y:14.2, z:-1, face:true });
-S0.sign($('#q0'), { x:-11.8, y:9.6, z:-2, face:true });
-const N0 = [shopAt(-7), shopAt(0), shopAt(7)];
-const SL0 = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => S0.sign(el, { x:local(S0, N0[i]), y:ST.height(N0[i]) + 3.1, z:-7.5, face:true }));
+/* S0 — your road: the count tile, the shops it counts (the view dollies past them), the three named shops */
+S0.sign($('#tl'), { x:-11.5, y:17.8, z:-1, face:true });
+const N0 = [shopAt(-11), shopAt(-3), shopAt(5)];            /* three distinct shops in the settled view: café, barber, takeaway */
+const SL0 = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => S0.sign(el, { x:local(S0, N0[i]), y:ST.height(N0[i]) + 1.5, z:-5.3, face:true }));
+const COUNTED = [shopAt(-19), shopAt(-11), shopAt(-3), shopAt(5)];   /* the shops the view rides past while it counts */
 
-/* S1 — paid: the lit shop's door prints the receipt; the figure and its condition stand to the right */
+/* S1 — paid: three shops light on "every one of them", the terminal lands on "NeroPay", the receipt prints on "once" */
+const N1S = [shopAt(STEP - 9), shopAt(STEP - 1), shopAt(STEP + 7)];
 const N1 = shopAt(STEP + 11);
-const RC = S1.add(receipt({ w:5.2, h:8.2 })); { const d = ST.doorTop(N1); RC.position.set(local(S1, N1) + (d.x - ST.x(N1)), d.y + .1, -7.5 + d.z + .2); }
+const RC = S1.add(receipt({ w:5.2, h:8.2 })); RC.position.set(...doorOf(S1, N1));
 RC.draw((c, W, H) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.fillStyle = '#141416'; c.textAlign = 'center';
   c.font = '400 30px "Martian Mono"'; c.letterSpacing = '4px'; c.fillText('BONUS · PER MERCHANT', W / 2, 110);
   c.font = '700 160px Poppins'; c.letterSpacing = '-6px'; c.fillText('PAID', W / 2, 290);
@@ -259,39 +275,39 @@ RC.draw((c, W, H) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.fillSt
   c.setLineDash([8, 10]); c.strokeStyle = 'rgba(20,20,22,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(W * .1, 520); c.lineTo(W * .9, 520); c.stroke(); c.setLineDash([]);
   c.fillStyle = '#5E5E64'; c.font = '400 30px "Martian Mono"'; c.fillText('£100 · £200 · £300', W / 2, 600); c.fillText('by their first 30 days’ takings', W / 2, 650);
   c.font = '400 28px "Martian Mono"'; c.fillText('THANK YOU', W / 2, 760);
-  /* the tear along the top */
   c.fillStyle = '#F1EFE8'; for (let x = 0; x < W; x += 28){ c.beginPath(); c.moveTo(x, 0); c.lineTo(x + 14, 22); c.lineTo(x + 28, 0); c.fill(); } });
-S1.sign($('#h1'), { x:0, y:16.8, z:-2, face:true });
-S1.sign($('#f1'), { x:0, y:13.8, z:-1, face:true });
-S1.sign($('#k1'), { x:0, y:11.2, z:-2, face:true });
-S1.sign($('#d1'), { x:0, y:9.1, z:-2, face:true });
+const TM1 = S1.add(neroTerminal()); TM1.scale.setScalar(.34); { const d = doorOf(S1, N1S[2], 1.8); TM1.position.set(d[0] - 2.0, 0, d[2]); } TM1.rotation.y = .3; TM1.visible = false;
+S1.sign($('#h1'), { x:0, y:22.0, z:-2, face:true });
+S1.sign($('#f1'), { x:0, y:17.6, z:-1, face:true });
+S1.sign($('#k1'), { x:0, y:14.6, z:-2, face:true });
+S1.sign($('#d1'), { x:0, y:12.4, z:-2, face:true });
 
-/* S2 — you don't: three claims and three strikes; a lamp post at the edge for the street's sake */
-S2.sign($('#y2'), { x:-11.5, y:16.2, z:-2, face:true });
-S2.sign($('#s2a'), { x:-11.5, y:13.4, z:-1, face:true });
-S2.sign($('#s2b'), { x:-11.5, y:10.8, z:-1, face:true });
-S2.sign($('#s2c'), { x:-11.5, y:8.2, z:-1, face:true });
+/* S2 — you don't */
+S2.sign($('#s2a'), { x:-11.5, y:20.5, z:-1, face:true });
+S2.sign($('#s2b'), { x:-11.5, y:17.0, z:-1, face:true });
+S2.sign($('#s2c'), { x:-11.5, y:13.5, z:-1, face:true });
 const LP2 = S2.add(lampPost({ h:9.5 })); LP2.position.set(12.4, 0, 4); LP2.rotation.y = Math.PI;
 
-/* S3 — a name and a number: the phone on the pavement, the van from our end of the road, the terminal at the door */
+/* S3 — a name and a number: the phone on the pavement, the van in from our end of the road that stops at the shop */
 const PH = S3.add(phone({ w:5.2 })); PH.position.set(-6.2, 0, 4.5); PH.rotation.y = .35;
 const N3 = shopAt(3 * STEP + 6);
 const VAN = S3.add(van()); VAN.position.set(-60, 0, 12.5); VAN.visible = false;
-const TM3 = S3.add(neroTerminal()); TM3.scale.setScalar(.34); { const d = ST.doorTop(N3); TM3.position.set(local(S3, N3) + (d.x - ST.x(N3)) - 2.0, 0, -7.5 + d.z + 1.8); } TM3.rotation.y = -.3; TM3.visible = false;
-S3.sign($('#h3'), { x:11.5, y:15.4, z:-1, face:true });
-S3.sign($('#h3b'), { x:11.5, y:12.2, z:-1, face:true });
+const VAN_STOP = 3.2;   /* on the road in frame, below the shop it serves */
+const TM3 = S3.add(neroTerminal()); TM3.scale.setScalar(.34); { const d = doorOf(S3, N3, 1.8); TM3.position.set(d[0] - 2.0, 0, d[2]); } TM3.rotation.y = -.3; TM3.visible = false;
+S3.sign($('#h3'), { x:11.5, y:21.0, z:-1, face:true });
+S3.sign($('#h3b'), { x:11.5, y:17.8, z:-1, face:true });
 
-/* S4 — Active Partner: bunting overhead, the signs on the lamp post, three shops lighting */
-S4.sign($('#b4'), { x:-12, y:16.2, z:-2, face:true });
-S4.sign($('#a4'), { x:12, y:14.4, z:-1, face:true });
-S4.sign($('#r4'), { x:-11.5, y:11.0, z:-1, face:true });
-S4.sign($('#m4'), { x:-11.5, y:8.1, z:-2, face:true });
+/* S4 — Active Partner */
+S4.sign($('#b4'), { x:-12, y:22.0, z:-2, face:true });
+S4.sign($('#a4'), { x:12, y:20.1, z:-1, face:true });
+S4.sign($('#r4'), { x:-11.5, y:16.0, z:-1, face:true });
+S4.sign($('#m4'), { x:-11.5, y:12.0, z:-2, face:true });
 const N4 = [shopAt(4 * STEP - 8), shopAt(4 * STEP - 1), shopAt(4 * STEP + 6)];
 
-/* S5 — the quiet month: shutters down on every shop in view but one; that one's receipt prints anyway */
+/* S5 — the quiet month */
 const N5 = [shopAt(5 * STEP - 14), shopAt(5 * STEP - 7), shopAt(5 * STEP), shopAt(5 * STEP + 7), shopAt(5 * STEP + 14)];
 const OPEN5 = N5[2];
-const RC5 = S5.add(receipt({ w:5.2, h:9.6 })); { const d = ST.doorTop(OPEN5); RC5.position.set(local(S5, OPEN5) + (d.x - ST.x(OPEN5)), d.y + .1, -7.5 + d.z + .2); }
+const RC5 = S5.add(receipt({ w:5.2, h:9.6 })); RC5.position.set(...doorOf(S5, OPEN5));
 RC5.draw((c, W, H) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.fillStyle = '#141416'; c.textAlign = 'center';
   c.font = '400 30px "Martian Mono"'; c.letterSpacing = '4px'; c.fillText('BONUS · PER MERCHANT', W / 2, 110);
   c.font = '700 160px Poppins'; c.letterSpacing = '-6px'; c.fillText('PAID', W / 2, 290);
@@ -300,44 +316,50 @@ RC5.draw((c, W, H) => { c.fillStyle = '#FBF9F2'; c.fillRect(0, 0, W, H); c.fillS
   c.setLineDash([8, 10]); c.strokeStyle = 'rgba(20,20,22,.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(W * .1, 520); c.lineTo(W * .9, 520); c.stroke(); c.setLineDash([]);
   c.fillStyle = '#5E5E64'; c.font = '400 30px "Martian Mono"'; c.fillText('paid after 30 days', W / 2, 600); c.fillText('of card payments with us', W / 2, 650);
   c.fillStyle = '#F1EFE8'; for (let x = 0; x < W; x += 28){ c.beginPath(); c.moveTo(x, 0); c.lineTo(x + 14, 22); c.lineTo(x + 28, 0); c.fill(); } });
-S5.sign($('#h5'), { x:-11.5, y:13.4, z:-1, face:true });
+S5.sign($('#h5'), { x:-11.5, y:18.8, z:-1, face:true });
 
-/* S6 — the end of the road: the street runs out, the nameplate, our terminal at the kerb, the compliance line */
-S6.sign($('#p6'), { x:-11.5, y:17.2, z:-2, face:true });
-S6.sign($('#n6'), { x:-11.5, y:13.5, z:-1, face:true });
-S6.sign($('#l6'), { x:-11.5, y:9.9, z:-2, face:true });
-S6.sign($('#c6'), { x:-11.5, y:5.7, z:-2, face:true });
-const TM6 = S6.add(neroTerminal()); TM6.position.set(18, 0, -2); TM6.rotation.y = -.3;
+/* S6 — the end of the road */
+S6.sign($('#p6'), { x:-11.5, y:22.6, z:-2, face:true });
+S6.sign($('#n6'), { x:-11.5, y:18.6, z:-1, face:true });
+S6.sign($('#l6'), { x:-11.5, y:15.0, z:-2, face:true });
+S6.sign($('#c6'), { x:-11.5, y:10.6, z:-2, face:true });
+const TM6 = S6.add(neroTerminal()); TM6.scale.setScalar(.72); TM6.position.set(13.2, 0, -1); TM6.rotation.y = -.3;
 
-/* ---- anchors, by the word ---- */
+/* ---- anchors, by the word: every one is the start of the word that earns the graphic ---- */
+const T = {
+  own:times('business owners on your road'), ownE:times('business owners on your road').map((_, k) => we(find('business owners on your road') + k)),
+  know:times('know your name'), knowE:times('know your name').map((_, k) => we(find('know your name') + k)),
+  every:times('every one of them'), pays:times('pays you'), fig:[at('hundred'), at('to three'), at('three hundred')],
+  sell:times('sell anything'), setup:times('set anything up'), call:times('make the call'),
+  send:times('send us a name'), number:times('and a number'),
+  bonus:[at('that bonus'), w(find('that bonus') + 1), w(find('that bonus') + 2), at('still yours') + .12],
+};
 const A = {
   qEnd:end('name'), cafe:at('cafe'), barber:at('barber'), take:at('takeaway'),
-  pays:at('pays you'), fig:at('hundred to three'), once:at('once'), thirty:at('thirty days'), daysEnd:end('thirty days'),
-  dont:at('and you dont'), sell:at('sell'), setup:at('set anything'), call:at('make the call'),
-  send:at('send us'), name:at('a name'), number:at('a number'), close:at('well close'), foryou:end('for you'),
-  three:at('three times'), month:at('in a month'), act:at('active partner'), share:at('a share'), every:at('every month'), hit:end('hit it'),
-  quiet:at('quiet'), one:at('bring one'), bonus:at('that bonus'), yours:at('still yours'),
-  free:at('free to join'), url:at('slash partners'), link:at('get your link'), comp:0,
+  intro:at('introduce'), nero:at('neropay'), pounds:at('pounds'), once:at('once'), thirty:at('thirty days'), daysEnd:end('thirty days'),
+  sellE:end('sell anything'), setupE:end('set anything up'), callE:end('make the call'),
+  send:at('send us'), name:at('a name'), nameE:end('a name'), number:at('a number'), numberE:end('a number'), close:at('well close'), it:at('it for you'), foryou:at('for you'), foryouE:end('for you'),
+  three:at('three times'), timesW:w(find('three times') + 1), inW:at('in a month'), month:at('a month'), act:at('active partner'), share:at('a share'), every:at('every month'), hit:end('hit it'),
+  quiet:at('quiet'), one:w(find('bring one') + 1), bonus:at('that bonus'), yours:at('still yours') + .12, yoursE:end('still yours'),
+  its:at('its free'), free:at('free to join'), app:at('neropay dot app'), url:at('slash partners'), link:at('get your link'), comp:0,
 };
 A.comp = A.url + .5;
 const CAM = [
-  { t:0,                        d:0,  sec:S0 },
-  { t:end('takeaway') + .05,    d:.75, sec:S1 },
-  { t:A.daysEnd + .05,          d:.75, sec:S2 },
-  { t:end('the call') + .45,    d:.75, sec:S3 },
-  { t:end('a month') + .05,     d:.75, sec:S4 },
-  { t:A.hit + .05,              d:.75, sec:S5 },
-  { t:end('join') + .05,        d:.75, sec:S6 },
+  { t:0,                      d:0,   sec:S0, dolly:{ dx:-6, to:A.qEnd - .3 } },
+  { t:end('takeaway') - .02,  d:.65, sec:S1 },
+  { t:A.daysEnd + .05,        d:.65, sec:S2 },
+  { t:A.callE + .05,          d:.65, sec:S3 },
+  { t:at('and youre') - .05,  d:.65, sec:S4 },
+  { t:A.hit + .05,            d:.65, sec:S5 },
+  { t:A.its - .1,             d:.65, sec:S6 },
 ];
-/* things that must wait for the camera to land */
-A.h1 = CAM[1].t + .45; A.y2 = CAM[2].t + .45; A.h3 = CAM[3].t + .45; A.bunt = CAM[4].t + .5; A.h5 = Math.max(A.bonus - .4, CAM[5].t + .5); A.term6 = CAM[6].t + .3;
-A.free = Math.max(A.free, CAM[6].t + .9);
+A.term6 = CAM[6].t + .3; A.land4 = CAM[4].t + CAM[4].d * .55;
 let PAD = 0;
 
 const BEATS = [
-  { name:'0 your road',      t:0,               out:CAM[1].t, words:13 },
+  { name:'0 your road',      t:0,               out:CAM[1].t, words:9 },
   { name:'1 paid',           t:CAM[1].t + .40,  out:CAM[2].t, words:14 },
-  { name:'2 you don\'t',     t:CAM[2].t + .40,  out:CAM[3].t, words:10 },
+  { name:'2 you don\'t',     t:CAM[2].t + .40,  out:CAM[3].t, words:8 },
   { name:'3 name and number', t:CAM[3].t + .40, out:CAM[4].t, words:7 },
   { name:'4 active partner', t:CAM[4].t + .40,  out:CAM[5].t, words:12 },
   { name:'5 quiet month',    t:CAM[5].t + .40,  out:CAM[6].t, words:6 },
@@ -350,8 +372,8 @@ function lawReport(){
     return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need }; });
 }
 
-/* the walk: between stops the camera dollies along the pavement — target and position slide, a small step up and
-   down in the middle, no pull-back to a wide view. The stops face alternately left and right across the street. */
+/* the walk: between stops the camera dollies along the pavement — a small step up and down in the middle, no
+   pull-back. The hook has its own slow dolly: the view rides past the shops while the count counts them. */
 function walk(a, b, p){ const target = a.target.clone().lerp(b.target, p); const pos = a.pos.clone().lerp(b.pos, p);
   pos.y += 1.4 * Math.sin(Math.PI * p); return { pos, target, R:a.R + (b.R - a.R) * p }; }
 function camState(t){
@@ -361,7 +383,9 @@ function camState(t){
     const p = eio(seg(t, cur.t, cur.d)), a = prev.sec.pose(), b = cur.sec.pose();
     return { ...walk(a, b, p), moving:p, sec:null, from:prev.sec, to:cur.sec };
   }
-  const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
+  const { pos, target, R } = cur.sec.pose();
+  if (cur.dolly){ const k = cur.dolly.dx * (1 - eio(seg(t, cur.t, cur.dolly.to - cur.t))); pos.x += k; target.x += k; }
+  return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
 }
 const UP = new THREE.Vector3(0, 1, 0);
 function applyCam(t){
@@ -370,7 +394,6 @@ function applyCam(t){
   const pad = CAPS_ON && (W / H) > .7 ? -6 : 0;
   if (pad !== PAD) { PAD = pad; for (const S of SECS) S.setBox({ x:S.box.x, y:[pad, S.box.y[1]], z:S.box.z }); }
   const c = camState(t);
-  /* the camera never stops: a slow drift and breath, continuous in time so a walk starts and ends without a jump */
   const off = c.pos.clone().sub(c.target); const L = off.length();
   off.applyAxisAngle(UP, .045 * Math.sin(t * .42)); off.y += L * .016 * Math.sin(t * .29 + 1); off.setLength(L * (1 + .018 * Math.sin(t * .23 + 2)));
   c.pos = c.target.clone().add(off);
@@ -380,7 +403,6 @@ function applyCam(t){
   const leaving = 1 - seg(c.moving, .15, .3);
   for (const el of $$('.sign')) { const st = el.dataset.st;
     el.style.opacity = st === SECN.get(c.to) ? 1 : (c.from && st === SECN.get(c.from)) ? leaving : 0; }
-  /* the arrival: the stop's type slides up and settles over the last of the walk and the first half second on it */
   const cur = CAM.filter(x => t >= x.t).pop(); const land = cur.t + cur.d * .55; const p = cur.d ? eo(seg(t, land, .75)) : 1;
   for (const el of $$(`[data-st="${SECN.get(cur.sec)}"] > .in`)) settle(el, p);
   return c;
@@ -411,24 +433,31 @@ function captions(t){
   }
 }
 
-/* ---- the tally: an odometer rolling as the shops pass, then a question mark ---- */
+/* ---- the count: it flies in large in its glass, counts 1 → 14 with a pop on every count while the shops it counts
+   light one after another as the view rides past them, then flips into the question mark on "know your name" ---- */
+const N = 14, T0 = .3, T1 = A.qEnd - .75;
+const countAt = k => T0 + (k - 1) / (N - 1) * (T1 - T0);
 function tally(t){
-  /* the number flies in from low and large, counts 1 → 14 with a pop on every change, then hands over to the ? */
-  const T0 = .25, T1 = A.qEnd - .55, N = 14;
   const v = 1 + (N - 1) * seg(t, T0, T1 - T0); const k = Math.min(N, Math.floor(v));
-  const tk = T0 + (k - 1) / (N - 1) * (T1 - T0);                              /* when this count arrived */
-  const pop = 1 + .10 * Math.sin(Math.PI * seg(t, tk, .16));
-  const fly = eo(seg(t, .1, .8));
-  const out = eo(seg(t, A.qEnd - .2, .3));
+  const pop = 1 + .12 * Math.sin(Math.PI * seg(t, countAt(k), .18));
+  const flip = eo(seg(t, T.know[0], .38));
   const el = $('#odo'); el.textContent = String(k);
-  px(el, { opacity:(fly * (1 - out)).toFixed(3), transform:`translate(${((1 - fly) * -60).toFixed(1)}px, ${((1 - fly) * 140 - out * 60).toFixed(1)}px) scale(${(1.6 - .6 * fly).toFixed(3)}) scale(${pop.toFixed(3)})` });
-  const q = eo(seg(t, A.qEnd - .15, .45));
-  px($('#qmark'), { opacity:q.toFixed(3), transform:`translateY(${((1 - q) * 70).toFixed(1)}px) scale(${(1.25 - .25 * q).toFixed(3)}) rotate(${((1 - q) * -8).toFixed(1)}deg)` });
+  px(el, { transform:`rotateX(${(flip * -90).toFixed(1)}deg) scale(${pop.toFixed(3)})`, opacity:flip > .5 ? 0 : 1 });
+  const q = $('#qmark'); px(q, { transform:`rotateX(${((1 - flip) * 90).toFixed(1)}deg) scale(${(1 + .1 * Math.sin(Math.PI * seg(t, T.know[0] + .3, .3))).toFixed(3)})`, opacity:flip < .5 ? 0 : 1 });
+  hl(q, t, A.qEnd - .1, .4);
+  /* the kicker retypes under it: the first line on "business owners on your road", the second on "know your name" */
+  const k0 = $('#tk0'), k1 = $('#tk1'); typeSync(k0, t, T.own, T.ownE); typeSync(k1, t, T.know, T.knowE);
+  k0.style.opacity = t < T.know[0] ? 1 : 0; k1.style.opacity = t >= T.know[0] ? 1 : 0;
+  glass($('#tile'), t, .1, .7, 0);
+  /* the shops it counts: each lights on its count and eases back to a glow; all drop on the flip */
+  COUNTED.forEach((i, j) => { const tk = countAt(1 + j * 4); const on = seg(t, tk, .14), down = eo(seg(t, tk + .35, .5));
+    const base = on * (1 - .65 * down) * (1 - flip); ST.light(i, N0.includes(i) ? Math.max(base, litN0(i, t)) : base); });
 }
+const litN0 = (i, t) => { const k = N0.indexOf(i); return k < 0 ? 0 : eo(seg(t, [A.cafe, A.barber, A.take][k], .3)); };
 
-/* ---- the phone screen: a contact card typing in, then SENT ---- */
+/* ---- the phone screen: the contact card types on "name" and "number", SENT lands on "close" ---- */
 function phoneScreen(t){
-  const kName = Math.floor(4 * seg(t, A.name - .05, .5)), kNum = Math.floor(11 * seg(t, A.number - .05, .55)), sent = eo(seg(t, A.close, .3));
+  const kName = Math.floor(4 * seg(t, A.name, A.nameE - A.name)), kNum = Math.floor(11 * seg(t, A.number, A.numberE - A.number + .15)), sent = eo(seg(t, A.close, .3));
   PH.draw((c, W, H) => { c.fillStyle = '#FBFAF7'; c.fillRect(0, 0, W, H);
     c.fillStyle = '#141416'; c.font = '600 44px Poppins'; c.textAlign = 'left'; c.fillText('New lead', 60, 150);
     c.fillStyle = '#F5C518'; c.fillRect(60, 175, 120, 10);
@@ -441,15 +470,33 @@ function phoneScreen(t){
       c.fillStyle = '#2FBF71'; c.beginPath(); c.roundRect(-150, -46, 300, 92, 46); c.fill();
       c.fillStyle = '#fff'; c.font = '700 36px Poppins'; c.textAlign = 'center'; c.letterSpacing = '4px'; c.fillText('SENT', 16, 13);
       c.strokeStyle = '#fff'; c.lineWidth = 7; c.lineCap = 'round'; c.beginPath(); c.moveTo(-92, 2); c.lineTo(-74, 20); c.lineTo(-44, -14); c.stroke(); c.restore(); }
+    /* "three times": three ticks pop under SENT, one per beat; "in a month": the label */
+    for (let k = 0; k < 3; k++){ const pk = eo(seg(t, A.three + k * .14, .28)); if (pk <= 0) continue;
+      c.save(); c.globalAlpha = pk; c.translate(W / 2 - 150 + k * 150, 880); c.scale(1.25 - .25 * pk, 1.25 - .25 * pk);
+      c.fillStyle = '#F5C518'; c.beginPath(); c.arc(0, 0, 46, 0, Math.PI * 2); c.fill();
+      c.strokeStyle = '#141416'; c.lineWidth = 7; c.lineCap = 'round'; c.beginPath(); c.moveTo(-20, 2); c.lineTo(-6, 16); c.lineTo(22, -14); c.stroke(); c.restore(); }
+    { const pm = eo(seg(t, A.month, .3)); if (pm > 0){ c.save(); c.globalAlpha = pm; c.fillStyle = '#7C7C82'; c.font = '400 28px "Martian Mono"'; c.textAlign = 'center'; c.letterSpacing = '5px'; c.fillText('THIS MONTH', W / 2, 990 + (1 - pm) * 20); c.restore(); } }
   });
 }
 
-/* ---- the climb on the lamp-post sign ---- */
+/* ---- the van: in from our end of the road on "send", slowing to a stop at the shop on "close"; the door slides,
+   the terminal lands at the shop's door on "it", the shop lights on "for you" ---- */
+function vanDrive(t){
+  const p = eio(seg(t, A.send, A.close + .15 - A.send)); const x = -60 + (VAN_STOP + 60) * p;
+  VAN.visible = t >= A.send; VAN.position.x = x; VAN.roll(x + 60);
+  const dp = eio(seg(t + 1 / FPS, A.send, A.close + .15 - A.send)) - p;          /* the nose dips as it brakes */
+  VAN.rotation.z = -.9 * dp * (t > A.close - .6 ? 1 : .35) + .012 * Math.sin(t * 2.2) * (p > .02 && p < .98 ? 1 : 0);
+  VAN.open(eo(seg(t, A.close + .25, .45)));
+  rise(TM3, eo(seg(t, A.it, .5)), 6);
+  ST.light(N3, eo(seg(t, A.foryou, .35)));
+}
+
+/* ---- the climb in glass ---- */
 const RATE = c => c >= 111 ? 40 : c >= 61 ? 35 : c >= 36 ? 30 : c >= 21 ? 25 : c >= 3 ? 20 : 0;
 const STEPS = [[3, 0, 0], [21, .5, .25], [36, .35, .25], [61, .35, .25], [111, .45, 0]];
 function climb(t){
   let c = 3;
-  if (t >= A.share){ let tt = A.share, prev = 3;
+  if (t >= A.share + .4){ let tt = A.share + .4, prev = 3;
     for (let i = 1; i < STEPS.length; i++){ const [n, tr, hold] = STEPS[i]; if (t >= tt) c = Math.round(prev + (n - prev) * eo(seg(t, tt, tr))); tt += tr + hold; prev = n; } }
   const rest = t >= A.every; if (rest) c = 111;
   $('#cCount').textContent = rest ? '111+' : String(c); $('#cRate').textContent = RATE(c) + '%';
@@ -463,42 +510,43 @@ function setFrame(n){
 
   /* S0 */
   tally(t);
-  const q = $$('#q0 .type'); typeIn(q[0], t, HEAD, at('owners') + .1); typeIn(q[1], t, at('on your road'), A.qEnd);
-  [[N0[0], A.cafe], [N0[1], A.barber], [N0[2], A.take]].forEach(([i, a], k) => { ST.light(i, eo(seg(t, a, .3))); hang(SL0[k].element.firstElementChild, t, a - .05); });
+  N0.forEach((i, k) => hang(SL0[k].element.querySelector('.lbl'), t, [A.cafe, A.barber, A.take][k]));
 
   /* S1 */
-  wordsUp($('#h1w'), t, A.h1); const tf = Math.max(A.fig, A.h1 + .15);
-  { const pf = eo(seg(t, tf, .55)); px($('#f1 .hero'), { transform:`translateY(${((1 - pf) * 150).toFixed(1)}%) scale(${(1.12 - .12 * pf).toFixed(3)})`, opacity:pf < .02 ? 0 : 1 }); $('#f1 .hero').style.transformOrigin = '50% 80%'; }
-  hl($('#hlF'), t, tf + .3, .5);
-  maskUp($('#k1 .kick'), t, tf + .3, .42); maskUp($('#d1 .d1a'), t, A.once, .5); maskUp($('#d1 .d1b'), t, A.once + .12, .5);
-  ST.light(N1, eo(seg(t, A.h1, .35)));
-  RC.setProgress(eo(seg(t, A.once + .1, 1.3)));
+  N1S.forEach((i, k) => ST.light(i, eo(seg(t, T.every[[0, 1, 3][k]], .3))));
+  ST.light(N1, eo(seg(t, A.intro, .35)));
+  rise(TM1, eo(seg(t, A.nero, .5)), 6);
+  sync($('#h1w'), t, T.pays);
+  glass($('#slabF'), t, T.fig[0] - .05, .6, 1.3); sync($('#f1w'), t, T.fig, .4);
+  maskUp($('#k1 .kick'), t, A.pounds, .42);
+  RC.setProgress(eo(seg(t, A.once, 1.3)));
+  maskUp($('#d1 .d1a'), t, A.thirty, .5); maskUp($('#d1 .d1b'), t, A.thirty + .14, .5);
 
   /* S2 */
-  maskUp($('#y2 .serif'), t, A.y2, .45);
-  wordsUp($('#s2aw'), t, Math.max(A.sell - .35, A.y2 + .1)); strike($('#stA'), t, A.sell + .1);
-  wordsUp($('#s2bw'), t, A.setup - .3); strike($('#stB'), t, A.setup + .15);
-  wordsUp($('#s2cw'), t, A.call - .35); strike($('#stC'), t, A.call + .1);
+  sync($('#s2aw'), t, T.sell); strike($('#stA'), t, A.sellE - .1);
+  sync($('#s2bw'), t, T.setup); strike($('#stB'), t, A.setupE - .1);
+  sync($('#s2cw'), t, T.call); strike($('#stC'), t, A.callE - .12);
   LP2.rotation.z = .01 * Math.sin(t * .7);
 
   /* S3 */
-  wordsUp($('#h3w'), t, Math.max(A.h3, A.send - .1)); wordsUp($('#h3bw'), t, Math.max(A.h3 + .2, A.number - .35));
-  rise(PH, eo(seg(t, A.h3 - .1, .6)), 10); phoneScreen(t);
-  { const p = eio(seg(t, A.close - .1, 1.5)); VAN.visible = p > 0 && p < 1; VAN.position.x = -60 + 74 * p; ST.light(N3, eo(seg(t, A.close + .9, .35))); }
-  rise(TM3, eo(seg(t, A.close + .85, .5)), 6);
+  sync($('#h3w'), t, T.send); sync($('#h3bw'), t, T.number);
+  rise(PH, eo(seg(t, A.send, .55)), 10); phoneScreen(t);
+  vanDrive(t);
 
   /* S4 */
-  [0, 1, 2, 3].forEach(i => { const el = $('#wk' + i); hang(el, t, A.bunt + i * .08); el.className = 'chip' + (t >= A.three + .1 + i * .2 && i < 3 ? ' on' : ''); });
-  N4.forEach((i, k) => ST.light(i, eo(seg(t, A.three + .1 + k * .2, .3))));
-  hang($('#pAct'), t, A.act); maskUp($('#cCount'), t, A.share - .1, .45); maskUp($('#cArrow'), t, A.share - .05, .45); maskUp($('#cRate'), t, A.share, .45); maskUp($('#cNote'), t, A.share + .1, .42); maskUp($('#m4 .serif'), t, A.every + .1, .45); climb(t);
+  N4.forEach((i, k) => ST.light(i, eo(seg(t, A.land4 + .1 + k * .15, .3))));
+  [0, 1, 2, 3].forEach(i => { const el = $('#wk' + i); hang(el, t, A.land4 + i * .07); el.className = 'chip' + (t >= A.land4 + .25 + i * .15 && i < 3 ? ' on' : ''); });
+  hang($('#pAct'), t, A.act);
+  glass($('#slabR'), t, A.share, .6, 2.1); maskUp($('#cCount'), t, A.share + .1, .45); maskUp($('#cArrow'), t, A.share + .15, .45); maskUp($('#cRate'), t, A.share + .2, .45); maskUp($('#cNote'), t, A.share + .3, .42);
+  maskUp($('#m4 .serif'), t, A.every + .1, .45); climb(t);
 
   /* S5 */
-  N5.forEach((i, k) => { if (i === OPEN5) return; ST.shutter(i, eo(seg(t, A.quiet + .1 + k * .12, .55))); });
+  N5.forEach((i, k) => { if (i === OPEN5) return; ST.shutter(i, eo(seg(t, A.quiet + k * .1, .55))); });
   ST.light(OPEN5, eo(seg(t, A.one, .3))); RC5.setProgress(eo(seg(t, A.bonus, 1.2)));
-  maskUp($('#h5 .mask:first-child .serif'), t, A.h5, .5); maskUp($('#h5 .h5b'), t, A.h5 + .14, .5); hl($('#hlY'), t, A.yours + .05);
+  sync($('#h5w'), t, T.bonus, .42); maskUp($('#h5 .h5b'), t, A.yoursE + .05, .5); hl($('#hlY'), t, A.yours + .3);
 
   /* S6 */
-  hang($('#pFree'), t, A.free); hang($('#plate'), t, A.url); hang($('#pLink'), t, A.link); maskUp($('#c6 .comp'), t, A.comp, .5);
+  hang($('#pFree'), t, A.free); hang($('#plate'), t, A.app); hl($('#plate'), t, A.url, .5); hang($('#pLink'), t, A.link); maskUp($('#c6 .comp'), t, A.comp, .5);
   rise(TM6, eo(seg(t, A.term6, .7)), 16); TM6.rotation.y = -.3 + .06 * Math.sin(t * .8);
 
   captions(t);

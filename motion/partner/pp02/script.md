@@ -93,3 +93,42 @@ stereo, −13.99 LUFS / −1.21 dBTP. Higgsfield:
 `https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/4497b38d-a4e5-49dc-89d7-d1be36a1d1c3.mp4`
 (contact `…/46e62e45-53c1-4171-9720-22c62e1b9c45.jpg`). Drive: README v2 (`1X67fhjrybpimYQKgqHgX81rVWxnDOj4ENg4uNjt4LsQ`),
 v1 renamed superseded. Law passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; contact sheet at 30 points.
+
+## v3, 17 Sep 2026 — the voice leads
+
+Faisal's notes on v2: type and overlays were on screen before Olivia had said them ("pays you" sat above the street two
+seconds before "pays"); the overlays should feel guided by her, interactive; the opening count bigger and a real attention
+grabber, the lone "?" given a purpose; more dynamic and modern; liquid glass used tastefully with animated movement; the van
+detailed and stopping on the road in frame when it delivers to a shop; the yellow on a shop matching the business she names.
+
+So every anchor is now the start of the word that earns the graphic (`sync()` rises a heading word by spoken word,
+`typeSync()` types each word across the time she takes to say it), and every camera walk is timed to land before the first
+word of its stop: to the paid stop on the end of "takeaway", to you don't on the end of "days", to the phone on the end of
+"call", to Active Partner on "and you're an", to the quiet month on the end of "hit it", to the end of the road on "It's".
+"You don't" as a heading went (the captions carry it; the three struck claims are the graphic) so the stop holds its law.
+
+| Stop | What lands on which word |
+|---|---|
+| 0 | The count tile (a glass slab, 290 px Martian Mono) flies in at once; the view rides six units along the street while it counts 1 → 14 and the four shops it passes light on their counts; BUSINESS OWNERS ON YOUR ROAD types under it on those words; on "know" the count flips like a board into a large ? which takes the marker on "name?", the kicker retyping KNOW YOUR NAME? on those words; Café / Barber / Takeaway light on their words, each with a label hanging in above the awning |
+| 1 | Three shops on "every", "one", "them"; the far shop on "introduce"; a terminal lands at its door on "NeroPay"; "pays" then "you"; £100 in its glass on "hundred", the dash on "to", £300 on "three hundred"; PER MERCHANT on "pounds"; the receipt prints from "once"; "paid after 30 days / of card payments with us." on "thirty days" |
+| 2 | "sell" "anything." on the words, struck as she finishes "anything"; the same for "set anything up." and "make the call." |
+| 3 | The phone stands on "Send"; "Send us a name" word by word; NAME types on "name"; "and a number." on the words, NUMBER on "number"; the van comes along the road from "Send" and brakes to a stop in frame at the shop on "close" (its nose dips, the wheels roll by distance); SENT on "close"; the side door slides; the terminal lands at the shop door on "it"; the shop lights on "for you"; three ticks pop on the phone on "three times", THIS MONTH on "month" |
+| 4 | The camera lands on "and you're an": bunting with three ticks and the three shops as it settles; ACTIVE PARTNER on the words; the climb in its glass on "share"; the rest on "every month" |
+| 5 | Shutters on "quiet"; the one shop on "one"; its receipt on "bonus"; "Your bonus is … yours" on "that bonus is … yours", the marker after; "either way." after "yours." |
+| 6 | FREE TO JOIN on the words; the nameplate hangs on "NeroPay dot app", the marker draws under partners on "slash partners"; YOUR OWN LINK on "get your link"; the terminal (0.72 scale) inside the frame at the kerb |
+
+Glass: three slabs (`.slab`), each tilting in on a perspective, floating a little, with a sheen passing every 3.8 s — the
+count, the money, the climb. The van (`van()` in `objects3d.js`) gained a raked windscreen with pillars, cab side windows,
+grille, bumpers, headlights, tail lights, wing mirrors, hub caps, the band on both sides and the back, and a sliding side
+door on to a dark bay (`open(p)`), with `roll(dist)` for the wheels. It stays unbranded: the terminal is the only branded
+object in frame (root CLAUDE.md, Brand).
+
+The type is raised into the frame's upper third (the 4:5 frame reaches y ≈ 27 above a box that ends at 17.4): headings at
+y 20–22.6, slabs at 16–18, conditions at 12–14. The frame scan caught the count tile past the right edge during the
+opening dolly at ten units; six. Sound: 47 cues re-timed to the word anchors, none twice in a row; bed unchanged.
+
+**Delivered (v3, 4:5):** `out/final/pp02-4x5.mp4`, 49.1 s, 1,474 frames, md5 `5ed5ef84948b9e97e7c2c606c8b6aa57`;
+stereo, −13.99 LUFS / −1.31 dBTP. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/360391df-95bf-4928-b7b2-63ffde5575f0.mp4`
+(contact `…/9b532774-abdb-4c98-9cb6-6e4c8a7ca1ec.jpg`). Drive: README v3 in the PP02 folder, v2 renamed superseded. Law
+passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 32 points.
