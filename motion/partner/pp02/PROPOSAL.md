@@ -1,0 +1,82 @@
+# PP02 — proposal (draft for Faisal, 17 Sep 2026 — nothing built until approved)
+
+Second partner video. Same house: the white world, ink type, the yellow accent, Poppins, Olivia, captions in the picture.
+Everything else new — the angle, the hook, the script, the camera, the objects, the type animation, the bed.
+
+## The angle: your road
+
+PP01 said what an introduction pays. PP02 says who the viewer already knows — the network-led body from BRIEF.md
+Part 4, variant 2, aimed at the people who walk past twenty card machines a day. The whole video is one walk down one
+road, and the camera walks it.
+
+## The hook
+
+Spoken, as the first frame: **"Ninety-eight food businesses in eight hundred metres of Wilmslow Road. How many of those
+owners have your number?"** On screen: a long paper-model street, "98" rolling up in mono on the pavement, a drawn line
+measuring 800 m along the kerb, and the question typed in under it. The number is NeroPay's own count (root CLAUDE.md:
+"98 food businesses in 800 metres of Wilmslow Road — NeroPay's own count"; post L1); it needs a confirmed `figures.json`
+record before it goes on screen, which is the first thing I add if approved.
+
+Fallback hook if Faisal would rather not name the road: the brief's A2, "We will pay you for a conversation you were
+going to have anyway."
+
+## The script — one continuous UGC read, Olivia, about 45 seconds
+
+> [curious] Ninety-eight food businesses in eight hundred metres of Wilmslow Road. How many of those owners have your
+> number? Because every one you introduce to NeroPay is worth a hundred to three hundred pounds to you, based on what
+> they take in their first thirty days. And that's the whole job: you introduce them, we set them up, we do the support,
+> you never sell anything. [warmly] Do it three times in a month and you're an Active Partner, with a share of what all
+> your merchants' card payments earn us, every month you hit it. And if a month's quiet and you only bring one, that
+> bonus is still yours. So walk down your road and count. Then go to NeroPay dot app slash partners and get your link.
+
+Per merchant, never a total; the condition in the same sentence as every figure; nothing from the banned register; no
+personal attribute (a road and a phone number are situations); the concession is the quiet month; two CTAs, the walk
+and the link.
+
+## How it looks — seven stops on one street
+
+The camera does not hop between sections on an arc this time. It walks: a slow dolly down the pavement of one long
+street of paper shopfronts, turning to face each stop, never still. The type stands in the street like signage.
+
+| Stop | Words | On screen |
+|---|---|---|
+| 1 The count | "Ninety-eight… Wilmslow Road" | A long row of shopfronts (mixed heights, awnings, a few shutters, trading types only — Café, Kebab, Sweets, Barber, Grocer — no names). "98" rolls up on the pavement in mono like an odometer, "food businesses" under it; a pencil line draws along the kerb and stamps "800 m". |
+| 2 Your number | "How many of those owners have your number?" | A phone stands on the pavement (new object, our screen). Three messages type in: "which card machine do you use?" (the brief's Q1 picture). The question types in beside it, one character at a time, the full stop hits with a tick. |
+| 3 Worth | "every one you introduce… first thirty days" | One shop lights yellow; a receipt prints out of its door and curls up into the frame reading "£100–£300 · per merchant · based on their first 30 days" — the bonus as a receipt, not a dial. The highlighter draws under the figure as she says it. |
+| 4 The job | "you introduce them, we set them up, we do the support, you never sell anything" | A small white van (unbranded) drives up the road and drops a terminal at the lit shop. Three pills hang off a lamp post: YOU INTRODUCE · WE SET UP · WE SUPPORT. "sell" gets a strike drawn through it. |
+| 5 Active Partner | "three times in a month… every month you hit it" | Three shops light in turn with a month strip overhead like bunting, four weeks, three ticks. A lamp-post sign flips to ACTIVE PARTNER; a second sign reads "3 · 20%" and the count climbs to "111+ · 40%" (the Rate Climb, as street signage, with "Most partners start at 20%: three a month." on the rest frame). |
+| 6 Quiet month | "if a month's quiet and you only bring one" | The shutters come down on all but one shop; the one stays lit and its receipt prints anyway. Serif line on the pavement: *Your bonus is yours either way.* |
+| 7 The end of the road | "walk down your road and count… get your link" | The street runs out; a street nameplate hangs in on "slash partners": **neropay.app/partners**, FREE TO JOIN · YOUR OWN LINK beneath; our terminal stands at the kerb; the compliance line on the pavement, held. |
+
+## Type animation — the upgrade
+
+- **Per-word rise with a stagger** for every heading: words mask up one after another, 40 ms apart, not the whole line at once.
+- **Typewriter** for the hook question and the phone messages, with the full stop landing on a tick.
+- **Odometer roll** for 98 and the climb: digits roll vertically in tabular mono, never fade or count in place.
+- **Tracking settle** on the big words: letter-spacing tightens from wide to tight over 300 ms as the word lands.
+- **The highlighter draws** left to right under the hit word, on the beat, instead of appearing.
+- **A strike** through "sell", drawn as she says it.
+- **Signs hang in**: pills and nameplates swing in from a hinge and settle, no overshoot.
+- **Captions pop per word**: the current word scales 1.06 → 1 as it lights, on top of the marker.
+
+## New objects (three.js, `objects3d.js`)
+
+A long street with mixed shopfronts and shutters (`street()`), a kerb and road with a dashed centre line, a lamp post with
+hanging signs, a phone slab with our screen texture, a receipt strip that prints and curls, a small unbranded van, a
+street nameplate. One card at the edge as PP01, or none if it competes with the street.
+
+## Sound
+
+A new bed: lighter than PP01's, acoustic guitar and hand claps, about 105–110 bpm, no vocals, generated once with
+Eleven Music and put in the ledger. Effects: the receipt print, one shutter, the van passing, a sign's hinge, the tick
+on the full stop. None twice in a row.
+
+## Length and crops
+
+About 45 seconds, shorter than PP01's 68. 4:5 first for Meta, then 9:16 and 1:1 if wanted.
+
+## What I need from Faisal
+
+1. Approval of the angle and the hook — or "use A2 instead".
+2. The script, or edits to it.
+3. Whether the road may be named on screen (it is our own count and already in a published post).

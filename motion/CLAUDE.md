@@ -12,7 +12,7 @@ Don't mix the styles and don't reuse presenter assets here. Nothing in `motion/`
 |---|---|---|
 | The Maths | `motion/maths/` | One number out of a merchant's life, worked out on screen |
 | Small Print | `motion/print/` | The law, the deadline and the rule a card machine touches — tips, contracts, surcharges, disputes, HMRC. White editorial, a stamp on the date, and "if this doesn't apply to you, do nothing". Briefed in `motion.js` |
-| *(proposed)* Partner programme | `motion/partner/` | The partner programme explained as an animated diagram. **Blocked on figures** — the incentive model isn't signed off, and rail 10 blocks partner commission regardless. A figureless version explaining the mechanics is publishable now |
+| Partner Programme | `motion/partner/` | The partner programme — what a partner earns and the condition, said condition-first, in the white world. Briefed by Faisal in `motion/partner/BRIEF.md` (v4 final, 17 Sep 2026); the figures are confirmed records in `figures.json`. `motion/partner/pp01/` is the first video |
 
 Adding a series: a folder in `motion/`, a `CLAUDE.md` in it carrying the premise, the spec and the
 episode bank, and episodes beneath that. Everything below applies to all of them.
@@ -120,8 +120,8 @@ never two glass objects competing, never as decoration. On white it is the frost
 | **Martian Mono 700 / 400** | Every figure, date and deadline; the small uppercase kickers | Counts, ticks, or stamps; never fades |
 | **Source Serif 4 italic** | The human line — the opening question, the aside, the concession | Rises softly, half a beat late |
 
-Chivo 800 survives only inside the terminal's screen texture (the wordmark). Captions burn in Poppins Bold
-(`motion/assets/fonts-ttf/Poppins-Bold.ttf`).
+Chivo 800 survives only inside the terminal's screen texture (the wordmark). Captions are drawn by the composition
+in Poppins 700 (v6); the `.ass` files and `Poppins-Bold.ttf` remain for anything that still burns.
 
 Colour by phrase, not by rule: the thing the voice is *hitting* is the thing that's yellow. A word
 the voice throws away is `--muted` and small. Italic is the voice dropping to an aside. Caps and
@@ -222,6 +222,30 @@ all still work. One perspective camera (28° vertical). The rules that come with
   the frames as JPEG q97 and halves the time — use it for review cuts. Crops run *sequentially*: four processes
   on four cores thrash SwiftShader and finish later than one after another. Peek first, always.
 
+**v6, 16 Sep 2026 — captions in the picture, glass, a room, the terminal as it is.** Faisal's notes on v5:
+
+- **Captions are drawn by the composition, not burned.** No black box, no fixed strap. A stage-level layer
+  (`#caps`, appended *after* the world's two layers so nothing paints over it) shows one caption line at a time
+  from `data/caps.js` (the lines of `captions.json` aligned to word indices), grey Poppins 700, the word being
+  spoken in ink on a yellow marker, spoken words a shade darker after. A line that carries the section's figure or
+  action is *big* (`BIG` regex) and sits a little higher. Lines rise in over 0.24 s and fade out in 0.12 s. The
+  16:9 master renders without them (`?caps=0` on the page URL; `render.mjs` and `peek.mjs` add it), so YouTube
+  stays clean and nothing is burned in `finish.sh` any more.
+- **Liquid glass, kept to the rule.** The pills are frosted slabs — even white tint, thin rim, soft drop shadow,
+  one sheen pass on entrance (`--sh`, driven from `stamp()`) — and the solid pill is the same slab tinted yellow.
+  The end card adds four glass tiles with the social marks drawn as inline SVG in ink (Instagram, Facebook,
+  TikTok, YouTube), stamping in on "follow". Still one glass object per idea, never glass for its own sake.
+- **A room and a haze.** `world3d.js` builds a `RoomEnvironment` PMREM as `scene.environment` at low intensity
+  (`env`, 0.32) so the glass, the shells and the tile tops carry real reflections, with the hemisphere eased to
+  compensate; a faint paper-coloured fog from 140 to 520 units sits the far end of a flight back in the world.
+  Subtle by design — the look is still paper and ink.
+- **The terminal is one moulding.** `neroTerminal()` v6: a single side profile (flat front, rounded foot, a back
+  that swells at the top for the printer, a domed top) extruded across the width with soft ends, then split at the
+  seam into a yellow head and a white shell so both share every curve; a black frame inset on the front around the
+  full-height display; the contactless indicator (ellipse, arcs, hand and card) large on the yellow; the wordmark
+  once, bottom-left. No dock, no stand. The yellow material clamps its lit colour so the top stays brand yellow
+  under the sun. `motion/lib/preview-terminal.html` + `motion/still.mjs` are the sign-off loop for any object.
+
 **Every video closes the same way — the house sign-off, v4.** What to do about it (compare), how to reach us
 ("Get a quote in minutes" · MESSAGE US · CALL US · neropay.app), "That's it for today", then the follow line.
 The middle of the sign-off changes with the video; the shape does not.
@@ -238,6 +262,84 @@ props (the terminal is the only branded object and must not carry a competitor's
 deep (no bokeh, MOTION-SYSTEM §1), and one plate per beat at most. A plate is a *texture for a
 beat*, never the body of the video. Rail 4: an AI image under a caption is synthetic content — the
 upload disclosure applies as it does for the presenter series; raise it once per series.
+
+**Light mode only — Faisal, 17 Sep 2026.** NeroPay content is white: the off-white ground, ink type, the yellow as the
+accent, and a little blush or lilac where a graphic earns it. PP01 was first built on the partner brief's dark ground and
+Faisal rejected it outright ("no more black background theme"). `world({ dark:true })` stays in `world3d.js` as a
+switch, but nothing in `motion/` uses it and nothing new should. The charcoal ground listed under Style above is
+retired with it.
+
+**PP01, 16–17 Sep 2026 — the white world that keeps moving, a UGC read, the two modules as glass.** The first partner
+video, built from Faisal's brief (`motion/partner/BRIEF.md`) and his notes on the first two cuts. What it added:
+
+- **Movement the whole time.** The camera never stops: a slow orbit and breath around the target, a continuous function
+  of time, so a flight starts and ends without a jump. Shaded spheres (yellow, a few blush and lilac) float over every
+  section and bob; objects sway a few degrees; the field of tiles breathes. The reference's rule — cuts land on motion.
+- **Variety in the frame.** Sections alternate: the view swings left (az −22) then right (az +20) then centre, and the
+  type is anchored to match (`.in`, `.in.r`, `.in.c`), so nothing sits in the same corner twice running.
+- **Phrases become graphics.** "Found it in the terms" is a terms sheet with one line highlighted; "you introduce them"
+  draws connector paths on the floor from a YOU pill to the three shops with a dot running each; "we set them up" lands
+  a small terminal beside each shop; "every month you hit it" ticks four month chips; "quiet month … only bring one"
+  ticks one of four weeks. Badges (brief 03's value badge: ink fill, white type) slam in with two frames of sparks.
+- **The reference, borrowed.** The Bonus Dial is a stack: the ledger row tilted above the dial slab. The close turns
+  three arc rings at their own rates behind the address (the converge). Poppins stays the family; the brief's Inter and
+  DejaVu Mono are not adopted (house ruling of the same day).
+- **Squarer crops get room under the objects.** With captions on and the aspect over 0.7, the section boxes drop 6
+  units below the floor (`setBox`) so the caption never sits over a pillar or a tile.
+- **The brief's two modules as glass slabs.** The Bonus Dial (bonus above the marker, volume below, thresholds appearing
+  as they are passed, the rest frame with "£40,000+" and "per merchant" and the only permitted "up to") and the Rate
+  Climb (count beside rate, chips lighting as each step is passed, "111+ · 40%" and "Most partners start at 20%: three a
+  month." at rest). Both start at the base, never skip a step, and hold their rest frames ≥ 2.4 s; the camera waits for
+  them. `shops()` in `objects3d.js` is the brief's street: a run of shopfronts that light yellow when introduced.
+- **A UGC read.** Faisal's note on the first take: fully UGC-sounding, continuous, no one-liners, no gaps, no breaths.
+  So the script is one piece of talking with the condition said first, and the take goes through `tighten.mjs` with
+  `--gap .2 --min .3 --tempo 1.06` (pitch held) and then `gate.py`, which mutes what is left between the words —
+  breaths — with 30 ms ramps, leaving alone any gap whose peak says it is a word edge Whisper timed late. Anchors are
+  found *by the word* (`at('three hundred')`), never by index, so a re-take re-times the whole composition.
+- **An upbeat bed, generated.** `bgm/partner-upbeat-118.mp3` (Eleven Music v2, no vocals — checked with Whisper),
+  tempo measured with `motion/tempo.py` (numpy onset autocorrelation; librosa isn't in the sandbox), extended past the
+  cut at a bar boundary with a crossfade rather than looped from 0.
+- **The draft gate, for next time.** `figures.json` can carry `status: "draft"` and `verify.py` a `draft_figure()`: a
+  draft record passes stage 3 but marks the build DRAFT for exports named `-DRAFT` that do not post. PP01 used it for
+  a day; the partner figures were confirmed final on 17 Sep 2026 and are ordinary confirmed records now. `checks.py`
+  scans for the brief's banned register (Part 6) and asserts every pound figure sits with the condition that earns it.
+- **The voice is per video when Faisal says so.** Verity stays the merchant series voice; PP01 is **Olivia — Warm,
+  British Female** (`pPoztmvzd5p26S3MsNrV`) at Faisal's request mid-build. Record any such choice in the ledger and in
+  the episode's `script.md`.
+- **Two mixer faults, found on the v3 master.** `amix` takes the first input's channel layout, and the VO is mono, so
+  every mix before 17 Sep 2026 folded its stereo bed to mono; `mix.mjs` now makes every input stereo first. And a linear
+  loudnorm pass stops short of the target when the peaks would cross the ceiling (v3 landed 1.1 LU under): when the
+  measured gain would push the true peak over `tp`, the mixer now runs a limiter at the ceiling first and measures again.
+  `finish.sh` copies the mastered AAC into the crops rather than encoding it a second time.
+- **Glass fintech pieces, not balls — v4, 17 Sep 2026.** Faisal's note on v3: no 3D balls; a few subtle fintech elements
+  to give the space texture and lift, with the liquid-glass look from his reference (light catching the glass, a mark
+  set inside it). `motion/lib/glass.js`: a payment-card slab, a ring, a coin, a square tile — pale yellow, blush or
+  lilac glass (a near-mirror clearcoat reflecting the room environment, low opacity so the paper shows through, a dark
+  back-face rim so a pale object reads on a pale ground) with a mark etched inside: the contactless wave, £, %, a tick,
+  a sparkline, a chip. **Never a number in the glass**, never a brand, never a card number. Two per section, at the
+  edges, half in frame, drifting and turning slowly from a deterministic seed. Refraction (`transmission`) is not used:
+  the WebGL layer draws over a transparent clear, so a refracting material samples nothing and goes dark. The v3 spheres
+  are gone.
+- **One real card, not shapes — v4.1, the same day.** Faisal's note on the glass pieces: no floating shapes; one real asset
+  relevant to payments per section, large, subtly in the frame, hinting at a card without becoming the focus.
+  `paymentCard()` in `glass.js`: bank-card proportions, an ivory matte body with a soft sheen, a gold chip with its
+  contact grid, the contactless wave pressed into the face, a thin yellow band, a dark stripe on the back. No number,
+  no name, no expiry, no scheme mark, and never a NeroPay card. One per section, at the edge, a third to a half out of
+  the frame, drifting and turning slowly, placed clear of every heading (the WebGL layer draws over the type, so a card
+  that crosses a heading hides it — S2's card went above the heading, S3's beside the slab). The glass ring, coin and
+  tile builders stay in `glass.js` unused.
+- **Generated plates, for certain beats — v4.** Faisal generates clips in a video tool (no people, no text, no brand, the
+  white world, the specs in `motion/partner/pp01/AI-PLATES.md`) and we composite our type, captions and modules over
+  them; frames are pulled with ffmpeg and loaded per frame so the render stays deterministic. Texture for a beat, never
+  the body; the upload disclosure covers them.
+- **The gate, leniently.** The v2 settings (`tighten --gap .2 --min .3 --tempo 1.06`, `gate --inset .06 --max -18`)
+  clipped into words. The ruling: `--gap .32 --min .45 --tempo 1.03` and `--inset .12 --max -30` — a split second of
+  gap is allowed, 120 ms either side of every word is never touched.
+- **The hook, for a stranger.** v3 leads with what an introduction pays, per merchant with the condition on the same
+  frame, as if the viewer has never heard of NeroPay; who we are comes second. The v2 "here's the catch" opening assumed
+  they already knew us.
+- The timing law counts the words a viewer has to *read* — sentences, kickers, the rest-frame lines — not the numerals
+  and chips they glance at; the compliance super is its own beat.
 
 ## Narration — the performance
 

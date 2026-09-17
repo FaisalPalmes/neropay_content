@@ -1,0 +1,273 @@
+{
+ "duration": 68.07,
+ "head": 1.01833,
+ "vo": "data/vo.mp3",
+ "target": -14,
+ "tp": -1.5,
+ "bed": {
+  "file": "motion/partner/pp01/data/bed.mp3",
+  "t": 0,
+  "gain": 0.2,
+  "duck": {
+   "threshold": 0.025,
+   "ratio": 5,
+   "attack": 12,
+   "release": 420
+  },
+  "fade": 2.2
+ },
+ "cues": [
+  {
+   "sfx": "click-soft",
+   "t": 0.3,
+   "gain": 0.18,
+   "why": "the three shops come up under the first words"
+  },
+  {
+   "sfx": "ping",
+   "t": 2.086,
+   "gain": 0.2,
+   "why": "£100–£300 lands"
+  },
+  {
+   "sfx": "key-press",
+   "t": 4.435,
+   "gain": 0.22,
+   "why": "the café lights"
+  },
+  {
+   "sfx": "key-press",
+   "t": 5.173,
+   "gain": 0.22,
+   "why": "the takeaway"
+  },
+  {
+   "sfx": "key-press",
+   "t": 6.067,
+   "gain": 0.22,
+   "why": "the barber — the count of three, one gesture"
+  },
+  {
+   "sfx": "pop",
+   "t": 6.513,
+   "gain": 0.14,
+   "why": "the condition super"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 11.718,
+   "gain": 0.14,
+   "why": "flight to who we are"
+  },
+  {
+   "sfx": "pop",
+   "t": 12.008,
+   "gain": 0.16,
+   "why": "the NeroPay mark"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 17.601,
+   "gain": 0.2,
+   "why": "the shops rise"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 17.761,
+   "gain": 0.2,
+   "why": ""
+  },
+  {
+   "sfx": "click-soft",
+   "t": 17.921,
+   "gain": 0.2,
+   "why": ""
+  },
+  {
+   "sfx": "sparkle",
+   "t": 19.565,
+   "gain": 0.2,
+   "why": "the paths draw from You to the three"
+  },
+  {
+   "sfx": "pop",
+   "t": 23.406,
+   "gain": 0.16,
+   "why": "WE SET UP, the terminals land"
+  },
+  {
+   "sfx": "click",
+   "t": 24.727,
+   "gain": 0.18,
+   "why": "WE SUPPORT"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 25.155,
+   "gain": 0.15,
+   "why": "flight to the bonus"
+  },
+  {
+   "sfx": "notification",
+   "t": 26.089,
+   "gain": 0.2,
+   "why": "the ledger row flips to LIVE"
+  },
+  {
+   "sfx": "click",
+   "t": 26.921,
+   "gain": 0.18,
+   "why": "the dial slab stamps in"
+  },
+  {
+   "sfx": "ping",
+   "t": 28.785,
+   "gain": 0.22,
+   "why": "£100"
+  },
+  {
+   "sfx": "key-press",
+   "t": 32.533,
+   "gain": 0.28,
+   "why": "the dial steps to £200"
+  },
+  {
+   "sfx": "key-press",
+   "t": 34.105,
+   "gain": 0.28,
+   "why": "the dial steps to £300"
+  },
+  {
+   "sfx": "chime",
+   "t": 36.677,
+   "gain": 0.22,
+   "why": "the rest frame"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 37.853,
+   "gain": 0.14,
+   "why": "the pays-you badge slams in (soft)"
+  },
+  {
+   "sfx": "pop",
+   "t": 39.562,
+   "gain": 0.16,
+   "why": "NOTHING TO UNLOCK"
+  },
+  {
+   "sfx": "whoosh-cinematic",
+   "t": 39.912,
+   "gain": 0.15,
+   "why": "flight to the share"
+  },
+  {
+   "sfx": "click",
+   "t": 41.076,
+   "gain": 0.2,
+   "why": "count 1"
+  },
+  {
+   "sfx": "click",
+   "t": 41.376,
+   "gain": 0.2,
+   "why": "count 2"
+  },
+  {
+   "sfx": "click",
+   "t": 41.676,
+   "gain": 0.2,
+   "why": "count 3"
+  },
+  {
+   "sfx": "ping",
+   "t": 43.27,
+   "gain": 0.22,
+   "why": "ACTIVE PARTNER · 20%"
+  },
+  {
+   "sfx": "typing",
+   "t": 45.096,
+   "gain": 0.1,
+   "why": "the count climbs"
+  },
+  {
+   "sfx": "chime",
+   "t": 46.746,
+   "gain": 0.2,
+   "why": "the rest frame"
+  },
+  {
+   "sfx": "pop",
+   "t": 49.751,
+   "gain": 0.14,
+   "why": "the months tick"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 50.844,
+   "gain": 0.14,
+   "why": "flight to the quiet month"
+  },
+  {
+   "sfx": "pop",
+   "t": 51.294,
+   "gain": 0.16,
+   "why": "the barber row"
+  },
+  {
+   "sfx": "notification",
+   "t": 53.351,
+   "gain": 0.2,
+   "why": "LIVE · £100"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 56.439,
+   "gain": 0.15,
+   "why": "flight to the close"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 57.239,
+   "gain": 0.2,
+   "why": "the one soft thud, on the CTA landing"
+  },
+  {
+   "sfx": "pop",
+   "t": 56.241,
+   "gain": 0.16,
+   "why": "FREE TO JOIN"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 57.562,
+   "gain": 0.18,
+   "why": "YOUR OWN LINK"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 60.144,
+   "gain": 0.18,
+   "why": "neropay.app/partners"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 62.174,
+   "gain": 0.18,
+   "why": "the three shops come back"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 62.314,
+   "gain": 0.18,
+   "why": ""
+  },
+  {
+   "sfx": "click-soft",
+   "t": 62.454,
+   "gain": 0.18,
+   "why": ""
+  }
+ ]
+}

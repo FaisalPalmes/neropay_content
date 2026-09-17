@@ -17,7 +17,7 @@ const build = readdirSync(root).filter(d => d.startsWith('chromium-')).sort().po
 const browser = await chromium.launch({ executablePath: resolve(root, build, 'chrome-linux/chrome'), args:['--allow-file-access-from-files'] });
 const [W, H] = CROPS[ratio];
 const pg = await browser.newPage({ viewport:{ width:W, height:H } }); pg.on('pageerror', e => console.log('  pageerror:', e.message)); pg.on('console', m => { if (!/GL Driver/.test(m.text())) console.log('  console:', m.text()); });
-await pg.goto(pathToFileURL(resolve(ep, 'index.html')).href);
+await pg.goto(pathToFileURL(resolve(ep, 'index.html')).href + (ratio === '16x9' ? '?caps=0' : ''));
 await pg.evaluate(() => document.fonts.ready); await pg.waitForFunction(() => window.READY !== false && typeof window.setFrame === 'function', null, { timeout:60000 });
 await pg.addStyleTag({ content:`#stage{width:${W}px;height:${H}px}` });
 const rows = await pg.evaluate(() => window.lawReport()); const dur = await pg.evaluate(() => window.DURATION); const cams = await pg.evaluate(() => window.CAMS || null); if (cams) console.log('  camera:', cams.map(c => `${c.st}@${c.t}+${c.d}`).join('  '));

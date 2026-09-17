@@ -43,6 +43,14 @@ Facebook profile (21 Aug 2026). Refuse and explain if asked to cross one.
 
 - **NeroPay Flex has no confirmed price.** Never quote one.
 - **The partner incentive model is not signed off.** No partner post carries figures; L4 stays blocked.
+  *Settled for the public programme, 17 Sep 2026:* Faisal's partner programme video brief (`motion/partner/BRIEF.md`,
+  v4 final) confirms the public tiers — £100/£200/£300 per merchant by first-30-day volume, 20–40% revenue share by
+  new active merchants a month, the three-a-month gate — as final and approved for video. They are `confirmed` records
+  in `figures.json` (`partner_bonus_tiers`, `partner_revenue_share_tiers`, `partner_active_gate`); "up to £500" in older
+  material is superseded and never carried into a video. Rail 10 still covers anything beyond those public tiers —
+  negotiated partner terms, margins, what the share is in pounds. Every partner video keeps the brief's five hard
+  rules: each figure with its condition in the same sentence and frame, per unit never a total, none of the banned
+  register, no lifestyle imagery, no personal attribute.
 - **"Competitors charge for POS software" is inaccurate** — Square, SumUp and PayPal all have
   working free tiers. The accurate claim is about their paid tiers (Square for Restaurants Plus
   £69/month, SumUp POS Plus £39+VAT). Post L8 corrects this publicly; don't reintroduce the old line.

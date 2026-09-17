@@ -17,7 +17,7 @@
 :root{ --ground:#FBFAF7; --ink:#141416; --muted:#7C7C82; --line:#DDDCD6; --accent:#F5C518; }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#000}
-#stage{ position:relative; width:1080px; height:1920px; overflow:hidden; color:var(--ink);
+#stage{ position:relative; container-type:size; width:1080px; height:1920px; overflow:hidden; color:var(--ink);
   background:radial-gradient(120% 90% at 50% 38%, #FDFCFA 0%, var(--ground) 45%, #F1EFE8 100%);
   font-family:Poppins,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
 #src{position:absolute; left:0; top:0; visibility:hidden}   /* signs are authored here and moved into the world on the first render */
@@ -33,9 +33,36 @@ html,body{background:#000}
 .mask>span{display:block}
 .hid{opacity:0}
 .hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 62%; background-size:calc(var(--p) * 100%) .42em; padding:0 .04em; margin:0 -.04em}
-.pill{display:inline-block; padding:12px 24px 10px; border:4px solid var(--accent); border-radius:14px; white-space:nowrap; background:var(--ground);
+/* liquid-glass pills: a frosted slab with an even tint, a thin rim, a soft shadow, one sheen pass on entrance (--sh) */
+.pill{--sh:0; position:relative; overflow:hidden; display:inline-block; padding:13px 26px 11px; border-radius:18px; white-space:nowrap;
+  background:linear-gradient(135deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.58) 55%,rgba(255,255,255,.74) 100%);
+  border:1.5px solid rgba(255,255,255,.95);
+  box-shadow:0 22px 34px -20px rgba(20,20,22,.38),0 2px 6px -2px rgba(20,20,22,.10),inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(20,20,22,.06);
   font-family:Poppins; font-weight:600; font-size:30px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
-.pill.solid{background:var(--accent); border-color:var(--accent)}
+.pill::after{content:''; position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.1) 65%,transparent 100%);
+  transform:translateX(calc(-140% + var(--sh) * 400%))}
+.pill.solid{background:linear-gradient(135deg,rgba(245,197,24,.96) 0%,rgba(245,197,24,.78) 55%,rgba(250,214,80,.92) 100%); border-color:rgba(255,242,190,.95)}
+.pill.solid::after{background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.6) 50%,rgba(255,255,255,.1) 65%,transparent 100%)}
+
+/* the social tiles on the end card: glass squares with the marks drawn in ink */
+#end .social{display:flex; gap:14px; margin-top:22px}
+#end .social .tile{--sh:0; position:relative; overflow:hidden; width:78px; height:78px; border-radius:22px; opacity:0; transform-origin:50% 50%;
+  background:linear-gradient(135deg,rgba(255,255,255,.88) 0%,rgba(255,255,255,.6) 55%,rgba(255,255,255,.76) 100%); border:1.5px solid rgba(255,255,255,.95);
+  box-shadow:0 22px 34px -20px rgba(20,20,22,.38),0 2px 6px -2px rgba(20,20,22,.10),inset 0 1px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(20,20,22,.06)}
+#end .social .tile::after{content:''; position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.1) 65%,transparent 100%); transform:translateX(calc(-140% + var(--sh) * 400%))}
+#end .social svg{position:absolute; inset:0; width:78px; height:78px; padding:19px; fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round}
+#end .social svg .f{fill:var(--ink); stroke:none}
+
+/* ---- captions: a stage-level layer, one line at a time, the spoken word marked in yellow ---- */
+#caps{position:absolute; inset:0; pointer-events:none}
+.cap{position:absolute; left:50%; bottom:7.5cqh; width:86cqw; transform:translateX(-50%); text-align:center; opacity:0;
+  font-family:Poppins; font-weight:700; font-size:4.3cqmin; line-height:1.18; letter-spacing:-.02em; color:#8E8E94; text-wrap:balance}
+.cap.big{font-size:6cqmin; bottom:8.5cqh; letter-spacing:-.03em; line-height:1.08}
+.cap .w{display:inline-block; padding:0 .06em; margin:0 -.06em; border-radius:.12em; transition:none}
+.cap .w.on{color:var(--ink); background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 60%; background-size:100% .5em}
+.cap .w.past{color:#6B6B71}
 .lbl{font-family:"Martian Mono",monospace; font-weight:700; font-size:36px; letter-spacing:-.02em; white-space:nowrap; color:var(--ink)}
 .lbl.m{color:var(--muted); font-weight:400}
 
@@ -102,13 +129,21 @@ html,body{background:#000}
       <div class="follow">
         <div class="mask"><span class="serif l f1">That's it for today.</span></div>
         <div class="pill solid hid" id="follow" style="--rot:-2deg">Follow for more videos like this</div>
+        <div class="social">
+          <div class="tile" id="so0"><svg viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="7"/><circle cx="16" cy="16" r="5.5"/><circle class="f" cx="23" cy="9" r="1.6"/></svg></div>
+          <div class="tile" id="so1"><svg viewBox="0 0 32 32"><path d="M19 29V18h4l.7-4.5H19v-3c0-1.4.5-2.4 2.5-2.4H24V4.2c-.5-.1-2-.2-3.7-.2-3.7 0-6 2.2-6 6.2v3.3h-4V18h4v11"/></svg></div>
+          <div class="tile" id="so2"><svg viewBox="0 0 32 32"><path d="M18 4v16.5a4.5 4.5 0 1 1-4.5-4.5"/><path d="M18 4c.5 3.6 2.9 6 6.5 6.3"/><path d="M18 11.5c1.8 1.4 4 2.1 6.5 2.1"/></svg></div>
+          <div class="tile" id="so3"><svg viewBox="0 0 32 32"><rect x="3" y="7" width="26" height="18" rx="6"/><path class="f" d="M13.5 12v8l7-4z"/></svg></div>
+        </div>
       </div>
     </div></div>
   </div>
+  <div id="caps"></div>
 </div>
 
 <script>window.READY = false;</script>
 <script src="data/words.js"></script>
+<script src="data/caps.js"></script>
 <script type="module">
 import * as THREE from '../../assets/vendor/three.module.js';
 import { neroTerminal, oldTerminal, tiles, envelope, pillars, rise, sink, ease, seg } from '../../lib/objects3d.js';
@@ -133,13 +168,14 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 const px = (el, o) => Object.assign(el.style, o);
 function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
 function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = el.style.getPropertyValue('--rot') || '0deg';
-  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); }
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); el.style.setProperty('--sh', seg(t, start + .1, .55).toFixed(3)); }
 function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, start, dur)).toFixed(3)); }
 function show(el, on){ el.style.opacity = on ? 1 : 0; }
 
 /* ---- the world and its six sections, along a route that curves away to the left ---- */
 const stage = $('#stage');
 const Wd = world(stage, { fov:28 });
+stage.appendChild($('#caps'));   /* the caption layer sits above the world's two layers */
 /* each section's box is what the camera must keep in frame: x across, y up from the floor, z depth (+ toward the camera).
    The route: every section stands 60 units to the right of the last and the view turns 29 degrees each time, an arc —
    so at rest a neighbour is beside the frame, never ahead of it, and each flight is a real turn across the floor. */
@@ -287,8 +323,31 @@ const A = {
   h2:CAM[2].t + .35, h2b:CAM[2].t + .47, flap:w(41), k2:w(43), write:w(47), letter:w(47) + .05, date:w(55), tick:w(65), swapOut:w(65), swapIn:w(67),
   h3:CAM[3].t + .35, h3b:CAM[3].t + .47, mon:CAM[3].t + .3, k3:w(75), wave:w(75), fall:w(79), one:w(91),
   a1:CAM[4].t + .35, a2:w(101), h4:w(108), h4b:w(108) + .12, hlc:w(108) + .1, cmpOld:CAM[4].t + .3, cmpNew:CAM[4].t + .45, yr:w(118), k4:w(122), gold:w(122),
-  term5:CAM[5].t + .3, e1:w(127), e2:w(127) + .12, hlm:w(136), msg:w(140), call:w(145), url:w(147), f1:w(153), follow:w(160),
+  term5:CAM[5].t + .3, e1:w(127), e2:w(127) + .12, hlm:w(136), msg:w(140), call:w(145), url:w(147), f1:w(153), follow:w(160), soc:w(162),
 };
+
+/* ---- captions: built once from data/caps.js, one line on screen at a time; a line is "big" when it carries the
+   figure or the action the section is about. Off for the 16:9 master (?caps=0). ---- */
+const CAPS_ON = new URLSearchParams(location.search).get('caps') !== '0';
+const BIG = /18 months|Not three years|write and tell you|free to switch|one month's notice|quote in minutes|give us a follow/i;
+const CAPL = (CAPS_ON ? window.CAPS : []).map((L, i, all) => {
+  const el = document.createElement('div'); el.className = 'cap' + (BIG.test(L.text) ? ' big' : '');
+  const toks = L.text.split(' ');
+  el.innerHTML = toks.map((tk, k) => `<span class="w" data-i="${L.idx[Math.min(k, L.idx.length - 1)]}">${tk}</span>`).join(' ');
+  $('#caps').appendChild(el);
+  const start = w(L.idx[0]) - .08, next = all[i + 1] ? w(all[i + 1].idx[0]) - .08 : Infinity;
+  return { el, start, end:Math.min(next, we(L.idx[L.idx.length - 1]) + .7), words:[...el.querySelectorAll('.w')] };
+});
+function captions(t){
+  for (const L of CAPL){
+    const on = t >= L.start && t < L.end; if (!on){ L.el.style.opacity = 0; continue; }
+    const pin = eo(seg(t, L.start, .24)), pout = 1 - seg(t, L.end - .12, .12);
+    L.el.style.opacity = Math.min(pin, pout).toFixed(3);
+    L.el.style.transform = `translateX(-50%) translateY(${((1 - pin) * 18).toFixed(1)}px) scale(${(.94 + .06 * pin).toFixed(3)})`;
+    for (const sp of L.words){ const i = +sp.dataset.i; const cur = t >= w(i) && (i + 1 >= WORDS.length || t < w(i + 1));
+      sp.className = 'w' + (cur ? ' on' : t >= w(i) ? ' past' : ''); }
+  }
+}
 
 function setFrame(n){
   const t = n / FPS;
@@ -337,6 +396,8 @@ function setFrame(n){
   maskUp($('#end .e1'), t, A.e1, .5); maskUp($('#end .e2'), t, A.e2, .5); hl($('#hlm'), t, A.hlm);
   stamp($('#msg'), t, A.msg); stamp($('#call'), t, A.call); maskUp($('#end .url'), t, A.url, .45);
   maskUp($('#end .f1'), t, A.f1, .5); stamp($('#follow'), t, A.follow);
+  [0, 1, 2, 3].forEach(i => stamp($('#so' + i), t, A.soc + i * .09));
+  captions(t);
   rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .05 * Math.sin(t * .9);
 
   Wd.render();

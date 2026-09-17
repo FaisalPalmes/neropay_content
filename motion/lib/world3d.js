@@ -17,11 +17,18 @@
  */
 import * as THREE from '../assets/vendor/three.module.js';
 import { CSS3DObject, CSS3DRenderer } from '../assets/vendor/CSS3DRenderer.js';
+import { RoomEnvironment } from '../assets/vendor/RoomEnvironment.js';
 
 export const K = 1 / 40;            /* world units per DOM px: a 120px heading is 3 units tall, a 14-unit terminal 560px */
 const d2r = THREE.MathUtils.degToRad;
 
-export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grain = .07 } = {}) {
+/* dark: the charcoal ground (motion/CLAUDE.md, "for the money videos") — the haze, the hemisphere's ground bounce, the
+   grain and the default mat and route tones swap to the dark palette; the floor's shadow deepens so it still reads on
+   near-black mats. Everything else — the sun, the room, the objects — is unchanged. First used by motion/partner/pp01. */
+export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grain = .07, env = .32, haze = true, dark = false } = {}) {
+  const PAL = dark
+    ? { fog:0x0A0B0D, hemiGround:0x1A1C21, grainTone:200, mat:'#141619', route:'#171A1F', shadow:Math.max(shadow, .55) }
+    : { fog:0xF6F4EE, hemiGround:0xE6E4DD, grainTone:20,  mat:'#EFECE4', route:'#D6D3C8', shadow };
   /* CSS3D under, WebGL over */
   const css = new CSS3DRenderer();
   css.domElement.id = 'board'; Object.assign(css.domElement.style, { position:'absolute', left:0, top:0 });
@@ -37,7 +44,11 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(fov, 1, near, far);
   const probe = new THREE.PerspectiveCamera(fov, 1, near, far);   /* for fitting a section's box, without touching the live camera */
-  scene.add(new THREE.HemisphereLight(0xffffff, 0xE6E4DD, 1.35));
+  /* v6: a room environment for reflections on the glass and the shells (subtle, most of the light is still the
+     hemisphere and the sun), and a faint paper-coloured haze so the far end of a flight sits back in the world */
+  if (env > 0) { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), .04).texture; scene.environmentIntensity = env; pm.dispose(); }
+  if (haze) scene.fog = new THREE.Fog(PAL.fog, 140, 520);
+  scene.add(new THREE.HemisphereLight(0xffffff, PAL.hemiGround, env > 0 ? 1.15 : 1.35));
   const sun = new THREE.DirectionalLight(0xffffff, 2.1); sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 3; sun.shadow.bias = -0.0008;
   Object.assign(sun.shadow.camera, { left:-34, right:34, top:34, bottom:-34, near:1, far:120 });
@@ -45,7 +56,7 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
   const fill = new THREE.DirectionalLight(0xFFF4D6, .35); fill.position.set(8, 4, -6); scene.add(fill);
 
   /* the floor: shadows only, plus a faint paper grain that fades with distance */
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600), new THREE.ShadowMaterial({ opacity:shadow, transparent:true }));
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600), new THREE.ShadowMaterial({ opacity:PAL.shadow, transparent:true }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
   /* the floor is solid to the depth buffer but not to the eye: anything parked below it (a tile before it rises, a
      machine that has sunk) is hidden, while the CSS layer beneath still shows through. This is what makes rise()
@@ -55,7 +66,7 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
   if (grain > 0) {
     const gc = document.createElement('canvas'); gc.width = gc.height = 256; const gx = gc.getContext('2d');
     const img = gx.createImageData(256, 256); let s = 7;
-    for (let i = 0; i < img.data.length; i += 4) { s = (s * 16807) % 2147483647; const v = (s / 2147483647); img.data[i] = img.data[i + 1] = img.data[i + 2] = 20; img.data[i + 3] = v < .12 ? Math.floor(255 * grain * (v / .12)) : 0; }
+    for (let i = 0; i < img.data.length; i += 4) { s = (s * 16807) % 2147483647; const v = (s / 2147483647); img.data[i] = img.data[i + 1] = img.data[i + 2] = PAL.grainTone; img.data[i + 3] = v < .12 ? Math.floor(255 * grain * (v / .12)) : 0; }
     gx.putImageData(img, 0, 0);
     const gt = new THREE.CanvasTexture(gc); gt.wrapS = gt.wrapT = THREE.RepeatWrapping; gt.repeat.set(200, 200); gt.anisotropy = 4;
     const gm = new THREE.Mesh(new THREE.PlaneGeometry(1600, 1600), new THREE.MeshBasicMaterial({ map:gt, transparent:true, depthWrite:false }));
@@ -72,12 +83,12 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
     /* a mat: a slightly different paper tone under a section, so the floor reads as sections of one place.
        Drawn in the CSS layer (a flat DOM plane) so it can never paint over a sign — the WebGL layer above it
        carries only objects and their shadows, which fall on the mat as they should. */
-    mat(x, z, w, d, { ry = 0, tone = '#EFECE4', r = 2.5 } = {}) {
+    mat(x, z, w, d, { ry = 0, tone = PAL.mat, r = 2.5 } = {}) {
       const el = document.createElement('div'); Object.assign(el.style, { width:(w / K) + 'px', height:(d / K) + 'px', background:tone, borderRadius:(r / K) + 'px' });
       const o = new CSS3DObject(el); o.rotation.order = 'YXZ'; o.rotation.y = ry; o.rotation.x = -Math.PI / 2; o.position.set(x, 0, z); o.scale.setScalar(K);
       scene.add(o); return o; },
     /* a route on the floor between two points: a thin flat ribbon, the colour of a pencil line — CSS too */
-    route(a, b, { w = .22, tone = '#D6D3C8' } = {}) {
+    route(a, b, { w = .22, tone = PAL.route } = {}) {
       const d = b.clone().sub(a); const len = d.length();
       const el = document.createElement('div'); Object.assign(el.style, { width:(len / K) + 'px', height:(w / K) + 'px', background:tone });
       const o = new CSS3DObject(el); o.rotation.order = 'YXZ'; o.rotation.y = Math.atan2(-d.z, d.x); o.rotation.x = -Math.PI / 2;
@@ -102,9 +113,13 @@ export function world(stage, { fov = 28, near = 1, far = 900, shadow = .17, grai
     section({ x = 0, z = 0, ry = 0, az = -20, el = 18, box = { x:[-13, 13], y:[0, 30], z:[-4, 6] }, ty = null, margin = 1.08 } = {}) {
       const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; scene.add(g);
       const bw = box.x[1] - box.x[0], bh = box.y[1] - box.y[0], tyv = ty ?? bh / 2;
-      const corners = []; for (const cx of box.x) for (const cy of box.y) for (const cz of box.z) corners.push(new THREE.Vector3(cx, cy, cz));
+      let corners = [];
+      const setBox = b => { corners = []; for (const cx of b.x) for (const cy of b.y) for (const cz of b.z) corners.push(new THREE.Vector3(cx, cy, cz)); };
+      setBox(box);
       const sec = { g, az, el, bw, bh, box, ty:tyv, margin,
         add: o => (g.add(o), o),
+        /* refit to another box — a squarer crop drops y[0] below the floor so the captions have room under the objects */
+        setBox,
         sign: (elm, opts = {}) => v.sign(elm, g, { ry:(opts.face ? d2r(az) * .55 : 0), ...opts }),
         local: (lx, ly, lz) => (g.updateWorldMatrix(true, false), g.localToWorld(new THREE.Vector3(lx, ly, lz))),
         /* the camera pose that frames this section for the current aspect */

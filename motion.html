@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Motion graphics — NeroPay Content</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;800;900&family=Martian+Mono:wght@300;400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,10 +34,12 @@
   <button class="f" type="button" data-go="all" aria-pressed="true">All</button>
   <button class="f" type="button" data-go="MATHS">The Maths</button>
   <button class="f" type="button" data-go="PRINT">Small Print</button>
+  <button class="f" type="button" data-go="PARTNER">Partner Programme</button>
   <span class="sep"></span>
   <button class="f" type="button" data-status="ready" aria-pressed="false">ready</button>
   <button class="f" type="button" data-status="flagged" aria-pressed="false">flagged</button>
   <button class="f" type="button" data-status="brief" aria-pressed="false">brief</button>
+  <button class="f" type="button" data-status="draft" aria-pressed="false">draft</button>
 </div></div></div>
 
 <div class="wrap">
@@ -51,7 +56,7 @@
 <script>
 (function(){
   var M = window.MOTION, esc = NP.esc;
-  function st(s){ var k = { production: 'ready', ready: 'ready', flagged: 'p', brief: 'd', blocked: 'blocked' }[s] || 'd'; return '<span class="chip ' + k + '">' + esc(s) + '</span>'; }
+  function st(s){ var k = { production: 'ready', ready: 'ready', flagged: 'p', brief: 'd', draft: 'p', blocked: 'blocked' }[s] || 'd'; return '<span class="chip ' + k + '">' + esc(s) + '</span>'; }
   var byS = {}; M.series.forEach(function(s){ byS[s.id] = s; });
   document.getElementById('stats').innerHTML =
     '<div><b>' + M.series.length + '</b><span>series</span></div>' +
@@ -59,7 +64,7 @@
     '<div><b>' + M.videos.filter(function(v){ return v.status === 'ready'; }).length + '</b><span>ready to voice</span></div>' +
     '<div><b>' + M.videos.filter(function(v){ return (v.format === 'board' || v.format === 'world'); }).length + '</b><span>on a board</span></div>' +
     '<div><b>' + Math.round(M.videos.reduce(function(a, v){ return a + v.secs; }, 0) / M.videos.length) + 's</b><span>average length</span></div>';
-  document.getElementById('kick').textContent = 'Motion graphics · ' + M.videos.length + ' videos · two series · one voice';
+  document.getElementById('kick').textContent = 'Motion graphics · ' + M.videos.length + ' videos · ' + M.series.length + ' series';
 
   document.getElementById('series-list').innerHTML = M.series.map(function(s){
     return '<div class="idea big" data-series="' + esc(s.id) + '" data-status="' + esc(s.status) + '"><div class="ih"><span class="sid">' + esc(s.id) + '</span><h3>' + esc(s.name) + '</h3>' + st(s.status) +
