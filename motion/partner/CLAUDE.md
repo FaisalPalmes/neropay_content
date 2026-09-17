@@ -32,6 +32,17 @@ first, no one-liners, tightened gently (`tighten.mjs --gap .32 --min .45 --tempo
 117.84 bpm, no vocals), ducked under the voice; effects only on something moving, no effect twice in a row, one
 soft thud on the CTA landing.
 
+## Two rulings for every partner video — Faisal, 17 Sep 2026
+
+1. **The bonus is said as paid, not as conditional.** The take never says "based on what they take in their first
+   thirty days". It says the bonus is paid "once they've been taking card payments with us for thirty days" — certain,
+   only delayed. The tier condition (£100 / £200 / £300 by first-30-day takings) stays on screen, in the module's
+   small print and the compliance super, so BRIEF.md's rule — every figure with its condition on the same frame —
+   still holds; it is no longer in the sentence.
+2. **Every video portrays how little the partner does.** We handle everything: the partner does not sell, does not set
+   up, and does not even have to make the call — a name and a phone number is enough and we close it for them. No copy
+   may sound like work for the partner (PP02's "walk down your road and count" was cut for this).
+
 ## The figures and the gate
 
 `figures.json` carries `partner_bonus_tiers`, `partner_revenue_share_tiers` and `partner_active_gate` as confirmed
