@@ -34,10 +34,12 @@
   <button class="f" type="button" data-go="all" aria-pressed="true">All</button>
   <button class="f" type="button" data-go="MATHS">The Maths</button>
   <button class="f" type="button" data-go="PRINT">Small Print</button>
+  <button class="f" type="button" data-go="PARTNER">Partner Programme</button>
   <span class="sep"></span>
   <button class="f" type="button" data-status="ready" aria-pressed="false">ready</button>
   <button class="f" type="button" data-status="flagged" aria-pressed="false">flagged</button>
   <button class="f" type="button" data-status="brief" aria-pressed="false">brief</button>
+  <button class="f" type="button" data-status="draft" aria-pressed="false">draft</button>
 </div></div></div>
 
 <div class="wrap">
@@ -54,7 +56,7 @@
 <script>
 (function(){
   var M = window.MOTION, esc = NP.esc;
-  function st(s){ var k = { production: 'ready', ready: 'ready', flagged: 'p', brief: 'd', blocked: 'blocked' }[s] || 'd'; return '<span class="chip ' + k + '">' + esc(s) + '</span>'; }
+  function st(s){ var k = { production: 'ready', ready: 'ready', flagged: 'p', brief: 'd', draft: 'p', blocked: 'blocked' }[s] || 'd'; return '<span class="chip ' + k + '">' + esc(s) + '</span>'; }
   var byS = {}; M.series.forEach(function(s){ byS[s.id] = s; });
   document.getElementById('stats').innerHTML =
     '<div><b>' + M.series.length + '</b><span>series</span></div>' +

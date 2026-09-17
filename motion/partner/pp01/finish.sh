@@ -6,12 +6,15 @@ set -euo pipefail
 cd "$(dirname "$0")"
 EP=pp01; FONTS=../../assets/fonts-ttf
 mkdir -p out/final
-for r in 9x16 4x5 1x1 16x9; do
+# ratios as arguments, or every crop that has been rendered
+for r in ${@:-9x16 4x5 1x1 16x9}; do
   src=out/$EP-$r.mp4; dst=out/final/$EP-$r-DRAFT.mp4
+  [ -f "$src" ] || { echo "$r not rendered yet"; continue; }
   VF="null"
   ffmpeg -y -v error -i "$src" -i out/mix.m4a -vf "$VF" -map 0:v -map 1:a -c:v libx264 -crf 18 -preset medium -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart "$dst"
   printf "%-8s %s\n" "$r" "$(ffprobe -v error -show_entries stream=width,height:format=duration -of csv=p=0 "$dst" | tr '\n' ' ')"
 done
+[ -f out/final/$EP-9x16-DRAFT.mp4 ] || exit 0
 ffmpeg -i out/final/$EP-9x16-DRAFT.mp4 -af "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json" -f null - 2>&1 | grep -E '"input_i"|"input_tp"'
 rm -f /tmp/claude-0/cs_*.png
 for t in 0.6 2.4 10.5 12.5 16 22 27 31 36 38.5 46.5 50.5 57.5 64 69; do ffmpeg -nostdin -y -v error -ss $t -i out/final/$EP-9x16-DRAFT.mp4 -frames:v 1 /tmp/claude-0/cs_$(printf '%05.2f' $t).png; done
