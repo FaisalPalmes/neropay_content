@@ -62,7 +62,7 @@
     '<div><b>' + M.videos.filter(function(v){ return v.status === 'ready'; }).length + '</b><span>ready to voice</span></div>' +
     '<div><b>' + M.videos.filter(function(v){ return (v.format === 'board' || v.format === 'world'); }).length + '</b><span>on a board</span></div>' +
     '<div><b>' + Math.round(M.videos.reduce(function(a, v){ return a + v.secs; }, 0) / M.videos.length) + 's</b><span>average length</span></div>';
-  document.getElementById('kick').textContent = 'Motion graphics · ' + M.videos.length + ' videos · two series · one voice';
+  document.getElementById('kick').textContent = 'Motion graphics · ' + M.videos.length + ' videos · ' + M.series.length + ' series';
 
   document.getElementById('series-list').innerHTML = M.series.map(function(s){
     return '<div class="idea big" data-series="' + esc(s.id) + '" data-status="' + esc(s.status) + '"><div class="ih"><span class="sid">' + esc(s.id) + '</span><h3>' + esc(s.name) + '</h3>' + st(s.status) +

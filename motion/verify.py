@@ -24,6 +24,8 @@ STALE_DAYS = 90
 REQUIRED = ("kind", "verified_on", "status")
 REQUIRED_CONFIRMED = ("internal_source", "footer")
 REQUIRED_BLOCKED = ("blocked_reason",)
+REQUIRED_DRAFT = ("internal_source", "footer", "confirm_open")
+DRAFT = {"on": False, "keys": []}   # set by draft_figure(): a build that used one is a DRAFT build
 
 # Words that are an earnings or guaranteed-savings claim. Rail 1 of the series
 # block. Checked against VO, captions and on-screen copy, not just this file.
@@ -48,14 +50,14 @@ def audit(figs, today=None):
     for key, rec in figs.items():
         if key.startswith("_"):
             continue
-        extra = REQUIRED_BLOCKED if rec.get("status") == "blocked" else REQUIRED_CONFIRMED
+        extra = {"blocked": REQUIRED_BLOCKED, "draft": REQUIRED_DRAFT}.get(rec.get("status"), REQUIRED_CONFIRMED)
         missing = [f for f in REQUIRED + extra if f not in rec]
         if missing:
             problems.append(f"{key}: missing {', '.join(missing)}")
             continue
         age = (today - date.fromisoformat(rec["verified_on"])).days
         state = rec["status"]
-        if state == "confirmed" and age > STALE_DAYS:
+        if state in ("confirmed", "draft") and age > STALE_DAYS:
             problems.append(f"{key}: verified {age} days ago, over the {STALE_DAYS}-day limit")
             state = "STALE"
         rows.append((key, (rec.get("display") or "—")[:14], state, f"{age}d"))
@@ -77,6 +79,23 @@ def figure(figs, key):
         raise Fail(
             f"'{key}' is {rec.get('status')}: {rec.get('blocked_reason', 'no reason recorded')}"
         )
+    return rec
+
+
+def draft_figure(figs, key):
+    """Fetch a figure Faisal has released for a DRAFT build only (16 Sep 2026: the partner programme
+    figures, motion/partner/BRIEF.md Part 1). A confirmed record passes too. Using a draft record marks
+    the build DRAFT: every export carries -DRAFT in its name and nothing posts until it is confirmed."""
+    if key not in figs:
+        raise Fail(f"'{key}' has no figures.json record — it cannot go on screen.")
+    rec = figs[key]
+    if rec.get("status") == "confirmed":
+        return rec
+    if rec.get("status") != "draft":
+        raise Fail(f"'{key}' is {rec.get('status')}: {rec.get('blocked_reason', 'no reason recorded')}")
+    DRAFT["on"] = True
+    DRAFT["keys"].append(key)
+    print(f"  !!  {key}: DRAFT figure — still open: {rec['confirm_open']}")
     return rec
 
 
@@ -112,8 +131,8 @@ def main():
             problems.append(f"{name}: no checks.py at motion/{name}/ — stage 3 cannot pass without one")
         else:
             print(f"\n  {name} — arithmetic\n")
-            ns = {"figure": lambda k: figure(figs, k), "check": check,
-                  "scan_copy": scan_copy, "crossover": crossover}
+            ns = {"figure": lambda k: figure(figs, k), "draft_figure": lambda k: draft_figure(figs, k),
+                  "check": check, "scan_copy": scan_copy, "crossover": crossover, "BANNED": BANNED}
             try:
                 exec(compile(mod.read_text(), str(mod), "exec"), ns)
             except Fail as e:
@@ -124,6 +143,10 @@ def main():
             print(f"  FAIL  {p}")
         print(f"\n  {len(problems)} problem(s). Build stopped.\n")
         return 1
+    if DRAFT["on"]:
+        print(f"  All checks passed — DRAFT BUILD: {', '.join(DRAFT['keys'])} not yet confirmed."
+              f" Every export is named -DRAFT and does not post.\n")
+        return 0
     print("  All checks passed.\n")
     return 0
 

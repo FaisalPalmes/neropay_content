@@ -15,6 +15,9 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2), ep = resolve(HERE, args[0]);
 const opt = (k, d) => args.includes(k) ? +args[args.indexOf(k) + 1] : d;
 const GAP = opt('--gap', .34), MIN = opt('--min', .5), EDGE = .12;
+/* --tempo 1.06: after the cuts, play the take a little faster with the pitch held (ffmpeg atempo) and scale the timings to
+   match — a UGC read that still breathes but doesn't dawdle (PP01, Faisal's "no gaps" note, 16 Sep 2026). 1.0 = off. */
+const TEMPO = opt('--tempo', 1);
 const D = resolve(ep, 'data');
 if (!existsSync(resolve(D, 'vo-raw.mp3'))) { copyFileSync(resolve(D, 'vo.mp3'), resolve(D, 'vo-raw.mp3')); copyFileSync(resolve(D, 'vo_words.json'), resolve(D, 'vo_words-raw.json')); }
 const words = JSON.parse(readFileSync(resolve(D, 'vo_words-raw.json'), 'utf8'));
@@ -29,12 +32,12 @@ for (let i = 1; i < words.length; i++) {
 const keep = []; let t = 0;
 for (const [a, b] of cuts) { keep.push([t, a]); t = b; } keep.push([t, dur]);
 const parts = keep.map(([a, b], i) => `[0:a]atrim=${a.toFixed(3)}:${b.toFixed(3)},asetpts=PTS-STARTPTS[k${i}]`);
-const fc = parts.join(';') + ';' + keep.map((_, i) => `[k${i}]`).join('') + `concat=n=${keep.length}:v=0:a=1[out]`;
+const fc = parts.join(';') + ';' + keep.map((_, i) => `[k${i}]`).join('') + `concat=n=${keep.length}:v=0:a=1` + (TEMPO !== 1 ? `,atempo=${TEMPO}` : '') + '[out]';
 execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', resolve(D, 'vo-raw.mp3'), '-filter_complex', fc, '-map', '[out]', '-c:a', 'libmp3lame', '-q:a', '2', resolve(D, 'vo.mp3')]);
-/* shift the timings */
-const shift = t => { let s = 0; for (const [a, b] of cuts) { if (t >= b) s += b - a; else if (t > a) s += t - a; } return +(t - s).toFixed(3); };
+/* shift the timings (and scale them if the tempo changed) */
+const shift = t => { let s = 0; for (const [a, b] of cuts) { if (t >= b) s += b - a; else if (t > a) s += t - a; } return +((t - s) / TEMPO).toFixed(3); };
 const out = words.map(w => ({ w: w.w, s: shift(w.s), e: shift(w.e) }));
 writeFileSync(resolve(D, 'vo_words.json'), JSON.stringify(out));
 writeFileSync(resolve(D, 'words.js'), 'window.WORDS=' + JSON.stringify(out) + ';\n');
 const removed = cuts.reduce((a, [x, y]) => a + (y - x), 0);
-console.log(`${cuts.length} gaps tightened to ${GAP}s, ${removed.toFixed(2)}s removed: ${dur.toFixed(2)}s -> ${(dur - removed).toFixed(2)}s`);
+console.log(`${cuts.length} gaps tightened to ${GAP}s, ${removed.toFixed(2)}s removed: ${dur.toFixed(2)}s -> ${(dur - removed).toFixed(2)}s` + (TEMPO !== 1 ? ` -> ${((dur - removed) / TEMPO).toFixed(2)}s at tempo ${TEMPO}` : ''));

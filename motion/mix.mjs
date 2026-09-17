@@ -23,7 +23,9 @@ const out = resolve(ep, 'out'); mkdirSync(out, { recursive: true });
 const target = spec.target ?? -16, tp = spec.tp ?? -1.5;
 
 const inputs = ['-i', resolve(ep, spec.vo || 'data/vo.mp3')];
-const chains = [`[0:a]adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},volume=1.0[v]`];
+/* the VO is padded to the piece's length: it keys the bed's compressor, and sidechaincompress stops when its key runs out —
+   an unpadded VO cut the bed off at the last word (PP01's 3.8 s tail was silent until this) */
+const chains = [`[0:a]adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},volume=1.0,apad=whole_dur=${spec.duration}[v]`];
 let n = 1; const labels = ['[v]'];
 for (const c of spec.cues) {
   const f = resolve(SFX, `${c.sfx}.mp3`);

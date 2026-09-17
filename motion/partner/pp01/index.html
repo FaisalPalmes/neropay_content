@@ -1,0 +1,476 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Partner Programme — how it pays</title>
+<style>
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(../../assets/fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-400-italic.woff2)format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:"Source Serif 4";src:url(../../assets/fonts/source-serif-4-latin-600-italic.woff2)format("woff2");font-weight:600;font-style:italic;font-display:block}
+
+/* the partner brief's dark ground: #0A0B0D, ink white, dim #8A8F97, one accent, card #141619, green only for "live" */
+:root{ --ground:#0A0B0D; --ink:#FFFFFF; --muted:#8A8F97; --line:#2A2E35; --accent:#F5C518; --good:#2FBF71; --card:#141619; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#000}
+#stage{ position:relative; container-type:size; width:1080px; height:1920px; overflow:hidden; color:var(--ink);
+  background:radial-gradient(120% 90% at 50% 36%, #191B20 0%, var(--ground) 52%, #050506 100%);
+  font-family:Poppins,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+#src{position:absolute; left:0; top:0; visibility:hidden}
+
+/* ---- type ---- */
+.sign{width:0; height:0}
+.sign>.in{position:absolute; left:0; top:0; transform:translateY(-50%); white-space:nowrap}
+.shout{font-family:Poppins; font-weight:700; font-size:120px; letter-spacing:-.035em; line-height:1.02; color:var(--ink); white-space:nowrap}
+.shout.s{font-size:84px}
+.kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:28px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); white-space:nowrap}
+.serif{font-family:"Source Serif 4",Georgia,serif; font-style:italic; font-weight:400; color:var(--ink); letter-spacing:-.005em; line-height:1.12}
+.serif.dim{color:#B9BCC2}
+.mask{display:block; overflow:hidden; padding:.08em .12em .18em 0; margin:-.08em -.12em -.18em 0}
+.mask>span{display:block}
+.hid{opacity:0}
+/* the highlighter on a dark ground is a thick yellow underline drawn behind the word, so white type stays white */
+.hl{--p:0; background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 94%; background-size:calc(var(--p) * 100%) .14em; padding:0 .02em; margin:0 -.02em}
+.mark{font-family:Chivo; font-weight:800; font-size:64px; letter-spacing:-.02em; color:var(--ink)}
+.mark b{color:var(--accent); font-weight:800}
+.lbl{font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; letter-spacing:.04em; white-space:nowrap; color:var(--ink)}
+.lbl.m{color:var(--muted); font-weight:400}
+.lbl.y{color:var(--accent)}
+
+/* liquid glass on charcoal: the dark slab — an even pale tint, a thin bright rim, a deep soft shadow, one sheen pass */
+.pill,.slab,.row{--sh:0; position:relative; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.07) 55%,rgba(255,255,255,.12) 100%);
+  border:1.5px solid rgba(255,255,255,.26);
+  box-shadow:0 26px 40px -22px rgba(0,0,0,.85),0 2px 6px -2px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.34),inset 0 -1px 0 rgba(0,0,0,.25)}
+.pill::after,.slab::after,.row::after{content:''; position:absolute; top:-30%; left:0; width:45%; height:160%; pointer-events:none;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.05) 35%,rgba(255,255,255,.28) 50%,rgba(255,255,255,.05) 65%,transparent 100%);
+  transform:translateX(calc(-140% + var(--sh) * 400%))}
+.pill{display:inline-block; padding:13px 26px 11px; border-radius:18px; white-space:nowrap; font-family:Poppins; font-weight:600; font-size:30px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transform-origin:50% 50%}
+.pill.solid{background:linear-gradient(135deg,rgba(245,197,24,.98) 0%,rgba(245,197,24,.84) 55%,rgba(250,214,80,.95) 100%); border-color:rgba(255,242,190,.9); color:#141416}
+.pill.solid::after{background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.1) 35%,rgba(255,255,255,.6) 50%,rgba(255,255,255,.1) 65%,transparent 100%)}
+.pills{display:flex; gap:16px}
+.slab{width:800px; padding:30px 38px 28px; border-radius:30px; transform-origin:50% 50%}
+.row{width:760px; padding:18px 30px; border-radius:22px; display:flex; align-items:center; gap:22px; transform-origin:50% 50%}
+.row .who{font-family:Poppins; font-weight:600; font-size:30px; color:var(--ink); letter-spacing:-.01em}
+.row .ev{font-family:Poppins; font-weight:400; font-size:28px; color:var(--muted); flex:1}
+.row .st{font-family:"Martian Mono",monospace; font-weight:700; font-size:20px; letter-spacing:.1em; padding:8px 14px 6px; border-radius:12px; background:rgba(255,255,255,.1); color:var(--muted); display:flex; align-items:center; gap:10px}
+.row .st i{width:12px; height:12px; border-radius:50%; background:var(--muted); display:inline-block}
+.row .st.live{background:rgba(47,191,113,.16); color:var(--good)} .row .st.live i{background:var(--good)}
+.row .bonus{font-family:"Martian Mono",monospace; font-weight:700; font-size:30px; color:var(--accent); letter-spacing:-.02em}
+.row.dim .who,.row.dim .ev{color:#6E737B} .row.dim{border-color:rgba(255,255,255,.14)}
+
+/* the Bonus Dial */
+.d-kick,.c-kick{font-family:"Martian Mono",monospace; font-weight:400; font-size:22px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+.d-bonus{font-family:Poppins; font-weight:700; font-size:150px; line-height:1; letter-spacing:-.04em; color:var(--accent); margin-top:4px; font-variant-numeric:tabular-nums}
+.d-track{position:relative; height:14px; border-radius:7px; background:rgba(255,255,255,.12); margin:22px 0 46px}
+.d-fill{position:absolute; left:0; top:0; height:100%; width:0; border-radius:7px; background:var(--accent)}
+.d-mark{position:absolute; top:50%; left:0; width:34px; height:34px; border-radius:50%; background:var(--accent); transform:translate(-50%,-50%); box-shadow:0 0 0 6px rgba(245,197,24,.18)}
+.d-th{position:absolute; top:22px; transform:translateX(-50%); font-family:"Martian Mono",monospace; font-weight:400; font-size:22px; color:var(--muted); letter-spacing:.04em; opacity:0}
+.d-th i{display:block; width:2px; height:12px; background:rgba(255,255,255,.35); margin:-14px auto 8px}
+.d-th.last{transform:translateX(-100%)}
+.d-vol{font-family:"Martian Mono",monospace; font-weight:700; font-size:44px; letter-spacing:-.03em; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap}
+.d-vol span{font-weight:400; font-size:26px; letter-spacing:0; color:var(--muted); margin-left:14px}
+.d-rest{font-family:Poppins; font-weight:500; font-size:22px; color:var(--muted); margin-top:16px; white-space:nowrap}
+
+/* the Rate Climb */
+.c-row{display:flex; align-items:baseline; gap:34px; margin-top:6px}
+.c-count{font-family:"Martian Mono",monospace; font-weight:700; font-size:118px; line-height:1; letter-spacing:-.05em; color:var(--ink); font-variant-numeric:tabular-nums; min-width:250px}
+.c-rate{font-family:Poppins; font-weight:700; font-size:118px; line-height:1; letter-spacing:-.04em; color:var(--accent); font-variant-numeric:tabular-nums}
+.c-note{font-family:Poppins; font-weight:500; font-size:28px; color:var(--muted); margin-top:14px; white-space:nowrap}
+.c-steps{display:flex; gap:12px; margin-top:26px}
+.c-steps span{font-family:"Martian Mono",monospace; font-weight:400; font-size:19px; letter-spacing:.02em; padding:7px 10px 5px; border-radius:12px; background:rgba(255,255,255,.06); color:#5E636B; white-space:nowrap}
+.c-steps span.past{color:var(--ink); background:rgba(255,255,255,.12)}
+.c-steps span.now{color:#141416; background:var(--accent)}
+.c-rest{font-family:Poppins; font-weight:500; font-size:28px; color:var(--ink); margin-top:22px; white-space:nowrap}
+
+/* the close */
+#end .in{width:900px; white-space:normal}
+.url{font-family:Poppins; font-weight:700; font-size:72px; letter-spacing:-.035em; color:var(--accent); white-space:nowrap}
+.comp{font-family:"Martian Mono",monospace; font-weight:400; font-size:24px; line-height:1.55; letter-spacing:.01em; color:#B4B8BF; width:700px; white-space:normal}
+
+/* the draft mark — on every frame until the figures are confirmed */
+#draft{position:absolute; left:3.2cqw; top:2.4cqh; font-family:"Martian Mono",monospace; font-weight:700; font-size:1.55cqmin; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); opacity:.92}
+
+/* ---- captions: one line at a time, the spoken word on a yellow marker ---- */
+#caps{position:absolute; inset:0; pointer-events:none}
+.cap{position:absolute; left:50%; bottom:7.5cqh; width:86cqw; transform:translateX(-50%); text-align:center; opacity:0;
+  font-family:Poppins; font-weight:700; font-size:4.3cqmin; line-height:1.18; letter-spacing:-.02em; color:#A7AAB0; text-wrap:balance}
+.cap.big{font-size:6cqmin; bottom:8.5cqh; letter-spacing:-.03em; line-height:1.08}
+.cap .w{display:inline-block; padding:0 .06em; margin:0 -.06em; border-radius:.12em}
+.cap .w.on{color:#141416; background:var(--accent); border-radius:.14em; padding:0 .1em; margin:0 -.1em}
+.cap .w.past{color:#7C8087}
+</style>
+
+<div id="stage">
+  <div id="src">
+    <!-- section 0: the catch, up front -->
+    <div class="sign" id="q0" data-st="S0"><div class="in"><div class="mask"><span class="serif dim" style="font-size:54px">We'll tell you the condition first.</span></div></div></div>
+    <div class="sign" id="c0" data-st="S0"><div class="in"><div class="mask"><span class="shout s">The <span class="hl" id="hlc0">catch,</span> up front.</span></div></div></div>
+    <div class="sign" id="h0" data-st="S0"><div class="in"><div class="mask"><span class="shout"><span class="hl" id="hl3">Three</span> a month.</span></div></div></div>
+    <div class="sign" id="k0" data-st="S0"><div class="in">
+      <div class="mask"><span class="kick">for the revenue share ·</span></div>
+      <div class="mask"><span class="kick">3+ new active merchants in a month</span></div>
+    </div></div>
+    <div class="sign" id="h0b" data-st="S0"><div class="in"><div class="mask"><span class="shout s">The bonus has <span class="hl" id="hlnc">no catch.</span></span></div></div></div>
+
+    <!-- section 1: how it works -->
+    <div class="sign" id="wm" data-st="S1"><div class="in"><div class="mask"><span class="mark">Nero<b>Pay</b></span></div></div></div>
+    <div class="sign" id="h1" data-st="S1"><div class="in">
+      <div class="mask"><span class="shout h1a">Partner</span></div>
+      <div class="mask"><span class="shout h1b">Programme.</span></div>
+    </div></div>
+    <div class="sign" id="p1" data-st="S1"><div class="in"><div class="pills">
+      <div class="pill solid hid" id="pIntro" style="--rot:-2deg">You introduce</div>
+      <div class="pill hid" id="pSet" style="--rot:2deg">We set up</div>
+      <div class="pill hid" id="pSup" style="--rot:-1deg">We support</div>
+    </div></div></div>
+    <div class="sign" id="a1" data-st="S1"><div class="in"><div class="mask"><span class="serif" style="font-size:50px">you don't touch any of it.</span></div></div></div>
+    <div class="sign" id="l0" data-st="S1"><div class="in lbl m hid">Café</div></div>
+    <div class="sign" id="l1" data-st="S1"><div class="in lbl m hid">Takeaway</div></div>
+    <div class="sign" id="l2" data-st="S1"><div class="in lbl m hid">Barber</div></div>
+
+    <!-- section 2: the bonus, per merchant, on the dial -->
+    <div class="sign" id="h2" data-st="S2"><div class="in">
+      <div class="mask"><span class="shout h2a">A bonus on</span></div>
+      <div class="mask"><span class="shout h2b"><span class="hl" id="hlev">every</span> one.</span></div>
+    </div></div>
+    <div class="sign" id="r2" data-st="S2"><div class="in"><div class="row hid" id="row2" style="--rot:-1deg">
+      <span class="who">Café · Stockport</span><span class="ev">went live</span><span class="st" id="st2"><i></i><span>PENDING</span></span>
+    </div></div></div>
+    <div class="sign" id="d2" data-st="S2"><div class="in"><div class="slab hid" id="dial" style="--rot:1deg">
+      <div class="d-kick">Bonus · per merchant</div>
+      <div class="d-bonus" id="dBonus">£100</div>
+      <div class="d-track"><div class="d-fill" id="dFill"></div>
+        <div class="d-th" id="th1" style="left:50%"><i></i>£20,000</div><div class="d-th last" id="th2" style="left:100%"><i></i>£40,000</div>
+        <div class="d-mark" id="dMark"></div></div>
+      <div class="d-vol"><span id="dVol" style="font-weight:700;font-size:44px;color:var(--ink);margin:0;letter-spacing:-.03em">£0</span><span>in their first 30 days</span></div>
+      <div class="d-rest hid" id="dRest">up to £300 per merchant — £40,000+ in their first 30 days</div>
+    </div></div></div>
+    <div class="sign" id="k2" data-st="S2"><div class="in"><div class="pills"><div class="pill hid" id="pNo" style="--rot:-2deg">Nothing to unlock</div></div></div></div>
+    <div class="sign" id="pl0" data-st="S2"><div class="in lbl hid" style="transform:translate(-50%,-50%)">£100</div></div>
+    <div class="sign" id="pl1" data-st="S2"><div class="in lbl hid" style="transform:translate(-50%,-50%)">£200</div></div>
+    <div class="sign" id="pl2" data-st="S2"><div class="in lbl hid" style="transform:translate(-50%,-50%)">£300</div></div>
+
+    <!-- section 3: the revenue share, on the climb -->
+    <div class="sign" id="h3" data-st="S3"><div class="in">
+      <div class="mask"><span class="shout h3a">Active</span></div>
+      <div class="mask"><span class="shout h3b">Partner.</span></div>
+    </div></div>
+    <div class="sign" id="k3" data-st="S3"><div class="in">
+      <div class="mask"><span class="kick">a share of what your merchants'</span></div>
+      <div class="mask"><span class="kick">card payments earn NeroPay</span></div>
+    </div></div>
+    <div class="sign" id="c3" data-st="S3"><div class="in"><div class="slab hid" id="climb" style="--rot:-1deg">
+      <div class="c-kick">New active merchants · this month</div>
+      <div class="c-row"><span class="c-count" id="cCount">0</span><span class="c-rate" id="cRate">—</span></div>
+      <div class="c-note" id="cNote">not yet — 3 to qualify</div>
+      <div class="c-steps"><span id="s3">3 · 20%</span><span id="s21">21 · 25%</span><span id="s36">36 · 30%</span><span id="s61">61 · 35%</span><span id="s111">111 · 40%</span></div>
+      <div class="c-rest hid" id="cRest">Most partners start at 20%: three a month.</div>
+    </div></div></div>
+    <div class="sign" id="b3" data-st="S3"><div class="in"><div class="pill solid hid" id="pAct" style="--rot:-3deg">Active Partner</div></div></div>
+
+    <!-- section 4: either way -->
+    <div class="sign" id="r4" data-st="S4"><div class="in"><div class="row hid" id="row4" style="--rot:1deg">
+      <span class="who">Barber · Longsight</span><span class="ev">went live</span><span class="st" id="st4"><i></i><span>PENDING</span></span><span class="bonus hid" id="bn4">£100</span>
+    </div></div></div>
+    <div class="sign" id="h4" data-st="S4"><div class="in"><div class="mask"><span class="serif" style="font-size:66px">Your bonus is <span class="hl" id="hlyours">yours</span> either way.</span></div></div></div>
+
+    <!-- section 5: the close -->
+    <div class="sign" id="end" data-st="S5"><div class="in">
+      <div class="mask"><span class="serif dim e0" style="font-size:54px">Someone come to mind?</span></div>
+      <div class="mask" style="margin-top:22px"><span class="url e1">partners.neropay.app</span></div>
+      <div class="pills" style="margin-top:26px"><div class="pill hid" id="pFree" style="--rot:-2deg">Free to join</div><div class="pill hid" id="pLink" style="--rot:2deg">Get your link</div></div>
+      <div class="mask" style="margin-top:44px"><span class="comp e2">£100–£300 per merchant. Revenue share needs 3+ new active merchants per calendar month. Terms: partners.neropay.app</span></div>
+    </div></div>
+  </div>
+  <div id="draft">Draft · figures pending confirmation · not for posting</div>
+  <div id="caps"></div>
+</div>
+
+<script>window.READY = false;</script>
+<script src="data/words.js"></script>
+<script src="data/caps.js"></script>
+<script type="module">
+import * as THREE from '../../assets/vendor/three.module.js';
+import { neroTerminal, tiles, pillars, shops, rise, sink, ease, seg } from '../../lib/objects3d.js';
+import { world, flight, K } from '../../lib/world3d.js';
+await document.fonts.ready;
+await Promise.all(['700 120px Poppins', '600 30px Poppins', '500 26px Poppins', '400 28px Poppins', '800 64px Chivo', '700 44px "Martian Mono"', '400 26px "Martian Mono"', 'italic 400 54px "Source Serif 4"'].map(f => document.fonts.load(f)));
+
+const FPS = 30;
+/* ---------------------------------------------------------------------------
+   PP01, 16 Sep 2026 — the partner programme, one world, dark ground. Olivia's take (eleven_v3), tightened and
+   breath-gated; bed partner-upbeat-118 (117.84 bpm measured) from 0, the voice on beat 2. Composition time =
+   HEAD + word time. Every anchor is found by the word, not by index, so a re-take re-times the whole piece.
+--------------------------------------------------------------------------- */
+const BEAT = 60 / 117.84, HEAD = 2 * BEAT, TAIL = 3.8;
+const WORDS = window.WORDS;
+const w = i => HEAD + WORDS[i].s, we = i => HEAD + WORDS[i].e;
+const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+function find(phrase, nth = 0){ const alts = Array.isArray(phrase) ? phrase : [phrase];
+  for (const ph of alts){ const ws = ph.split(' ').map(norm); let hits = 0;
+    for (let i = 0; i + ws.length <= WORDS.length; i++){ let ok = true;
+      for (let k = 0; k < ws.length; k++) if (norm(WORDS[i + k].w) !== ws[k]) { ok = false; break; }
+      if (ok) { if (hits === nth) return i; hits++; } } }
+  throw new Error('no such words in the take: ' + alts.join(' | ')); }
+const at = (p, n = 0) => w(find(p, n));                                                    /* start of a phrase */
+const end = (p, n = 0) => { const a = Array.isArray(p) ? p[0] : p; return we(find(p, n) + a.split(' ').length - 1); };   /* end of it */
+const LAST = WORDS.length - 1;
+const DURATION = +(we(LAST) + TAIL).toFixed(3);
+
+const eo = ease.out, eio = ease.inout;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const px = (el, o) => Object.assign(el.style, o);
+function maskUp(el, t, start, dur = .42){ const p = eo(seg(t, start, dur)); px(el, { transform:`translateY(${(1 - p) * 150}%)`, opacity:p < .02 ? 0 : 1 }); }
+function stamp(el, t, start){ const p = eo(seg(t, start, .16)), rot = el.style.getPropertyValue('--rot') || '0deg';
+  px(el, { opacity:p < .01 ? 0 : 1, transform:`rotate(${rot}) scale(${1.06 - .06 * p})` }); el.style.setProperty('--sh', seg(t, start + .1, .55).toFixed(3)); }
+function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, start, dur)).toFixed(3)); }
+function show(el, on){ el.style.opacity = on ? 1 : 0; }
+const gbp = n => '£' + Math.round(n).toLocaleString('en-GB');
+
+/* ---- the world: six sections along the arc, on the dark ground ---- */
+const stage = $('#stage');
+const Wd = world(stage, { fov:28, dark:true });
+stage.appendChild($('#draft')); stage.appendChild($('#caps'));
+const STEP = 60, TURN = -.5;
+let rx = 0, rz = 0, rry = 0;
+const place = spec => { const S = Wd.section({ x:rx, z:rz, ry:rry, ...spec });
+  rx += STEP * Math.cos(rry) + 6 * Math.sin(rry); rz += -STEP * Math.sin(rry) + 6 * Math.cos(rry); rry += TURN; return S; };
+const S0 = place({ az:-22, el:16, box:{ x:[-11.5, 11.5], y:[0, 27.5], z:[-4, 6] },  ty:12.5 });
+const S1 = place({ az:-20, el:18, box:{ x:[-12.5, 12.5], y:[0, 29.5], z:[-4, 6] },  ty:13 });
+const S2 = place({ az:-18, el:20, box:{ x:[-12.5, 12],   y:[0, 33],   z:[-5, 6] },  ty:15 });
+const S3 = place({ az:-18, el:20, box:{ x:[-13, 12.5],   y:[0, 32],   z:[-5, 7] },  ty:14.5 });
+const S4 = place({ az:-20, el:18, box:{ x:[-12.5, 12],   y:[0, 25.5], z:[-4, 6] },  ty:11.5 });
+const S5 = place({ az:-16, el:16, box:{ x:[-13.5, 16.5], y:[0, 25.5], z:[-3, 5] },  ty:11 });
+const SECS = [S0, S1, S2, S3, S4, S5];
+for (const S of SECS) Wd.mat(S.g.position.x, S.g.position.z, S.bw + 6, 30, { ry:S.g.rotation.y });
+for (let i = 1; i < SECS.length; i++) Wd.route(SECS[i - 1].g.position, SECS[i].g.position);
+
+/* section 0 — the condition first: three shops come up and light 1-2-3 under "three" */
+const SH0 = S0.add(shops(3)); SH0.position.set(0, 0, 2);
+S0.sign($('#q0'), { x:-11, y:25.6, z:-4, face:true });
+S0.sign($('#c0'), { x:-11, y:21.6, z:-4, face:true });
+S0.sign($('#h0'), { x:-11, y:17, z:-4, face:true });
+S0.sign($('#k0'), { x:-11, y:12.7, z:-4, face:true });
+S0.sign($('#h0b'), { x:-11, y:8.4, z:-4, face:true });
+
+/* section 1 — the programme: the mark, the heading, a café / takeaway / barber rising on their words, who does what */
+const SH1 = S1.add(shops(3)); SH1.position.set(0, 0, 2);
+S1.sign($('#wm'), { x:-12, y:27.8, z:-4, face:true });
+S1.sign($('#h1'), { x:-12, y:22.4, z:-4, face:true });
+S1.sign($('#p1'), { x:-12, y:15.6, z:-4, face:true });
+S1.sign($('#a1'), { x:-12, y:11.8, z:-4, face:true });
+const SL = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => { const t = SH1.top(i); return S1.sign(el, { x:t.x - 2.2, y:t.y + 1.7, z:2, face:true }); });
+
+/* section 2 — the bonus: a ledger row goes live, the dial runs, three steps rise on the floor */
+const BARS = S2.add(pillars([{ h:2.6, color:0x2A2E36 }, { h:5.2, color:0x2A2E36 }, { h:7.8, color:0x2A2E36 }], { w:2.4, gap:1.2, depth:2.4 })); BARS.position.set(0, 0, 3.2);
+S2.sign($('#h2'), { x:-12, y:29.2, z:-4, face:true });
+S2.sign($('#r2'), { x:-12, y:24.1, z:-4, face:true });
+S2.sign($('#d2'), { x:-12, y:16.4, z:-4, face:true });
+S2.sign($('#k2'), { x:-12, y:10.2, z:-4, face:true });
+const PL = [$('#pl0'), $('#pl1'), $('#pl2')].map((el, i) => { const t = BARS.top(i); return S2.sign(el, { x:t.x, y:t.y + 1.3, z:3.2, face:true }); });
+
+/* section 3 — the revenue share: the count climbs, the path of tiles lights, the rate steps beside it */
+const PATH = S3.add(tiles(12, { cols:12, size:1.5, gap:.36, height:.6, color:0x2A2E36 })); PATH.position.set(0, 0, 3.6);
+S3.sign($('#h3'), { x:-12.5, y:28.6, z:-4, face:true });
+S3.sign($('#b3'), { x:1.5, y:29.6, z:-4, face:true });
+S3.sign($('#k3'), { x:-12.5, y:23.2, z:-4, face:true });
+S3.sign($('#c3'), { x:-12.5, y:14.6, z:-4, face:true });
+
+/* section 4 — either way: one shop, its bonus row, the line */
+const SH4 = S4.add(shops(1)); SH4.position.set(6.5, 0, 2.5);
+S4.sign($('#r4'), { x:-12, y:19.4, z:-4, face:true });
+S4.sign($('#h4'), { x:-12, y:12.6, z:-4, face:true });
+
+/* section 5 — the close: our terminal, the address, the compliance line */
+const NEW5 = S5.add(neroTerminal()); NEW5.position.set(13.2, 0, 1); NEW5.rotation.y = -.4;
+S5.sign($('#end'), { x:-13, y:13.2, z:-1, face:true });
+
+/* ---- the anchors, all by the word ---- */
+const A = {
+  q0:BEAT, c0:at('catch'), shops0:at('here\'s'), three:at('three'), k0:at('revenue'), k0b:at('kicks'), h0b:at('bonus'), nc:at('no catch'),
+  wm:0, h1:0, cafe:at(['cafe', 'café']), take:at('takeaway'), barber:at('barber'), intro:at('introduce them'), pset:at('set them'), psup:at('support'), a1:at('touch'),
+  h2:0, row:at('go live'), live:at('live'), dial:at('bonus', 1), b100:at('hundred pounds'), t1:at('goes to'), b200:at('two hundred'), th1:at(['twenty thousand', '20,000']),
+  t2:at('and three hundred'), b300:at('three hundred'), th2:at(['over forty', 'over 40']), rest2:end(['over forty', 'over 40']) + .3, ev:at('every business'), pno:at('unlock'),
+  h3:0, cnt:at('three or more'), act:at('active partner'), climb:at('a share of'), rest3:at('card payments earn'), k3:at('what all'),
+  q4:0, row4:0, live4:at('only bring one'), h4:at('still'), yours:at('yours'),
+  e0:0, url:at('partners'), free:at('free'), link:at('get your link'), comp:at('partners') + 1.0, term5:0,
+};
+
+/* ---- the flights: each starts just after the last word of the section; the dial and the climb keep their rest frames ---- */
+const CAM = [
+  { t:0,                                 d:0,  sec:S0 },
+  { t:end('at all') + .02,               d:.8, sec:S1 },
+  { t:end('any of it') + .02,            d:.8, sec:S2 },
+  { t:end('to unlock') + .02,            d:.8, sec:S3 },
+  { t:end('hit it') + .02,               d:.8, sec:S4 },
+  { t:end('either way') + 1.5,           d:.8, sec:S5 },
+];
+A.wm = CAM[1].t + .3; A.h1 = CAM[1].t + .38; A.h2 = CAM[2].t + .35; A.h3 = CAM[3].t + .35; A.q4 = CAM[4].t + .35; A.row4 = CAM[4].t + .45; A.e0 = CAM[5].t + .35; A.term5 = CAM[5].t + .3;
+const SECN = new Map([[S0, 'S0'], [S1, 'S1'], [S2, 'S2'], [S3, 'S3'], [S4, 'S4'], [S5, 'S5']]);
+
+const BEATS = [
+  { name:'0 the catch',   t:0,              out:CAM[1].t, words:27 },
+  { name:'1 how it works', t:CAM[1].t + .40, out:CAM[2].t, words:17 },
+  { name:'2 the bonus',   t:CAM[2].t + .40,  out:CAM[3].t, words:30 },
+  { name:'3 the share',   t:CAM[3].t + .40,  out:CAM[4].t, words:26 },
+  { name:'4 either way',  t:CAM[4].t + .40,  out:CAM[5].t, words:12 },
+  { name:'5 the close',   t:CAM[5].t + .40,  out:DURATION, words:8 },
+  { name:'5 compliance',  t:A.comp,          out:DURATION, words:15 },
+];
+const BUILD = 0.55, EXIT = 0.30;
+function lawReport(){
+  return BEATS.map(b => { const need = Math.max(1.5, b.words * 0.4), have = (b.out - b.t) - BUILD - EXIT;
+    return { beat:b.name, words:b.words, required:+need.toFixed(2), hold:+have.toFixed(2), pass:have >= need }; });
+}
+
+function camState(t){
+  let cur = CAM[0], prev = null;
+  for (const c of CAM){ if (t >= c.t){ prev = cur; cur = c; } }
+  if (cur.d > 0 && t < cur.t + cur.d && prev){
+    const p = eio(seg(t, cur.t, cur.d)), a = prev.sec.pose(), b = cur.sec.pose();
+    const wideR = Wd.fit(a.target.distanceTo(b.target) + 30, 34, 1.0);
+    return { ...flight(a, b, p, { wideR, high:.55 }), moving:p, sec:null, from:prev.sec, to:cur.sec };
+  }
+  const { pos, target, R } = cur.sec.pose(); return { pos, target, R, moving:0, sec:cur.sec, from:null, to:cur.sec };
+}
+function applyCam(t){
+  const W = stage.clientWidth, H = stage.clientHeight; const sz = Wd.size();
+  if (sz.W !== W || sz.H !== H) Wd.resize(W, H);
+  const c = camState(t);
+  Wd.setCamera(c.pos, c.target, c.R);
+  $$('[data-active]').forEach(e => e.removeAttribute('data-active'));
+  if (c.sec) $$(`[data-st="${SECN.get(c.sec)}"]`).forEach(e => e.setAttribute('data-active', ''));
+  const others = Math.min(1, Math.sin(Math.PI * c.moving) * 2.2);
+  const leaving = 1 - seg(c.moving, .6, .4);
+  for (const el of $$('.sign')) { const st = el.dataset.st;
+    el.style.opacity = st === SECN.get(c.to) ? 1 : (c.from && st === SECN.get(c.from)) ? leaving : others; }
+  return c;
+}
+
+/* ---- captions ---- */
+const CAPS_ON = new URLSearchParams(location.search).get('caps') !== '0';
+const BIG = /three businesses a month|no catch|you get a bonus|hundred pounds|two hundred|three hundred|active partner|every month you hit it|yours either way|partners dot neropay dot app/i;
+const CAPL = (CAPS_ON ? window.CAPS : []).map((L, i, all) => {
+  const el = document.createElement('div'); el.className = 'cap' + (BIG.test(L.text) ? ' big' : '');
+  const toks = L.text.split(' ');
+  el.innerHTML = toks.map((tk, k) => `<span class="w" data-i="${L.idx[Math.min(k, L.idx.length - 1)]}">${tk}</span>`).join(' ');
+  $('#caps').appendChild(el);
+  const start = w(L.idx[0]) - .08, next = all[i + 1] ? w(all[i + 1].idx[0]) - .08 : Infinity;
+  return { el, start, end:Math.min(next, we(L.idx[L.idx.length - 1]) + .7), words:[...el.querySelectorAll('.w')] };
+});
+function captions(t){
+  for (const L of CAPL){
+    const on = t >= L.start && t < L.end; if (!on){ L.el.style.opacity = 0; continue; }
+    const pin = eo(seg(t, L.start, .24)), pout = 1 - seg(t, L.end - .12, .12);
+    L.el.style.opacity = Math.min(pin, pout).toFixed(3);
+    L.el.style.transform = `translateX(-50%) translateY(${((1 - pin) * 18).toFixed(1)}px) scale(${(.94 + .06 * pin).toFixed(3)})`;
+    for (const sp of L.words){ const i = +sp.dataset.i; const cur = t >= w(i) && (i + 1 >= WORDS.length || t < w(i + 1));
+      sp.className = 'w' + (cur ? ' on' : t >= w(i) ? ' past' : ''); }
+  }
+}
+
+/* ---- the Bonus Dial: volume and bonus always on screen together; the marker travels, the bonus steps at the thresholds ---- */
+const TIER = v => v >= 40000 ? 300 : v > 20000 ? 200 : 100;
+function dial(t){
+  const on = t >= A.dial; stamp($('#dial'), t, A.dial); if (!on) return;
+  /* travel 1: £0 -> £20,000 landing on "two hundred"; travel 2: £20,000 -> £40,000 landing on "three hundred" */
+  const d1 = Math.max(.6, A.b200 - A.t1), d2 = Math.max(.6, A.b300 - A.t2);
+  let v = 0;
+  if (t >= A.t2) v = 20000 + 20000 * eo(seg(t, A.t2, d2));
+  else if (t >= A.t1) v = 20000 * eo(seg(t, A.t1, d1));
+  const rest = t >= A.rest2;
+  const bonus = TIER(v);
+  $('#dBonus').textContent = gbp(bonus);
+  $('#dVol').textContent = rest ? '£40,000+' : gbp(v);
+  const p = Math.min(1, v / 40000);
+  $('#dFill').style.width = (p * 100).toFixed(2) + '%'; $('#dMark').style.left = (p * 100).toFixed(2) + '%';
+  show($('#th1'), v >= 20000); show($('#th2'), v >= 40000);
+  const pop = b => `scale(${(1 + .08 * Math.sin(Math.PI * seg(t, b, .28))).toFixed(3)})`;
+  $('#dBonus').style.transform = t >= A.b300 ? pop(A.b300) : t >= A.b200 ? pop(A.b200) : pop(A.b100);
+  $('#dBonus').style.transformOrigin = '0 80%';
+  maskUp($('#dRest'), t, A.rest2 + .1, .4);
+}
+
+/* ---- the Rate Climb: the count never skips a threshold; each step holds; the rest frame carries 111+ and the 20% line ---- */
+const RATE = c => c >= 111 ? 40 : c >= 61 ? 35 : c >= 36 ? 30 : c >= 21 ? 25 : c >= 3 ? 20 : 0;
+const STEPS = [[3, .0, .0], [21, .55, .28], [36, .38, .28], [61, .38, .28], [111, .5, 0]];   /* [count, travel, hold] from the previous step */
+function climb(t){
+  stamp($('#climb'), t, CAM[3].t + .45); if (t < CAM[3].t + .45) return;
+  let c = 0;
+  if (t >= A.cnt) c = Math.min(3, Math.floor(seg(t, A.cnt, .9) * 3.999));                 /* 1-2-3 under "three or more" */
+  if (t >= A.climb){ let tt = A.climb, prev = 3; c = 3;
+    for (let i = 1; i < STEPS.length; i++){ const [n, tr, hold] = STEPS[i];
+      if (t >= tt){ c = Math.round(prev + (n - prev) * eo(seg(t, tt, tr))); } tt += tr + hold; prev = n; } }
+  const rest = t >= A.rest3; if (rest) c = 111;
+  const r = RATE(c);
+  $('#cCount').textContent = rest ? '111+' : String(c);
+  $('#cRate').textContent = r ? r + '%' : '—';
+  $('#cNote').textContent = rest ? '111+ new active merchants in one month' : c >= 3 ? 'Active Partner · a share of the whole network' : 'not yet — 3 to qualify';
+  for (const [id, n] of [['s3', 3], ['s21', 21], ['s36', 36], ['s61', 61], ['s111', 111]]){
+    const el = $('#' + id); el.className = c >= n ? (RATE(c) === RATE(n) && (n === 111 || c < [21, 36, 61, 111][[3, 21, 36, 61].indexOf(n)]) ? 'now' : 'past') : ''; }
+  const pop = b => `scale(${(1 + .08 * Math.sin(Math.PI * seg(t, b, .28))).toFixed(3)})`;
+  $('#cRate').style.transform = pop(A.act); $('#cRate').style.transformOrigin = '0 80%';
+  maskUp($('#cRest'), t, A.rest3 + .15, .4);
+  /* the path: three tiles for the gate, the rest as the count climbs; the whole run lifts once on "every month" */
+  for (let i = 0; i < 12; i++){
+    PATH.setProgress(i, eo(seg(t, CAM[3].t + .3 + i * .03, .35)));
+    const need = i < 3 ? i + 1 : 3 + Math.round((i - 2) * (108 / 9));
+    const lit = c >= need; PATH.setColor(i, lit ? 0xF5C518 : 0x2A2E36);
+    PATH.setLift(i, .45 * Math.sin(Math.PI * seg(t, at('every month') + i * .04, .4)));
+  }
+}
+
+function setFrame(n){
+  const t = n / FPS;
+  applyCam(t);
+
+  /* section 0 */
+  maskUp($('#q0 .serif'), t, A.q0, .5); maskUp($('#c0 .shout'), t, A.c0, .5); hl($('#hlc0'), t, A.c0 + .15); maskUp($('#h0 .shout'), t, A.three, .5); hl($('#hl3'), t, A.three + .1);
+  maskUp($('#k0 .mask:nth-child(1) .kick'), t, A.k0, .42); maskUp($('#k0 .mask:nth-child(2) .kick'), t, A.k0b, .42);
+  maskUp($('#h0b .shout'), t, A.h0b, .5); hl($('#hlnc'), t, A.nc);
+  for (let i = 0; i < 3; i++){ SH0.setProgress(i, eo(seg(t, A.shops0 + .2 + i * .14, .55))); SH0.light(i, eo(seg(t, A.three + i * .22, .3))); }
+
+  /* section 1 */
+  maskUp($('#wm .mark'), t, A.wm, .45); maskUp($('#h1 .h1a'), t, A.h1, .5); maskUp($('#h1 .h1b'), t, A.h1 + .12, .5);
+  [A.cafe, A.take, A.barber].forEach((a, i) => { SH1.setProgress(i, eo(seg(t, a, .5))); show(SL[i].element.firstElementChild, t >= a + .25); SH1.light(i, eo(seg(t, A.intro + i * .18, .3))); });
+  stamp($('#pIntro'), t, A.intro); stamp($('#pSet'), t, A.pset); stamp($('#pSup'), t, A.psup);
+  maskUp($('#a1 .serif'), t, A.a1, .5);
+
+  /* section 2 */
+  maskUp($('#h2 .h2a'), t, A.h2, .5); maskUp($('#h2 .h2b'), t, A.h2 + .12, .5); hl($('#hlev'), t, A.ev);
+  stamp($('#row2'), t, A.row); const live = t >= A.live + .1; $('#st2').className = 'st' + (live ? ' live' : ''); $('#st2 span').textContent = live ? 'LIVE' : 'PENDING';
+  dial(t);
+  [[0, A.b100], [1, A.b200], [2, A.b300]].forEach(([i, a]) => { BARS.setRise(i, eo(seg(t, a, .55))); const tp = BARS.top(i); PL[i].position.y = tp.y + 1.3;
+    show(PL[i].element.firstElementChild, t >= a + .35); });
+  stamp($('#pNo'), t, A.pno);
+
+  /* section 3 */
+  maskUp($('#h3 .h3a'), t, A.h3, .5); maskUp($('#h3 .h3b'), t, A.h3 + .12, .5);
+  maskUp($('#k3 .mask:nth-child(1) .kick'), t, A.k3, .42); maskUp($('#k3 .mask:nth-child(2) .kick'), t, A.k3 + .1, .42);
+  stamp($('#pAct'), t, A.act);
+  climb(t);
+
+  /* section 4 */
+  SH4.setProgress(0, eo(seg(t, CAM[4].t + .3, .5))); SH4.light(0, eo(seg(t, A.live4, .3)));
+  stamp($('#row4'), t, A.row4); const l4 = t >= A.live4 + .1; $('#st4').className = 'st' + (l4 ? ' live' : ''); $('#st4 span').textContent = l4 ? 'LIVE' : 'PENDING'; show($('#bn4'), l4);
+  maskUp($('#h4 .serif'), t, A.h4, .5); hl($('#hlyours'), t, A.yours + .05);
+
+  /* section 5 */
+  maskUp($('#end .e0'), t, A.e0, .5); maskUp($('#end .e1'), t, A.url, .5);
+  stamp($('#pFree'), t, A.free); stamp($('#pLink'), t, A.link); maskUp($('#end .e2'), t, A.comp, .5);
+  rise(NEW5, eo(seg(t, A.term5, .7)), 16); NEW5.rotation.y = -.35 + .05 * Math.sin(t * .9);
+
+  captions(t);
+  Wd.render();
+}
+window.setFrame = setFrame; window.DURATION = DURATION; window.FPS = FPS; window.lawReport = lawReport; window.BEAT = BEAT; window.HEAD = HEAD;
+window.CAMS = CAM.map(c => ({ t:+c.t.toFixed(3), d:c.d, st:SECN.get(c.sec) }));
+window.ANCHORS = Object.fromEntries(Object.entries(A).map(([k, v]) => [k, +(+v).toFixed(3)]));
+setFrame(0);
+window.READY = true;
+</script>

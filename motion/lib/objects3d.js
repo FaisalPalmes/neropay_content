@@ -345,6 +345,34 @@ export function pillars(specs, { w = 2.2, gap = 1.1, depth = 2.2 } = {}) {
   });
 }
 
+/* a run of simplified shopfronts (the partner programme's "street"): a dark body, a wide window across the front, an
+   awning over it and a door beside it. light(i, p) brings the window and the awning up to the accent — a shop "lit"
+   is one introduced. setProgress(i, p) rises it out of the ground like tiles(). Trading type only, never a name. */
+export function shops(n, { w = 4.4, h = 3.6, d = 3.2, gap = 1.5, color = 0x1D2027, lit = C.accent } = {}) {
+  const g = new THREE.Group(); const pitch = w + gap, ox = -((n - 1) * pitch) / 2;
+  const cLit = new THREE.Color(lit), cWin = new THREE.Color(0x2B2F38), cAwn = new THREE.Color(0x3C4049), cGlow = new THREE.Color(lit).multiplyScalar(.5), black = new THREE.Color(0);
+  const items = [];
+  for (let i = 0; i < n; i++) {
+    const s = new THREE.Group(); s.position.x = ox + i * pitch;
+    const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 3, .2), mat(color, { roughness:.78 })); body.position.y = h / 2; body.castShadow = body.receiveShadow = true; s.add(body);
+    const winM = new THREE.MeshStandardMaterial({ color:cWin.clone(), emissive:0x000000, roughness:.35, metalness:.05 });
+    const win = new THREE.Mesh(new THREE.PlaneGeometry(w * .56, h * .42), winM); win.position.set(-w * .12, h * .5, d / 2 + .015); s.add(win);
+    const door = new THREE.Mesh(new THREE.PlaneGeometry(w * .18, h * .58), new THREE.MeshStandardMaterial({ color:0x0E1013, roughness:.8 })); door.position.set(w * .3, h * .29, d / 2 + .015); s.add(door);
+    const awnM = mat(0x3C4049, { roughness:.6 });
+    const awn = new THREE.Mesh(new RoundedBoxGeometry(w * .94, .26, 1.25, 2, .08), awnM); awn.position.set(0, h * .8, d / 2 + .45); awn.castShadow = true; s.add(awn);
+    s.visible = false; g.add(s); items.push({ s, winM, awnM });
+  }
+  const tmp = new THREE.Color();
+  return Object.assign(g, {
+    pitch, ox, h,
+    setProgress(i, p) { rise(items[i].s, p, h + 1); },
+    light(i, p) { const it = items[i]; it.winM.color.copy(tmp.copy(cWin).lerp(cLit, p)); it.winM.emissive.copy(tmp.copy(black).lerp(cGlow, p)); it.awnM.color.copy(tmp.copy(cAwn).lerp(cLit, p)); },
+    lift(i, y) { const it = items[i]; it.s.position.y = Math.max(it.s.position.y, 0) + y; },
+    /* local position of shop i's top-centre, for a label standing on it */
+    top(i) { return new THREE.Vector3(ox + i * pitch, h, 0); },
+  });
+}
+
 /* rise(obj, p, h): an object of height h comes up out of the ground as p goes 0 -> 1. Below the ground it is
    hidden by the shadow plane, so this never clips against a canvas edge the way a drop from above did. */
 export function rise(obj, p, h = 16) { obj.position.y = -(h + 1) * (1 - p); obj.visible = p > 0; }

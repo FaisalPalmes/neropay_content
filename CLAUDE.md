@@ -43,6 +43,12 @@ Facebook profile (21 Aug 2026). Refuse and explain if asked to cross one.
 
 - **NeroPay Flex has no confirmed price.** Never quote one.
 - **The partner incentive model is not signed off.** No partner post carries figures; L4 stays blocked.
+  *One exception, 16 Sep 2026:* Faisal's partner programme video brief (`motion/partner/BRIEF.md`) released the
+  programme figures — £100/£200/£300 per merchant by first-30-day volume, 20–40% revenue share by new active merchants
+  a month, the three-a-month gate — for **draft builds only**. They sit in `figures.json` as `status: "draft"` with
+  what is still open with Eray (the £300/£500 top tier, the definition of "active", the base and timing of the share),
+  every export of `motion/partner/pp01` is named `-DRAFT` and carries a draft mark on every frame, and nothing posts
+  until Faisal clears the three CONFIRM items. Rail 10 still stands for anything published.
 - **"Competitors charge for POS software" is inaccurate** — Square, SumUp and PayPal all have
   working free tiers. The accurate claim is about their paid tiers (Square for Restaurants Plus
   £69/month, SumUp POS Plus £39+VAT). Post L8 corrects this publicly; don't reintroduce the old line.

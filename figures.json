@@ -8,11 +8,12 @@
       "kind": "benchmark | neropay | research | specimen | context",
       "internal_source": "traceability only. May name a provider. NEVER rendered.",
       "verified_on": "ISO date. Older than 90 days fails the build with a warning.",
-      "status": "confirmed | blocked. A blocked record fails the build if an episode references it.",
+      "status": "confirmed | draft | blocked. A blocked record fails the build if an episode references it. A draft record (16 Sep 2026) is one Faisal has released for a DRAFT build only: verify.py accepts it through draft_figure(), marks the build DRAFT, and every export carries -DRAFT until confirm_open is settled and the status is confirmed.",
+      "confirm_open": "draft records only: what is still open with Eray before the figure can be confirmed.",
       "footer": "the source line this figure contributes to the persistent footer."
     },
     "verified_on_policy": "warn at 90 days, from the date the figure was last checked against its source, not the date this file was edited.",
-    "last_reviewed": "2026-09-14"
+    "last_reviewed": "2026-09-16"
   },
   "benchmark_flat_no_fee": {
     "value": 0.0169,
@@ -167,8 +168,44 @@
     "on_screen_label": null,
     "kind": "neropay",
     "status": "blocked",
-    "blocked_reason": "Partner incentive model not signed off. No partner asset carries figures. CLAUDE.md unconfirmed list; brief rail 6.",
-    "verified_on": "2026-09-14"
+    "blocked_reason": "Partner incentive model not signed off; rail 10 blocks partner commission. Still blocked for anything published. For DRAFT builds only, Faisal's brief of 16 Sep 2026 (motion/partner/BRIEF.md, Part 1) released the programme figures as the draft records partner_bonus_tiers, partner_revenue_share_tiers and partner_active_gate — on screen only in exports named -DRAFT, which do not post.",
+    "verified_on": "2026-09-16"
+  },
+  "partner_bonus_tiers": {
+    "value": [[0, 20000, 100], [20000.01, 39999.99, 200], [40000, null, 300]],
+    "display": "£100 · £200 · £300",
+    "on_screen_label": "per merchant, by their total card processing in their first 30 days",
+    "kind": "neropay",
+    "note": "Bonus per verified active merchant: £100 at £0–£20,000 of first-30-day processing, £200 at £20,000.01–£39,999.99, £300 at £40,000 and above. Always on screen with the volume that earns it (the Bonus Dial). Per unit, never a total. 'up to £300' only on the dial's rest frame, with '£40,000+ in their first 30 days' in the same line.",
+    "internal_source": "motion/partner/BRIEF.md, Part 1 (Faisal, 16 Sep 2026)",
+    "verified_on": "2026-09-16",
+    "status": "draft",
+    "confirm_open": "Top tier — £300 in the brief, £500 on the live leaflets and landing page — Eray to confirm (BRIEF.md Part 7, item 1). Payout timing and method (item 3).",
+    "footer": "Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Terms: partners.neropay.app"
+  },
+  "partner_revenue_share_tiers": {
+    "value": [[3, 20, 0.2], [21, 35, 0.25], [36, 60, 0.3], [61, 110, 0.35], [111, null, 0.4]],
+    "display": "20% · 25% · 30% · 35% · 40%",
+    "on_screen_label": "share of what your merchants' card payments earn NeroPay, by new active merchants introduced in the calendar month",
+    "kind": "neropay",
+    "note": "The rate is set by the count of NEW active merchants introduced in the calendar month and paid on the whole network. Never a pound figure, never a share of merchant turnover. The rest frame carries '111+ new active merchants in one month' and 'Most partners start at 20%: three a month'.",
+    "internal_source": "motion/partner/BRIEF.md, Part 1 (Faisal, 16 Sep 2026)",
+    "verified_on": "2026-09-16",
+    "status": "draft",
+    "confirm_open": "The base of the share (NeroPay's net processing revenue?) and when and how it is paid — Eray (BRIEF.md Part 7, item 3). The definition of 'active merchant' (item 2).",
+    "footer": "Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Terms: partners.neropay.app"
+  },
+  "partner_active_gate": {
+    "value": 3,
+    "display": "3",
+    "on_screen_label": "new active merchants in a calendar month to be an Active Partner",
+    "kind": "neropay",
+    "note": "A gate, not a cap. Under three in a month: no revenue share that month; every bonus is still paid.",
+    "internal_source": "motion/partner/BRIEF.md, Part 1 (Faisal, 16 Sep 2026)",
+    "verified_on": "2026-09-16",
+    "status": "draft",
+    "confirm_open": "The definition of 'active merchant' (registered that month vs transacted) — Eray (BRIEF.md Part 7, item 2).",
+    "footer": "Revenue share needs 3+ new active merchants per calendar month."
   },
   "neropay_workhorse_rate": {
     "value": 0.013,
