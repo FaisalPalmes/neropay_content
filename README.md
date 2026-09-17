@@ -74,6 +74,10 @@ the presenter disclosure), `ref` (an asset that already exists on `youtube.html`
 `sq` 1080×1080, `pt` 1080×1350, `st` 1080×1920. Charcoal ground, white type, yellow accent, wordmark
 bottom-left. No money figure ever dominates an image — that is the rule that got the profile restricted.
 
+**Exporting in bulk** — `node export-assets.mjs L2 M2` (or no ids for every unblocked post) renders each
+post's creative headlessly to `social-out/<id>/` as PNG and SVG with the caption alongside. Needs Playwright;
+`social-out/` is git-ignored.
+
 **Sketch types** — `reel`, `carousel`, `statcard`, `photo`, `none`.
 
 ```js

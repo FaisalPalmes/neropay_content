@@ -17,3 +17,6 @@ video/*/snap*/
 video/*/review/*
 !video/*/review/manifest.json
 motion/*/*/out/
+
+# headless exports of the social creative (export-assets.mjs) — handed to Faisal, not committed
+social-out/

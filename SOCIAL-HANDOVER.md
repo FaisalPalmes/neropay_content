@@ -146,8 +146,12 @@ The download buttons need someone clicking them. For a batch, render headlessly:
 Playwright 1.56 is installed globally and its Chromium is at `/opt/pw-browsers/chromium-1194`. Load
 `social.html` over `file://`, then for each post call `window.OVERLAY_ART.postAssets("M2")` to get its
 asset ids and `window.OVERLAY_ART.toPng(id, {})` for each, and write the blobs to
-`social-out/<post id>/`. No such script exists yet — writing `export-assets.mjs` at root and
-git-ignoring `social-out/` is a good first task. Until then, click.
+`social-out/<post id>/`. That script is `export-assets.mjs` at root (added 17 Sep 2026; `social-out/` is
+git-ignored): `node export-assets.mjs L2 M2` for named posts, no arguments for every unblocked post,
+`--all` for the blocked ones too. It writes each PNG, the SVG and a `caption.txt` per post. One thing it
+handles that a plain Playwright script would not: the cloud container's Chromium does not trust the
+outbound proxy's certificate, so the Google Fonts requests are served to the page from Node — otherwise
+Chivo silently falls back to a system sans and the export doesn't match the preview.
 
 ### 5.4 Reels and anything with motion
 
@@ -277,7 +281,7 @@ allowlist; `video/AUDIO.md` §2 lists the hosts to add. Not needed for the socia
 - [ ] Ask Faisal which posts are already live and add the `posted` field to those.
 - [ ] Add `assets` to every unblocked post that has a stat card, carousel or cover in its `sketch`,
       so the site draws them. L2, M2, M5, M7 first.
-- [ ] Write `export-assets.mjs` (§5.3) and export the week's creative.
+- [x] Write `export-assets.mjs` (§5.3) and export the week's creative. *Done 17 Sep 2026.*
 - [ ] Confirm which ElevenLabs account the connector is signed into before any voiced piece.
 - [ ] Note the competitor-register date (18 Aug) and raise the refresh with Faisal.
 
