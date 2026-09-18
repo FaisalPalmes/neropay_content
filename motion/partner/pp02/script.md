@@ -242,3 +242,25 @@ stereo, −14.20 LUFS / −1.04 dBTP. Higgsfield:
 the PP02 folder, v5 renamed superseded. Law passes on all eight beats (the push-in carries no type, so it is not a beat);
 frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 36 points. The voice peaks at −0.3 dBFS and the
 loudest effect at −14.7 dBFS after gain.
+
+## v7, 18 Sep 2026 — the review of v6
+
+Faisal's notes on v6 (the new animations and overlays stay): the question mark and the rail were covering the three shop
+labels; the socials on the close sat under the nameplate; crackling in a few places and under the shutters; the earthquake
+subtler; "no" in front of each struck line so it reads at a glance; the third line straight after the second; and the
+name-and-number stop grander and bigger with a short line above it.
+
+So: the labels sit higher above the roofs and in front of the rail (`y: height + 2.8, z: −4.6`); from "The café" the rail
+and its numbers leave altogether and the question mark lifts and shrinks (`gone`/`lift` in `hook()`), so nothing covers
+the labels. The close moves the nameplate up a touch and the socials and the terms down (19.6 / 15.1 / 10.2). The three
+lines are "no selling." / "no setting up." / "no calling.", the third dropping in 0.3 s after "up," and struck as she
+finishes "call"; the camera burst is half the v6 amplitude and decays faster. The name-and-number stop has a higher box
+(y to 15, x ±10.5) so there is room: WHAT WE NEED types across "just send us", NAME and NUMBER rise at 150 px Chivo on
+their words with the marker sweeping under each, and a rounded frame draws round both on "close" (the ellipse is gone).
+
+Sound: the four `glitch-*` cues were the crackle — by measurement 8–17 thousand zero-crossings a second, a crest of up to
+27 dB — and are replaced (click-soft on £100, key-press on £300, sparkle on the bunting, a whoosh on the shutters). The
+master was also limiting the voice's plosives by about 7 dB, so `mix.json` now carries `vo_filter`, a gentle compressor on
+the voice before the mix (threshold −22 dB, 4:1, 4 ms / 140 ms, 6 dB make-up; `mix.mjs` applies it), and the limiter now
+takes at most 2.9 dB off a handful of peaks. A false alarm on the way: a mono downmix (`-ac 1`) in ffmpeg sums the
+channels without normalising, so a peak reading over 1.0 from it is not clipping — decode the stereo to check a master.

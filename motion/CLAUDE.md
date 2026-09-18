@@ -396,6 +396,14 @@ shakes as it lands (a decaying burst, never a wobble that lingers). When the sto
 camera move, not a reading beat. Effects sit well under the voice (0.05–0.13 against a voice at 1.0). Scripts are conversation:
 no triplets, no anaphora, no line that scans — and no clever opener, which is why "Quick question." was trimmed from the take.
 
+**PP02 v7 — the same day, the review.** A struck line carries its "no" so it reads at a glance ("no selling." / "no setting
+up." / "no calling."), and the last of a run lands straight after the one before it, not on its own word, so the set is on
+screen while she is still saying the sentence. A camera burst is felt, not seen: about a quarter of a unit, gone in half a
+second. A hook's graphic leaves before the labels it would cover arrive. A section with a short line over two big words
+("what we need" · NAME · NUMBER) gets a taller box so the stack has air. Two sound rules: never a `glitch-*` effect under
+speech (they are crackle by construction), and the voice goes through a gentle compressor before the master so the
+limiter is never working more than ~3 dB (`vo_filter` in `mix.json`).
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**

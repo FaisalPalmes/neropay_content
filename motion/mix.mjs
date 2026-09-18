@@ -27,7 +27,9 @@ const inputs = ['-i', resolve(ep, spec.vo || 'data/vo.mp3')];
    an unpadded VO cut the bed off at the last word (PP01's 3.8 s tail was silent until this) */
 /* everything is made stereo before amix: amix takes the first input's layout, and a mono VO first in line folded the
    stereo bed to mono (PP01 v3) */
-const chains = [`[0:a]aformat=channel_layouts=stereo,adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},volume=1.0,apad=whole_dur=${spec.duration}[v]`];
+/* vo_filter (optional): an ffmpeg filter on the voice before it meets the mix — PP02 v7 runs a gentle compressor so the master
+   needs far less peak limiting (a 19 dB crest on the raw take had the limiter working 7 dB on plosives) */
+const chains = [`[0:a]aformat=channel_layouts=stereo,${spec.vo_filter ? spec.vo_filter + ',' : ''}adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},volume=1.0,apad=whole_dur=${spec.duration}[v]`];
 let n = 1; const labels = ['[v]'];
 for (const c of spec.cues) {
   const f = resolve(SFX, `${c.sfx}.mp3`);

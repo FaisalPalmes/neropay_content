@@ -63,8 +63,8 @@ assert not re.search(r'£(6|9)00', ALLSCREEN), 'no summed bonus on screen'
 for bad_work in ['walk down', 'count', 'go and', 'knock', 'pitch']:
     assert bad_work not in VO.lower(), f'copy that sounds like work: {bad_work}'
 assert 'send us a name and a number' in VO.lower() and "we'll close it for you" in VO.lower(), 'the hand-off must be in the take'
-assert 'selling.' in ON_SCREEN and 'setting anything up.' in ON_SCREEN and 'the call.' in ON_SCREEN, 'the three struck claims'
-assert 'a name' in ON_SCREEN and 'a number' in ON_SCREEN, 'the hand-off must be on screen'
+assert 'no selling.' in ON_SCREEN and 'no setting up.' in ON_SCREEN and 'no calling.' in ON_SCREEN, 'the three struck claims'
+assert 'name' in ON_SCREEN and 'number' in ON_SCREEN and 'data-text="what we need"' in html, 'the hand-off must be on screen (the kicker is typed from data-text)'
 assert not re.search(r'07\d', ALLSCREEN), 'never a real-looking phone number on screen'
 
 BAD = ['passive income', 'easy money', 'guaranteed', 'no effort', 'risk-free', 'risk free', 'no cost no contract', 'no cost, no contract', '£500',

@@ -80,6 +80,8 @@ html,body{background:#000}
 
 /* the name and the number: a heavier, condensed face, the camera in close — the two things circled */
 .big3{font-family:Chivo; font-weight:800; font-size:96px; letter-spacing:-.015em; line-height:1.04; text-transform:uppercase; color:var(--ink); white-space:nowrap}
+.big3.xl{font-size:150px; letter-spacing:-.01em}
+.big3 .hl{background-position:0 72%; background-size:calc(var(--p) * 100%) .46em; padding:0 .1em; margin:0 -.1em}
 .mask.pad{padding:.16em .22em .26em .12em; margin:-.16em -.22em -.26em -.12em}
 .ring{display:block; overflow:visible}
 .ring path{fill:none; stroke:var(--accent); stroke-width:16; stroke-linecap:round; filter:drop-shadow(0 14px 18px rgba(20,20,22,.18))}
@@ -154,14 +156,15 @@ html,body{background:#000}
     <div class="sign" id="k1" data-st="S1"><div class="in c"><div class="kick wds" id="k1w" style="justify-content:center">per merchant · after 30 days with us</div></div></div>
 
     <!-- S2: you don't do any of it — three claims slam into the street, each struck as she finishes it -->
-    <div class="sign" id="s2a" data-st="S2"><div class="in"><div class="slam" id="slA"><div class="wds shout s" id="s2aw"><span class="strike" id="stA">selling.</span></div></div></div></div>
-    <div class="sign" id="s2b" data-st="S2"><div class="in"><div class="slam" id="slB"><div class="wds shout s" id="s2bw"><span class="strike" id="stB">setting anything up.</span></div></div></div></div>
-    <div class="sign" id="s2c" data-st="S2"><div class="in"><div class="slam" id="slC"><div class="wds shout s" id="s2cw"><span class="strike" id="stC">the call.</span></div></div></div></div>
+    <div class="sign" id="s2a" data-st="S2"><div class="in"><div class="slam" id="slA"><div class="wds shout s" id="s2aw"><span class="strike" id="stA">no selling.</span></div></div></div></div>
+    <div class="sign" id="s2b" data-st="S2"><div class="in"><div class="slam" id="slB"><div class="wds shout s" id="s2bw"><span class="strike" id="stB">no setting up.</span></div></div></div></div>
+    <div class="sign" id="s2c" data-st="S2"><div class="in"><div class="slam" id="slC"><div class="wds shout s" id="s2cw"><span class="strike" id="stC">no calling.</span></div></div></div></div>
 
     <!-- S3: a name and a number — in close on the shops; the two things, circled; the van that stops, the terminal -->
-    <div class="sign" id="h3" data-st="S3"><div class="in c"><div class="wds big3" id="h3w" style="justify-content:center">a name</div></div></div>
-    <div class="sign" id="h3b" data-st="S3"><div class="in c"><div class="wds big3" id="h3bw" style="justify-content:center">a number</div></div></div>
-    <div class="sign" id="o3" data-st="S3"><div class="in c"><svg class="ring" id="ring" width="760" height="400" viewBox="0 0 760 400"><path id="ringp" d="M380 24 C 590 20, 740 80, 738 200 C 736 330, 560 380, 380 378 C 190 376, 22 320, 24 200 C 26 90, 200 30, 400 26"/></svg></div></div>
+    <div class="sign" id="k3" data-st="S3"><div class="in c"><div class="kick big type" id="tk3" data-text="what we need"></div></div></div>
+    <div class="sign" id="h3" data-st="S3"><div class="in c"><div class="wds big3 xl" id="h3w" style="justify-content:center"><span class="hl" id="hlN">name</span></div></div></div>
+    <div class="sign" id="h3b" data-st="S3"><div class="in c"><div class="wds big3 xl" id="h3bw" style="justify-content:center"><span class="hl" id="hlNum">number</span></div></div></div>
+    <div class="sign" id="o3" data-st="S3"><div class="in c"><svg class="ring" id="ring" width="820" height="400" viewBox="0 0 820 400"><path id="ringp" d="M410 30 L 730 30 A 60 60 0 0 1 790 90 L 790 310 A 60 60 0 0 1 730 370 L 90 370 A 60 60 0 0 1 30 310 L 30 90 A 60 60 0 0 1 90 30 L 420 30"/></svg></div></div>
 
     <!-- S4: Active Partner — the bunting, the pill, the chart on its words, the ladder across the tops -->
     <div class="sign" id="b4" data-st="S4"><div class="in"><div class="bunt">
@@ -296,7 +299,7 @@ const STEP = 48;
 const mk = (i, spec) => Wd.section({ x:i * STEP, z:0, ry:0, el:11, box:{ x:[-12, 12], y:[0, 17.4], z:[-9, 8] }, ty:8.7, ...spec });
 const S0 = mk(0, { az:16 }), S1 = mk(1, { az:-14 }), S2 = mk(2, { az:14 });
 /* v6: the name-and-number stop is in close — a smaller box brings the camera in and the shops up large */
-const S3 = mk(3, { az:-14, box:{ x:[-9.5, 9.5], y:[0, 13.4], z:[-9, 9] }, ty:6.7 });
+const S3 = mk(3, { az:-14, box:{ x:[-10.5, 10.5], y:[0, 15], z:[-9, 9] }, ty:7.5 });
 const S3B = Wd.section({ x:3 * STEP + 6, z:0, ry:0, az:-5, el:9, box:{ x:[-11.5, 11.5], y:[0, 10.8], z:[-9, 6] }, ty:5.4 });
 const S4 = mk(4, { az:14 }), S5 = mk(5, { az:-12 }), S6 = mk(6, { az:10, box:{ x:[-12, 17.5], y:[0, 18.2], z:[-9, 8] } });
 const SECS = [S0, S1, S2, S3, S3B, S4, S5, S6];
@@ -319,9 +322,9 @@ const RN = RS.map((i, k) => { const left = ((ST.x(i) - RAIL_X0) / K).toFixed(0) 
   const n = document.createElement('div'); n.className = 'rn'; n.textContent = String(k + 1); n.style.left = left; $('#railwrap').appendChild(n);
   const tk = document.createElement('div'); tk.className = 'rt'; tk.style.left = left; $('#railwrap').appendChild(tk); return { n, tk, x:ST.x(i), i }; });
 S0.sign($('#q0'), { x:0, y:15.7, z:-1, face:true });
-S0.sign($('#k0'), { x:0, y:22.0, z:-1, face:true });
+S0.sign($('#k0'), { x:0, y:22.5, z:-1, face:true });
 const N0 = [shopAt(-11), shopAt(-3), shopAt(5)];            /* three distinct shops in the settled view: café, barber, takeaway */
-const SL0 = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => S0.sign(el, { x:local(S0, N0[i]), y:ST.height(N0[i]) + 1.5, z:-5.3, face:true }));
+const SL0 = [$('#l0'), $('#l1'), $('#l2')].map((el, i) => S0.sign(el, { x:local(S0, N0[i]), y:ST.height(N0[i]) + 2.8, z:-4.6, face:true }));   /* v7: above the roofs, in front of the rail */
 
 /* S1 — the money: three shops light on "every one of them", the terminal lands on "NeroPay", the receipt prints on "paid" */
 const N1S = [shopAt(STEP - 9), shopAt(STEP - 1), shopAt(STEP + 7)];
@@ -353,9 +356,10 @@ const N3B = [N3 - 1, N3, N3 + 1];
 const VAN = S3.add(van()); VAN.position.set(-60, -.06, 12.5); VAN.visible = false;
 const VAN_STOP = 3.2;   /* on the road in frame, below the shop it serves */
 const TM3 = S3.add(neroTerminal()); { const a = above(S3, N3, 1.0, -6); TM3.position.set(a[0], a[1], a[2]); } TM3.userData = { ry:-.3, y0:TM3.position.y }; TM3.visible = false;
-S3.sign($('#h3'), { x:0, y:14.3, z:-1, face:true });
-S3.sign($('#h3b'), { x:0, y:11.7, z:-1, face:true });
-S3.sign($('#o3'), { x:0, y:13.0, z:-1.2, face:true });
+S3.sign($('#k3'), { x:0, y:19.2, z:-1, face:true });
+S3.sign($('#h3'), { x:0, y:16.0, z:-1, face:true });
+S3.sign($('#h3b'), { x:0, y:12.3, z:-1, face:true });
+S3.sign($('#o3'), { x:0, y:14.15, z:-1.2, face:true });
 const RING = $('#ringp'), RING_L = RING.getTotalLength(); RING.style.strokeDasharray = RING_L; RING.style.strokeDashoffset = RING_L;
 
 /* S4 — Active Partner */
@@ -379,9 +383,9 @@ S5.sign($('#h5'), { x:-11.5, y:18.8, z:-1, face:true });
 
 /* S6 — the end of the road */
 S6.sign($('#p6'), { x:-11.5, y:22.7, z:-2, face:true });
-S6.sign($('#n6'), { x:-11.5, y:19.3, z:-1, face:true });
-S6.sign($('#s6'), { x:-11.5, y:15.9, z:-2, face:true });
-S6.sign($('#c6'), { x:-11.5, y:11.0, z:-2, face:true });
+S6.sign($('#n6'), { x:-11.5, y:19.6, z:-1, face:true });
+S6.sign($('#s6'), { x:-11.5, y:15.1, z:-1, face:true });
+S6.sign($('#c6'), { x:-11.5, y:10.2, z:-2, face:true });
 const TM6 = S6.add(neroTerminal()); TM6.position.set(12.8, 10.4, -2); TM6.userData = { ry:-.3, y0:10.4 }; TM6.visible = false;
 const N6 = [shopAt(6 * STEP - 9), shopAt(6 * STEP - 1), shopAt(6 * STEP + 8)];
 const VAN6 = S6.add(van()); VAN6.position.set(-60, -.06, 12.5); VAN6.visible = false;
@@ -391,8 +395,8 @@ const NERO = ['neropay', 'nero pay', 'neuropay'];
 const T = {
   know:times('know your name'), knowE:endsOf('know your name'),
   every:times('every one of them'), fig:[at('hundred'), at('to three'), at('three hundred')],
-  sell:times('selling'), setup:times('setting anything up'), call:times('the call'),
-  sendE:endsOf('send us'), send:times('send us'), name:times('a name'), number:times('a number'),
+  sell:[at('no selling')], setup:[at('no setting')], call:[end('setting anything up') + .3],   /* v7: the third lands straight after the second, not on "call" */
+  sendE:endsOf('just send us'), send:times('just send us'), name:[at('a name') + .05], number:[at('a number') + .05],   /* v7: WHAT WE NEED types across "just send us" */
   bonus:[at('that bonus'), w(find('that bonus') + 1), w(find('that bonus') + 2), at('still yours') + .12],
   cond:[at('pounds'), at('pounds') + .06, at('thirty days'), at('thirty days') + .05, at('thirty days') + .1, at('thirty days') + .15, at('thirty days') + .2],
 };
@@ -419,14 +423,14 @@ const CAM = [
 const CAMOF = S => CAM.find(c => c.sec === S);
 A.term6 = CAMOF(S6).t + .3; A.land4 = CAMOF(S4).t + CAMOF(S4).d * .55; A.land3b = CAMOF(S3B).t + CAMOF(S3B).d * .55;
 /* v6: the camera shakes when a claim slams in — a decaying burst; the strikes add a smaller one */
-const SHAKES = [[T.sell[0], .55], [T.setup[0], .55], [T.call[0], .6], [A.sellE - .1, .16], [A.setupE - .1, .16], [A.callE - .12, .18]];
+const SHAKES = [[T.sell[0], .28], [T.setup[0], .28], [T.call[0], .3], [A.sellE - .1, .09], [A.setupE - .1, .09], [A.callE - .12, .1]];   /* v7: half the v6 burst */
 let PAD = 0;
 
 const BEATS = [
   { name:'0 your road',        t:0,                     out:CAMOF(S1).t,  words:5 },
   { name:'1 the money',        t:CAMOF(S1).t + .40,     out:CAMOF(S2).t,  words:10 },
   { name:'2 you don\'t',       t:CAMOF(S2).t + .40,     out:CAMOF(S3).t,  words:6 },
-  { name:'3 name and number',  t:CAMOF(S3).t + .40,     out:CAMOF(S3B).t, words:4 },
+  { name:'3 name and number',  t:CAMOF(S3).t + .40,     out:CAMOF(S3B).t, words:5 },
   { name:'4 active partner',   t:CAMOF(S4).t + .40,     out:CAMOF(S5).t,  words:12 },
   { name:'5 quiet month',      t:CAMOF(S5).t + .40,     out:CAMOF(S6).t,  words:6 },
   { name:'6 the close',        t:CAMOF(S6).t + .40,     out:DURATION,     words:5 },
@@ -456,7 +460,7 @@ function camState(t){
 }
 const UP = new THREE.Vector3(0, 1, 0);
 function shake(t){ let x = 0, y = 0, r = 0;
-  for (const [s, a] of SHAKES){ const u = t - s; if (u < 0 || u > .75) continue; const e = a * Math.exp(-7 * u);
+  for (const [s, a] of SHAKES){ const u = t - s; if (u < 0 || u > .6) continue; const e = a * Math.exp(-8 * u);
     x += e * Math.sin(u * 84 + s); y += e * .7 * Math.sin(u * 117 + 2 + s); r += e * .9 * Math.sin(u * 61 + 1); }
   return { x, y, r }; }
 function applyCam(t){
@@ -516,14 +520,16 @@ RN.forEach(r => { let t = CAM[0].dolly.from; while (tipAt(t) < r.x && t < CAM[0]
 function hook(t){
   const tip = tipAt(t);
   const flip = eo(seg(t, A.know, .4));
-  $('#rail').style.transform = `scaleX(${((tip - RAIL_X0) / (RAIL_X1 - RAIL_X0)).toFixed(4)})`; $('#rail').style.opacity = t < A.how - .05 ? 0 : (1 - .5 * flip).toFixed(3);
+  /* v7: once she names the shops the rail and its numbers leave altogether and the mark lifts and shrinks, so the labels are never covered */
+  const gone = eo(seg(t, A.cafe - .4, .45)), lift = gone;
+  $('#rail').style.transform = `scaleX(${((tip - RAIL_X0) / (RAIL_X1 - RAIL_X0)).toFixed(4)})`; $('#rail').style.opacity = t < A.how - .05 ? 0 : ((1 - .5 * flip) * (1 - gone)).toFixed(3);
   RN.forEach(r => { const q = eo(seg(t, r.t0, .22)); const sc = 1.7 - .7 * q;
-    px(r.n, { opacity:(Math.min(1, q * 2) * (1 - .7 * flip)).toFixed(3), transform:`translateX(-50%) translateY(${((1 - q) * -40).toFixed(1)}px) scale(${sc.toFixed(3)})` });
-    r.tk.style.opacity = (Math.min(1, q * 2) * (1 - .7 * flip)).toFixed(3);
+    px(r.n, { opacity:(Math.min(1, q * 2) * (1 - .7 * flip) * (1 - gone)).toFixed(3), transform:`translateX(-50%) translateY(${((1 - q) * -40).toFixed(1)}px) scale(${sc.toFixed(3)})` });
+    r.tk.style.opacity = (Math.min(1, q * 2) * (1 - .7 * flip) * (1 - gone)).toFixed(3);
     const base = seg(t, r.t0, .1) * (1 - .6 * eo(seg(t, r.t0 + .3, .5))) * (1 - flip); const kN = N0.indexOf(r.i);
     ST.light(r.i, kN < 0 ? base : Math.max(base, eo(seg(t, [A.cafe, A.barber, A.take][kN], .3)))); });
   const s = flip < .01 ? 0 : (1.18 * flip - .18 * eo(seg(t, A.know + .4, .3))) * (1 + .05 * Math.sin(Math.PI * seg(t, A.nameE, .3)));
-  px($('#qmark'), { opacity:flip < .01 ? 0 : 1, transform:`rotate(${((1 - flip) * -10).toFixed(2)}deg) scale(${s.toFixed(3)}) translateY(${(2 * Math.sin(t * 1.4)).toFixed(1)}px)` });
+  px($('#qmark'), { opacity:flip < .01 ? 0 : 1, transform:`translateY(${(-92 * lift).toFixed(1)}px) rotate(${((1 - flip) * -10).toFixed(2)}deg) scale(${(s * (1 - .28 * lift)).toFixed(3)}) translateY(${(2 * Math.sin(t * 1.4)).toFixed(1)}px)` });
   typeSync($('#tk1'), t, T.know, T.knowE);
   N0.forEach((i, k) => { if (!RS.includes(i)) ST.light(i, eo(seg(t, [A.cafe, A.barber, A.take][k], .3))); });
 }
@@ -544,11 +550,12 @@ function vanDrive(t){
   const p = eio(seg(t, A.send, A.close + .15 - A.send)); const x = -60 + (VAN_STOP + 60) * p;
   VAN.visible = t >= A.send; VAN.position.x = x; VAN.position.y = -.06; VAN.roll(x + 60);   /* flat on the road: no pitch, no wobble */
   VAN.open(eo(seg(t, A.close + .25, .45)));
-  hover(TM3, t, A.it, TM3.userData.y0, .3, .55, 1);
+  hover(TM3, t, A.land3b - .25, TM3.userData.y0, .3, .55, 1);   /* v7: the terminal rises as the camera pushes in — on "it" it touched the frame round NAME / NUMBER */
 }
 /* the name and the number: "send us" types, the two rise on their words, the ring draws round both on "close" */
 function nameNumber(t){
-  sync($('#h3w'), t, T.name, .42); sync($('#h3bw'), t, T.number, .42);
+  typeSync($('#tk3'), t, T.send, T.sendE);
+  sync($('#h3w'), t, T.name, .42); sync($('#h3bw'), t, T.number, .42); hl($('#hlN'), t, T.name[0] + .18, .4); hl($('#hlNum'), t, T.number[0] + .18, .4);
   const r = eo(seg(t, A.close - .05, .55)); RING.style.strokeDashoffset = (RING_L * (1 - r)).toFixed(1); $('#ring').style.opacity = r > 0 ? 1 : 0;
   const lift = seg(t, A.close + .5, .3); $('#ring').style.transform = `scale(${(1 + .03 * Math.sin(Math.PI * lift)).toFixed(3)})`;
 }
