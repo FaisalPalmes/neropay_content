@@ -229,5 +229,16 @@ in the Higgsfield sandbox from the take re-hosted in the Higgsfield media store 
 Sound: 51 cues on the new anchors, the effects at 0.05–0.13 (v5 was 0.10–0.22), the bed and the voice unchanged.
 Captions: 25 lines set by hand so no line starts with the tail of a sentence.
 
-**Built and peeked, not rendered:** contact sheet at 36 points sent to Faisal 18 Sep 2026 for confirmation before the full
-render. Law passes on all eight beats (the push-in carries no type, so it is not a beat); the gate passes.
+Contact sheet at 36 points sent to Faisal 18 Sep 2026 and approved ("I like the new edits, and the new overlays are amazing").
+Two things the render caught after the sheet: the rail's passed numbers sit off the left edge behind the camera by design, so
+the rail carries `data-noscan` (the attribute the scan keeps for a ruler that runs off the edge); and a claim slamming from
+2.1× its size ran past the right edge for a few frames, so the slam is now a drop from above at 1.12× with a squash on landing.
+The strike effect (`error`) was inaudible at the halved level and sits at 0.3.
+
+**Delivered (v6, 4:5):** `out/final/pp02-4x5.mp4`, 52.0 s, 1,560 frames, md5 `bb10d277f7213ef6d6cb1e18b08b0f07`;
+stereo, −14.20 LUFS / −1.04 dBTP. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/7a321ce0-ac97-4db3-9171-617dbfc059c2.mp4`
+(contact `…/5d5d6971-a879-4644-81e7-2e2a3f2f9f39.jpg`). Drive: README v6 (`1pUTciyPLLWL2m92M74-RCJ5ujLz_YA12GXP-aCHKuOg`) in
+the PP02 folder, v5 renamed superseded. Law passes on all eight beats (the push-in carries no type, so it is not a beat);
+frame scan clean; 0 spikes, 0 jumps; the gate passes; contact sheet at 36 points. The voice peaks at −0.3 dBFS and the
+loudest effect at −14.7 dBFS after gain.
