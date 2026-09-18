@@ -49,7 +49,7 @@ html,body{background:#000}
 .strike{--s:0; position:relative; display:inline-block; color:var(--ink)}
 .strike::after{content:''; position:absolute; left:-.05em; top:52%; height:.14em; width:calc(var(--s) * 110%); background:#E0433A; border-radius:.07em; transform:rotate(-1.6deg); transform-origin:0 50%; box-shadow:0 .04em .12em rgba(224,67,58,.25)}
 /* v6: a claim slams into the street from above the camera — big, then down to size, the camera shaking as it lands */
-.slam{display:inline-block; transform-origin:0 50%; will-change:transform}
+.slam{display:inline-block; transform-origin:50% 50%; will-change:transform}
 /* the typewriter: every character pre-laid, revealed one by one so nothing reflows */
 .type .ch{opacity:0}
 .type .ch.on{opacity:1}
@@ -139,7 +139,7 @@ html,body{background:#000}
 <div id="stage">
   <div id="src">
     <!-- S0: your road — the rail with a number at every shop, the camera whipping past; the question mark; the three named shops -->
-    <div class="sign" id="rl" data-st="S0"><div class="in"><div class="railwrap" id="railwrap"><div class="rail" id="rail"></div></div></div></div>
+    <div class="sign" id="rl" data-st="S0" data-noscan><div class="in"><div class="railwrap" id="railwrap"><div class="rail" id="rail"></div></div></div></div>
     <div class="sign" id="q0" data-st="S0"><div class="in c"><div class="qm" id="qmark">?</div></div></div>
     <div class="sign" id="k0" data-st="S0"><div class="in c"><div class="kick big type" id="tk1" data-text="know your name"></div></div></div>
     <div class="sign" id="l0" data-st="S0"><div class="in c"><div class="lbl hang hid">Café</div></div></div>
@@ -266,9 +266,10 @@ function hl(el, t, start, dur = .45){ el.style.setProperty('--p', eo(seg(t, star
 function strike(el, t, start, dur = .3){ const s = eo(seg(t, start, dur)); el.style.setProperty('--s', s.toFixed(3));
   const k = seg(t, start, .4); const dx = Math.sin(k * Math.PI * 4) * (1 - k) * 7; const g = eo(seg(t, start + .12, .35));
   const c = Math.round(20 + (142 - 20) * g); el.style.color = `rgb(${c},${c},${c + 6})`; el.style.transform = `translateX(${dx.toFixed(1)}px)`; }
-/* v6: a claim slams in — from twice its size and above, down to size in a quarter second; the camera shakes as it lands */
-function slam(el, t, start, dur = .26){ const p = eo(seg(t, start, dur)); const s = 2.1 - 1.1 * p; const set = 1 + .05 * Math.sin(Math.PI * seg(t, start + dur, .2));
-  px(el, { opacity:p < .01 ? 0 : Math.min(1, p * 3).toFixed(3), transform:`translateY(${((1 - p) * -60).toFixed(1)}px) scale(${(s * set).toFixed(3)})` }); }
+/* v6: a claim slams in — it drops from above the frame, a little large, and lands to size with a squash in a quarter
+   second; the camera shakes as it lands. It never scales past the frame's edge (the scan caught a 2.1x start). */
+function slam(el, t, start, dur = .26){ const p = eo(seg(t, start, dur)); const s = 1.12 - .12 * p; const q = seg(t, start + dur, .18); const sq = 1 - .06 * Math.sin(Math.PI * q);
+  px(el, { opacity:p < .01 ? 0 : Math.min(1, p * 3).toFixed(3), transform:`translateY(${((1 - p) * -260).toFixed(1)}px) scale(${s.toFixed(3)}, ${(s * sq).toFixed(3)})` }); }
 /* an object that floats above the street — up from below, a slow bob and turn */
 function hover(obj, t, start, y0, sc, dur = .55, ph = 0){ const p = eo(seg(t, start, dur)); obj.visible = p > 0;
   obj.position.y = y0 - (1 - p) * 3 + .18 * Math.sin(t * 1.3 + ph); obj.scale.setScalar(sc * (.5 + .5 * p)); obj.rotation.y = (obj.userData.ry || 0) + .22 * Math.sin(t * .6 + ph); }
