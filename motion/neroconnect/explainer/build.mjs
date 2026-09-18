@@ -18,6 +18,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const PREVIEW = args.includes('--preview');
 const ONLY = args.includes('--scenes') ? args[args.indexOf('--scenes') + 1].split(',').map(Number) : null;
+const JOIN = args.includes('--join');   /* join only: the frames were rendered by parallel runs with --scenes */
 const FPS = 25, XF = 10;                       /* the dissolve, in frames */
 const spec = JSON.parse(readFileSync(resolve(HERE, 'data/scenes.json'), 'utf8'));
 const S = spec.scenes;
@@ -26,10 +27,10 @@ const OUT = resolve(HERE, 'out'); mkdirSync(OUT, { recursive: true });
 
 const root = process.env.PLAYWRIGHT_BROWSERS_PATH || '/opt/pw-browsers';
 const build = existsSync(resolve(root, 'chromium')) ? resolve(root, 'chromium') : resolve(root, readdirSync(root).filter(d => d.startsWith('chromium-')).sort().pop(), 'chrome-linux/chrome');
-const browser = await chromium.launch({ executablePath: build, args: ['--allow-file-access-from-files'] });
+const browser = JOIN ? null : await chromium.launch({ executablePath: build, args: ['--allow-file-access-from-files'] });
 
 const t0 = Date.now();
-for (const sc of S) {
+for (const sc of (JOIN ? [] : S)) {
   if (ONLY && !ONLY.includes(sc.scene)) continue;
   const frames = Math.round((sc.end - sc.start) * FPS) + (sc.last ? 0 : XF);
   const dir = resolve(OUT, 'frames' + (PREVIEW ? '-preview' : ''), sc.file.replace('.html', '')); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true });
@@ -43,8 +44,8 @@ for (const sc of S) {
   await pg.close();
   console.log(`  scene ${sc.scene}  ${sc.file}  ${frames} frames  ${((Date.now() - t0) / 1000).toFixed(0)}s`);
 }
-await browser.close();
-if (ONLY) process.exit(0);
+if (browser) await browser.close();
+if (ONLY && !JOIN) process.exit(0);
 
 /* join: each scene is a clip; xfade chains them with the dissolve inside the overlap the render added */
 const inputs = [], filters = []; let prev = null, offset = 0;

@@ -86,5 +86,8 @@ NeroPay.
 
 ## Status
 
-Draft: stills of all sixteen scenes and the two references rendered (`out/glass/`), the take tightened, the timeline set,
-a 720p preview rendering. Nothing rendered at delivery quality; nothing published.
+Draft sent to Faisal 18 Sep 2026: stills of all sixteen scenes and the two references (`out/glass/`), the take tightened, the
+timeline set, a 720p preview (`out/nc-explainer-16x9-preview.mp4`, 2:02, voice only, no captions, not mastered) rendered as
+three parallel `build.mjs --preview --scenes` runs then `--join` (one run is ~0.85 fps on this box; three run at ~5 fps
+together). Nothing rendered at delivery quality; nothing published. Awaiting Faisal's notes on the script, the scenes and
+the voice before the master.
