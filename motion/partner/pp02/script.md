@@ -185,3 +185,49 @@ stereo, −13.99 LUFS / −1.34 dBTP. Higgsfield:
 (contact `…/6bec7093-9687-4642-8a08-b16ab156c900.jpg`). Drive: README v5 (`1ijqYxKwh44FGyiwrJfLtL_VHjCXq4qUFYLVYXE7HFoo`),
 v4 renamed superseded. Law passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate passes;
 contact sheet at 32 points.
+
+## v6, 18 Sep 2026 — a new take, a new hook, the picture re-directed
+
+Faisal's notes on v5: redo the creative direction; adjust the script so the intro is an engaging hook, cut the
+rhythm-sounding sentences and make it a real conversation; the picture to match the energy. The camera whipping past
+shops on "how many businesses on your road" with an animated yellow line above them carrying numbers, fast, not a slow
+count; the question mark bigger, yellow, placed with a purpose; the money stop without "pays you", the £100–£300 animated
+rather than popping into glass, less text under it; the three claims more impactful — animated in, with a camera shake
+like an earthquake as they land; a different look for "send us a name and a number" — no phone, the shops larger as if
+the camera is closer, an effect that says the name and the number are all we need; "do it three times" as a zoom on three
+shops flashing yellow in sync with her; the Active Partner chart more animated and in sync; the chimes quieter, the voice
+the same; the close with liquid-glass social icons, the link, the terminal with the shops, and only the text that is needed.
+
+**The take (Olivia, eleven_v3, one take, 48.5 s raw, 795 credits, flow `V5Z2DUgxnS9rAnIxR1yP`, node `8CX5dfq6DJFctU8xj3Rh`):**
+
+> [curious] Quick question. How many of the businesses on your road actually know your name? The café, the barber, the
+> takeaway on the corner. Because every one of them you introduce to NeroPay is worth a hundred to three hundred pounds
+> to you, paid once they've been taking card payments with us for thirty days. And you don't do any of it. No selling, no
+> setting anything up, you don't even have to make the call. Just send us a name and a number and we'll close it for you.
+> [warmly] Do that three times in a month and you're an Active Partner, so you also get a share of what all your merchants'
+> card payments earn us, every month you hit it. And if it's a quiet month and you only bring one, that bonus is still
+> yours. It's free to join. Go to NeroPay dot app slash partners and get your link.
+
+"Quick question." is recorded but **cut from the front of the take** (`data/vo-untrimmed.mp3` keeps it): the standing
+ruling in `motion/CLAUDE.md` cuts openers that exist to sound clever ("Quick one"), and the whip is the hook. Say the word
+and it goes back — it is one trim. Both rulings hold: paid after thirty days is in the sentence, the tier condition stays
+on the receipt and in the terms; nothing sounds like work. `tighten.mjs --gap .32 --min .45 --tempo 1.03` (10 gaps, 47.5 s →
+44.1 s → 42.8 s); `gate.py --inset .12 --max -30` muted two breaths. Composition 52.0 s (HEAD two beats, TAIL 8.3 s). Whisper
+in the Higgsfield sandbox from the take re-hosted in the Higgsfield media store (a retyped signed URL had broken).
+
+| Stop | What lands on which word |
+|---|---|
+| 0 | From "How" the camera whips fifty units along the street (`dolly` from −50 on an in-out ease over "How many of the businesses on your road") while a yellow rail shoots ahead of it above the roofs, a number popping on the rail at every shop it passes (`RN`, solved once from the whip so any still is the same frame) and the shop flashing under it; the rail ends where the camera settles and a 560 px yellow question mark with an ink stroke scales in there on "know", with KNOW YOUR NAME typing above it; the numbers dim to a trace; café / barber / takeaway light on their words with labels |
+| 1 | The street starts eight shops earlier (`street(60, x0:-109.6)`) so the whip has shops. Three shops on "every one of them", the far shop on "introduce", the terminal on "NeroPay"; £100 flips in digit by digit on "hundred" (`roll()`: split-flap, five whole glyphs then its own — never a partial glyph), the dash draws on "to", £300 on "three hundred"; on "pounds" a glow blooms behind the figure and the marker draws beneath it; PER MERCHANT on "pounds", · AFTER 30 DAYS WITH US on "thirty days"; the receipt prints on "paid". No glass, no "pays you" |
+| 2 | "selling." / "setting anything up." / "the call." each slam in from twice their size on their word (`slam()`), the camera shaking as each lands (`SHAKES`, a decaying burst on the camera's right and up axes and a small roll), then struck in red as she finishes the phrase, with a smaller shake |
+| 3 | The camera is in close (box x ±9.5, y to 13.4): "a name" rises on its words, "a number" beneath on its words, and on "close" a yellow ring draws round both (`#ring`, a hand-drawn ellipse path); the van comes along the road from "send" and stops at the shop on "close", the terminal lands on "it", the shop lights on "for you". No phone. The "send us" kicker was dropped for the timing law (the caption carries it) |
+| 3B | On the end of "for you" the camera pushes in on three shops (`S3B`, box y to 10.8); on "three" they flash yellow one after another, .19 s apart, each popping (`street().pop`), and stay lit |
+| 4 | The bunting and ACTIVE PARTNER as v5; the 20% bar rises on "share", 30% on "merchants", 40% on "earn", each with its sheen as it lands; on "every month" a dotted ladder steps across the bar tops with a dot on each, and the chart lifts; the chart sits in a slow perspective drift; the rest line on "every month"; the shops ghosted |
+| 5 | As v5, on the new words ("quiet", "one", "that bonus is … yours") |
+| 6 | FREE TO JOIN on its words, the nameplate on "NeroPay dot app" with the marker on "slash partners", five glass discs — Instagram, Facebook, TikTok, LinkedIn, YouTube, the marks in ink — swinging in one after another on "get your link", the terms line, the terminal at the right, three shops lit, the van along the road. "Your own link" is gone |
+
+Sound: 51 cues on the new anchors, the effects at 0.05–0.13 (v5 was 0.10–0.22), the bed and the voice unchanged.
+Captions: 25 lines set by hand so no line starts with the tail of a sentence.
+
+**Built and peeked, not rendered:** contact sheet at 36 points sent to Faisal 18 Sep 2026 for confirmation before the full
+render. Law passes on all eight beats (the push-in carries no type, so it is not a beat); the gate passes.

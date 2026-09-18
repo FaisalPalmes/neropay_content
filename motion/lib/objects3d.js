@@ -419,6 +419,8 @@ export function street(n, { pitch = 6.6, x0 = 0, color = 0xEDEAE2, lit = C.accen
     doorTop(i) { const it = items[i]; return new THREE.Vector3(it.sh.position.x + it.door.x, it.h * .58, it.d / 2); },
     x(i) { return items[i].sh.position.x; },
     height(i) { return items[i].h; },
+    /* v6 (PP02): a shop pops on the beat — scaled about its footprint, so it grows up and out, never off the ground */
+    pop(i, s) { items[i].sh.scale.setScalar(s); },
   });
 }
 

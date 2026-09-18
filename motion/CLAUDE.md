@@ -387,6 +387,15 @@ diagram — bars, large, centred, just above the caption — and the street behi
 (`street().fade(i, p)`), so the figures carry the frame; the other stops keep the street solid. A panel with a large
 figure gets one short condition line with real clearance below it, not two serif lines under the slab's edge.
 
+**PP02 v6 — energy to match the voice (Faisal, 18 Sep 2026).** A hook is a camera move, not a count: the view whips along the
+street while a rail above the roofs carries a number at every shop it passes, and the rail ends in the question mark — large,
+yellow with an ink stroke, placed where the line stops so it means something. Figures animate as whole glyphs (a split-flap,
+never a rolling column) and stand without glass, with one short condition line. A retracted claim slams in and the camera
+shakes as it lands (a decaying burst, never a wobble that lingers). When the stop is about the shops, the camera goes in close
+(a smaller box) and the type sits above the roofs. A beat with no type (a push-in on three shops flashing on her words) is a
+camera move, not a reading beat. Effects sit well under the voice (0.05–0.13 against a voice at 1.0). Scripts are conversation:
+no triplets, no anaphora, no line that scans — and no clever opener, which is why "Quick question." was trimmed from the take.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**

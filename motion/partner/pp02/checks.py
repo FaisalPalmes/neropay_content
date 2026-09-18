@@ -1,4 +1,4 @@
-"""Stage-3 checks for the Partner Programme episode PP02 — your road (17 Sep 2026).
+"""Stage-3 checks for the Partner Programme episode PP02 — your road (17 Sep 2026; v6 take of 18 Sep 2026).
 
 Every figure on screen resolves to partner_bonus_tiers, partner_revenue_share_tiers and partner_active_gate, confirmed
 final by Faisal on 17 Sep 2026 (motion/partner/BRIEF.md v4). Two rulings of the same day apply (motion/partner/CLAUDE.md):
@@ -25,12 +25,13 @@ ON_SCREEN = re.sub(r'\s+', ' ', ON_SCREEN)
 SCRIPT = html[html.index('<script type="module">'):]
 CANVAS = ' '.join(re.findall(r"'([^'\\\n]*)'", SCRIPT))
 ALLSCREEN = ON_SCREEN + ' ' + CANVAS
-VO = ("How many of the business owners on your road actually know your name? The café, the barber, the takeaway. Because every "
-      "one of them you introduce to NeroPay pays you a hundred to three hundred pounds, once they've been taking card payments "
-      "with us for thirty days. And you don't sell anything. You don't set anything up. You don't even have to make the call. "
-      "Send us a name and a number, and we'll close it for you. Do it three times in a month and you're an Active Partner, with "
-      "a share of what all your merchants' card payments earn us, every month you hit it. And if a month's quiet and you only "
-      "bring one, that bonus is still yours. It's free to join. Go to NeroPay dot app slash partners and get your link.")
+VO = ("How many of the businesses on your road actually know your name? The café, the barber, the takeaway on the corner. "
+      "Because every one of them you introduce to NeroPay is worth a hundred to three hundred pounds to you, paid once they've "
+      "been taking card payments with us for thirty days. And you don't do any of it. No selling, no setting anything up, you "
+      "don't even have to make the call. Just send us a name and a number and we'll close it for you. Do that three times in a "
+      "month and you're an Active Partner, so you also get a share of what all your merchants' card payments earn us, every "
+      "month you hit it. And if it's a quiet month and you only bring one, that bonus is still yours. It's free to join. Go to "
+      "NeroPay dot app slash partners and get your link.")
 
 b = {row[2]: (row[0], row[1]) for row in bonus['value']}
 check('bonus tier 1, £', min(b), 100)
@@ -48,7 +49,8 @@ check('Active Partner gate, new merchants', gate['value'], 3)
 # ruling 1: the figure is paid after 30 days, the tier condition on screen, never "based on" in the take
 assert 'based on' not in VO.lower(), 'the take must not say the bonus is based on what they take'
 assert 'taking card payments with us for thirty days' in VO.lower(), 'the take says the bonus is paid after 30 days with us'
-assert '£100–£300' in ON_SCREEN and 'per merchant' in ON_SCREEN, 'the figure sits with "per merchant" on the same section'
+# v6: the hero figure is digit columns that roll, so the HTML carries it whole on the element as data-figure
+assert 'data-figure="£100–£300"' in html and 'per merchant' in ON_SCREEN, 'the figure sits with "per merchant" on the same section'
 assert 'paid after 30 days' in CANVAS and 'of card payments with us' in CANVAS, 'the receipt carries the payment condition'
 assert '£100 · £200 · £300' in CANVAS and 'first 30 days' in CANVAS, 'the receipt carries the tier condition (BRIEF rule 1)'
 assert 'Most partners start at 20%: three a month.' in html, 'the mandatory "most partners" line is missing from the rest frame'
@@ -61,9 +63,9 @@ assert not re.search(r'£(6|9)00', ALLSCREEN), 'no summed bonus on screen'
 for bad_work in ['walk down', 'count', 'go and', 'knock', 'pitch']:
     assert bad_work not in VO.lower(), f'copy that sounds like work: {bad_work}'
 assert 'send us a name and a number' in VO.lower() and "we'll close it for you" in VO.lower(), 'the hand-off must be in the take'
-assert 'Send us a name' in ON_SCREEN and 'and a number.' in ON_SCREEN, 'the hand-off must be on screen'
-assert 'NAME' in CANVAS and 'NUMBER' in CANVAS and 'SENT' in CANVAS, 'the phone shows the lead going to us'
-assert not re.search(r'07\d', CANVAS), 'never a real-looking phone number on screen'
+assert 'selling.' in ON_SCREEN and 'setting anything up.' in ON_SCREEN and 'the call.' in ON_SCREEN, 'the three struck claims'
+assert 'a name' in ON_SCREEN and 'a number' in ON_SCREEN, 'the hand-off must be on screen'
+assert not re.search(r'07\d', ALLSCREEN), 'never a real-looking phone number on screen'
 
 BAD = ['passive income', 'easy money', 'guaranteed', 'no effort', 'risk-free', 'risk free', 'no cost no contract', 'no cost, no contract', '£500',
        'unemployed', 'benefits', 'broke', 'student', 'immigrant', 'over 50', 'hustle', 'game-changer', 'simply', 'genuinely', 'easy']
