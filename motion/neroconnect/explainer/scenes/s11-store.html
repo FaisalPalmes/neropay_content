@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
+<style>
+/* S11 the store — tilted panel */
+
+.scene{position:absolute;inset:0;perspective:2600px;perspective-origin:70% 45%}
+.panel{position:absolute;left:700px;top:150px;width:1140px;transform-style:preserve-3d;transform:rotateY(-18deg) rotateX(8deg) rotateZ(1deg) translateZ(-120px)}
+.title{position:absolute;left:120px;top:96px;width:440px}
+.title .h1{font-size:54px;margin-top:20px}
+.title .sub{margin-top:18px;font-size:22px}
+.foot{position:absolute;left:120px;bottom:64px;color:var(--mut);font-size:19px;max-width:440px;line-height:1.5}
+
+.modes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;transform-style:preserve-3d}
+.mode{padding:28px 30px;height:250px;display:flex;flex-direction:column;justify-content:space-between}
+.mode .t{font-size:24px;font-weight:600;color:var(--ink)} .mode .sub{font-size:18px;margin-top:10px}
+.mode.on{background:rgba(255,255,255,.74);transform:translateZ(90px)}
+.item{margin-top:26px;padding:30px 34px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px;align-items:center;transform:translateZ(40px)}
+.item .nm{font-size:26px;font-weight:600} .item .k{font-size:17px;color:var(--mut)} .item .v{font-size:24px;font-weight:600;margin-top:6px}
+.item .bar{height:12px;border-radius:6px;background:rgba(11,18,32,.08);margin-top:12px;overflow:hidden} .item .bar i{display:block;height:100%;width:var(--w,0%);background:var(--yel);border-radius:6px}
+
+
+</style></head><body>
+<div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="2" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.2"/></filter></svg>
+  <div class="grid"></div>
+  <div class="light" style="--lx:-600px;--ly:-800px;opacity:0.5"></div><div class="light two" style="--lx2:1500px;--ly2:760px;opacity:0.3"></div>
+<div class="title in" data-i="0"><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; Store</div><div class="h1">Your store. Your prices.</div><div class="sub">Terminals, tills and accessories, sold under your name.</div></div>
+<div class="scene"><div class="panel"><div class="modes">
+<div class="glass liquid mode in" data-i="1"><div class="rim"></div><div><div class="t">NeroPay store</div><div class="sub">The standard store, NeroPay branding</div></div><div class="sub">Mode 1</div></div>
+<div class="glass liquid mode on in" data-i="2"><div class="rim"></div><div><div class="yline" style="margin-bottom:14px"></div><div class="t">White-label store</div><div class="sub">Your branding, neutral product names</div></div><div class="sub">Mode 2 · selected</div></div>
+<div class="glass liquid mode in" data-i="3"><div class="rim"></div><div><div class="t">Hidden</div><div class="sub">You order the hardware yourself</div></div><div class="sub">Mode 3</div></div>
+</div>
+<div class="glass liquid item in" data-i="4"><div class="rim"></div><div><div class="nm">Card terminal</div><div class="k">One catalogue item</div></div><div><div class="k">Supply cost</div><div class="v">NeroPay's</div><div class="bar"><i style="--w:55%"></i></div></div><div><div class="k">Your price</div><div class="v">Yours</div><div class="bar"><i style="--w:88%"></i></div></div><div><div class="k">Your margin</div><div class="v">The difference</div><div class="bar"><i class="m" style="--w:33%"></i></div></div></div>
+</div></div>
+<div class="foot in" data-i="5">NeroPay ships, supports and handles returns. You set the price and keep the margin.</div>
+</div>
+<script>
+const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
+const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
+const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const L1=[-600,-800], L2=[1500,760];
+function base(n){
+  /* the light drifts on a 190-frame loop — the only ambient motion; entrances stagger from frame 4, six frames apart */
+  const p=eio((n%190)/190), p2=eio(((n+95)%190)/190);
+  const l=document.querySelector('.light'), l2=document.querySelector('.light.two');
+  l.style.setProperty('--lx',(L1[0]+p*200)+'px'); l.style.setProperty('--ly',(L1[1]+p*120)+'px');
+  l2.style.setProperty('--lx2',(L2[0]-p2*140)+'px'); l2.style.setProperty('--ly2',(L2[1]+p2*70)+'px');
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20);
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${.985+.015*t})`;});
+  document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
+    el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+}
+function setFrame(n){ base(n); const p=eio((n%200)/200); const pu=1+0*ease(seg(n,60,60)); document.querySelector('.panel').style.transform=`rotateY(${-18+p*4}deg) rotateX(${8-p*2}deg) rotateZ(1deg) translateZ(-120px) scale(${pu})`; const w=ease(seg(n,40,40)); document.querySelector('.item .bar i.m').style.setProperty('--w',(33*w)+'%'); }
+setFrame(300);
+</script></body></html>

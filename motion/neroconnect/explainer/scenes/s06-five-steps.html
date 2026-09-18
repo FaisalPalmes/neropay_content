@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
+<style>
+/* S6 five steps — cascade */
+
+.scene{position:absolute;inset:0;perspective:2400px;perspective-origin:50% 55%}
+.stack{position:absolute;left:180px;top:260px;transform-style:preserve-3d;transform:rotateY(-8deg) rotateX(6deg)}
+.c{position:absolute;padding:34px 40px;display:flex;flex-direction:column;justify-content:space-between}
+.c .lbl{font-size:26px;font-weight:600;color:var(--ink)}
+.c .sub{font-size:20px;margin-top:10px}
+.c .big{font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.op{position:absolute;width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.7)}
+.op.eq{background:var(--yel)}
+.title{position:absolute;left:120px;top:96px;width:460px}
+.title .h1{font-size:56px;margin-top:20px}
+.title .sub{margin-top:18px;font-size:22px}
+.foot{position:absolute;left:120px;bottom:64px;color:var(--mut);font-size:19px;max-width:440px;line-height:1.5}
+
+.c{width:330px;height:300px;padding:28px 30px}
+.c .n{width:56px;height:56px;border-radius:50%;background:rgba(11,18,32,.08);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;color:var(--ink);margin-bottom:16px}
+.c.last .n{background:var(--yel)}
+.title{top:80px;width:1000px}
+.s1{left:0;top:0;transform:translateZ(-160px)}
+.s2{left:320px;top:60px;transform:translateZ(-80px)}
+.s3{left:640px;top:120px;transform:translateZ(0)}
+.s4{left:960px;top:180px;transform:translateZ(80px)}
+.s5{left:1280px;top:240px;transform:translateZ(160px);background:rgba(255,255,255,.75)}
+
+
+</style></head><body>
+<div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="2" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.2"/></filter></svg>
+  <div class="grid"></div>
+  <div class="light" style="--lx:1100px;--ly:-600px;opacity:0.5"></div><div class="light two" style="--lx2:-400px;--ly2:700px;opacity:0.3"></div>
+<div class="title in" data-i="0"><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; Connected accounts</div><div class="h1">Adding a merchant: five steps</div></div>
+<div class="scene"><div class="stack"><div class="glass liquid c s1 in" data-i="1"><div class="rim"></div><div><div class="n">1</div><div class="lbl">The person</div><div class="sub">Name, nationality, date of birth, contact</div></div><div class="sub" style="color:var(--mut)">Validated before the next step</div></div><div class="glass liquid c s2 in" data-i="2"><div class="rim"></div><div><div class="n">2</div><div class="lbl">The business</div><div class="sub">Trading and legal identity</div></div><div class="sub" style="color:var(--mut)">Validated before the next step</div></div><div class="glass liquid c s3 in" data-i="3"><div class="rim"></div><div><div class="n">3</div><div class="lbl">Addresses</div><div class="sub">Registered and trading</div></div><div class="sub" style="color:var(--mut)">Validated before the next step</div></div><div class="glass liquid c s4 in" data-i="4"><div class="rim"></div><div><div class="n">4</div><div class="lbl">Terms</div><div class="sub">Agreement accepted</div></div><div class="sub" style="color:var(--mut)">Validated before the next step</div></div><div class="glass liquid c s5 last in" data-i="5"><div class="rim"></div><div><div class="n">5</div><div class="lbl">Review</div><div class="sub">Confirm, and they are live</div></div><div class="sub" style="color:var(--mut)">NeroPay runs the checks</div></div></div></div>
+<div class="foot in" data-i="6">Each step checks itself before the next unlocks. Identity verification runs through NeroPay.</div>
+</div>
+<script>
+const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
+const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
+const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const L1=[1100,-600], L2=[-400,700];
+function base(n){
+  /* the light drifts on a 190-frame loop — the only ambient motion; entrances stagger from frame 4, six frames apart */
+  const p=eio((n%190)/190), p2=eio(((n+95)%190)/190);
+  const l=document.querySelector('.light'), l2=document.querySelector('.light.two');
+  l.style.setProperty('--lx',(L1[0]+p*200)+'px'); l.style.setProperty('--ly',(L1[1]+p*120)+'px');
+  l2.style.setProperty('--lx2',(L2[0]-p2*140)+'px'); l2.style.setProperty('--ly2',(L2[1]+p2*70)+'px');
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20);
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${.985+.015*t})`;});
+  document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
+    el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+}
+function setFrame(n){ base(n); const p=eio((n%220)/220); document.querySelector('.stack').style.transform=`rotateY(${-8+p*4}deg) rotateX(${6-p*2}deg) translateX(${-40*ease(seg(n,60,80))}px)`; }
+setFrame(300);
+</script></body></html>

@@ -1,0 +1,37 @@
+{
+  "platform": {
+    "name": "Harbourline Ltd",
+    "id": "NP7kQ2mWx4_41108",
+    "domain": "pay.harbourline.co.uk",
+    "site": "harbourline.co.uk",
+    "support_email": "support@harbourline.co.uk",
+    "ops_email": "ops@harbourline.co.uk",
+    "finance_email": "finance@harbourline.co.uk",
+    "phone": "0161 496 0142",
+    "txt_token": "neroconnect-verify=npv_8t2wqz4mhc7ykn9r3xp5v6ub1"
+  },
+  "merchants": [
+    {"n":"The Copper Kettle","id":41210,"acct":"NPk4Rw9xLm","u":"copperkettle","e":"hello@copperkettle-stockport.co.uk","since":"14 Apr 2026"},
+    {"n":"Marlow Street Deli","id":41377,"acct":"NPq7Ts2vBn","u":"marlowdeli","e":"orders@marlowstreetdeli.co.uk","since":"02 May 2026"},
+    {"n":"Blue Anchor Fish Bar","id":41502,"acct":"NPd3Hy8cJp","u":"blueanchor","e":"blueanchorfishbar@outlook.com","since":"19 May 2026"},
+    {"n":"Halcyon Coffee","id":41688,"acct":"NPz6Fm1kQr","u":"halcyoncoffee","e":"team@halcyoncoffee.uk","since":"03 Jun 2026"},
+    {"n":"Saffron Lane Tandoori","id":41794,"acct":"NPw2Ln5gVs","u":"saffronlane","e":"saffronlanetandoori@gmail.com","since":"11 Jun 2026"},
+    {"n":"Fenwick & Sons Butchers","id":41903,"acct":"NPb9Cx4tHe","u":"fenwickbutchers","e":"shop@fenwickandsons.co.uk","since":"24 Jun 2026"},
+    {"n":"Rosewood Nails","id":42015,"acct":"NPj5Vk7pMa","u":"rosewoodnails","e":"rosewoodnails.altrincham@gmail.com","since":"08 Jul 2026"},
+    {"n":"Pemberton Cycles","id":42140,"acct":"NPn8Qd2yWf","u":"pembertoncycles","e":"info@pembertoncycles.co.uk","since":"21 Jul 2026"},
+    {"n":"Lantern Thai Kitchen","id":42266,"acct":"NPs1Gh6rZc","u":"lanternthai","e":"lanternthaikitchen@hotmail.co.uk","since":"04 Aug 2026"},
+    {"n":"Northgate Pharmacy","id":42381,"acct":"NPv4Jb3nKx","u":"northgatepharm","e":"dispensary@northgatepharmacy.co.uk","since":"12 Aug 2026"},
+    {"n":"The Old Mill Bakery","id":42457,"acct":"NPe7Mp9wTq","u":"oldmillbakery","e":"bakery@theoldmill.co.uk","since":"20 Aug 2026"},
+    {"n":"Greenway Grocers","id":42533,"acct":"NPh2Xr5cLd","u":"greenwaygrocers","e":"greenwaygrocers@yahoo.co.uk","since":"27 Aug 2026"},
+    {"n":"Ashby Barbers","id":42609,"acct":"NPt6Ky1fRm","u":"ashbybarbers","e":"ashbybarbers@icloud.com","since":"02 Sep 2026"},
+    {"n":"Portside Chippy","id":42688,"acct":"NPc3Wn8jAz","u":"portsidechippy","e":"portsidechippy@gmail.com","since":"07 Sep 2026"},
+    {"n":"Willow & Vine Florist","id":42741,"acct":"NPm9Bq4vHs","u":"willowvine","e":"studio@willowandvine.co.uk","since":"11 Sep 2026"},
+    {"n":"Kingsway Motors","id":42798,"acct":"NPr1Dz7tYe","u":"kingswaymotors","e":"service@kingswaymotors.co.uk","since":"15 Sep 2026"}
+  ],
+  "customers": [
+    {"n":"Oliver Brandt","e":"oliver.brandt@proton.me"},
+    {"n":"Priya Nair","e":"priya.nair88@outlook.com"},
+    {"n":"Tomasz Wieczorek","e":"t.wieczorek@gmail.com"},
+    {"n":"Chloe Whitfield","e":"chloewhitfield@icloud.com"}
+  ]
+}

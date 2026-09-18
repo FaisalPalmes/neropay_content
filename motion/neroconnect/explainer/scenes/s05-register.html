@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
+<style>
+/* S5 the register — tilted panel */
+
+.scene{position:absolute;inset:0;perspective:2600px;perspective-origin:75% 45%}
+.panel{position:absolute;left:700px;top:140px;width:1200px;transform-style:preserve-3d;transform:rotateY(-20deg) rotateX(8deg) rotateZ(1deg) translateZ(-120px)}
+.title{position:absolute;left:120px;top:96px;width:440px}
+.title .h1{font-size:54px;margin-top:20px}
+.title .sub{margin-top:18px;font-size:22px}
+.foot{position:absolute;left:120px;bottom:64px;color:var(--mut);font-size:19px;max-width:440px;line-height:1.5}
+
+.tbl{padding:30px 34px}
+.tbl .hd,.tbl .tr{display:grid;grid-template-columns:1.5fr 1.1fr .8fr .8fr;gap:20px;align-items:center;padding:16px 14px}
+.tbl .hd{font-size:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:600;border-bottom:1.5px solid rgba(11,18,32,.09)}
+.tbl .tr{height:82px;border-bottom:1.5px solid rgba(11,18,32,.06);font-size:21px;color:var(--ink2)}
+.tbl .tr .nm{font-weight:600;color:var(--ink);font-size:23px}
+.tbl .tr .ac{font-size:17px;color:var(--mut);margin-top:3px}
+.tbl .tr.hero{background:rgba(255,255,255,.75);border-radius:16px;transform:translateZ(60px)}
+.count{position:absolute;left:120px;top:560px;width:400px;padding:30px 34px}
+.count .num{font-size:88px}
+
+
+</style></head><body>
+<div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="2" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.2"/></filter></svg>
+  <div class="grid"></div>
+  <div class="light" style="--lx:-560px;--ly:-760px;opacity:0.5"></div><div class="light two" style="--lx2:1400px;--ly2:700px;opacity:0.28"></div>
+<div class="title in" data-i="0"><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; Connected accounts</div><div class="h1">Every merchant, one screen</div><div class="sub">Who they are, whether they're live, whether their checks are done.</div></div>
+<div class="glass liquid count in" data-i="1"><div class="rim"></div><div class="lbl">Active merchants</div><div class="num" data-n="37" data-int="1">0</div><div class="sub">Live and taking payments</div></div>
+<div class="scene"><div class="panel"><div class="glass liquid tbl in" data-i="2"><div class="rim"></div><div class="hd"><div>Business</div><div>Contact</div><div>Onboarding</div><div>Identity</div></div><div class="tr"><div><div class="nm">The Copper Kettle</div><div class="ac">NPk4Rw9xLm</div></div><div>hello@…</div><div><span class="pill good"><span class="dot"></span> Connected</span></div><div><span class="pill ink">Verified</span></div></div><div class="tr"><div><div class="nm">Marlow Street Deli</div><div class="ac">NPq7Ts2vBn</div></div><div>orders@…</div><div><span class="pill good"><span class="dot"></span> Connected</span></div><div><span class="pill ink">Verified</span></div></div><div class="tr hero"><div><div class="nm">Halcyon Coffee</div><div class="ac">NPz6Fm1kQr</div></div><div>team@…</div><div><span class="pill good"><span class="dot"></span> Connected</span></div><div><span class="pill ink">Verified</span></div></div><div class="tr"><div><div class="nm">Rosewood Nails</div><div class="ac">NPj5Vk7pMa</div></div><div>rosewoodnails.altrincham@…</div><div><span class="pill amber"><span class="dot"></span> Pending</span></div><div><span class="pill ink" style="opacity:.6">Unverified</span></div></div><div class="tr"><div><div class="nm">Portside Chippy</div><div class="ac">NPc3Wn8jAz</div></div><div>portsidechippy@…</div><div><span class="pill good"><span class="dot"></span> Connected</span></div><div><span class="pill ink">Verified</span></div></div></div></div></div>
+<div class="foot in" data-i="3">Identity checks are NeroPay's. Everything else on this screen is yours to act on.</div>
+</div>
+<script>
+const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
+const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
+const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const L1=[-560,-760], L2=[1400,700];
+function base(n){
+  /* the light drifts on a 190-frame loop — the only ambient motion; entrances stagger from frame 4, six frames apart */
+  const p=eio((n%190)/190), p2=eio(((n+95)%190)/190);
+  const l=document.querySelector('.light'), l2=document.querySelector('.light.two');
+  l.style.setProperty('--lx',(L1[0]+p*200)+'px'); l.style.setProperty('--ly',(L1[1]+p*120)+'px');
+  l2.style.setProperty('--lx2',(L2[0]-p2*140)+'px'); l2.style.setProperty('--ly2',(L2[1]+p2*70)+'px');
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20);
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${.985+.015*t})`;});
+  document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
+    el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+}
+function setFrame(n){ base(n); const p=eio((n%200)/200); const pu=1+0*ease(seg(n,60,60)); document.querySelector('.panel').style.transform=`rotateY(${-20+p*4}deg) rotateX(${8-p*2}deg) rotateZ(1deg) translateZ(-120px) scale(${pu})`; }
+setFrame(300);
+</script></body></html>

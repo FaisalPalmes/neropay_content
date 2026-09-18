@@ -1,0 +1,75 @@
+@font-face{font-family:"Inter";font-weight:400;src:url("../fonts/node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;src:url("../fonts/node_modules/@fontsource/inter/files/inter-latin-500-normal.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;src:url("../fonts/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;src:url("../fonts/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2") format("woff2")}
+:root{
+  --ink:#0b1220; --ink2:#3b4351; --mut:#6b7280; --yel:#fbc50f; --navy:#0b1220;
+  --good:#1f7a4d; --goodbg:#e4f3ea; --amber:#8a5a00; --amberbg:#fdf3d7; --red:#9b2c2c; --redbg:#f7e4e2;
+  --lx:-620px; --ly:-780px; --lx2:1500px; --ly2:820px;
+}
+*{box-sizing:border-box;margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#fff;font-family:"Inter",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1,"cv11" 1}
+.stage{position:relative;width:1920px;height:1080px;background:#fff;overflow:hidden}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(11,18,32,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(11,18,32,.045) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at 50% 45%,#000 30%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 30%,transparent 80%)}
+.light{position:absolute;left:0;top:0;width:1700px;height:1700px;border-radius:50%;background:radial-gradient(circle,rgba(251,197,15,.9) 0%,rgba(251,197,15,.45) 32%,rgba(251,197,15,0) 66%);filter:blur(150px);opacity:.62;transform:translate(var(--lx),var(--ly));will-change:transform}
+.light.two{width:900px;height:900px;opacity:.22;filter:blur(140px);transform:translate(var(--lx2),var(--ly2));background:radial-gradient(circle,rgba(251,197,15,.8) 0%,rgba(255,231,140,.4) 35%,rgba(251,197,15,0) 66%)}
+.ring{position:absolute;width:1400px;height:1400px;border-radius:50%;border:1.5px solid rgba(11,18,32,.06);left:960px;top:540px;transform:translate(-50%,-50%)}
+.ring.b{width:1900px;height:1900px;border-color:rgba(11,18,32,.04)}
+
+/* glass */
+.glass{position:relative;border-radius:30px;background:rgba(255,255,255,.52);
+  -webkit-backdrop-filter:blur(26px) saturate(170%);backdrop-filter:blur(26px) saturate(170%);
+  box-shadow:0 40px 90px -36px rgba(11,18,32,.22),0 1px 0 rgba(255,255,255,.9) inset,0 0 0 1px rgba(255,255,255,.6) inset}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 30%,rgba(255,255,255,0) 70%,rgba(255,255,255,.10) 100%)}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(11,18,32,.06)}
+.glass.deep{background:rgba(255,255,255,.34)}
+.glass.navy{background:rgba(11,18,32,.86);color:#fff;-webkit-backdrop-filter:blur(30px) saturate(140%);backdrop-filter:blur(30px) saturate(140%);
+  box-shadow:0 50px 100px -40px rgba(11,18,32,.6),0 1px 0 rgba(255,255,255,.18) inset}
+.glass.navy::before{background:linear-gradient(118deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 40%)}
+
+/* type */
+.eyebrow{font-size:20px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.eyebrow b{color:var(--ink);font-weight:600}
+.h1{font-size:64px;font-weight:600;letter-spacing:-.025em;line-height:1.05}
+.h2{font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.lbl{font-size:22px;font-weight:500;color:var(--ink2)}
+.sub{font-size:20px;color:var(--mut);line-height:1.4}
+.num{font-size:96px;font-weight:600;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
+.num.md{font-size:64px}
+.num.sm{font-size:44px}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:999px;font-size:19px;font-weight:600;letter-spacing:.02em}
+.pill.good{background:var(--goodbg);color:var(--good)}
+.pill.amber{background:var(--amberbg);color:var(--amber)}
+.pill.red{background:var(--redbg);color:var(--red)}
+.pill.ink{background:rgba(11,18,32,.08);color:var(--ink)}
+.pill.yel{background:var(--yel);color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:50%;background:currentColor}
+.rule{height:1.5px;background:rgba(11,18,32,.09)}
+.chip{display:inline-block;padding:6px 14px;border-radius:12px;background:rgba(11,18,32,.06);font-size:18px;color:var(--ink2);font-weight:500}
+.mono{font-family:"DejaVu Sans Mono",ui-monospace,monospace}
+.acc{color:var(--ink)}
+.yline{height:6px;width:64px;border-radius:3px;background:var(--yel)}
+
+/* motion helpers */
+.in{opacity:0;transform:translateY(28px) scale(.985)}
+.in.on{opacity:1;transform:none}
+
+.glass>*{position:relative;z-index:2}
+.ink{color:var(--ink)}
+
+/* ---- thick liquid glass (v2) ---- */
+/* rim refraction: a ring just inside the edge that bends the backdrop; text sits above it (z-index rule above) */
+.glass.liquid{background:rgba(255,255,255,.46);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 50px 100px -40px rgba(11,18,32,.30),0 1px 0 rgba(255,255,255,.95) inset,0 0 0 1px rgba(255,255,255,.7) inset,
+    0 -14px 30px -18px rgba(11,18,32,.18) inset, 0 14px 30px -18px rgba(255,255,255,.9) inset}
+.glass.liquid::before{background:
+   radial-gradient(120% 80% at 8% 0%,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 45%),
+   linear-gradient(118deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 32%,rgba(255,255,255,0) 70%,rgba(255,255,255,.12) 100%)}
+.glass.liquid::after{box-shadow:0 0 0 1px rgba(11,18,32,.07),0 0 0 3px rgba(255,255,255,.35)}
+.rim{position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:1;
+  -webkit-backdrop-filter:url(#rimbend);backdrop-filter:url(#rimbend);
+  -webkit-mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);-webkit-mask-composite:xor;mask-composite:exclude;padding:22px}
+.drop{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.95),rgba(255,255,255,.25) 55%,rgba(255,255,255,0) 70%);box-shadow:0 2px 6px rgba(11,18,32,.15),0 0 0 1px rgba(255,255,255,.6) inset;pointer-events:none;z-index:1}

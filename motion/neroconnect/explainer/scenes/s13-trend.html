@@ -1,0 +1,71 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
+<style>
+/* V3 — one large glass chart card with tabs and a readout, small stat cards beneath, slight tilt */
+.scene{position:absolute;inset:0;perspective:3000px;perspective-origin:50% 40%}
+.big{position:absolute;left:160px;top:110px;width:1600px;height:620px;padding:44px 52px;transform:rotateX(6deg) rotateY(-4deg)}
+.big .top{display:flex;justify-content:space-between;align-items:center}
+.big .tabs{display:flex;gap:34px;font-size:22px;font-weight:500;color:var(--mut)}
+.big .tabs .on{color:var(--ink);position:relative}
+.big .tabs .on::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:4px;border-radius:2px;background:var(--yel)}
+.big .h2{font-size:36px}
+.chart{position:absolute;left:52px;right:420px;top:130px;bottom:40px}
+.chart svg{width:100%;height:100%;overflow:visible}
+.readout{position:absolute;right:52px;top:140px;width:330px;padding:28px 30px}
+.readout .num{font-size:56px}
+.readout .lbl{margin-top:6px}
+.readout .rule{margin:20px 0}
+.readout .kv{display:flex;justify-content:space-between;font-size:19px;color:var(--ink2);margin:8px 0}
+.readout .kv b{font-weight:600;color:var(--ink)}
+.small{position:absolute;left:160px;top:770px;width:1600px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px;transform:rotateX(6deg) rotateY(-4deg)}
+.small .s{padding:26px 30px;height:200px;display:flex;flex-direction:column;justify-content:space-between}
+.small .num{font-size:46px}
+.small .sub{font-size:17px}
+.axis{font-size:17px;fill:var(--mut);font-family:Inter}
+.marker{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--yel);box-shadow:0 0 0 6px rgba(251,197,15,.25)}
+</style></head><body>
+<div class="stage">
+  <div class="grid"></div>
+  <div class="light" style="--lx:-560px;--ly:-800px"></div><div class="light two" style="--lx2:1400px;--ly2:560px;opacity:.3"></div>
+  <div class="scene">
+    <div class="glass big in" data-i="0">
+      <div class="top">
+        <div><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; Connect Reports</div><div class="h2" style="margin-top:10px">Your margin, payment by payment</div></div>
+        <div class="tabs"><span class="on">Net margin</span><span>Your fee</span><span>NeroPay cost</span><span>Volume</span></div>
+      </div>
+      <div class="chart">
+        <svg viewBox="0 0 1100 420" preserveAspectRatio="none">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc50f" stop-opacity=".55"/><stop offset="1" stop-color="#fbc50f" stop-opacity="0"/></linearGradient></defs>
+          <g stroke="rgba(11,18,32,.08)" stroke-width="1"><line x1="0" y1="80" x2="1100" y2="80"/><line x1="0" y1="180" x2="1100" y2="180"/><line x1="0" y1="280" x2="1100" y2="280"/><line x1="0" y1="380" x2="1100" y2="380"/></g>
+          <path id="area" fill="url(#g)" d=""/>
+          <path id="line" fill="none" stroke="#fbc50f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" d=""/>
+          <path id="line2" fill="none" stroke="rgba(11,18,32,.35)" stroke-width="3" stroke-dasharray="8 8" d=""/>
+          <text class="axis" x="0" y="405">Mon</text><text class="axis" x="180" y="405">Tue</text><text class="axis" x="360" y="405">Wed</text><text class="axis" x="540" y="405">Thu</text><text class="axis" x="720" y="405">Fri</text><text class="axis" x="900" y="405">Sat</text><text class="axis" x="1060" y="405">Sun</text>
+        </svg>
+      </div>
+      <div class="glass readout"><div class="num" data-n="18.35">£0.00</div><div class="lbl">Net margin this week</div><div class="rule"></div>
+        <div class="kv"><span>Your fee</span><b>£41.20</b></div><div class="kv"><span>NeroPay cost</span><b>£22.85</b></div><div class="kv"><span>Payments</span><b>61</b></div></div>
+    </div>
+    <div class="small">
+      <div class="glass s in" data-i="1"><div class="lbl">Active merchants</div><div><div class="num">37</div><div class="sub">Live and taking payments</div></div></div>
+      <div class="glass s in" data-i="2"><div class="lbl">Terminal</div><div><div class="num">£1,412.30</div><div class="sub">44 payments</div></div></div>
+      <div class="glass s in" data-i="3"><div class="lbl">Online</div><div><div class="num">£430.30</div><div class="sub">17 payments</div></div></div>
+      <div class="glass s in" data-i="4"><div class="lbl">Extra services</div><div><div class="num">£3.40</div><div class="sub">SMS, instant payouts, refunds</div></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
+const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const pts=[[0,300],[90,270],[180,285],[270,220],[360,240],[450,170],[540,190],[630,120],[720,150],[810,90],[900,110],[990,60],[1100,75]];
+const pts2=[[0,340],[180,330],[360,300],[540,290],[720,250],[900,230],[1100,210]];
+function path(ps,k){const m=Math.max(1,Math.ceil(ps.length*k));const s=ps.slice(0,m);return 'M'+s.map(p=>p.join(' ')).join(' L ');}
+function setFrame(n){
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i;const t=ease((n-(4+i*6))/22);el.style.opacity=t;});
+  const k=ease((n-20)/50);
+  document.getElementById('line').setAttribute('d',path(pts,k));
+  document.getElementById('line2').setAttribute('d',path(pts2,k));
+  const m=Math.max(1,Math.ceil(pts.length*k));document.getElementById('area').setAttribute('d',path(pts,k)+` L ${pts[m-1][0]} 420 L 0 420 Z`);
+  const nm=document.querySelector('.readout [data-n]');nm.textContent=fmt(+nm.dataset.n*ease((n-30)/36));
+}
+setFrame(200);
+</script></body></html>

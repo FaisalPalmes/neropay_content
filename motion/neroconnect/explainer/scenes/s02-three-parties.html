@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
+<style>
+/* S2 three parties — cascade */
+
+.scene{position:absolute;inset:0;perspective:2400px;perspective-origin:42% 50%}
+.stack{position:absolute;left:660px;top:120px;transform-style:preserve-3d;transform:rotateY(-12deg) rotateX(5deg)}
+.c{position:absolute;padding:34px 40px;display:flex;flex-direction:column;justify-content:space-between}
+.c .lbl{font-size:26px;font-weight:600;color:var(--ink)}
+.c .sub{font-size:20px;margin-top:10px}
+.c .big{font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.op{position:absolute;width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.7)}
+.op.eq{background:var(--yel)}
+.title{position:absolute;left:120px;top:96px;width:460px}
+.title .h1{font-size:56px;margin-top:20px}
+.title .sub{margin-top:18px;font-size:22px}
+.foot{position:absolute;left:120px;bottom:64px;color:var(--mut);font-size:19px;max-width:440px;line-height:1.5}
+
+.c{width:600px;height:270px}
+.c1{left:0;top:0;transform:translateZ(-200px);background:rgba(255,255,255,.42)}
+.c2{left:240px;top:300px;transform:translateZ(-40px);background:rgba(255,255,255,.52)}
+.c3{left:480px;top:600px;transform:translateZ(140px);background:rgba(255,255,255,.72)}
+.op1{left:520px;top:250px;transform:translateZ(-30px)}
+.op2{left:760px;top:550px;transform:translateZ(170px)}
+.tag{display:inline-block;padding:6px 14px;border-radius:999px;font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(11,18,32,.07);color:var(--ink2);margin-bottom:14px}
+
+
+</style></head><body>
+<div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="2" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.2"/></filter></svg>
+  <div class="grid"></div>
+  <div class="light" style="--lx:-700px;--ly:-900px;opacity:0.5"></div><div class="light two" style="--lx2:1150px;--ly2:450px;opacity:0.32"></div>
+<div class="title in" data-i="0"><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; How it works</div><div class="h1">Three parts. One arrangement.</div><div class="sub">Who does what, and who decides what.</div></div>
+<div class="scene"><div class="stack">
+<div class="glass liquid c c1 in" data-i="1"><div class="rim"></div><div><div class="tag">NeroPay</div><div class="big">Processes the payments. Owns the compliance.</div></div><div class="sub">The regulated processor underneath</div></div>
+<div class="glass op op1 in" data-i="2">→</div>
+<div class="glass liquid c c2 in" data-i="3"><div class="rim"></div><div><div class="tag">You, the platform</div><div class="big">Bring the merchants. Set the terms.</div></div><div class="sub">Pricing, branding, the store, the relationship</div></div>
+<div class="glass op op2 eq in" data-i="4">→</div>
+<div class="glass liquid c c3 in" data-i="5"><div class="rim"></div><div class="drop" style="width:22px;height:22px;left:560px;top:36px"></div><div><div class="yline" style="margin-bottom:14px"></div><div class="tag">Your merchants</div><div class="big">Take payments on your dashboard, on your domain.</div></div><div class="sub">Cafés, takeaways, shops</div></div>
+</div></div>
+<div class="foot in" data-i="6">NeroPay keeps identity checks, compliance and the hard limits. Everything your merchants see is yours.</div>
+</div>
+<script>
+const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
+const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
+const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const L1=[-700,-900], L2=[1150,450];
+function base(n){
+  /* the light drifts on a 190-frame loop — the only ambient motion; entrances stagger from frame 4, six frames apart */
+  const p=eio((n%190)/190), p2=eio(((n+95)%190)/190);
+  const l=document.querySelector('.light'), l2=document.querySelector('.light.two');
+  l.style.setProperty('--lx',(L1[0]+p*200)+'px'); l.style.setProperty('--ly',(L1[1]+p*120)+'px');
+  l2.style.setProperty('--lx2',(L2[0]-p2*140)+'px'); l2.style.setProperty('--ly2',(L2[1]+p2*70)+'px');
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20);
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${.985+.015*t})`;});
+  document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
+    el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+}
+function setFrame(n){ base(n); const p=eio((n%220)/220); document.querySelector('.stack').style.transform=`rotateY(${-12+p*5}deg) rotateX(${5-p*2}deg)`; }
+setFrame(300);
+</script></body></html>

@@ -1,0 +1,130 @@
+[
+ {
+  "scene": 1,
+  "first": 0,
+  "last": 26,
+  "t0": 0,
+  "t1": 9.7,
+  "text": "So you've got merchants, cafes, takeaways, shops, all taking card payments. NeroConnect lets you run those payments for them, under your own brand. Here's how it works."
+ },
+ {
+  "scene": 2,
+  "first": 27,
+  "last": 63,
+  "t0": 10.02,
+  "t1": 21.06,
+  "text": "There are three parts to it. NeroPay processes the payments and handles the compliance. You bring the merchants and set the terms. And your merchants take payments on a dashboard that's yours, on a domain that's yours."
+ },
+ {
+  "scene": 3,
+  "first": 64,
+  "last": 84,
+  "t0": 21.38,
+  "t1": 27.64,
+  "text": "Everything lives in one place. How many merchants are live? What they've taken? What you've earned? And what needs you today?"
+ },
+ {
+  "scene": 4,
+  "first": 85,
+  "last": 108,
+  "t0": 27.96,
+  "t1": 35.6,
+  "text": "And when something does need you, a dispute, a document, proof of a payment, it's right at the top with a deadline. Nothing hides."
+ },
+ {
+  "scene": 5,
+  "first": 109,
+  "last": 126,
+  "t0": 35.92,
+  "t1": 41.56,
+  "text": "Every merchant on one screen. Who they are, whether they're live, and whether their identity checks are done."
+ },
+ {
+  "scene": 6,
+  "first": 127,
+  "last": 144,
+  "t0": 41.88,
+  "t1": 47.84,
+  "text": "Adding one takes five steps. You put in their details, NeroPay runs the checks, and they're taking payments."
+ },
+ {
+  "scene": 7,
+  "first": 145,
+  "last": 178,
+  "t0": 48.16,
+  "t1": 59.16,
+  "text": "Now, pricing. Two things are agreed with NeroPay up front. Who pays the processing fee, and who pays the monthly account fee? Everything else, what your merchants are actually charged, is yours to set."
+ },
+ {
+  "scene": 8,
+  "first": 179,
+  "last": 194,
+  "t0": 59.48,
+  "t1": 65.16,
+  "text": "And it's simple maths. Your fee minus NeroPay's cost is your margin, on every single payment."
+ },
+ {
+  "scene": 9,
+  "first": 195,
+  "last": 230,
+  "t0": 65.48,
+  "t1": 74.9,
+  "text": "There's a floor under every price too. You can't set a rate below NeroPay's cost, so you can never lose money on a service. Set it at the floor, and you're passing it through at cost."
+ },
+ {
+  "scene": 10,
+  "first": 231,
+  "last": 251,
+  "t0": 75.22,
+  "t1": 81.28,
+  "text": "Your logo. Your domain. Your login link. Your merchant see your brand, and only your brand, if that's what you want."
+ },
+ {
+  "scene": 11,
+  "first": 252,
+  "last": 274,
+  "t0": 81.6,
+  "t1": 88.46,
+  "text": "Terminals, tills and accessories. Sold through your own store at your own prices. NeroPay ships them and supports them. You keep the margin."
+ },
+ {
+  "scene": 12,
+  "first": 275,
+  "last": 292,
+  "t0": 88.78,
+  "t1": 94.1,
+  "text": "Reports show you what your merchants earn you. The payments, your fee, NeroPay's cost, and what you keep."
+ },
+ {
+  "scene": 13,
+  "first": 293,
+  "last": 304,
+  "t0": 94.1,
+  "t1": 98.42,
+  "text": "And how it moves over time, terminal and online, side by side."
+ },
+ {
+  "scene": 14,
+  "first": 305,
+  "last": 325,
+  "t0": 98.74,
+  "t1": 104.48,
+  "text": "Your balance is yours to move. And a reserve sits behind it, so payouts keep flowing even on a thin day."
+ },
+ {
+  "scene": 15,
+  "first": 326,
+  "last": 351,
+  "t0": 104.8,
+  "t1": 113.42,
+  "text": "Support comes in two tiers. Free covers the platform. Premium answers your merchant's tickets, ships their hardware, and picks up the phone all in your name."
+ },
+ {
+  "scene": 16,
+  "first": 352,
+  "last": 364,
+  "t0": 113.74,
+  "t1": 118.82,
+  "text": "Your merchants. Your brand. NeroConnect. The full guides are at docs .neuropay .app."
+ }
+]
