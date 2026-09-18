@@ -264,3 +264,14 @@ master was also limiting the voice's plosives by about 7 dB, so `mix.json` now c
 the voice before the mix (threshold −22 dB, 4:1, 4 ms / 140 ms, 6 dB make-up; `mix.mjs` applies it), and the limiter now
 takes at most 2.9 dB off a handful of peaks. A false alarm on the way: a mono downmix (`-ac 1`) in ffmpeg sums the
 channels without normalising, so a peak reading over 1.0 from it is not clipping — decode the stereo to check a master.
+
+The v7 render's own sheet caught one more: on "close it" the terminal rising above the shop touched the bottom of the frame
+round NAME / NUMBER, so the terminal now rises as the camera pushes in on the three shops (`A.land3b − .25`), after that
+type has left; its cue moved with it.
+
+**Delivered (v7, 4:5):** `out/final/pp02-4x5.mp4`, 52.0 s, 1,560 frames, md5 `a126ac3a015e9c5bbf6d2fae11d55969`;
+stereo, −14.16 LUFS / −1.38 dBTP, decoded peak 0.85, no clipped samples. Higgsfield:
+`https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/62228ccf-ea52-4f90-b7d2-974aee17017b.mp4`
+(contact `…/acd35f78-f4d8-4bf3-b01d-991cf537d6df.jpg`). Drive: README v7 (`1NhqHD-cTdThNXJxbi4xTC5OSCvPiF22ttz9C38cdcSg`)
+in the PP02 folder, v6 renamed superseded. Law passes on all eight beats; frame scan clean; 0 spikes, 0 jumps; the gate
+passes; contact sheet at 36 points; the limiter works at most 2.9 dB on 785 samples.
