@@ -107,14 +107,14 @@ function base(n){
    being said in ink, said words a shade darker */
 const LINES=(()=>{const L=[];let cur=[];for(let i=SCN.first;i<=SCN.last_word;i++){cur.push(i);const w=WORDS[i].w;if((/[.,?!:;]$/.test(w)&&cur.length>=3)||cur.length>=6){L.push(cur);cur=[]}}if(cur.length){if(L.length&&cur.length<=2)L[L.length-1].push(...cur);else L.push(cur)}return L})();
 const capEl=document.getElementById('caps');
-capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
+capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.filter(i=>WORDS[i].w).map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
 function captions(n){ const t=F0+n/25-HEAD; let ci=-1; for(let i=SCN.first;i<=SCN.last_word;i++){ if(t>=WORDS[i].s-.05) ci=i; else break; }
   let li=-1; LINES.forEach((l,k)=>{ if(ci>=l[0]) li=k; }); if(ci<0) li=(t>=WORDS[SCN.first].s-.6)?0:-1;
   const lastEnd=WORDS[SCN.last_word].e+.9; if(t>lastEnd) li=-1;
   capEl.querySelectorAll('.ln').forEach((ln,k)=>{ ln.style.display=k===li?'block':'none'; });
   if(li<0) return; const ln=capEl.querySelector(`.ln[data-k="${li}"]`); const lstart=WORDS[LINES[li][0]].s-.05; const p=ease((t-lstart)/.2);
   ln.style.opacity=p.toFixed(3); ln.style.transform=`translateY(${((1-p)*10).toFixed(1)}px)`;
-  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci; sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
+  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci||(i<ci&&!WORDS[ci].w&&!WORDS.slice(i+1,ci+1).some(x=>x.w)); sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
 }
 function setFrame(n){ base(n); const p=eio((n%210)/210); document.querySelector('.rows').style.transform=`rotateY(${-12+p*4}deg) rotateX(${5-p*2}deg)`; [['l1','tickets'],['l2','ships'],['l3','picks']].forEach(([id,w])=>{const e=document.getElementById(id); const q=n>=at(w)&&n<at(w)+50; e.style.color=q?'var(--ink)':''; e.style.fontWeight=q?'600':'';}); }
 /* measure the camera targets once, in the settled state, with the camera at rest */

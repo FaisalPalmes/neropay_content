@@ -490,6 +490,11 @@ absolute paths in render scripts, always. Never re-attach a screenshot of a prev
 an edit; generation loss stacks, re-render from source. And no CDN scripts — the web container blocks
 them, so vendor fonts (`@fontsource/*` or a local `.woff2`) and libraries.
 
+**Two more, from the NeroConnect explainer (18 Sep 2026).** An unbounded `apad` on the voice under `-shortest` overflows
+ffmpeg's filter queue on a long join and dies with "No space left on device" — pad to a finite `whole_dur` instead. And a
+phrase anchor that lands on a contraction ("Here's", "they've") has to match the stem, or the scene throws before its camera
+array exists and the render fails one call later with "Cannot access 'CAM' before initialization".
+
 **Module compositions.** A composition that imports `objects3d.js` is an ES module, so it loads over `file://`
 only with `--allow-file-access-from-files` (`render.mjs` and `peek.mjs` pass it) and it declares
 `window.READY = false` in a classic script first and sets it `true` when the module has built its scenes; the

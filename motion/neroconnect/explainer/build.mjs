@@ -4,7 +4,8 @@
  *
  * Reads data/scenes.json (scene, file, start, end — seconds on the film's timeline; the take sits at HEAD) and renders
  * every scene's frames by driving its setFrame(n) at 25 fps from its own frame 0 (empty) to its end plus the dissolve,
- * then joins the scenes with a 10-frame cross-dissolve (a hard cut into the close) and muxes the voice. --preview renders
+ * then joins the scenes with a 10-frame cross-dissolve (a hard cut into the close) and muxes the voice (padded to a finite
+ * length — an unbounded apad under -shortest overflows ffmpeg's filter queue and dies with a misleading ENOSPC). --preview renders
  * at 1280×720 with the same timing so a review cut is a third of the work; the master is 1920×1080.
  * Frames land in out/frames/<scene>/ and the film in out/nc-explainer-16x9[-preview].mp4. Absolute paths throughout.
  */
@@ -48,11 +49,11 @@ if (browser) await browser.close();
 if (ONLY && !JOIN) process.exit(0);
 
 /* join: each scene is a clip; xfade chains them with the dissolve inside the overlap the render added */
-const inputs = [], filters = []; let prev = null, offset = 0;
+const inputs = [], filters = []; let prev = null, offset = 0, total = 0;   /* total: every frame rendered, an upper bound on the film */
 S.forEach((sc, k) => {
   const dir = resolve(OUT, 'frames' + (PREVIEW ? '-preview' : ''), sc.file.replace('.html', ''));
   inputs.push('-framerate', String(FPS), '-i', `${dir}/f_%05d.jpg`);
-  const n = readdirSync(dir).length;
+  const n = readdirSync(dir).length; total += n;
   if (k === 0) { prev = '[0:v]'; offset = n / FPS - XF / FPS; return; }
   const out = k === S.length - 1 ? '[v]' : `[x${k}]`;
   const tr = sc.hardcut ? 'fade' : 'fade'; const dur = sc.hardcut ? 1 / FPS : XF / FPS;
@@ -61,6 +62,6 @@ S.forEach((sc, k) => {
 });
 const film = resolve(OUT, `nc-explainer-16x9${PREVIEW ? '-preview' : ''}.mp4`);
 const vo = resolve(HERE, spec.vo || 'data/vo.mp3');
-execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-i', vo, '-filter_complex', filters.join(';') + `;[${S.length}:a]adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},apad[a]`,
+execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...inputs, '-i', vo, '-filter_complex', filters.join(';') + `;[${S.length}:a]adelay=${Math.round(spec.head * 1000)}|${Math.round(spec.head * 1000)},apad=whole_dur=${(total / FPS).toFixed(2)}[a]`,
   '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-crf', PREVIEW ? '22' : '16', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', film]);
 console.log(film);

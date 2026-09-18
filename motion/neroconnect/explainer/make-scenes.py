@@ -140,14 +140,14 @@ function base(n){
    being said in ink, said words a shade darker */
 const LINES=(()=>{const L=[];let cur=[];for(let i=SCN.first;i<=SCN.last_word;i++){cur.push(i);const w=WORDS[i].w;if((/[.,?!:;]$/.test(w)&&cur.length>=3)||cur.length>=6){L.push(cur);cur=[]}}if(cur.length){if(L.length&&cur.length<=2)L[L.length-1].push(...cur);else L.push(cur)}return L})();
 const capEl=document.getElementById('caps');
-capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
+capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.filter(i=>WORDS[i].w).map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
 function captions(n){ const t=F0+n/25-HEAD; let ci=-1; for(let i=SCN.first;i<=SCN.last_word;i++){ if(t>=WORDS[i].s-.05) ci=i; else break; }
   let li=-1; LINES.forEach((l,k)=>{ if(ci>=l[0]) li=k; }); if(ci<0) li=(t>=WORDS[SCN.first].s-.6)?0:-1;
   const lastEnd=WORDS[SCN.last_word].e+.9; if(t>lastEnd) li=-1;
   capEl.querySelectorAll('.ln').forEach((ln,k)=>{ ln.style.display=k===li?'block':'none'; });
   if(li<0) return; const ln=capEl.querySelector(`.ln[data-k="${li}"]`); const lstart=WORDS[LINES[li][0]].s-.05; const p=ease((t-lstart)/.2);
   ln.style.opacity=p.toFixed(3); ln.style.transform=`translateY(${((1-p)*10).toFixed(1)}px)`;
-  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci; sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
+  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci||(i<ci&&!WORDS[ci].w&&!WORDS.slice(i+1,ci+1).some(x=>x.w)); sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
 }
 function setFrame(n){ base(n); @@EXTRA@@ }
 /* measure the camera targets once, in the settled state, with the camera at rest */
@@ -659,7 +659,7 @@ def s16():
 <div class="term in" id="term" data-i="2"><img src="../glass/terminal.png" alt=""></div>
 <div class="tag in" data-i="5">The terminal your merchants take payments on</div>
 </div>'''
-    cam = [("at('Your merchants')", '#big', 1.22, 30), ("at('NeroConnect')", '#term', 1.14, 30), ("at('The full')", '#url', 1.26, 30), ("endAt('app') + 20", None, 1.04, 40)]
+    cam = [("at('Your merchants')", '#big', 1.22, 30), ("at('NeroConnect')", '#term', 1.14, 30), ("at('The full')", '#url', 1.26, 30), ("endAt('docs.neropay.app') + 20", None, 1.04, 40)]
     extra = "const tm=document.getElementById('term'); tm.style.transform=`translateY(${(Math.sin(n/45)*10).toFixed(1)}px) rotateY(${(-6+Math.sin(n/70)*4).toFixed(2)}deg)`;"
     write(16, 'S16 close — the terminal, the socials, the link', css, html, cam, extra, stag=6,
           lights=[dict(x=-600, y=-800, rx=200, ry=140, T=230, ph=0, o=.4), dict(x=1300, y=600, rx=160, ry=160, T=270, ph=2, o=.26), dict(x=200, y=900, rx=240, ry=100, T=320, ph=4, o=.22)],

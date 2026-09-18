@@ -58,7 +58,7 @@ edit list `build.mjs` renders from.
 | 13 | s13-trend | v3 chart card (approved) | 4.6 s | the line draws | And how it moves over time, terminal and online, side by side. |
 | 14 | s14-wallet | v1 hero pill | 6.1 s | the pill scales in, the balance counts | Your balance is yours to move. And a reserve sits behind it, so payouts keep flowing even on a thin day. |
 | 15 | s15-support | v5 row stack | 8.9 s | the Premium row lifts | Support comes in two tiers. Free covers the platform. Premium answers your merchant's tickets, ships their hardware, and picks up the phone all in your name. |
-| 16 | s16-close | v1 hero pill | 7.4 s | the pill scales in, the link lands | Your merchants. Your brand. NeroConnect. The full guides are at docs .neuropay .app. |
+| 16 | s16-close | v1 hero pill | 7.4 s | the pill scales in, the link lands | Your merchants. Your brand. NeroConnect. The full guides are at docs.neropay.app. |
 
 No two consecutive scenes share an archetype (asserted when the timeline is written); across the film v2 ×4, v4 ×3, v1 ×3,
 v5 ×2, v6 ×2, m18 ×1, v3 ×1. The two new archetype references are `glass/v5-row-stack.html` and `glass/v6-floating-form.html`;
@@ -115,3 +115,13 @@ Faisal's verdict on the draft: too static. His notes, each with the v2 answer:
 The voice is mastered to −14 LUFS / −1.5 dBTP (`data/vo-master.mp3`, a gentle compressor then a two-pass linear loudnorm)
 before the mux; no music (none sourced, as before). The film is 131.4 s, 3,284 frames at 1920×1080, rendered as three parallel
 `build.mjs --scenes` runs and joined with `--join`.
+
+## Status, v2 — 18 Sep 2026
+
+Rendered and sent to Faisal for review: the 16:9 master (2:11, −14.3 LUFS, −1.4 dBTP, md5 f56bea4a7f82761407b4e344283480ca),
+a 720p preview and the 36-frame contact sheet, all in the Higgsfield media store; Drive README in *Motion graphics / NC - Explainer*
+(`1PJv8zs6lqjG_s_eKbUQQ7-o5ZKHuJ-g817ThMJniwv0`). Master link:
+https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/243e9316-3761-4f7e-8883-799780616ac2.mp4
+Not published. Two build faults fixed on the way: a phrase anchor on a contraction ("Here's", "they've") now matches its stem,
+and the join pads the voice to a finite length — an unbounded `apad` under `-shortest` overflowed ffmpeg's filter queue and
+died with a misleading "No space left on device". Whisper's ".neuropay" is corrected to one caption word, docs.neropay.app.
