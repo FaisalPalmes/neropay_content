@@ -91,3 +91,27 @@ timeline set, a 720p preview (`out/nc-explainer-16x9-preview.mp4`, 2:02, voice o
 three parallel `build.mjs --preview --scenes` runs then `--join` (one run is ~0.85 fps on this box; three run at ~5 fps
 together). Nothing rendered at delivery quality; nothing published. Awaiting Faisal's notes on the script, the scenes and
 the voice before the master.
+
+
+## v2 — Faisal's notes on the draft, 18 Sep 2026, and what changed
+
+Faisal's verdict on the draft: too static. His notes, each with the v2 answer:
+
+| Note | v2 |
+|---|---|
+| Captions animated: grey words, the spoken word in ink, moving position and size per overlay, italic where it fits | Captions are drawn inside each scene (`#caps`), grey Inter with the spoken word in ink and a small pop; every scene places them (left column, right column, centred low, italic on the human lines); an off-white backing so a caption that crosses a card still reads as placed |
+| The camera moves in the 3D space, into the part she is talking about, panning over the document | Every scene sits in a camera (`.cam > .world`) with keyframes anchored to her words — `at('phrase')` — that push in on the element (zoom 1.2–1.35), pan to it and settle; the element in focus lifts and brightens (`.hot`) |
+| The three parties: zoom to each and pop it | S2 pushes to NeroPay on "NeroPay", to you on "You bring", to the merchants on "And your", each card popping as the camera lands |
+| The dashboard cards not aligned; keep the icons | S3 is a neat 3×2 grid on one tilted plane; the icon rail stays, moved clear of the heading |
+| Figures animate on her words | Every figure counts on the word that names it; the margin bar draws on "You keep"; the chart line draws on "how it moves" |
+| Voice words clipped | The eleven zero-length Whisper words repaired, the take re-tightened with more room (`--gap .5 --min .62 --tempo 1`) and gated more gently (`--inset .2 --max -36`); 128.3 s |
+| "What needs you today": zoom to each row and lift it as if clicked | S4 pushes to each row on its merchant's name and the row hovers up |
+| Whole screen covered by an overlay system; glass less harsh, no hard yellow lines | The rim displacement dropped from 26 to 9; the yellow light softened; the blurred backdrop cards carry content and drift |
+| Subtle blue and pink lights, random, dynamic | Three lights per scene — yellow, blue, pink — each on its own slow loop, seeded per scene so no two drift alike |
+| Overlays animate in as one 3D environment moving between sections | Every scene flies in over 18 frames and out over the last 12, on the same camera, so the cut reads as a move through one space; the join is a 10-frame dissolve |
+| Graphs can zoom for depth | S13 pushes to the big figure, then to the terminal and online split |
+| CTA too blank: terminal, socials, docs link, professional | S16 is a glass card (the line, the mark, docs.neropay.app as a pill, five glass social discs) with the terminal (our own `neroTerminal()` rendered with alpha to `glass/terminal.png`) floating beside it — Faisal's terminal images never arrived, so this is the house model |
+
+The voice is mastered to −14 LUFS / −1.5 dBTP (`data/vo-master.mp3`, a gentle compressor then a two-pass linear loudnorm)
+before the mux; no music (none sourced, as before). The film is 131.4 s, 3,284 frames at 1920×1080, rendered as three parallel
+`build.mjs --scenes` runs and joined with `--join`.

@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><style>
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-800-normal.woff2)format("woff2");font-weight:800}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-600-normal.woff2)format("woff2");font-weight:600}
+@font-face{font-family:Chivo;src:url(../../assets/fonts/chivo-latin-400-normal.woff2)format("woff2");font-weight:400}
+@font-face{font-family:"Martian Mono";src:url(../../assets/fonts/martian-mono-latin-700-normal.woff2)format("woff2");font-weight:700}
+html,body{margin:0;background:transparent}canvas{display:block;width:640px;height:900px}</style>
+<canvas id="a"></canvas><script>window.READY=false</script>
+<script type="module">
+import { view, neroTerminal } from '../../lib/objects3d.js';
+await document.fonts.ready;
+await Promise.all(['800 84px Chivo','600 52px Chivo','400 26px Chivo','700 54px "Martian Mono"'].map(f => document.fonts.load(f)));
+const va = view(document.getElementById('a'), { w:640, h:900, span:9.2, elev:14, azim:-30, ty:7.2 }); const t1 = va.add(neroTerminal()); t1.rotation.y = -.2;
+va.render(); window.READY = true;
+</script>

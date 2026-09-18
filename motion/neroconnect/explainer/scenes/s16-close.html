@@ -1,70 +1,124 @@
 <!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
 <style>
-/* S16 close — text only */
+/* S16 close — the terminal, the socials, the link */
 
-.bgcards{position:absolute;inset:0;perspective:2200px}
-.bg{position:absolute;padding:34px 40px;width:520px;height:250px;filter:blur(var(--b,6px));opacity:.9}
-.bg .lbl{font-size:22px}.bg .num{font-size:60px;margin-top:10px}.bg .sub{font-size:18px;margin-top:22px}
-.bg .big{font-size:34px;font-weight:600;margin-top:12px;letter-spacing:-.02em}
-.b1{left:110px;top:120px;transform:rotateY(14deg) rotateX(4deg) translateZ(-260px)}
-.b2{left:1300px;top:150px;transform:rotateY(-16deg) rotateX(6deg) translateZ(-320px)}
-.b3{left:40px;top:720px;transform:rotateY(12deg) rotateX(-6deg) translateZ(-200px)}
-.b4{left:1500px;top:730px;transform:rotateY(-14deg) rotateX(-5deg) translateZ(-240px)}
-.hero{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1240px;height:300px;border-radius:150px;display:flex;align-items:center;justify-content:center;gap:48px;padding:0 70px}
-.hero .num{font-size:120px;letter-spacing:-.045em}
-.hero .side{display:flex;flex-direction:column;gap:10px}
-.hero .side .lbl{font-size:30px;font-weight:600;color:var(--ink)}
-.hero .side .sub{font-size:22px;max-width:380px}
-.hero.glass{background:rgba(255,255,255,.58);-webkit-backdrop-filter:blur(34px) saturate(180%);backdrop-filter:blur(34px) saturate(180%)}
-.hero.glass::after{box-shadow:0 0 0 1.5px rgba(255,255,255,.9),0 0 0 2.5px rgba(11,18,32,.06)}
-.cap{position:absolute;left:50%;transform:translateX(-50%);top:790px;text-align:center;width:540px}
-.cap .eyebrow{margin-bottom:12px}
-.cap .sub{font-size:22px;line-height:1.35}
-.orb{position:absolute;width:260px;height:260px;border-radius:50%;left:1440px;top:420px;background:rgba(255,255,255,.35);-webkit-backdrop-filter:blur(8px) saturate(200%);backdrop-filter:blur(8px) saturate(200%);box-shadow:0 30px 60px -20px rgba(11,18,32,.25),0 1px 0 rgba(255,255,255,.9) inset}
-.orb::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.9),rgba(255,255,255,0) 55%)}
-.orb.s{width:120px;height:120px;left:300px;top:560px}
+/* v2: the camera, the three lights, the captions, the focus lift */
+.cam{position:absolute;inset:0;perspective:2600px;perspective-origin:50% 50%;overflow:hidden}
+.world{position:absolute;inset:0;transform-origin:0 0;transform-style:preserve-3d;will-change:transform}
+.light{opacity:.42;filter:blur(170px)}
+.light.y{background:radial-gradient(circle,rgba(251,197,15,.72) 0%,rgba(251,197,15,.30) 34%,rgba(251,197,15,0) 66%)}
+.light.b{width:1300px;height:1300px;opacity:.26;background:radial-gradient(circle,rgba(118,160,255,.62) 0%,rgba(118,160,255,.22) 36%,rgba(118,160,255,0) 66%)}
+.light.p{width:1100px;height:1100px;opacity:.22;background:radial-gradient(circle,rgba(255,140,196,.6) 0%,rgba(255,140,196,.2) 36%,rgba(255,140,196,0) 66%)}
+.glass.liquid::after{box-shadow:0 0 0 1px rgba(11,18,32,.06),0 0 0 3px rgba(255,255,255,.22)}
+.rim{padding:16px}
+.hot{background:rgba(255,255,255,.80) !important}
+.caps{position:absolute;z-index:60;left:120px;top:900px;width:1400px;font-size:34px;font-weight:600;line-height:1.28;letter-spacing:-.012em;color:rgba(11,18,32,.26);text-wrap:balance}
+.caps.it{font-style:italic;font-weight:500}
+.caps.big{font-size:44px}
+.caps.sm{font-size:28px}
+.caps.c{text-align:center}
+.caps.r{text-align:right}
+.caps .ln{display:inline;background:rgba(251,250,247,.78);box-shadow:0 0 0 .34em rgba(251,250,247,.78);border-radius:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.caps .w{display:inline-block;padding:0 .04em;margin:0 -.04em;border-radius:.1em;transform-origin:50% 70%}
+.caps .w.on{color:var(--ink)}
+.caps .w.past{color:rgba(11,18,32,.5)}
 
-.hero{flex-direction:column;gap:14px;height:340px;border-radius:60px}
-.hero .big{font-size:76px;font-weight:600;letter-spacing:-.03em;line-height:1.05;text-align:center}
-.hero .big b{font-weight:600;color:var(--ink)}
-.hero .mark{font-size:40px;font-weight:700;letter-spacing:-.02em;margin-top:8px}
-.hero .mark b{color:var(--ink)}
-.hero .mk{width:64px;height:6px;border-radius:3px;background:var(--yel);margin-top:18px}
-.url{position:absolute;left:50%;top:770px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:16px;padding:18px 34px;border-radius:999px;font-size:30px;font-weight:600}
+
+.scene{position:absolute;inset:0;perspective:2400px;perspective-origin:60% 50%}
+.card{position:absolute;left:120px;top:150px;width:1040px;height:760px;padding:64px 70px;transform:rotateY(6deg) rotateX(2deg)}
+.card .big{font-size:84px;font-weight:600;letter-spacing:-.03em;line-height:1.02}
+.card .mark{font-size:44px;font-weight:700;letter-spacing:-.02em;margin-top:26px}
+.card .mk{width:72px;height:6px;border-radius:3px;background:var(--yel);margin-top:22px}
+.card .line{font-size:24px;color:var(--mut);margin-top:26px;max-width:720px;line-height:1.4}
+.url{display:inline-flex;align-items:center;gap:16px;padding:18px 34px;border-radius:999px;font-size:32px;font-weight:600;margin-top:40px}
 .url i{width:12px;height:12px;border-radius:50%;background:var(--yel)}
-
+.socs{display:flex;gap:18px;margin-top:34px}
+.soc{width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.soc svg{width:38px;height:38px}
+.term{position:absolute;left:1250px;top:90px;width:540px;height:780px;transform-style:preserve-3d}
+.term img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 60px 60px rgba(11,18,32,.28))}
+.tag{position:absolute;left:1200px;top:890px;width:640px;text-align:center;font-size:16px;color:var(--mut);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
 
 </style></head><body>
 <div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="3" result="n"/>
-<feGaussianBlur in="n" stdDeviation="2" result="nb"/>
-<feDisplacementMap in="SourceGraphic" in2="nb" scale="26" xChannelSelector="R" yChannelSelector="G"/>
-<feGaussianBlur stdDeviation="1.2"/></filter></svg>
+<feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="3" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.4"/></filter></svg>
   <div class="grid"></div>
-  <div class="light" style="--lx:-600px;--ly:-800px;opacity:0.5"></div><div class="light two" style="--lx2:1300px;--ly2:600px;opacity:0.32"></div>
-<div class="orb" style="left:1500px;top:180px"></div><div class="orb s" style="left:240px;top:640px"></div>
-<div class="glass liquid hero in" data-i="0"><div class="rim"></div><div class="drop" style="width:26px;height:26px;left:120px;top:38px"></div>
-<div class="big">Your merchants.<br>Your brand.</div><div class="mark">Nero<b>Connect</b></div><div class="mk"></div></div>
-<div class="glass liquid url in" data-i="2"><div class="rim"></div><i></i> docs.neropay.app</div>
-<div class="cap in" data-i="3" style="top:870px"><div class="sub">The full guides, screen by screen.</div></div>
+  <div class="light y"></div><div class="light b"></div><div class="light p"></div>
+  <div class="cam"><div class="world">
+<div class="scene">
+<div class="glass liquid card in" id="card" data-i="0" data-tf="rotateY(6deg) rotateX(2deg)"><div class="rim"></div><div class="drop" style="width:26px;height:26px;left:120px;top:38px"></div>
+<div class="eyebrow in" data-i="1"><b>NeroConnect</b> &nbsp;·&nbsp; Your platform</div>
+<div class="big in" id="big" data-i="1" style="margin-top:22px">Your merchants.<br>Your brand.</div>
+<div class="mark in" data-i="2">Nero<b>Connect</b></div><div class="mk in" data-i="2"></div>
+<div class="line in" data-i="3">Card payments for the businesses you look after, run under your name. NeroPay stays underneath.</div>
+<div class="glass liquid url in" id="url" data-i="3"><div class="rim"></div><i></i> docs.neropay.app</div>
+<div class="socs"><div class="glass liquid soc in" data-i="4"><div class="rim"></div><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg></div><div class="glass liquid soc in" data-i="5"><div class="rim"></div><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.6 21.5v-7.2h2.5l.4-3h-2.9V9.4c0-.9.3-1.5 1.5-1.5h1.6V5.2c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.6v7.2z"/></svg></div><div class="glass liquid soc in" data-i="6"><div class="rim"></div><svg viewBox="0 0 24 24"><path fill="currentColor" d="M16.6 3c.3 2.3 1.6 3.7 3.8 3.9V10c-1.4 0-2.7-.4-3.8-1.2v6.4c0 3.2-2.6 5.7-5.8 5.7S5 18.4 5 15.2s2.6-5.7 5.8-5.7c.3 0 .6 0 .9.1v3.3c-.3-.1-.6-.2-.9-.2-1.4 0-2.6 1.1-2.6 2.5s1.2 2.5 2.6 2.5 2.6-1.1 2.6-2.5V3z"/></svg></div><div class="glass liquid soc in" data-i="7"><div class="rim"></div><svg viewBox="0 0 24 24"><path fill="currentColor" d="M6 9.4h3V20H6zM7.5 4.6a1.75 1.75 0 110 3.5 1.75 1.75 0 010-3.5zM10.9 9.4h2.9v1.5c.4-.8 1.4-1.7 3-1.7 3.1 0 3.7 2.1 3.7 4.7V20h-3v-5.4c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20h-2.9z"/></svg></div><div class="glass liquid soc in" data-i="8"><div class="rim"></div><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12.5" rx="4" fill="currentColor"/><path d="M10 9.4v5.7l4.8-2.85z" fill="#fff"/></svg></div></div></div>
+<div class="term in" id="term" data-i="2"><img src="../glass/terminal.png" alt=""></div>
+<div class="tag in" data-i="5">The terminal your merchants take payments on</div>
 </div>
+  </div></div>
+  <div class="caps " id="caps" style="left:120px;top:960px;width:900px;font-size:28px"></div>
+</div>
+<script src="../data/timeline.js"></script>
 <script>
+const SCENE=16; const SCN=SCENES[SCENE-1]; const F0=SCN.start, NF=SCN.frames;
 const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
-const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const ein=t=>{t=Math.max(0,Math.min(1,t));return t*t*t};
+const eio=t=>{t=Math.max(0,Math.min(1,t));return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
 const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
 const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
-const L1=[-600,-800], L2=[1300,600];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+function findW(p,nth=0){const ws=p.split(' ').map(norm);let h=0;for(let i=SCN.first;i+ws.length-1<=SCN.last_word;i++){let ok=true;for(let k=0;k<ws.length;k++){const W=WORDS[i+k].w; if(norm(W)!==ws[k]&&norm(W.replace(/['’].*$/,''))!==ws[k]){ok=false;break}}if(ok){if(h===nth)return i;h++}}throw new Error('no words in this scene: '+p)}
+const fr=t=>Math.round((HEAD+t-F0)*25);
+const at=(p,n=0)=>fr(WORDS[findW(p,n)].s), endAt=(p,n=0)=>fr(WORDS[findW(p,n)+p.split(' ').length-1].e);
+/* lights: three, each on its own slow loop, seeded per scene so no two scenes drift the same way */
+const LS=[{x:-600,y:-800,rx:200,ry:140,T:230,ph:0,o:0.4},{x:1300,y:600,rx:160,ry:160,T:270,ph:2,o:0.26},{x:200,y:900,rx:240,ry:100,T:320,ph:4,o:0.22}];
+function lights(n){ document.querySelectorAll('.light').forEach((l,k)=>{const L=LS[k]; const a=n/L.T*Math.PI*2+L.ph; l.style.transform=`translate(${(L.x+Math.cos(a)*L.rx).toFixed(1)}px,${(L.y+Math.sin(a*.8)*L.ry).toFixed(1)}px)`; l.style.opacity=L.o;}); }
+/* the camera: keyframes [frame, targetSelector|null, zoom]; the world moves to centre the target over 24 frames */
+const CAM=[[at('Your merchants'),'#big',1.22,30],[at('NeroConnect'),'#term',1.14,30],[at('The full'),'#url',1.26,30],[endAt('app') + 20,null,1.04,40]]; const CT={};
+function measure(){ CAM.forEach(k=>{ if(k[1]&&!CT[k[1]]){ const el=document.querySelector(k[1]); if(!el){CT[k[1]]={x:960,y:540};return} const r=el.getBoundingClientRect(); const s=document.querySelector('.stage').getBoundingClientRect(); const sc=1920/s.width; CT[k[1]]={x:(r.left+r.width/2-s.left)*sc,y:(r.top+r.height/2-s.top)*sc}; } }); }
+function camAt(n){ let cur={x:960,y:540,z:1,t:null}, prev=null, kf=null, kprev=null;
+  for(const k of CAM){ if(n>=k[0]){ kprev=kf; kf=k; } }
+  if(!kf) return cur;
+  const to=kf[1]?{...CT[kf[1]],z:kf[2],t:kf[1]}:{x:960,y:540,z:kf[2]||1,t:null};
+  const from=kprev?(kprev[1]?{...CT[kprev[1]],z:kprev[2]}:{x:960,y:540,z:kprev[2]||1}):{x:960,y:540,z:1};
+  const p=eio(seg(n,kf[0],kf[3]||24));
+  return {x:from.x+(to.x-from.x)*p,y:from.y+(to.y-from.y)*p,z:from.z+(to.z-from.z)*p,t:to.t,p};
+}
 function base(n){
-  /* the light drifts on a 190-frame loop — the only ambient motion; entrances stagger from frame 4, six frames apart */
-  const p=eio((n%190)/190), p2=eio(((n+95)%190)/190);
-  const l=document.querySelector('.light'), l2=document.querySelector('.light.two');
-  l.style.setProperty('--lx',(L1[0]+p*200)+'px'); l.style.setProperty('--ly',(L1[1]+p*120)+'px');
-  l2.style.setProperty('--lx2',(L2[0]-p2*140)+'px'); l2.style.setProperty('--ly2',(L2[1]+p2*70)+'px');
-  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20);
-    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${.985+.015*t})`;});
+  lights(n);
+  const c=camAt(n);
+  /* the fly in and out: the scene comes up out of the space and leaves into it */
+  const fi=ease(seg(n,0,18)), fo=ein(seg(n,NF-12,12));
+  const z=c.z*(.9+.1*fi)*(1+.07*fo), dy=(1-fi)*70+fo*-30;
+  const ry=(960-c.x)/960*2.2, rx=(c.y-540)/540*1.4;
+  document.querySelector('.world').style.transform=`translate(960px,${540+dy}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${z.toFixed(4)}) translate(${(-c.x).toFixed(1)}px,${(-c.y).toFixed(1)}px)`;
+  document.querySelector('.world').style.opacity=Math.min(1,fi*1.5).toFixed(3);
+  document.querySelectorAll('.hot').forEach(e=>e.classList.remove('hot'));
+  if(c.t){ const el=document.querySelector(c.t); if(el){ el.classList.add('hot'); el.dataset.hot=(c.p===undefined?1:c.p); } }
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20); const h=el.classList.contains('hot')?1+.035*(+el.dataset.hot||1):1;
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${(.985+.015*t)*h})`;});
   document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
     el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+  captions(n);
 }
-function setFrame(n){ base(n); document.querySelectorAll('.orb').forEach((o,k)=>o.style.transform=`translateY(${Math.sin(n/40+k)*14}px)`); const h=document.querySelector('.hero'); const t=ease(seg(n,10,26)); h.style.transform=`translate(-50%,-50%) scale(${.94+.06*t})`; h.style.opacity=t; }
-setFrame(300);
+/* captions: this scene's words, in lines of up to six broken at punctuation; the line being said shows, grey, the word
+   being said in ink, said words a shade darker */
+const LINES=(()=>{const L=[];let cur=[];for(let i=SCN.first;i<=SCN.last_word;i++){cur.push(i);const w=WORDS[i].w;if((/[.,?!:;]$/.test(w)&&cur.length>=3)||cur.length>=6){L.push(cur);cur=[]}}if(cur.length){if(L.length&&cur.length<=2)L[L.length-1].push(...cur);else L.push(cur)}return L})();
+const capEl=document.getElementById('caps');
+capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
+function captions(n){ const t=F0+n/25-HEAD; let ci=-1; for(let i=SCN.first;i<=SCN.last_word;i++){ if(t>=WORDS[i].s-.05) ci=i; else break; }
+  let li=-1; LINES.forEach((l,k)=>{ if(ci>=l[0]) li=k; }); if(ci<0) li=(t>=WORDS[SCN.first].s-.6)?0:-1;
+  const lastEnd=WORDS[SCN.last_word].e+.9; if(t>lastEnd) li=-1;
+  capEl.querySelectorAll('.ln').forEach((ln,k)=>{ ln.style.display=k===li?'block':'none'; });
+  if(li<0) return; const ln=capEl.querySelector(`.ln[data-k="${li}"]`); const lstart=WORDS[LINES[li][0]].s-.05; const p=ease((t-lstart)/.2);
+  ln.style.opacity=p.toFixed(3); ln.style.transform=`translateY(${((1-p)*10).toFixed(1)}px)`;
+  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci; sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
+}
+function setFrame(n){ base(n); const tm=document.getElementById('term'); tm.style.transform=`translateY(${(Math.sin(n/45)*10).toFixed(1)}px) rotateY(${(-6+Math.sin(n/70)*4).toFixed(2)}deg)`; }
+/* measure the camera targets once, in the settled state, with the camera at rest */
+CAM.length=0; setFrame(200); CAM.push(...[[at('Your merchants'),'#big',1.22,30],[at('NeroConnect'),'#term',1.14,30],[at('The full'),'#url',1.26,30],[endAt('app') + 20,null,1.04,40]]); measure(); setFrame(300);
 </script></body></html>

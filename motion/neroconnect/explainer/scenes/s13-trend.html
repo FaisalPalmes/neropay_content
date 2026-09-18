@@ -1,6 +1,29 @@
 <!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../glass/glass.css">
 <style>
-/* V3 — one large glass chart card with tabs and a readout, small stat cards beneath, slight tilt */
+/* S13 trend — the approved chart */
+
+/* v2: the camera, the three lights, the captions, the focus lift */
+.cam{position:absolute;inset:0;perspective:2600px;perspective-origin:50% 50%;overflow:hidden}
+.world{position:absolute;inset:0;transform-origin:0 0;transform-style:preserve-3d;will-change:transform}
+.light{opacity:.42;filter:blur(170px)}
+.light.y{background:radial-gradient(circle,rgba(251,197,15,.72) 0%,rgba(251,197,15,.30) 34%,rgba(251,197,15,0) 66%)}
+.light.b{width:1300px;height:1300px;opacity:.26;background:radial-gradient(circle,rgba(118,160,255,.62) 0%,rgba(118,160,255,.22) 36%,rgba(118,160,255,0) 66%)}
+.light.p{width:1100px;height:1100px;opacity:.22;background:radial-gradient(circle,rgba(255,140,196,.6) 0%,rgba(255,140,196,.2) 36%,rgba(255,140,196,0) 66%)}
+.glass.liquid::after{box-shadow:0 0 0 1px rgba(11,18,32,.06),0 0 0 3px rgba(255,255,255,.22)}
+.rim{padding:16px}
+.hot{background:rgba(255,255,255,.80) !important}
+.caps{position:absolute;z-index:60;left:120px;top:900px;width:1400px;font-size:34px;font-weight:600;line-height:1.28;letter-spacing:-.012em;color:rgba(11,18,32,.26);text-wrap:balance}
+.caps.it{font-style:italic;font-weight:500}
+.caps.big{font-size:44px}
+.caps.sm{font-size:28px}
+.caps.c{text-align:center}
+.caps.r{text-align:right}
+.caps .ln{display:inline;background:rgba(251,250,247,.78);box-shadow:0 0 0 .34em rgba(251,250,247,.78);border-radius:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.caps .w{display:inline-block;padding:0 .04em;margin:0 -.04em;border-radius:.1em;transform-origin:50% 70%}
+.caps .w.on{color:var(--ink)}
+.caps .w.past{color:rgba(11,18,32,.5)}
+
+
 .scene{position:absolute;inset:0;perspective:3000px;perspective-origin:50% 40%}
 .big{position:absolute;left:160px;top:110px;width:1600px;height:620px;padding:44px 52px;transform:rotateX(6deg) rotateY(-4deg)}
 .big .top{display:flex;justify-content:space-between;align-items:center}
@@ -21,51 +44,97 @@
 .small .num{font-size:46px}
 .small .sub{font-size:17px}
 .axis{font-size:17px;fill:var(--mut);font-family:Inter}
-.marker{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--yel);box-shadow:0 0 0 6px rgba(251,197,15,.25)}
+
 </style></head><body>
-<div class="stage">
+<div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="3" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.4"/></filter></svg>
   <div class="grid"></div>
-  <div class="light" style="--lx:-560px;--ly:-800px"></div><div class="light two" style="--lx2:1400px;--ly2:560px;opacity:.3"></div>
-  <div class="scene">
-    <div class="glass big in" data-i="0">
-      <div class="top">
-        <div><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; Connect Reports</div><div class="h2" style="margin-top:10px">Your margin, payment by payment</div></div>
-        <div class="tabs"><span class="on">Net margin</span><span>Your fee</span><span>NeroPay cost</span><span>Volume</span></div>
-      </div>
-      <div class="chart">
-        <svg viewBox="0 0 1100 420" preserveAspectRatio="none">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc50f" stop-opacity=".55"/><stop offset="1" stop-color="#fbc50f" stop-opacity="0"/></linearGradient></defs>
-          <g stroke="rgba(11,18,32,.08)" stroke-width="1"><line x1="0" y1="80" x2="1100" y2="80"/><line x1="0" y1="180" x2="1100" y2="180"/><line x1="0" y1="280" x2="1100" y2="280"/><line x1="0" y1="380" x2="1100" y2="380"/></g>
-          <path id="area" fill="url(#g)" d=""/>
-          <path id="line" fill="none" stroke="#fbc50f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" d=""/>
-          <path id="line2" fill="none" stroke="rgba(11,18,32,.35)" stroke-width="3" stroke-dasharray="8 8" d=""/>
-          <text class="axis" x="0" y="405">Mon</text><text class="axis" x="180" y="405">Tue</text><text class="axis" x="360" y="405">Wed</text><text class="axis" x="540" y="405">Thu</text><text class="axis" x="720" y="405">Fri</text><text class="axis" x="900" y="405">Sat</text><text class="axis" x="1060" y="405">Sun</text>
-        </svg>
-      </div>
-      <div class="glass readout"><div class="num" data-n="18.35">£0.00</div><div class="lbl">Net margin this week</div><div class="rule"></div>
-        <div class="kv"><span>Your fee</span><b>£41.20</b></div><div class="kv"><span>NeroPay cost</span><b>£22.85</b></div><div class="kv"><span>Payments</span><b>61</b></div></div>
-    </div>
-    <div class="small">
-      <div class="glass s in" data-i="1"><div class="lbl">Active merchants</div><div><div class="num">37</div><div class="sub">Live and taking payments</div></div></div>
-      <div class="glass s in" data-i="2"><div class="lbl">Terminal</div><div><div class="num">£1,412.30</div><div class="sub">44 payments</div></div></div>
-      <div class="glass s in" data-i="3"><div class="lbl">Online</div><div><div class="num">£430.30</div><div class="sub">17 payments</div></div></div>
-      <div class="glass s in" data-i="4"><div class="lbl">Extra services</div><div><div class="num">£3.40</div><div class="sub">SMS, instant payouts, refunds</div></div></div>
-    </div>
-  </div>
+  <div class="light y"></div><div class="light b"></div><div class="light p"></div>
+  <div class="cam"><div class="world">
+<div class="scene">
+<div class="glass liquid big in" id="big" data-i="0" data-tf="rotateX(6deg) rotateY(-4deg)"><div class="rim"></div>
+<div class="top"><div><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; Connect Reports</div><div class="h2" style="margin-top:10px">Your margin, payment by payment</div></div>
+<div class="tabs"><span class="on">Net margin</span><span>Your fee</span><span>NeroPay cost</span><span>Volume</span></div></div>
+<div class="chart"><svg viewBox="0 0 1100 420" preserveAspectRatio="none">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbc50f" stop-opacity=".55"/><stop offset="1" stop-color="#fbc50f" stop-opacity="0"/></linearGradient></defs>
+<g stroke="rgba(11,18,32,.08)" stroke-width="1"><line x1="0" y1="80" x2="1100" y2="80"/><line x1="0" y1="180" x2="1100" y2="180"/><line x1="0" y1="280" x2="1100" y2="280"/><line x1="0" y1="380" x2="1100" y2="380"/></g>
+<path id="area" fill="url(#g)" d=""/><path id="line" fill="none" stroke="#fbc50f" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" d=""/><path id="line2" fill="none" stroke="rgba(11,18,32,.35)" stroke-width="3" stroke-dasharray="8 8" d=""/>
+<text class="axis" x="0" y="405">Mon</text><text class="axis" x="180" y="405">Tue</text><text class="axis" x="360" y="405">Wed</text><text class="axis" x="540" y="405">Thu</text><text class="axis" x="720" y="405">Fri</text><text class="axis" x="900" y="405">Sat</text><text class="axis" x="1060" y="405">Sun</text></svg></div>
+<div class="glass readout" id="ro"><div class="num" data-n="18.35">£0.00</div><div class="lbl">Net margin this week</div><div class="rule"></div>
+<div class="kv"><span>Your fee</span><b>£41.20</b></div><div class="kv"><span>NeroPay cost</span><b>£22.85</b></div><div class="kv"><span>Payments</span><b>61</b></div></div></div>
+<div class="small">
+<div class="glass liquid s in" data-i="1"><div class="rim"></div><div class="lbl">Active merchants</div><div><div class="num">37</div><div class="sub">Live and taking payments</div></div></div>
+<div class="glass liquid s in" id="sT" data-i="2"><div class="rim"></div><div class="lbl">Terminal</div><div><div class="num">£1,412.30</div><div class="sub">44 payments</div></div></div>
+<div class="glass liquid s in" id="sO" data-i="3"><div class="rim"></div><div class="lbl">Online</div><div><div class="num">£430.30</div><div class="sub">17 payments</div></div></div>
+<div class="glass liquid s in" data-i="4"><div class="rim"></div><div class="lbl">Extra services</div><div><div class="num">£3.40</div><div class="sub">SMS, instant payouts, refunds</div></div></div>
+</div></div>
+  </div></div>
+  <div class="caps sm" id="caps" style="left:1280px;top:790px;width:500px;font-size:24px"></div>
 </div>
+<script src="../data/timeline.js"></script>
 <script>
+const SCENE=13; const SCN=SCENES[SCENE-1]; const F0=SCN.start, NF=SCN.frames;
 const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
+const ein=t=>{t=Math.max(0,Math.min(1,t));return t*t*t};
+const eio=t=>{t=Math.max(0,Math.min(1,t));return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
+const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
 const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
-const pts=[[0,300],[90,270],[180,285],[270,220],[360,240],[450,170],[540,190],[630,120],[720,150],[810,90],[900,110],[990,60],[1100,75]];
-const pts2=[[0,340],[180,330],[360,300],[540,290],[720,250],[900,230],[1100,210]];
-function path(ps,k){const m=Math.max(1,Math.ceil(ps.length*k));const s=ps.slice(0,m);return 'M'+s.map(p=>p.join(' ')).join(' L ');}
-function setFrame(n){
-  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i;const t=ease((n-(4+i*6))/22);el.style.opacity=t;});
-  const k=ease((n-20)/50);
-  document.getElementById('line').setAttribute('d',path(pts,k));
-  document.getElementById('line2').setAttribute('d',path(pts2,k));
-  const m=Math.max(1,Math.ceil(pts.length*k));document.getElementById('area').setAttribute('d',path(pts,k)+` L ${pts[m-1][0]} 420 L 0 420 Z`);
-  const nm=document.querySelector('.readout [data-n]');nm.textContent=fmt(+nm.dataset.n*ease((n-30)/36));
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+function findW(p,nth=0){const ws=p.split(' ').map(norm);let h=0;for(let i=SCN.first;i+ws.length-1<=SCN.last_word;i++){let ok=true;for(let k=0;k<ws.length;k++){const W=WORDS[i+k].w; if(norm(W)!==ws[k]&&norm(W.replace(/['’].*$/,''))!==ws[k]){ok=false;break}}if(ok){if(h===nth)return i;h++}}throw new Error('no words in this scene: '+p)}
+const fr=t=>Math.round((HEAD+t-F0)*25);
+const at=(p,n=0)=>fr(WORDS[findW(p,n)].s), endAt=(p,n=0)=>fr(WORDS[findW(p,n)+p.split(' ').length-1].e);
+/* lights: three, each on its own slow loop, seeded per scene so no two scenes drift the same way */
+const LS=[{x:-560,y:-800,rx:180,ry:120,T:220,ph:0,o:0.42},{x:1400,y:560,rx:140,ry:140,T:260,ph:1.7,o:0.24},{x:200,y:900,rx:220,ry:90,T:300,ph:3.1,o:0.18}];
+function lights(n){ document.querySelectorAll('.light').forEach((l,k)=>{const L=LS[k]; const a=n/L.T*Math.PI*2+L.ph; l.style.transform=`translate(${(L.x+Math.cos(a)*L.rx).toFixed(1)}px,${(L.y+Math.sin(a*.8)*L.ry).toFixed(1)}px)`; l.style.opacity=L.o;}); }
+/* the camera: keyframes [frame, targetSelector|null, zoom]; the world moves to centre the target over 24 frames */
+const CAM=[[at('And how'),'#big',1.12,30],[at('terminal'),'#sT',1.4,22],[at('online'),'#sO',1.4,22],[at('side by'),null,1.02,30]]; const CT={};
+function measure(){ CAM.forEach(k=>{ if(k[1]&&!CT[k[1]]){ const el=document.querySelector(k[1]); if(!el){CT[k[1]]={x:960,y:540};return} const r=el.getBoundingClientRect(); const s=document.querySelector('.stage').getBoundingClientRect(); const sc=1920/s.width; CT[k[1]]={x:(r.left+r.width/2-s.left)*sc,y:(r.top+r.height/2-s.top)*sc}; } }); }
+function camAt(n){ let cur={x:960,y:540,z:1,t:null}, prev=null, kf=null, kprev=null;
+  for(const k of CAM){ if(n>=k[0]){ kprev=kf; kf=k; } }
+  if(!kf) return cur;
+  const to=kf[1]?{...CT[kf[1]],z:kf[2],t:kf[1]}:{x:960,y:540,z:kf[2]||1,t:null};
+  const from=kprev?(kprev[1]?{...CT[kprev[1]],z:kprev[2]}:{x:960,y:540,z:kprev[2]||1}):{x:960,y:540,z:1};
+  const p=eio(seg(n,kf[0],kf[3]||24));
+  return {x:from.x+(to.x-from.x)*p,y:from.y+(to.y-from.y)*p,z:from.z+(to.z-from.z)*p,t:to.t,p};
 }
-setFrame(200);
+function base(n){
+  lights(n);
+  const c=camAt(n);
+  /* the fly in and out: the scene comes up out of the space and leaves into it */
+  const fi=ease(seg(n,0,18)), fo=ein(seg(n,NF-12,12));
+  const z=c.z*(.9+.1*fi)*(1+.07*fo), dy=(1-fi)*70+fo*-30;
+  const ry=(960-c.x)/960*2.2, rx=(c.y-540)/540*1.4;
+  document.querySelector('.world').style.transform=`translate(960px,${540+dy}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${z.toFixed(4)}) translate(${(-c.x).toFixed(1)}px,${(-c.y).toFixed(1)}px)`;
+  document.querySelector('.world').style.opacity=Math.min(1,fi*1.5).toFixed(3);
+  document.querySelectorAll('.hot').forEach(e=>e.classList.remove('hot'));
+  if(c.t){ const el=document.querySelector(c.t); if(el){ el.classList.add('hot'); el.dataset.hot=(c.p===undefined?1:c.p); } }
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20); const h=el.classList.contains('hot')?1+.035*(+el.dataset.hot||1):1;
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${(.985+.015*t)*h})`;});
+  document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
+    el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+  captions(n);
+}
+/* captions: this scene's words, in lines of up to six broken at punctuation; the line being said shows, grey, the word
+   being said in ink, said words a shade darker */
+const LINES=(()=>{const L=[];let cur=[];for(let i=SCN.first;i<=SCN.last_word;i++){cur.push(i);const w=WORDS[i].w;if((/[.,?!:;]$/.test(w)&&cur.length>=3)||cur.length>=6){L.push(cur);cur=[]}}if(cur.length){if(L.length&&cur.length<=2)L[L.length-1].push(...cur);else L.push(cur)}return L})();
+const capEl=document.getElementById('caps');
+capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
+function captions(n){ const t=F0+n/25-HEAD; let ci=-1; for(let i=SCN.first;i<=SCN.last_word;i++){ if(t>=WORDS[i].s-.05) ci=i; else break; }
+  let li=-1; LINES.forEach((l,k)=>{ if(ci>=l[0]) li=k; }); if(ci<0) li=(t>=WORDS[SCN.first].s-.6)?0:-1;
+  const lastEnd=WORDS[SCN.last_word].e+.9; if(t>lastEnd) li=-1;
+  capEl.querySelectorAll('.ln').forEach((ln,k)=>{ ln.style.display=k===li?'block':'none'; });
+  if(li<0) return; const ln=capEl.querySelector(`.ln[data-k="${li}"]`); const lstart=WORDS[LINES[li][0]].s-.05; const p=ease((t-lstart)/.2);
+  ln.style.opacity=p.toFixed(3); ln.style.transform=`translateY(${((1-p)*10).toFixed(1)}px)`;
+  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci; sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
+}
+function setFrame(n){ base(n); const pts=[[0,300],[90,270],[180,285],[270,220],[360,240],[450,170],[540,190],[630,120],[720,150],[810,90],[900,110],[990,60],[1100,75]];
+const pts2=[[0,340],[180,330],[360,300],[540,290],[720,250],[900,230],[1100,210]];
+const path=(ps,k)=>{const m=Math.max(1,Math.ceil(ps.length*k));return 'M'+ps.slice(0,m).map(p=>p.join(' ')).join(' L ');};
+const k=ease(seg(n,20,60)); document.getElementById('line').setAttribute('d',path(pts,k)); document.getElementById('line2').setAttribute('d',path(pts2,k));
+const m=Math.max(1,Math.ceil(pts.length*k)); document.getElementById('area').setAttribute('d',path(pts,k)+` L ${pts[m-1][0]} 420 L 0 420 Z`); }
+/* measure the camera targets once, in the settled state, with the camera at rest */
+CAM.length=0; setFrame(200); CAM.push(...[[at('And how'),'#big',1.12,30],[at('terminal'),'#sT',1.4,22],[at('online'),'#sO',1.4,22],[at('side by'),null,1.02,30]]); measure(); setFrame(300);
 </script></body></html>

@@ -2,6 +2,28 @@
 <style>
 /* S2 three parties — cascade */
 
+/* v2: the camera, the three lights, the captions, the focus lift */
+.cam{position:absolute;inset:0;perspective:2600px;perspective-origin:50% 50%;overflow:hidden}
+.world{position:absolute;inset:0;transform-origin:0 0;transform-style:preserve-3d;will-change:transform}
+.light{opacity:.42;filter:blur(170px)}
+.light.y{background:radial-gradient(circle,rgba(251,197,15,.72) 0%,rgba(251,197,15,.30) 34%,rgba(251,197,15,0) 66%)}
+.light.b{width:1300px;height:1300px;opacity:.26;background:radial-gradient(circle,rgba(118,160,255,.62) 0%,rgba(118,160,255,.22) 36%,rgba(118,160,255,0) 66%)}
+.light.p{width:1100px;height:1100px;opacity:.22;background:radial-gradient(circle,rgba(255,140,196,.6) 0%,rgba(255,140,196,.2) 36%,rgba(255,140,196,0) 66%)}
+.glass.liquid::after{box-shadow:0 0 0 1px rgba(11,18,32,.06),0 0 0 3px rgba(255,255,255,.22)}
+.rim{padding:16px}
+.hot{background:rgba(255,255,255,.80) !important}
+.caps{position:absolute;z-index:60;left:120px;top:900px;width:1400px;font-size:34px;font-weight:600;line-height:1.28;letter-spacing:-.012em;color:rgba(11,18,32,.26);text-wrap:balance}
+.caps.it{font-style:italic;font-weight:500}
+.caps.big{font-size:44px}
+.caps.sm{font-size:28px}
+.caps.c{text-align:center}
+.caps.r{text-align:right}
+.caps .ln{display:inline;background:rgba(251,250,247,.78);box-shadow:0 0 0 .34em rgba(251,250,247,.78);border-radius:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.caps .w{display:inline-block;padding:0 .04em;margin:0 -.04em;border-radius:.1em;transform-origin:50% 70%}
+.caps .w.on{color:var(--ink)}
+.caps .w.past{color:rgba(11,18,32,.5)}
+
+
 .scene{position:absolute;inset:0;perspective:2400px;perspective-origin:42% 50%}
 .stack{position:absolute;left:660px;top:120px;transform-style:preserve-3d;transform:rotateY(-12deg) rotateX(5deg)}
 .c{position:absolute;padding:34px 40px;display:flex;flex-direction:column;justify-content:space-between}
@@ -23,42 +45,84 @@
 .op2{left:760px;top:550px;transform:translateZ(170px)}
 .tag{display:inline-block;padding:6px 14px;border-radius:999px;font-size:17px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:rgba(11,18,32,.07);color:var(--ink2);margin-bottom:14px}
 
-
 </style></head><body>
 <div class="stage"><svg width="0" height="0" style="position:absolute"><filter id="rimbend" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
-<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="3" result="n"/>
-<feGaussianBlur in="n" stdDeviation="2" result="nb"/>
-<feDisplacementMap in="SourceGraphic" in2="nb" scale="26" xChannelSelector="R" yChannelSelector="G"/>
-<feGaussianBlur stdDeviation="1.2"/></filter></svg>
+<feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="1" seed="3" result="n"/>
+<feGaussianBlur in="n" stdDeviation="3" result="nb"/>
+<feDisplacementMap in="SourceGraphic" in2="nb" scale="9" xChannelSelector="R" yChannelSelector="G"/>
+<feGaussianBlur stdDeviation="1.4"/></filter></svg>
   <div class="grid"></div>
-  <div class="light" style="--lx:-700px;--ly:-900px;opacity:0.5"></div><div class="light two" style="--lx2:1150px;--ly2:450px;opacity:0.32"></div>
+  <div class="light y"></div><div class="light b"></div><div class="light p"></div>
+  <div class="cam"><div class="world">
 <div class="title in" data-i="0"><div class="eyebrow"><b>NeroConnect</b> &nbsp;·&nbsp; How it works</div><div class="h1">Three parts. One arrangement.</div><div class="sub">Who does what, and who decides what.</div></div>
 <div class="scene"><div class="stack">
-<div class="glass liquid c c1 in" data-i="1"><div class="rim"></div><div><div class="tag">NeroPay</div><div class="big">Processes the payments. Owns the compliance.</div></div><div class="sub">The regulated processor underneath</div></div>
-<div class="glass op op1 in" data-i="2">→</div>
-<div class="glass liquid c c2 in" data-i="3"><div class="rim"></div><div><div class="tag">You, the platform</div><div class="big">Bring the merchants. Set the terms.</div></div><div class="sub">Pricing, branding, the store, the relationship</div></div>
-<div class="glass op op2 eq in" data-i="4">→</div>
-<div class="glass liquid c c3 in" data-i="5"><div class="rim"></div><div class="drop" style="width:22px;height:22px;left:560px;top:36px"></div><div><div class="yline" style="margin-bottom:14px"></div><div class="tag">Your merchants</div><div class="big">Take payments on your dashboard, on your domain.</div></div><div class="sub">Cafés, takeaways, shops</div></div>
+<div class="glass liquid c c1 in" id="c1" data-i="1" data-tf="translateZ(-200px)"><div class="rim"></div><div><div class="tag">NeroPay</div><div class="big">Processes the payments. Owns the compliance.</div></div><div class="sub">The regulated processor underneath</div></div>
+<div class="glass op op1 in" data-i="2" data-tf="translateZ(-30px)">→</div>
+<div class="glass liquid c c2 in" id="c2" data-i="3" data-tf="translateZ(-40px)"><div class="rim"></div><div><div class="tag">You, the platform</div><div class="big">Bring the merchants. Set the terms.</div></div><div class="sub">Pricing, branding, the store, the relationship</div></div>
+<div class="glass op op2 eq in" data-i="4" data-tf="translateZ(170px)">→</div>
+<div class="glass liquid c c3 in" id="c3" data-i="5" data-tf="translateZ(140px)"><div class="rim"></div><div class="drop" style="width:22px;height:22px;left:560px;top:36px"></div><div><div class="yline" style="margin-bottom:14px"></div><div class="tag">Your merchants</div><div class="big">Take payments on your dashboard, on your domain.</div></div><div class="sub">Cafés, takeaways, shops</div></div>
 </div></div>
 <div class="foot in" data-i="6">NeroPay keeps identity checks, compliance and the hard limits. Everything your merchants see is yours.</div>
+  </div></div>
+  <div class="caps " id="caps" style="left:120px;top:560px;width:480px;font-size:30px"></div>
 </div>
+<script src="../data/timeline.js"></script>
 <script>
+const SCENE=2; const SCN=SCENES[SCENE-1]; const F0=SCN.start, NF=SCN.frames;
 const ease=t=>1-Math.pow(1-Math.max(0,Math.min(1,t)),3);
-const eio=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const ein=t=>{t=Math.max(0,Math.min(1,t));return t*t*t};
+const eio=t=>{t=Math.max(0,Math.min(1,t));return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2};
 const seg=(n,a,d)=>Math.max(0,Math.min(1,(n-a)/d));
 const fmt=v=>'£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
-const L1=[-700,-900], L2=[1150,450];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+function findW(p,nth=0){const ws=p.split(' ').map(norm);let h=0;for(let i=SCN.first;i+ws.length-1<=SCN.last_word;i++){let ok=true;for(let k=0;k<ws.length;k++){const W=WORDS[i+k].w; if(norm(W)!==ws[k]&&norm(W.replace(/['’].*$/,''))!==ws[k]){ok=false;break}}if(ok){if(h===nth)return i;h++}}throw new Error('no words in this scene: '+p)}
+const fr=t=>Math.round((HEAD+t-F0)*25);
+const at=(p,n=0)=>fr(WORDS[findW(p,n)].s), endAt=(p,n=0)=>fr(WORDS[findW(p,n)+p.split(' ').length-1].e);
+/* lights: three, each on its own slow loop, seeded per scene so no two scenes drift the same way */
+const LS=[{x:-700,y:-900,rx:200,ry:100,T:230,ph:0.5,o:0.4},{x:1150,y:450,rx:120,ry:180,T:280,ph:2.4,o:0.24},{x:-200,y:800,rx:240,ry:120,T:330,ph:4,o:0.2}];
+function lights(n){ document.querySelectorAll('.light').forEach((l,k)=>{const L=LS[k]; const a=n/L.T*Math.PI*2+L.ph; l.style.transform=`translate(${(L.x+Math.cos(a)*L.rx).toFixed(1)}px,${(L.y+Math.sin(a*.8)*L.ry).toFixed(1)}px)`; l.style.opacity=L.o;}); }
+/* the camera: keyframes [frame, targetSelector|null, zoom]; the world moves to centre the target over 24 frames */
+const CAM=[[at('There'),null,1],[at('NeroPay'),'#c1',1.32,26],[at('You bring'),'#c2',1.32,26],[at('And your'),'#c3',1.3,26],[endAt('yours', 1),null,1,30]]; const CT={};
+function measure(){ CAM.forEach(k=>{ if(k[1]&&!CT[k[1]]){ const el=document.querySelector(k[1]); if(!el){CT[k[1]]={x:960,y:540};return} const r=el.getBoundingClientRect(); const s=document.querySelector('.stage').getBoundingClientRect(); const sc=1920/s.width; CT[k[1]]={x:(r.left+r.width/2-s.left)*sc,y:(r.top+r.height/2-s.top)*sc}; } }); }
+function camAt(n){ let cur={x:960,y:540,z:1,t:null}, prev=null, kf=null, kprev=null;
+  for(const k of CAM){ if(n>=k[0]){ kprev=kf; kf=k; } }
+  if(!kf) return cur;
+  const to=kf[1]?{...CT[kf[1]],z:kf[2],t:kf[1]}:{x:960,y:540,z:kf[2]||1,t:null};
+  const from=kprev?(kprev[1]?{...CT[kprev[1]],z:kprev[2]}:{x:960,y:540,z:kprev[2]||1}):{x:960,y:540,z:1};
+  const p=eio(seg(n,kf[0],kf[3]||24));
+  return {x:from.x+(to.x-from.x)*p,y:from.y+(to.y-from.y)*p,z:from.z+(to.z-from.z)*p,t:to.t,p};
+}
 function base(n){
-  /* the light drifts on a 190-frame loop — the only ambient motion; entrances stagger from frame 4, six frames apart */
-  const p=eio((n%190)/190), p2=eio(((n+95)%190)/190);
-  const l=document.querySelector('.light'), l2=document.querySelector('.light.two');
-  l.style.setProperty('--lx',(L1[0]+p*200)+'px'); l.style.setProperty('--ly',(L1[1]+p*120)+'px');
-  l2.style.setProperty('--lx2',(L2[0]-p2*140)+'px'); l2.style.setProperty('--ly2',(L2[1]+p2*70)+'px');
-  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20);
-    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${.985+.015*t})`;});
+  lights(n);
+  const c=camAt(n);
+  /* the fly in and out: the scene comes up out of the space and leaves into it */
+  const fi=ease(seg(n,0,18)), fo=ein(seg(n,NF-12,12));
+  const z=c.z*(.9+.1*fi)*(1+.07*fo), dy=(1-fi)*70+fo*-30;
+  const ry=(960-c.x)/960*2.2, rx=(c.y-540)/540*1.4;
+  document.querySelector('.world').style.transform=`translate(960px,${540+dy}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${z.toFixed(4)}) translate(${(-c.x).toFixed(1)}px,${(-c.y).toFixed(1)}px)`;
+  document.querySelector('.world').style.opacity=Math.min(1,fi*1.5).toFixed(3);
+  document.querySelectorAll('.hot').forEach(e=>e.classList.remove('hot'));
+  if(c.t){ const el=document.querySelector(c.t); if(el){ el.classList.add('hot'); el.dataset.hot=(c.p===undefined?1:c.p); } }
+  document.querySelectorAll('.in').forEach(el=>{const i=+el.dataset.i; const t=ease((n-(4+i*6))/20); const h=el.classList.contains('hot')?1+.035*(+el.dataset.hot||1):1;
+    el.style.opacity=t; el.style.transform=(el.dataset.tf||'')+` translateY(${28*(1-t)}px) scale(${(.985+.015*t)*h})`;});
   document.querySelectorAll('[data-n]').forEach(el=>{const i=+el.closest('.in').dataset.i; const t=ease((n-(4+i*6+9))/28);
     el.textContent=el.dataset.int?Math.round(+el.dataset.n*t).toString():fmt(+el.dataset.n*t);});
+  captions(n);
 }
-function setFrame(n){ base(n); const p=eio((n%220)/220); document.querySelector('.stack').style.transform=`rotateY(${-12+p*5}deg) rotateX(${5-p*2}deg)`; }
-setFrame(300);
+/* captions: this scene's words, in lines of up to six broken at punctuation; the line being said shows, grey, the word
+   being said in ink, said words a shade darker */
+const LINES=(()=>{const L=[];let cur=[];for(let i=SCN.first;i<=SCN.last_word;i++){cur.push(i);const w=WORDS[i].w;if((/[.,?!:;]$/.test(w)&&cur.length>=3)||cur.length>=6){L.push(cur);cur=[]}}if(cur.length){if(L.length&&cur.length<=2)L[L.length-1].push(...cur);else L.push(cur)}return L})();
+const capEl=document.getElementById('caps');
+capEl.innerHTML=LINES.map((l,k)=>`<div class="ln" data-k="${k}" style="display:none">${l.map(i=>`<span class="w" data-i="${i}">${WORDS[i].w}</span>`).join(' ')}</div>`).join('');
+function captions(n){ const t=F0+n/25-HEAD; let ci=-1; for(let i=SCN.first;i<=SCN.last_word;i++){ if(t>=WORDS[i].s-.05) ci=i; else break; }
+  let li=-1; LINES.forEach((l,k)=>{ if(ci>=l[0]) li=k; }); if(ci<0) li=(t>=WORDS[SCN.first].s-.6)?0:-1;
+  const lastEnd=WORDS[SCN.last_word].e+.9; if(t>lastEnd) li=-1;
+  capEl.querySelectorAll('.ln').forEach((ln,k)=>{ ln.style.display=k===li?'block':'none'; });
+  if(li<0) return; const ln=capEl.querySelector(`.ln[data-k="${li}"]`); const lstart=WORDS[LINES[li][0]].s-.05; const p=ease((t-lstart)/.2);
+  ln.style.opacity=p.toFixed(3); ln.style.transform=`translateY(${((1-p)*10).toFixed(1)}px)`;
+  ln.querySelectorAll('.w').forEach(sp=>{const i=+sp.dataset.i; const on=i===ci; sp.className='w'+(on?' on':(i<ci?' past':'')); sp.style.transform=on?`scale(${(1.08-.08*ease((t-WORDS[i].s)/.14)).toFixed(3)})`:'';});
+}
+function setFrame(n){ base(n); const p=eio((n%220)/220); document.querySelector('.stack').style.transform=`rotateY(${-12+p*5}deg) rotateX(${5-p*2}deg) translateX(${0*ease(seg(n,60,80))}px)`; }
+/* measure the camera targets once, in the settled state, with the camera at rest */
+CAM.length=0; setFrame(200); CAM.push(...[[at('There'),null,1],[at('NeroPay'),'#c1',1.32,26],[at('You bring'),'#c2',1.32,26],[at('And your'),'#c3',1.3,26],[endAt('yours', 1),null,1,30]]); measure(); setFrame(300);
 </script></body></html>
