@@ -31,3 +31,4 @@ __pycache__/
 # playwright-cli runtime: launch config written by the session-start hook, snapshots per session
 .playwright/
 .playwright-cli/
+.claude/skills/playwright-skill/.playwright-skill/
