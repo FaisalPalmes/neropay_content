@@ -24,3 +24,6 @@ social-out/
 # light-stage renders of the social creative (social/render.mjs) — handed to Faisal, not committed
 social/out/
 __pycache__/
+
+# img2threejs keeps per-run state where it runs
+**/.img2threejs/

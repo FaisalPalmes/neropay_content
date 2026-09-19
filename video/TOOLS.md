@@ -10,9 +10,18 @@ unless the entry says so. Before pulling any of them into a build, re-read the e
 | [dashersw/liquid-glass-js](https://github.com/dashersw/liquid-glass-js) | Apple "Liquid Glass" panels for the web: WebGL refraction, blur and tint over whatever sits behind the element. Rounded, circle and pill shapes; nested glass. ~1,300 lines, no build step. Samples the page with html2canvas. | MIT | 13 Sep 2026 |
 | [pmndrs/react-three-fiber](https://github.com/pmndrs/react-three-fiber) | React renderer for three.js — 3D scenes written as JSX components. v9 pairs with React 19. | MIT | 13 Sep 2026 |
 | [ruucm/shadergradient](https://github.com/ruucm/shadergradient) | Animated 3D gradients (the Framer / Figma plugin); the `@shadergradient/react` package renders through react-three-fiber + three. Presets, camera controls, driven by props or a query string. | MIT | 13 Sep 2026 |
+| [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | A curated list of Claude skills and resources. A list, not a skill: nothing installs from it. | CC0-style list | 19 Sep 2026 |
+| [VoltAgent/awesome-claude-design](https://github.com/VoltAgent/awesome-claude-design) | 68 ready-made `DESIGN.md` files for Claude Design. A list, not a skill. The `DESIGN.md` format is the same one `/impeccable document` writes and reads, so it is a reference for writing NeroPay's own. | MIT | 19 Sep 2026 |
 | [collidingScopes/liquid-logo](https://github.com/collidingScopes/liquid-logo) | Browser tool that turns a logo PNG into a "liquid metal" animation: a fragment shader finds the edges, builds a vector field and flows simplex noise along it with a metallic sheen. Exports PNG or MP4 (WebCodecs + mp4-muxer) in the browser. | MIT | 13 Sep 2026 |
 
 ## What each one means for this project
+
+**The two "awesome" lists (19 Sep 2026): read, don't install.** Faisal asked for both to be installed alongside the
+skills below. Neither is a skill; they are catalogues. Nothing was pulled from either. `awesome-claude-design` is the more
+useful of the two: its `DESIGN.md` files are the format `/impeccable` uses for a project's design system, so when the
+warehouse gets its own `DESIGN.md` (from `SOCIAL-BRIEF.md` and `MOTION-SYSTEM.md` v3, never from a stranger's), the
+shape comes from there. The skills that were installed the same day are `/impeccable`, four of the `taste-skill`
+family, `playwright-skill` and `img2threejs`; each has a `NEROPAY-NOTE.md` in its folder and `STACK.md` §3 lists them.
 
 **liquid-glass-js — the look we already have, built a way we can't render.** Our panels (v6 onward, `video/b1-v8/build.mjs`
 `glass()`) are the liquid-glass look: a blurred copy of the footage behind each panel, tint, sheen, rim. LESSONS #27 is why

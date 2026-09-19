@@ -129,6 +129,14 @@ the global installer, and `caveman-setup`/`-discover`/`-learn`/`-manage`/`-optim
 drive the Caveman Cloud gateway, which we do not use. Refresh by re-copying from the upstream `skills/`
 folder; nothing here is fetched at session start.
 
+**Design, browser and 3D skills (added 19 Sep 2026, Faisal's ask):** `/impeccable` (pbakaus/impeccable 4.3.1, Apache
+2.0) for a design critique, audit or polish of the warehouse pages and the `social/` templates, hooks deliberately not
+installed; `taste-skill`, `redesign-skill`, `soft-skill` and `minimalist-skill` from leonxlnx/taste-skill (MIT) for the
+same surfaces; `playwright-skill` (willmarple, MIT) driving `@playwright/cli`, which the session-start hook now installs,
+for the page checks in `CLAUDE.md`; `img2threejs` (Apache 2.0) for a procedural Three.js model of the terminal from a
+photograph. `SOCIAL-BRIEF.md` and `MOTION-SYSTEM.md` outrank all of them on the look; each folder's `NEROPAY-NOTE.md`
+says where. The two "awesome" lists Faisal sent the same day are catalogues, recorded in `video/TOOLS.md`, not installed.
+
 ## 4. The toolchain
 
 | Piece | Version / location | Notes |
