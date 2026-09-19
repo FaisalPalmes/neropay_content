@@ -43,8 +43,17 @@ if ! ( cd video && npx hyperframes browser ensure >/dev/null 2>&1 ); then
   fi
 fi
 
-# 3b. playwright-cli for .claude/skills/playwright-skill (bin/open etc. call it bare)
+# 3b. playwright-cli for .claude/skills/playwright-skill (bin/open etc. call it bare). Its default is Google
+#     Chrome, which this image does not have, and Chromium's sandbox fails as root, so point it at the
+#     pre-installed Playwright Chromium with --no-sandbox through the launch config it reads from the cwd.
+#     The config is environment-specific and git-ignored; file: URLs are refused by design, so the page
+#     checks run against `python3 -m http.server`.
 command -v playwright-cli >/dev/null 2>&1 || npm install -g @playwright/cli --no-audit --no-fund --loglevel=error >/dev/null 2>&1 || true
+PW_CHROME=/opt/pw-browsers/chromium-1194/chrome-linux/chrome
+if [ -x "$PW_CHROME" ] && [ ! -f .playwright/cli.config.json ]; then
+  mkdir -p .playwright
+  printf '{ "browser": { "launchOptions": { "executablePath": "%s", "args": ["--no-sandbox", "--disable-dev-shm-usage"] } } }\n' "$PW_CHROME" > .playwright/cli.config.json
+fi
 
 # 4. keep HyperFrames quiet about skills: they are committed under .claude/skills
 echo 'export HYPERFRAMES_SKIP_SKILLS=1' >> "$CLAUDE_ENV_FILE"
