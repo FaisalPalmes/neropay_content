@@ -1,5 +1,14 @@
 # Motion graphics & video — the handover for a session making NeroPay content
 
+> **BRAND CHANGED 19 SEP 2026.** Eray issued a new kit, committed at `brand/`. **`/BRAND.md` is the
+> authority** and outranks every brand value below. Yellow is `#FFCF24`, ink `#111114`, charcoal `#151519`.
+> The wordmark is **supplied artwork, lowercase `neropay`, never typeset and never recoloured** — place
+> `brand/logos/neropay-dark-640.png` on a dark ground, `neropay-light-640.png` on a light one. There is no
+> yellow full stop and there is no vector or font file, so the letter-by-letter wordmark animation cannot
+> be rebuilt; it moves as one object now. Finished renders are **not** to be reissued without Faisal
+> (`BRAND.md` §6.3). Read `BRAND.md` before placing a logo or picking a colour.
+
+
 Written 17 September 2026 by the session that built The Maths, Small Print and the two Partner Programme videos
 (`motion/`), for the session that owns social — LinkedIn first, Instagram and Facebook second — and will make longer,
 educational pieces (one to two minutes, never over three) rather than paid ads. It assumes you already have the NeroPay
@@ -25,7 +34,7 @@ the compliance line long enough to read. Faisal reviews before anything posts.
 **Ground.** Light mode only. Faisal killed the dark ground on 17 Sep 2026 ("no more black background theme"). The world is
 `#FBFAF7` with a soft radial to `#F1EFE8` at the edges; paper, not a gradient you notice. Never charcoal, never neon.
 
-**Colour.** Ink `#141416` for type. Yellow `#F5C518` as the accent and only the accent: the marker under the word the voice
+**Colour.** Ink `#111114` for type. Yellow `#FFCF24` as the accent and only the accent: the marker under the word the voice
 is hitting, a pill, the lit window of a shop, the terminal's head. Blush `#F4BDB6` and lilac `#C9B8F5` are allowed at a
 whisper inside glass tints. Green `#2FBF71` only for a LIVE / SENT state. No blue, no saturated fields, no gradients on
 type.

@@ -58,6 +58,27 @@ fi
 # 4. keep HyperFrames quiet about skills: they are committed under .claude/skills
 echo 'export HYPERFRAMES_SKIP_SKILLS=1' >> "$CLAUDE_ENV_FILE"
 
+# 5. standing notices — the one thing every session on this repo must see before it writes anything.
+#    Edit .claude/NOTICES.md to change what is printed; the hook never needs touching again.
+if [ -f .claude/NOTICES.md ]; then
+  echo ""
+  echo "NeroPay — standing notices (.claude/NOTICES.md):"
+  grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2} ' .claude/NOTICES.md | head -5 | sed 's/^/  • /'
+fi
+
+# 6. a stale checkout is the way a session quietly works on the old brand. Say so, loudly, and do not
+#    pull on its behalf: a session may be mid-edit and a surprise merge is worse than a warning.
+if git rev-parse --git-dir >/dev/null 2>&1; then
+  git fetch -q origin main 2>/dev/null || true
+  BEHIND=$(git rev-list --count HEAD..origin/main 2>/dev/null || echo 0)
+  if [ "${BEHIND:-0}" -gt 0 ]; then
+    echo ""
+    echo "  !! This checkout is ${BEHIND} commit(s) behind origin/main. Run: git pull origin main"
+    echo "     Another session has pushed. Work here may be built on stale briefs or brand values."
+  fi
+fi
+echo ""
+
 ( cd video && npx hyperframes doctor --json | node -e '
   let s = ""; process.stdin.on("data", (d) => (s += d)).on("end", () => {
     const d = JSON.parse(s);

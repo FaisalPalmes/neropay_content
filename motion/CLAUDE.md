@@ -1,5 +1,14 @@
 # Motion graphics — the video style
 
+> **BRAND CHANGED 19 SEP 2026.** Eray issued a new kit, committed at `brand/`. **`/BRAND.md` is the
+> authority** and outranks every brand value below. Yellow is `#FFCF24`, ink `#111114`, charcoal `#151519`.
+> The wordmark is **supplied artwork, lowercase `neropay`, never typeset and never recoloured** — place
+> `brand/logos/neropay-dark-640.png` on a dark ground, `neropay-light-640.png` on a light one. There is no
+> yellow full stop and there is no vector or font file, so the letter-by-letter wordmark animation cannot
+> be rebuilt; it moves as one object now. Finished renders are **not** to be reissued without Faisal
+> (`BRAND.md` §6.3). Read `BRAND.md` before placing a logo or picking a colour.
+
+
 The spec for everything in `motion/`. The repo rails in `/CLAUDE.md` apply unchanged on top of this.
 
 This is NeroPay's **third video style**, alongside the presenter-led Explained videos
@@ -102,7 +111,7 @@ the middle, and empty space that is doing work.
 
 **Ground.** Two grounds, chosen per video, never mixed inside one:
 
-- **White editorial** — `#FBFAF7` off-white, ink `#141416`, the yellow as the single accent. The Apple
+- **White editorial** — `#FBFAF7` off-white, ink `#111114`, the yellow as the single accent. The Apple
   register. Default for regulatory and "did you know" videos.
 - **Charcoal** — `#0E1013` as before. For the money videos where the number needs to glow.
 

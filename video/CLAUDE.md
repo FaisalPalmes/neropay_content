@@ -1,8 +1,16 @@
 # HyperFrames Composition Project
 
+> **BRAND CHANGED 19 SEP 2026.** Eray issued a new kit, committed at `brand/`. **`/BRAND.md` is the
+> authority** and outranks every brand value below. Yellow is `#FFCF24`, ink `#111114`, charcoal `#151519`.
+> The wordmark is **supplied artwork, lowercase `neropay`, never typeset and never recoloured** — place
+> `brand/logos/neropay-dark-640.png` on a dark ground, `neropay-light-640.png` on a light one. There is no
+> yellow full stop and there is no vector or font file, so the letter-by-letter wordmark animation cannot
+> be rebuilt; it moves as one object now. Finished renders are **not** to be reissued without Faisal
+> (`BRAND.md` §6.3). Read `BRAND.md` before placing a logo or picking a colour.
+
 > **NeroPay note.** This container cannot reach CDNs: load GSAP from `vendor/gsap.min.js` (already vendored),
-> never from jsdelivr. Fonts come from `@fontsource/*` or a local file. Brand: Poppins, `#F5C518` yellow as an
-> accent on charcoal, "Nero" white / "Pay" yellow. Never put a terminal price or transaction rate on screen.
+> never from jsdelivr. Fonts come from `@fontsource/*` or a local file. Brand: Poppins for type, `#FFCF24` yellow
+> as an accent, the wordmark placed as artwork (see the banner below). Never put a terminal price or rate on screen.
 > Deliver renders through the Higgsfield media upload, not Google Drive. Read the repo's root `CLAUDE.md` first,
 > then `PLAYBOOK.md` (the brief: Faisal's standards, the three delivery formats, the sandbox pipeline) and
 > `LESSONS.md` (the fault log) in this folder.
