@@ -11,7 +11,7 @@
   --bg:#F7F6F3; --surface:#FFFFFF; --surface-2:#F0EEE9; --elev:#FFFFFF; --sunk:#E9E6DF;
   --ink:#131316; --ink-2:#46454B; --muted:#74727A;
   --rule:#E4E1DA; --rule-2:#CBC7BD;
-  --yl:#C99400; --yl-ink:#8A6500; --yl-soft:rgba(201,148,0,.13); --yl-line:rgba(201,148,0,.42);
+  --yl:#CB9600; --yl-ink:#8C6700; --yl-soft:rgba(203,150,0,.13); --yl-line:rgba(203,150,0,.42);
   --grid:rgba(19,19,22,.022);
   --stop:#A5342A; --stop-soft:rgba(165,52,42,.1);
   --ok:#2A6A4C; --ok-soft:rgba(42,106,76,.1);
@@ -27,7 +27,7 @@
   --bg:#0E0E10; --surface:#16161A; --surface-2:#1C1C21; --elev:#1F1F25; --sunk:#0A0A0C;
   --ink:#F4F3F0; --ink-2:#B8B6B1; --muted:#7D7B84;
   --rule:#24242A; --rule-2:#3A3A44;
-  --yl:#F5C518; --yl-ink:#F5C518; --yl-soft:rgba(245,197,24,.11); --yl-line:rgba(245,197,24,.34);
+  --yl:#FFCF24; --yl-ink:#FFCF24; --yl-soft:rgba(255,207,36,.11); --yl-line:rgba(255,207,36,.34);
   --grid:rgba(255,255,255,.013);
   --stop:#E8837A; --stop-soft:rgba(232,131,122,.12);
   --ok:#6FC098; --ok-soft:rgba(111,192,152,.12);

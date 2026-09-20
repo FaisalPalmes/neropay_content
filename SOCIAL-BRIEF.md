@@ -12,6 +12,13 @@ lifted from that build so a social card and a video end card are visibly the sam
 
 ---
 
+> **Superseded in part, 19 Sep 2026.** Eray issued a new brand kit; `BRAND.md` is now the authority on
+> the wordmark and the colour values, and it wins over §1 and §2 below wherever they disagree. What
+> changed: yellow is `#FFCF24` and ink `#111114` (same hue, brighter); the wordmark is supplied artwork,
+> lowercase, never typeset in Poppins, and carries no full stop. The stage, the blooms, the frost, the
+> light-glass slab and every layout rule here are unchanged. Poppins still sets everything that is not
+> the logo.
+
 ## 1. The look — light glass
 
 **Default stage is light.** Near-white ground, black type, soft yellow light behind a frost, and
@@ -22,11 +29,11 @@ the end."
 | Element | Value | Note |
 |---|---|---|
 | Ground | `#fbfaf7` | Never pure white. Never grey. |
-| Ink | `#141416` | Headlines, the wordmark, body |
+| Ink | `#111114` | Headlines and body. The wordmark is artwork, not type |
 | Kicker | `#6d6c68` | Uppercase, `letter-spacing: 0.36em`, 600 |
 | Secondary line | `#4d4c48` | Italic 500 — an episode line, a sub |
-| Accent | `#F5C518` | The full stop, one value, one rule, the blooms. Nothing else. |
-| Bloom 1 | `radial-gradient(circle, rgba(245,197,24,.50), rgba(245,197,24,0) 62%)`, ~1200 px, `filter: blur(90px)`, off the top-left | Static. A blurred element never moves. |
+| Accent | `#FFCF24` | One value, one rule, the blooms. Nothing else. |
+| Bloom 1 | `radial-gradient(circle, rgba(255,207,36,.50), rgba(255,207,36,0) 62%)`, ~1200 px, `filter: blur(90px)`, off the top-left | Static. A blurred element never moves. |
 | Bloom 2 | same, `.38`, ~1300 px, off the bottom-right | |
 | Bloom 3 | white, `rgba(255,255,255,.9)` → 0, ~700 px, centre-low | Lifts the middle so type sits on near-white |
 | Frost over the blooms | `linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.18) 50%, rgba(255,255,255,.42))` | The "blurred glass" — the yellow reads through it, never on top of it |
@@ -41,7 +48,7 @@ the end."
 }
 .lglass .tint{position:absolute;inset:0;
   background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.7),transparent 55%),
-             radial-gradient(70% 60% at 100% 100%,rgba(245,197,24,.16),transparent 60%)}
+             radial-gradient(70% 60% at 100% 100%,rgba(255,207,36,.16),transparent 60%)}
 .lglass .rim{position:absolute;inset:0;border-radius:inherit;
   box-shadow:inset 0 2px 0 rgba(255,255,255,1),inset 0 0 0 1px rgba(255,255,255,.9)}
 .lglass .sheen{position:absolute;top:-20%;left:0;width:45%;height:140%;
@@ -52,22 +59,20 @@ A slab has four layers in this order: tint, sheen, body, rim. On a still the she
 about 30% across; in motion it passes once on the cue. The yellow in the tint's corner is the only
 yellow inside a slab unless a value is set in yellow.
 
-**Dark stage — allowed, not default.** Charcoal `#141416` ground, white type, "Nero" white and
-"Pay" yellow. Use it when the creative sits *over footage* (a Reel with glass panels, a street photo
+**Dark stage — allowed, not default.** Charcoal `#151519` ground, white type, the dark wordmark artwork. Use it when the creative sits *over footage* (a Reel with glass panels, a street photo
 with a caption plate) or when Faisal asks for it. The dark glass is the v8 `.glass`: a blurred copy of
 the image under it (`blur(30px) saturate(1.3) brightness(.5)`), `rgba(26,26,30,.30)` fill, a white
 tint gradient at 7–17%, a 1.5 px top rim at 55% white, shadow `0 30px 60px rgba(0,0,0,.26)`.
 
-**The wordmark, both stages.**
+**The wordmark, both stages** — rewritten 19 Sep 2026, `BRAND.md` §1 is the authority.
 
-- Light: **NeroPay** in ink, Poppins 800, `letter-spacing: -0.05em`, followed by a yellow full stop
-  0.17 em wide with 0.04 em gap. Not "Pay" in yellow — that is the dark rule.
-- Dark: **Nero** white, **Pay** yellow, same weight and tracking, no full stop.
-- Always bottom-left on a card, 40–48 px at 1080 wide. Never centred on a card unless the card *is* the
-  wordmark (a title or end frame).
-- In motion the seven letters rise one after another (`y: 72 → 0`, 0.5 s, `power4.out`, stagger 0.04),
-  the word settles (`scaleX 1.035 → 1`), the full stop pops in on `back.out(2.4)` over ten frames and takes
-  one shallow breath. No clip-path near it — it cuts the descender of the y (LESSONS #69).
+- It is **placed artwork, never typeset**. `brand/logos/neropay-light-640.png` on the light stage,
+  `neropay-dark-640.png` on a dark one. Lowercase `neropay`, no full stop, no recolouring, no filter.
+- Always bottom-left on a card, **44 px tall** at 1080 wide (241 px wide at its 5.48:1 aspect). Never
+  centred unless the card *is* the wordmark. Clear space at least half the height of the `o`.
+- In motion it moves as one object: fade, rise, scale or a wipe across the whole mark. The old
+  letter-by-letter rise and the yellow full stop belonged to the typeset version and cannot be rebuilt
+  from raster. Whether the dot survives as a motion signature is Faisal's call (`BRAND.md` §6.2).
 
 **What the look is not.** No flat dark panels, no hairline boxes, no numbered spec tables, no bevel, no
 gradient fills on type, no glow for its own sake, no motion blur, no bokeh, no props, no stock. The
@@ -75,7 +80,7 @@ blooms are the only soft thing in the frame; everything else is sharp.
 
 ## 2. Type
 
-**Poppins carries the brand.** Wordmark, headline, values, labels — always Poppins, 500–800, tight
+**Poppins carries everything that is not the logo.** Headline, values, labels — always Poppins, 500–800, tight
 tracking (`-0.03em` on headlines, `-0.05em` on the wordmark, normal on labels). Committed at
 `video/b1-v8/assets/fonts/` as woff2 (500/600/700/800 plus italics). Never from Google Fonts or a CDN.
 
@@ -205,7 +210,7 @@ sandbox.
 
 **Don't**
 - A money figure as the big thing.
-- "Pay" in yellow on a light stage, or a full stop on a dark one.
+- A typeset or recoloured wordmark. It is supplied artwork now (`BRAND.md` §1).
 - A blurred element that moves. A glow that isn't a bloom. Bokeh.
 - A price, a rate, a finance word, a merchant's name, Faisal's name.
 - AI-generated people or places.

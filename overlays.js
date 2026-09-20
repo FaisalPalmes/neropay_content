@@ -11,7 +11,7 @@
 window.OVERLAY_ART = (function () {
   "use strict";
 
-  var Y = '#F5C518', W = '#FFFFFF', D = '#9A9A9A', K = '#000000';
+  var Y = '#FFCF24', W = '#FFFFFF', D = '#9A9A9A', K = '#000000';
   var SANS = "Chivo,'Helvetica Neue',Helvetica,Arial,sans-serif";
   var MONO = "'Martian Mono',Menlo,Consolas,monospace";
   var F16 = { w: 1920, h: 1080, m: 160, ar: '16:9' };
@@ -343,7 +343,7 @@ window.OVERLAY_ART = (function () {
           { k: 'text', s: 'Subscribe for more', size: 56, w: 600, gap: b ? 90 : 26 }];
         if (!b) blocks.push({ k: 'text', s: 'partners.neropay.app', size: 40, fill: Y, mono: true, gap: 90 });
         blocks.push({ k: 'text', s: b ? 'Illustrative figures. No saving is guaranteed. NeroPay is a trading name of Nero Panda Ltd.' : 'NeroPay is a trading name of Nero Panda Ltd.', size: 28, fill: D });
-        return '<rect width="' + F.w + '" height="' + F.h + '" fill="#141416"/>' + stack(blocks, F, { align: 'center' });
+        return '<rect width="' + F.w + '" height="' + F.h + '" fill="#111114"/>' + stack(blocks, F, { align: 'center' });
       } });
   }
   endCard('END/B', F16, 'B');
@@ -370,7 +370,7 @@ window.OVERLAY_ART = (function () {
       var lo = { fill: INK }, mu = { fill: MUTE, mono: true, size: 18 };
       o += '<rect width="' + F.w + '" height="' + F.h + '" fill="' + P + '"/>';
       if (flat) {
-        o += '<rect width="' + F.w + '" height="150" fill="#141416"/>';
+        o += '<rect width="' + F.w + '" height="150" fill="#111114"/>';
         o += t(100, 98, wordmark(), { size: 64, w: 900, ls: '-0.03em' });
         o += t(F.w - 100, 72, 'Monthly card processing statement', { size: 30, fill: W, anchor: 'end', w: 600 });
         o += t(F.w - 100, 112, 'Statement period  01 Jul 2026 – 31 Jul 2026', { size: 22, fill: '#B8B6B1', anchor: 'end', mono: true });
@@ -391,7 +391,7 @@ window.OVERLAY_ART = (function () {
       var tiles = [['Card turnover', '£28,400.00'], ['Transactions', '780'], ['Total charges', flat ? '£198.81' : '£308.46'], ['Effective rate', flat ? '0.70%' : '1.09%', true]];
       tiles.forEach(function (tl, i) {
         var x = 900 + i * 232, hi = !!tl[2];
-        o += '<rect x="' + x + '" y="236" width="212" height="110" fill="' + (hi ? '#141416' : '#FFFFFF') + '" stroke="' + (hi ? '#141416' : RULE) + '" stroke-width="2"/>';
+        o += '<rect x="' + x + '" y="236" width="212" height="110" fill="' + (hi ? '#111114' : '#FFFFFF') + '" stroke="' + (hi ? '#111114' : RULE) + '" stroke-width="2"/>';
         o += t(x + 18, 270, tl[0].toUpperCase(), { size: 16, fill: hi ? '#B8B6B1' : MUTE, mono: true, ls: '0.14em' });
         o += t(x + 18, 322, tl[1], { size: 38, w: 800, fill: hi ? Y : INK });
       });
@@ -436,7 +436,7 @@ window.OVERLAY_ART = (function () {
       o += t(rx, y, 'Other charges', { size: 24, fill: INK, w: 800 });
       o += t(1820, y, flat ? '£0.00' : '£75.65', { size: 24, fill: INK, anchor: 'end', w: 800 });
 
-      o += '<rect x="' + rx + '" y="' + (y + 40) + '" width="560" height="120" fill="#141416"/>';
+      o += '<rect x="' + rx + '" y="' + (y + 40) + '" width="560" height="120" fill="#111114"/>';
       o += t(rx + 24, y + 80, 'TOTAL CHARGES THIS MONTH', { size: 16, fill: '#B8B6B1', mono: true, ls: '0.14em' });
       o += t(rx + 24, y + 134, flat ? '£198.81' : '£308.46', { size: 44, w: 800, fill: W });
       o += t(1796, y + 134, flat ? 'effective 0.70%' : 'effective 1.09%', { size: 22, fill: Y, anchor: 'end', mono: true });
@@ -465,7 +465,7 @@ window.OVERLAY_ART = (function () {
 
   def('CALL/END', { vid: 'CALL', title: 'Series end card', use: 'every [END] on C1–C6, 16:9', frame: F16, opaque: true,
     draw: function (F) {
-      return '<rect width="' + F.w + '" height="' + F.h + '" fill="#141416"/>' + stack([
+      return '<rect width="' + F.w + '" height="' + F.h + '" fill="#111114"/>' + stack([
         { k: 'text', s: wordmark(), size: 130, w: 900, ls: '-0.04em', gap: 40 },
         { k: 'text', s: 'Behind the Counter', size: 48, w: 700, gap: 18 },
         { k: 'text', s: 'New episode every other Thursday  ·  Subscribe for more', size: 36, fill: '#D6D6D6', gap: 80 },
@@ -520,7 +520,7 @@ window.OVERLAY_ART = (function () {
 
   /* ---------- social creatives, drawn from the `assets` field on each post ---------- */
   var SZ = { sq: { w: 1080, h: 1080, m: 90, ar: '1:1' }, pt: { w: 1080, h: 1350, m: 90, ar: '4:5' }, st: { w: 1080, h: 1920, m: 100, ar: '9:16' } };
-  var CH = '#141416', SOFT = '#D6D6D6';
+  var CH = '#111114', SOFT = '#D6D6D6';
   function short(F) { return { k: 'rule', x1: F.m / F.w, x2: (F.m + 140) / F.w, h: 6, fill: Y }; }
   function chrome(F, o) { /* charcoal ground, wordmark bottom-left, optional corner labels and AI tag */
     o = o || {};

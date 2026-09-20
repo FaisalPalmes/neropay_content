@@ -155,6 +155,10 @@ session** (`CLAUDE_CODE_REMOTE != true`), so a local machine needs Node 22, a re
 
 ## 5. Resources already in the repo
 
+- **The brand kit.** `brand/` — Eray's 19 Sep 2026 identity: the lowercase `neropay` wordmark in four
+  versions, the diagonal-N symbol as favicons, and the social and SEO artwork. `BRAND.md` is the
+  authority on values and on what the kit is missing (no vector, no font, no Instagram or YouTube sizes).
+
 - **Sound.** Nineteen effects committed at `video/library/sfx/` (Pixabay licence, commercial use, no
   attribution), a Freesound CC0 set declared in `video/library/sounds.json` and fetched by
   `fetch-sounds.mjs`, and `video/library/LEDGER.md` — the licence record every sound must appear in

@@ -75,7 +75,17 @@ merchants to stay put), L8 (correcting ourselves).
 
 ## Brand — for any creative direction
 
-- "Nero" in white, "Pay" in yellow. Yellow only as an accent against dark/charcoal.
+**`BRAND.md` is the authority, and it replaced this paragraph on 19 Sep 2026** when Eray issued a new
+kit (committed at `brand/`). Read it before placing a logo or picking a colour. The short version:
+
+- The wordmark is **supplied artwork, lowercase `neropay`, never typeset**. `nero` dark or white,
+  `pay` yellow, no full stop. Light version on light grounds, dark on dark. In running text it is
+  still NeroPay, capital N and P.
+- Yellow is `#FFCF24`, ink `#111114`, charcoal `#151519`. Same hue as the old yellow, brighter.
+  Yellow is an accent, never type on a light ground.
+- Raster only: no vector, no font file, no Instagram or YouTube assets. `BRAND.md` §5–6 lists what is
+  missing and the four questions open with Eray, including whether the yellow full stop survives and
+  what happens to the finished videos that end on the old lockup. Don't resolve those locally.
 - The terminal is the only branded object in frame. No NeroPay cards, pens, mugs, props.
 - Everything sharp, deep depth of field, no bokeh anywhere. Locked-off, static framing.
 - Flex terminal: NeroPay branding only. Never reference Verifone or Stripe in customer-facing content.
@@ -101,6 +111,7 @@ from here, and folder uploads silently fail there.
 | `STACK.md` | What a session has to work with — connectors and how credentials actually reach a session, the committed skills, the toolchain and versions, the licensed resources, what the network reaches. Hand this to a new session first | Keep current — it is dated, and verified facts go stale |
 | `SOCIAL-HANDOVER.md` | The brief for the session that owns social: what it owns and doesn't, the state of the posts, the weekly loop, how each kind of creative is made and exported, cloud versus local, the first-day checklist and the opening prompt. Hand it to that session first | Keep current — it is dated |
 | `MOTION-HANDOVER.md` | The brief for a session making video content: the look, Faisal's rulings in order, the fundamentals for ads and educational pieces, the pipeline end to end, the stack and skills, and every link the session needs | Keep current — it is dated |
+| `BRAND.md` | The 19 Sep 2026 identity: the supplied wordmark and symbol, the measured colour values, where each value lives in code, what the kit does not contain, and the open questions for Eray. It supersedes the brand paragraph above, `SOCIAL-BRIEF.md` §1 and the light-stage values in `MOTION-SYSTEM.md` v3 | Only when Eray issues a new kit |
 | `SOCIAL-BRIEF.md` | The social creative brief — the light-glass look with its exact values, Poppins plus one editorial secondary, the card archetypes and their governing rails, what ships with every post, and the HTML-to-PNG route that makes the files inside Claude Code | Only when Faisal rules on the look |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
 | `figures.json` | The figure register for the motion graphics videos — every number one may state, each dated and sourced, plus the blocked ones and why | **Yes — add a record before a figure goes on screen** |

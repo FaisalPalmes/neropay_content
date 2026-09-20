@@ -60,8 +60,8 @@
       var x = x0 + i * (cw + gap);
       s += '<rect x="' + x + '" y="6" width="' + cw + '" height="55" rx="2" class="' + (i === 0 ? 's-yl' : 's-fill') + '" stroke="var(--sk-line)" stroke-width="1.2"/>';
       if (i === 0) {
-        s += '<rect x="' + (x + 6) + '" y="20" width="32" height="5" fill="#141416" opacity=".62"/>';
-        s += '<rect x="' + (x + 6) + '" y="29" width="24" height="5" fill="#141416" opacity=".38"/>';
+        s += '<rect x="' + (x + 6) + '" y="20" width="32" height="5" fill="#111114" opacity=".62"/>';
+        s += '<rect x="' + (x + 6) + '" y="29" width="24" height="5" fill="#111114" opacity=".38"/>';
       } else {
         s += '<rect x="' + (x + 5) + '" y="14" width="14" height="4" class="s-yl"/>';
         s += '<rect x="' + (x + 5) + '" y="24" width="34" height="4" fill="var(--sk-line)" opacity=".6"/>';
@@ -81,9 +81,9 @@
     var s = '<svg viewBox="0 0 200 200" role="img" aria-label="Rough sketch: stat card. ' + esc(o.alt || '') + '">';
     // the card it depicts is charcoal in real life, so it stays charcoal in
     // both themes — this is a picture of an artefact, not a themed surface
-    s += '<rect x="1" y="1" width="198" height="198" rx="2" fill="#141416" stroke="var(--sk-line)" stroke-width="1"/>';
-    s += '<text x="100" y="86" text-anchor="middle" font-family="Chivo,sans-serif" font-size="32" font-weight="900" fill="#F5C518">' + esc(o.big || '00%') + '</text>';
-    s += '<rect x="70" y="100" width="60" height="2" fill="#F5C518"/>';
+    s += '<rect x="1" y="1" width="198" height="198" rx="2" fill="#111114" stroke="var(--sk-line)" stroke-width="1"/>';
+    s += '<text x="100" y="86" text-anchor="middle" font-family="Chivo,sans-serif" font-size="32" font-weight="900" fill="#FFCF24">' + esc(o.big || '00%') + '</text>';
+    s += '<rect x="70" y="100" width="60" height="2" fill="#FFCF24"/>';
     s += '<text x="100" y="126" text-anchor="middle" font-family="Martian Mono,monospace" font-size="6.5" fill="#E6E4DF">' + esc(o.line1 || '') + '</text>';
     s += '<text x="100" y="140" text-anchor="middle" font-family="Martian Mono,monospace" font-size="6.5" fill="#96949C">' + esc(o.line2 || '') + '</text>';
     s += '<text x="100" y="180" text-anchor="middle" font-family="Martian Mono,monospace" font-size="5.5" fill="#77757E">' + esc(o.src || '') + '</text>';
