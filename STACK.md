@@ -137,6 +137,12 @@ for the page checks in `CLAUDE.md`; `img2threejs` (Apache 2.0) for a procedural 
 photograph. `SOCIAL-BRIEF.md` and `MOTION-SYSTEM.md` outrank all of them on the look; each folder's `NEROPAY-NOTE.md`
 says where. The two "awesome" lists Faisal sent the same day are catalogues, recorded in `video/TOOLS.md`, not installed.
 
+**`/prompt-master`** (added 21 Sep 2026, v1.8.0, MIT, upstream nidhinjs/prompt-master) writes one
+finished, tool-routed prompt from a rough idea: Higgsfield video and image, ElevenLabs voice, an agentic
+brief for another session, or a decompile of a prompt that keeps missing. It fires only when you ask for a
+prompt. The rails and `BRAND.md` outrank whatever it writes; `.claude/skills/prompt-master/NEROPAY-NOTE.md`
+has the detail.
+
 ## 4. The toolchain
 
 | Piece | Version / location | Notes |
