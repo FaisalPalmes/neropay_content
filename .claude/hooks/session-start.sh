@@ -5,12 +5,18 @@
 # Idempotent: every step is a no-op when already done. Local sessions skip it.
 set -euo pipefail
 
+ROOT="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
+cd "$ROOT"
+
+# 0. dead hooks, first and always — before the remote check, because this one matters most on the box
+#    you are sitting at. A UserPromptSubmit hook whose script is missing blocks every prompt, so the
+#    session cannot even be told to remove it (21 Sep 2026: planning-with-files). The pruner drops any
+#    hook entry whose script is not on disk and leaves everything else alone.
+python3 "$ROOT/.claude/hooks/prune-dead-hooks.py" "$ROOT" 2>/dev/null || true
+
 if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
   exit 0
 fi
-
-ROOT="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "$0")/../.." && pwd)}"
-cd "$ROOT"
 
 # 1. node modules for both editors (npm install is cached by the container snapshot)
 ( cd edit && npm install --no-audit --no-fund --loglevel=error )

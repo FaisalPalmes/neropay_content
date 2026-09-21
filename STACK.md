@@ -159,6 +159,29 @@ has the detail.
 session** (`CLAUDE_CODE_REMOTE != true`), so a local machine needs Node 22, a real ffmpeg,
 `npm install` in `video/` and `npx hyperframes browser ensure` done by hand once.
 
+### Hooks — the one rule, learnt the hard way (21 Sep 2026)
+
+**Never register a `UserPromptSubmit` hook, and never register any hook before its script is committed
+and executable.** A session installing a skill wrote a `UserPromptSubmit` hook pointing at
+`.claude/skills/planning-with-files/hooks/claude-hook.sh` while that file did not exist. A prompt hook
+that exits non-zero blocks the prompt, so every message Faisal typed came back as *"A hook blocked your
+prompt"* — and because the block is on the prompt itself, that session could not be told to undo it. It
+had to be repaired from a second session.
+
+Two defences are now in the repo:
+
+- `.claude/skills/planning-with-files/` is a shim: `hooks/claude-hook.sh` exits 0 and does nothing, so a
+  container still carrying the old registration runs a file that succeeds. Its `README.md` says why.
+- `.claude/hooks/prune-dead-hooks.py` runs as **step 0 of the session-start hook, before the local-session
+  exit**, and removes any hook whose script is missing from `.claude/settings.json`,
+  `.claude/settings.local.json` and the same two under `~/.claude/`. It copies each file to
+  `*.before-prune.json` before it writes and never touches a hook whose script exists, or anything outside
+  `hooks`. A settings file it cannot parse is skipped.
+
+If a skill's installer offers to add a hook: decline `UserPromptSubmit` outright, and for any other event
+commit the script first, `chmod +x` it, then register it, then open a fresh session and check that a prompt
+still goes through before pushing.
+
 ## 5. Resources already in the repo
 
 - **The brand kit.** `brand/` — Eray's 19 Sep 2026 identity: the lowercase `neropay` wordmark in four
