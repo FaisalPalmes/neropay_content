@@ -40,7 +40,13 @@ timing law but no diagram grammar, and The Maths is a diagram series. Its anti-p
 scripts paint a diagram in headless Chromium and check it, which is the same verification loop as
 our contact sheet.
 
-**Adopt — `planning-with-files` (MIT).** The only one that addresses a problem we actually have and
+**Rejected on 21 Sep 2026 — `planning-with-files` (MIT).** Installing it cost Faisal a working session:
+the install registered a `UserPromptSubmit` hook before the hook script existed, every prompt came back
+"A hook blocked your prompt", and because the block is on the prompt that session could not be told to
+undo it. The folder is deleted and `.claude/hooks/prune-dead-hooks.py` now strips dead hooks at session
+start (`STACK.md`, Hooks). Do not reinstall it. If the idea is ever wanted, take the markdown plan files
+and leave every hook behind. What follows was the case for adopting it, kept so nobody re-argues it:
+it was the only one that addressed a problem we actually have and
 have not solved. `.claude/NOTICES.md` broadcasts *between* sessions; this holds state *within* a long
 task, and its PreCompact hook re-injects the plan after compaction — the exact failure mode that
 costs us detail on every long build. Plain markdown, so it commits and merges like anything else,

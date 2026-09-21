@@ -168,15 +168,18 @@ that exits non-zero blocks the prompt, so every message Faisal typed came back a
 prompt"* — and because the block is on the prompt itself, that session could not be told to undo it. It
 had to be repaired from a second session.
 
-Two defences are now in the repo:
+The skill was never installed — there was never a `SKILL.md`, only the hook path — and the folder is gone
+from the repo at Faisal's instruction (21 Sep 2026). The defence is one file:
 
-- `.claude/skills/planning-with-files/` is a shim: `hooks/claude-hook.sh` exits 0 and does nothing, so a
-  container still carrying the old registration runs a file that succeeds. Its `README.md` says why.
-- `.claude/hooks/prune-dead-hooks.py` runs as **step 0 of the session-start hook, before the local-session
-  exit**, and removes any hook whose script is missing from `.claude/settings.json`,
-  `.claude/settings.local.json` and the same two under `~/.claude/`. It copies each file to
-  `*.before-prune.json` before it writes and never touches a hook whose script exists, or anything outside
-  `hooks`. A settings file it cannot parse is skipped.
+`.claude/hooks/prune-dead-hooks.py` runs as **step 0 of the session-start hook, before the local-session
+exit**, and removes any hook whose script is missing from `.claude/settings.json`,
+`.claude/settings.local.json` and the same two under `~/.claude/`. It copies each file to
+`*.before-prune.json` before it writes and never touches a hook whose script exists, or anything outside
+`hooks`. A settings file it cannot parse is skipped. Because the folder is deleted, a container still
+carrying that registration now has it stripped at session start rather than papered over.
+
+A session whose container cannot reach this file — an old checkout, or a branch that predates it — cannot
+be repaired from inside, because the block is on the prompt. Start a fresh session instead.
 
 If a skill's installer offers to add a hook: decline `UserPromptSubmit` outright, and for any other event
 commit the script first, `chmod +x` it, then register it, then open a fresh session and check that a prompt
