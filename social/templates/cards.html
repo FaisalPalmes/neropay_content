@@ -10,7 +10,7 @@
 </style></head>
 <body data-post>
 <div class="stage">
-  <div class="bgd"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><i class="frost"></i></div>
+  <div class="bgd"><i class="seam"></i><i class="glow"></i><i class="frost"></i><i class="seam line"></i></div>
   <div class="kick" data-f="kick">Statement</div>
   <div class="tr" data-f="tr">1 / 5</div>
   <div class="lglass"><i class="tint"></i><i class="sheen"></i>
@@ -22,6 +22,7 @@
     </div>
   <i class="rim"></i></div>
   <img class="wm" src="../../brand/logos/neropay-light-640.png" alt="NeroPay">
+  <img class="mk" src="../../brand/favicon/neropay-icon-192.png" alt="NeroPay">
   <div class="next" data-f="next">next</div>
 </div>
 <script>
@@ -38,6 +39,10 @@ window.fill = function (d) {
   set('kick', d.kick || 'Statement'); set('tr', (d.i + 1) + ' / ' + d.total);
   set('n', first ? '' : (c.n || '')); set('h', c.h || ''); set('b', c.b || '');
   var nx = document.querySelector('[data-f="next"]'); nx.style.display = last ? 'none' : '';
+  /* the wordmark signs the first and last card; interior cards carry the symbol alone (BRAND.md §2) */
+  var edge = first || last;
+  document.querySelector('.wm').style.display = edge ? '' : 'none';
+  document.querySelector('.mk').style.display = edge ? 'none' : '';
   var h = document.querySelector('[data-f="h"]'), n = String(c.h || '').length;
   if (!first) h.style.fontSize = n <= 34 ? '68px' : n <= 60 ? '58px' : '50px';
   else h.style.fontSize = n <= 30 ? '92px' : n <= 50 ? '80px' : '68px';
