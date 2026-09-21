@@ -10,11 +10,90 @@ unless the entry says so. Before pulling any of them into a build, re-read the e
 | [dashersw/liquid-glass-js](https://github.com/dashersw/liquid-glass-js) | Apple "Liquid Glass" panels for the web: WebGL refraction, blur and tint over whatever sits behind the element. Rounded, circle and pill shapes; nested glass. ~1,300 lines, no build step. Samples the page with html2canvas. | MIT | 13 Sep 2026 |
 | [pmndrs/react-three-fiber](https://github.com/pmndrs/react-three-fiber) | React renderer for three.js — 3D scenes written as JSX components. v9 pairs with React 19. | MIT | 13 Sep 2026 |
 | [ruucm/shadergradient](https://github.com/ruucm/shadergradient) | Animated 3D gradients (the Framer / Figma plugin); the `@shadergradient/react` package renders through react-three-fiber + three. Presets, camera controls, driven by props or a query string. | MIT | 13 Sep 2026 |
+| [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | Editorial diagram skill: self-contained HTML with inline SVG, no shadows, no Mermaid. ~41 type references, six connector rules, a complexity budget, plus `lint-skin.py` and `lint-render.py` which verify a diagram by painting it in headless Chromium. 41.7k stars. | MIT | 21 Sep 2026 |
+| [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) | File-based planning for long agent tasks: `task_plan.md`, `findings.md`, `progress.md`, or `.planning/<id>/` for parallel work. Hooks on UserPromptSubmit, PreToolUse, PostToolUse, Stop and **PreCompact** — the last re-injects plan state after compaction and after `/clear`. No database, no daemon, no network. 27k stars. | MIT | 21 Sep 2026 |
+| [Vincentwei1021/video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft) | 152 shot recipe cards in ten categories, each a parameter table in frames and pixels, plus 149 Mixkit commercial-free SFX, 209 preview clips and a Remotion template. The cards are framework-neutral; the code is Remotion-only. 9.2k stars. | Apache 2.0 (audio: Mixkit free-commercial, attribution required) | 21 Sep 2026 |
+| [virgiliojr94/book-to-skill](https://github.com/virgiliojr94/book-to-skill) | Turns a PDF, EPUB, DOCX or folder of documents into an agent skill with chapter files and decision rules. Runs fully locally — no API, no network, no key. Needs `pdftotext` or `pypdf` for PDFs. 31.8k stars. | MIT | 21 Sep 2026 |
+| [blader/humanizer](https://github.com/blader/humanizer) | 25 numbered AI-writing patterns in five categories, ~8,500 words of editing guidance. Prose only: no script, no linter. 50.9k stars. | MIT | 21 Sep 2026 |
+| [tt-a1i/archify](https://github.com/tt-a1i/archify) | Architecture, sequence and data-flow diagrams as one self-contained HTML file, everything inline, optional SVG/CSS motion. The alternative to diagram-design. 68.8k stars. | MIT | 21 Sep 2026 |
 | [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | A curated list of Claude skills and resources. A list, not a skill: nothing installs from it. | CC0-style list | 19 Sep 2026 |
 | [VoltAgent/awesome-claude-design](https://github.com/VoltAgent/awesome-claude-design) | 68 ready-made `DESIGN.md` files for Claude Design. A list, not a skill. The `DESIGN.md` format is the same one `/impeccable document` writes and reads, so it is a reference for writing NeroPay's own. | MIT | 19 Sep 2026 |
 | [collidingScopes/liquid-logo](https://github.com/collidingScopes/liquid-logo) | Browser tool that turns a logo PNG into a "liquid metal" animation: a fragment shader finds the edges, builds a vector field and flows simplex noise along it with a metallic sheen. Exports PNG or MP4 (WebCodecs + mp4-muxer) in the browser. | MIT | 13 Sep 2026 |
 
 ## What each one means for this project
+
+### The 21 Sep 2026 survey — twelve repos checked, two worth installing
+
+Faisal asked for a sweep of open-source repos above 1,000 stars that suit our workflow. Twelve were
+read properly, three of them by separate agents that fetched the licence and the actual skill files
+rather than trusting the README. **The headline finding is that star count predicts nothing here.**
+The two largest, at 94k and 60k, are the two we categorically cannot use. Two mid-sized ones are
+genuinely good.
+
+**Adopt — `diagram-design` (MIT).** The best fit of everything surveyed. Its output substrate is
+exactly ours: a self-contained HTML file with inline SVG. Its six connector rules (rounded orthogonal
+only, a 6–10 px label gap with a mask rect, no overlaps, fanned attach points) and its complexity
+budget (at most 9 nodes, 12 arrows, 2 accent elements) fill a real gap — `motion/CLAUDE.md` has a
+timing law but no diagram grammar, and The Maths is a diagram series. Its anti-pattern list
+("borders in, shadows out") already matches our light stage. Re-cut it to our tokens the way
+`/linkedin-post` was re-cut: paper → `#fbfaf7`, ink → `#111114`, accent → `#FFCF24`. Its two lint
+scripts paint a diagram in headless Chromium and check it, which is the same verification loop as
+our contact sheet.
+
+**Adopt — `planning-with-files` (MIT).** The only one that addresses a problem we actually have and
+have not solved. `.claude/NOTICES.md` broadcasts *between* sessions; this holds state *within* a long
+task, and its PreCompact hook re-injects the plan after compaction — the exact failure mode that
+costs us detail on every long build. Plain markdown, so it commits and merges like anything else,
+and `.planning/<id>/` gives each of the three sessions its own plan directory. One folder to copy,
+nothing to install.
+
+**Harvest, don't install — `video-shotcraft` (Apache 2.0).** The 152 recipe cards are real numbers,
+not vibes: `camera/crash-zoom-punch.md` specifies a 6-frame push (4–8 f range, over 10 f "reads as a
+normal zoom"), target zoom 2.4–2.8 filling 60–75 % of frame, 3–6 % rebound, shake envelope
+`14px·e^(−t/1.8)` with over 20 px "reads as malfunction". That ports to a paused GSAP timeline in an
+afternoon. Take about twenty cards matching our register and the 149 Mixkit SFX, which serve
+`AUDIO.md` directly and are licensed for commercial use with attribution. Do not vendor the repo:
+hundreds of megabytes, partly Chinese-language, and much of the catalogue is off-brand for us
+(we ban motion blur and most of its "electric" energy tier).
+
+**Harvest — `book-to-skill` (MIT).** Fully local, no network, no key. The obvious job: the ~40 NeroPay
+docs that live in the claude.ai Project and that no session in this repo can currently read — the
+pricing ladder, the KYC rules, the GTM playbook. Converting those into committed skills would close
+the single biggest context gap we have. Faisal supplies the files; the conversion runs here.
+
+**Skip — `claude-mem` (94k stars, Apache 2.0).** Architecturally impossible for us and worth saying
+why, because the star count is seductive. Its entire value sits in a SQLite plus Chroma store under
+`~/.claude-mem/`, which our ephemeral container destroys on exit. Committing it is not a workaround:
+it is a binary file rewritten on every tool call, so three concurrent sessions would collide on an
+unmergeable blob at every push. It also needs Bun from a blocked host, spends tokens calling the API
+to compress transcripts, ships telemetry, and its cloud sync pushes memories to a third-party host —
+which, for a repo carrying s.21 FSMA rails and unpublished commercial terms, is an objection on its
+own.
+
+**Skip — `OpenMontage` (60k stars).** AGPLv3, a network-clause copyleft, which should stop adoption
+by itself. Beyond that it vendors copies of `hyperframes-core`, `hyperframes-creative`,
+`media-use` and `motion-graphics` — skills we already have first-party — and needs twenty-plus paid
+video providers and a GPU we do not have. Its original pieces (a five-aspect video-prompt spec, a
+sound-design note) are worth reading for ideas; the licence means we copy nothing.
+
+**Skip — the marketing packs, and this one matters.** `coreyhaines31/marketingskills` (51k, MIT) is
+well written and dangerous to us: its default copy skill recommends rhetorical questions — "Tired of
+chasing approvals?" — which is rail 9's banned personal-attributes phrasing verbatim, and its
+psychology skill routes "increasing urgency" to scarcity and loss aversion. `wondelai/skills` is
+worse: it scores an offer 9/10 for "ethical scarcity" and named dollar-valued bonuses, templates
+"10 qualified leads or you don't pay", and scripts "How much would you like to save per month?" —
+rails 2 and 8 straight through. None of the four marketing repos mentions the ASA, the CAP Code,
+the FCA or financial promotion once. They assume an unregulated advertiser. Lift `copy-editing`
+from Corey's pack if anything; read `aaron-he-zhu/aaron-marketing-skills` (Apache 2.0) for its
+claims-ledger contract, which is `figures.json` under another name.
+
+**Skip — the rest.** `last30days-skill` (62k) needs eighteen source hosts and our proxy blocks all
+but one. `anti-slop` duplicates `/slopmonster` and `/impeccable`, and its R-02 bans the em dash,
+which fights our house voice. `anything2explainer` is PolyForm Noncommercial, so a commercial
+advertiser cannot use it. `humanizer` (50.9k) overlaps `/slopmonster` — it is prose only with no
+linter, so the linter we have is the stronger half; a few of its 25 patterns could be folded in.
+`archify` is a good MIT alternative to `diagram-design` if that one disappoints.
+
 
 **The two "awesome" lists (19 Sep 2026): read, don't install.** Faisal asked for both to be installed alongside the
 skills below. Neither is a skill; they are catalogues. Nothing was pulled from either. `awesome-claude-design` is the more
