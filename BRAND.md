@@ -89,7 +89,7 @@ not in the box.
 - **No terminal artwork.** Nothing showing the mark as it appears on the Flex's shell or screen.
 - **No dark-on-yellow lockup**, which is what a yellow-ground card or a sticker would need.
 
-## 6. Open questions for Eray — do not resolve these locally
+## 6. Open questions — 2 is settled, the rest are Eray's and are not to be resolved locally
 
 1. **The artwork does not match its own colour spec, and is not internally consistent.** Measured from
    the supplied files: the light wordmark is `#FCCA16`, the dark wordmark `#FCCA17`, the app icon
@@ -99,12 +99,12 @@ not in the box.
    We have taken the **declared** values as authority, so a yellow rule drawn in code will read very
    slightly brighter than the supplied logo beside it. Nobody will catch it in a feed; a printer will.
    Ask Eray for artwork that matches the spec, ideally as vector.
-2. **The yellow full stop is gone.** Faisal chose it on 11 Sep 2026 — "NeroPay in black with a yellow
-   dot at the end with a very subtle animation" — and it is built into `MOTION-SYSTEM.md` v3, the B1
-   master's title and end stages, and every social card's furniture. The new kit has no full stop. Two
-   readings: the dot was a device belonging to the old typeset wordmark and retires with it, or it stays
-   as a motion signature beside the new artwork. **Faisal decides.** Until then the cards and the
-   templates carry the new wordmark without the dot, and the finished video masters are untouched.
+2. ~~**The yellow full stop is gone.**~~ **Settled 21 Sep 2026: the dot is retired.** Faisal's ruling.
+   It was punctuation belonging to the old typeset wordmark and it retires with it; the mark's 46.5°
+   diagonal is the signature in its place. `social/templates/stage.css` carries that — the rounded
+   yellow bar is gone and the rule is the mark's two bars in miniature, cut at the angle. The spec for
+   the motion side is `BRAND-MOTION.md`. The finished video masters are untouched; that is question 3,
+   which is still open.
 3. **The finished videos now carry an old logo.** The B1 master, the NeroConnect explainer, The Maths
    episode 1 and the partner pieces all end on the typeset `NeroPay.` lockup. They are approved,
    rendered and in some cases delivered. Re-rendering every end card is a real job with a review gate,

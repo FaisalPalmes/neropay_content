@@ -111,6 +111,7 @@ from here, and folder uploads silently fail there.
 | `STACK.md` | What a session has to work with — connectors and how credentials actually reach a session, the committed skills, the toolchain and versions, the licensed resources, what the network reaches. Hand this to a new session first | Keep current — it is dated, and verified facts go stale |
 | `SOCIAL-HANDOVER.md` | The brief for the session that owns social: what it owns and doesn't, the state of the posts, the weekly loop, how each kind of creative is made and exported, cloud versus local, the first-day checklist and the opening prompt. Hand it to that session first | Keep current — it is dated |
 | `MOTION-HANDOVER.md` | The brief for a session making video content: the look, Faisal's rulings in order, the fundamentals for ads and educational pieces, the pipeline end to end, the stack and skills, and every link the session needs | Keep current — it is dated |
+| `BRAND-MOTION.md` | The Shutter — the motion signature. The mark's measured angle (46.5°), the five components (shutter up, shutter down, the cut, the tile, open/closed), what it replaces and what it still needs from Eray. Written by the social session for the motion session to build | Only when Faisal rules on the motion |
 | `BRAND.md` | The 19 Sep 2026 identity: the supplied wordmark and symbol, the measured colour values, where each value lives in code, what the kit does not contain, and the open questions for Eray. It supersedes the brand paragraph above, `SOCIAL-BRIEF.md` §1 and the light-stage values in `MOTION-SYSTEM.md` v3 | Only when Eray issues a new kit |
 | `SOCIAL-BRIEF.md` | The social creative brief — the light-glass look with its exact values, Poppins plus one editorial secondary, the card archetypes and their governing rails, what ships with every post, and the HTML-to-PNG route that makes the files inside Claude Code | Only when Faisal rules on the look |
 | `README.md` | Field reference for adding posts and the parser format | Keep current |
@@ -296,8 +297,9 @@ Rules that come from this environment, not from HyperFrames:
   `@fontsource/*` packages or a local `.woff2`.
 - Rendered MP4s go to Faisal via the Higgsfield media upload (or chat attachment); the Drive
   connector cannot carry files over a few MB. `out/` is git-ignored.
-- Brand rules above apply to every frame: Nero white, Pay yellow (`#F5C518`) as an accent on charcoal,
-  Poppins, tight letter-spacing, no bokeh, no props, no price or rate on screen.
+- Brand rules apply to every frame, and `BRAND.md` is the authority: the supplied wordmark placed never
+  typeset, yellow `#FFCF24` as an accent on ink `#111114`, Poppins, tight letter-spacing, no bokeh, no
+  props, no price or rate on screen. `BRAND-MOTION.md` is what a video does at the top, the cut and the end.
 - The session-start hook (`.claude/hooks/session-start.sh`) installs node modules for both folders, puts
   ffmpeg on PATH and fetches HyperFrames' Chrome. If `npx hyperframes doctor` complains, run the hook.
 - **Real clips are not in this container.** They live on the Higgsfield CDN, which the web container
