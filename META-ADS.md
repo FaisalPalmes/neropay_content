@@ -447,3 +447,50 @@ A change to a live ad is proposed only when one of these is true:
 Everything else goes on a list for the next time that ad is being rebuilt anyway. **Check the live state
 before proposing work**, and say what is already done before saying what is left — the answer to "do I need
 to do X" is usually "no, you already have it".
+
+## 21. The static campaign, audited live — 22 Sep 2026
+
+All three static ads published. State at audit:
+
+| Ad | Id | Status | Impressions | Spend |
+|---|---|---|---|---|
+| `AD \| Static \| Cafe \| EN \| v1` | `120249681700780743` | Delivering | 252 | £1.35 |
+| `AD \| Static \| Takeaway \| EN \| v1` | `120249682646300743` | Delivering | 3 | £0.17, 1 click |
+| `AD \| Static \| Restaurant \| EN \| v2` | `120249683543760743` | `PENDING_REVIEW` | 0 | £0 |
+
+Campaign `COLD | EPOS | Static | NW | 2026-09` (`120249624005110743`): active, `OUTCOME_LEADS`, **£11/day**,
+highest volume, started 21 Sep, **ends 5 Oct 2026**, £3.92 spent. The video campaign
+`COLD | Terminal | Video | GM | 2026-09` stays paused at £143.41 lifetime. £11/day is about £335/month,
+inside the £500 with room.
+
+Ad set `AS | Static | Instant form | 25-65 | North West` (`120249664926490743`): active,
+`LEAD_GENERATION`, billed on impressions, ages 25–65, no pixel (lead form, so none needed).
+
+### Three findings, ranked
+
+1. **The geo radius is 80 km** around Manchester city centre (53.4808, −2.2426). That reaches Liverpool,
+   Leeds, Sheffield, Stoke and Preston — against a territory of Rusholme–Longsight–Levenshulme, Cheetham
+   Hill and Stretford, worked by field days from Manchester. It buys impressions against merchants nobody
+   will visit, on a budget too small to cover Manchester properly. **Recommended 15–20 km.** The single
+   biggest lever on cost per lead and on whether a lead is worth anything.
+2. **Audience Network is on, including `rewarded_video`** — a placement where people tap ads for a game
+   reward, and the classic source of junk leads. Placements are currently everything: FB feed, IG stream /
+   story / reels / profile, Marketplace, Search, Notifications, in-stream video, Audience Network classic
+   and rewarded. Faisal chose **feed only** when this was set up; the live state is the opposite.
+   `advantage_audience: 1` compounds it by expanding past the stated targeting.
+3. **End date 5 Oct 2026.** Thirteen days out. Fine if deliberate, flagged so delivery stopping is not a
+   surprise.
+
+Also: the restaurant ad is named **v2** while the other two are v1. Cosmetic, but it confuses reporting
+later, and name is the one field an ad always accepts.
+
+### What not to read into the early numbers
+
+At £11/day across three ads this ad set **will not exit the learning phase**: roughly 50 conversions a week
+would need leads at about £1.50 against a historical best of £6.89. Meta will concentrate spend on whichever
+ad gets early traction — which is why the café has 252 impressions and the takeaway 3. So results will be
+noisy, optimisation weak, and **the first week says nothing about which creative won**, because the budget
+never gave all three a fair run.
+
+Verdict given: fine to continue, nothing broken, no rail breached, form attached, copy clean. Fix the radius
+first.
