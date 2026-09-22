@@ -40,8 +40,16 @@ window.PUBLISHED = {
   updated: '22 September 2026',
   owner: 'the nPanda Meta session',
 
-  /* Nothing has gone out yet. The first session to publish something adds the first record here —
-     and deletes this comment. */
   records: [
+
+    { ref: 'MG02', crop: null, platform: 'facebook', kind: 'organic', on: '2026-09-22',
+      url: null,
+      by: 'the nPanda Meta session, 22 Sep 2026 — Faisal confirmed in chat that it went out on both platforms.',
+      note: 'First record in this file. URL OUTSTANDING — Faisal to send the permalink. Crop not recorded: MG02 has both a 1:1 feed and a 4:5 cut and it is not known which was uploaded. Organic only; paid Meta stays refused under Route C (library.js notCleared). Rail 4 does not bite — no AI presenter — but the voice is synthetic and is declared in the description.' },
+
+    { ref: 'MG02', crop: null, platform: 'instagram', kind: 'organic', on: '2026-09-22',
+      url: null,
+      by: 'the nPanda Meta session, 22 Sep 2026 — Faisal confirmed in chat that it went out on both platforms.',
+      note: 'URL OUTSTANDING — Faisal to send the permalink. Same crop question as the Facebook record. Posted as NeroPay (@neropayapp), never a personal profile — rail 3.' }
   ]
 };
