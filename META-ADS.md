@@ -292,3 +292,35 @@ café ad either, and duplicating that ad with `source_ad_id` would carry its ret
 
 So §7's rule widens: **anything that touches an instant form is built by hand in Ads Manager.** A session
 can still write the copy, verify it against Route C, name it to convention, and read the result back.
+
+## 16. The static image set — review, 22 Sep 2026
+
+Faisal sent four of twelve (three per vertical plus a Flex feature card). Layout is the new brand kit:
+the rounded-square mark, the brighter yellow, Poppins, a product shot over a real-premises photo. Route C
+clean on rates: no percentage, no fee figure, no money anywhere. Four things to fix.
+
+1. **Takeaway, "Switch in 24 hours." — change it.** Switching framing is the only thing this account has
+   ever had permanently rejected (`20251024_Card Terminal (Switching)`, still in the account WITH_ISSUES).
+   "24 hours" is also a hard delivery promise that underwriting or KYC can break. The sub-line underneath
+   it already carries the idea safely: "We bring the terminal, set it up on your counter and show your
+   staff. You keep serving."
+2. **"Get your quote" on the café and takeaway cards — change to "Book a free demo".** §5 records that
+   this CTA was deliberately avoided because a quote invites the rate conversation Route C exists to
+   prevent. The restaurant and Flex cards already use the safer one.
+3. **The Flex card footnote names card processing.** "Hardware, setup and card processing are quoted
+   separately." §5 records that a disclaimer footnote did not mitigate, and that in one case naming card
+   processing explicitly made it worse. Trim to the software sentence and the T&Cs line.
+4. **"Table plans" is not in the approved product list.** `/CLAUDE.md` gives NeroPOS as till, product grid,
+   staff, kitchen display, Z-reports. Either the feature is real and the product list is stale, or the card
+   overstates. Confirm before it runs.
+
+**The restaurant card is the template.** "The kitchen sees every order" with "Nothing shouted across the
+pass" is product-led, specific, concedes nothing it cannot prove, names no rate and does not mention
+switching. Build the others to that shape.
+
+**On the lead form theory.** Faisal suspects the video ad's instant form was misconfigured and that this
+explains the missing leads. The evidence says otherwise: `AD | Video | Online Bookings | EN | v1` took 71
+link clicks and the campaign returned 1 lead, and that lead landed on day one. A form that is not wired up
+returns zero, not one. This is a conversion problem, which matches the audit's own finding that the
+Messenger destination converts at a third of the account's worst historic rate. Verify by submitting a test
+through the ad preview rather than rebuilding on the assumption.
