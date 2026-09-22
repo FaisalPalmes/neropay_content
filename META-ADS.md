@@ -424,3 +424,26 @@ re-check the Review row before publishing. Leads collected against v6 stay attac
   are immutable, so the CTA needs a v2; the Advantage+ toggles are free to change and should be off on all three.
 - `Apply now` was proposed as the CTA on the restaurant ad and rejected here: application language on a financial
   services ad is the Rail 1 register, and this account has already lost a profile to a classifier match.
+
+## 20. Standing rule — do not rebuild what is already live — 22 Sep 2026
+
+Faisal's instruction, 22 Sep 2026, after this was got wrong more than once:
+
+> "next time just make sure you're not making these errors where I've already got a V1 that's approved.
+> I don't need to do it."
+
+**An ad that is live and approved stays as it is.** Never propose a v2, a rebuild or a replacement for a
+cosmetic improvement — a CTA label that could read better, a headline that could be sharper, a naming
+inconsistency. Creatives are immutable, so every such suggestion costs a full rebuild and a fresh review on
+something that already cleared.
+
+A change to a live ad is proposed only when one of these is true:
+
+1. It breaks a rail or Route C.
+2. The destination is broken — no form, wrong form, dead link.
+3. It is spending badly enough that the creative is the measured problem.
+4. Faisal asked for it.
+
+Everything else goes on a list for the next time that ad is being rebuilt anyway. **Check the live state
+before proposing work**, and say what is already done before saying what is left — the answer to "do I need
+to do X" is usually "no, you already have it".
