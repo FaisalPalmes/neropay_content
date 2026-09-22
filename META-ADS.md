@@ -198,3 +198,20 @@ rendered from the repo compositions and uploaded (`2f8a380ee78ed9a145ac80e5708f3
 thumbnail, the second on "Ad Set with Promoted Object Is Required", and then this handover arrived and
 stopped the work. Both videos were already in the account's video library: MG02 `1811664206853327` (55.87 s,
 matches v6), PP02 `1352116770336872` (52.0 s, cannot tell v6 from v7 by length).
+
+**22 Sep 2026, later — the café static paused on a Route C read.** `AD | Static | Cafe | EN | v1`
+(`120249665727150743`) was ACTIVE in `COLD | EPOS | Static | NW | 2026-09` on creative `926832176796526`
+("Save with NeroPAY !!!", created 21 Sep). Its primary text breaches Route C on most lines: a transaction
+rate with a competitor comparison ("up to 1.2% + 15p transaction fee (lower than others)"), negative fee
+claims ("£0 monthly fee", "£0 setup / PCI / SIM fees"), payout language ("Instant payout available"),
+personal-attribute phrasing ("Still paying high fees for your card machine?"), a savings claim in the
+headline, a partner figure in a merchant ad ("£100 per referral"), "No contract — cancel anytime" and a
+"FREE card terminal trial". The quoted rate does not match the internal standard either (1.30% + £0.15).
+**Paused, not deleted.** Two sibling creatives with the same body (`1805274824259338`, `1104507042091049`)
+also carry `https://ivy.nero.partners`, the departed employee's link (open item 7) — not attached to a live
+ad, but they are in the library.
+
+`AS | MG02 18-month rule` archived as `Z-ARCHIVE | MG02 refused for paid Meta (Route C)` on Faisal's
+instruction ("one of the videos that you mentioned is not allowed... let's just get rid of that one").
+The PP02 ad set and the VIEWS campaign stay PAUSED with no ads, pending a ruling on PP02's on-screen
+£100–£300, which is the Elif pattern.
