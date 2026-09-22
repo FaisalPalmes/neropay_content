@@ -378,3 +378,49 @@ Q3 ends on a phone number on purpose. The audit's finding is that Messenger conv
 this account's worst historic rate because conversations stall; giving a route off Messenger in the first
 auto-reply is the mitigation. The larger question — whether any ad should use the Messenger destination at
 all rather than the instant form — is still open and is not answered by filling this in well.
+
+## 19. Archived ad cleanup — 22 Sep 2026
+
+Two archived ads inside `AS | Static | Instant form | 25-65 | North West` were set to `DELETED` at Faisal's
+request, because they were cluttering the ad list:
+
+| Ad | ID | Lifetime spend |
+|---|---|---|
+| `AD \| Static \| Cafe \| EN \| v1` (archived) | `120249665727150743` | £2.32 |
+| `20250718_EnglishPriceSensitive` (archived) | `120249664926500743` | — |
+
+Three things learned doing it.
+
+**Archived is Meta's delete.** There is no UI button that removes an ad, because the object holds spend history
+that has to reconcile against billing. The only reason archived ads appear in the list is the **"Deleted" filter
+chip** in the Ads Manager toolbar being toggled on; turning it off hides all of them, account-wide, reversibly.
+`DELETED` via the API is the permanent version and cannot be undone. The account still holds ~29 other archived
+ads, including `20250930_switch to NeroPAY` (£658) and `20250723price_comparison_logo` (£168) — left in place,
+because they are the record of what this account has already tried.
+
+**The UI name and the API name disagreed.** Faisal's screen showed the archived row as
+`AD | Static | Restaurant | EN | ...`; the API had it as `AD | Static | Cafe | EN | v1`. Name is the only field an
+archived ad accepts (error #1885088), so a rename almost certainly sat unpublished in the draft layer, which the
+API cannot read. An earlier note in this file said the archived *Restaurant* ad held the £2.32 — that was wrong;
+it was the archived *Cafe* ad. **Confirm an id before any irreversible action; the draft layer makes names
+unreliable.**
+
+**Deleting moved nothing else.** Verified after: the ad set returns one ad, the live `AD | Static | Cafe | EN | v1`.
+Worth checking every time on this account, which has twice had a status change ripple somewhere unasked.
+
+### The lead form fork
+
+Separately, the restaurant ad's publish preview showed `Lead form: None` with the tooltip reading
+`New: None / Original: FORM | Static | NW | 2026-09 (v6)`. The form was not missing — the draft was staging its
+**removal**. Clicking **"Edit this form"** on a form that has already collected leads does not edit it in place:
+Meta **forks it to a new version**, the ad's pointer to v6 goes stale, and Ads Manager stages the stale pointer as
+`None`. Fix is to re-pick the form from the dropdown, with only that one ad selected in the left panel, then
+re-check the Review row before publishing. Leads collected against v6 stay attached to v6.
+
+### Still open on the static set
+
+- `AD | Static | Cafe | EN | v1` is **ACTIVE and now delivering** (£0.19). Its CTA button reads `Learn more` while
+  the creative says "Book a free demo", and Advantage+ **Text improvements** and **Add overlays** are on. Creatives
+  are immutable, so the CTA needs a v2; the Advantage+ toggles are free to change and should be off on all three.
+- `Apply now` was proposed as the CTA on the restaurant ad and rejected here: application language on a financial
+  services ad is the Rail 1 register, and this account has already lost a profile to a classifier match.
