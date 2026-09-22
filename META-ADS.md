@@ -235,3 +235,33 @@ café ad used `N_cafe_C` (`7ac7e0ad1ddd687a9708a70150eb0b1a`).
 (CONNECT 403), so the overlay text on the statics cannot be read from here. Route C applies inside the
 image as much as in the caption, so the statics cannot be cleared until Faisal sends the files or the
 overlay wording into chat. That is a standing limitation, not a one-off.
+
+## 15. Pricing and contracts, as Faisal stated them on 22 Sep 2026
+
+Context for writing, **not** for putting in an ad.
+
+- **Standard merchants are on no contract at all.** Rates start from 1.2%.
+- **Contracts apply only to bespoke offers.** When a lead comes in unhappy with the standard terms, the
+  rate can go below 1.2% and a contract goes with it. That is the only place an agreement appears.
+- **Public-facing: "no contracts" is true and may be said. Rates are never mentioned** until a merchant
+  makes contact, sends a statement and the volume is assessed. Only then is a rate quoted, privately.
+
+This answers a question the repo had carried as open since 14 Sep: `figures.json`'s `neropay_workhorse_rate`
+record notes that "no contract" collided with the unanswered question of whether the 8p fixed fee triggers
+the 18-month agreement. It does not — the agreement belongs to bespoke pricing. **The content session
+should fold this into `figures.json` and `/CLAUDE.md`; this session does not own those files.**
+
+**On putting "no contracts" in a Meta ad.** It is true and Faisal has ruled it public, so the accuracy
+objection is gone. The residual risk is register, not fact: Meta's classifier groups "no contract, cancel
+anytime" with the too-good-to-be-true pattern, and it sat inside the creative paused earlier today next to
+a rate, a comparison and a savings claim. Said plainly in a sentence it reads as a product fact; stacked in
+a list of green ticks with "£0" lines it reads as a pitch. The three captions below say it once, in a
+sentence.
+
+**Contact details, confirmed 22 Sep 2026:** calls 020 8150 2104 · WhatsApp 0333 049 4380 ·
+support@neropay.app · merchant landing page `https://eu.neropay.app/lp/i` (served by NeroForce, the URL is
+stable, the page content will be updated later). The old creative's WhatsApp number and `ivy.nero.partners`
+are both retired.
+
+**One mismatch to settle:** the copy says Manchester-based and the calls number is an 020 London line.
+Either is fine on its own; together a sharp merchant notices. Faisal to choose which gives way.
