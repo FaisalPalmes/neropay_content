@@ -32,3 +32,11 @@ __pycache__/
 .playwright/
 .playwright-cli/
 .claude/skills/playwright-skill/.playwright-skill/
+
+# HyperFrames renders and the assets make-assets.sh rebuilds from brand/ and the supplied screens
+video/*/renders/
+video/*/assets/bands/
+video/*/assets/mark.png
+video/*/assets/wordmark-white.png
+video/*/fonts/
+video/*/vendor/

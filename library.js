@@ -105,6 +105,17 @@ window.LIBRARY = {
         { crop: '4:5 Meta', px: '1080×1350', lufs: '−14.16', media: '62228ccf-ea52-4f90-b7d2-974aee17017b', md5: 'a126ac3a015e9c5bbf6d2fae11d55969' }
       ] },
 
+    { id: 'AS01', series: 'App Store', title: 'App preview — iPhone',
+      version: 'v1', rendered: '2026-09-22', secs: 26.0,
+      status: 'review', by: 'unrecorded — built while Faisal was away on 22 Sep and sent for his review',
+      waiting: 'Faisal watches it and rules on the five decisions in video/appstore-iphone/NOTES.md §5 — chiefly no voiceover, and the black end card instead of the wordmark on yellow.',
+      build: 'video/appstore-iphone/', drive: null, backup: false, clearedFor: null, notCleared: null,
+      clearanceNote: 'It is a store listing asset, not a social post, so the platform question is Apple review rather than Route C. An App Preview must read as the app in use; this animates his own exported screens and keeps overlaid material to the brand open and close.',
+      note: 'Built from the five carousel screens Faisal exported, each cut into wordmark, copy and device bands so the layout moves without re-typesetting placed artwork. The Shutter opens it, cuts between every screen and closes it. No voiceover and no captions. The iPad and Play Store cuts are not made.',
+      files: [
+        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.5', media: 'ffdeb658-553c-4f1a-a74b-03f6cfa97219', md5: '41a8563735273d3d008210bcc2082674' }
+      ] },
+
     { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
       version: 'v2', rendered: '2026-09-17', secs: null,
       status: 'review', by: 'unrecorded',
