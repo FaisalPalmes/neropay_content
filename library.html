@@ -91,7 +91,7 @@
 
 <section id="posts">
   <div class="sec-head"><span class="lbl">02</span><h2>Posts</h2></div>
-  <p class="sec-sub">The 24 written posts and whether each one has actually gone out. <b>Nothing is marked posted yet</b> — set <span class="mono">posted</span> in <span class="mono">posts.js</span> as each goes live, or tell a session and it will.</p>
+  <p class="sec-sub">The 24 written posts and whether each one has actually gone out. Whether one has gone out is read from <span class="mono">published.js</span>, which the nPanda Meta session writes when it publishes.</p>
   <div id="pfeed"></div>
 </section>
 
@@ -99,7 +99,9 @@
   <div class="sec-head"><span class="lbl">03</span><h2>How this stays true</h2></div>
   <p class="sec-sub">The register is only worth opening if it is right. Three rules.</p>
   <div class="prose">
-    <p><b>A session writes the row when it delivers.</b> Anything rendered gets a row here in the same commit that renders it — not a Drive README, not a commit message, not a line in chat. The row carries the crop, the link, the md5 and the build folder.</p>
+    <p><b>Two files, two owners, no collisions.</b> <span class="mono">library.js</span> is what we made and belongs to the content and motion sessions. <span class="mono">published.js</span> is what went out and belongs to the nPanda Meta session — the one that runs the ad account and posts to Facebook, Instagram, TikTok, LinkedIn and YouTube. Neither session writes the other's file, which is what keeps them out of each other's merge conflicts. This page joins them by id. <span class="mono">PUBLISH-HANDOVER.md</span> is the contract.</p>
+    <p><b>A session writes the row when it delivers.</b> Anything rendered gets a row in <span class="mono">library.js</span> in the same commit that renders it — not a Drive README, not a commit message, not a line in chat. The row carries the crop, the link, the md5 and the build folder.</p>
+    <p><b><span class="mono">clearedFor</span> says where a video may go.</b> <span class="mono">null</span> means nobody has assessed it, which is not the same as cleared. Publishing organically and publishing as a paid Meta ad are separate decisions: MG02 is fine on YouTube, organic and the website and refused on paid Meta under Route C. Two more are flagged and unruled.</p>
     <p><b>Any state may be set by a session, including <span class="mono">approved</span> — but only when Faisal says so in chat, and it must carry who and when.</b> That is Faisal's ruling of 22 Sep 2026. The <span class="mono">by</span> field is what keeps it honest: an approval nobody can attribute is the thing that lost track in the first place. Never infer <span class="mono">approved</span> from a render, a delivery, or a README that calls itself final — three of the videos below do exactly that and none of them was ever confirmed.</p>
     <p><b><span class="mono">backup: false</span> is a live problem, not a note.</b> It means the only copy is a CDN link. It flips to true when the MP4 is sitting in its Drive folder, and only Faisal can do that — the connector will not carry a file that size.</p>
   </div>
@@ -113,9 +115,20 @@
 
 <script src="posts.js"></script>
 <script src="library.js"></script>
+<script src="published.js"></script>
 <script>
 (function () {
   var L = window.LIBRARY, POSTS = window.POSTS || [], V = L.videos;
+  var PUB = (window.PUBLISHED && window.PUBLISHED.records) || [];
+  /* published.js is the Meta session's file; join it in by ref rather than duplicating the state */
+  function pubFor(ref) { return PUB.filter(function (r) { return r.ref === ref; }); }
+  function pubChips(ref) {
+    return pubFor(ref).map(function (r) {
+      var t = r.platform + (r.crop ? ' ' + r.crop : '') + ' · ' + r.on;
+      return r.url ? '<a class="chip p" href="' + r.url + '" target="_blank" rel="noopener">' + esc(t) + '</a>'
+                   : '<span class="chip p">' + esc(t) + '</span>';
+    }).join(' ');
+  }
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
@@ -133,13 +146,16 @@
   var nNot   = V.filter(function (v) { return v.status === 'brief' || v.status === 'building'; }).length;
   var nRisk  = V.filter(function (v) { return v.files.length && !v.backup; }).length;
   var nFiles = V.reduce(function (a, v) { return a + v.files.length; }, 0);
-  var nPosted = POSTS.filter(function (p) { return p.posted; }).length;
+  var pubRefs = {}; PUB.forEach(function (r) { pubRefs[r.ref] = true; });
+  var nPosted = POSTS.filter(function (p) { return pubRefs[p.id]; }).length;
+  var nLive   = V.filter(function (v) { return pubRefs[v.id]; }).length;
 
   document.getElementById('stats').innerHTML =
     '<div><b>' + nFiles + '</b><span>Files rendered</span></div>' +
     '<div><b>' + nWait + '</b><span>Waiting on you</span></div>' +
     '<div><b>' + nReady + '</b><span>Ready to go</span></div>' +
     '<div><b>' + nNot + '</b><span>Not made yet</span></div>' +
+    '<div><b>' + nLive + ' / ' + V.length + '</b><span>Videos live</span></div>' +
     '<div><b>' + nPosted + ' / ' + POSTS.length + '</b><span>Posts out</span></div>';
 
   document.getElementById('risk').innerHTML =
@@ -171,6 +187,13 @@
          '<span class="lser">' + esc(v.series) + (v.secs ? ' · ' + v.secs + 's' : '') + '</span></div>';
     if (v.waiting) h += '<div class="lw"><b>Waiting:</b> ' + esc(v.waiting) + '</div>';
     if (v.note) h += '<div class="lnote">' + esc(v.note) + '</div>';
+    if (v.clearedFor) h += '<div class="lnote"><b>Cleared for:</b> ' + esc(v.clearedFor.join(' · ')) + '</div>';
+    if (v.notCleared) Object.keys(v.notCleared).forEach(function (k) {
+      h += '<div class="lnote" style="color:var(--stop)"><b>Not cleared for ' + esc(k) + ':</b> ' + esc(v.notCleared[k]) + '</div>';
+    });
+    if (v.clearanceNote) h += '<div class="lnote" style="color:var(--yl-ink)"><b>Clearance not assessed.</b> ' + esc(v.clearanceNote) + '</div>';
+    var pc = pubChips(v.id);
+    if (pc) h += '<div class="lnote"><b>Live:</b> ' + pc + '</div>';
     if (v.files.length) h += '<div class="files">' + v.files.map(function (f) { return fileRow(v, f); }).join('') + '</div>';
     var tail = [];
     tail.push('state set by: ' + esc(v.by));
@@ -189,7 +212,8 @@
   document.getElementById('pfeed').innerHTML = POSTS.slice()
     .sort(function (a, b) { return String(a.id).localeCompare(String(b.id), 'en', { numeric: true }); })
     .map(function (p) {
-      var state = p.posted ? '<span class="chip p">' + esc(p.posted.where + ' · ' + p.posted.on) + '</span>'
+      var pc = pubChips(p.id);
+      var state = pc ? pc
         : p.blocked ? '<span class="chip blocked">blocked</span>'
         : '<span class="chip d">not posted</span>';
       return '<div class="prow"><span class="sid">' + esc(p.id) + '</span>' +

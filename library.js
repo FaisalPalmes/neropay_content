@@ -21,6 +21,17 @@
    attributable. `by: 'unrecorded'` means nobody wrote the decision down; it is not the same as no.
    Never infer `approved` from a render, a delivery or a README that calls itself final.
 
+   ── This file is half of a pair ────────────────────────────────────────────────────────────────
+   `library.js` is WHAT WE MADE and is owned by the content and motion sessions. `published.js` is
+   WHAT WENT OUT and is owned by the nPanda Meta session. Neither session writes the other's file —
+   that is what keeps two sessions out of each other's merge conflicts. `library.html` joins them by
+   id. `PUBLISH-HANDOVER.md` is the contract. Do not record a publish here; it goes in published.js.
+
+   ── clearedFor / notCleared ────────────────────────────────────────────────────────────────────
+   Where a video may go, so the Meta session can pick something up without having to re-litigate it.
+   `clearedFor: null` means nobody has assessed it — not that it is cleared. `notCleared` names the
+   platform and the reason. A clearance is a decision like any other: it needs a date and a source.
+
    ── The backup field, and why it matters ───────────────────────────────────────────────────────
    `backup: false` means the MP4 exists ONLY as a Higgsfield CDN link. Those links are valid while the
    account holds them — the NC README says so in as many words. Drive has the folder and a note saying
@@ -40,7 +51,8 @@ window.LIBRARY = {
       version: 'v8.4', rendered: '2026-09-12', secs: null,
       status: 'ready', by: 'unrecorded — rendered and handed over, approval never written down',
       build: 'video/b1-v8/', drive: 'https://drive.google.com/drive/folders/1vnCpZjv2-tST91e8Bprz8hHHgLGY8mp-',
-      backup: false,
+      backup: false, clearedFor: null, notCleared: null,
+      clearanceNote: 'Not assessed. The script states 0.50% quoted and 0.70% illustrative and turns on a rate comparison, which is the exact shape META-ADS.md §10 refused for MG02 on paid Meta. Someone has to rule on it before this goes near an ad.',
       note: 'Ends on the old typeset NeroPay. lockup. Whether it is reissued against the new kit is BRAND.md §6.3, still open. Rail 4: nothing in the video says the presenter is AI — tick YouTube\'s altered-or-synthetic setting at upload and keep the line in the description. The 0.70% in the script is illustrative, not a NeroPay rate.',
       files: [
         { crop: '16:9 YouTube master', px: '1920×1080', lufs: '−15', media: '9a37d1ec-9f9c-4b30-8a50-41b9f93acd81', md5: 'c6ad7ec58121fd70059211fd831aae32', commit: 'ed6a9bd' },
@@ -53,6 +65,8 @@ window.LIBRARY = {
       status: 'ready', by: 'unrecorded — four crops delivered, approval never written down',
       build: 'motion/print/mg02/', drive: 'https://drive.google.com/drive/folders/1oeHnyT75J2cmSRM_lDyj6bfULDnkAuuC',
       backup: false,
+      clearedFor: ['youtube', 'instagram', 'facebook', 'tiktok', 'website'],
+      notCleared: { 'paid-meta': 'Route C. Rate-comparison language, a savings claim, a switching premise, and it positions a firm that is not on the FCA Register in its own right as an authority on payment regulation. Judged 22 Sep 2026 — META-ADS.md §10.' },
       note: 'Faceless motion graphics, Verity. No AI presenter, so rail 4 does not bite; the voice is synthetic and is declared in the description. Figures all confirmed in figures.json: 18 months, 14 largest providers, one month\'s notice. v5 and v4.1 were review cuts and are not to be published.',
       files: [
         { crop: '9:16 Reels / TikTok / Shorts', px: '1080×1920', lufs: '−14.4', media: '70e428ae-9cfd-4f09-b5d6-d40a2c4c0e8d', md5: '5a9e879fa12b978b800fb325a4f33d09', mb: 10.5 },
@@ -65,7 +79,8 @@ window.LIBRARY = {
       version: 'v7', rendered: '2026-09-18', secs: 52.0,
       status: 'ready', by: 'unrecorded — its own README calls it final and publishable, but Faisal never confirmed',
       build: 'motion/partner/pp02/', drive: 'https://drive.google.com/drive/folders/1wyUXzCzfII9BXtTcVngt-SIxDJ8EGd3z',
-      backup: false,
+      backup: false, clearedFor: null, notCleared: null,
+      clearanceNote: 'Not assessed, and there is a tension to settle before it is. The Meta session built a PAUSED ThruPlay ad set for this on 22 Sep, but the video carries £100/£200/£300 per merchant and a 20–40% revenue share. META-ADS.md Route C bars rate, fee, percentage, settlement and payout language from an ad, and rail 2 bars earnings claims. Every figure travels with its condition, which is why it passes organically. Paid is a different call and nobody has made it.',
       note: 'Only the 4:5 is rendered; other crops on request. Figures are the confirmed partner_bonus_tiers, partner_revenue_share_tiers and partner_active_gate records, each with its condition on the same frame, per merchant, never a total.',
       files: [
         { crop: '4:5 Meta', px: '1080×1350', lufs: '−14.16', media: '62228ccf-ea52-4f90-b7d2-974aee17017b', md5: 'a126ac3a015e9c5bbf6d2fae11d55969' }
@@ -75,7 +90,7 @@ window.LIBRARY = {
       version: 'v2', rendered: '2026-09-17', secs: null,
       status: 'review', by: 'unrecorded',
       waiting: 'Faisal reviews the 16:9 render and approves it for posting. This is the only thing blocking post L12.',
-      build: 'motion/neroconnect/nc01/', drive: null, backup: false,
+      build: 'motion/neroconnect/nc01/', drive: null, backup: false, clearedFor: null, notCleared: null,
       posts: ['L12'],
       files: [
         { crop: '16:9', px: '1920×1080', media: 'd7d50f7c-9fcb-4930-9a70-a297ba1a1d2f' }
@@ -86,7 +101,7 @@ window.LIBRARY = {
       status: 'review', by: 'unrecorded',
       waiting: 'Four things: the terminal photos promised on 18 Sep never arrived, so the close uses our own 3D model; the 17 Sep series note bars margin figures, reports and support tiers on screen while the 18 Sep brief approves them, and the later brief was followed — Faisal confirms which stands; no cut-downs rendered; no music bed.',
       build: 'motion/neroconnect/explainer/', drive: 'https://drive.google.com/drive/folders/1hVAZJFL5uLPqC4ATJzpoO9QkvvM9dpaP',
-      backup: false,
+      backup: false, clearedFor: null, notCleared: null,
       note: 'Figures on screen are the seven approved in the overlay kit and the invented Harbourline names. Placeholder brand throughout.',
       files: [
         { crop: '16:9 master', px: '1920×1080', mb: 62.5, media: '243e9316-3761-4f7e-8883-799780616ac2', md5: 'f56bea4a7f82761407b4e344283480ca' },
@@ -98,7 +113,7 @@ window.LIBRARY = {
       status: 'review', by: 'unrecorded',
       waiting: 'Faisal\'s review. The generated plates (motion/partner/pp01/AI-PLATES.md) are not in this cut — they could not be produced on the day. When they arrive they slot under certain beats and it re-renders.',
       build: 'motion/partner/pp01/', drive: 'https://drive.google.com/drive/folders/11gSOA2be260FQlJcRUN2ZxPvMwn4AtUU',
-      backup: false,
+      backup: false, clearedFor: null, notCleared: null,
       note: '68s against the brief\'s 22–28s social module; the short modules can be cut from this script. Other crops render on request, about 35 minutes each.',
       files: [
         { crop: '4:5 Meta', px: '1080×1350', lufs: '−14.12', media: '4a729d5b-051f-49ab-b2ba-0a9480f161e6', md5: '2b747a617cd8f815f38f42692d458c3a' }
@@ -108,44 +123,46 @@ window.LIBRARY = {
       version: null, rendered: null, secs: 38,
       status: 'building', by: 'motion session',
       waiting: 'Flagged in motion.js and never rendered. The build is in the repo; the workhorse-rate record it depends on still carries two open questions (15p vs 8p, and whether 8p triggers the 18-month agreement).',
-      build: 'motion/maths/ep01/', drive: null, backup: false, files: [] },
+      build: 'motion/maths/ep01/', drive: null, backup: false, clearedFor: null, notCleared: null, files: [] },
 
     { id: 'MG03', series: 'Small Print', title: 'The tip isn\'t yours',
       version: null, rendered: null, secs: 30,
-      status: 'brief', by: 'motion session', build: null, drive: null, backup: false, files: [],
+      status: 'brief', by: 'motion session', build: null, drive: null, backup: false,
+      clearedFor: null, notCleared: null, files: [],
       waiting: 'Briefed in motion.js with the full beat list. Not built.' },
 
     { id: 'MG04', series: 'Small Print', title: 'Four times a year',
       version: null, rendered: null, secs: 34,
-      status: 'brief', by: 'motion session', build: null, drive: null, backup: false, files: [],
+      status: 'brief', by: 'motion session', build: null, drive: null, backup: false,
+      clearedFor: null, notCleared: null, files: [],
       waiting: 'Briefed in motion.js. Not built.' },
 
     { id: 'C1', series: 'Behind the Counter', title: 'What did your last statement actually say?',
       version: null, rendered: null, secs: null,
-      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [],
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, clearedFor: null, notCleared: null, files: [],
       waiting: 'Scripted in calls.js. Was due Thursday 17 Sep on the calendar and was not made. The Drive folder for the series is empty.' },
 
     { id: 'C2', series: 'Behind the Counter', title: 'Friday night, and the card machine\'s down',
       version: null, rendered: null, secs: null,
-      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [],
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, clearedFor: null, notCleared: null, files: [],
       waiting: 'Scripted. Due Thursday 1 Oct.' },
 
     { id: 'C3', series: 'Behind the Counter', title: 'The six weeks before Christmas',
       version: null, rendered: null, secs: null,
-      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [],
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, clearedFor: null, notCleared: null, files: [],
       waiting: 'Scripted. Due Thursday 15 Oct.' },
 
     { id: 'C4', series: 'Behind the Counter', title: 'How many screens are you running?',
       version: null, rendered: null, secs: null,
-      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [], waiting: 'Scripted, unscheduled.' },
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, clearedFor: null, notCleared: null, files: [], waiting: 'Scripted, unscheduled.' },
 
     { id: 'C5', series: 'Behind the Counter', title: 'Who gets paid before you do?',
       version: null, rendered: null, secs: null,
-      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [], waiting: 'Scripted, unscheduled.' },
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, clearedFor: null, notCleared: null, files: [], waiting: 'Scripted, unscheduled.' },
 
     { id: 'C6', series: 'Behind the Counter', title: 'What did you actually sign?',
       version: null, rendered: null, secs: null,
-      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [], waiting: 'Scripted, unscheduled.' }
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, clearedFor: null, notCleared: null, files: [], waiting: 'Scripted, unscheduled.' }
 
   ],
 

@@ -104,7 +104,10 @@ from here, and folder uploads silently fail there.
 | `*.html` | Eight pages — overview, social, youtube, motion, library, ideas, calendar, rails | Rarely |
 | `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes, next briefs | **Yes — hand-edited, copy an episode to add one** |
 | `motion.js` | The motion graphics videos as `window.MOTION` — two series, each video with its hook, the audience need it answers (dated, sourced), format, the narrator's performance and the beats. Renders on `motion.html` | **Yes — this is where motion graphics briefs go** |
-| `library.js` | **The delivery register** — every video, the state it is in, who set that state and when, and a direct link to each rendered master. Plus which of the 24 posts have actually gone out. Renders on `library.html`. This is the only place in the repo that records a *decision* rather than a plan | **Yes — write the row in the same commit that renders a video** |
+| `library.js` | **The delivery register** — every video, the state it is in, who set that state and when, and a direct link to each rendered master. Half of a pair: this is **what we made**, `published.js` is **what went out**. Renders on `library.html`. The only place in the repo that records a *decision* rather than a plan | **Yes — write the row in the same commit that renders a video** |
+| `published.js` | **The publish log** — one record per thing that has gone out, per platform, with the live URL and who recorded it. Joined to `library.js` by id on `library.html` | **No — the nPanda Meta session owns this file** |
+| `PUBLISH-HANDOVER.md` | The contract between the two sessions: who owns which file, how to find something cleared to publish, how to record it, and the rails that still bite at upload. Hand it to the Meta session | Keep current |
+| `check-register.mjs` | Resolves every `ref` in `published.js`, validates the states and platforms, and refuses a publish to a platform a video is `notCleared` for. Part of the pre-push checks | Keep current |
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
@@ -346,19 +349,39 @@ Six states, in order: `brief` → `building` → `review` → `ready` → `appro
 - **`backup: false` is a live problem.** The master exists only as a Higgsfield CDN link, valid while that
   account holds it. A session cannot fix it — the Drive connector will not carry a file that size. Only
   Faisal can download it into the Drive folder; then a session flips the flag.
+- **`clearedFor` says where a video may go**, and `null` means nobody has assessed it — not that it is
+  cleared. Organic and paid Meta are separate decisions: MG02 is cleared for YouTube, organic and the
+  website and refused for paid Meta under Route C. B1 and PP02 are flagged and unruled.
 
-`posted` on a `posts.js` record follows the same rule: `null` until it goes out, then `{ where, on }`.
+### Two sessions, two files, no collisions
+
+**`library.js` is what we made. `published.js` is what went out.** This session and the motion session
+write the first; **the nPanda Meta session writes the second** — it runs the ad account and posts to
+Facebook, Instagram, TikTok, LinkedIn and YouTube. Neither writes the other's file, which is what keeps
+two sessions out of each other's merge conflicts. `library.html` joins them by id.
+
+So: **never record a publish in `library.js` or `posts.js`.** It goes in `published.js`, and that is not
+this session's file. A `posted` field lived on `posts.js` for one day on 22 Sep and had already drifted —
+M13 and M14 were added without it — which is the argument against two places holding the same fact.
+
+`PUBLISH-HANDOVER.md` is the contract; hand it to the Meta session. `node check-register.mjs` enforces the
+bits a human forgets: that every `ref` resolves, and that nothing is published to a platform it is
+`notCleared` for.
 
 ## Verification before pushing
 
-Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js library.js` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
+Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js library.js published.js`
+and `node check-register.mjs` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
 page and confirm no console errors, `.post` count matches `POSTS.length` on social.html, and
 nothing overflows at 390px. The site is light by default (off-white ground, black and grey type); dark is opt-in via `data-theme="dark"` and must still paint its own background.
 
 ## What lives elsewhere
 
-Meta paid advertising moved into this session on 22 Sep 2026 at Faisal's instruction ("u are now the main
-session i will be using to control and manage my meta ads"). **`META-ADS.md` at root is the handover brief** —
+Meta paid advertising, and publishing to Facebook, Instagram, TikTok and LinkedIn, belong to the **nPanda
+Meta session** — a second Claude session working in this same repo, given the ad account on 22 Sep 2026
+("u are now the main session i will be using to control and manage my meta ads"). It publishes; this
+session and the motion session make. It owns `published.js` and `META-ADS.md` and writes no other file
+here; see `PUBLISH-HANDOVER.md`. **`META-ADS.md` at root is its handover brief** —
 the account, what is live, the audit findings, the Route C compliance position, the two incidents, what the
 MCP connector can and cannot do, the naming convention and the operating rules. Read it before touching the
 ad account. Route C is the one that bites creative: the terminal and the EPOS software only, no rate, fee,

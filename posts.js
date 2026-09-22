@@ -2,8 +2,10 @@
    Add a new post by copying an object and changing the fields.
    channel: "linkedin" | "meta"   pillar: Statement | Street | Product | Merchant | Partner
    blocked: false, or a string explaining what must happen first.
-   posted:  null until it goes out, then { where, on } — e.g. { where: "LinkedIn", on: "2026-09-10" }.
-            Faisal sets this, or a session sets it when Faisal says so in chat. It renders on library.html.
+   Whether a post has gone out is NOT recorded here. It lives in published.js, which the nPanda Meta
+   session owns — that session publishes, this one writes. One place, one owner, no merge conflicts.
+   A `posted` field lived here for one day on 22 Sep 2026 and had already drifted (M13 and M14 were
+   added without it), which is the argument against keeping it.
    sketch.type: reel | carousel | statcard | photo | none
    assets: the creative drawn for this post, rendered by overlays.js and downloadable on social.html.
      { t:"stat",  big, line, src, size }            one figure, one line, a source
@@ -19,7 +21,7 @@ window.POSTS = [
 /* ============================ LINKEDIN — posted as NeroPay ============================ */
 {
   id: "L1", channel: "linkedin", pillar: "Street", format: "Photo + text",
-  date: "Thu 10 Sep", blocked: false, posted: null,
+  date: "Thu 10 Sep", blocked: false,
   title: "98 in 800 metres",
   copy: "98 food businesses in 800 metres of Wilmslow Road. We counted.\n\nJordanian, Lebanese, Kurdish, Iranian, Afghan, and the Pakistani places that were there before any of them.\n\nWe work in payments, so we notice card machines. Six or seven providers on one road. Almost nobody has changed theirs in years.\n\nNot because they're locked in. Most aren't. They've got forty things to do before the card machine, and nobody's ever sat down and read the bill with them.\n\nThat's most of the job. Not selling. Reading a statement out loud until the number makes sense.\n\nIf yours is one of the 98, we're on that road most weeks. Bring last month's statement out to the counter and we'll read it with you. Ten minutes. Sometimes the answer is keep what you've got.",
   creative: "One photograph taken on the day, of the actual street. Not stock, not a graphic. Phone camera, landscape, mid-morning when the shutters are up and the light is flat. Slightly imperfect beats polished — the post depends on being believed. The stat card below is the fallback if the photo doesn't land, not the plan.",
@@ -34,7 +36,7 @@ window.POSTS = [
 },
 {
   id: "L2", channel: "linkedin", pillar: "Statement", format: "Stat card + text",
-  date: "Mon 14 Sep", blocked: false, posted: null,
+  date: "Mon 14 Sep", blocked: false,
   title: "The pub got a cut. The takeaway didn't.",
   copy: "Pubs got a rates cut in April. The takeaway two doors down got nothing.\n\nThe 40% relief ended. Pubs got 15% off and a three-year freeze. Restaurants, cafés, bars and takeaways were left out of it. Same street, same customers.\n\nThen the Living Wage went to £12.71, the 18-to-20 rate went up 8.5%, and employer NI hit 15% from £5,000.\n\nIn February, 51% of independent operators called themselves optimistic. By August it was 16%.\n\nWe can't do anything about rates or wages. Nobody in payments can, and anyone who says otherwise is selling something.\n\nWhat we can do is sit down with the one cost line that's actually negotiable and that almost nobody has read: the card processing. It's a small line. It's also one of the few that moves when you push on it.\n\nSmall and available beats big and impossible.",
   creative: "Single stat card, 1:1. Charcoal ground, one yellow figure, one hairline rule. '51% → 16%' and the caption. No logo lockup beyond the wordmark, no stock photo, no icons. The number is the whole design.",
@@ -47,7 +49,7 @@ window.POSTS = [
 },
 {
   id: "L3", channel: "linkedin", pillar: "Statement", format: "Text only",
-  date: "Thu 17 Sep", blocked: false, posted: null,
+  date: "Thu 17 Sep", blocked: false,
   title: "We tell some merchants to stay put",
   copy: "We tell some merchants to stay put.\n\nMost weeks someone sends a statement, we work out what they're actually paying, and it's already good. Nothing useful to add. We say so.\n\nSometimes it's worse than that for us. If your average sale is under about £18, a flat-rate provider usually beats our standard pricing. A fixed pence charge lands harder on a £6 coffee than a £60 dinner. SumUp's 0.99% plan beats what we'd quote most merchants at volume. Correct as of 18 August 2026.\n\nWe could keep quiet about that.\n\nWe don't, because if we win a merchant who was always going to be cheaper elsewhere, they work it out in four months and leave. Then they tell people.\n\nIn Rusholme everyone knows everyone. There's no version of this that survives being clever with people who talk to each other every day.\n\nIf you want to know which one you are, send the statement. We'll tell you either way.",
   creative: "Nothing. No image. An image makes it look produced rather than said, and that undercuts the point. The quote card exists only if the post gets reused later as a carousel opener.",
@@ -59,7 +61,7 @@ window.POSTS = [
 },
 {
   id: "L4", channel: "linkedin", pillar: "Partner", format: "Video + text",
-  date: "Mon 28 Sep", blocked: false, posted: null,
+  date: "Mon 28 Sep", blocked: false,
   note: "Unblocked 17 Sep 2026: Faisal confirmed the partner programme final. The post still carries no figures by design — they live at partners.neropay.app. The Stripe question on third-party introducers stays on youtube.html as Eray's.",
   title: "The objection nobody says out loud",
   copy: "Wholesalers lose customers to suppliers they introduced. Everyone in the trade knows a story like it, and nobody says it in the meeting.\n\nFifteen-year accounts. The money isn't the worry. Losing the relationship is.\n\nThis is how an introduction to us works, plainly.\n\nYou pass on a name. That's the whole ask. No selling, no paperwork, no quoting a rate.\n\nWe talk to them. If their current deal is good, we say so and they stay where they are. We don't get paid for those. We do it anyway, because the alternative is your customer working out in four months that you sent them somewhere worse.\n\nIf they move, they're still yours. We don't see who else you supply, we don't market to your list, and we never contact anyone you haven't introduced.\n\nTerms and the numbers are at partners.neropay.app, better read at your own pace than in a post.\n\nSupply independent hospitality in Greater Manchester? Send us a message.\n\nPresenter in the video generated with AI.",
@@ -75,7 +77,7 @@ window.POSTS = [
 },
 {
   id: "L5", channel: "linkedin", pillar: "Street", format: "Text only",
-  date: "Mon 7 Sep", blocked: false, posted: null,
+  date: "Mon 7 Sep", blocked: false,
   title: "Awards week",
   copy: "Thirty Greater Manchester businesses are on the Asian Restaurant Awards shortlist today. The British Kebab Awards semi-finals are tomorrow.\n\nTwo things about that.\n\nOne: this sector has spent the year being told how bad things are. Thirty businesses from one city region still made a national shortlist.\n\nTwo: almost none of them will post about it. We checked. Most have a Facebook page last touched in 2023 and no website.\n\nIf that's your restaurant, or a customer's: phone out, one photo of the team or the certificate, one line saying what it's for, posted from the business page. It's free, and it's what fills tables on a wet Tuesday in November.\n\nCongratulations to everyone on the list.",
   creative: "No image before the event. Post a photo of the room afterwards as a follow-up — the venue and the crowd, not a posed shot of anyone from NeroPay.",
@@ -87,7 +89,7 @@ window.POSTS = [
 },
 {
   id: "L6", channel: "linkedin", pillar: "Statement", format: "Image + text",
-  date: "Wed 23 Sep", blocked: false, posted: null,
+  date: "Wed 23 Sep", blocked: false,
   title: "The ninety-second calculation",
   copy: "Most merchant statements are designed to be filed, not read.\n\nReading one takes ninety seconds once you know the trick. Ignore every percentage on the page. Take the total you were charged. Divide it by what you took on cards. Multiply by a hundred.\n\nThat's your effective rate. It's the only number that compares one provider with another, and it's almost never the number on the front.\n\nOn the specimen below (illustrative, not a real merchant) the advertised rate is \"from 0.50%\". The effective rate is 1.09%.\n\nWhere the gap comes from: 4p a transaction to authorise, terminal rental, a PCI charge, a fee on every payout. Small lines. £308 on the month.\n\nIf you do the sum and the number's good, keep your provider and tell us nothing. If it isn't, you'll know exactly which line to ask about.\n\nLast statement. Ninety seconds. Go.",
   creative: "The Northwick specimen statement, exported as a still. Crop to the charges block so the small lines are legible at feed size. The SPECIMEN strip must stay in frame. Never a real one, even redacted. The 0.50% → 1.09% card is the alternative if the crop is unreadable on a phone.",
@@ -103,7 +105,7 @@ window.POSTS = [
 },
 {
   id: "L7", channel: "linkedin", pillar: "Partner", format: "Text only",
-  date: "Fri 2 Oct", blocked: false, posted: null,
+  date: "Fri 2 Oct", blocked: false,
   title: "Writing down what's in our heads",
   copy: "We're building a remote team this quarter. Writing the job descriptions has been humbling.\n\nTo hire someone you have to explain the job. To explain the job you have to admit what lives in one person's head and nowhere else.\n\nFor us: how a terminal gets set up for a white-label partner versus a standard merchant. How a flagged payout gets reviewed. What happens between a lead arriving and a first payment.\n\nAll fine while three people did everything. None of it survives a fourth.\n\nSo this week's work is writing down things we already know, in the order someone else would need them.\n\nNot glamorous. Probably the most valuable thing we'll do this month.",
   creative: "Text only, or one plain photo of a whiteboard with a process sketch on it. Nothing legible that touches a real merchant, a real payout or a real account.",
@@ -115,7 +117,7 @@ window.POSTS = [
 },
 {
   id: "L8", channel: "linkedin", pillar: "Statement", format: "Text only",
-  date: "Wed 7 Oct", blocked: false, posted: null,
+  date: "Wed 7 Oct", blocked: false,
   title: "Correcting ourselves",
   copy: "We've been saying something slightly wrong. Here's the correction.\n\nThe line: competitors charge for POS software and we don't. Sounds great on a doorstep.\n\nIt isn't accurate. Square, SumUp and PayPal all have free POS tiers, and they work. Plenty of businesses run on them and never pay a penny.\n\nThe accurate version is narrower. Growing restaurants tend to end up on the paid tiers. Square for Restaurants Plus is £69 a month per location, SumUp POS Plus £39 plus VAT. That's the comparison worth making. Ours is included with the terminal at every tier.\n\nNarrower. Less punchy. True.\n\nWhy say it publicly: the person we'd be overstating it to is already on Square's free tier. They'd know in four seconds, and everything else we said would go in the bin with it.\n\nFigures correct as of 18 August 2026, from each provider's pricing page.",
   creative: "Text only.",
@@ -129,7 +131,7 @@ window.POSTS = [
 /* ============================ INSTAGRAM + FACEBOOK ============================ */
 {
   id: "M1", channel: "meta", pillar: "Statement", format: "Reel · 45s",
-  date: "Tue 8 Sep", blocked: false, posted: null,
+  date: "Tue 8 Sep", blocked: false,
   title: "The only number that compares",
   copy: "The rate on the front of your statement isn't the rate you pay.\n\nThe one that is: total charged ÷ total card takings × 100. Your effective rate. The only number that compares one provider with another.\n\nWe go through a specimen statement line by line on YouTube. Link in bio. If your number comes out fine, keep what you've got.\n\nIllustrative example, not a real statement. Correct as of 18 Aug 2026. Presenter generated with AI.",
   creative: "Vertical cut from B1. Open on the cover frame, presenter enters at 3s. Burned-in subtitles — most of this is watched on mute. No AI wording inside the video (Faisal, 9 Sep 2026): tick the platform's AI-generated content setting and put the disclosure line in the caption. No music bed under the presenter. The formula overlay from B1 is the end frame.",
@@ -145,7 +147,7 @@ window.POSTS = [
 },
 {
   id: "M2", channel: "meta", pillar: "Statement", format: "Carousel · 5 cards",
-  date: "Wed 16 Sep", blocked: false, posted: null,
+  date: "Wed 16 Sep", blocked: false,
   title: "Four things to find on your statement",
   copy: "Open last month's statement and find these four things.\n\n1. Your effective rate: total charged ÷ total card takings × 100.\n2. Authorisation fees. Pence per tap. Never in the headline rate.\n3. Terminal rental. Do you own the machine or hire it, and what happens to it if you leave?\n4. The monthly extras. PCI, statement fee, minimum monthly charge. Small each. Not small over a year.\n\nIf all four look fine, you're in a good place. Stay there.\n\nSave this for the next one.\n\nIllustrative figures. Correct as of 18 Aug 2026.",
   creative: "Five cards at 4:5, drawn below. Card 1 the title, cards 2–5 one item each. Charcoal ground, white type, yellow as the only accent. This is the house carousel template — everything after it reuses the same grid.",
@@ -164,7 +166,7 @@ window.POSTS = [
 },
 {
   id: "M3", channel: "meta", pillar: "Product", format: "Reel · 15s",
-  date: "Fri 11 Sep", blocked: false, posted: null,
+  date: "Fri 11 Sep", blocked: false,
   title: "Terminal on a counter",
   copy: "One tap. That's the whole video.\n\nCard machine with the full till built in: product grid, staff logins, kitchen screen, Z-reports, online ordering, table bookings. No monthly software fee.\n\nneropay.app",
   creative: "Locked-off static shot. Terminal on a real counter in a real independent business, mid-service. Everything sharp front to back — no bokeh anywhere. Natural light. The terminal is the only branded object in frame. Hands enter, one tap completes, hands leave. That's the whole action. The cover below is the frame before the hands arrive.",
@@ -178,7 +180,7 @@ window.POSTS = [
 },
 {
   id: "M4", channel: "meta", pillar: "Statement", format: "Reel · 60s",
-  date: "Mon 21 Sep", blocked: false, posted: null,
+  date: "Mon 21 Sep", blocked: false,
   title: "A £6 coffee and a £60 dinner",
   copy: "A £6 coffee and a £60 dinner aren't the same transaction. Most pricing treats them like they are.\n\nA fixed pence charge barely touches sixty pounds. On six, it's most of the cost.\n\nSo the right pricing depends on your average sale. Small tickets at high volume? Some cafés are genuinely better off on a flat rate somewhere else, and we'll say so.\n\nFull version on YouTube. Link in bio.\n\nCorrect as of 18 Aug 2026. Presenter generated with AI.",
   creative: "Vertical cut from B2. The coffee overlay and the crossover figure are the whole visual. Hold on the crossover for a full two seconds; that's the frame people screenshot.",
@@ -194,7 +196,7 @@ window.POSTS = [
 },
 {
   id: "M5", channel: "meta", pillar: "Product", format: "Carousel · 8 cards",
-  date: "Fri 25 Sep", blocked: false, posted: null,
+  date: "Fri 25 Sep", blocked: false,
   title: "Everything included",
   copy: "Everything that comes with a NeroPay terminal, and none of it costs extra per month.\n\nNeroPOS: the till. Product grid, staff, kitchen display, Z-reports.\nNeroWeb: your own online ordering. No commission per order.\nNeroBooking: tables and appointments.\nNero QR Pay: pay by QR from the far end of the table.\nNeroAI: what sold and what it cost to take.\nNeroTrade: wholesale and trade accounts.\nNeroGym: memberships and classes.\n\nOne machine. Swipe through, then save it for when you're comparing.\n\nneropay.app",
   creative: "Eight cards at 4:5, drawn below. Card 1 the title, one product per card, card 8 closes on the terminal — swap that card for the terminal photograph. Demo-account screenshots can sit under the type on cards 2–7 if you want them; never the live dashboard, never real transactions.",
@@ -216,7 +218,7 @@ window.POSTS = [
 },
 {
   id: "M6", channel: "meta", pillar: "Street", format: "Reel · 20s",
-  date: "Fri 18 Sep", blocked: false, posted: null,
+  date: "Fri 18 Sep", blocked: false,
   title: "Wilmslow Road, Tuesday",
   copy: "98 food businesses in 800 metres.\n\nWilmslow Road, Tuesday, half two. Shutters up, grills on, probably the densest food strip in the North.\n\nWe walk it most weeks. If you're on it, say hello.",
   creative: "Phone footage, walking, vertical, no narration. Shopfronts, signage, the texture of the street. Ambient sound only — traffic and voices. No music, no captions beyond the single opening title below. Shot on a field day; costs nothing but remembering to film.",
@@ -230,7 +232,7 @@ window.POSTS = [
 },
 {
   id: "M7", channel: "meta", pillar: "Statement", format: "Carousel · 7 cards",
-  date: "Mon 5 Oct", blocked: false, posted: null,
+  date: "Mon 5 Oct", blocked: false,
   title: "Before you sign anything",
   copy: "Five questions to ask before you sign a card processing agreement. Get the answers in writing.\n\n1. How long is the minimum term, in months?\n2. What's the exact figure to leave early?\n3. Do I own the terminal, or am I hiring it?\n4. What happens to the machine if I close the account, and what's the charge if it isn't returned?\n5. Can the rate change mid-term, and how would I find out?\n\nA contract isn't automatically a bad deal. Not knowing the exit number is.\n\nSave it for the next time someone puts a form in front of you.\n\nCorrect as of 18 Aug 2026.",
   creative: "Seven cards, same template, drawn below. Title, one question per card, and the concession on its own card at the end — it's the payoff, so give it the space.",
@@ -251,7 +253,7 @@ window.POSTS = [
 },
 {
   id: "M8", channel: "meta", pillar: "Merchant", format: "Reel · 60s",
-  date: "Wed 30 Sep", blocked: "Written consent from Arman covering filming, his name, the business name and every channel it appears on — signed before the shoot, not after. No negotiated rate, no commercial terms, no transaction data in the video or caption.", posted: null,
+  date: "Wed 30 Sep", blocked: "Written consent from Arman covering filming, his name, the business name and every channel it appears on — signed before the shoot, not after. No negotiated rate, no commercial terms, no transaction data in the video or caption.",
   title: "Armenian Taverna",
   copy: "Arman runs the Armenian Taverna on Albert Square.\n\nTwo terminals, the full till, and a menu we built with him item by item.\n\nFilmed in his restaurant, in his words.",
   creative: "The mid-September shoot. Real filming, real merchant, real premises — the one asset in the whole plan that isn't generated. Keep the caption short: the video is the content. The cover below carries his name only once the form is signed.",
@@ -265,7 +267,7 @@ window.POSTS = [
 },
 {
   id: "M9", channel: "meta", pillar: "Product", format: "Reel · 20s",
-  date: "Mon 12 Oct", blocked: "Flex pricing is unconfirmed and must not be quoted. The caption deliberately carries no price — keep it that way until Eray signs it off.", posted: null,
+  date: "Mon 12 Oct", blocked: "Flex pricing is unconfirmed and must not be quoted. The caption deliberately carries no price — keep it that way until Eray signs it off.",
   title: "Flex, for markets and stalls",
   copy: "No counter, no reliable wi-fi, and a queue that won't wait. That's a market stall in November.\n\nNeroPay Flex: 5.5in screen, receipt printer built in, wi-fi, 4G and offline. Prints the receipt on the spot.\n\nMarkets open in November. Kit gets decided in October.\n\nneropay.app",
   creative: "Flex held in one hand, outdoors, overcast Manchester light. Receipt printing is the hero shot — it's the feature a market trader actually needs. Everything sharp, locked off, NeroPay branding only. Never reference Verifone or Stripe. No price on screen.",
@@ -279,7 +281,7 @@ window.POSTS = [
 },
 {
   id: "M10", channel: "meta", pillar: "Street", format: "Reel or carousel",
-  date: "Fri 16 Oct", blocked: "Posts from the NeroPay Page only. Elif's personal profile is restricted until 18 September and nothing commercial goes out from a personal profile regardless. Product-led only — no earnings figures, no partner-programme content in any language.", posted: null,
+  date: "Fri 16 Oct", blocked: "Posts from the NeroPay Page only. Elif's personal profile is restricted until 18 September and nothing commercial goes out from a personal profile regardless. Product-led only — no earnings figures, no partner-programme content in any language.",
   title: "Turkish-language product post",
   copy: "Kart ödeme terminali ve ücretsiz yazarkasa yazılımı.\n\nÜrün ekranı, personel yönetimi, mutfak ekranı, Z raporu, online sipariş ve rezervasyon — terminale dahil, aylık yazılım ücreti yok.\n\nManchester ve çevresindeki işletmelere kurulum ve destek sağlıyoruz.\n\nneropay.app",
   creative: "Same product footage as M3 or M5 with Turkish burned-in subtitles. No separate shoot. Elif reviews terminology before publishing — POS cihazı, yazarkasa yazılımı, ekstre. The cover below is the Turkish opening frame; Elif checks it too.",
@@ -294,7 +296,7 @@ window.POSTS = [
 /* ============================ ADDED 17 SEP 2026 — NeroConnect · partner programme · card machines ============================ */
 {
   id: "L9", channel: "linkedin", pillar: "Partner", format: "Document · 6 cards + text",
-  date: "Wed 30 Sep", blocked: false, posted: null,
+  date: "Wed 30 Sep", blocked: false,
   title: "NeroConnect — your brand on the terminal",
   copy: "Three kinds of business asked us the same thing this year: whether the card payments could carry their name instead of ours.\n\nEPOS installers who fit tills for a living. Software companies with a few hundred restaurants on their platform. Anyone looking after a group of merchants and sick of six logins.\n\nNeroConnect is the yes. One dashboard for every merchant you look after. Your logo, your domain, your merchant pricing. We run the card acquiring, the settlement and the compliance underneath. You keep the relationship.\n\nTwo ways to set it up, and the difference is who pays NeroPay's processing fee. Either your platform pays it and bills your merchants yourself, or each merchant pays it directly with your fee on top. Merchant pricing is yours in both.\n\nTwo things it isn't. If you look after three cafés, this is the wrong door; the partner programme is built for that, one introduction and no platform to run. And depending on the setup there can be regulatory questions on your side. That's a conversation before a contract, not after.\n\nThe documentation is public at docs.neropay.app, NeroConnect section. Read it before you talk to us. It's more use than the sales call.",
   creative: "A six-card carousel on the light stage, uploaded to LinkedIn as a document (one PDF, 1080×1350 pages). No product screenshot: Connect Reports and the pricing screens carry figures that never go public (docs build plan §8). No figure anywhere on the cards.",
@@ -314,7 +316,7 @@ window.POSTS = [
 },
 {
   id: "M11", channel: "meta", pillar: "Product", format: "Carousel · 6 cards",
-  date: "Wed 23 Sep", blocked: false, posted: null,
+  date: "Wed 23 Sep", blocked: false,
   title: "NeroConnect — for installers and platforms",
   copy: "Card payments under your own brand.\n\nNeroConnect is for EPOS installers, software platforms and anyone looking after a group of merchants. One dashboard, your logo, your domain, your merchant pricing. We run the payments underneath.\n\nThree cafés? That's the terminal and the partner programme, not this.\n\ndocs.neropay.app",
   creative: "The same six cards as L9 at 4:5, posted as a multi-image carousel. Same files, second channel — the engine rule, not a new build.",
@@ -334,7 +336,7 @@ window.POSTS = [
 },
 {
   id: "L10", channel: "linkedin", pillar: "Partner", format: "Document · 6 cards + text",
-  date: "Tue 6 Oct", blocked: false, posted: null,
+  date: "Tue 6 Oct", blocked: false,
   title: "The partner programme, in the order people ask",
   copy: "The NeroPay partner programme, in the order people actually ask about it.\n\nWhat do I have to do? Make an introduction. A name and a number is enough. We make the call, do the setup, train the staff and take the support. You don't sell anything and you don't quote a rate.\n\nWhat's it worth? Two separate things. A bonus for every merchant you introduce who goes live: £100, £200 or £300, set by their card takings in their first 30 days. And a share of what your merchants' card payments earn NeroPay, from 20% once you've introduced three new active merchants in a calendar month, rising with the count that month.\n\nWhat happens to my customer? They stay yours. We never see your list and we never tell you who signed. You get a count, not names.\n\nWhat we tell some of them. To stay put. If their statement is already good we say so, and nobody gets paid for that one. It's the only way an introduction from you stays safe.\n\nWhere we're weaker. We're small. If your customers want a name they already recognise behind the counter, that isn't us. What they get instead is someone fifteen minutes down the road who picks up.\n\nTerms in full at partners.neropay.app. Three new active merchants a month is the gate for the share; the bonus is yours either way.",
   creative: "A six-card carousel on the light stage, uploaded as a LinkedIn document. The two figures appear once each, in body type on their own card, each in the same sentence as its condition, per merchant, never a total. No figure is ever the big element (rail 2, partner brief rule 2). No lifestyle imagery, no person.",
@@ -354,7 +356,7 @@ window.POSTS = [
 },
 {
   id: "L11", channel: "linkedin", pillar: "Product", format: "Document · 6 cards + text",
-  date: "Mon 12 Oct", blocked: false, posted: null,
+  date: "Mon 12 Oct", blocked: false,
   title: "Four kinds of card machine",
   copy: "Four kinds of card machine get sold to the same takeaway, and most of the difference is where the payment happens.\n\nCountertop. Plugged in by the till, wired or wi-fi, never moves. The right answer for a counter with a queue.\n\nPortable. Talks to a base by the till and walks to the table. Restaurants with table service. Its range is the room, not the street.\n\nMobile. Its own SIM, works anywhere with signal, prints a receipt. Market stalls, deliveries, a pop-up. Ours in this class is the Flex: 5.5 inch screen, printer built in, wi-fi, 4G and offline.\n\nPhone-based reader. A small reader paired to an app on a phone. No printer, no till. The customer taps the reader and the receipt goes by text.\n\nWhere the smaller box wins. If the business takes twenty payments a day on a stall, a phone-based reader is fine and there is no reason to carry more. The case for a terminal starts when the machine has to do more than take the payment: run the till, split a bill, print, keep working when the wi-fi drops.\n\nThe question to ask before anything else: where does the payment happen, and what else does the machine have to do while it's there?",
   creative: "A six-card carousel on the light stage, uploaded as a LinkedIn document. One machine per card, the concession on the last. No price, no rate, no competitor named, no photograph of a competitor's reader.",
@@ -374,7 +376,7 @@ window.POSTS = [
 },
 {
   id: "M12", channel: "meta", pillar: "Product", format: "Carousel · 6 cards",
-  date: "Mon 28 Sep", blocked: false, posted: null,
+  date: "Mon 28 Sep", blocked: false,
   title: "Four kinds of card machine",
   copy: "Four kinds of card machine. Most of the difference is where the payment happens.\n\nCountertop: by the till, never moves.\nPortable: walks to the table, talks to a base.\nMobile: its own SIM, prints a receipt, works on a stall. That's the Flex.\nPhone reader: a small reader and an app. No printer, no till.\n\nTwenty payments a day on a stall and a phone reader is fine. A terminal makes sense when it has to run the till as well.\n\nneropay.app",
   creative: "L11's six cards at 4:5 as a multi-image post. Same files, second channel.",
@@ -394,7 +396,7 @@ window.POSTS = [
 },
 {
   id: "L12", channel: "linkedin", pillar: "Partner", format: "Video · 16:9 · 88s + text",
-  date: "Tue 22 Sep", blocked: "Faisal reviews the NC01 v2 16:9 render (motion/neroconnect/nc01, delivered 17 Sep 2026) and approves it for posting.", posted: null,
+  date: "Tue 22 Sep", blocked: "Faisal reviews the NC01 v2 16:9 render (motion/neroconnect/nc01, delivered 17 Sep 2026) and approves it for posting.",
   title: "NeroConnect — the intro video",
   copy: "You don't have to build a payments company to run one.\n\nThe terminals, the till software, the settlement, the compliance and the support desk already exist. We built them for NeroPay. NeroConnect lets a software company, an EPOS installer or anyone looking after a group of merchants run all of it under their own name: one dashboard, your logo, your domain, your branding on the terminal.\n\nTwo ways to set it up. Either your platform pays NeroPay's processing fee and bills your merchants yourself, or each merchant pays it directly with your fee on top. Either way, you set what your merchants pay.\n\nWho it isn't for: three cafés. That's the partner programme, one introduction and nothing to run. And depending on the setup there can be regulatory questions on your side, which is a conversation before a contract, not after.\n\nEighty-five seconds on how it fits together. The documentation is public at docs.neropay.app.\n\nVoice generated with AI.",
   creative: "The NC01 motion graphics intro, 16:9 master without burnt captions (motion/neroconnect/nc01, Olivia, 87.5 s), uploaded natively. No AI wording inside the video; the disclosure is the last line of the post (rail 4 at upload). Cover: the first frame with the statement fully risen (about 3.5 s).",
