@@ -74,12 +74,12 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#0E1013}
 /* beat D: the crossover */
 #d-slab{left:110px;top:600px;width:860px;height:520px}
 #d-slab .body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px}
-#d-fig{font-size:196px;line-height:.92;color:#F5C518}
+#d-fig{font-size:196px;line-height:.92;color:#FFCF24}
 #d-sub{font-family:Chivo;font-weight:400;font-size:34px;color:rgba(255,255,255,.66);letter-spacing:.005em}
 
 /* beat E: the end card */
 #e-wm{position:absolute;left:0;right:0;top:760px;text-align:center;font-weight:800;font-size:196px;letter-spacing:-.05em;line-height:1}
-#e-wm i{font-style:normal;color:#F5C518}
+#e-wm i{font-style:normal;color:#FFCF24}
 #e-ed{top:990px;font-size:66px;font-weight:400;color:rgba(255,255,255,.92)}
 #e-url{position:absolute;left:0;right:0;top:1118px;text-align:center;font-weight:600;font-size:28px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.5)}
 
@@ -222,7 +222,7 @@ document.fonts.ready.then(function () {
   tl.set('#amtB', { innerHTML: '67.6p' }, bt(14) + 0.25);
   tl.to('#barA', { width: '88.8%', duration: 0.6, ease: up, immediateRender: false }, bt(15));   /* 60.0p of 67.6p */
   tl.to('#barB', { width: '100%', duration: 0.6, ease: up, immediateRender: false }, bt(15) + 0.22);
-  tl.to('#barA', { backgroundColor: '#F5C518', duration: 0.4, ease: 'power2.out', immediateRender: false }, bt(15) + 0.6);
+  tl.to('#barA', { backgroundColor: '#FFCF24', duration: 0.4, ease: 'power2.out', immediateRender: false }, bt(15) + 0.6);
   tl.set('#c-ed-t', { innerHTML: "Here we don't." }, bt(14) + 0.1);
   rise('#c-ed-t', bt(18));                                   // "Here we don't."
   drop('#c-ed-t', bt(22) - 0.3);

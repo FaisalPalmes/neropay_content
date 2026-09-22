@@ -3,6 +3,7 @@
 One line per notice, newest first. Keep it to what a session must know before it writes a word or a
 frame, and retire a line once it is folded into the docs and nobody can get it wrong any more.
 
+2026-09-22 · MOTION IS ON THE NEW BRAND, from `motion/lib/` forward. Yellow `#FFCF24`, ink `#111114`, the wordmark placed from `brand/logos/`. The delivered episodes (PP01, PP02, NC01, MG02, Maths ep 1) keep their own old values and are not reissued — Faisal, 22 Sep 2026. Move an episode's own values only if it is re-rendered.
 2026-09-22 · A1/A2/A3 (the presenter partner videos in generation-pack.md) DESCRIBE A SUPERSEDED PARTNER MODEL — account credit on the partner's own trading account, not the confirmed £100/£200/£300 bonus plus 20–40% revenue share. A2-06 still carries a literal `[PLACEHOLDER]`. Never generate them as written; rewrite from `motion/partner/BRIEF.md` v4 first.
 2026-09-22 · MG01 "Don't switch to us" was RENDERED on 15 Sep (four crops, md5s in script.md) but `out/final/` is gitignored and no delivery link was ever written — the files are gone unless Faisal has them. It needs re-rendering before it can even be reviewed, and publish is separately blocked on the workhorse rate.
 2026-09-22 · TWO SESSIONS, TWO FILES. `library.js` = what we made (content + motion sessions write it). `published.js` = what went out (the nPanda Meta session writes it, and nothing else here). Never record a publish in `library.js` or `posts.js`; the `posted` field is gone. `PUBLISH-HANDOVER.md` is the contract, `node check-register.mjs` enforces it.

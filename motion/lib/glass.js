@@ -27,7 +27,7 @@ export function glassMat(tint = 'w', { opacity = .3, roughness = .05 } = {}) {
 /* the pencil-world outline for a glass object: the same geometry, back faces only, a touch larger, ink at low alpha —
    a soft dark edge where the surface turns away, which is what makes a pale glass read on a pale ground */
 export function rimShell(geometry, scale = 1.025) {
-  const m = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color:0x141416, transparent:true, opacity:.09, side:THREE.BackSide, depthWrite:false }));
+  const m = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color:0x111114, transparent:true, opacity:.09, side:THREE.BackSide, depthWrite:false }));
   m.scale.setScalar(scale); m.renderOrder = 4; m.castShadow = false; return m;
 }
 
@@ -38,7 +38,7 @@ function etchTexture(draw, size = 512) {
   x.save(); x.translate(size / 2, size / 2);
   x.lineCap = 'round'; x.lineJoin = 'round';
   /* shadow pass (ink, offset) then the light pass */
-  for (const [dx, dy, col, a] of [[6, 8, '#141416', .16], [0, 0, '#FFFFFF', .85]]) {
+  for (const [dx, dy, col, a] of [[6, 8, '#111114', .16], [0, 0, '#FFFFFF', .85]]) {
     x.save(); x.translate(dx, dy); x.globalAlpha = a; x.strokeStyle = x.fillStyle = col; draw(x, size); x.restore();
   }
   x.restore();
@@ -98,7 +98,7 @@ export function glassCoin({ r = 5, d = .8, tint = 'y', mark = 'pound', markScale
    large, subtly in the frame, hinting at a card without becoming the focus. Bank-card proportions (85.6 × 54), an ivory
    matte body with a soft sheen, a gold chip, the contactless wave, a thin yellow band on the back edge. No number, no
    name, no expiry, no scheme mark, no brand — never a NeroPay card (the terminal is the only branded object). */
-export function paymentCard({ w = 20, tint = 0xF3F0E8, band = 0xF5C518 } = {}) {
+export function paymentCard({ w = 20, tint = 0xF3F0E8, band = 0xFFCF24 } = {}) {
   const h = w * 54 / 85.6, d = w * .022;
   const g = new THREE.Group();
   const body = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 6, w * .045),

@@ -12,7 +12,7 @@
 import * as THREE from '../assets/vendor/three.module.js';
 import { RoundedBoxGeometry } from '../assets/vendor/RoundedBoxGeometry.js';
 
-export const C = { ink:0x141416, ink2:0x1F2026, accent:0xF5C518, paper:0xFAF8F2, paper2:0xECEAE3, muted:0x9A9A9E, screen:0x0E1013 };
+export const C = { ink:0x111114, ink2:0x1F2026, accent:0xFFCF24, paper:0xFAF8F2, paper2:0xECEAE3, muted:0x9A9A9E, screen:0x0E1013 };
 export const ease = { out: p => 1 - Math.pow(1 - p, 3), inout: p => p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2, in: p => p*p*p };
 export const clamp01 = p => p < 0 ? 0 : p > 1 ? 1 : p;
 export const seg = (t, s, d) => clamp01((t - s) / d);
@@ -61,13 +61,13 @@ export function terminal({ lean = 62 } = {}) {
   const sc = document.createElement('canvas'); sc.width = 640; sc.height = 1024;
   const x = sc.getContext('2d');
   x.fillStyle = '#0E1013'; x.fillRect(0, 0, 640, 1024);
-  x.fillStyle = '#F5C518'; x.fillRect(0, 0, 640, 14);
+  x.fillStyle = '#FFCF24'; x.fillRect(0, 0, 640, 14);
   x.font = '800 150px Chivo'; x.textBaseline = 'middle'; x.letterSpacing = '-7px';
   const nw = x.measureText('Nero').width, pw = x.measureText('Pay').width, x0 = (640 - nw - pw) / 2;
   x.fillStyle = '#FFFFFF'; x.fillText('Nero', x0, 470);
-  x.fillStyle = '#F5C518'; x.fillText('Pay', x0 + nw, 470);
+  x.fillStyle = '#FFCF24'; x.fillText('Pay', x0 + nw, 470);
   x.font = '400 34px "Martian Mono"'; x.fillStyle = '#9A9A9E'; x.letterSpacing = '5px'; x.textAlign = 'center'; x.fillText('TAP TO PAY', 320, 600);
-  x.fillStyle = '#F5C518'; x.beginPath(); x.arc(320, 780, 62, 0, Math.PI * 2); x.stroke(); x.lineWidth = 8; x.strokeStyle = '#F5C518'; x.beginPath(); x.arc(320, 780, 62, 0, Math.PI * 2); x.stroke();
+  x.fillStyle = '#FFCF24'; x.beginPath(); x.arc(320, 780, 62, 0, Math.PI * 2); x.stroke(); x.lineWidth = 8; x.strokeStyle = '#FFCF24'; x.beginPath(); x.arc(320, 780, 62, 0, Math.PI * 2); x.stroke();
   x.beginPath(); x.arc(320, 780, 34, 0, Math.PI * 2); x.stroke();
   const tex = new THREE.CanvasTexture(sc); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
   const screen = new THREE.Mesh(new THREE.PlaneGeometry(W - 1.0, H * .66), new THREE.MeshStandardMaterial({ map:tex, roughness:.3, metalness:0, emissive:0xffffff, emissiveIntensity:.55, emissiveMap:tex }));
@@ -168,11 +168,11 @@ function uiTexture() {
   const c = document.createElement('canvas'); c.width = 720; c.height = 1280; const x = c.getContext('2d');
   x.fillStyle = '#EDEDEB'; x.fillRect(0, 0, 720, 1280);
   /* banner */
-  x.fillStyle = '#F5C518'; x.beginPath(); x.roundRect(40, 56, 640, 70, 12); x.fill();
-  x.font = '800 30px Chivo'; x.textBaseline = 'middle'; x.fillStyle = '#141416'; x.fillText('PAYOUT', 64, 92);
+  x.fillStyle = '#FFCF24'; x.beginPath(); x.roundRect(40, 56, 640, 70, 12); x.fill();
+  x.font = '800 30px Chivo'; x.textBaseline = 'middle'; x.fillStyle = '#111114'; x.fillText('PAYOUT', 64, 92);
   x.font = '400 26px Chivo'; x.fillStyle = '#3A3A3E'; x.fillText('see your daily total', 210, 93);
   /* amount */
-  x.font = '800 124px Chivo'; x.textAlign = 'center'; x.fillStyle = '#141416'; x.fillText('£0.00', 360, 226);
+  x.font = '800 124px Chivo'; x.textAlign = 'center'; x.fillStyle = '#111114'; x.fillText('£0.00', 360, 226);
   /* keypad 4 x 3, white keys with a soft edge, and an operator column */
   const keys = [['1','2','3'],['4','5','6'],['7','8','9'],['C','0','←']];
   x.font = '600 50px Chivo';
@@ -180,14 +180,14 @@ function uiTexture() {
     const kx = 44 + k * 178, ky = 318 + r * 146;
     x.fillStyle = '#D6D6D3'; x.beginPath(); x.roundRect(kx, ky + 5, 158, 122, 22); x.fill();
     x.fillStyle = '#FFFFFF'; x.beginPath(); x.roundRect(kx, ky, 158, 122, 22); x.fill();
-    x.fillStyle = '#141416'; x.fillText(keys[r][k], kx + 79, ky + 63);
+    x.fillStyle = '#111114'; x.fillText(keys[r][k], kx + 79, ky + 63);
   }
   x.strokeStyle = '#D9D9D6'; x.lineWidth = 2; x.beginPath(); x.moveTo(596, 318); x.lineTo(596, 900); x.stroke();
   const ops = ['C', '+', '−', '÷', '×', '='];
   x.font = '600 40px Chivo';
   for (let i = 0; i < 6; i++) { const ky = 318 + i * 97;
-    x.fillStyle = i === 5 ? '#F5C518' : '#FFFFFF'; x.beginPath(); x.roundRect(606, ky, 74, 80, 16); x.fill();
-    x.fillStyle = '#141416'; x.fillText(ops[i], 643, ky + 41); }
+    x.fillStyle = i === 5 ? '#FFCF24' : '#FFFFFF'; x.beginPath(); x.roundRect(606, ky, 74, 80, 16); x.fill();
+    x.fillStyle = '#111114'; x.fillText(ops[i], 643, ky + 41); }
   /* charge: inactive grey until an amount is keyed, as on the product */
   x.fillStyle = '#C9C9CE'; x.beginPath(); x.roundRect(44, 936, 636, 104, 18); x.fill();
   x.font = '700 40px Chivo'; x.fillStyle = '#FFFFFF'; x.fillText('CHARGE', 362, 990);
@@ -195,7 +195,7 @@ function uiTexture() {
   const nav = ['Link Pay', 'QR Pay', 'Transactions', 'Notifications', 'Menu'];
   x.font = '500 20px Chivo';
   for (let i = 0; i < 5; i++) { const nx = 96 + i * 132;
-    x.fillStyle = '#141416'; x.beginPath(); x.roundRect(nx - 20, 1116, 40, 32, 8); x.fill();
+    x.fillStyle = '#111114'; x.beginPath(); x.roundRect(nx - 20, 1116, 40, 32, 8); x.fill();
     x.fillStyle = '#6F6F74'; x.fillText(nav[i], nx, 1182); }
   x.fillStyle = '#D6322A'; x.beginPath(); x.arc(96 + 3 * 132 + 22, 1114, 11, 0, Math.PI * 2); x.fill();
   x.fillStyle = '#FFFFFF'; x.font = '700 15px Chivo'; x.fillText('2', 96 + 3 * 132 + 22, 1115);
@@ -205,13 +205,13 @@ function wordmarkTexture(w = 512, h = 128, dark = false, align = 'center', pay =
   const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d');
   x.font = '800 84px Chivo'; x.textBaseline = 'middle'; x.letterSpacing = '-4px';
   const nw = x.measureText('Nero').width, pw = x.measureText('Pay').width, x0 = align === 'left' ? 6 : (w - nw - pw) / 2;
-  x.fillStyle = dark ? '#141416' : '#FFFFFF'; x.fillText('Nero', x0, h / 2);
-  x.fillStyle = pay || '#F5C518'; x.fillText('Pay', x0 + nw, h / 2);
+  x.fillStyle = dark ? '#111114' : '#FFFFFF'; x.fillText('Nero', x0, h / 2);
+  x.fillStyle = pay || '#FFCF24'; x.fillText('Pay', x0 + nw, h / 2);
   const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8; return tex;
 }
 /* the contactless indicator as on the product: an ellipse holding four arcs and a hand tapping a card. Drawn to a
    canvas in ink; a decal on the head. */
-function contactlessTexture(ink = '#141416') {
+function contactlessTexture(ink = '#111114') {
   const c = document.createElement('canvas'); c.width = 640; c.height = 380; const x = c.getContext('2d');
   x.strokeStyle = ink; x.fillStyle = ink; x.lineCap = 'round'; x.lineJoin = 'round';
   /* the ellipse */
@@ -250,7 +250,7 @@ function clipPoly(pts, keepAbove, y) {
 export function neroTerminal({ lean = -6 } = {}) {
   const g = new THREE.Group();
   const W = 6.4, H = 14.6, D = 1.55, HEAD = 2.7, FD = .42, b = .55;
-  const white = mat(0xF1F1EE, { roughness:.5 }), black = mat(0x1E1F23, { roughness:.4, metalness:.2 }), yellow = mat(0xF5C518, { roughness:.7 });
+  const white = mat(0xF1F1EE, { roughness:.5 }), black = mat(0x1E1F23, { roughness:.4, metalness:.2 }), yellow = mat(0xFFCF24, { roughness:.7 });
   /* the rig's sun is ~3x on an upward face, which blows brand yellow out to white; clamp this material's lit colour
      to a touch above the brand value (linear), so the top reads as the same yellow catching light */
   yellow.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <opaque_fragment>', 'outgoingLight = min(outgoingLight, vec3(1.0, 0.64, 0.024));\n#include <opaque_fragment>'); };
@@ -279,7 +279,7 @@ export function neroTerminal({ lean = -6 } = {}) {
   const front = new THREE.Mesh(new RoundedBoxGeometry(W - .34, frameH, FD, 8, .3), black); front.position.set(0, yBot + .25 + frameH / 2, fz - FD / 2 + .06); front.castShadow = true; g.add(front);
   const ffz = fz + .06;
   /* the contactless indicator, large and centred on the yellow */
-  const cl = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 2.9 * 380 / 640), new THREE.MeshBasicMaterial({ map:contactlessTexture('#141416'), transparent:true }));
+  const cl = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 2.9 * 380 / 640), new THREE.MeshBasicMaterial({ map:contactlessTexture('#111114'), transparent:true }));
   cl.position.set(0, y0 + HEAD / 2 + .02, fz + .022 + .012); g.add(cl);
   /* the display: black glass inside the frame, from just under the seam to just above the wordmark, the UI in it */
   const SH = frameH - 1.55, SY = yBot + .25 + 1.2 + SH / 2;

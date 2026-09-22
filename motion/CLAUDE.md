@@ -413,6 +413,24 @@ second. A hook's graphic leaves before the labels it would cover arrive. A secti
 speech (they are crackle by construction), and the voice goes through a gentle compressor before the master so the
 limiter is never working more than ~3 dB (`vo_filter` in `mix.json`).
 
+## Brand — the values a new build draws
+
+`BRAND.md` is the authority. From 22 Sep 2026 the shared code in `motion/lib/` draws **yellow `#FFCF24`
+and ink `#111114`**, matching the site, the social templates and `overlays.js`.
+
+**The delivered episodes were deliberately not touched.** PP01, PP02, NC01, MG02 and The Maths episode 1
+still carry the old values in their own `index.html`, because their masters are rendered and published and
+Faisal ruled on 22 Sep 2026 that they are not reissued. Re-rendering one of them now would take the new
+yellow from `motion/lib/` and the old yellow from its own file, which is a mess — so if an episode is ever
+re-rendered, move its own values in the same commit, and say so in its `library.js` row.
+
+Every new build takes the new values from the start. The wordmark is **placed artwork** from `brand/logos/`,
+never typeset — the one exception is the terminal's own screen texture in `objects3d.js`, which draws its
+wordmark in Chivo because it is a product surface, not a brand lockup.
+
+`BRAND-MOTION.md` is the Shutter: what a video does at the top, between scenes, and at the end. It is
+specified and not yet built; it needs a dark-on-yellow lockup from Eray before shutter-down can be right.
+
 ## Narration — the performance
 
 **Model.** `eleven_v3` with inline audio tags, one take per video, the series voice **Verity**
