@@ -215,3 +215,23 @@ ad, but they are in the library.
 instruction ("one of the videos that you mentioned is not allowed... let's just get rid of that one").
 The PP02 ad set and the VIEWS campaign stay PAUSED with no ads, pending a ruling on PP02's on-screen
 £100–£300, which is the Elif pattern.
+
+**22 Sep 2026, later still — the video campaign off, the statics blocked on a look at the images.**
+`COLD | Terminal | Video | GM | 2026-09` PAUSED at Faisal's word ("I think we can disable the video ad
+for now"). Its Online Bookings creative (`4263023013947605`) is the account's best-behaved ad and the
+model for Route C copy: product-led, third person, a concession in the first line ("A salon that's happy
+with its booking system doesn't need to change it"), no rate, no comparison. The one line to watch in it
+is "EPOS software included, no monthly software fee" — an approved product fact, but a negative fee claim
+under a strict Route C reading. It has run 14 days without a rejection.
+
+Daily spend now £11 against the £16.45 the £500/month budget allows. It was £21.
+
+**The static ad set has no live ad.** The café is paused on its copy; the takeaway Faisal describes is not
+visible to the API, which means it is an unpublished Ads Manager draft (the §7 hazard). His nine static
+images ARE in the ad account library: `N_cafe_A/B/C`, `N_take_A/B/C`, `N_rest_A/B/C` (1080×1350). The live
+café ad used `N_cafe_C` (`7ac7e0ad1ddd687a9708a70150eb0b1a`).
+
+**A session cannot see inside those images.** `scontent.*.fbcdn.net` is refused by the egress proxy
+(CONNECT 403), so the overlay text on the statics cannot be read from here. Route C applies inside the
+image as much as in the caption, so the statics cannot be cleared until Faisal sends the files or the
+overlay wording into chat. That is a standing limitation, not a one-off.
