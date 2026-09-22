@@ -101,9 +101,10 @@ from here, and folder uploads silently fail there.
 | `videos.js` | Six videos, every shot prompt | No — generated from `generation-pack.md` |
 | `generation-pack.md` | Source of truth for the video series | Yes, then regenerate videos.js |
 | `style.css`, `app.js` | One stylesheet, one script (sketches, filters, motion) | Only for design changes |
-| `*.html` | Seven pages — overview, social, youtube, motion, ideas, calendar, rails | Rarely |
+| `*.html` | Eight pages — overview, social, youtube, motion, library, ideas, calendar, rails | Rarely |
 | `calls.js` | Behind the Counter — the video-call series, cast, globals, six episodes, next briefs | **Yes — hand-edited, copy an episode to add one** |
 | `motion.js` | The motion graphics videos as `window.MOTION` — two series, each video with its hook, the audience need it answers (dated, sourced), format, the narrator's performance and the beats. Renders on `motion.html` | **Yes — this is where motion graphics briefs go** |
+| `library.js` | **The delivery register** — every video, the state it is in, who set that state and when, and a direct link to each rendered master. Plus which of the 24 posts have actually gone out. Renders on `library.html`. This is the only place in the repo that records a *decision* rather than a plan | **Yes — write the row in the same commit that renders a video** |
 | `ideas.js` | The backlog — proposed series, one-offs, each judged by the engine rule | **Yes — this is where proposals go** |
 | `overlays.js` | Every on-screen graphic the pack calls for, drawn as SVG for post | Only when a figure changes in the pack |
 | `scripts-tr.js` | The Turkish scripts — one line per spoken shot, keyed by shot id, plus the translation rules and the Turkish VOICE globals | **Yes — add a `lines` entry per shot** |
@@ -327,9 +328,30 @@ Rules that come from this environment, not from HyperFrames:
   `data/words.json` (Whisper timings), `data/edit.json` (trims) and the clips on disk. Copy its
   patterns — liquid-glass panels, the clamped virtual camera, per-word captions — for the next piece.
 
+## The delivery register — read this before saying a video is done
+
+`library.js` is the register and `library.html` renders it. It exists because until 22 Sep 2026 the repo
+recorded what was **built**, Drive recorded what was **rendered**, and nothing anywhere recorded what
+Faisal **approved** or what got **posted** — so the state of the work lived in Google Doc titles and
+nobody could see it at a glance.
+
+Six states, in order: `brief` → `building` → `review` → `ready` → `approved` → `published`.
+
+- **A session writes the row in the same commit that renders a video.** Crop, link, md5, build folder.
+  Not a Drive README, not a commit message, not a line in chat.
+- **Any state may be set by a session, `approved` included — but only when Faisal says so in chat, and
+  the `by` field must carry who and when.** Faisal's ruling, 22 Sep 2026. `by: 'unrecorded'` means nobody
+  wrote it down; it is not the same as no. **Never infer `approved` from a render, a delivery, or a README
+  that calls itself final.** Three of the videos in there do exactly that and none was ever confirmed.
+- **`backup: false` is a live problem.** The master exists only as a Higgsfield CDN link, valid while that
+  account holds it. A session cannot fix it — the Drive connector will not carry a file that size. Only
+  Faisal can download it into the Drive folder; then a session flips the flag.
+
+`posted` on a `posts.js` record follows the same rule: `null` until it goes out, then `{ where, on }`.
+
 ## Verification before pushing
 
-Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
+Run `node --check app.js posts.js videos.js scripts-tr.js calls.js ideas.js overlays.js library.js` at minimum, and confirm every spoken shot still has a Turkish line (the command is in `README.md`). If Playwright is available, load each
 page and confirm no console errors, `.post` count matches `POSTS.length` on social.html, and
 nothing overflows at 390px. The site is light by default (off-white ground, black and grey type); dark is opt-in via `data-theme="dark"` and must still paint its own background.
 
