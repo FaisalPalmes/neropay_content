@@ -357,8 +357,13 @@ nothing overflows at 390px. The site is light by default (off-white ground, blac
 
 ## What lives elsewhere
 
-Meta paid advertising — the ad account, campaigns, audiences, the daily performance brief — is
-handled in a separate Claude session with the Meta connector. Don't build ad campaigns here.
+Meta paid advertising moved into this session on 22 Sep 2026 at Faisal's instruction ("u are now the main
+session i will be using to control and manage my meta ads"). **`META-ADS.md` at root is the handover brief** —
+the account, what is live, the audit findings, the Route C compliance position, the two incidents, what the
+MCP connector can and cannot do, the naming convention and the operating rules. Read it before touching the
+ad account. Route C is the one that bites creative: the terminal and the EPOS software only, no rate, fee,
+percentage, settlement, payout or credit language anywhere in an ad, and switching framing is the one thing
+this account has had permanently rejected.
 
 The fuller NeroPay context (pricing ladder, the KYC rules, the Elif incident report, the GTM
 playbook, ~40 docs) lives in a claude.ai Project, not in this repo. If a task needs something
