@@ -62,7 +62,7 @@ window.LIBRARY = {
 
     { id: 'MG02', series: 'Small Print', title: 'The 18-month rule',
       version: 'v6', rendered: '2026-09-16', secs: 55.9,
-      status: 'ready', by: 'unrecorded — four crops delivered, approval never written down',
+      status: 'approved', by: 'Faisal, in chat, 22 Sep 2026 — "can we post 1 of them now". Organic Facebook and Instagram only; paid Meta still refused.',
       build: 'motion/print/mg02/', drive: 'https://drive.google.com/drive/folders/1oeHnyT75J2cmSRM_lDyj6bfULDnkAuuC',
       backup: false,
       clearedFor: ['youtube', 'instagram', 'facebook', 'tiktok', 'website'],
