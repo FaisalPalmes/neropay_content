@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;500;600;700;800;900&family=Martian+Mono:wght@300;400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="brand/favicon/neropay-icon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="brand/favicon/neropay-icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#111114">
+<link rel="stylesheet" href="style.css">
+<title>Library — NeroPay Content</title>
+<style>
+  /* one row per deliverable: id, state, title, then the files under it */
+  .lrow{border:1px dashed var(--rule-2);padding:16px 18px;margin-bottom:10px}
+  .lrow.wait{border-style:solid;border-color:var(--yl-line);background:var(--yl-soft)}
+  .lrow .lhead{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline}
+  .lrow .sid{font-family:"Martian Mono",monospace;font-size:.62rem;letter-spacing:.08em;color:var(--yl-ink);min-width:58px}
+  .lrow .lt{font-family:"Chivo",sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:-.02em;color:var(--ink);flex:1 1 220px}
+  .lrow .lser{font-family:"Martian Mono",monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .lrow .lw{font-family:"Source Serif 4",serif;font-size:.9rem;line-height:1.55;color:var(--ink-2);margin-top:10px}
+  .lrow .lnote{font-size:.78rem;line-height:1.55;color:var(--muted);margin-top:8px}
+  .lrow .lby{font-family:"Martian Mono",monospace;font-size:.55rem;letter-spacing:.06em;color:var(--muted);margin-top:8px}
+  .files{margin-top:12px;border-top:1px solid var(--rule);padding-top:10px}
+  .file{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;padding:5px 0;
+    font-family:"Martian Mono",monospace;font-size:.58rem;letter-spacing:.05em;color:var(--muted)}
+  .file .fc{min-width:186px;color:var(--ink-2)}
+  .file a{color:var(--yl-ink);text-decoration:none}
+  .file a:hover{text-decoration:underline}
+  .file .fm{opacity:.72}
+  .prow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:9px 14px;margin-bottom:6px;
+    border:1px dashed var(--rule-2);font-family:"Martian Mono",monospace;font-size:.58rem;color:var(--muted)}
+  .prow .sid{color:var(--yl-ink);min-width:44px;letter-spacing:.08em}
+  .prow .pt{flex:1 1 220px;font-family:"Source Serif 4",serif;font-size:.88rem;color:var(--ink-2)}
+  .prow .pd{min-width:86px}
+  .risk{border:1px solid var(--stop);background:var(--stop-soft);padding:20px 22px;margin:26px 0 0}
+  .risk h3{font-family:"Chivo",sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-.02em;color:var(--stop);margin-bottom:8px}
+  .risk p{font-size:.92rem;line-height:1.6;color:var(--ink-2)}
+  .risk p+p{margin-top:9px}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="index.html">Nero<i>Pay</i> · Content</a>
+  <nav class="nlinks" aria-label="Pages">
+    <a class="n" href="index.html">Overview</a>
+    <a class="n" href="social.html">Posts</a>
+    <a class="n" href="youtube.html">Videos</a>
+    <a class="n" href="motion.html">Motion</a>
+    <a class="n" href="library.html" aria-current="page">Library</a>
+    <a class="n" href="ideas.html">Ideas</a>
+    <a class="n" href="calendar.html">Calendar</a>
+    <a class="n" href="rails.html">Rails</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<div class="hero">
+  <span class="kicker" id="kick">Delivery register</span>
+  <h1>What's out, what's<br>waiting on you.</h1>
+  <p class="lede">Every video and every post, with the state it is actually in and a link straight to the file. The other pages say what we <em>plan</em>; this one says what <em>exists</em>. A state here is a decision someone wrote down — where it says <b>unrecorded</b>, nobody ever did.</p>
+  <div class="facts" id="stats"></div>
+</div>
+<div class="risk" id="risk"></div>
+</div>
+
+<div class="subbar"><div class="wrap"><div class="row" id="filters">
+  <button class="f" data-st="ready" aria-pressed="false" type="button">Ready</button>
+  <button class="f" data-st="review" aria-pressed="false" type="button">Waiting on you</button>
+  <button class="f" data-st="approved" aria-pressed="false" type="button">Approved</button>
+  <button class="f" data-st="published" aria-pressed="false" type="button">Published</button>
+  <span class="sep"></span>
+  <button class="f" data-st="building" aria-pressed="false" type="button">Building</button>
+  <button class="f" data-st="brief" aria-pressed="false" type="button">Briefed only</button>
+  <span class="sp"></span>
+  <span class="count" id="count"></span>
+</div></div></div>
+
+<div class="wrap">
+
+<section id="videos">
+  <div class="sec-head"><span class="lbl">01</span><h2>Videos</h2></div>
+  <p class="sec-sub">Newest state first: waiting on you, then ready to go, then everything not yet made. Each file link is the master itself — it opens or downloads straight from the Higgsfield store.</p>
+  <div id="vfeed"></div>
+</section>
+
+<section id="posts">
+  <div class="sec-head"><span class="lbl">02</span><h2>Posts</h2></div>
+  <p class="sec-sub">The 24 written posts and whether each one has actually gone out. <b>Nothing is marked posted yet</b> — set <span class="mono">posted</span> in <span class="mono">posts.js</span> as each goes live, or tell a session and it will.</p>
+  <div id="pfeed"></div>
+</section>
+
+<section id="how">
+  <div class="sec-head"><span class="lbl">03</span><h2>How this stays true</h2></div>
+  <p class="sec-sub">The register is only worth opening if it is right. Three rules.</p>
+  <div class="prose">
+    <p><b>A session writes the row when it delivers.</b> Anything rendered gets a row here in the same commit that renders it — not a Drive README, not a commit message, not a line in chat. The row carries the crop, the link, the md5 and the build folder.</p>
+    <p><b>Any state may be set by a session, including <span class="mono">approved</span> — but only when Faisal says so in chat, and it must carry who and when.</b> That is Faisal's ruling of 22 Sep 2026. The <span class="mono">by</span> field is what keeps it honest: an approval nobody can attribute is the thing that lost track in the first place. Never infer <span class="mono">approved</span> from a render, a delivery, or a README that calls itself final — three of the videos below do exactly that and none of them was ever confirmed.</p>
+    <p><b><span class="mono">backup: false</span> is a live problem, not a note.</b> It means the only copy is a CDN link. It flips to true when the MP4 is sitting in its Drive folder, and only Faisal can do that — the connector will not carry a file that size.</p>
+  </div>
+</section>
+
+</div>
+
+<footer class="foot"><div class="wrap">
+  <p>NeroPay content warehouse · the delivery register · updated <span id="upd"></span></p>
+</div></footer>
+
+<script src="posts.js"></script>
+<script src="library.js"></script>
+<script>
+(function () {
+  var L = window.LIBRARY, POSTS = window.POSTS || [], V = L.videos;
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+
+  var LABEL = { brief: 'briefed only', building: 'building', review: 'waiting on you',
+                ready: 'ready to go', approved: 'approved', published: 'published' };
+  var CHIP  = { brief: 'chip d', building: 'chip d', review: 'chip blocked',
+                ready: 'chip ready', approved: 'chip ready', published: 'chip p' };
+  /* the order the page reads in: what needs Faisal first, then what is done, then what is not made */
+  var ORDER = { review: 0, ready: 1, approved: 2, published: 3, building: 4, brief: 5 };
+
+  document.getElementById('upd').textContent = L.updated;
+
+  var nReady = V.filter(function (v) { return v.status === 'ready'; }).length;
+  var nWait  = V.filter(function (v) { return v.status === 'review'; }).length;
+  var nNot   = V.filter(function (v) { return v.status === 'brief' || v.status === 'building'; }).length;
+  var nRisk  = V.filter(function (v) { return v.files.length && !v.backup; }).length;
+  var nFiles = V.reduce(function (a, v) { return a + v.files.length; }, 0);
+  var nPosted = POSTS.filter(function (p) { return p.posted; }).length;
+
+  document.getElementById('stats').innerHTML =
+    '<div><b>' + nFiles + '</b><span>Files rendered</span></div>' +
+    '<div><b>' + nWait + '</b><span>Waiting on you</span></div>' +
+    '<div><b>' + nReady + '</b><span>Ready to go</span></div>' +
+    '<div><b>' + nNot + '</b><span>Not made yet</span></div>' +
+    '<div><b>' + nPosted + ' / ' + POSTS.length + '</b><span>Posts out</span></div>';
+
+  document.getElementById('risk').innerHTML =
+    '<h3>' + nRisk + ' videos have no durable copy</h3>' +
+    '<p>Every finished master exists only as a Higgsfield CDN link, valid while that account holds it. ' +
+    'The Drive folders are set up and each one contains a note saying &ldquo;download this link and drop the file here&rdquo; &mdash; ' +
+    'and that has never been done. <span class="mono">04 Exports</span> holds READMEs and no MP4s.</p>' +
+    '<p>A session cannot fix this: the Drive connector will not carry a file that size. ' +
+    'Download the ' + nFiles + ' links below and put them in the folders already named for them. ' +
+    'Then a session flips <span class="mono">backup</span> to true and this panel goes away.</p>';
+
+  function fileRow(v, f) {
+    var bits = [];
+    if (f.px) bits.push(f.px);
+    if (f.lufs) bits.push(f.lufs + ' LUFS');
+    if (f.mb) bits.push(f.mb + ' MB');
+    if (f.md5) bits.push('md5 ' + f.md5.slice(0, 8));
+    if (f.commit) bits.push('@' + f.commit);
+    return '<div class="file"><span class="fc">' + esc(f.crop) + '</span>' +
+      '<a href="' + L.cdn + f.media + '.mp4" target="_blank" rel="noopener">open mp4 &rarr;</a>' +
+      '<span class="fm">' + esc(bits.join(' · ')) + '</span></div>';
+  }
+
+  function videoRow(v) {
+    var h = '<div class="lrow' + (v.status === 'review' ? ' wait' : '') + '" data-st="' + v.status + '">';
+    h += '<div class="lhead"><span class="sid">' + esc(v.id) + '</span>' +
+         '<span class="lt">' + esc(v.title) + (v.version ? ' <span class="lser">' + esc(v.version) + '</span>' : '') + '</span>' +
+         '<span class="' + CHIP[v.status] + '">' + esc(LABEL[v.status]) + '</span>' +
+         '<span class="lser">' + esc(v.series) + (v.secs ? ' · ' + v.secs + 's' : '') + '</span></div>';
+    if (v.waiting) h += '<div class="lw"><b>Waiting:</b> ' + esc(v.waiting) + '</div>';
+    if (v.note) h += '<div class="lnote">' + esc(v.note) + '</div>';
+    if (v.files.length) h += '<div class="files">' + v.files.map(function (f) { return fileRow(v, f); }).join('') + '</div>';
+    var tail = [];
+    tail.push('state set by: ' + esc(v.by));
+    if (v.rendered) tail.push('rendered ' + esc(v.rendered));
+    if (v.build) tail.push(esc(v.build));
+    if (v.files.length) tail.push(v.backup ? 'backed up to Drive' : '⚠ no durable copy');
+    if (v.posts && v.posts.length) tail.push('blocks post ' + v.posts.join(', '));
+    var links = v.drive ? ' · <a href="' + v.drive + '" target="_blank" rel="noopener" style="color:var(--yl-ink)">Drive folder</a>' : '';
+    h += '<div class="lby">' + tail.join(' · ') + links + '</div>';
+    return h + '</div>';
+  }
+
+  var sorted = V.slice().sort(function (a, b) { return ORDER[a.status] - ORDER[b.status]; });
+  document.getElementById('vfeed').innerHTML = sorted.map(videoRow).join('');
+
+  document.getElementById('pfeed').innerHTML = POSTS.slice()
+    .sort(function (a, b) { return String(a.id).localeCompare(String(b.id), 'en', { numeric: true }); })
+    .map(function (p) {
+      var state = p.posted ? '<span class="chip p">' + esc(p.posted.where + ' · ' + p.posted.on) + '</span>'
+        : p.blocked ? '<span class="chip blocked">blocked</span>'
+        : '<span class="chip d">not posted</span>';
+      return '<div class="prow"><span class="sid">' + esc(p.id) + '</span>' +
+        '<span class="pd">' + esc(p.date) + '</span>' +
+        '<span class="pt">' + esc(p.title) + '</span>' + state + '</div>';
+    }).join('');
+
+  /* filters — one state at a time, click again to clear */
+  var on = null, btns = [].slice.call(document.querySelectorAll('#filters .f'));
+  var count = document.getElementById('count');
+  function apply() {
+    var shown = 0;
+    [].forEach.call(document.querySelectorAll('#vfeed .lrow'), function (el) {
+      var hit = !on || el.getAttribute('data-st') === on;
+      el.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+    });
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.st === on)); });
+    count.textContent = shown + ' of ' + V.length + ' videos';
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () { on = (on === b.dataset.st) ? null : b.dataset.st; apply(); });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>

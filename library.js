@@ -1,0 +1,160 @@
+/* library.js — the delivery register. Every video NeroPay has, what state it is in, and where the file is.
+   Renders on library.html beside the social posts, so one page answers: what is out, what is waiting on
+   Faisal, and what has not been made.
+
+   Why this file exists. Until 22 Sep 2026 the repo recorded what was BUILT, Drive recorded what was
+   RENDERED, and nothing anywhere recorded what Faisal APPROVED or what actually got POSTED. Version state
+   lived in Google Doc titles ("superseded by v7"), readable only by opening six documents. This is the one
+   place that carries a decision.
+
+   ── The states, in order ───────────────────────────────────────────────────────────────────────
+     brief      written, not built
+     building   a build exists in the repo, never rendered
+     review     rendered, and something is outstanding — see `waiting`
+     ready      rendered, no known faults, nothing outstanding; waiting only on Faisal's go
+     approved   Faisal has said yes
+     published  out, with where and when in `published`
+
+   ── Who may set what ───────────────────────────────────────────────────────────────────────────
+   Faisal's ruling, 22 Sep 2026: a session may set any state, including `approved`, when Faisal says so
+   in chat. In exchange every state carries `by` — who set it and when — so an approval is always
+   attributable. `by: 'unrecorded'` means nobody wrote the decision down; it is not the same as no.
+   Never infer `approved` from a render, a delivery or a README that calls itself final.
+
+   ── The backup field, and why it matters ───────────────────────────────────────────────────────
+   `backup: false` means the MP4 exists ONLY as a Higgsfield CDN link. Those links are valid while the
+   account holds them — the NC README says so in as many words. Drive has the folder and a note saying
+   "download this and drop the file here", and that has never once been done. A session cannot do it: the
+   Drive connector will not carry a file that size. Until Faisal downloads them, nothing here is safe.  */
+
+window.LIBRARY = {
+
+  updated: '22 September 2026',
+
+  /* The Higgsfield media store. Every `url` below is this plus the media id. */
+  cdn: 'https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/',
+
+  videos: [
+
+    { id: 'B1', series: 'Explained by NeroPay', title: 'The rate you were quoted',
+      version: 'v8.4', rendered: '2026-09-12', secs: null,
+      status: 'ready', by: 'unrecorded — rendered and handed over, approval never written down',
+      build: 'video/b1-v8/', drive: 'https://drive.google.com/drive/folders/1vnCpZjv2-tST91e8Bprz8hHHgLGY8mp-',
+      backup: false,
+      note: 'Ends on the old typeset NeroPay. lockup. Whether it is reissued against the new kit is BRAND.md §6.3, still open. Rail 4: nothing in the video says the presenter is AI — tick YouTube\'s altered-or-synthetic setting at upload and keep the line in the description. The 0.70% in the script is illustrative, not a NeroPay rate.',
+      files: [
+        { crop: '16:9 YouTube master', px: '1920×1080', lufs: '−15', media: '9a37d1ec-9f9c-4b30-8a50-41b9f93acd81', md5: 'c6ad7ec58121fd70059211fd831aae32', commit: 'ed6a9bd' },
+        { crop: '4:5 feed', px: '1080×1350', lufs: '−15', media: 'e03316a0-948d-487a-beab-f923a11ecbcf', md5: '33d04105496b52cf943483d8f068c728', commit: 'f6bf682' },
+        { crop: '4:5 Meta ad, 59s', px: '1080×1350', lufs: '−15', media: '3aafdeda-88f7-472b-9ae0-3fdd2a3c00b0', md5: '61bfc30a944a385e8173a91cb328f09d', commit: '2fc4a17' }
+      ] },
+
+    { id: 'MG02', series: 'Small Print', title: 'The 18-month rule',
+      version: 'v6', rendered: '2026-09-16', secs: 55.9,
+      status: 'ready', by: 'unrecorded — four crops delivered, approval never written down',
+      build: 'motion/print/mg02/', drive: 'https://drive.google.com/drive/folders/1oeHnyT75J2cmSRM_lDyj6bfULDnkAuuC',
+      backup: false,
+      note: 'Faceless motion graphics, Verity. No AI presenter, so rail 4 does not bite; the voice is synthetic and is declared in the description. Figures all confirmed in figures.json: 18 months, 14 largest providers, one month\'s notice. v5 and v4.1 were review cuts and are not to be published.',
+      files: [
+        { crop: '9:16 Reels / TikTok / Shorts', px: '1080×1920', lufs: '−14.4', media: '70e428ae-9cfd-4f09-b5d6-d40a2c4c0e8d', md5: '5a9e879fa12b978b800fb325a4f33d09', mb: 10.5 },
+        { crop: '16:9 YouTube master', px: '1920×1080', lufs: '−14.4', media: '7b369ba0-e218-4df3-8190-e9665653caed', md5: '790ffdb2f48ad71e57be335505780192', mb: 10.2 },
+        { crop: '4:5 Meta ads', px: '1080×1350', lufs: '−14.4', media: '1e086b32-af8b-462d-8829-8bd76217be98', md5: '5e5b8da6b0d207c7ec49f2c5ee409797', mb: 8.4 },
+        { crop: '1:1 feed', px: '1080×1080', lufs: '−14.4', media: '3ab995c2-468e-4cc4-9897-9431ba0c53f6', md5: '6f4adf36ca6f7512650142773f8870df', mb: 7.6 }
+      ] },
+
+    { id: 'PP02', series: 'Partner Programme', title: 'Your road',
+      version: 'v7', rendered: '2026-09-18', secs: 52.0,
+      status: 'ready', by: 'unrecorded — its own README calls it final and publishable, but Faisal never confirmed',
+      build: 'motion/partner/pp02/', drive: 'https://drive.google.com/drive/folders/1wyUXzCzfII9BXtTcVngt-SIxDJ8EGd3z',
+      backup: false,
+      note: 'Only the 4:5 is rendered; other crops on request. Figures are the confirmed partner_bonus_tiers, partner_revenue_share_tiers and partner_active_gate records, each with its condition on the same frame, per merchant, never a total.',
+      files: [
+        { crop: '4:5 Meta', px: '1080×1350', lufs: '−14.16', media: '62228ccf-ea52-4f90-b7d2-974aee17017b', md5: 'a126ac3a015e9c5bbf6d2fae11d55969' }
+      ] },
+
+    { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
+      version: 'v2', rendered: '2026-09-17', secs: null,
+      status: 'review', by: 'unrecorded',
+      waiting: 'Faisal reviews the 16:9 render and approves it for posting. This is the only thing blocking post L12.',
+      build: 'motion/neroconnect/nc01/', drive: null, backup: false,
+      posts: ['L12'],
+      files: [
+        { crop: '16:9', px: '1920×1080', media: 'd7d50f7c-9fcb-4930-9a70-a297ba1a1d2f' }
+      ] },
+
+    { id: 'NCEX', series: 'NeroConnect', title: 'NeroConnect explainer',
+      version: 'v2', rendered: '2026-09-18', secs: 131,
+      status: 'review', by: 'unrecorded',
+      waiting: 'Four things: the terminal photos promised on 18 Sep never arrived, so the close uses our own 3D model; the 17 Sep series note bars margin figures, reports and support tiers on screen while the 18 Sep brief approves them, and the later brief was followed — Faisal confirms which stands; no cut-downs rendered; no music bed.',
+      build: 'motion/neroconnect/explainer/', drive: 'https://drive.google.com/drive/folders/1hVAZJFL5uLPqC4ATJzpoO9QkvvM9dpaP',
+      backup: false,
+      note: 'Figures on screen are the seven approved in the overlay kit and the invented Harbourline names. Placeholder brand throughout.',
+      files: [
+        { crop: '16:9 master', px: '1920×1080', mb: 62.5, media: '243e9316-3761-4f7e-8883-799780616ac2', md5: 'f56bea4a7f82761407b4e344283480ca' },
+        { crop: '720p preview', px: '1280×720', media: '1ebf986e-4fc0-48f0-913a-afbb1bc7d024' }
+      ] },
+
+    { id: 'PP01', series: 'Partner Programme', title: 'The Partner Programme',
+      version: 'v4', rendered: '2026-09-17', secs: 68,
+      status: 'review', by: 'unrecorded',
+      waiting: 'Faisal\'s review. The generated plates (motion/partner/pp01/AI-PLATES.md) are not in this cut — they could not be produced on the day. When they arrive they slot under certain beats and it re-renders.',
+      build: 'motion/partner/pp01/', drive: 'https://drive.google.com/drive/folders/11gSOA2be260FQlJcRUN2ZxPvMwn4AtUU',
+      backup: false,
+      note: '68s against the brief\'s 22–28s social module; the short modules can be cut from this script. Other crops render on request, about 35 minutes each.',
+      files: [
+        { crop: '4:5 Meta', px: '1080×1350', lufs: '−14.12', media: '4a729d5b-051f-49ab-b2ba-0a9480f161e6', md5: '2b747a617cd8f815f38f42692d458c3a' }
+      ] },
+
+    { id: 'MG01', series: 'The Maths', title: 'Don\'t switch to us',
+      version: null, rendered: null, secs: 38,
+      status: 'building', by: 'motion session',
+      waiting: 'Flagged in motion.js and never rendered. The build is in the repo; the workhorse-rate record it depends on still carries two open questions (15p vs 8p, and whether 8p triggers the 18-month agreement).',
+      build: 'motion/maths/ep01/', drive: null, backup: false, files: [] },
+
+    { id: 'MG03', series: 'Small Print', title: 'The tip isn\'t yours',
+      version: null, rendered: null, secs: 30,
+      status: 'brief', by: 'motion session', build: null, drive: null, backup: false, files: [],
+      waiting: 'Briefed in motion.js with the full beat list. Not built.' },
+
+    { id: 'MG04', series: 'Small Print', title: 'Four times a year',
+      version: null, rendered: null, secs: 34,
+      status: 'brief', by: 'motion session', build: null, drive: null, backup: false, files: [],
+      waiting: 'Briefed in motion.js. Not built.' },
+
+    { id: 'C1', series: 'Behind the Counter', title: 'What did your last statement actually say?',
+      version: null, rendered: null, secs: null,
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [],
+      waiting: 'Scripted in calls.js. Was due Thursday 17 Sep on the calendar and was not made. The Drive folder for the series is empty.' },
+
+    { id: 'C2', series: 'Behind the Counter', title: 'Friday night, and the card machine\'s down',
+      version: null, rendered: null, secs: null,
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [],
+      waiting: 'Scripted. Due Thursday 1 Oct.' },
+
+    { id: 'C3', series: 'Behind the Counter', title: 'The six weeks before Christmas',
+      version: null, rendered: null, secs: null,
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [],
+      waiting: 'Scripted. Due Thursday 15 Oct.' },
+
+    { id: 'C4', series: 'Behind the Counter', title: 'How many screens are you running?',
+      version: null, rendered: null, secs: null,
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [], waiting: 'Scripted, unscheduled.' },
+
+    { id: 'C5', series: 'Behind the Counter', title: 'Who gets paid before you do?',
+      version: null, rendered: null, secs: null,
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [], waiting: 'Scripted, unscheduled.' },
+
+    { id: 'C6', series: 'Behind the Counter', title: 'What did you actually sign?',
+      version: null, rendered: null, secs: null,
+      status: 'brief', by: 'unrecorded', build: 'calls.js', drive: null, backup: false, files: [], waiting: 'Scripted, unscheduled.' }
+
+  ],
+
+  /* The Drive tree, so a session does not have to walk it again. Everything lives under
+     📁 NeroPay Ads › 05 - Video Edits (YouTube). */
+  drive: {
+    root: 'https://drive.google.com/drive/folders/1aDWq69Z_IjuJ9wGWvJGMCyWBEUm2ZiZB',
+    partner: 'https://drive.google.com/drive/folders/1jbynGFcHYI9hyU0VVy6Sxp6XTNXRbNec',
+    merchant: 'https://drive.google.com/drive/folders/1dpJoqrcc0zN_QgFbY7KbzB87-qIU97P5',
+    note: 'Each series folder has 01 Script & voice · 02 Test cut · 03 Finished · 04 Exports. The exports folders currently hold READMEs pointing at CDN links, and no MP4s.'
+  }
+};
