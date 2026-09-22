@@ -265,3 +265,20 @@ are both retired.
 
 **One mismatch to settle:** the copy says Manchester-based and the calls number is an 020 London line.
 Either is fine on its own; together a sharp merchant notices. Faisal to choose which gives way.
+
+**22 Sep 2026 — discarding a draft reactivated a paused ad.** Faisal discarded the takeaway ad draft by
+accident. Two consequences, one of them not obvious:
+
+1. **The takeaway ad is unrecoverable.** It had never been published, so it lived only in the Ads Manager
+   draft layer, which the API cannot see. Meta has no undo for a discarded draft. Its images survive in the
+   library (`N_take_A/B/C`); only the ad and its setup are gone, and both are cheap to rebuild.
+2. **`AD | Static | Cafe | EN | v1` came back ACTIVE.** It had been paused earlier today over its Route C
+   copy — the pause returned `success: true`, `is_draft: false`, and a later read confirmed PAUSED. After
+   the discard it read ACTIVE and had served 139 impressions for £2.24 before being paused again and
+   re-verified. The mechanism is not established; what is established is that a discard touched the live
+   status of a different object.
+
+This is the second time the draft layer has moved a status on this account with nobody asking it to — on
+21 Aug a pending draft committed itself during an unrelated rename and flipped `20260630` from PAUSED to
+ACTIVE at £7/day. **The standing rule is now proven twice: after any action in Ads Manager, re-read status
+from the API rather than trusting the screen.**
