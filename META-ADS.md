@@ -348,3 +348,33 @@ Three things seen in the form itself:
 
 None of this blocks publishing. The SMS verification is the one worth changing first because it is free to
 test and it bears directly on the open question of where the leads went.
+
+## 18. The Messenger chat builder — 22 Sep 2026
+
+The Chat builder is the scripted opening of a click-to-Messenger conversation: greeting, CTA button, and up
+to three tappable suggested questions, each with an optional auto-reply that fires before a human sees it.
+It applies only to ads whose destination is Messenger, so it does **not** touch the three static ads, which
+go to the instant form.
+
+**What was on screen was all Meta defaults**, and two of them ship as-is if nobody changes them: the button
+read the literal placeholder `Current CTA`, and question 2 was **"How much do your services cost?"** That
+question invites the rate conversation Route C exists to prevent — answering it publishes a price inside an
+ad experience, leaving it blank asks every merchant about price and then refuses to answer. Deleted.
+
+What replaced it:
+
+- **Greeting:** "Thanks for getting in touch with NeroPay. Tell us what kind of business you run and we'll
+  come back to you."
+- **CTA:** Book a free demo — the same wording as the static ads.
+- **Q1 "What comes with the terminal?"** → terminal plus EPOS software (till, product grid, staff, kitchen
+  display, Z-reports), online ordering, bookings, website. No monthly software fee. No rate, no percentage,
+  no figure.
+- **Q2 "Do I have to sign a contract?"** → no contract on the standard setup, stop whenever. Safe to say
+  publicly per §15; contracts are bespoke-only.
+- **Q3 "Can someone come and show me?"** → Greater Manchester, we come to you, then 020 8150 2104 /
+  WhatsApp 03330494380.
+
+Q3 ends on a phone number on purpose. The audit's finding is that Messenger converts at about a third of
+this account's worst historic rate because conversations stall; giving a route off Messenger in the first
+auto-reply is the mitigation. The larger question — whether any ad should use the Messenger destination at
+all rather than the instant form — is still open and is not answered by filling this in well.
