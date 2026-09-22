@@ -14,6 +14,8 @@
      ready      rendered, no known faults, nothing outstanding; waiting only on Faisal's go
      approved   Faisal has said yes
      published  out, with where and when in `published`
+     dropped    killed. Not a backlog item, not "later" — say who killed it and why, in `by` and
+                `waiting`, so nobody rebuilds it. The build stays in the repo.
 
    ── Who may set what ───────────────────────────────────────────────────────────────────────────
    Faisal's ruling, 22 Sep 2026: a session may set any state, including `approved`, when Faisal says so
@@ -41,6 +43,23 @@
 window.LIBRARY = {
 
   updated: '22 September 2026',
+
+  /* ── Motion graphics and paid Meta: a premise problem, not a wording problem ──────────────────
+     Recorded 22 Sep 2026 after the Meta session refused MG02 and archived its ad set.
+
+     Route C (META-ADS.md §5) allows an ad to show the terminal and the EPOS software, and bars rates,
+     fees, percentages, settlement, payout and credit language — and bars positioning a firm that is not
+     on the FCA Register in its own right as an authority on payment regulation.
+
+     Small Print's whole premise is "the law, the deadline and the rule an owner-operator hasn't been
+     told about". The Maths's whole premise is arithmetic on a rate. **Both series are structurally
+     outside Route C, and no rewrite fixes that** — rewriting a regulation explainer until it clears
+     Route C leaves you without the explainer. They are organic, YouTube and website pieces, and they
+     are good ones. MG02 is cleared for exactly that and approved for organic Facebook and Instagram.
+
+     What CAN be made for paid Meta is product-led: the terminal, the free EPOS software, what NeroPOS
+     does on a Tuesday lunchtime. That is a new brief, not an edit of these. Faisal parked the question
+     on 22 Sep to work on the Higgsfield presenter videos instead.                                   */
 
   /* The Higgsfield media store. Every `url` below is this plus the media id. */
   cdn: 'https://d2ol7oe51mr4n9.cloudfront.net/user_38ZXgS1FsFgzPivSruKltDoPHGB/',
@@ -121,8 +140,8 @@ window.LIBRARY = {
 
     { id: 'MG01', series: 'The Maths', title: 'Don\'t switch to us',
       version: 'draft', rendered: '2026-09-15', secs: 46.4,
-      status: 'review', by: 'unrecorded',
-      waiting: 'Two things, and they are different in kind. (1) PUBLISH IS BLOCKED on the workhorse rate: the internal standard says 1.30% + 15p, not + 8p, and "no contract" collides with the unanswered 18-month-agreement question — both written into the figures.json record. (2) THE FILES ARE GONE: four crops were rendered on 15 Sep with their md5s recorded in script.md, but out/final/ is gitignored and no delivery link was ever written anywhere. Unless Faisal has them, this needs re-rendering from the build before it can be reviewed at all.',
+      status: 'dropped', by: 'Faisal, 22 Sep 2026 — "let\'s skip that for now, i dont like that"',
+      waiting: 'DROPPED. Do not rebuild it without Faisal saying so. Three things were wrong with it at once and any one would have held it: he does not like it; the files were rendered on 15 Sep and then lost (out/final/ is gitignored and no delivery link was ever written, so only the md5s in script.md survive); and publish was blocked anyway on the workhorse rate — the internal standard says 1.30% + 15p, not + 8p, and "no contract" collides with the unanswered 18-month-agreement question. The build stays in motion/maths/ep01/ if the argument is ever worth reviving.',
       build: 'motion/maths/ep01/', drive: null, backup: false, clearedFor: null, notCleared: null,
       note: 'Rendered 9:16, 4:5, 1:1 and 16:9 at 46.4s against a 38s target — the take runs long. Voice Verity, one generation, −16.27 LUFS. The concession is the format: under about twenty pounds a sale, stay put. This is the only video where NeroPay argues against itself, which is why it is worth finishing.',
       files: [] },

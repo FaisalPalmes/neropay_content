@@ -19,6 +19,7 @@
   /* one row per deliverable: id, state, title, then the files under it */
   .lrow{border:1px dashed var(--rule-2);padding:16px 18px;margin-bottom:10px}
   .lrow.wait{border-style:solid;border-color:var(--yl-line);background:var(--yl-soft)}
+  .lrow.gone{opacity:.5}
   .lrow .lhead{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline}
   .lrow .sid{font-family:"Martian Mono",monospace;font-size:.62rem;letter-spacing:.08em;color:var(--yl-ink);min-width:58px}
   .lrow .lt{font-family:"Chivo",sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:-.02em;color:var(--ink);flex:1 1 220px}
@@ -77,6 +78,7 @@
   <span class="sep"></span>
   <button class="f" data-st="building" aria-pressed="false" type="button">Building</button>
   <button class="f" data-st="brief" aria-pressed="false" type="button">Briefed only</button>
+  <button class="f" data-st="dropped" aria-pressed="false" type="button">Dropped</button>
   <span class="sp"></span>
   <span class="count" id="count"></span>
 </div></div></div>
@@ -133,17 +135,18 @@
     return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
   var LABEL = { brief: 'briefed only', building: 'building', review: 'waiting on you',
-                ready: 'ready to go', approved: 'approved', published: 'published' };
+                ready: 'ready to go', approved: 'approved', published: 'published', dropped: 'dropped' };
   var CHIP  = { brief: 'chip d', building: 'chip d', review: 'chip blocked',
-                ready: 'chip ready', approved: 'chip ready', published: 'chip p' };
+                ready: 'chip ready', approved: 'chip ready', published: 'chip p', dropped: 'chip d' };
   /* the order the page reads in: what needs Faisal first, then what is done, then what is not made */
-  var ORDER = { review: 0, ready: 1, approved: 2, published: 3, building: 4, brief: 5 };
+  var ORDER = { review: 0, ready: 1, approved: 2, published: 3, building: 4, brief: 5, dropped: 6 };
 
   document.getElementById('upd').textContent = L.updated;
 
   var nReady = V.filter(function (v) { return v.status === 'ready'; }).length;
   var nWait  = V.filter(function (v) { return v.status === 'review'; }).length;
   var nNot   = V.filter(function (v) { return v.status === 'brief' || v.status === 'building'; }).length;
+  var nDrop  = V.filter(function (v) { return v.status === 'dropped'; }).length;
   var nRisk  = V.filter(function (v) { return v.files.length && !v.backup; }).length;
   var nFiles = V.reduce(function (a, v) { return a + v.files.length; }, 0);
   var pubRefs = {}; PUB.forEach(function (r) { pubRefs[r.ref] = true; });
@@ -180,7 +183,7 @@
   }
 
   function videoRow(v) {
-    var h = '<div class="lrow' + (v.status === 'review' ? ' wait' : '') + '" data-st="' + v.status + '">';
+    var h = '<div class="lrow' + (v.status === 'review' ? ' wait' : '') + (v.status === 'dropped' ? ' gone' : '') + '" data-st="' + v.status + '">';
     h += '<div class="lhead"><span class="sid">' + esc(v.id) + '</span>' +
          '<span class="lt">' + esc(v.title) + (v.version ? ' <span class="lser">' + esc(v.version) + '</span>' : '') + '</span>' +
          '<span class="' + CHIP[v.status] + '">' + esc(LABEL[v.status]) + '</span>' +

@@ -20,9 +20,18 @@ Two sessions work in this repo. The rule that makes that survivable is that they
 | `motion/` · `video/` · `edit/` | the builds | motion session |
 | `META-ADS.md` | the ad account, the audit, Route C | **you** |
 
-**You write `published.js` and `META-ADS.md`. You do not write `library.js`, `posts.js`, `calls.js`,
-`motion.js`, `ideas.js`, or anything under `motion/`, `video/` or `edit/`.** If one of those is wrong,
-say so — don't fix it. The content session will.
+**You write `published.js` and `META-ADS.md`. You do not write `posts.js`, `calls.js`, `motion.js`,
+`ideas.js`, or anything under `motion/`, `video/` or `edit/`.** If one of those is wrong, say so — don't
+fix it. The content session will.
+
+**One carve-out in `library.js`, added 22 Sep 2026.** You may change **`status` and `by`, and nothing
+else**, on a video's row when Faisal clears or refuses something in chat with you — and the same for
+`clearedFor` / `notCleared` when he rules on a platform. An approval has nowhere else sensible to live,
+and routing it through the other session just loses it. Two fields on one line is a small enough
+conflict surface to be worth it. This carve-out exists because you did exactly this for MG02 and you
+were right to: `status: 'approved'`, `by: 'Faisal, in chat, 22 Sep 2026 — "can we post 1 of them now".
+Organic Facebook and Instagram only; paid Meta still refused.'` That is the model — the quote, the date,
+and the limit of what was approved. Everything else in the row stays the content session's.
 
 `library.html` joins `library.js` and `published.js` by id and shows one picture. That page is what Faisal
 opens.

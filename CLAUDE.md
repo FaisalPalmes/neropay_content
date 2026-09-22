@@ -361,7 +361,9 @@ Facebook, Instagram, TikTok, LinkedIn and YouTube. Neither writes the other's fi
 two sessions out of each other's merge conflicts. `library.html` joins them by id.
 
 So: **never record a publish in `library.js` or `posts.js`.** It goes in `published.js`, and that is not
-this session's file. A `posted` field lived on `posts.js` for one day on 22 Sep and had already drifted —
+this session's file. One carve-out the other way, added 22 Sep: the Meta session may set `status`, `by`,
+`clearedFor` and `notCleared` on a `library.js` row when Faisal rules in chat with it — an approval has
+nowhere else to live, and routing it through this session only loses it. It touches nothing else. A `posted` field lived on `posts.js` for one day on 22 Sep and had already drifted —
 M13 and M14 were added without it — which is the argument against two places holding the same fact.
 
 `PUBLISH-HANDOVER.md` is the contract; hand it to the Meta session. `node check-register.mjs` enforces the

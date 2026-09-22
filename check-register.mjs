@@ -19,7 +19,7 @@ const POSTS = await load('posts.js', 'POSTS');
 
 const ids = new Set([...LIB.videos.map(v => v.id), ...POSTS.map(p => p.id)]);
 const PLATFORMS = ['youtube', 'instagram', 'facebook', 'tiktok', 'linkedin', 'website', 'paid-meta'];
-const STATES = ['brief', 'building', 'review', 'ready', 'approved', 'published'];
+const STATES = ['brief', 'building', 'review', 'ready', 'approved', 'published', 'dropped'];
 const fail = [];
 
 for (const v of LIB.videos) {
