@@ -403,6 +403,35 @@ window.POSTS = [
   assets: [
     { t: "cover", size: "sq", kick: "NeroConnect", alt: "A light card with the line: You don't have to build a payments company to run one. NeroPay wordmark bottom left.", title: "You don't have to build a payments company to run one.", sub: "NeroConnect, from NeroPay" }
   ]
+},
+/* ============================ ADDED 22 SEP 2026 — the two finished motion graphics on Meta ============================ */
+{
+  id: "M13", channel: "meta", pillar: "Statement", format: "Video · 9:16 + 4:5 · 56s",
+  date: "Thu 24 Sep", blocked: false,
+  title: "The 18-month rule",
+  copy: "If you rent your card machine, there's a rule worth knowing about.\n\nSince January 2023 the Payment Systems Regulator has capped terminal leases at 18 months. Not three years, not four. When that minimum term ends, the 14 largest providers have to write and tell you the date it ended and that you are free to switch. If you would rather stay, you can still leave later on one month's notice.\n\nSome deals are fine as they are. You won't know until you compare, and comparing takes minutes.\n\nPayment Systems Regulator, PS22/2. The letters have been going out since July 2023.\n\nVoice generated with AI.",
+  creative: "MG02 v6 (motion/print/mg02, Verity, 55.9 s), all four crops rendered 16 Sep 2026. Feed post: the 4:5. Reels and Stories: the 9:16. Both carry captions drawn in the picture, so the post reads with the sound off; the 16:9 is the clean master and is for YouTube, not the feed. Never let Meta auto-crop between placements — the type is positioned per crop. Cover frame: the pillars at about 11 s, where 18 MONTHS is gold beside the two that sank.\n\nInstagram cut of the caption, shorter and front-loaded: \"Your card machine lease cannot tie you in for more than 18 months. That has been the rule since January 2023.\\n\\nWhen the minimum term ends the biggest providers have to write and tell you the date, and tell you that you are free to switch. Stay if you want to. You can still leave later on one month's notice.\\n\\nSome deals are fine as they are. You won't know until you compare.\\n\\nPayment Systems Regulator, PS22/2. Voice generated with AI.\"",
+  why: "The strongest educational asset we have and the clearest case of manufacturing shopping-around behaviour: a rule in the merchant's favour that most of them have never been told, with the date and the regulator's own reference on screen. Concedes in the caption and in the video. No price, no rate, no competitor named.",
+  sketch: { type: "reel", subject: "graphic", alt: "three pillars, 18 months gold beside three years and four years",
+    beats: ["when does your contract actually end", "the 18-month rule, since Jan 2023", "they have to write to you", "one month's notice, then compare"],
+    cap: "4:5 for the feed, 9:16 for Reels. Captions are drawn in both. The pillars are the shot." },
+  assets: [
+    { t: "cover", size: "st", kick: "Since Jan 2023", alt: "A light card reading The 18-month rule, with the line: a terminal lease cannot tie you in for longer. NeroPay wordmark bottom left.", title: "The 18-month rule.", sub: "Payment Systems Regulator · PS22/2" }
+  ]
+},
+{
+  id: "M14", channel: "meta", pillar: "Partner", format: "Video · 4:5 · 52s",
+  date: "Tue 29 Sep", blocked: "The 9:16 crop is not rendered — PP02 v7 exists as 4:5 only. The feed post can go as it is; Reels and Stories need the vertical render first (about 35 minutes, motion/partner/pp02).",
+  title: "Your road",
+  copy: "The café, the barber, the takeaway. If you know the people who run them, you can introduce them to us.\n\nYou don't sell anything. You don't set anything up. You don't make the call. Send us a name and a number and we close it from there. Introduce three in a month and you are an Active Partner.\n\nFree to join. It isn't for everyone: if you would rather not put your name to a recommendation, leave this one alone. What an introduction pays, and what it depends on, is in the video.\n\nneropay.app/partners\n\nVoice generated with AI.",
+  creative: "PP02 v7 (motion/partner/pp02, Olivia, 52.0 s), 4:5, delivered 18 Sep 2026. Captions drawn in the picture. No place is named in the video by design, so the same file runs anywhere. The figures stay where the condition sits beside them, on screen — the caption carries none, because a money figure in the text of a Meta post is the pattern that restricted the profile in August.\n\nInstagram cut of the caption: \"How many of the business owners on your road know your name? The café, the barber, the takeaway.\\n\\nIntroduce one to us and we take it from there. No selling, no setting up, no phone calls: a name and a number is enough. Three in a month makes you an Active Partner.\\n\\nFree to join. If you would rather not put your name to a recommendation, this one isn't for you.\\n\\nneropay.app/partners. Voice generated with AI.\"",
+  why: "The partner programme's audience is anyone with a high street network, which is Facebook and Instagram rather than LinkedIn. Leads with the job, not the money; the concession is that it is not worth doing if you would not put your name to it.",
+  sketch: { type: "reel", subject: "graphic", alt: "a row of paper shopfronts, the camera walking the street",
+    beats: ["how many owners on your road know your name", "no selling, no setting up, no calling", "a name and a number, we close it", "free to join, neropay.app/partners"],
+    cap: "4:5 only for now. Captions drawn in. The walk down the street is the shot." },
+  assets: [
+    { t: "cover", size: "st", kick: "Partner programme", alt: "A light card reading: the café, the barber, the takeaway. NeroPay wordmark bottom left.", title: "Who on your road knows your name?", sub: "One introduction. We do the rest." }
+  ]
 }
 
 ];
