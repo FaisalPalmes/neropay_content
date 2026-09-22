@@ -3,6 +3,7 @@
 One line per notice, newest first. Keep it to what a session must know before it writes a word or a
 frame, and retire a line once it is folded into the docs and nobody can get it wrong any more.
 
+2026-09-22 · MG01 "Don't switch to us" was RENDERED on 15 Sep (four crops, md5s in script.md) but `out/final/` is gitignored and no delivery link was ever written — the files are gone unless Faisal has them. It needs re-rendering before it can even be reviewed, and publish is separately blocked on the workhorse rate.
 2026-09-22 · TWO SESSIONS, TWO FILES. `library.js` = what we made (content + motion sessions write it). `published.js` = what went out (the nPanda Meta session writes it, and nothing else here). Never record a publish in `library.js` or `posts.js`; the `posted` field is gone. `PUBLISH-HANDOVER.md` is the contract, `node check-register.mjs` enforces it.
 2026-09-22 · `clearedFor` on a `library.js` video says where it may go; `null` means NOT ASSESSED, not cleared. MG02 is refused for paid Meta on Route C. B1 and PP02 are flagged and unruled — organic and paid are separate decisions.
 2026-09-22 · `library.js` / `library.html` is the DELIVERY REGISTER — the only place that records a decision. Write the row in the same commit that renders a video. A session may set any state including `approved`, but only when Faisal says so in chat, and `by` must name who and when. Never infer `approved` from a render or a README calling itself final.
