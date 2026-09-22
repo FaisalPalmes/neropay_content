@@ -100,9 +100,13 @@ its own review gate, not a side effect of this spec.
 
 From `BRAND.md` §5, the gaps that bite this spec specifically:
 
-- **No dark-on-yellow lockup.** Shutter down puts the wordmark on a join between two yellow panels.
-  There is no supplied artwork for a wordmark on a yellow ground. Until there is, the panels meet on
-  charcoal and the wordmark is the dark version.
+- ~~**No dark-on-yellow lockup.**~~ **Settled by Faisal, 22 Sep 2026: there is no dark-on-yellow,
+  because there is no dark lockup going forward.** The wordmark is used in its **light or white**
+  version only, on yellow or on black. So shutter down puts the light wordmark straight onto the
+  yellow join — no charcoal fallback, and nothing to wait on Eray for. The two combinations in use
+  are light on yellow and light on black.
+  *One thing to confirm when Faisal next reads this: whether the black wordmark files in
+  `brand/logos/` are retired outright, or only barred from a yellow ground.*
 - **No vector.** A full-bleed yellow tile at 4K is fine because it is drawn in code, but any supplied
   artwork scaled up will soften. Keep the wordmark at or below its native 1200px.
 - **Five yellows in the supplied artwork** (`#FBCB1E`, `#FCCA16`, `#FCCA17`, `#FDD315`) against the
