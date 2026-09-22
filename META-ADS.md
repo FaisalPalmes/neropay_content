@@ -282,3 +282,13 @@ This is the second time the draft layer has moved a status on this account with 
 21 Aug a pending draft committed itself during an unrelated rename and flipped `20260630` from PAUSED to
 ACTIVE at £7/day. **The standing rule is now proven twice: after any action in Ads Manager, re-read status
 from the API rather than trusting the screen.**
+
+**22 Sep 2026 — the connector cannot create ads inside a lead ad set either.** Tested, not assumed.
+`ads_create_ad` into `AS | Static | Instant form | 25-65 | North West` with an inline `link_data` creative
+returns `Missing Lead Form: Choose or create an instant form for your leads campaign. (#3390001)`. The
+creative must carry the instant form's id, and this connector exposes no tool to list, read or attach one.
+`ads_get_creatives` does not return `object_story_spec`, so the form id cannot be lifted off the existing
+café ad either, and duplicating that ad with `source_ad_id` would carry its retired copy.
+
+So §7's rule widens: **anything that touches an instant form is built by hand in Ads Manager.** A session
+can still write the copy, verify it against Route C, name it to convention, and read the result back.
