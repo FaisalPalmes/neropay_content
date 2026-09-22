@@ -324,3 +324,27 @@ link clicks and the campaign returned 1 lead, and that lead landed on day one. A
 returns zero, not one. This is a conversion problem, which matches the audit's own finding that the
 Messenger destination converts at a third of the account's worst historic rate. Verify by submitting a test
 through the ad preview rather than rebuilding on the assumption.
+
+## 17. The instant form — 22 Sep 2026
+
+The form **is** attached to `AD | Static | Cafe | EN | v1`. A `Website URL` of `http://fb.me/` in the
+publish summary is how Meta renders a lead-ad destination, not a sign of a missing form; an earlier note in
+this file guessing otherwise was wrong.
+
+Three things seen in the form itself:
+
+1. **"Require SMS verification to submit form" is ON.** The lead has to receive and enter a one-time code
+   before the form submits. It raises lead quality and cuts completion hard. This account currently gets
+   about one lead per £126 against a historic best of £6.89, so it is a live candidate for where the volume
+   is going, and it is one checkbox. Recommendation: off while volume is the problem, revisit if the leads
+   that do arrive turn out to be junk.
+2. **The form is called `Generated form 09/21/2026 9:10am (v1)`** — Meta's auto-name, and the library holds a
+   second, `Generated form 09/21/2026 8:51am`, from the same morning. Two near-identical auto-named forms is
+   how nobody can later say which one collected which leads. Rename to the convention (`FORM | Static | NW |
+   2026-09`) and archive the stray.
+3. **Field order is Email (optional), Phone number, First name.** Follow-up on this account is by phone and
+   WhatsApp, so phone is the field that matters; asking for an optional email first is a wasted first
+   impression. Suggested order: First name, Phone number, then Email optional.
+
+None of this blocks publishing. The SMS verification is the one worth changing first because it is free to
+test and it bears directly on the open question of where the leads went.
