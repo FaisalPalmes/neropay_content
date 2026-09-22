@@ -494,3 +494,26 @@ never gave all three a fair run.
 
 Verdict given: fine to continue, nothing broken, no rail breached, form attached, copy clean. Fix the radius
 first.
+
+## 22. Boosting is paid Meta — 22 Sep 2026
+
+MG02 went out organically on Facebook and Instagram on 22 Sep and is refused for paid Meta under Route C.
+Faisal confirmed he is only posting it to the grid. That is exactly what its `clearedFor` allows.
+
+**The trap: "Boost post" is not an organic action.** It converts the post into a paid ad using the same
+creative, routes it through the ad account, and puts it in front of the ad classifier. A video cleared for
+organic and refused for paid can breach Route C with one tap, from a button that sits next to the organic
+ones in Business Suite.
+
+So for anything whose `notCleared` names `paid-meta` — MG02 today, and structurally every Small Print and
+The Maths episode, because their premise is a regulation or arithmetic on a rate and no rewrite fixes that:
+
+- Never boost the post.
+- Ignore the "your post is performing well, boost it" prompts. They appear *because* it is doing well
+  organically, which is not a reason to change what it is.
+- Check the Page's **automatic boosting / Advantage+ for Pages** setting is **off**. Meta has been enabling
+  auto-promotion of well-performing posts by default, which can boost a post with no tap at all.
+
+This is the operational edge of `CLAUDE.md` rail 9 — write organic to ad standards, because any post might
+be boosted later. Where a piece cannot meet ad standards, the control is not the copy, it is never letting
+it become an ad.
