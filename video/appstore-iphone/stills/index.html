@@ -137,6 +137,7 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
    onto the keyed screen with a homography so it sits at the photo's own angle ── */
 .pht{position:absolute;left:0;top:0;transform-origin:0 0}
 .pht > img.cutimg{position:absolute;left:0;top:0;width:1116px;height:2000px;filter:drop-shadow(0 34px 40px rgba(30,30,60,.22)) drop-shadow(0 8px 12px rgba(30,30,60,.12))}
+.pht > img.cutimg.flat{filter:none}
 .pscr{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;background:#fff}
 .pscr .in{position:absolute;inset:0;filter:blur(.5px) contrast(.95) brightness(.97) saturate(.95)}
 .pscr .st{height:44px;position:relative;background:#fff}
@@ -367,11 +368,15 @@ function photoSlide(n) {
   const hq = (Math.hypot(Q.bl[0]-Q.tl[0], Q.bl[1]-Q.tl[1]) + Math.hypot(Q.br[0]-Q.tr[0], Q.br[1]-Q.tr[1])) / 2;
   const CW = 400, CH = Math.round(CW * hq / wq);
   const M = homography(CW, CH, q);
+  /* the hands' drop shadow lifts them off the ground but must not fall on the screen: seen through a finger's soft
+     edge it is a dark dotted rim. So the shadow layer has the screen cut out of it, and a plain copy sits on top */
+  const hole = `path(evenodd,'M0 0H1116V2000H0Z M${q.map(p => p[0] + ' ' + p[1]).join(' L')}Z')`;
   return `<div class="pht" style="transform:translate(${ox.toFixed(1)}px,${oy.toFixed(1)}px) scale(${s.toFixed(4)})">
     <div class="pscr" style="width:${CW}px;height:${CH}px;transform:${M}"><div class="in">
       <div class="st"><div class="t">9:41</div><div class="r"><b style="height:6px"></b><b style="height:9px"></b><b style="height:12px"></b><b style="height:15px"></b><b class="bat"></b></div></div>
       <img src="${A(P.app)}" alt=""><div class="hm"></div></div><div class="lt"></div></div>
-    <img class="cutimg" src="assets/photo-${P.name}-cut.png" alt=""></div>`;
+    <img class="cutimg" src="assets/photo-${P.name}-cut.png" alt="" style="clip-path:${hole}">
+    <img class="cutimg flat" src="assets/photo-${P.name}-cut.png" alt=""></div>`;
 }
 const [n, v, m] = (location.hash.slice(1) || '1').split('-').map(Number);
 const fr = document.getElementById('f');

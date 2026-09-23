@@ -117,3 +117,7 @@ fine gold chain bracelet on the wrist, only just in frame.
 from either side with both hands, both thumbs resting on the lower part of the screen as if typing, only the thumb
 tips overlapping the screen. Short rounded nails with a classic French manicure, soft sheer pink base and fine white
 tips. One slim polished silver band on the ring finger of the left hand.
+
+**Used (23 Sep 2026):** A → slide 3 (`photo-pos-src.webp`, nude nails, gold band) and B → slide 5
+(`photo-reports-src.webp`, cherry nails, gold chain). Slide 6 keeps the v1 typing photo with the emerald nails, as
+Faisal chose. `cut-photo.py` holds the fair-skin wall test, the reports shadow boxes and the luma matte at the screen edge.
