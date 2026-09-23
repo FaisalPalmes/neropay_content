@@ -8,4 +8,4 @@ cd "$(dirname "$0")"
 mkdir -p vendor fonts assets
 cp ../vendor/gsap.min.js vendor/
 cp ../../motion/node_modules/@fontsource/poppins/files/poppins-latin-{400,500,600,700}-normal.woff2 fonts/
-cp ../../brand/logos/neropay-white-640.png assets/wordmark-white.png
+cp ../../brand/logos/neropay-white-1200.png assets/wordmark-white.png
