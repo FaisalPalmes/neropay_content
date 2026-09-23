@@ -54,3 +54,32 @@ has to get the hands, the card, the phone and the light right.
    it apply to this image: the feature is named exactly "Tap to Pay on iPhone" if named at all, and Apple's own
    checkout screen must not be altered. The headline as built ("Take card payments on your phone.") does not use
    Apple's name.
+
+## Feature slides — three more hand shots (23 Sep 2026)
+
+For slides 3 (NeroPOS), 5 (Reports) and 6 (Payment links), so the carousel alternates: photo, glass screenshot, photo,
+glass screenshot, photo, photo. Slides 2 and 4 stay bare screenshots in the yellow glass outline. Every shot uses the
+same wall, the same shop owner's hand and the same green screen, so the cut-out and the screen swap work exactly as
+on slide 1. Portrait 9:16, 4 variations each. Negative prompt as above, plus: `second phone, tablet, laptop, props`.
+
+Common to all three (paste at the end of each): *Plain warm off-white plaster wall with a faint natural texture.
+The phone is a modern black smartphone with thin even bezels, rounded corners and no logo; its screen is a flat,
+evenly lit, pure chroma green (#00FF00) with no reflections, no glare and nothing displayed, facing the camera
+almost straight on (tilted no more than ten degrees). The phone's top edge sits about a third of the way down the
+frame and the phone fills the lower middle of the frame, centred left to right; the top third of the frame is clear
+empty wall. The shop owner's hand is a deep brown skin tone with medium-length almond-shaped gel nails in glossy
+emerald green with a thin gold chrome tip; no rings, no watches, no bracelets, no tattoos. Soft daylight from the
+left, gentle natural shadows. Everything in sharp focus, deep depth of field, f/8, 50mm lens, no bokeh. Photorealistic,
+clean, bright, true-to-life colour.*
+
+**A — slide 3, NeroPOS (tapping the menu).** Photorealistic close-up product photograph, vertical format. One hand
+holds a smartphone upright from below; the index finger of the same person's other hand, coming in from the lower
+right, lightly touches the lower right quarter of the screen as if tapping an item on a menu.
+
+**B — slide 5, Reports (reading the numbers).** Photorealistic close-up product photograph, vertical format. One
+hand holds a smartphone upright, fingers wrapped around the back and the thumb resting on the left edge of the frame
+of the phone, not on the screen, the phone tilted very slightly back as if being read.
+
+**C — slide 6, Payment links (typing).** Photorealistic close-up product photograph, vertical format. Two hands hold
+a smartphone upright from either side, both thumbs resting on the lower part of the screen as if typing, only the
+thumb tips overlapping the screen.

@@ -297,11 +297,23 @@ const MORE = {
 };
 const heroVariant = (v, m) => `<div class="gbg">${THEMES[HERO_THEME[v === 6 ? 5 : v]]}<div class="disc"></div></div>
   <div class="cut"><div class="hscr">${m ? (v === 6 ? MORE[m]() : MARKS[m]()) : SCREENS[v]()}<div class="lit"></div><div class="cs"></div></div><img src="assets/hero-cut.png" alt=""></div>`;
+
+/* the carousel's grounds (Faisal, 23 Sep): every frame on the hero's blurred pink-and-blue light, each one mixed
+   differently so no two slides share a pattern; the top-left stays pale behind the copy */
+const disc = (x,y,d) => `<div class="disc" style="left:${x}px;top:${y}px;width:${d}px;height:${d}px"></div>`;
+const GROUND = {
+  2: bloom(360,-180,640,'rgba(255,170,205,.42)') + bloom(-300,700,760,'rgba(140,175,255,.40)') + bloom(300,1000,600,'rgba(200,170,255,.32)') + disc(60,560,560),
+  3: bloom(340,-150,620,'rgba(140,175,255,.40)') + bloom(-320,520,700,'rgba(255,170,205,.36)') + bloom(280,1050,560,'rgba(255,214,110,.26)') + disc(-160,820,520),
+  4: bloom(380,-100,560,'rgba(200,170,255,.40)') + bloom(260,560,700,'rgba(140,175,255,.34)') + bloom(-260,1000,680,'rgba(255,170,205,.38)') + disc(200,420,560),
+  5: bloom(300,300,700,'rgba(255,170,205,.34)') + bloom(0,1050,800,'rgba(140,175,255,.38)') + bloom(420,-220,520,'rgba(255,214,110,.26)') + disc(90,700,620),
+  6: bloom(360,-200,680,'rgba(140,175,255,.42)') + bloom(240,880,700,'rgba(255,170,205,.38)') + bloom(-340,420,640,'rgba(200,170,255,.30)') + disc(-120,500,540)
+};
 const [n, v, m] = (location.hash.slice(1) || '1').split('-').map(Number);
 const fr = document.getElementById('f');
 fr.className = 'frame is' + n;
 /* frame 1 draws the art first so the copy sits above the hands; #1-k is one of the cut-out variants */
-fr.innerHTML = n === 1 ? (v ? heroVariant(v, m) : ART[1]()) + copy(COPY[1]) : copy(COPY[n]) + ART[n]();
+fr.innerHTML = n === 1 ? (v ? heroVariant(v, m) : ART[1]()) + copy(COPY[1])
+             : `<div class="gbg">${GROUND[n]}</div>` + copy(COPY[n]) + ART[n]();
 </script>
 </body>
 </html>
