@@ -73,6 +73,7 @@ h1 .mk{position:absolute;left:-6px;right:-8px;bottom:.05em;height:.40em;backgrou
 
 /* taps: a press on a key, a ring going out from a fingertip */
 .press{position:absolute;border-radius:14px;background:rgba(17,17,20,.16);opacity:0}
+#kc{background:rgba(255,255,255,.30);border-radius:0 0 14px 14px}   /* CHARGE is black: its press lightens */
 .ring{position:absolute;border-radius:50%;border:2.5px solid rgba(255,207,36,.95);opacity:0;
   box-shadow:0 0 0 3px rgba(255,207,36,.25)}
 
@@ -279,7 +280,10 @@ function apply(t) {
   slides.forEach((el, k) => {
     const o = k - p;
     el.style.visibility = Math.abs(o) < 1.3 ? 'visible' : 'hidden';
+    /* clip-path, not only overflow:hidden with a radius: the renderer let a composited child escape that clip
+       during the first swipe (a yellow sliver at the top of the frame), and clip-path cuts every layer */
     el.style.borderRadius = (pull * 60).toFixed(1) + 'px';
+    el.style.clipPath = `inset(0 round ${(pull * 60).toFixed(1)}px)`;
     el.style.boxShadow = `0 ${(pull*40).toFixed(1)}px ${(pull*80).toFixed(1)}px -${(pull*30).toFixed(1)}px rgba(40,40,70,${(pull*.35).toFixed(3)})`;
     /* depth: the art trails the card, the copy a little less */
     $('ap' + k).style.transform = `translateX(${(o * 78).toFixed(2)}px)`;

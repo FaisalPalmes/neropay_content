@@ -378,6 +378,15 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
 3. **"Just two yellow lines alone" at the close.** The bare bars read as a graphic, not a logo. Rule: the mark
    at a close sits in a tile, the way the app icon does; clear glass on a light ground, no coloured light.
 
+## App Store preview v6 (23 Sep 2026) — caught before delivery, not by Faisal
+
+1. **A clip that holds in a browser can leak in the render.** The slides were rounded cards with
+   `overflow:hidden`. A plain browser and `hyperframes snapshot` both clipped them correctly, but the full render
+   showed a yellow sliver above the incoming card for half a second. Rule: clip any card that scales or moves with
+   `clip-path: inset(0 round r)` as well as `overflow:hidden`. Scan the rendered MP4 itself, not only snapshots:
+   for example, count off-palette pixels along the frame edges frame by frame.
+2. **A press has to read on the thing pressed.** A dark flash disappears on a black button. Lighten the dark ones.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on

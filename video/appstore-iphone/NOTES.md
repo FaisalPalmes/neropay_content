@@ -22,7 +22,8 @@ The screens are his 923 × 2000 export, so at App Store size they are upscaled a
 
 # App Store preview, iPhone — v6 (23 Sep 2026) is current; v5 and earlier are below and superseded
 
-**File** `renders/FINAL-appstore-iphone-v6.mp4` · 886 × 1920 · 30 fps · 29.0s · (filled in on render)
+**File** `renders/FINAL-appstore-iphone-v6.mp4` · 886 × 1920 · 30 fps · 29.0s · 12.4 MB · −13.9 LUFS / −1.9 dBTP ·
+md5 `86c981f5b73b20cfd5bd3b32e4304877` · Higgsfield media `27c2d347-6fe8-440c-85dd-5c8607a52f7a`.
 
 ## v6 — Faisal: "a full video with these new elements, the new background and the whole new aesthetic"
 
@@ -53,6 +54,14 @@ softening). v1 showed that a filter on anything that moves flickers, so those ar
 stills page. They are rendered at 1800 × 2868 with 120px spare each side for the parallax:
 `node stills/render.cjs layers` → `assets/v6/` (git-ignored; run `stills/cut-photo.py` first if the cut-outs are
 missing). The grounds, the copy, the hero's screen, the taps and the lifts are live HTML with no filter.
+
+Two faults fixed before delivery:
+
+- **A yellow sliver at the top of the frame during the first swipe**, in the render only (the snapshot and a plain
+  browser did not show it). A composited child of the slide escaped its rounded `overflow:hidden` clip. Each slide
+  is now also cut with `clip-path: inset(0 round r)`, which clips every layer. The top-edge scan finds yellow
+  only under the Shutter in the first 0.3s now.
+- **The CHARGE press could not be seen**: a dark flash on a black button. It lightens instead.
 
 Rebuild: `node stills/render.cjs layers`, `npm run check`, `npx hyperframes render --fps 30 -o renders/v6-picture.mp4`,
 `bash mix.sh renders/v6-picture.mp4 renders/FINAL-appstore-iphone-v6.mp4`. v5's composition and mix are in `archive/`.
