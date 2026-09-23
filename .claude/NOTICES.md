@@ -3,6 +3,7 @@
 One line per notice, newest first. Keep it to what a session must know before it writes a word or a
 frame, and retire a line once it is folded into the docs and nobody can get it wrong any more.
 
+2026-09-23 · FOUR SESSIONS NOW. "nPanda - CONTENT" split into CONTENT VIDEO (videos, scripts, register, posts.js, docs) and CONTENT IMAGES (everything under `social/` and static ads). Motion Graphics and META unchanged. The lane table is in CLAUDE.md under "The sessions on this repo" — stay in yours.
 2026-09-22 · NO DARK LOCKUP GOING FORWARD (Faisal). The wordmark is the light or white version only, on yellow or on black. Dark-on-yellow is dead, and so is the charcoal fallback the Shutter outro was waiting on — `BRAND-MOTION.md` §5 is unblocked. Whether the black files in `brand/logos/` are retired outright is the one thing still to confirm.
 2026-09-22 · MOTION IS ON THE NEW BRAND, from `motion/lib/` forward. Yellow `#FFCF24`, ink `#111114`, the wordmark placed from `brand/logos/`. The delivered episodes (PP01, PP02, NC01, MG02, Maths ep 1) keep their own old values and are not reissued — Faisal, 22 Sep 2026. Move an episode's own values only if it is re-rendered.
 2026-09-22 · A1/A2/A3 (the presenter partner videos in generation-pack.md) DESCRIBE A SUPERSEDED PARTNER MODEL — account credit on the partner's own trading account, not the confirmed £100/£200/£300 bonus plus 20–40% revenue share. A2-06 still carries a literal `[PLACEHOLDER]`. Never generate them as written; rewrite from `motion/partner/BRIEF.md` v4 first.

@@ -390,6 +390,21 @@ ad account. Route C is the one that bites creative: the terminal and the EPOS so
 percentage, settlement, payout or credit language anywhere in an ad, and switching framing is the one thing
 this account has had permanently rejected.
 
+### The sessions on this repo, as of 23 Sep 2026
+
+Four Claude sessions share this repo. Each has a lane; stay in yours, pull before you write, push straight after.
+
+| Session | Makes | Owns |
+|---|---|---|
+| **nPanda - CONTENT VIDEO** | Presenter and Higgsfield videos, scripts, the delivery register | `library.js`, `posts.js`, `ideas.js`, `calls.js`, `generation-pack.md`, the pages, the repo docs |
+| **nPanda - CONTENT IMAGES** | Static creative — social cards, carousels, stat cards, covers, static ads | `social/` (templates, renderer, output) and static ad creative |
+| **nPanda - Motion Graphics** | Faceless motion graphics and HyperFrames builds | `motion/`, `video/`, `edit/` |
+| **nPanda - META** | Publishing, and the ad account | `published.js`, `META-ADS.md` |
+
+Split on 23 Sep 2026 at Faisal's request: the old "nPanda - CONTENT" became CONTENT VIDEO, and CONTENT IMAGES was
+created for statics. If a job crosses a lane — the images session needs a caption changed, say — ask the owning
+session rather than editing its file.
+
 The fuller NeroPay context (pricing ladder, the KYC rules, the Elif incident report, the GTM
 playbook, ~40 docs) lives in a claude.ai Project, not in this repo. If a task needs something
 that isn't in this file or `rails.html`, ask Faisal to bring the relevant doc over rather than
