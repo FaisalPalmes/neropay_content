@@ -1,0 +1,23 @@
+{
+  "_": "Per-post framing for the photo opener. y = which part of a tall photo stays in the 4:5 card (0% top, 100% bottom). panel = where the glass slab sits: top, middle or bottom, chosen so it doesn't cover the subject.",
+  "M2": {
+    "y": "75%",
+    "panel": "top"
+  },
+  "M5": {
+    "y": "60%",
+    "panel": "top"
+  },
+  "M7": {
+    "y": "100%",
+    "panel": "bottom"
+  },
+  "M11": {
+    "y": "45%",
+    "panel": "top"
+  },
+  "M12": {
+    "y": "80%",
+    "panel": "bottom"
+  }
+}

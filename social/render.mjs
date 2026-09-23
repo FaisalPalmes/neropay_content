@@ -74,15 +74,17 @@ page.on('requestfailed', r => errors.push('request failed: ' + r.url()));
 const kickFor = p => p.pillar === 'Partner' ? 'NeroPay partners' : p.pillar === 'Statement' ? 'Explained by NeroPay' : p.pillar;
 
 const PHOTOS = join(HERE, 'photos');
+const FOCUS = await readFile(join(PHOTOS, 'focus.json'), 'utf8').then(JSON.parse).catch(() => ({}));
 const photoFor = async id => { for (const ext of ['jpg', 'jpeg', 'png', 'webp']) { const f = join(PHOTOS, `${id}.${ext}`);
-  try { await readFile(f); return pathToFileURL(f).href; } catch {} } return null; };
+  try { await readFile(f); return { src: pathToFileURL(f).href, ...(FOCUS[id] || {}) }; } catch {} } return null; };
 
 async function shoot(template, size, data, file) {
   const [w, h] = SIZES[size] || SIZES.sq;
   await page.setViewportSize({ width: w, height: h });
   await page.goto(pathToFileURL(join(TPL, template + '.html')).href, { waitUntil: 'load' });
   await page.evaluate(([lk, md]) => { if (lk === 'glass') { const d = document.documentElement; d.classList.add('glass'); for (const k in md) d.style.setProperty(k, md[k]); } }, [look, data.mood]);
-  if (data.photo) await page.evaluate(u => { const d = document.documentElement; d.classList.add('photo'); d.style.setProperty('--photo', `url("${u}")`); }, data.photo);
+  if (data.photo) await page.evaluate(u => { const d = document.documentElement; d.classList.add('photo'); d.style.setProperty('--photo', `url("${u.src}")`);
+    if (u.y) d.style.setProperty('--photo-y', u.y); if (u.panel === 'top') d.classList.add('ptop'); if (u.panel === 'bottom') d.classList.add('pbot'); }, data.photo);
   /* never let a line break at a hyphen ("18-" / "month rule"): word joiners either side of every inner hyphen */
   const glue = v => typeof v === 'string' ? v.replace(/(\S)-(?=\S)/g, '$1⁠-⁠')
     : Array.isArray(v) ? v.map(glue) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, glue(x)])) : v;

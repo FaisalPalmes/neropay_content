@@ -156,3 +156,14 @@ html.photo .seam.line{display:none}
 html.photo .lglass{background:linear-gradient(135deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.74) 50%,rgba(255,255,255,.82) 100%);
   -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1)}
 html.photo .lglass .sheen{display:none}
+/* photo framing, per post from social/photos/focus.json: --photo-y picks the slice of a tall photo, and the
+   slab moves off the subject. The opener's slab loses its minimum height so it covers as little as possible. */
+html.photo .bgd{background-position:center var(--photo-y,50%)}
+html.photo .lglass .body{min-height:0}
+html.photo.ptop .lglass{top:120px;transform:none}
+html.photo.pbot .lglass{top:auto;bottom:170px;transform:none}
+/* on a photo the wordmark can land on anything, so it sits on a small frosted pill (the light wordmark stays the
+   light wordmark — no recolouring, BRAND.md §1) */
+html.photo .wm{box-sizing:content-box;padding:16px 24px;border-radius:999px;left:calc(var(--m) - 24px);bottom:calc(var(--bot) - 16px);
+  background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:inset 0 1.5px 0 #fff,0 8px 24px rgba(20,20,22,.12)}
