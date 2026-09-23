@@ -73,7 +73,25 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
 .photo > img{position:absolute;inset:0;width:100%;height:100%}
 /* the keyed screen, x 372–741 / y 588–1396 of the source, at the photo's scale (.717) */
 .hscr{position:absolute;left:266.7px;top:421.6px;width:265.3px;height:579.3px;background:#fff;overflow:hidden}
-.hscr img{position:absolute;left:0;bottom:0;width:100%;height:auto}
+/* the screen is built like a real one: the app, the bottom of its CHARGE / TAP buttons (his export cuts them),
+   the home-indicator safe area, then matched to the photograph — a touch soft, a touch dimmer, lit from the left,
+   a glass reflection, the bezel's inner shadow and the card's shadow falling across the screen */
+.hscr .ui{position:absolute;left:0;right:0;bottom:0;filter:blur(.35px) contrast(.95) brightness(.97) saturate(.95)}
+.hscr .ui .crop{overflow:hidden}
+.hscr .ui img{display:block;width:100%;margin-top:-36px}   /* drops the Keypad / POS switch: only a sliver of it showed past the card */
+.hscr .ext{position:relative;height:10px}
+.hscr .ext b{position:absolute;top:-1px;height:11px;border-radius:0 0 7px 7px}
+.hscr .ext .c{left:2.55%;width:46.3%;background:#000}
+.hscr .ext .t{left:51.5%;width:46.2%;background:#EEEEEE}
+.hscr .safe{height:22px;position:relative;background:#fff}
+.hscr .safe i{position:absolute;left:50%;bottom:7px;width:92px;height:4px;margin-left:-46px;border-radius:3px;background:#111}
+.hscr .lit{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 35%,rgba(40,30,20,0) 60%,rgba(40,30,20,.07) 100%),
+             linear-gradient(118deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.10) 52%,rgba(255,255,255,0) 64%);
+  box-shadow:inset 0 0 7px rgba(0,0,0,.28),inset 0 0 2px rgba(0,0,0,.35)}
+/* the card's bottom edge runs (390,783)→(806,818) in the source: 4.8deg; its shadow falls on the glass below it */
+.hscr .cs{position:absolute;left:-20px;top:136px;width:330px;height:30px;transform-origin:0 0;transform:rotate(4.8deg);
+  background:linear-gradient(to bottom,rgba(12,14,30,.34),rgba(12,14,30,0));filter:blur(3px)}
 </style>
 </head>
 <body>
@@ -105,7 +123,9 @@ const lift = (k,cx,cy,cw,ch,X,Y,W) => { const s = W/cw;
 /* the art sits where his v1 device sat. Phone: 488 wide at x 86, top 492 (screen image from y 568, scale .591).
    Glass: 560 wide at x 50, top 486 (image from x 65 / y 501, scale .675). Each lift covers its own original. */
 const ART = {
-  1: () => `<div class="photo"><div class="hscr"><img src="${A(1)}" alt=""></div><img src="assets/hero-keyed.png" alt=""></div>`,
+  1: () => `<div class="photo"><div class="hscr">
+      <div class="ui"><div class="crop"><img src="${A(1)}" alt=""></div><div class="ext"><b class="c"></b><b class="t"></b></div><div class="safe"><i></i></div></div>
+      <div class="lit"></div><div class="cs"></div></div><img src="assets/hero-keyed.png" alt=""></div>`,
   2: () => glass(1,50,486,560),
   3: () => phone(2,86,492,488) + lift(2,402,543,345,377,320,872,270),
   4: () => glass(3,50,486,560) + lift(3,0,335,785,190,35,716,590),
