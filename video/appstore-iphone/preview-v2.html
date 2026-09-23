@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+/* v2 look-book — stills only, for Faisal to choose from before anything is rendered.
+   A neutral handset drawn in code (no maker's shape, no logo, no buttons that identify one) so it can
+   tilt in real 3D and the screens can swap inside it. */
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500}
+:root{--ang:46.5deg;--yel:#FFCF24;--ink:#111114}
+html,body{width:886px;height:1920px;overflow:hidden}
+body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased;background:#EFEFEC}
+#stage{position:absolute;inset:0;overflow:hidden}
+
+.ground{position:absolute;inset:0;background:
+  radial-gradient(120% 60% at 100% 8%, rgba(255,207,36,.26), rgba(255,207,36,0) 60%),
+  radial-gradient(80% 45% at 0% 70%, rgba(150,180,255,.16), rgba(150,180,255,0) 70%),
+  linear-gradient(170deg,#F4F3EF 0%,#EFEEE9 45%,#E6E7EA 100%)}
+
+/* the copy, straight from Faisal's own export band — never re-typeset */
+.copy{position:absolute;left:0;top:150px;width:886px;z-index:6}
+.copy img{width:100%;display:block}
+.wm{position:absolute;left:0;top:0;width:886px;z-index:7}
+.wm img{width:100%;display:block}
+
+/* ── the phone ── */
+.rig{position:absolute;left:50%;top:747px;width:760px;height:1570px;margin-left:-380px;
+  perspective:2200px;perspective-origin:50% 40%;z-index:5}
+.phone{position:absolute;inset:0;transform-style:preserve-3d}
+.shadow{position:absolute;left:8%;right:8%;bottom:-60px;height:90px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(17,18,20,.30),rgba(17,18,20,0));filter:blur(6px)}
+.body{position:absolute;inset:0;border-radius:116px;
+  background:linear-gradient(145deg,#5A5C61 0%,#2B2C30 38%,#1B1C1F 62%,#46484D 100%);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.22), inset 0 0 0 7px #111214, 0 50px 80px -30px rgba(17,18,20,.45)}
+.body::after{content:"";position:absolute;inset:3px;border-radius:113px;
+  box-shadow:inset 0 2px 1px rgba(255,255,255,.35), inset 0 -2px 2px rgba(0,0,0,.4)}
+.btn{position:absolute;background:linear-gradient(90deg,#1E1F22,#55575C,#1E1F22);border-radius:3px}
+.btn.a{right:-5px;top:330px;width:8px;height:160px}
+.btn.b{left:-5px;top:270px;width:8px;height:86px}
+.btn.c{left:-5px;top:390px;width:8px;height:86px}
+.screen{position:absolute;left:18px;top:18px;right:18px;bottom:18px;border-radius:98px;overflow:hidden;background:#fff}
+.screen .app{position:absolute;left:0;top:92px;width:100%;will-change:transform}
+.sbar{position:absolute;left:0;right:0;top:0;height:92px;background:#fff;z-index:2}
+.sbar .t{position:absolute;left:62px;top:40px;font:600 27px Poppins;color:#111;letter-spacing:-.01em}
+.sbar .r{position:absolute;right:58px;top:44px;display:flex;gap:9px;align-items:center}
+.sbar .r b{display:block;background:#111;border-radius:2px}
+.screen .app img{width:100%;display:block}
+.island{position:absolute;left:50%;top:30px;width:204px;height:60px;margin-left:-102px;border-radius:32px;background:#050506;z-index:4;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.island i{position:absolute;right:22px;top:18px;width:24px;height:24px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,#2a3550,#07080c 70%)}
+.glare{position:absolute;inset:0;border-radius:98px;z-index:3;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.16) 44%,rgba(255,255,255,0) 58%)}
+.status{position:absolute;left:44px;right:44px;top:34px;height:28px;z-index:3;display:flex;justify-content:space-between;
+  font:600 22px Poppins;color:#111}
+
+/* ── motion language, shown as stills ── */
+.streak{position:absolute;height:6px;border-radius:3px;background:linear-gradient(90deg,rgba(255,207,36,0),rgba(255,207,36,.9));z-index:8}
+.tapring{position:absolute;width:120px;height:120px;border-radius:50%;border:5px solid rgba(255,207,36,.95);z-index:9;
+  box-shadow:0 0 0 14px rgba(255,207,36,.18)}
+.tapdot{position:absolute;width:34px;height:34px;border-radius:50%;background:rgba(17,18,20,.28);z-index:9}
+.callout{position:absolute;z-index:9;padding:18px 26px;border-radius:26px;background:rgba(255,255,255,.72);
+  box-shadow:0 30px 60px -24px rgba(17,18,20,.35), inset 0 0 0 1.5px rgba(255,255,255,.9);
+  font:700 44px Poppins;color:var(--ink);letter-spacing:-.02em}
+.callout small{display:block;font:600 16px Poppins;letter-spacing:.14em;text-transform:uppercase;color:#6b6b72;margin-bottom:4px}
+
+/* the Shutter, unchanged from v1 — Faisal kept it */
+.shut{position:absolute;left:-60%;top:-60%;width:220%;height:220%;transform:rotate(var(--ang));z-index:40}
+.shut .h{position:absolute;left:0;width:100%;height:50%;background:var(--yel)}
+.shut .t{top:0}.shut .b{top:50%}
+
+/* ── the new close: white and yellow, no black ── */
+.close{position:absolute;inset:0;z-index:50;background:#FBFAF7;overflow:hidden}
+.close .bars{position:absolute;left:-40%;top:-40%;width:180%;height:180%;transform:rotate(var(--ang))}
+.close .bar{position:absolute;left:0;width:100%;background:var(--yel)}
+.close .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:42px}
+.close .tile{width:330px;height:330px;border-radius:15.5%;overflow:hidden;position:relative;
+  background:linear-gradient(150deg,#FFFFFF 0%,#EEF0F3 55%,#E1E4E9 100%);
+  box-shadow:0 44px 80px -30px rgba(17,18,20,.40), inset 0 0 0 2px rgba(255,255,255,.95)}
+.close .tile img{position:absolute;left:-2%;top:-2%;width:104%;height:104%}
+.close .wmk{width:500px}
+.close .line{font:500 34px Poppins;line-height:1.45;color:#4a4a52;text-align:center}
+.close .rule{width:96px;height:7px;border-radius:4px;background:var(--yel)}
+.lift{position:absolute;left:173px;top:955px;width:540px;z-index:9;padding:20px 0 26px;border-radius:30px;text-align:center;
+  background:#fff;box-shadow:0 46px 70px -26px rgba(17,18,20,.42), 0 0 0 1.5px rgba(17,18,20,.05);
+  font:700 118px Poppins;color:var(--ink);letter-spacing:-.035em;line-height:1;transform:translateY(-34px) rotate(-2deg) scale(1.08)}
+.lift small{display:block;font:600 19px Poppins;letter-spacing:.16em;text-transform:uppercase;color:#77777e;margin-bottom:10px}
+.label{position:absolute;left:24px;bottom:22px;z-index:99;font:600 22px Poppins;color:#111;background:rgba(255,255,255,.85);
+  padding:8px 14px;border-radius:10px;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+const $ = h => { const d=document.createElement('div'); d.innerHTML=h.trim(); return d.firstChild; };
+const stage = document.getElementById('stage');
+
+function phone(i, {ry=-14, rx=6, rz=0, y=0, x=0, s=1, scroll=0, zoom=1, zx='50%', zy='30%', ghost=null, gx=0}={}){
+  const app = n => `<div class="app" style="transform:translateY(${-scroll}px) scale(${zoom});transform-origin:${zx} ${zy}"><img src="assets/bands/dev${n}.png"></div>`;
+  return `<div class="rig" style="transform:translate(${x}px,${y}px) scale(${s})">
+    <div class="shadow"></div>
+    <div class="phone" style="transform:rotateY(${ry}deg) rotateX(${rx}deg) rotateZ(${rz}deg)">
+      <div class="body"></div><div class="btn a"></div><div class="btn b"></div><div class="btn c"></div>
+      <div class="screen">
+        ${ghost ? `<div class="app" style="transform:translateX(${gx}px)"><img src="assets/bands/dev${ghost}.png"></div>
+                   <div class="app" style="transform:translateX(${gx+724}px)"><img src="assets/bands/dev${i}.png"></div>` : app(i)}
+        <div class="sbar"><div class="t">9:41</div><div class="r"><b style="width:6px;height:10px"></b><b style="width:6px;height:14px"></b><b style="width:6px;height:18px"></b><b style="width:6px;height:22px"></b><b style="width:36px;height:18px;border-radius:5px;margin-left:8px"></b></div></div>
+        <div class="glare"></div>
+        <div class="island"><i></i></div>
+      </div>
+    </div></div>`;
+}
+const copy = n => `<div class="wm"><img src="assets/bands/head1.png"></div><div class="copy"><img src="assets/bands/body${n}.png"></div>`;
+
+const FRAMES = {
+  /* 1 — the phone arrives: screen 1, angled, copy set above */
+  1: () => `<div class="ground"></div>${copy(1)}${phone(1,{ry:-16,rx:7,rz:-2})}<div class="label">1 · the phone arrives, angled — never flat front-on</div>`,
+
+  /* 2 — a tap: the keypad takes an amount, the figure lifts off the screen */
+  2: () => `<div class="ground"></div>${copy(1)}${phone(1,{ry:-3,rx:2,rz:0})}
+            <div class="lift"><small>Custom amount</small>£45.75</div>
+            <div class="tapring" style="left:322px;top:1340px"></div><div class="tapdot" style="left:365px;top:1383px"></div>
+            <div class="label">2 · a tap lands and the key figure lifts off the screen</div>`,
+
+  /* 3 — the swipe: screen 1 slides out, screen 2 in, with yellow speed streaks */
+  3: () => `<div class="ground"></div>${copy(2)}${phone(2,{ry:-4,rx:3,rz:1,ghost:1,gx:-430})}
+            <div class="streak" style="left:20px;top:1120px;width:330px"></div>
+            <div class="streak" style="left:0px;top:1260px;width:460px;opacity:.7"></div>
+            <div class="streak" style="left:40px;top:1420px;width:270px;opacity:.5"></div>
+            <div class="label">3 · a swipe carries the next screen in, with a whoosh</div>`,
+
+  /* 4 — the push-in: the camera goes close on one dish */
+  4: () => `<div class="ground"></div>${copy(2)}${phone(2,{ry:-6,rx:4,s:1.5,y:420,x:120})}
+            <div class="label">4 · a quick push-in on the detail that sells it</div>`,
+
+  /* 5 — the other way round: the phone swings right, the list scrolls */
+  5: () => `<div class="ground"></div>${copy(3)}${phone(3,{ry:15,rx:6,rz:2,scroll:120,x:40})}
+            <div class="callout" style="left:30px;top:640px;transform:rotate(-3deg)"><small>Every channel</small>One list</div>
+            <div class="label">5 · the angle alternates screen to screen; lists scroll</div>`,
+
+  /* 6 — the report: the phone lies back, the chart reads big */
+  6: () => `<div class="ground"></div>${copy(4)}${phone(4,{ry:-10,rx:18,rz:-3,y:20})}
+            <div class="label">6 · the report — the phone tips back so the chart reads</div>`,
+
+  /* 7 — payment link: phone close, the send button pressed */
+  7: () => `<div class="ground"></div>${copy(5)}${phone(5,{ry:8,rx:5,rz:1})}
+            <div class="tapring" style="left:506px;top:1772px"></div><div class="tapdot" style="left:549px;top:1815px"></div>
+            <div class="label">7 · send — the last tap before the close</div>`,
+
+  /* 8 — the intro, unchanged: the shutter mid-open over screen 1 */
+  8: () => `<div class="ground"></div>${copy(1)}${phone(1,{ry:-16,rx:7,rz:-2})}
+            <div class="shut"><div class="h t" style="transform:translateY(-21%)"></div><div class="h b" style="transform:translateY(21%)"></div></div>
+            <div class="label">8 · the intro you liked, kept as it is</div>`,
+
+  /* 9 — close A: white ground, the mark's two yellow bars sweep through, tile + wordmark */
+  9: () => `<div class="close">
+              <div class="bars"><div class="bar" style="top:37%;height:9%"></div><div class="bar" style="top:55%;height:9%"></div></div>
+              <div class="mid"><div class="tile"><img src="assets/mark.png"></div>
+                <img class="wmk" src="../../brand/logos/neropay-light-1200.png"><div class="rule"></div>
+                <div class="line">Card payments and your till,<br>in one app.</div></div></div>
+            <div class="label">9 · close A — white, the mark's two yellow bars behind</div>`,
+
+  /* 10 — close B: white ground, a single yellow seam band, tile only then wordmark below */
+  10: () => `<div class="close">
+              <div class="bars"><div class="bar" style="top:0;height:44%"></div></div>
+              <div class="mid" style="justify-content:flex-end;padding-bottom:300px"><div class="tile"><img src="assets/mark.png"></div>
+                <img class="wmk" src="../../brand/logos/neropay-light-1200.png">
+                <div class="line">Card payments and your till,<br>in one app.</div></div></div>
+            <div class="label">10 · close B — a yellow field cut on the seam, white below</div>`,
+};
+
+window.show = async n => { stage.innerHTML = FRAMES[n](); await Promise.all([...stage.querySelectorAll('img')].map(i => i.decode().catch(()=>{}))); };
+</script>
+</body>
+</html>
