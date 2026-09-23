@@ -152,8 +152,10 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
              linear-gradient(118deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.10) 52%,rgba(255,255,255,0) 64%);
   box-shadow:inset 0 0 10px rgba(0,0,0,.28),inset 0 0 3px rgba(0,0,0,.35)}
 /* layer mode (?layer=…): see the script */
-html.lay,html.lay body{width:900px;background:transparent}
-html.lay .frame{left:120px;width:660px;overflow:visible;background:none}
+html.lay,html.lay body{width:1460px;background:transparent}
+html.lay .frame{left:400px;width:660px;overflow:visible;background:none}
+/* ?fmt=ipad|play: the same slide refitted to another store's canvas (fit.js) */
+.fitbox{position:absolute;left:0;top:0;width:660px;height:1434px;transform-origin:0 0}
 html.lay .gbg,html.lay .wm,html.lay .rule,html.lay .kick,html.lay h1,html.lay .blk,html.lay .lift{display:none}
 html.lay-s .cutimg{display:none}
 html.lay-h .pscr,html.lay-h .hscr .scrn{display:none}
@@ -163,6 +165,7 @@ html.lay-h .hscr{background:transparent}
 <body>
 <div class="frame" id="f"></div>
 <script src="assets/photo-quads.js"></script>
+<script src="../fit.js"></script>
 <script>
 /* app-card crops from make-assets.sh: 785 × 1320, cut from his 923 × 2000 export */
 const A = k => `../assets/app/app${k}.png`;
@@ -386,7 +389,7 @@ function photoSlide(n) {
     <img class="cutimg flat" src="assets/photo-${P.name}-cut.png" alt=""></div>`;
 }
 const [n, v, m] = (location.hash.slice(1) || '1').split('-').map(Number);
-/* ?layer=s|h|a — one layer of a frame on a transparent ground, 120px wider each side, for the video (render.cjs layers):
+/* ?layer=s|h|a — one layer of a frame on a transparent ground, 400px wider each side, for the video (render.cjs layers):
    s the photo's screen, h the hands (and on the hero the screen's lighting and the card's shadow), a the glass art
    without its lift. The ground, the copy, the lifts and the hero's screen are drawn live in the video */
 const LAYER = new URLSearchParams(location.search).get('layer');
@@ -396,6 +399,19 @@ fr.className = 'frame is' + n;
 /* frame 1 draws the art first so the copy sits above the hands; #1-k is one of the cut-out variants */
 fr.innerHTML = n === 1 ? (v ? heroVariant(v, m) : ART[1]()) + copy(COPY[1])
              : `<div class="gbg">${GROUND[n]}</div>` + (PHOTO[n] && !v ? photoSlide(n) + copy(COPY[n]) : copy(COPY[n]) + ART[n]());
+/* another store's canvas: move the ground, the art and the copy into their own boxes and refit each (fit.js) */
+const FMT = new URLSearchParams(location.search).get('fmt') || 'iphone';
+if (FMT !== 'iphone') {
+  const F = FMTS[FMT], box = () => { const d = document.createElement('div'); d.className = 'fitbox'; return d; };
+  for (const el of [document.documentElement, document.body, fr]) { el.style.width = F.W + 'px'; el.style.height = F.H + 'px'; }
+  const gfit = box(), afit = box(), cfit = box();
+  [...fr.children].forEach(el => (el.classList.contains('gbg') ? gfit : el.matches('.wm,.rule,.kick,h1,.blk') ? cfit : afit).appendChild(el));
+  fr.append(gfit, afit, cfit);
+  const slide = n === 1 && m === 10 ? 7 : n, f = fitArt(FMT, artGeo(slide), COPYB[slide] * F.K), gr = fitGround(FMT);
+  afit.style.transform = `translate(${f.tx}px,${f.ty}px) scale(${f.A})`;
+  cfit.style.transform = `scale(${F.K})`;
+  gfit.style.transform = `translate(${gr.tx}px,0) scale(${gr.S})`;
+}
 </script>
 </body>
 </html>
