@@ -517,3 +517,36 @@ The Maths episode, because their premise is a regulation or arithmetic on a rate
 This is the operational edge of `CLAUDE.md` rail 9 — write organic to ad standards, because any post might
 be boosted later. Where a piece cannot meet ad standards, the control is not the copy, it is never letting
 it become an ad.
+
+## 23. First results, and inbox auto-replies — 23 Sep 2026
+
+Faisal reported **three leads in roughly the first twelve hours** of the three static ads running at £11/day.
+One of the three also messaged on WhatsApp. Early, and the learning-phase caveat in §21 still applies, but
+the plumbing is proven end to end: ad → instant form → lead.
+
+**Auto-replies.** Faisal asked for an automatic first reply on Messenger and WhatsApp. Both support it; this
+session cannot set either, because the Meta connector covers the ad account only — not the Page inbox and
+not WhatsApp. Faisal sets them by hand:
+
+- **Messenger + Instagram:** Business Suite → Inbox → Automations → Instant reply. Instagram has its own
+  toggle on the same screen.
+- **WhatsApp Business app:** Settings → Business tools → Greeting message (fires on first contact and after
+  14 days' silence), plus an optional Away message for outside hours. If the 0333 number runs through a
+  provider instead, it is set in that provider.
+
+Copy given (both linted clean):
+
+> Messenger / Instagram — "Thanks for getting in touch with NeroPay. We'll come back to you as soon as we can.
+> To help us, send your business name, what kind of business it is and the area you're in. Please don't send
+> card or bank details by message. If you'd rather talk, call us on 020 8150 2104."
+
+> WhatsApp — the same without the phone line.
+
+Why it is worded that way: no response-time promise, because it fires at 11pm on a Sunday too; an explicit
+line against card and bank details, because this is a payments company and rail 7 means KYC never lands in a
+chat thread; and it asks for business name, type and area only — not turnover or current fees, which would
+invite the quote conversation Route C exists to prevent.
+
+**Not the same channel as the form.** Instant-form leads land in Business Suite → **Leads Centre**, not in
+Messenger. An auto-reply covers people who message; it does nothing for the form leads, which still need a
+person to pick them up.
