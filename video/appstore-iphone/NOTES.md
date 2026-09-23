@@ -20,7 +20,44 @@ floating tags, the diagonal bar and the enlarged headline of v1 are gone.
 
 The screens are his 923 × 2000 export, so at App Store size they are upscaled about 1.3×.
 
-# App Store preview, iPhone — v5 (23 Sep 2026) is current; v4 and earlier are below and superseded
+# App Store preview, iPhone — v6 (23 Sep 2026) is current; v5 and earlier are below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v6.mp4` · 886 × 1920 · 30 fps · 29.0s · (filled in on render)
+
+## v6 — Faisal: "a full video with these new elements, the new background and the whole new aesthetic"
+
+The video is now built from the carousel stills themselves, not from a code-drawn phone:
+
+- **The slides are the stills.** Each section is one of the six carousel slides at the stills' own 660 × 1434,
+  scaled to the frame (the same 0.46 aspect, 2.5px lost top and bottom): the white hero with the Visa card, the
+  keypad and the transactions list in the yellow glass outline, and the three hand photographs. Same copy, same
+  pink-and-blue grounds with the frosted disc, and the blooms drift slowly.
+- **Between them, a carousel swipe.** The slide pulls back into a card (to 83%, rounded corners, a soft shadow),
+  slides across to the next and pushes back in. Over 1.05s, eased at both ends. The art trails the card and the copy
+  trails it less, so the swipe has depth.
+- **Something happens on every slide.**
+  - Hero: the amount comes up, the contactless signal goes out three times and the mark lands.
+  - Keypad: 4, 5, 7, 5, then CHARGE, and the amount lifts off the screen.
+  - NeroPOS: the finger's tap sends out a ring and the Black Truffle Butter card lifts out.
+  - Transactions: the NeroWeb row lifts, and the place it left goes blank.
+  - Reports: the total and the chart tooltip lift.
+  - Payment links: the thumb on Send, and the amount field lifts.
+
+  The photographs punch in and ease back as they land, then drift closer. They only ever scale up from their foot,
+  so the arms never leave the frame's bottom edge. The glass outlines rise and turn into place.
+- **Kept from v5:** the Shutter up at the head, the swish that draws down into the mark on the glass tile, and the
+  white close.
+
+How it is built: the hands and the glass outlines carry CSS filters in the stills (drop shadows, the photo screen's
+softening). v1 showed that a filter on anything that moves flickers, so those are baked once, transparent, from the
+stills page. They are rendered at 1800 × 2868 with 120px spare each side for the parallax:
+`node stills/render.cjs layers` → `assets/v6/` (git-ignored; run `stills/cut-photo.py` first if the cut-outs are
+missing). The grounds, the copy, the hero's screen, the taps and the lifts are live HTML with no filter.
+
+Rebuild: `node stills/render.cjs layers`, `npm run check`, `npx hyperframes render --fps 30 -o renders/v6-picture.mp4`,
+`bash mix.sh renders/v6-picture.mp4 renders/FINAL-appstore-iphone-v6.mp4`. v5's composition and mix are in `archive/`.
+
+# App Store preview, iPhone — v5 (23 Sep 2026) (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v5.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.4 MB · −13.9 LUFS / −1.8 dBTP ·
 md5 `d8682c6cdd835e9ce7c8c739ea03e368` · Higgsfield media `cce72b47-2900-43de-8268-77beb2cdd6e0`.

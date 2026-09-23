@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=886, height=1920" />
+<script src="vendor/gsap.min.js"></script>
+<style>
+/* NeroPay — App Store app preview, iPhone portrait 886x1920, 29s. v3, 23 Sep 2026.
+   Faisal's notes on v2: the phone had no depth; the copy and the phone sat in two different places; the close
+   mixed too many colours. So: the phone is a solid — a front face, a back, and a stacked metal band between them,
+   real-phone thin — and the copy stands on the phone's own plane, aligned to its left edge, directly above it,
+   turning with it: one unit per section, the same composition every time. The close is one colour: white, the
+   mark's two bars in yellow as the only set of stripes, and the wordmark.
+   v4, same day: v3's phone faded in with opacity, which flattens a preserve-3d group, so it came in flat and
+   snapped to 3D as the fade ended. The phone never carries opacity now; it leaps up from below the frame, solid
+   the whole way, and tilts away as the camera leaves. The close keeps its bars and gains a clear glass tile.
+   v5, same day: the frosted panes behind (they read as phone outlines) are gone; the mark's stripe stands at
+   depth in clear glass instead, just visible. The outro is one motion: two yellow bands swish in, cover the
+   frame and draw down into the mark's two bars on the glass tile.
+   Still true from v2: one 3D world the camera flies through; the copy set live in Poppins; one fluid background;
+   no CSS filter on anything that moves (v1's flicker). */
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+:root{--ang:46.5deg;--yel:#FFCF24;--ink:#111114;--T:64px}
+html,body{width:886px;height:1920px;overflow:hidden;background:#F1F0EC}
+body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
+#root{position:relative;width:886px;height:1920px;overflow:hidden}
+.clip{position:absolute;inset:0}
+
+/* ── one fluid background ── */
+.ground{background:linear-gradient(172deg,#F5F4F0 0%,#F0EFEA 46%,#E8E9EC 100%)}
+.glow{position:absolute;border-radius:50%}
+.glow.y{width:1300px;height:1300px;left:-120px;top:-520px;background:radial-gradient(closest-side,rgba(255,207,36,.34),rgba(255,207,36,0))}
+.glow.b{width:1100px;height:1100px;left:-520px;top:900px;background:radial-gradient(closest-side,rgba(126,162,255,.20),rgba(126,162,255,0))}
+.glow.p{width:980px;height:980px;left:380px;top:1180px;background:radial-gradient(closest-side,rgba(255,150,192,.15),rgba(255,150,192,0))}
+.glow.w{width:900px;height:900px;left:120px;top:420px;background:radial-gradient(closest-side,rgba(255,255,255,.70),rgba(255,255,255,0))}
+/* the mark's stripe, as clear glass, standing at depth behind the sections: just visible, never the subject */
+.gstripe{position:absolute;left:0;top:0;border-radius:10px;
+  background:linear-gradient(90deg,rgba(255,255,255,.50),rgba(255,255,255,.16) 55%,rgba(255,255,255,.36));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),inset 0 2px 0 rgba(255,255,255,.9),0 26px 50px -26px rgba(17,18,20,.14)}
+
+/* ── the world and its camera ── */
+.cam{perspective:2400px;perspective-origin:50% 42%}
+#world{position:absolute;left:0;top:0;width:886px;height:1920px;transform-style:preserve-3d;transform-origin:443px 960px}
+.station{position:absolute;left:0;top:0;width:886px;height:1920px;transform-style:preserve-3d;transform-origin:443px 960px}
+/* the unit: the copy and the phone, one object, turned together */
+.unit{position:absolute;left:0;top:0;width:886px;height:1920px;transform-style:preserve-3d;transform-origin:443px 1000px}
+
+/* the copy — on the phone's front plane, its left edge on the phone's left edge, standing just above it */
+.copy{position:absolute;left:93px;bottom:1264px;width:700px;transform:translateZ(calc(var(--T) / 2))}
+.copy .rule{width:44px;height:7px;border-radius:4px;background:var(--yel);margin-bottom:20px}
+.copy .kick{font:600 19px Poppins;letter-spacing:.24em;text-transform:uppercase;color:#55555D;margin-bottom:20px}
+.copy h1{font:700 76px/1.0 Poppins;letter-spacing:-.035em;color:var(--ink)}
+.copy h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.copy h1 .ln > span{display:inline-block;position:relative}
+.copy h1 .mk{position:absolute;left:-10px;right:-14px;bottom:.06em;height:.44em;background:var(--yel);border-radius:4px;
+  transform-origin:0 50%;transform:skewX(-10deg) rotate(-1deg);z-index:-1}
+.copy h1 .ln.two > span{isolation:isolate}
+.copy .sub{font:400 24px/1.42 Poppins;color:#5E5E66;margin-top:18px;max-width:700px}
+.copy .chips{display:flex;gap:12px;margin-top:22px}
+.copy .chip{display:flex;align-items:center;gap:10px;padding:12px 19px;border-radius:999px;background:rgba(255,255,255,.94);
+  box-shadow:0 10px 24px -14px rgba(17,18,20,.28), inset 0 0 0 1px rgba(17,17,20,.05);font:600 20px Poppins;color:#1E1E22}
+.copy .chip i{width:10px;height:10px;border-radius:50%;background:var(--yel)}
+
+/* ── the phone: a solid. Front face, back, and the metal band between them built from stacked slices ── */
+.rig{position:absolute;left:93px;top:700px;width:700px;height:1450px;transform-style:preserve-3d}
+.phone{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 40%}
+.slice{position:absolute;inset:0;border-radius:108px}
+/* the front face is ONE flat layer (body + screen + island) so its own parts never split against each other */
+.front{position:absolute;inset:0;transform-style:flat;transform:translateZ(calc(var(--T) / 2))}
+.body{position:absolute;inset:0;border-radius:108px;background:linear-gradient(145deg,#4A4C51 0%,#26272B 40%,#17181B 64%,#3C3E43 100%);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.26), inset 0 0 0 8px #0F1012}
+.body::after{content:"";position:absolute;inset:3px;border-radius:105px;box-shadow:inset 0 2px 1px rgba(255,255,255,.34), inset 0 -2px 2px rgba(0,0,0,.4)}
+.screen{position:absolute;left:17px;top:17px;right:17px;bottom:17px;border-radius:92px;overflow:hidden;background:#fff}
+.sbar{position:absolute;left:0;right:0;top:0;height:86px;background:#fff}
+.sbar .t{position:absolute;left:58px;top:36px;font:600 26px Poppins;color:#111;letter-spacing:-.01em}
+.sbar .r{position:absolute;right:54px;top:40px;display:flex;gap:8px;align-items:center}
+.sbar .r b{display:block;background:#111;border-radius:2px}
+.app{position:absolute;left:0;top:86px;width:100%;border-radius:36px 36px 0 0;overflow:hidden;background:#fff}
+.app img{width:100%;display:block}
+.island{position:absolute;left:50%;top:28px;width:190px;height:56px;margin-left:-95px;border-radius:30px;background:#050506}
+.island i{position:absolute;right:20px;top:16px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2a3550,#07080c 70%)}
+.glare{position:absolute;inset:0;border-radius:92px;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.15) 44%,rgba(255,255,255,0) 58%)}
+.back{position:absolute;inset:0;border-radius:108px;transform:translateZ(calc(var(--T) / -2)) rotateY(180deg);
+  background:linear-gradient(160deg,#3A3C41,#1C1D20 60%,#2E3034);box-shadow:inset 0 0 0 2px rgba(255,255,255,.12)}
+.key{position:absolute;width:10px;border-radius:4px;background:linear-gradient(90deg,#1E1F22,#63656B,#1E1F22)}
+
+/* ── the Shutter: the seam is the mark's own 46.5deg ── */
+.shut{position:absolute;left:50%;top:50%;width:4400px;height:4400px;margin:-2200px 0 0 -2200px;transform:rotate(var(--ang));transform-origin:50% 50%;z-index:40;pointer-events:none}
+.shut .half{position:absolute;left:0;width:100%;height:calc(50% + 2px);background:var(--yel)}
+.shut .half.t{top:0}.shut .half.b{top:50%}
+
+/* ── the close: white, a clear liquid glass tile carrying the mark's two yellow bars, the wordmark ── */
+.close{background:#FBFAF7;z-index:38;overflow:hidden}
+.swish{z-index:45;pointer-events:none}.swish svg{position:absolute;left:0;top:0;overflow:visible}.swish polygon{fill:var(--yel)}
+/* clear liquid glass: no colour of its own, read by its rim, its highlight and its shadow */
+.close .tile{position:absolute;left:233px;top:650px;width:420px;height:420px;border-radius:24%;overflow:hidden;
+  background:linear-gradient(150deg,rgba(255,255,255,.92) 0%,rgba(246,246,248,.55) 48%,rgba(236,237,241,.62) 100%);
+  box-shadow:0 60px 110px -40px rgba(17,17,20,.30),0 18px 36px -18px rgba(17,17,20,.16),
+    inset 0 2px 0 rgba(255,255,255,1),inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 0 0 14px rgba(255,255,255,.30),
+    inset 0 0 34px rgba(17,17,20,.08),inset 0 -3px 6px rgba(17,17,20,.05);
+  outline:1px solid rgba(17,17,20,.07);outline-offset:-1px}
+.close .tile::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  background:radial-gradient(120% 70% at 30% 0%,rgba(255,255,255,.9),rgba(255,255,255,0) 60%)}
+.close .tile::after{content:"";position:absolute;left:12%;right:12%;bottom:5px;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0))}
+.close .tile .sheen{position:absolute;inset:-10%;background:linear-gradient(115deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 62%);transform:translateX(-120%)}
+.close .wm{position:absolute;left:213px;top:1150px;width:460px}
+.close .wm.alt{display:none}
+/* the alternative, shown as a still: the same close on yellow, white mark and white wordmark */
+#root.altclose .close{background:var(--yel)} #root.altclose .swish polygon{fill:#fff}
+#root.altclose .close .wm{display:none} #root.altclose .close .wm.alt{display:block}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="29" data-width="886" data-height="1920">
+
+  <div class="clip ground" id="ground" data-start="0" data-duration="29" data-track-index="0">
+    <div class="glow w" id="gw" data-layout-allow-overflow></div>
+    <div class="glow y" id="gy" data-layout-allow-overflow></div>
+    <div class="glow b" id="gb" data-layout-allow-overflow></div>
+    <div class="glow p" id="gp" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip cam" id="camclip" data-start="0" data-duration="26.4" data-track-index="1">
+    <div id="world" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip close" id="close" data-start="25.75" data-duration="3.25" data-track-index="2">
+    <div class="tile" id="ctile"><div class="sheen" id="csheen"></div></div>
+    <img class="wm" id="cwm" src="assets/wordmark-light.png" alt="neropay">
+    <img class="wm alt" id="cwm2" src="assets/wordmark-white.png" alt="neropay">
+  </div>
+
+  <!-- the outro in one motion: two yellow bands swish in over the last section, cover the frame, and draw down
+       into the two bars of the mark on the glass tile -->
+  <div class="clip swish" id="swish" data-start="24.8" data-duration="4.2" data-track-index="5">
+    <svg viewBox="0 0 886 1920" width="886" height="1920" data-layout-allow-overflow>
+      <polygon id="mb1" points="0,0 0,0 0,0 0,0"/>
+      <polygon id="mb2" points="0,0 0,0 0,0 0,0"/>
+    </svg>
+  </div>
+
+  <!-- shutter up at the head (the intro Faisal kept); the outro is the swish above -->
+  <div class="clip shut" id="shut" data-start="0" data-duration="29" data-track-index="4">
+    <div class="half t" id="sht" data-layout-allow-overflow></div>
+    <div class="half b" id="shb" data-layout-allow-overflow></div>
+  </div>
+
+</div>
+
+<script>
+/* ── Faisal's copy, verbatim ── */
+const S = [
+  { kick:'Take a payment', l1:'Charge it in', l2:'three taps.', sub:'Type the amount and hit charge.', chips:['Card','Tap','Payment link'] },
+  { kick:'NeroPOS', l1:'Your menu,', l2:'on the till.', sub:'Photos, descriptions and prices. Tap the dish and it goes to the kitchen.', chips:['Photos','Modifiers','Table map'] },
+  { kick:'Transactions', l1:'Every sale,', l2:'one list.', sub:'Terminal, till, web and bookings, as they happen.', chips:['Terminal','Till','Web','Bookings'] },
+  { kick:'Reports', l1:'See what sold,', l2:'and where.', sub:'Split by channel, for any date range.', chips:['By channel','Card & cash','Any dates'] },
+  { kick:'Payment links', l1:'Send a link.', l2:'Get paid.', sub:'The customer does not have to be in front of you.', chips:['72-hour expiry','One-time use','By email'] }
+];
+/* where each section stands; `turn` is the angle the whole unit (copy and phone together) is held at */
+const POS = [
+  { x:0,    y:0,   z:0,    ry:0,   view:-3, turn:-15 },
+  { x:1080, y:60,  z:-300, ry:-14, view: 3, turn: 15 },
+  { x:2160, y:-40, z:0,    ry:12,  view:-3, turn:-15 },
+  { x:3240, y:80,  z:-300, ry:-12, view: 3, turn: 15 },
+  { x:4320, y:0,   z:0,    ry:10,  view:-3, turn:-14 }
+];
+const HOLD = [[0.0,4.6],[5.5,9.7],[10.6,14.8],[15.7,19.9],[20.8,26.4]];
+
+/* the band: slices from the back face to the front, lighter in the middle where a rounded edge catches light */
+const SLICES = 24, T = 64;
+const band = [...Array(SLICES)].map((_,i) => {
+  const u = i/(SLICES-1), z = -T/2 + 2 + u*(T-4);
+  const lift = Math.sin(u*Math.PI);                         /* 0 at the faces, 1 mid-edge */
+  const c = Math.round(34 + lift*62);
+  return `<div class="slice" style="transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+6})"></div>`;
+}).join('');
+/* the side keys: two volume on the left, power on the right, each a solid stack 2px apart through the middle
+   of the band, so they read as one object from any angle and are the same on every phone */
+const keys = [['l',250,82],['l',352,82],['r',300,150]].map(([side,top,h]) =>
+  [-12,-10,-8,-6,-4,-2,0,2,4,6,8,10,12].map(z => `<div class="key" style="${side==='l'?'left:-7px':'right:-7px'};top:${top}px;height:${h}px;transform:translateZ(${z}px)"></div>`).join('')).join('');
+
+const world = document.getElementById('world');
+/* glass stripes at the mark's angle, spread along the flight path at depth; fixed positions, no randomness */
+const STRIPES = [
+  [-420,  180, -900, 1500, 38], [ 380, 1450,-1300, 1800, 52], [ 760, -260, -700, 1100, 28],
+  [1260,  980,-1500, 1900, 60], [1700,  120, -800, 1300, 34], [2150, 1600,-1100, 1600, 44],
+  [2580, -300,-1400, 1700, 56], [2980,  900, -750, 1200, 30], [3450,  300,-1250, 1800, 48],
+  [3900, 1500, -900, 1400, 36], [4350, -200,-1500, 1900, 58], [4800,  800, -800, 1300, 32]
+];
+STRIPES.forEach(([x,y,z,len,w]) => {
+  const d = document.createElement('div');
+  d.className = 'gstripe'; d.setAttribute('data-layout-allow-overflow','');
+  d.style.width = len+'px'; d.style.height = w+'px';
+  d.style.transform = `translate3d(${x}px,${y}px,${z}px) rotateZ(46.5deg)`;
+  world.appendChild(d);
+});
+POS.forEach((p,k) => {
+  const s = S[k];
+  const st = document.createElement('div');
+  st.className = 'station'; st.id = 'sec'+k; st.setAttribute('data-layout-allow-overflow','');
+  st.style.transform = `translate3d(${p.x}px,${p.y}px,${p.z}px) rotateY(${p.ry}deg)`;
+  st.innerHTML = `
+   <div class="unit" id="n${k}">
+    <div class="copy" id="c${k}">
+      <div class="rule" id="r${k}"></div>
+      <div class="kick" id="k${k}" data-layout-allow-overlap>${s.kick}</div>
+      <h1><span class="ln"><span id="a${k}" data-layout-allow-overlap>${s.l1}</span></span><span class="ln two"><span id="b${k}" data-layout-allow-overlap><i class="mk" id="m${k}"></i>${s.l2}</span></span></h1>
+      <div class="sub" id="u${k}" data-layout-allow-overlap>${s.sub}</div>
+      <div class="chips">${s.chips.map((c,j)=>`<div class="chip" id="h${k}_${j}" data-layout-allow-overlap><i></i>${c}</div>`).join('')}</div>
+    </div>
+    <div class="rig" id="g${k}">
+      <div class="phone" id="p${k}">
+        <div class="back"></div>
+        ${band}
+        ${keys}
+        <div class="front">
+          <div class="body"></div>
+          <div class="screen">
+            <div class="sbar"><div class="t">9:41</div><div class="r"><b style="width:6px;height:10px"></b><b style="width:6px;height:14px"></b><b style="width:6px;height:18px"></b><b style="width:6px;height:22px"></b><b style="width:34px;height:17px;border-radius:5px;margin-left:8px"></b></div></div>
+            <div class="app"><img src="assets/app/app${k+1}.png" alt=""></div>
+            <div class="glare"></div>
+            <div class="island"><i></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+   </div>`;
+  world.appendChild(st);
+});
+
+/* ── the camera: a pure function of time ── */
+const eio = u => u<.5 ? 4*u*u*u : 1-Math.pow(-2*u+2,3)/2;
+const lerp = (a,b,u) => a+(b-a)*u;
+function camAt(t){
+  for (let k=0;k<HOLD.length;k++){
+    if (t <= HOLD[k][1] || k===HOLD.length-1) {
+      if (k>0 && t < HOLD[k][0]) {
+        const u = eio((t-HOLD[k-1][1])/(HOLD[k][0]-HOLD[k-1][1]));
+        const a=POS[k-1], b=POS[k];
+        return { x:lerp(a.x,b.x,u), y:lerp(a.y,b.y,u), z:lerp(a.z,b.z,u), ry:lerp(a.ry,b.ry,u), view:lerp(a.view,b.view,u), lift:Math.sin(u*Math.PI)*260 };
+      }
+      return { ...POS[k], lift:0 };
+    }
+  }
+}
+const secs = [...document.querySelectorAll('.station')];
+const $ = id => document.getElementById(id);
+const gl = { w:$('gw'), y:$('gy'), b:$('gb'), p:$('gp') };
+function apply(t){
+  const c = camAt(t);
+  const orb = Math.sin(t*0.55)*2.0, tilt = Math.cos(t*0.42)*1.2, bob = Math.sin(t*0.8)*8;
+  world.style.transform =
+    `translateZ(${-c.lift}px) rotateX(${tilt}deg) rotateY(${c.view+orb}deg) rotateY(${-c.ry}deg) translate3d(${-c.x}px,${-c.y+bob}px,${-c.z}px)`;
+  /* never opacity on a preserve-3d parent (it flattens); distance decides what is drawn */
+  secs.forEach((el,k) => { el.style.visibility = Math.abs(POS[k].x - c.x) < 1200 ? 'visible' : 'hidden'; });
+  const px = -c.x*0.018;
+  gl.w.style.transform = `translate(${(Math.sin(t*.30)*90+px*.5).toFixed(1)}px,${(Math.cos(t*.24)*70).toFixed(1)}px)`;
+  gl.y.style.transform = `translate(${(Math.cos(t*.22)*120+px).toFixed(1)}px,${(Math.sin(t*.27)*90).toFixed(1)}px)`;
+  gl.b.style.transform = `translate(${(Math.sin(t*.19)*140+px*1.4).toFixed(1)}px,${(Math.cos(t*.31)*110).toFixed(1)}px)`;
+  gl.p.style.transform = `translate(${(Math.cos(t*.26)*110+px*1.2).toFixed(1)}px,${(Math.sin(t*.21)*120).toFixed(1)}px)`;
+  /* each unit — copy and phone together — holds its angle and breathes a little */
+  POS.forEach((p,k) => { $('n'+k).style.transform =
+    `rotateY(${(p.turn + Math.sin(t*.7+k)*2.2).toFixed(2)}deg) rotateX(${(4+Math.cos(t*.6+k)*1.2).toFixed(2)}deg) translateY(${(Math.sin(t*.9+k)*6).toFixed(1)}px)`; });
+}
+
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const clock = { t:0 };
+tl.to(clock, { t:29, duration:29, ease:'none', onUpdate:() => apply(clock.t) }, 0);
+apply(0);
+
+/* ── each section: the phone swings in on its own vertical axis and the copy rises out of the same plane with it,
+   landing together; on leaving, both go the other way ── */
+HOLD.forEach(([hin,hout],k) => {
+  const arrive = k===0 ? 0.25 : hin-0.55, p='#p'+k;
+  /* never opacity on the phone: it is a preserve-3d group and any opacity below 1 flattens it to 2D, which is
+     what made v3's phone come in flat and snap to 3D as the fade finished. It leaps up from below the frame
+     instead, solid the whole way */
+  const side = k%2 ? 1 : -1;
+  tl.fromTo(p, { y:1500, z:-220, rotateX:30, rotateY:side*38, rotateZ:side*-5 },
+               { y:0, z:0, rotateX:0, rotateY:0, rotateZ:0, duration:1.0, ease:'back.out(1.1)' }, arrive);
+  const c0 = arrive + 0.30;                                    /* the copy starts as the phone turns towards us */
+  tl.fromTo('#r'+k, { scaleX:0, transformOrigin:'0 50%' }, { scaleX:1, duration:0.4, ease:'power3.out' }, c0)
+    .fromTo('#k'+k, { y:16, opacity:0 }, { y:0, opacity:1, duration:0.45, ease:'power3.out' }, c0+0.05)
+    .fromTo('#a'+k, { yPercent:110 }, { yPercent:0, duration:0.62, ease:'power4.out' }, c0+0.10)
+    .fromTo('#b'+k, { yPercent:110 }, { yPercent:0, duration:0.62, ease:'power4.out' }, c0+0.20)
+    .fromTo('#m'+k, { scaleX:0 }, { scaleX:1, duration:0.5, ease:'power3.inOut' }, c0+0.60)
+    .fromTo('#u'+k, { y:20, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, c0+0.42);
+  S[k].chips.forEach((_,j) => tl.fromTo(`#h${k}_${j}`, { y:18, opacity:0, scale:.92 },
+                                                      { y:0, opacity:1, scale:1, duration:0.42, ease:'back.out(1.6)' }, c0+0.58+j*0.08));
+  if (k < HOLD.length-1) {
+    tl.to(p, { rotateY:(k%2 ? 1 : -1)*-40, z:-260, duration:0.8, ease:'power2.in' }, hout-0.05)
+      .to('#c'+k, { opacity:0, duration:0.45, ease:'power2.in' }, hout);
+  }
+});
+
+/* ── the Shutter: up at the head (0.6s, nothing else happens); down over the last section; open on the close ── */
+tl.set('#sht',{y:'0%'},0).set('#shb',{y:'0%'},0)
+  .to('#sht',{ y:'-105%', duration:0.60, ease:'power2.inOut' }, 0.0)
+  .to('#shb',{ y:'105%',  duration:0.60, ease:'power2.inOut' }, 0.0)
+  ;
+
+/* the close: the glass tile rises in under the bars as they draw down onto it; then the wordmark */
+/* the swish: each band is one quad whose four corners travel from off-frame, to covering half the frame along
+   the 46.5deg seam, to the corners of one bar of the mark — the same four points the whole way, so it is one
+   continuous shape and one motion. Bar corners measured from brand/favicon/neropay-icon-512.png, placed at
+   283,700 and 320px square (the tile's centre) */
+const A = 46.5*Math.PI/180, DIR = [Math.cos(A), Math.sin(A)], NRM = [Math.sin(A), -Math.cos(A)], C = [443, 960];
+const at = (along, across) => [C[0]+DIR[0]*along+NRM[0]*across, C[1]+DIR[1]*along+NRM[1]*across];
+const mk = (u,v) => [283+u*3.2, 700+v*3.2];
+const str = pts => pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+/* Each band is the bar itself under a stretch: along the seam, across the seam, and pushed so its inner edge
+   sits on the seam. Moving between a shape and a stretch of it keeps every in-between frame the same bar,
+   just bigger, so the band reads as drawing down into the mark rather than folding through odd shapes. */
+const B1 = [mk(21.3,0), mk(36.1,0), mk(83.5,49.2), mk(83.5,70.1)];
+const B2 = [mk(16.7,33.2), mk(16.7,50.4), mk(63.9,100), mk(80.9,100)];
+const toAC = p => [(p[0]-C[0])*DIR[0]+(p[1]-C[1])*DIR[1], (p[0]-C[0])*NRM[0]+(p[1]-C[1])*NRM[1]];
+function swishBand(B, sgn, off){           /* sgn +1: the band on the upper-right of the seam, -1: lower-left */
+  const ac = B.map(toAC);
+  const am = ac.reduce((m,q)=>m+q[0],0)/ac.length;
+  const inner = sgn>0 ? Math.min(...ac.map(q=>q[1])) : Math.max(...ac.map(q=>q[1]));
+  /* corners 0 and 3 are each bar's inner (seam-side) edge: pin them to the seam exactly so the two bands meet
+     with no wedge between them; the outer corners take the stretch */
+  return ac.map(([a,c],i) => at((a-am)*26, (i===0||i===3 ? 0 : (c-inner)*44) - sgn*3 + sgn*off));
+}
+const B1cover = swishBand(B1, 1, 0),  B1off = swishBand(B1, 1, 1500);
+const B2cover = swishBand(B2,-1, 0),  B2off = swishBand(B2,-1, 1500);
+tl.set('#mb1', { attr:{ points:str(B1off) } }, 0).set('#mb2', { attr:{ points:str(B2off) } }, 0)
+  .to('#mb1', { attr:{ points:str(B1cover) }, duration:0.8, ease:'power1.in' }, 24.95)
+  .to('#mb2', { attr:{ points:str(B2cover) }, duration:0.8, ease:'power1.in' }, 24.95)
+  .to('#mb1', { attr:{ points:str(B1) }, duration:1.0, ease:'power3.out' }, 25.75)
+  .to('#mb2', { attr:{ points:str(B2) }, duration:1.0, ease:'power3.out' }, 25.75);
+tl.fromTo('#ctile', { y:40, scale:.9, opacity:0 }, { y:0, scale:1, opacity:1, duration:0.6, ease:'power3.out' }, 26.05)
+  .fromTo('#csheen', { xPercent:-120 }, { xPercent:120, duration:0.9, ease:'power2.inOut' }, 26.75);
+tl.fromTo('#cwm',  { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.75)
+  .fromTo('#cwm2', { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.75);
+
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>

@@ -151,6 +151,13 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
   background:linear-gradient(100deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 35%,rgba(40,30,20,0) 60%,rgba(40,30,20,.07) 100%),
              linear-gradient(118deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.10) 52%,rgba(255,255,255,0) 64%);
   box-shadow:inset 0 0 10px rgba(0,0,0,.28),inset 0 0 3px rgba(0,0,0,.35)}
+/* layer mode (?layer=…): see the script */
+html.lay,html.lay body{width:900px;background:transparent}
+html.lay .frame{left:120px;width:660px;overflow:visible;background:none}
+html.lay .gbg,html.lay .wm,html.lay .rule,html.lay .kick,html.lay h1,html.lay .blk,html.lay .lift{display:none}
+html.lay-s .cutimg{display:none}
+html.lay-h .pscr,html.lay-h .hscr .scrn{display:none}
+html.lay-h .hscr{background:transparent}
 </style>
 </head>
 <body>
@@ -379,6 +386,11 @@ function photoSlide(n) {
     <img class="cutimg flat" src="assets/photo-${P.name}-cut.png" alt=""></div>`;
 }
 const [n, v, m] = (location.hash.slice(1) || '1').split('-').map(Number);
+/* ?layer=s|h|a — one layer of a frame on a transparent ground, 120px wider each side, for the video (render.cjs layers):
+   s the photo's screen, h the hands (and on the hero the screen's lighting and the card's shadow), a the glass art
+   without its lift. The ground, the copy, the lifts and the hero's screen are drawn live in the video */
+const LAYER = new URLSearchParams(location.search).get('layer');
+if (LAYER) document.documentElement.classList.add('lay', 'lay-' + LAYER);
 const fr = document.getElementById('f');
 fr.className = 'frame is' + n;
 /* frame 1 draws the art first so the copy sits above the hands; #1-k is one of the cut-out variants */
