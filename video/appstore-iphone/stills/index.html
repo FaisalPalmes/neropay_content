@@ -270,8 +270,33 @@ const MARKS = {
   9: () => S6('dark'),
   10: () => S6('dark', '#FFCF24')
 };
-const heroVariant = (v, m) => `<div class="gbg">${THEMES[HERO_THEME[v]]}<div class="disc"></div></div>
-  <div class="cut"><div class="hscr">${m ? MARKS[m]() : SCREENS[v]()}<div class="lit"></div><div class="cs"></div></div><img src="assets/hero-cut.png" alt=""></div>`;
+
+/* v3 (Faisal liked #2 white/yellow and #10 dark/yellow): five close variations of each. #1-6-k renders them. */
+const S7 = o => {
+  const arcs = `<svg class="fx" viewBox="0 0 265.3 579.3">${[60,88,116].map((r,i)=>`<path d="M ${CX-r} ${PY-48} A ${r} ${r*.7} 0 0 1 ${CX+r} ${PY-48}" fill="none" stroke="rgba(${o.arc},${o.a[i]})" stroke-width="${[3,2.6,2.2][i]}" stroke-linecap="round"/>`).join('')}</svg>`;
+  const amt = `<b class="amt" style="color:${o.ink};${o.big?'font-size:46px':''}">£45.75</b>`;
+  const pill = o.big ? `<div class="ctr" style="top:${PY-40}px;height:80px">${amt}</div>`
+    : `<div class="ctr" style="top:${PY-42}px;height:84px"><div style="width:200px;height:84px;border-radius:42px;background:${o.pill};box-shadow:0 0 0 ${o.ringW||1}px ${o.ring}${o.pillShadow===false?'':',0 14px 28px -18px rgba(17,17,20,.30)'};display:flex;align-items:center;justify-content:center">${amt}</div></div>`;
+  const glow = o.glow ? `<div style="position:absolute;left:${CX-110}px;top:${MY-110}px;width:220px;height:220px;border-radius:50%;background:radial-gradient(closest-side,${o.glow},rgba(0,0,0,0))"></div>` : '';
+  return `<div class="scrn${o.dark?' dark':''}" style="background:${o.bg}">${glow}${arcs}${pill}${flatMark(o.mark, o.mw||40)}<div class="home"></div></div>`; };
+const WHITE = { bg:'#FFFFFF', arc:'17,17,20', a:[.16,.10,.06], pill:'#FFFFFF', ring:'rgba(17,17,20,.10)', ink:'#111114', mark:'#FFCF24' };
+const DARK  = { bg:'linear-gradient(180deg,#1A1A1F,#111114)', arc:'255,255,255', a:[.30,.18,.10], pill:'rgba(255,255,255,.08)', ring:'rgba(255,255,255,.18)', ink:'#FFFFFF', mark:'#FFCF24', dark:true };
+const MORE = {
+  /* white */
+  1: () => S7({ ...WHITE, arc:'245,190,20', a:[.75,.45,.22] }),                                  /* yellow arcs */
+  2: () => S7({ ...WHITE, big:true }),                                                            /* no pill, the amount large */
+  3: () => S7({ ...WHITE, ring:'#FFCF24', ringW:2, pillShadow:false, mw:32 }),                     /* yellow-rimmed pill, smaller mark */
+  4: () => S7({ ...WHITE, bg:'#FFFDF7', glow:'rgba(255,207,36,.22)', mw:52 }),                    /* warm white, a soft glow under a larger mark */
+  5: () => S7({ ...WHITE, pill:'#111114', ring:'rgba(17,17,20,0)', ink:'#FFFFFF' }),              /* black pill */
+  /* dark */
+  6: () => S7({ ...DARK, arc:'255,207,36', a:[.55,.32,.16] }),                                    /* yellow arcs */
+  7: () => S7({ ...DARK, big:true }),                                                             /* no pill, the amount large */
+  8: () => S7({ ...DARK, pill:'#FFCF24', ring:'rgba(0,0,0,0)', ink:'#111114', mark:'#FFFFFF', mw:32 }),   /* yellow pill, white mark */
+  9: () => S7({ ...DARK, ring:'#FFCF24', ringW:1.5, glow:'rgba(255,207,36,.18)' }),               /* yellow rim, a warm glow under the mark */
+  10: () => S7({ ...DARK, bg:'linear-gradient(180deg,#16203A,#0E1322)', pill:'#FFFFFF', ring:'rgba(0,0,0,0)', ink:'#111114' })   /* midnight blue, white pill */
+};
+const heroVariant = (v, m) => `<div class="gbg">${THEMES[HERO_THEME[v === 6 ? 5 : v]]}<div class="disc"></div></div>
+  <div class="cut"><div class="hscr">${m ? (v === 6 ? MORE[m]() : MARKS[m]()) : SCREENS[v]()}<div class="lit"></div><div class="cs"></div></div><img src="assets/hero-cut.png" alt=""></div>`;
 const [n, v, m] = (location.hash.slice(1) || '1').split('-').map(Number);
 const fr = document.getElementById('f');
 fr.className = 'frame is' + n;

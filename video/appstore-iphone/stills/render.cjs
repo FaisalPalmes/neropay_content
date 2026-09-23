@@ -9,6 +9,7 @@ const { chromium } = require(path.resolve(__dirname, '../../../motion/node_modul
   const b = await chromium.launch({ executablePath: exe, args: ['--allow-file-access-from-files', '--no-sandbox'] });
   const out = path.join(__dirname, 'out'); fs.mkdirSync(out, { recursive: true });
   const jobs = process.argv[2] === 'heroes' ? [1,2,3,4,5,6,7,8].map(v => ['1-' + v, `hero-v${v}`])
+    : process.argv[2] === 'more' ? [1,2,3,4,5,6,7,8,9,10].map(m => ['1-6-' + m, `hero-more${m}`])
     : process.argv[2] === 'marks' ? [1,2,3,4,5,6,7,8,9,10].map(m => ['1-5-' + m, `hero-mark${m}`])
     : [1,2,3,4,5,6].map(n => [String(n), `neropay-appstore-6.9-${n}`]);
   for (const [n, name] of jobs) {
