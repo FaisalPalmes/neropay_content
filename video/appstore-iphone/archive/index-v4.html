@@ -14,9 +14,6 @@
    v4, same day: v3's phone faded in with opacity, which flattens a preserve-3d group, so it came in flat and
    snapped to 3D as the fade ended. The phone never carries opacity now; it leaps up from below the frame, solid
    the whole way, and tilts away as the camera leaves. The close keeps its bars and gains a clear glass tile.
-   v5, same day: the frosted panes behind (they read as phone outlines) are gone; the mark's stripe stands at
-   depth in clear glass instead, just visible. The outro is one motion: two yellow bands swish in, cover the
-   frame and draw down into the mark's two bars on the glass tile.
    Still true from v2: one 3D world the camera flies through; the copy set live in Poppins; one fluid background;
    no CSS filter on anything that moves (v1's flicker). */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -37,10 +34,8 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
 .glow.b{width:1100px;height:1100px;left:-520px;top:900px;background:radial-gradient(closest-side,rgba(126,162,255,.20),rgba(126,162,255,0))}
 .glow.p{width:980px;height:980px;left:380px;top:1180px;background:radial-gradient(closest-side,rgba(255,150,192,.15),rgba(255,150,192,0))}
 .glow.w{width:900px;height:900px;left:120px;top:420px;background:radial-gradient(closest-side,rgba(255,255,255,.70),rgba(255,255,255,0))}
-/* the mark's stripe, as clear glass, standing at depth behind the sections: just visible, never the subject */
-.gstripe{position:absolute;left:0;top:0;border-radius:10px;
-  background:linear-gradient(90deg,rgba(255,255,255,.50),rgba(255,255,255,.16) 55%,rgba(255,255,255,.36));
-  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75),inset 0 2px 0 rgba(255,255,255,.9),0 26px 50px -26px rgba(17,18,20,.14)}
+.pane{position:absolute;border-radius:64px;background:linear-gradient(150deg,rgba(255,255,255,.42),rgba(255,255,255,.10));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.62), 0 40px 80px -40px rgba(17,18,20,.14)}
 
 /* ── the world and its camera ── */
 .cam{perspective:2400px;perspective-origin:50% 42%}
@@ -96,7 +91,7 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
 
 /* ── the close: white, a clear liquid glass tile carrying the mark's two yellow bars, the wordmark ── */
 .close{background:#FBFAF7;z-index:38;overflow:hidden}
-.swish{z-index:45;pointer-events:none}.swish svg{position:absolute;left:0;top:0;overflow:visible}.swish polygon{fill:var(--yel)}
+.close .mark{position:absolute;left:283px;top:700px;width:320px;height:320px;overflow:visible}
 /* clear liquid glass: no colour of its own, read by its rim, its highlight and its shadow */
 .close .tile{position:absolute;left:233px;top:650px;width:420px;height:420px;border-radius:24%;overflow:hidden;
   background:linear-gradient(150deg,rgba(255,255,255,.92) 0%,rgba(246,246,248,.55) 48%,rgba(236,237,241,.62) 100%);
@@ -109,10 +104,11 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
 .close .tile::after{content:"";position:absolute;left:12%;right:12%;bottom:5px;height:3px;border-radius:3px;
   background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0))}
 .close .tile .sheen{position:absolute;inset:-10%;background:linear-gradient(115deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 62%);transform:translateX(-120%)}
+.close .mark polygon{fill:var(--yel)}
 .close .wm{position:absolute;left:213px;top:1150px;width:460px}
 .close .wm.alt{display:none}
 /* the alternative, shown as a still: the same close on yellow, white mark and white wordmark */
-#root.altclose .close{background:var(--yel)} #root.altclose .swish polygon{fill:#fff}
+#root.altclose .close{background:var(--yel)} #root.altclose .close .mark polygon{fill:#fff}
 #root.altclose .close .wm{display:none} #root.altclose .close .wm.alt{display:block}
 </style>
 </head>
@@ -124,28 +120,27 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
     <div class="glow y" id="gy" data-layout-allow-overflow></div>
     <div class="glow b" id="gb" data-layout-allow-overflow></div>
     <div class="glow p" id="gp" data-layout-allow-overflow></div>
+    <div class="pane" id="pa" style="left:-180px;top:260px;width:420px;height:560px" data-layout-allow-overflow></div>
+    <div class="pane" id="pb" style="left:640px;top:980px;width:380px;height:520px" data-layout-allow-overflow></div>
+    <div class="pane" id="pc" style="left:520px;top:-120px;width:300px;height:360px" data-layout-allow-overflow></div>
   </div>
 
   <div class="clip cam" id="camclip" data-start="0" data-duration="26.4" data-track-index="1">
     <div id="world" data-layout-allow-overflow></div>
   </div>
 
-  <div class="clip close" id="close" data-start="25.75" data-duration="3.25" data-track-index="2">
+  <div class="clip close" id="close" data-start="25.88" data-duration="3.12" data-track-index="2">
     <div class="tile" id="ctile"><div class="sheen" id="csheen"></div></div>
+    <svg class="mark" viewBox="0 0 100 100" preserveAspectRatio="none" data-layout-allow-overflow>
+      <!-- the two bars of the mark, measured from brand/favicon/neropay-icon-512.png -->
+      <polygon id="bar1" points="21.3,0 36.1,0 83.5,49.2 83.5,70.1"/>
+      <polygon id="bar2" points="16.7,33.2 16.7,50.4 63.9,100 80.9,100"/>
+    </svg>
     <img class="wm" id="cwm" src="assets/wordmark-light.png" alt="neropay">
     <img class="wm alt" id="cwm2" src="assets/wordmark-white.png" alt="neropay">
   </div>
 
-  <!-- the outro in one motion: two yellow bands swish in over the last section, cover the frame, and draw down
-       into the two bars of the mark on the glass tile -->
-  <div class="clip swish" id="swish" data-start="24.8" data-duration="4.2" data-track-index="5">
-    <svg viewBox="0 0 886 1920" width="886" height="1920" data-layout-allow-overflow>
-      <polygon id="mb1" points="0,0 0,0 0,0 0,0"/>
-      <polygon id="mb2" points="0,0 0,0 0,0 0,0"/>
-    </svg>
-  </div>
-
-  <!-- shutter up at the head (the intro Faisal kept); the outro is the swish above -->
+  <!-- shutter up at the head (the intro Faisal kept), down over the last section, then open on the close -->
   <div class="clip shut" id="shut" data-start="0" data-duration="29" data-track-index="4">
     <div class="half t" id="sht" data-layout-allow-overflow></div>
     <div class="half b" id="shb" data-layout-allow-overflow></div>
@@ -186,20 +181,6 @@ const keys = [['l',250,82],['l',352,82],['r',300,150]].map(([side,top,h]) =>
   [-12,-10,-8,-6,-4,-2,0,2,4,6,8,10,12].map(z => `<div class="key" style="${side==='l'?'left:-7px':'right:-7px'};top:${top}px;height:${h}px;transform:translateZ(${z}px)"></div>`).join('')).join('');
 
 const world = document.getElementById('world');
-/* glass stripes at the mark's angle, spread along the flight path at depth; fixed positions, no randomness */
-const STRIPES = [
-  [-420,  180, -900, 1500, 38], [ 380, 1450,-1300, 1800, 52], [ 760, -260, -700, 1100, 28],
-  [1260,  980,-1500, 1900, 60], [1700,  120, -800, 1300, 34], [2150, 1600,-1100, 1600, 44],
-  [2580, -300,-1400, 1700, 56], [2980,  900, -750, 1200, 30], [3450,  300,-1250, 1800, 48],
-  [3900, 1500, -900, 1400, 36], [4350, -200,-1500, 1900, 58], [4800,  800, -800, 1300, 32]
-];
-STRIPES.forEach(([x,y,z,len,w]) => {
-  const d = document.createElement('div');
-  d.className = 'gstripe'; d.setAttribute('data-layout-allow-overflow','');
-  d.style.width = len+'px'; d.style.height = w+'px';
-  d.style.transform = `translate3d(${x}px,${y}px,${z}px) rotateZ(46.5deg)`;
-  world.appendChild(d);
-});
 POS.forEach((p,k) => {
   const s = S[k];
   const st = document.createElement('div');
@@ -251,7 +232,7 @@ function camAt(t){
 }
 const secs = [...document.querySelectorAll('.station')];
 const $ = id => document.getElementById(id);
-const gl = { w:$('gw'), y:$('gy'), b:$('gb'), p:$('gp') };
+const gl = { w:$('gw'), y:$('gy'), b:$('gb'), p:$('gp') }, pn = { a:$('pa'), b:$('pb'), c:$('pc') };
 function apply(t){
   const c = camAt(t);
   const orb = Math.sin(t*0.55)*2.0, tilt = Math.cos(t*0.42)*1.2, bob = Math.sin(t*0.8)*8;
@@ -264,6 +245,9 @@ function apply(t){
   gl.y.style.transform = `translate(${(Math.cos(t*.22)*120+px).toFixed(1)}px,${(Math.sin(t*.27)*90).toFixed(1)}px)`;
   gl.b.style.transform = `translate(${(Math.sin(t*.19)*140+px*1.4).toFixed(1)}px,${(Math.cos(t*.31)*110).toFixed(1)}px)`;
   gl.p.style.transform = `translate(${(Math.cos(t*.26)*110+px*1.2).toFixed(1)}px,${(Math.sin(t*.21)*120).toFixed(1)}px)`;
+  pn.a.style.transform = `translate(${(px*2.2).toFixed(1)}px,${(Math.sin(t*.33)*40).toFixed(1)}px) rotate(${(-8+Math.sin(t*.2)*3).toFixed(2)}deg)`;
+  pn.b.style.transform = `translate(${(px*1.6).toFixed(1)}px,${(Math.cos(t*.29)*46).toFixed(1)}px) rotate(${(10+Math.cos(t*.23)*3).toFixed(2)}deg)`;
+  pn.c.style.transform = `translate(${(px*2.8).toFixed(1)}px,${(Math.sin(t*.37)*30).toFixed(1)}px) rotate(${(14+Math.sin(t*.27)*4).toFixed(2)}deg)`;
   /* each unit — copy and phone together — holds its angle and breathes a little */
   POS.forEach((p,k) => { $('n'+k).style.transform =
     `rotateY(${(p.turn + Math.sin(t*.7+k)*2.2).toFixed(2)}deg) rotateX(${(4+Math.cos(t*.6+k)*1.2).toFixed(2)}deg) translateY(${(Math.sin(t*.9+k)*6).toFixed(1)}px)`; });
@@ -304,42 +288,18 @@ HOLD.forEach(([hin,hout],k) => {
 tl.set('#sht',{y:'0%'},0).set('#shb',{y:'0%'},0)
   .to('#sht',{ y:'-105%', duration:0.60, ease:'power2.inOut' }, 0.0)
   .to('#shb',{ y:'105%',  duration:0.60, ease:'power2.inOut' }, 0.0)
-  ;
+  .to('#sht',{ y:'0%', duration:1.00, ease:'power2.inOut' }, 24.9)
+  .to('#shb',{ y:'0%', duration:1.00, ease:'power2.inOut' }, 24.9)
+  .to('#sht',{ y:'-105%', duration:0.62, ease:'power2.inOut' }, 26.0)
+  .to('#shb',{ y:'105%',  duration:0.62, ease:'power2.inOut' }, 26.0);
 
-/* the close: the glass tile rises in under the bars as they draw down onto it; then the wordmark */
-/* the swish: each band is one quad whose four corners travel from off-frame, to covering half the frame along
-   the 46.5deg seam, to the corners of one bar of the mark — the same four points the whole way, so it is one
-   continuous shape and one motion. Bar corners measured from brand/favicon/neropay-icon-512.png, placed at
-   283,700 and 320px square (the tile's centre) */
-const A = 46.5*Math.PI/180, DIR = [Math.cos(A), Math.sin(A)], NRM = [Math.sin(A), -Math.cos(A)], C = [443, 960];
-const at = (along, across) => [C[0]+DIR[0]*along+NRM[0]*across, C[1]+DIR[1]*along+NRM[1]*across];
-const mk = (u,v) => [283+u*3.2, 700+v*3.2];
-const str = pts => pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
-/* Each band is the bar itself under a stretch: along the seam, across the seam, and pushed so its inner edge
-   sits on the seam. Moving between a shape and a stretch of it keeps every in-between frame the same bar,
-   just bigger, so the band reads as drawing down into the mark rather than folding through odd shapes. */
-const B1 = [mk(21.3,0), mk(36.1,0), mk(83.5,49.2), mk(83.5,70.1)];
-const B2 = [mk(16.7,33.2), mk(16.7,50.4), mk(63.9,100), mk(80.9,100)];
-const toAC = p => [(p[0]-C[0])*DIR[0]+(p[1]-C[1])*DIR[1], (p[0]-C[0])*NRM[0]+(p[1]-C[1])*NRM[1]];
-function swishBand(B, sgn, off){           /* sgn +1: the band on the upper-right of the seam, -1: lower-left */
-  const ac = B.map(toAC);
-  const am = ac.reduce((m,q)=>m+q[0],0)/ac.length;
-  const inner = sgn>0 ? Math.min(...ac.map(q=>q[1])) : Math.max(...ac.map(q=>q[1]));
-  /* corners 0 and 3 are each bar's inner (seam-side) edge: pin them to the seam exactly so the two bands meet
-     with no wedge between them; the outer corners take the stretch */
-  return ac.map(([a,c],i) => at((a-am)*26, (i===0||i===3 ? 0 : (c-inner)*44) - sgn*3 + sgn*off));
-}
-const B1cover = swishBand(B1, 1, 0),  B1off = swishBand(B1, 1, 1500);
-const B2cover = swishBand(B2,-1, 0),  B2off = swishBand(B2,-1, 1500);
-tl.set('#mb1', { attr:{ points:str(B1off) } }, 0).set('#mb2', { attr:{ points:str(B2off) } }, 0)
-  .to('#mb1', { attr:{ points:str(B1cover) }, duration:0.8, ease:'power1.in' }, 24.95)
-  .to('#mb2', { attr:{ points:str(B2cover) }, duration:0.8, ease:'power1.in' }, 24.95)
-  .to('#mb1', { attr:{ points:str(B1) }, duration:1.0, ease:'power3.out' }, 25.75)
-  .to('#mb2', { attr:{ points:str(B2) }, duration:1.0, ease:'power3.out' }, 25.75);
-tl.fromTo('#ctile', { y:40, scale:.9, opacity:0 }, { y:0, scale:1, opacity:1, duration:0.6, ease:'power3.out' }, 26.05)
+/* the close: as the halves part, the mark's two bars travel in on the same axis and meet; then the wordmark */
+tl.fromTo('#ctile', { y:40, scale:.9, opacity:0 }, { y:0, scale:1, opacity:1, duration:0.6, ease:'power3.out' }, 25.98)
   .fromTo('#csheen', { xPercent:-120 }, { xPercent:120, duration:0.9, ease:'power2.inOut' }, 26.75);
-tl.fromTo('#cwm',  { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.75)
-  .fromTo('#cwm2', { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.75);
+tl.fromTo('#bar1', { x:260, y:-247 }, { x:0, y:0, duration:0.7, ease:'power3.out' }, 26.05)
+  .fromTo('#bar2', { x:-260, y:247 }, { x:0, y:0, duration:0.7, ease:'power3.out' }, 26.10)
+  .fromTo('#cwm',  { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.55)
+  .fromTo('#cwm2', { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.55);
 
 window.__timelines['main'] = tl;
 </script>
