@@ -43,10 +43,19 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
   background:linear-gradient(150deg,#FFE789 0%,#FFCF24 30%,#F4BE0C 58%,#FFD94A 80%,#FFF0B0 100%);
   box-shadow:0 50px 90px -40px rgba(17,17,20,.40),0 14px 30px -18px rgba(17,17,20,.25),
     inset 0 3px 0 rgba(255,255,255,.85),inset 0 -3px 4px rgba(150,105,0,.35),inset 0 0 0 1.5px rgba(255,255,255,.35)}
-.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+/* the sheen sits under the screenshot, so it lights the yellow rim only (Faisal, 23 Sep: never across the screen) */
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
   background:linear-gradient(118deg,rgba(255,255,255,.65) 0%,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 70%,rgba(255,255,255,.35) 100%)}
-.glass .shot{position:relative;border-radius:36px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(120,90,0,.25)}
+.glass .shot{position:relative;z-index:1;border-radius:36px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(120,90,0,.25)}
 .glass .shot img{display:block;width:100%}
+/* white margin top and bottom so nothing sits hard against the rim; the keypad's CHARGE / TAP buttons, which his
+   export cuts off, finished at their own shape and colours */
+.glass .shot .pt{height:var(--pt)}
+.glass .shot .pb{height:var(--pb)}
+.glass .shot .btns{position:relative;height:var(--bh)}
+.glass .shot .btns b{position:absolute;top:-1px;bottom:0;border-radius:0 0 var(--br) var(--br)}
+.glass .shot .btns .c{left:2.55%;width:46.3%;background:#000}
+.glass .shot .btns .t{left:51.5%;width:46.2%;background:#EEEEEE}
 
 /* ── …or inside a flat, unbranded phone: the same front face as the video, no maker's mark ── */
 .phone{position:absolute;border-radius:74px;padding:12px;
@@ -63,7 +72,7 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
 .phone .scr img{display:block;width:100%}
 
 /* ── a piece of the screen lifted out over the art ── */
-.lift{position:absolute;overflow:hidden;border-radius:20px;background:#fff;
+.lift{position:absolute;z-index:2;overflow:hidden;border-radius:20px;background:#fff;
   box-shadow:0 40px 70px -30px rgba(17,17,20,.50),0 10px 22px -12px rgba(17,17,20,.30),inset 0 0 0 1px rgba(17,17,20,.06)}
 .lift img{position:absolute;display:block}
 
@@ -162,7 +171,10 @@ const copy = c => `<img class="wm" src="assets/wordmark-light.png" alt="neropay"
   <div class="kick">${c.kick}</div><h1><span>${c.a}</span><span class="two">${c.b}</span></h1>
   <div class="blk"><div class="sub">${c.sub}</div>
   ${c.chips.length ? `<div class="chips">${c.chips.map(t=>`<div class="chip"><i></i>${t}</div>`).join('')}</div>` : ''}</div>`;
-const glass = (k,x,y,w) => `<div class="glass" style="left:${x}px;top:${y}px;width:${w}px"><div class="shot"><img src="${A(k)}" alt=""></div></div>`;
+/* glass(k, x, y, w, …): pads and the button finish are in the screenshot's own pixels (784 wide) */
+const glass = (k,x,y,w, o = {}) => { const s = (w - 30) / 784, px = v => (v * s).toFixed(1) + 'px';
+  return `<div class="glass" style="left:${x}px;top:${y}px;width:${w}px"><div class="shot" style="--pt:${px(o.top||0)};--pb:${px(o.bottom||0)};--bh:${px(o.btns||0)};--br:${px(22)}">
+    <div class="pt"></div><img src="${A(k)}" alt="">${o.btns ? '<div class="btns"><b class="c"></b><b class="t"></b></div>' : ''}<div class="pb"></div></div></div>`; };
 const sbar = `<div class="sbar"><div class="t">9:41</div><div class="isl"></div><div class="r"><b style="height:7px"></b><b style="height:10px"></b><b style="height:13px"></b><b style="height:16px"></b><b class="bat"></b></div></div>`;
 const phone = (k,x,y,w) => `<div class="phone" style="left:${x}px;top:${y}px;width:${w}px"><div class="scr">${sbar}<img src="${A(k)}" alt=""></div></div>`;
 /* lift(k, crop x,y,w,h in app-card px, placed at X,Y with width W) */
@@ -186,9 +198,10 @@ const ART = {
         <div class="home"></div>
       </div>
       <div class="lit"></div><div class="cs"></div></div><img src="assets/hero-keyed.png" alt=""></div>`,
-  2: () => glass(1,50,486,560),
+  /* sized so the whole screenshot, its margins and the finished buttons end 40px above the frame's foot */
+  2: () => glass(1,65,486,530,{ top:22, btns:34, bottom:24 }),
   3: () => phone(2,86,492,488) + lift(2,402,543,345,377,320,872,270),
-  4: () => glass(3,50,486,560) + lift(3,0,335,785,190,35,716,590),
+  4: () => glass(3,58,486,544,{ top:14, bottom:22 }) + lift(3,0,335,785,190,38,720,584),
   5: () => phone(4,86,492,488) + lift(4,20,752,370,132,50,998,300) + lift(4,254,282,300,66,240,727,260),
   6: () => phone(5,86,492,488) + lift(5,25,150,735,125,80,642,500)
 };
