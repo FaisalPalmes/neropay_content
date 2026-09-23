@@ -128,3 +128,12 @@ html.glass .lglass{background:linear-gradient(135deg,rgba(255,255,255,.76) 0%,rg
 html.glass .lglass .tint{background:radial-gradient(120% 80% at 10% 0%,rgba(255,255,255,.75),transparent 55%),radial-gradient(70% 60% at 100% 100%,rgba(255,207,36,.18),transparent 65%)}
 html.glass .mk{content:url(assets/neropay-glass-icon.png);width:64px;height:64px;border-radius:22%;
   box-shadow:0 10px 26px rgba(40,40,60,.16),0 0 0 1px rgba(255,255,255,.9)}
+
+/* v3.1 — "just the post" (Faisal, 23 Sep 2026). No kicker, no card counter, no source or date line, no
+   "next" cue on the card itself: the platform supplies the dots and the date goes in the caption. The rule
+   is kept but made quiet and turned to the logo's own direction — the mark's bars run top-left to
+   bottom-right, so the skew is positive, not negative as in v2. */
+html.glass .kick,html.glass .tr,html.glass .src,html.glass .next{display:none}
+html.glass .rule{gap:8px}
+html.glass .rule::before,html.glass .rule::after{width:9px;height:40px;opacity:.85;transform:skewX(var(--shear))}
+html.glass .rule.sm::before,html.glass .rule.sm::after{width:8px;height:24px}

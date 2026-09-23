@@ -21,7 +21,7 @@ window.POSTS = [
 /* ============================ LINKEDIN — posted as NeroPay ============================ */
 {
   id: "L1", channel: "linkedin", pillar: "Street", format: "Photo + text",
-  date: "Thu 10 Sep", blocked: false,
+  date: "Thu 10 Sep", blocked: "Dropped by Faisal, 23 Sep 2026: no Curry Mile / Wilmslow Road posts; LinkedIn is educational.",
   title: "98 in 800 metres",
   copy: "98 food businesses in 800 metres of Manchester's Curry Mile. We counted.\n\nJordanian, Lebanese, Kurdish, Iranian, Afghan, and the Pakistani places that were there before any of them.\n\nWe work in payments, so we notice card machines. Six or seven providers on one road. Almost nobody has changed theirs in years.\n\nNot because they're locked in. Most aren't. They've got forty things to do before the card machine, and nobody's ever sat down and read the bill with them.\n\nThat's most of the job. Not selling. Reading a statement out loud until the number makes sense.\n\nIf yours is one of the 98, we're on that road most weeks. Bring last month's statement out to the counter and we'll read it with you. Ten minutes. Sometimes the answer is keep what you've got.",
   creative: "One photograph taken on the day, of the actual street. Not stock, not a graphic. Phone camera, landscape, mid-morning when the shutters are up and the light is flat. Slightly imperfect beats polished — the post depends on being believed. The stat card below is the fallback if the photo doesn't land, not the plan.",
@@ -218,7 +218,7 @@ window.POSTS = [
 },
 {
   id: "M6", channel: "meta", pillar: "Street", format: "Reel · 20s",
-  date: "Fri 18 Sep", blocked: false,
+  date: "Fri 18 Sep", blocked: "Dropped by Faisal, 23 Sep 2026: no Curry Mile / Wilmslow Road posts; social is educational.",
   title: "Wilmslow Road, Tuesday",
   copy: "98 food businesses in 800 metres.\n\nWilmslow Road, Tuesday, half two. Shutters up, grills on, probably the densest food strip in the North.\n\nWe walk it most weeks. If you're on it, say hello.",
   creative: "Phone footage, walking, vertical, no narration. Shopfronts, signage, the texture of the street. Ambient sound only — traffic and voices. No music, no captions beyond the single opening title below. Shot on a field day; costs nothing but remembering to film.",
