@@ -35,6 +35,15 @@ def box(m, k):                       # separable box blur via cumulative sums
 
 # drop specks (isolated wall-noise islands): keep pixels whose 9px neighbourhood is mostly subject
 subj = box(subj, 9) > 0.5
+# keep only what is joined to the subject itself (flood from a point on the card): no stray specks on the wall
+keep = np.zeros((H, W), bool); keep[700, 560] = True
+for _ in range(6000):
+    grow = keep.copy()
+    grow[1:,:] |= keep[:-1,:]; grow[:-1,:] |= keep[1:,:]; grow[:,1:] |= keep[:,:-1]; grow[:,:-1] |= keep[:,1:]
+    grow &= subj
+    if (grow == keep).all(): break
+    keep = grow
+subj = keep
 # pull the edge in by a pixel so no wall colour fringes the skin, then feather it
 alpha = np.clip((box(subj, 3) - 0.5) * 2, 0, 1)
 alpha = box(alpha, 3)
