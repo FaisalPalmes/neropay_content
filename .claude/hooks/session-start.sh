@@ -61,6 +61,10 @@ if [ -x "$PW_CHROME" ] && [ ! -f .playwright/cli.config.json ]; then
   printf '{ "browser": { "launchOptions": { "executablePath": "%s", "args": ["--no-sandbox", "--disable-dev-shm-usage"] } } }\n' "$PW_CHROME" > .playwright/cli.config.json
 fi
 
+# 3c. .claude/skills/playwright-scripts (lackeyjb) runs its own scripts through run.js and needs the playwright
+#     package beside it. Point it at the same Chromium with PW_EXECUTABLE_PATH and PW_HEADLESS=true when you run it.
+( cd .claude/skills/playwright-scripts && [ -d node_modules/playwright ] || npm install --no-audit --no-fund --loglevel=error >/dev/null 2>&1 ) || true
+
 # 4. keep HyperFrames quiet about skills: they are committed under .claude/skills
 echo 'export HYPERFRAMES_SKIP_SKILLS=1' >> "$CLAUDE_ENV_FILE"
 

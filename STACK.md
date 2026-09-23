@@ -137,6 +137,17 @@ for the page checks in `CLAUDE.md`; `img2threejs` (Apache 2.0) for a procedural 
 photograph. `SOCIAL-BRIEF.md` and `MOTION-SYSTEM.md` outrank all of them on the look; each folder's `NEROPAY-NOTE.md`
 says where. The two "awesome" lists Faisal sent the same day are catalogues, recorded in `video/TOOLS.md`, not installed.
 
+**Added 23 Sep 2026 (Faisal's ask):** `ui-ux-pro-max` (nextlevelbuilder/ui-ux-pro-max-skill 2.13.0, MIT), a local
+search over UX rules, styles, palettes and font pairings (`scripts/search.py`, Python, no network). Use its UX rules
+and pre-delivery checklist; ignore its `--design-system` generator, which proposes its own palette and fonts and
+does not know `BRAND.md`. And `playwright-scripts` (lackeyjb/playwright-skill 5.0.0, MIT, renamed from
+`playwright-skill` so it does not collide with the one above): it writes a full Playwright script and runs it through
+`run.js`, which suits a multi-page check (every page at 390 and 1440, console errors, overflow, screenshots) better
+than the CLI. Run it headless against the pre-installed Chromium:
+`PW_HEADLESS=true PW_EXECUTABLE_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome node .claude/skills/playwright-scripts/run.js <script>`.
+The session-start hook installs its `playwright` package. `/impeccable` and `taste-skill` were checked against
+upstream the same day and are current.
+
 **`/prompt-master`** (added 21 Sep 2026, v1.8.0, MIT, upstream nidhinjs/prompt-master) writes one
 finished, tool-routed prompt from a rough idea: Higgsfield video and image, ElevenLabs voice, an agentic
 brief for another session, or a decompile of a prompt that keeps missing. It fires only when you ask for a
