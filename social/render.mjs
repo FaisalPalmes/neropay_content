@@ -41,9 +41,18 @@ async function loadPlaywright() {
 
 const argv = process.argv.slice(2);
 const all = argv.includes('--all');
-const look = argv.includes('--look') ? argv[argv.indexOf('--look') + 1] : 'classic';  // glass is on trial, pending Faisal's ruling (23 Sep 2026)
-const MOODS = ['dawn', 'mist', 'blush'];
-const moodFor = id => MOODS[[...id].reduce((h, c) => h * 31 + c.charCodeAt(0) >>> 0, 7) % MOODS.length];
+const look = argv.includes('--look') ? argv[argv.indexOf('--look') + 1] : 'glass';  // Faisal, 23 Sep 2026; --look classic for the v2 cards
+/* the glass ground, arranged per post: yellow leads, pink sits under it. Seeded from the post id, so the feed
+   varies and a re-render of one post is identical. Pink always lands on the opposite side from the main yellow. */
+const moodFor = id => {
+  let h = [...id].reduce((a, c) => Math.imul(a ^ c.charCodeAt(0), 2654435761) >>> 0, 2166136261);
+  const r = () => ((h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0) % 1000) / 1000;
+  const left = r() < 0.5, top = r() < 0.6, pct = v => Math.round(v) + '%';
+  const yx = left ? r() * 18 : 82 + r() * 18, yy = top ? r() * 22 : 78 + r() * 22;
+  return { '--yx': pct(yx), '--yy': pct(yy), '--ya': (0.46 + r() * 0.18).toFixed(2),
+    '--y2x': pct(100 - yx + (r() - 0.5) * 20), '--y2y': pct(100 - yy + (r() - 0.5) * 20),
+    '--px': pct(left ? 80 + r() * 20 : r() * 20), '--py': pct(30 + r() * 50), '--pa': (0.24 + r() * 0.14).toFixed(2) };
+};
 const wanted = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--look');
 
 const posts = await (async () => {
@@ -68,8 +77,11 @@ async function shoot(template, size, data, file) {
   const [w, h] = SIZES[size] || SIZES.sq;
   await page.setViewportSize({ width: w, height: h });
   await page.goto(pathToFileURL(join(TPL, template + '.html')).href, { waitUntil: 'load' });
-  await page.evaluate(([lk, md]) => { if (lk === 'glass') { document.documentElement.classList.add('glass'); document.documentElement.dataset.mood = md; } }, [look, data.mood]);
-  await page.evaluate(d => window.fill(d), { ...data, size });
+  await page.evaluate(([lk, md]) => { if (lk === 'glass') { const d = document.documentElement; d.classList.add('glass'); for (const k in md) d.style.setProperty(k, md[k]); } }, [look, data.mood]);
+  /* never let a line break at a hyphen ("18-" / "month rule"): word joiners either side of every inner hyphen */
+  const glue = v => typeof v === 'string' ? v.replace(/(\S)-(?=\S)/g, '$1⁠-⁠')
+    : Array.isArray(v) ? v.map(glue) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, glue(x)])) : v;
+  await page.evaluate(d => window.fill(d), glue({ ...data, size }));
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: file, clip: { x: 0, y: 0, width: w, height: h } });
 }

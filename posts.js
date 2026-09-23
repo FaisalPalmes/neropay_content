@@ -23,7 +23,7 @@ window.POSTS = [
   id: "L1", channel: "linkedin", pillar: "Street", format: "Photo + text",
   date: "Thu 10 Sep", blocked: false,
   title: "98 in 800 metres",
-  copy: "98 food businesses in 800 metres of Wilmslow Road. We counted.\n\nJordanian, Lebanese, Kurdish, Iranian, Afghan, and the Pakistani places that were there before any of them.\n\nWe work in payments, so we notice card machines. Six or seven providers on one road. Almost nobody has changed theirs in years.\n\nNot because they're locked in. Most aren't. They've got forty things to do before the card machine, and nobody's ever sat down and read the bill with them.\n\nThat's most of the job. Not selling. Reading a statement out loud until the number makes sense.\n\nIf yours is one of the 98, we're on that road most weeks. Bring last month's statement out to the counter and we'll read it with you. Ten minutes. Sometimes the answer is keep what you've got.",
+  copy: "98 food businesses in 800 metres of Manchester's Curry Mile. We counted.\n\nJordanian, Lebanese, Kurdish, Iranian, Afghan, and the Pakistani places that were there before any of them.\n\nWe work in payments, so we notice card machines. Six or seven providers on one road. Almost nobody has changed theirs in years.\n\nNot because they're locked in. Most aren't. They've got forty things to do before the card machine, and nobody's ever sat down and read the bill with them.\n\nThat's most of the job. Not selling. Reading a statement out loud until the number makes sense.\n\nIf yours is one of the 98, we're on that road most weeks. Bring last month's statement out to the counter and we'll read it with you. Ten minutes. Sometimes the answer is keep what you've got.",
   creative: "One photograph taken on the day, of the actual street. Not stock, not a graphic. Phone camera, landscape, mid-morning when the shutters are up and the light is flat. Slightly imperfect beats polished — the post depends on being believed. The stat card below is the fallback if the photo doesn't land, not the plan.",
   why: "Opens with a number nobody else has. Local knowledge before product. The offer is one line at the bottom, framed as something we do anyway.",
   sketch: { type: "photo", alt: "Wilmslow Road shopfronts, landscape",
@@ -31,12 +31,12 @@ window.POSTS = [
     focus: [84,60], note: "shopfronts fill the frame · no sky · sign text legible",
     cap: "Landscape. Row of shopfronts, camera at eye level, no sky. Signage legible — that's what makes it Rusholme rather than anywhere." },
   assets: [
-    { t: "stat", size: "sq", big: "98", line: "food businesses in 800 metres of Wilmslow Road", src: "NeroPay count · August 2026" }
+    { t: "stat", size: "sq", big: "98", line: "food businesses in 800 metres of Manchester's Curry Mile", src: "NeroPay count · August 2026" }
   ]
 },
 {
   id: "L2", channel: "linkedin", pillar: "Statement", format: "Stat card + text",
-  date: "Mon 14 Sep", blocked: false,
+  date: "Mon 14 Sep", blocked: "Figures wrong, found 23 Sep 2026: 51% (all hospitality leaders, Feb) and 16% (single-site operators only) are different groups in the NIQ/Zonal survey; like-for-like is 51% → 35% (2 Sep 2026). Restaurants and cafés did get permanently lower RHL multipliers from April, so 'got nothing' is wrong. Rewrite against the primary sources before it runs.",
   title: "The pub got a cut. The takeaway didn't.",
   copy: "Pubs got a rates cut in April. The takeaway two doors down got nothing.\n\nThe 40% relief ended. Pubs got 15% off and a three-year freeze. Restaurants, cafés, bars and takeaways were left out of it. Same street, same customers.\n\nThen the Living Wage went to £12.71, the 18-to-20 rate went up 8.5%, and employer NI hit 15% from £5,000.\n\nIn February, 51% of independent operators called themselves optimistic. By August it was 16%.\n\nWe can't do anything about rates or wages. Nobody in payments can, and anyone who says otherwise is selling something.\n\nWhat we can do is sit down with the one cost line that's actually negotiable and that almost nobody has read: the card processing. It's a small line. It's also one of the few that moves when you push on it.\n\nSmall and available beats big and impossible.",
   creative: "Single stat card, 1:1. Charcoal ground, one yellow figure, one hairline rule. '51% → 16%' and the caption. No logo lockup beyond the wordmark, no stock photo, no icons. The number is the whole design.",
@@ -77,7 +77,7 @@ window.POSTS = [
 },
 {
   id: "L5", channel: "linkedin", pillar: "Street", format: "Text only",
-  date: "Mon 7 Sep", blocked: false,
+  date: "Mon 7 Sep", blocked: "Dead: the awards week it was written for has passed (images session, 23 Sep 2026).",
   title: "Awards week",
   copy: "Thirty Greater Manchester businesses are on the Asian Restaurant Awards shortlist today. The British Kebab Awards semi-finals are tomorrow.\n\nTwo things about that.\n\nOne: this sector has spent the year being told how bad things are. Thirty businesses from one city region still made a national shortlist.\n\nTwo: almost none of them will post about it. We checked. Most have a Facebook page last touched in 2023 and no website.\n\nIf that's your restaurant, or a customer's: phone out, one photo of the team or the certificate, one line saying what it's for, posted from the business page. It's free, and it's what fills tables on a wet Tuesday in November.\n\nCongratulations to everyone on the list.",
   creative: "No image before the event. Post a photo of the room afterwards as a follow-up — the venue and the crowd, not a posed shot of anyone from NeroPay.",
