@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=886, height=1920" />
+<script src="vendor/gsap.min.js"></script>
+<style>
+/* NeroPay — App Store app preview, iPhone portrait 886x1920, 29s. v2, 23 Sep 2026.
+   Faisal's notes on v1: too flat, one picture throughout. So: one 3D world. Each screen is a section —
+   its copy and a phone standing together in space — and the camera travels between them. The phone flips
+   in as the camera arrives; there are no zooms. The copy is set live in Poppins so the whole frame sits on
+   one fluid, moving background with no seam. The Shutter opens the film and closes it, then the close is
+   white with two full-bleed yellow stripes and the mark drawn as vector (no keyed-image fringe).
+   Nothing here carries a CSS filter: v1's flicker came from a drop-shadow on a scaling image and a 90px
+   blur on the blooms, both re-rasterised every frame. */
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+:root{--ang:46.5deg;--yel:#FFCF24;--ink:#111114}
+html,body{width:886px;height:1920px;overflow:hidden;background:#F1F0EC}
+body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
+#root{position:relative;width:886px;height:1920px;overflow:hidden}
+.clip{position:absolute;inset:0}
+
+/* ── one fluid background: the ground, light that drifts, and frosted panes floating behind ── */
+.ground{background:linear-gradient(172deg,#F5F4F0 0%,#F0EFEA 46%,#E8E9EC 100%)}
+.glow{position:absolute;border-radius:50%}
+.glow.y{width:1300px;height:1300px;left:-120px;top:-520px;background:radial-gradient(closest-side,rgba(255,207,36,.34),rgba(255,207,36,0))}
+.glow.b{width:1100px;height:1100px;left:-520px;top:900px;background:radial-gradient(closest-side,rgba(126,162,255,.20),rgba(126,162,255,0))}
+.glow.p{width:980px;height:980px;left:380px;top:1180px;background:radial-gradient(closest-side,rgba(255,150,192,.15),rgba(255,150,192,0))}
+.glow.w{width:900px;height:900px;left:120px;top:420px;background:radial-gradient(closest-side,rgba(255,255,255,.70),rgba(255,255,255,0))}
+.pane{position:absolute;border-radius:64px;background:linear-gradient(150deg,rgba(255,255,255,.42),rgba(255,255,255,.10));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.62), 0 40px 80px -40px rgba(17,18,20,.14)}
+
+/* ── the world and its camera ── */
+.cam{perspective:2400px;perspective-origin:50% 44%}
+#world{position:absolute;left:0;top:0;width:886px;height:1920px;transform-style:preserve-3d;transform-origin:443px 960px}
+.station{position:absolute;left:0;top:0;width:886px;height:1920px;transform-style:preserve-3d;transform-origin:443px 960px}
+
+/* the copy — set live, matching Faisal's carousel type. Its blocks carry data-layout-allow-overlap: the check
+   measures straight bounding boxes, and in 3D perspective a turned line's box grows past its neighbour's.
+   The rest-frame snapshot shows no real overlap (renders/peek, 23 Sep 2026). */
+.copy{position:absolute;left:66px;top:168px;width:760px;transform-style:flat;transform:translateZ(70px)}
+.copy .rule{width:44px;height:7px;border-radius:4px;background:var(--yel);margin-bottom:22px}
+.copy .kick{font:600 19px Poppins;letter-spacing:.24em;text-transform:uppercase;color:#55555D;margin-bottom:22px}
+.copy h1{font:700 78px/1.0 Poppins;letter-spacing:-.035em;color:var(--ink)}
+.copy h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.copy h1 .ln > span{display:inline-block;position:relative}
+.copy h1 .mk{position:absolute;left:-10px;right:-14px;bottom:.06em;height:.44em;background:var(--yel);border-radius:4px;
+  transform-origin:0 50%;transform:skewX(-10deg) rotate(-1deg);z-index:-1}
+.copy h1 .ln.two > span{isolation:isolate}
+.copy .sub{font:400 25px/1.42 Poppins;color:#5E5E66;margin-top:20px;max-width:740px}
+.copy .chips{display:flex;gap:12px;margin-top:24px}
+.copy .chip{display:flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;background:rgba(255,255,255,.94);
+  box-shadow:0 10px 24px -14px rgba(17,18,20,.28), inset 0 0 0 1px rgba(17,17,20,.05);font:600 21px Poppins;color:#1E1E22}
+.copy .chip i{width:10px;height:10px;border-radius:50%;background:var(--yel)}
+
+/* the phone — neutral, drawn in code: no maker's mark, no identifying shape */
+.rig{position:absolute;left:93px;top:720px;width:700px;height:1450px;transform-style:preserve-3d}
+/* the phone turns as ONE flat object: body and screen share a plane, and under preserve-3d Chromium splits
+   coplanar layers against each other — the dark body cut a band through the screen at some angles */
+.phone{position:absolute;inset:0;transform-style:flat;transform-origin:50% 40%}
+.body{position:absolute;inset:0;border-radius:108px;
+  background:linear-gradient(145deg,#5A5C61 0%,#2B2C30 38%,#1B1C1F 62%,#46484D 100%);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.22), inset 0 0 0 7px #111214, 0 60px 90px -40px rgba(17,18,20,.42)}
+.body::after{content:"";position:absolute;inset:3px;border-radius:105px;box-shadow:inset 0 2px 1px rgba(255,255,255,.35), inset 0 -2px 2px rgba(0,0,0,.4)}
+.btn{position:absolute;background:linear-gradient(90deg,#1E1F22,#55575C,#1E1F22);border-radius:3px}
+.btn.a{right:-5px;top:310px;width:8px;height:150px}.btn.b{left:-5px;top:250px;width:8px;height:80px}.btn.c{left:-5px;top:360px;width:8px;height:80px}
+.screen{position:absolute;left:17px;top:17px;right:17px;bottom:17px;border-radius:92px;overflow:hidden;background:#fff}
+.sbar{position:absolute;left:0;right:0;top:0;height:86px;background:#fff}
+.sbar .t{position:absolute;left:58px;top:36px;font:600 26px Poppins;color:#111;letter-spacing:-.01em}
+.sbar .r{position:absolute;right:54px;top:40px;display:flex;gap:8px;align-items:center}
+.sbar .r b{display:block;background:#111;border-radius:2px}
+.app{position:absolute;left:0;top:86px;width:100%;border-radius:36px 36px 0 0;overflow:hidden;background:#fff}
+.app img{width:100%;display:block}
+.island{position:absolute;left:50%;top:28px;width:190px;height:56px;margin-left:-95px;border-radius:30px;background:#050506}
+.island i{position:absolute;right:20px;top:16px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2a3550,#07080c 70%)}
+.glare{position:absolute;inset:0;border-radius:92px;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.15) 44%,rgba(255,255,255,0) 58%)}
+
+/* ── the Shutter: a rotated wrapper, so the seam is the mark's own 46.5deg ── */
+.shut{position:absolute;left:-60%;top:-60%;width:220%;height:220%;transform:rotate(var(--ang));transform-origin:50% 50%;z-index:40;pointer-events:none}
+.shut .half{position:absolute;left:0;width:100%;height:50%;background:var(--yel)}
+.shut .half.t{top:0}.shut .half.b{top:50%}
+.sweep{position:absolute;left:-60%;top:-60%;width:220%;height:220%;transform:rotate(var(--ang));transform-origin:50% 50%;z-index:48;pointer-events:none}
+.sweep .panel{position:absolute;left:0;top:-100%;width:100%;height:100%;background:#FBFAF7}
+
+/* ── the close: white, two full-bleed yellow stripes, the glass tile, the wordmark ── */
+.close{background:#FBFAF7;z-index:38;overflow:hidden}
+.stripes{position:absolute;left:-1057px;top:-525px;width:3000px;height:3000px;transform:rotate(var(--ang));transform-origin:50% 50%}
+.stripes .s{position:absolute;left:0;width:3000px;height:150px;background:var(--yel)}
+.close .wm{position:absolute;left:193px;top:1050px;width:500px}
+.close .rule{position:absolute;left:395px;top:1200px;width:96px;height:7px;border-radius:4px;background:var(--yel)}
+.close .line{position:absolute;left:0;width:886px;top:1242px;text-align:center;font:500 34px/1.45 Poppins;color:#4A4A52}
+.tilewrap{position:absolute;left:0;top:0;width:886px;height:1920px;z-index:52;pointer-events:none}
+.tile{position:absolute;left:258px;top:775px;width:370px;height:370px;border-radius:15.5%;overflow:hidden;
+  background:linear-gradient(150deg,#FFFFFF 0%,#EDEFF3 52%,#DDE1E7 100%);
+  box-shadow:0 46px 80px -34px rgba(17,18,20,.42), inset 0 0 0 2px rgba(255,255,255,.95), inset 0 -6px 18px rgba(17,18,20,.06)}
+.tile svg{position:absolute;inset:0;width:100%;height:100%}
+.tile .sheen{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,0) 34%,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 66%);transform:translateX(-130%)}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="29" data-width="886" data-height="1920">
+
+  <!-- the background is one layer for the whole film, outside the world, so it never seams -->
+  <div class="clip ground" id="ground" data-start="0" data-duration="29" data-track-index="0">
+    <div class="glow w" id="gw" data-layout-allow-overflow></div>
+    <div class="glow y" id="gy" data-layout-allow-overflow></div>
+    <div class="glow b" id="gb" data-layout-allow-overflow></div>
+    <div class="glow p" id="gp" data-layout-allow-overflow></div>
+    <div class="pane" id="pa" style="left:-180px;top:260px;width:420px;height:560px" data-layout-allow-overflow></div>
+    <div class="pane" id="pb" style="left:640px;top:980px;width:380px;height:520px" data-layout-allow-overflow></div>
+    <div class="pane" id="pc" style="left:520px;top:-120px;width:300px;height:360px" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip cam" id="camclip" data-start="0" data-duration="26.8" data-track-index="1">
+    <div id="world" data-layout-allow-overflow></div>
+  </div>
+
+  <!-- the close sits under the white sweep that reveals it -->
+  <div class="clip close" id="close" data-start="25.7" data-duration="3.3" data-track-index="2">
+    <div class="stripes" data-layout-allow-overflow>
+      <div class="s" id="stripe1" style="top:885px"></div>
+      <div class="s" id="stripe2" style="top:1965px"></div>
+    </div>
+    <img class="wm" id="cwm" src="assets/wordmark-light.png" alt="neropay">
+    <div class="rule" id="crule"></div>
+    <div class="line" id="cline">Card payments and your till,<br>in one app.</div>
+  </div>
+
+
+  <!-- shutter up at the head, shutter down at the tail — the intro Faisal kept, untouched -->
+  <div class="clip shut" id="shut" data-start="0" data-duration="29" data-track-index="4">
+    <div class="half t" id="sht" data-layout-allow-overflow></div>
+    <div class="half b" id="shb" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip tilewrap" id="tw" data-start="25.5" data-duration="3.5" data-track-index="5">
+    <div class="tile" id="tile">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs><linearGradient id="bar" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3C3D42"/><stop offset=".45" stop-color="#16171A"/><stop offset="1" stop-color="#0D0E10"/></linearGradient></defs>
+        <!-- measured from brand/favicon/neropay-icon-512.png: the two bars of the mark, clipped by the tile -->
+        <polygon points="21.3,0 36.1,0 83.5,49.2 83.5,70.1" fill="url(#bar)"/>
+        <polygon points="16.7,33.2 16.7,50.4 63.9,100 80.9,100" fill="url(#bar)"/>
+      </svg>
+      <div class="sheen" id="sheen" data-layout-allow-overflow></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ── the five sections, Faisal's own copy, verbatim ── */
+const S = [
+  { kick:'Take a payment', l1:'Charge it in', l2:'three taps.', sub:'Type the amount and hit charge.', chips:['Card','Tap','Payment link'] },
+  { kick:'NeroPOS', l1:'Your menu,', l2:'on the till.', sub:'Photos, descriptions and prices. Tap the dish and it goes to the kitchen.', chips:['Photos','Modifiers','Table map'] },
+  { kick:'Transactions', l1:'Every sale,', l2:'one list.', sub:'Terminal, till, web and bookings, as they happen.', chips:['Terminal','Till','Web','Bookings'] },
+  { kick:'Reports', l1:'See what sold,', l2:'and where.', sub:'Split by channel, for any date range.', chips:['By channel','Card & cash','Any dates'] },
+  { kick:'Payment links', l1:'Send a link.', l2:'Get paid.', sub:'The customer does not have to be in front of you.', chips:['72-hour expiry','One-time use','By email'] }
+];
+/* where each section stands in the world, and the angle the camera holds it at */
+const POS = [
+  { x:0,    y:0,   z:0,    ry:0,   view:-11, phone:-13 },
+  { x:1080, y:60,  z:-300, ry:-14, view: 12, phone: 14 },
+  { x:2160, y:-40, z:0,    ry:12,  view:-12, phone:-14 },
+  { x:3240, y:80,  z:-300, ry:-12, view: 11, phone: 13 },
+  { x:4320, y:0,   z:0,    ry:10,  view:-10, phone:-12 }
+];
+/* holds and travels: the camera sits on a section, then flies to the next in 0.9s */
+const HOLD = [[0.0,4.6],[5.5,9.7],[10.6,14.8],[15.7,19.9],[20.8,26.8]];
+
+const world = document.getElementById('world');
+POS.forEach((p,k) => {
+  const s = S[k];
+  const st = document.createElement('div');
+  st.className = 'station'; st.id = 'sec'+k; st.setAttribute('data-layout-allow-overflow','');
+  st.style.transform = `translate3d(${p.x}px,${p.y}px,${p.z}px) rotateY(${p.ry}deg)`;
+  st.innerHTML = `
+    <div class="copy" id="c${k}">
+      <div class="rule" id="r${k}"></div>
+      <div class="kick" id="k${k}" data-layout-allow-overlap>${s.kick}</div>
+      <h1><span class="ln"><span id="a${k}" data-layout-allow-overlap>${s.l1}</span></span><span class="ln two"><span id="b${k}" data-layout-allow-overlap><i class="mk" id="m${k}"></i>${s.l2}</span></span></h1>
+      <div class="sub" id="u${k}" data-layout-allow-overlap>${s.sub}</div>
+      <div class="chips">${s.chips.map((c,j)=>`<div class="chip" id="h${k}_${j}" data-layout-allow-overlap><i></i>${c}</div>`).join('')}</div>
+    </div>
+    <div class="rig" id="g${k}">
+      <div class="phone" id="p${k}">
+        <div class="body"></div><div class="btn a"></div><div class="btn b"></div><div class="btn c"></div>
+        <div class="screen">
+          <div class="sbar"><div class="t">9:41</div><div class="r"><b style="width:6px;height:10px"></b><b style="width:6px;height:14px"></b><b style="width:6px;height:18px"></b><b style="width:6px;height:22px"></b><b style="width:34px;height:17px;border-radius:5px;margin-left:8px"></b></div></div>
+          <div class="app"><img src="assets/app/app${k+1}.png" alt=""></div>
+          <div class="glare"></div>
+          <div class="island"><i></i></div>
+        </div>
+      </div>
+    </div>`;
+  world.appendChild(st);
+});
+
+/* ── the camera: a pure function of time, so any frame can be rendered in any order ── */
+const eio = u => u<.5 ? 4*u*u*u : 1-Math.pow(-2*u+2,3)/2;
+const lerp = (a,b,u) => a+(b-a)*u;
+function camAt(t){
+  for (let k=0;k<HOLD.length;k++){
+    if (t <= HOLD[k][1] || k===HOLD.length-1) {
+      if (k>0 && t < HOLD[k][0]) {                       /* in flight from k-1 to k */
+        const u = eio((t-HOLD[k-1][1])/(HOLD[k][0]-HOLD[k-1][1]));
+        const a=POS[k-1], b=POS[k];
+        return { x:lerp(a.x,b.x,u), y:lerp(a.y,b.y,u), z:lerp(a.z,b.z,u), ry:lerp(a.ry,b.ry,u),
+                 view:lerp(a.view,b.view,u), lift:Math.sin(u*Math.PI)*260, k:u<.5?k-1:k };
+      }
+      const p=POS[k]; return { ...p, lift:0, k };
+    }
+  }
+}
+const cams = [...document.querySelectorAll('.station')];
+const gl = { w:document.getElementById('gw'), y:document.getElementById('gy'), b:document.getElementById('gb'), p:document.getElementById('gp') };
+const pn = { a:document.getElementById('pa'), b:document.getElementById('pb'), c:document.getElementById('pc') };
+function apply(t){
+  const c = camAt(t);
+  /* a slow orbit on top, so the view is never still — including during a hold */
+  const orb = Math.sin(t*0.55)*2.2, tilt = Math.cos(t*0.42)*1.3, bob = Math.sin(t*0.8)*8;
+  world.style.transform =
+    `translateZ(${-c.lift}px) rotateX(${tilt}deg) rotateY(${c.view+orb}deg) rotateY(${-c.ry}deg) translate3d(${-c.x}px,${-c.y+bob}px,${-c.z}px)`;
+  /* only the sections near the camera are drawn (they stand 1080px apart: none peeks in at rest, and one is always in shot in flight);
+     never opacity on a station — it would flatten the 3D inside it */
+  cams.forEach((el,k) => {
+    const near = Math.abs(POS[k].x - c.x);
+    el.style.visibility = near < 1200 ? 'visible' : 'hidden';
+  });
+  /* the light drifts on its own clocks and against the camera, so the ground moves in parallax */
+  const px = -c.x*0.018;
+  gl.w.style.transform = `translate(${(Math.sin(t*.30)*90+px*.5).toFixed(1)}px,${(Math.cos(t*.24)*70).toFixed(1)}px)`;
+  gl.y.style.transform = `translate(${(Math.cos(t*.22)*120+px).toFixed(1)}px,${(Math.sin(t*.27)*90).toFixed(1)}px)`;
+  gl.b.style.transform = `translate(${(Math.sin(t*.19)*140+px*1.4).toFixed(1)}px,${(Math.cos(t*.31)*110).toFixed(1)}px)`;
+  gl.p.style.transform = `translate(${(Math.cos(t*.26)*110+px*1.2).toFixed(1)}px,${(Math.sin(t*.21)*120).toFixed(1)}px)`;
+  pn.a.style.transform = `translate(${(px*2.2).toFixed(1)}px,${(Math.sin(t*.33)*40).toFixed(1)}px) rotate(${(-8+Math.sin(t*.2)*3).toFixed(2)}deg)`;
+  pn.b.style.transform = `translate(${(px*1.6).toFixed(1)}px,${(Math.cos(t*.29)*46).toFixed(1)}px) rotate(${(10+Math.cos(t*.23)*3).toFixed(2)}deg)`;
+  pn.c.style.transform = `translate(${(px*2.8).toFixed(1)}px,${(Math.sin(t*.37)*30).toFixed(1)}px) rotate(${(14+Math.sin(t*.27)*4).toFixed(2)}deg)`;
+  /* each phone breathes a little in its own space */
+  POS.forEach((p,k) => { document.getElementById('g'+k).style.transform =
+    `rotateY(${(p.phone + Math.sin(t*.7+k)*2.4).toFixed(2)}deg) rotateX(${(4+Math.cos(t*.6+k)*1.4).toFixed(2)}deg) translateY(${(Math.sin(t*.9+k)*6).toFixed(1)}px)`; });
+}
+
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const clock = { t:0 };
+tl.to(clock, { t:29, duration:29, ease:'none', onUpdate:() => apply(clock.t) }, 0);
+apply(0);
+
+/* ── each section: the phone flips in as the camera lands, the copy builds, then both leave ── */
+HOLD.forEach(([hin,hout],k) => {
+  const arrive = k===0 ? 0.25 : hin-0.55;
+  const p='#p'+k;
+  tl.fromTo(p, { rotateY:78, z:-380, y:60, opacity:0 },
+               { rotateY:0, z:0, y:0, opacity:1, duration:0.85, ease:'power3.out' }, arrive);
+  const c0 = k===0 ? 0.45 : hin-0.10;
+  tl.fromTo('#r'+k, { scaleX:0, transformOrigin:'0 50%' }, { scaleX:1, duration:0.4, ease:'power3.out' }, c0)
+    .fromTo('#k'+k, { y:16, opacity:0 }, { y:0, opacity:1, duration:0.45, ease:'power3.out' }, c0+0.06)
+    .fromTo('#a'+k, { yPercent:110 }, { yPercent:0, duration:0.62, ease:'power4.out' }, c0+0.12)
+    .fromTo('#b'+k, { yPercent:110 }, { yPercent:0, duration:0.62, ease:'power4.out' }, c0+0.22)
+    .fromTo('#m'+k, { scaleX:0 }, { scaleX:1, duration:0.5, ease:'power3.inOut' }, c0+0.62)
+    .fromTo('#u'+k, { y:20, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, c0+0.46);
+  S[k].chips.forEach((_,j) => tl.fromTo(`#h${k}_${j}`, { y:18, opacity:0, scale:.92 },
+                                                      { y:0, opacity:1, scale:1, duration:0.42, ease:'back.out(1.6)' }, c0+0.62+j*0.08));
+  /* leaving: the phone flips away as the camera lifts off */
+  if (k < HOLD.length-1) tl.to(p, { rotateY:-72, z:-300, opacity:0, duration:0.7, ease:'power2.in' }, hout-0.05);
+});
+
+/* ── the Shutter ── up at the head (0.6s, nothing else happens), down over the last section */
+tl.set('#sht',{y:'0%'},0).set('#shb',{y:'0%'},0)
+  .to('#sht',{ y:'-105%', duration:0.60, ease:'power2.inOut' }, 0.0)
+  .to('#shb',{ y:'105%',  duration:0.60, ease:'power2.inOut' }, 0.0)
+  .to('#sht',{ y:'0%', duration:1.00, ease:'power2.inOut' }, 24.6)
+  .to('#shb',{ y:'0%', duration:1.00, ease:'power2.inOut' }, 24.6)
+  .to('#sht',{ y:'-105%', duration:0.62, ease:'power2.inOut' }, 26.15)
+  .to('#shb',{ y:'105%',  duration:0.62, ease:'power2.inOut' }, 26.15);
+
+/* the glass tile lands on the join as the halves meet */
+tl.fromTo('#tile', { y:24, opacity:0, scale:1.06 }, { y:0, opacity:1, scale:1, duration:0.44, ease:'power3.out' }, 25.58)
+  .fromTo('#sheen', { x:'-130%' }, { x:'130%', duration:0.8, ease:'power2.inOut' }, 25.72);
+
+/* the halves part again and leave the white close behind them; the stripes run in edge to edge */
+tl.fromTo('#stripe1', { x:-3000 }, { x:0, duration:0.75, ease:'power3.out' }, 26.3)
+  .fromTo('#stripe2', { x: 3000 }, { x:0, duration:0.75, ease:'power3.out' }, 26.38)
+  .to('#tile', { y:-190, scale:0.92, duration:0.62, ease:'power2.inOut' }, 26.2)
+  .fromTo('#cwm', { y:18, opacity:0 }, { y:0, opacity:1, duration:0.44, ease:'power3.out' }, 26.62)
+  .fromTo('#crule', { scaleX:0, transformOrigin:'50% 50%' }, { scaleX:1, duration:0.38, ease:'power3.out' }, 26.78)
+  .fromTo('#cline', { y:14, opacity:0 }, { y:0, opacity:1, duration:0.42, ease:'power3.out' }, 26.86);
+
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>

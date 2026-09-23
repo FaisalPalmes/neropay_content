@@ -29,7 +29,7 @@ ffmpeg -y -loglevel error -i $ROOT/brand/favicon/neropay-icon-512.png \
   -frames:v 1 assets/mark.png
 
 # 3. the wordmark for a dark ground — placed artwork, never typeset, never recoloured
-cp $ROOT/brand/logos/neropay-dark-1200.png assets/wordmark-white.png
+cp $ROOT/brand/logos/neropay-white-1200.png assets/wordmark-white.png
 
 # 4. fonts and the GSAP build, vendored: this container reaches no CDN
 mkdir -p fonts vendor

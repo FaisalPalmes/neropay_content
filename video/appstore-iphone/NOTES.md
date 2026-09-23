@@ -1,4 +1,28 @@
-# App Store preview, iPhone — v2 (23 Sep 2026) is current; v1 is below and superseded
+# App Store preview, iPhone — v3 (23 Sep 2026) is current; v2 and v1 are below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v3.mp4` · 886 × 1920 · 30 fps · 29.0s · @SIZE@ · @LUFS@ ·
+md5 `@MD5@` · Higgsfield media `@MEDIA@`.
+
+## v3 — Faisal's notes on v2, and what changed
+
+| Note | v3 |
+|---|---|
+| No 3D depth to the phone — a real phone's thickness, not too thick | The phone is a solid now: a flat front face, a back plate and sixteen rounded slices between them, 64px deep on a 700px-wide phone (about an iPhone's ratio). The slices shade darker towards the middle so the rim reads as a rounded metal band; the side buttons stand proud of it. The front face stays one flat group so the screen never splits against the body |
+| The copy and the phone sat in two different places, top and bottom | Each section is one unit: the copy sits on the phone's own front plane, left-aligned to the phone's left edge, directly above it — the same composition on every screen. The unit turns as one (±15°, alternating), so the text is in the same perspective as the phone, and the copy rises as the phone flips in |
+| The close had too many colours — liquid glass, black, white and yellow | One colour. The shutter closes over the last screen, parts again onto white, and the mark's two bars slide in along the 46.5° seam in yellow, then the light wordmark. No glass tile, no second set of stripes, no black |
+
+Two build faults found and fixed before the render:
+
+- **Shutter corners.** The shutter wrapper was 220% of a tall frame, so rotated to 46.5° its short sides fell
+  short of two frame corners and left white notches while it closed. It is a 4,400px square now, and the halves
+  overlap by 2px so no hairline shows on the seam.
+- **Close under the closing shutter.** The white close started at 25.6s, while the shutter was still closing,
+  so the gap showed plain white instead of the last screen. It starts at 25.88s, as the halves meet.
+
+An alternative close is in the build (`#root.altclose`: yellow ground, white bars, the all-white wordmark) if the
+white one reads too quiet. Not rendered as a video.
+
+# v2 (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v2.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.8 MB · −13.8 LUFS / −1.4 dBTP ·
 md5 `1c3db388fc0fc6d847861fd94af1c38c` · Higgsfield media `95de77ce-860a-41ec-940c-16572defa056`.
