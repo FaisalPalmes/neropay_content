@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="vendor/gsap.min.js"></script>
+<style>
+/* NeroPay — app motion test, 23 Sep 2026. Faisal's reference was an Incard story ad: one phone on black, turned
+   hard in 3D, the screens changing live, whips and a macro push onto the phone's corner, cut to the beat. This is
+   the same grammar on our own screens, with nothing he has to record: the keypad fills in live, the phone spins
+   to the tap screen, a whip into a close-up of the transactions list, then the end card. Four moves on a 118 bpm
+   bed (partner-upbeat-118), each cut on a bar. Rendered at 120 fps and blended to 30 for the motion blur.
+   No coins, no counters of money: that is the earnings register the rails forbid. The phone's back is plain: a
+   NeroPay-branded phone would be a prop, and the terminal is the only branded object allowed in frame. */
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+:root{--yel:#FFCF24;--ink:#111114}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#0A0A0C}
+body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#0A0A0C}
+.clip{position:absolute;inset:0}
+
+/* the ground: near-black, one warm light that follows the phone, and the mark's stripe faint at 46.5deg */
+.ground{background:radial-gradient(90% 55% at 50% 45%,#17171B 0%,#0A0A0C 70%)}
+#glow{position:absolute;left:190px;top:460px;width:700px;height:1000px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,207,36,.16),rgba(255,207,36,0))}
+.stripe{position:absolute;left:-400px;width:2200px;height:120px;transform:rotate(46.5deg);transform-origin:50% 50%;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.035),rgba(255,255,255,0))}
+
+/* the camera and the phone: a solid, front and back and a rounded metal band. Never opacity on it (it would
+   flatten to 2D: video/LESSONS.md, the App Store v3 fault) */
+#cam{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 45%}
+#rig{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 940px}
+#ph{position:absolute;left:270px;top:370px;width:540px;height:1140px;transform-style:preserve-3d;transform-origin:50% 50%}
+.slice{position:absolute;inset:0;border-radius:88px}
+.front{position:absolute;inset:0;transform-style:flat;transform:translateZ(20px)}
+.body{position:absolute;inset:0;border-radius:88px;background:#0B0B0D;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),inset 0 0 0 7px #151517}
+.body::after{content:"";position:absolute;inset:2px;border-radius:86px;box-shadow:inset 0 2px 1px rgba(255,255,255,.30),inset 0 -2px 2px rgba(0,0,0,.5)}
+.back{position:absolute;inset:0;border-radius:88px;transform:translateZ(-20px) rotateY(180deg);
+  background:linear-gradient(155deg,#2E2F34 0%,#18191C 55%,#26272B 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}
+.back .cams{position:absolute;left:44px;top:44px;width:190px;height:190px;border-radius:52px;background:linear-gradient(150deg,#34353A,#1C1D20);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.4)}
+.back .cams i{position:absolute;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a4560,#07080c 65%);box-shadow:0 0 0 6px #0f1012}
+.back .mk{position:absolute;left:190px;top:490px;width:160px;height:160px}
+.scr{position:absolute;left:16px;top:16px;width:508px;height:1108px;border-radius:72px;overflow:hidden;background:#fff}
+.sbar{position:absolute;left:0;right:0;top:0;height:64px;z-index:5;background:#fff}
+.sbar .t{position:absolute;left:52px;top:22px;font:600 22px Poppins;color:#111}
+.sbar .isl{position:absolute;left:50%;top:14px;width:150px;height:44px;margin-left:-75px;border-radius:24px;background:#050506}
+.sbar .r{position:absolute;right:46px;top:26px;display:flex;gap:5px;align-items:flex-end}
+.sbar .r b{display:block;background:#111;border-radius:2px;width:5px}
+.sbar .r b.bat{width:28px;height:13px;border-radius:4px;margin-left:6px}
+.glare{position:absolute;inset:0;border-radius:72px;pointer-events:none;z-index:9;
+  background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.12) 44%,rgba(255,255,255,0) 58%)}
+.pane{position:absolute;inset:0;background:#fff}
+.pane img{position:absolute;left:0;top:64px;width:508px;display:block}
+
+/* screen 1, the keypad: the amount fills in live over a blank where the export's figure was */
+.patch{position:absolute;background:#fff}
+#amt{position:absolute;text-align:center;font:700 87px/1 Poppins;letter-spacing:-.035em;color:#2A2F38;transform-origin:50% 60%}
+.press{position:absolute;border-radius:16px;background:rgba(17,17,20,.16);opacity:0}
+#kc{background:rgba(255,255,255,.32);border-radius:0 0 16px 16px}
+.ring{position:absolute;border-radius:50%;border:3px solid rgba(255,207,36,.95);opacity:0;box-shadow:0 0 0 3px rgba(255,207,36,.25)}
+
+/* screen 2, tap to pay: the white screen from the App Store hero */
+#s2 svg.arcs{position:absolute;left:0;top:0;width:508px;height:1108px;overflow:visible}
+#pill{position:absolute;left:84px;top:560px;width:340px;height:140px;border-radius:70px;background:#fff;
+  box-shadow:0 0 0 1.5px rgba(17,17,20,.10),0 22px 44px -26px rgba(17,17,20,.35);display:flex;align-items:center;justify-content:center}
+#pill b{font:700 58px/1 Poppins;letter-spacing:-.03em;color:#111114}
+#s2 .mk2{position:absolute;left:220px;top:800px;width:68px;height:68px}
+#note{position:absolute;left:18px;right:18px;top:78px;height:104px;border-radius:30px;z-index:6;
+  background:rgba(24,24,28,.92);box-shadow:0 20px 40px -18px rgba(0,0,0,.55);display:flex;align-items:center;gap:16px;padding:0 22px}
+#note i{width:56px;height:56px;border-radius:15px;background:var(--yel);flex:none;display:flex;align-items:center;justify-content:center}
+#note .tx{display:flex;flex-direction:column;gap:4px}
+#note .a{font:600 20px Poppins;color:#fff}
+#note .b{font:400 18px Poppins;color:rgba(255,255,255,.72)}
+
+/* screen 3, transactions: the list scrolls under the close-up, the NeroWeb row lights */
+#list{position:absolute;left:0;top:64px;width:508px}
+#list img{position:static;display:block;width:508px}
+#hl{position:absolute;left:0;width:508px;border-left:6px solid var(--yel);background:rgba(255,207,36,.10);opacity:0}
+
+/* the end card */
+.endc{z-index:30;background:#0A0A0C}
+.endc .wm{position:absolute;left:290px;top:880px;width:500px}
+.endc .bars{position:absolute;left:470px;top:640px;width:140px;height:140px}
+.endc .line{position:absolute;left:0;right:0;top:1050px;text-align:center;font:500 34px Poppins;color:rgba(255,255,255,.78);letter-spacing:-.01em}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="8.6" data-width="1080" data-height="1920">
+
+  <div class="clip ground" id="ground" data-start="0" data-duration="8.6" data-track-index="0">
+    <div class="stripe" style="top:500px" data-layout-allow-overflow></div>
+    <div class="stripe" style="top:1250px" data-layout-allow-overflow></div>
+    <div id="glow" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip" id="cam" data-start="0" data-duration="6.4" data-track-index="1">
+    <div id="rig" data-layout-allow-overflow><div id="ph" data-layout-allow-overflow></div></div>
+  </div>
+
+  <div class="clip endc" id="endc" data-start="6.1" data-duration="2.5" data-track-index="2">
+    <svg class="bars" id="ebars" viewBox="0 0 100 100"><polygon id="eb1" points="21.3,0 36.1,0 83.5,49.2 83.5,70.1" fill="#FFCF24"/><polygon id="eb2" points="16.7,33.2 16.7,50.4 63.9,100 80.9,100" fill="#FFCF24"/></svg>
+    <img class="wm" id="ewm" src="assets/wordmark-white.png" alt="neropay">
+    <div class="line" id="eline" data-layout-allow-overlap>Take card payments on your phone.</div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const B = 60 / 118;                                   /* one beat of the bed */
+const S = 508 / 784;                                  /* the app-card export onto the screen */
+const MARK = '<polygon points="21.3,0 36.1,0 83.5,49.2 83.5,70.1"/><polygon points="16.7,33.2 16.7,50.4 63.9,100 80.9,100"/>';
+
+/* ── the phone ── */
+const T = 40, N = 14;
+const band = [...Array(N)].map((_, i) => { const u = i/(N-1), z = -T/2 + 2 + u*(T-4), c = Math.round(30 + Math.sin(u*Math.PI)*70);
+  return `<div class="slice" style="transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+6})"></div>`; }).join('');
+const K = [['k4',20,568,173,180],['k5',225,568,173,180],['k7',20,780,173,180],['kc',20,1207,363,113]];
+$('ph').innerHTML = `<div class="back"><div class="cams"><i style="left:22px;top:22px"></i><i style="left:98px;top:98px"></i></div>
+</div>
+  ${band}
+  <div class="front"><div class="body"></div><div class="scr">
+    <div class="sbar"><div class="t">9:41</div><div class="isl"></div><div class="r"><b style="height:8px"></b><b style="height:11px"></b><b style="height:14px"></b><b style="height:17px"></b><b class="bat"></b></div></div>
+    <div class="pane" id="s1"><img src="assets/app1.png" alt="">
+      <div class="patch" style="left:${100*S}px;top:${64+160*S}px;width:${500*S}px;height:${150*S}px"></div>
+      <div id="amt" style="left:${100*S}px;top:${64+172*S}px;width:${500*S}px">£0.00</div>
+      ${K.map(([id,x,y,w,h]) => `<div class="press" id="${id}" style="left:${x*S}px;top:${64+y*S}px;width:${w*S}px;height:${h*S}px"></div>
+        <div class="ring" id="r${id}" style="left:${(x+w/2)*S-40}px;top:${64+(y+h/2)*S-40}px;width:80px;height:80px"></div>`).join('')}
+    </div>
+    <div class="pane" id="s2" style="visibility:hidden">
+      <svg class="arcs" viewBox="0 0 508 1108">${[110,160,210].map((r,i)=>`<path id="arc${i}" d="M ${254-r} 540 A ${r} ${r*.7} 0 0 1 ${254+r} 540" fill="none" stroke="rgba(17,17,20,${[.28,.17,.10][i]})" stroke-width="${[5,4.4,3.8][i]}" stroke-linecap="round"/>`).join('')}</svg>
+      <div class="ring" id="tring" style="left:${254-170}px;top:${630-170}px;width:340px;height:340px"></div>
+      <div id="pill"><b>£45.75</b></div>
+      <svg class="mk2" id="mk2" viewBox="0 0 100 100" fill="#FFCF24">${MARK}</svg>
+      <div id="note"><i><svg viewBox="0 0 100 100" width="30" height="30" fill="#111114">${MARK}</svg></i>
+        <div class="tx"><div class="a">NeroPay</div><div class="b">Payment received · £45.75</div></div></div>
+    </div>
+    <div class="pane" id="s3" style="visibility:hidden"><div id="list"><img src="assets/app3.png" alt=""><div style="height:${(1320-335)*S}px;overflow:hidden"><img src="assets/app3.png" alt="" style="margin-top:-${335*S}px"></div></div>
+      <div id="hl" style="top:${64+335*S}px;height:${190*S}px"></div></div>
+    <div class="glare"></div>
+  </div></div>`;
+
+/* ── the timeline: four moves, each cut on a bar (4 beats) ── */
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const C1 = 4*B, C2 = 8*B, C3 = 12*B;                  /* 2.03, 4.07, 6.10 */
+
+tl.set('#rig', { scale:1.14, y:10 }, 0);
+/* 1 · the keypad. The phone swings in from the left, turned hard, and settles while the amount is keyed */
+tl.fromTo('#ph', { x:-1150, y:60, rotationY:62, rotationX:14, rotationZ:-12 },
+                 { x:0, y:0, rotationY:20, rotationX:8, rotationZ:-4, duration:0.8, ease:'power3.out' }, 0)
+  .to('#ph', { rotationY:9, rotationX:5, rotationZ:-2, y:-10, duration:C1 - 0.2 - 0.8, ease:'sine.inOut' }, 0.8)
+  .fromTo('#glow', { x:-500 }, { x:0, duration:0.9, ease:'power3.out' }, 0);
+const AMT = [[B*1, '£0.04', 'k4'], [B*1.5, '£0.45', 'k5'], [B*2, '£4.57', 'k7'], [B*2.5, '£45.75', 'k5']];
+const amt = $('amt'), clock = { t:0 };
+tl.to(clock, { t:8.6, duration:8.6, ease:'none', onUpdate:() => {           /* the keyed amount, as a function of time */
+  let v = '£0.00'; AMT.forEach(([at, s]) => { if (clock.t >= at) v = s; }); if (amt.textContent !== v) amt.textContent = v; } }, 0);
+AMT.forEach(([at, v, k]) => {
+  tl.fromTo('#amt', { scale:1.07 }, { scale:1, duration:0.22, ease:'power2.out', immediateRender:false }, at)
+    .fromTo('#'+k, { opacity:0 }, { opacity:1, duration:0.05, immediateRender:false }, at)
+    .to('#'+k, { opacity:0, duration:0.22 }, at + 0.1)
+    .fromTo('#r'+k, { scale:.35, opacity:.95 }, { scale:1.5, opacity:0, duration:0.45, ease:'power2.out', immediateRender:false }, at);
+});
+tl.fromTo('#kc', { opacity:0 }, { opacity:1, duration:0.05, immediateRender:false }, B*3)
+  .to('#kc', { opacity:0, duration:0.22 }, B*3 + 0.1)
+  .fromTo('#rkc', { scale:.35, opacity:.95 }, { scale:1.6, opacity:0, duration:0.45, ease:'power2.out', immediateRender:false }, B*3);
+
+/* whip 1 · a full spin on the phone's own axis: the back passes the camera, the tap screen comes round */
+tl.to('#ph', { rotationY:189, rotationX:10, rotationZ:3, x:40, duration:0.28, ease:'power2.in' }, C1 - 0.2)
+  .set('#s1', { visibility:'hidden' }, C1).set('#s2', { visibility:'visible' }, C1)
+  .to('#ph', { rotationY:346, rotationX:6, rotationZ:3, x:30, duration:0.42, ease:'power3.out' }, C1 + 0.08)
+  .to('#ph', { rotationY:338, rotationX:4, rotationZ:1, x:10, y:-20, duration:C2 - (C1 + 0.5) - 0.2, ease:'sine.inOut' }, C1 + 0.5);
+
+/* 2 · tap to pay: the amount comes up, the signal goes out on the beat, the notification drops */
+tl.fromTo('#pill', { scale:.7, opacity:0 }, { scale:1, opacity:1, duration:0.4, ease:'back.out(2)' }, C1 + 0.3);
+[0,1,2].forEach(i => tl.fromTo('#arc'+i, { opacity:0 }, { opacity:1, duration:0.15 }, C1 + 0.45 + i*0.08));
+[0,1,2].forEach(n => tl.fromTo('#tring', { scale:.5, opacity:.9 }, { scale:1.5, opacity:0, duration:B*0.95, ease:'power2.out', immediateRender:n===0 }, C1 + B + n*B));
+tl.fromTo('#mk2', { scale:.4, opacity:0, transformOrigin:'50% 50%' }, { scale:1, opacity:1, duration:0.4, ease:'back.out(2.2)' }, C1 + B*1.5)
+  .fromTo('#note', { y:-150, opacity:0 }, { y:0, opacity:1, duration:0.45, ease:'back.out(1.5)' }, C1 + B*2.5);
+
+/* whip 2 · the phone is thrown off to the left; the cut lands on a close-up of its top corner */
+tl.to('#ph', { x:-1300, rotationY:300, rotationZ:-8, duration:0.22, ease:'power2.in' }, C2 - 0.2)
+  .set('#s2', { visibility:'hidden' }, C2).set('#s3', { visibility:'visible' }, C2)
+  .set('#rig', { scale:2.7, x:-620, y:1180 }, C2)
+  .fromTo('#ph', { x:420, rotationY:-38, rotationX:12, rotationZ:6 },
+                 { x:0, rotationY:-26, rotationX:8, rotationZ:3, duration:0.5, ease:'power3.out', immediateRender:false }, C2)
+  .to('#rig', { scale:3.0, x:-700, y:1300, duration:C3 - C2 - 0.2, ease:'sine.inOut' }, C2)
+  .to('#ph', { rotationY:-18, rotationX:5, duration:C3 - C2 - 0.7, ease:'sine.inOut' }, C2 + 0.5);
+
+/* 3 · the list scrolls under the close-up and the NeroWeb row lights on the beat */
+tl.fromTo('#list', { y:0 }, { y:-240, duration:C3 - C2, ease:'power1.inOut' }, C2)
+  .fromTo('#hl', { opacity:0 }, { opacity:1, duration:0.15, immediateRender:false }, C2 + B*2)
+  .to('#hl', { opacity:0.5, duration:0.6 }, C2 + B*2 + 0.2)
+  .fromTo('#hl', { y:0 }, { y:-240 * ((C3 - C2 - B*2) / (C3 - C2)), duration:C3 - C2 - B*2, ease:'none', immediateRender:false }, C2 + B*2);
+
+/* out · a fast pull back and the phone leaves right; the end card lands on the bar */
+tl.to('#rig', { scale:1.14, x:0, y:10, duration:0.3, ease:'power2.in' }, C3 - 0.3)
+  .to('#ph', { x:1300, rotationY:-70, duration:0.3, ease:'power2.in' }, C3 - 0.3)
+  .fromTo('#ebars', { scale:.3, rotation:-30, opacity:0, transformOrigin:'50% 50%' }, { scale:1, rotation:0, opacity:1, duration:0.5, ease:'back.out(1.8)' }, C3)
+  .fromTo('#ewm', { y:40, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, C3 + B*0.5)
+  .fromTo('#eline', { y:24, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, C3 + B*1.5);
+
+/* the light follows the phone */
+tl.to('#glow', { x:120, y:-60, duration:C2, ease:'sine.inOut' }, 0.9)
+  .to('#glow', { x:-40, y:40, scale:1.4, duration:C3 - C2, ease:'sine.inOut' }, C2);
+
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>

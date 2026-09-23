@@ -125,6 +125,17 @@ window.LIBRARY = {
         { crop: 'v1, superseded', px: '886×1920', lufs: '−13.5', media: 'ffdeb658-553c-4f1a-a74b-03f6cfa97219', md5: '41a8563735273d3d008210bcc2082674' }
       ] },
 
+    { id: 'AM01', series: 'App motion', title: 'App motion test — phone on black, cut to the beat',
+      version: 'v1', rendered: '2026-09-23', secs: 8.6,
+      status: 'review', by: 'unrecorded — a test Faisal asked for on 23 Sep, to see how close we get to an Incard story ad without screen recordings',
+      waiting: 'Faisal decides whether the look is worth a full 15–20 s piece; for that he would send screen recordings from the demo account, choose dark or the carousel\'s light ground, and a harder music track.',
+      build: 'video/app-motion-test/', drive: null, backup: false, clearedFor: null, notCleared: null,
+      clearanceNote: 'A test, not cleared anywhere. The screens show demo figures only; no rate, no price, no coins or money counters (earnings register); the phone back is plain so the terminal stays the only branded object.',
+      note: 'Four moves on the partner-upbeat-118 bed, each cut on a bar: the phone swings in with the keypad filling live, spins round to the tap screen and a notification, is thrown off into a close-up of its corner over the scrolling transactions list, and pulls away to the end card. Rendered at 120 fps and blended to 30 for motion blur.',
+      files: [
+        { crop: '9:16', px: '1080×1920', lufs: '−13.7', media: '8c0ea0f3-6efb-41b9-bf85-a64c4f898296', md5: '682343ce495912a513292241349e1117' }
+      ] },
+
     { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
       version: 'v2', rendered: '2026-09-17', secs: null,
       status: 'review', by: 'unrecorded',
