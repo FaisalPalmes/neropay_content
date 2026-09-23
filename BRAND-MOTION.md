@@ -125,3 +125,14 @@ Unchanged from `CLAUDE.md`, restated because this spec invites the breach:
 - Never name a competitor in motion graphics.
 - The terminal is the only branded object in frame. No cards, pens, mugs or props.
 - Everything sharp. Deep depth of field, no bokeh, locked-off framing.
+
+---
+
+## 7. The logo sting — locked 23 Sep 2026
+
+Faisal locked an animated logo for all future content on 23 Sep 2026. **It is not the Shutter.** The supplied
+wordmark's letters converge and a glass tile carrying the N grows out of them, with no split and no seam. It
+comes in three looks (yellow glass with ink bars, white glass with yellow bars, silver glass with yellow bars),
+all on off-white and none with a glow. The source, nine masters and the open questions for Eray are in
+`brand/sting/`, and `brand/sting/README.md` is the spec. Use the files; don't rebuild the motion. The Shutter
+components above stay a spec that nobody has built.
