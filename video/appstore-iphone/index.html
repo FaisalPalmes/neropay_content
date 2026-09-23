@@ -126,23 +126,15 @@ h1 .mk{position:absolute;left:-6px;right:-8px;bottom:.05em;height:.40em;backgrou
 <body>
 <div id="root" data-composition-id="main" data-start="0" data-duration="29" data-width="886" data-height="1920">
 
-  <div class="clip back" id="back" data-start="0" data-duration="26.4" data-track-index="0">
+  <div class="clip back" id="back" data-start="0" data-duration="26.0" data-track-index="0">
     <div id="stage" data-layout-allow-overflow><div id="deck" data-layout-allow-overflow></div></div>
   </div>
 
-  <div class="clip close" id="close" data-start="25.75" data-duration="3.25" data-track-index="2">
-    <div class="tile" id="ctile"><div class="sheen" id="csheen"></div></div>
-    <img class="wm" id="cwm" src="assets/wordmark-light.png" alt="neropay">
-  </div>
-
-  <!-- the outro in one motion: two yellow bands swish in over the last slide, cover the frame, and draw down
-       into the two bars of the mark on the glass tile -->
-  <div class="clip swish" id="swish" data-start="24.8" data-duration="4.2" data-track-index="5">
-    <svg id="swsvg" viewBox="0 0 886 1920" width="886" height="1920" data-layout-allow-overflow>
-      <polygon id="mb1" points="0,0 0,0 0,0 0,0"/>
-      <polygon id="mb2" points="0,0 0,0 0,0 0,0"/>
-    </svg>
-  </div>
+  <!-- the outro: the last slide pulls back into the off-white of the sting's ground, then the locked logo sting
+       (brand/sting, yellow, Faisal 23 Sep 2026) plays and its last frame holds to the end -->
+  <div class="clip" id="fade" data-start="24.9" data-duration="1.4" data-track-index="2" style="background:#FBFAF7;z-index:20;opacity:0"></div>
+  <video class="clip" id="sting" src="assets/sting-yellow-9x16.mp4" data-start="25.9" data-duration="2.6" data-track-index="3" muted playsinline style="width:100%;height:100%;object-fit:cover;z-index:21;background:#FBFAF7"></video>
+  <img class="clip" id="stinghold" src="assets/sting-yellow-9x16-last.png" alt="" data-start="28.5" data-duration="0.5" data-track-index="3" style="width:100%;height:100%;object-fit:cover;z-index:21">
 
   <!-- the Shutter, up at the head -->
   <div class="clip shut" id="shut" data-start="0" data-duration="29" data-track-index="4">
@@ -445,37 +437,10 @@ tl.set('#sht',{y:'0%'},0).set('#shb',{y:'0%'},0)
   .to('#sht',{ y:'-105%', duration:0.60, ease:'power2.inOut' }, 0.0)
   .to('#shb',{ y:'105%',  duration:0.60, ease:'power2.inOut' }, 0.0);
 
-/* ── the swish and the close, from v5 ── */
-/* the close is drawn for 886 x 1920 and scaled by u on the other frames: the tile, the mark on it and the wordmark
-   keep their proportions around the frame's centre */
-const U = Math.min(CWV, CHV * 886 / 1920) / 886, TC = [CWV / 2, CHV / 2 - 100 * U];
-Object.assign($('ctile').style, { left:(TC[0] - 210*U)+'px', top:(TC[1] - 210*U)+'px', width:(420*U)+'px', height:(420*U)+'px' });
-Object.assign($('cwm').style, { left:(TC[0] - 230*U)+'px', top:(TC[1] + 290*U)+'px', width:(460*U)+'px' });
-{ const sv = $('swsvg'); sv.setAttribute('viewBox', `0 0 ${CWV} ${CHV}`); sv.setAttribute('width', CWV); sv.setAttribute('height', CHV); }
-const AN = 46.5*Math.PI/180, DIR = [Math.cos(AN), Math.sin(AN)], NRM = [Math.sin(AN), -Math.cos(AN)], C = [CWV/2, CHV/2];
-const at = (along, across) => [C[0]+DIR[0]*along+NRM[0]*across, C[1]+DIR[1]*along+NRM[1]*across];
-const mk = (u,v) => [TC[0] - 160*U + u*3.2*U, TC[1] - 160*U + v*3.2*U];
-const str = pts => pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
-const B1 = [mk(21.3,0), mk(36.1,0), mk(83.5,49.2), mk(83.5,70.1)];
-const B2 = [mk(16.7,33.2), mk(16.7,50.4), mk(63.9,100), mk(80.9,100)];
-const toAC = p => [(p[0]-C[0])*DIR[0]+(p[1]-C[1])*DIR[1], (p[0]-C[0])*NRM[0]+(p[1]-C[1])*NRM[1]];
-function swishBand(B, sgn, off){
-  const ac = B.map(toAC);
-  const am = ac.reduce((m,q)=>m+q[0],0)/ac.length;
-  const inner = sgn>0 ? Math.min(...ac.map(q=>q[1])) : Math.max(...ac.map(q=>q[1]));
-  return ac.map(([a,c],i) => at((a-am)*26/U, (i===0||i===3 ? 0 : (c-inner)*44/U) - sgn*3 + sgn*off));
-}
-const OFF = 1500 * Math.max(CWV, CHV) / 1920;
-const B1cover = swishBand(B1, 1, 0),  B1off = swishBand(B1, 1, OFF);
-const B2cover = swishBand(B2,-1, 0),  B2off = swishBand(B2,-1, OFF);
-tl.set('#mb1', { attr:{ points:str(B1off) } }, 0).set('#mb2', { attr:{ points:str(B2off) } }, 0)
-  .to('#mb1', { attr:{ points:str(B1cover) }, duration:0.8, ease:'power1.in' }, 24.95)
-  .to('#mb2', { attr:{ points:str(B2cover) }, duration:0.8, ease:'power1.in' }, 24.95)
-  .to('#mb1', { attr:{ points:str(B1) }, duration:1.0, ease:'power3.out' }, 25.75)
-  .to('#mb2', { attr:{ points:str(B2) }, duration:1.0, ease:'power3.out' }, 25.75);
-tl.fromTo('#ctile', { y:40, scale:.9, opacity:0 }, { y:0, scale:1, opacity:1, duration:0.6, ease:'power3.out' }, 26.05)
-  .fromTo('#csheen', { xPercent:-120 }, { xPercent:120, duration:0.9, ease:'power2.inOut' }, 26.75)
-  .fromTo('#cwm', { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.75);
+/* ── the outro: the last slide pulls back and the off-white comes up over it; the sting fades in on the same ground ── */
+tl.to('#back', { scale:0.82, duration:1.0, ease:'power2.in', transformOrigin:'50% 50%' }, 24.9)
+  .fromTo('#fade', { opacity:0 }, { opacity:1, duration:0.6, ease:'power1.inOut' }, 25.3)
+  .fromTo('#sting', { opacity:0 }, { opacity:1, duration:0.25, ease:'power1.out' }, 25.9);
 
 window.__timelines['main'] = tl;
 </script>

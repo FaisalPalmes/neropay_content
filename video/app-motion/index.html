@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="vendor/gsap.min.js"></script>
+<style>
+/* NeroPay — app motion, light, 23 Sep 2026. The full version of the app motion test (AM01): the same grammar
+   Faisal liked in the Incard reference (one phone turned hard in 3D, the screens live, whips and a macro push,
+   cut on the bar), moved onto the App Store carousel's light ground and run through all six screens, then three
+   phones fan in and it ends on the locked logo sting (brand/sting, yellow). Seven bars of partner-upbeat-118.
+   Headlines are the approved carousel copy. Rendered at 120 fps and blended to 30 for the motion blur.
+   Rails: demo figures only, no rate, no price, no coins or counters of money. The phone's back is plain (a
+   branded phone would be a prop). Nothing lifted out of the screen is a total. */
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+:root{--yel:#FFCF24;--ink:#111114}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#F3F1EE}
+body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#F3F1EE}
+.clip{position:absolute;inset:0}
+
+/* the ground: the carousel's off-white with its pink, blue and lilac light, drifting */
+.ground{background:linear-gradient(170deg,#F4F2EF 0%,#ECEBF0 100%)}
+.bl{position:absolute;border-radius:50%}
+
+/* the headline: the carousel's type, over a scrim of the ground so a close-up never fights it */
+#hdz{z-index:10;pointer-events:none}
+#scrim{position:absolute;left:0;right:0;top:0;height:470px;background:linear-gradient(180deg,rgba(243,241,238,.96) 0%,rgba(243,241,238,.9) 62%,rgba(243,241,238,0) 100%);opacity:0}
+.hd{position:absolute;left:74px;right:60px;top:150px}
+.kick{display:flex;align-items:center;gap:14px;font:600 22px/1 Poppins;letter-spacing:.16em;text-transform:uppercase;color:#6B6B75}
+.kick i{display:block;width:34px;height:5px;border-radius:3px;background:var(--yel)}
+h1{margin-top:22px;font:700 78px/1.0 Poppins;letter-spacing:-.035em;color:var(--ink)}
+h1 .ln{display:block;overflow:hidden;padding:0 0 .08em 8px;margin:0 0 -.08em -8px}
+h1 .ln > span{display:inline-block;position:relative;isolation:isolate}
+h1 .mk{position:absolute;left:-6px;right:-8px;bottom:.06em;height:.38em;background:var(--yel);border-radius:3px;z-index:-1;transform-origin:0 50%}
+
+/* the camera and the phone: a solid, front and back and a rounded metal band. Never opacity on a preserve-3d
+   element (it flattens: video/LESSONS.md) */
+.cam{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 52%}
+#rig{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 1050px}
+.ph{position:absolute;left:270px;top:480px;width:540px;height:1140px;transform-style:preserve-3d;transform-origin:50% 50%}
+.slice{position:absolute;inset:0;border-radius:88px}
+.slice.sh{box-shadow:0 70px 110px -40px rgba(38,36,70,.42),0 20px 40px -20px rgba(38,36,70,.25)}
+.front{position:absolute;inset:0;transform-style:flat;transform:translateZ(20px)}
+.body{position:absolute;inset:0;border-radius:88px;background:#0B0B0D;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),inset 0 0 0 7px #151517}
+.body::after{content:"";position:absolute;inset:2px;border-radius:86px;box-shadow:inset 0 2px 1px rgba(255,255,255,.30),inset 0 -2px 2px rgba(0,0,0,.5)}
+.back{position:absolute;inset:0;border-radius:88px;transform:translateZ(-20px) rotateY(180deg);
+  background:linear-gradient(155deg,#2E2F34 0%,#18191C 55%,#26272B 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}
+.back .cams{position:absolute;left:44px;top:44px;width:190px;height:190px;border-radius:52px;background:linear-gradient(150deg,#34353A,#1C1D20);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.4)}
+.back .cams i{position:absolute;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a4560,#07080c 65%);box-shadow:0 0 0 6px #0f1012}
+.scr{position:absolute;left:16px;top:16px;width:508px;height:1108px;border-radius:72px;overflow:hidden;background:#fff;clip-path:inset(0 round 72px)}
+.sbar{position:absolute;left:0;right:0;top:0;height:64px;z-index:5;background:#fff}
+.sbar .t{position:absolute;left:52px;top:22px;font:600 22px Poppins;color:#111}
+.sbar .isl{position:absolute;left:50%;top:14px;width:150px;height:44px;margin-left:-75px;border-radius:24px;background:#050506}
+.sbar .r{position:absolute;right:46px;top:26px;display:flex;gap:5px;align-items:flex-end}
+.sbar .r b{display:block;background:#111;border-radius:2px;width:5px}
+.sbar .r b.bat{width:28px;height:13px;border-radius:4px;margin-left:6px}
+.glare{position:absolute;inset:0;border-radius:72px;pointer-events:none;z-index:9;
+  background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.14) 44%,rgba(255,255,255,0) 58%)}
+.pane{position:absolute;inset:0;background:#fff}
+.pane > img{position:absolute;left:0;top:64px;width:508px;display:block}
+
+/* live pieces on the screens */
+.patch{position:absolute;background:#fff}
+#amt{position:absolute;text-align:center;font:700 87px/1 Poppins;letter-spacing:-.035em;color:#2A2F38;transform-origin:50% 60%}
+.press{position:absolute;border-radius:16px;background:rgba(17,17,20,.16);opacity:0}
+.press.lt{background:rgba(255,255,255,.32)}
+.ring{position:absolute;border-radius:50%;border:3px solid rgba(255,207,36,.95);opacity:0;box-shadow:0 0 0 3px rgba(255,207,36,.25)}
+svg.arcs{position:absolute;left:0;top:0;width:508px;height:1108px;overflow:visible}
+.pill{position:absolute;left:84px;top:560px;width:340px;height:140px;border-radius:70px;background:#fff;
+  box-shadow:0 0 0 1.5px rgba(17,17,20,.10),0 22px 44px -26px rgba(17,17,20,.35);display:flex;align-items:center;justify-content:center}
+.pill b{font:700 58px/1 Poppins;letter-spacing:-.03em;color:#111114}
+.mk2{position:absolute;left:220px;top:800px;width:68px;height:68px}
+.note{position:absolute;left:18px;right:18px;top:78px;height:104px;border-radius:30px;z-index:6;
+  background:rgba(24,24,28,.92);box-shadow:0 20px 40px -18px rgba(0,0,0,.55);display:flex;align-items:center;gap:16px;padding:0 22px}
+.note i{width:56px;height:56px;border-radius:15px;background:var(--yel);flex:none;display:flex;align-items:center;justify-content:center}
+.note .tx{display:flex;flex-direction:column;gap:4px}
+.note .a{font:600 20px Poppins;color:#fff}
+.note .b{font:400 18px Poppins;color:rgba(255,255,255,.72)}
+#list{position:absolute;left:0;top:64px;width:508px}
+#list img{position:static;display:block;width:508px}
+#hl{position:absolute;left:0;width:508px;border-left:6px solid var(--yel);background:rgba(255,207,36,.10);opacity:0}
+#cover{position:absolute;background:#fff;transform-origin:100% 50%}
+#typed{position:absolute;font:400 17.5px/1 Poppins;color:#1F2430;white-space:nowrap}
+#caret{display:inline-block;width:2px;height:20px;margin-left:1px;vertical-align:-3px;background:#2F6FEB}
+
+/* what lifts out of the screen: a copy of the screen's own pixels, in the phone's 3D space */
+.lift{position:absolute;background-repeat:no-repeat;background-size:508px auto;opacity:0;
+  box-shadow:0 0 0 rgba(17,17,20,0)}
+
+/* the finale: three phones, each in its own camera so the stacking never sorts wrong */
+.fcam{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 50%}
+#fade{background:#FBFAF7;z-index:20;opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="17.8" data-width="1080" data-height="1920">
+
+  <div class="clip ground" id="ground" data-start="0" data-duration="17.8" data-track-index="0">
+    <div class="bl" id="bl0" data-layout-allow-overflow style="left:420px;top:-260px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,170,205,.55),rgba(255,170,205,0))"></div>
+    <div class="bl" id="bl1" data-layout-allow-overflow style="left:-420px;top:760px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(140,175,255,.50),rgba(140,175,255,0))"></div>
+    <div class="bl" id="bl2" data-layout-allow-overflow style="left:420px;top:1180px;width:860px;height:860px;background:radial-gradient(closest-side,rgba(200,170,255,.42),rgba(200,170,255,0))"></div>
+  </div>
+
+  <div class="clip cam" id="cam" data-start="0" data-duration="12.25" data-track-index="1">
+    <div id="rig" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip" id="fin" data-start="12.2" data-duration="2.2" data-track-index="1">
+    <div class="fcam" id="fcL" data-layout-allow-overflow></div>
+    <div class="fcam" id="fcR" data-layout-allow-overflow></div>
+    <div class="fcam" id="fcC" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip" id="hdz" data-start="0" data-duration="12.25" data-track-index="2">
+    <div id="scrim"></div>
+  </div>
+
+  <!-- the outro: the ground washes to the sting's off-white, then the locked logo sting (brand/sting, yellow)
+       plays with the letters meeting on the beat, and its last frame holds to the end -->
+  <div class="clip" id="fade" data-start="13.7" data-duration="1.0" data-track-index="3"></div>
+  <video class="clip" id="sting" src="assets/sting-yellow-9x16.mp4" data-start="14.334" data-duration="2.6" data-track-index="4" muted playsinline style="width:100%;height:100%;object-fit:cover;z-index:21;background:#FBFAF7"></video>
+  <img class="clip" id="stinghold" src="assets/sting-yellow-9x16-last.png" alt="" data-start="16.934" data-duration="0.866" data-track-index="4" style="width:100%;height:100%;object-fit:cover;z-index:21">
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const B = 60 / 118;                                   /* one beat of the bed */
+const C = n => 4 * n * B;                             /* bar n starts */
+const S = 508 / 784;                                  /* the app-card export onto the screen */
+const MARK = '<polygon points="21.3,0 36.1,0 83.5,49.2 83.5,70.1"/><polygon points="16.7,33.2 16.7,50.4 63.9,100 80.9,100"/>';
+const TICK = '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#111114" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const px = (x, y) => [x * S, 64 + y * S];            /* a point on an export, in screen space */
+
+/* ── the headlines: the approved carousel copy, one per bar ── */
+const COPY = [
+  ['Take a payment', 'Charge it in', 'three taps.'],
+  ['Contactless', 'Take card payments', 'on your phone.'],
+  ['NeroPOS', 'Your menu,', 'on the till.'],
+  ['Transactions', 'Every sale,', 'one list.'],
+  ['Reports', 'See what sold,', 'and where.'],
+  ['Payment links', 'Send a link.', 'Get paid.']
+];
+$('hdz').insertAdjacentHTML('beforeend', COPY.map(([k, a, b], i) =>
+  `<div class="hd"><div class="kick" id="hk${i}" data-layout-allow-overlap><i></i>${k}</div>
+   <h1><span class="ln" data-layout-allow-overflow><span id="ha${i}" data-layout-allow-overlap data-layout-allow-occlusion>${a}</span></span><span class="ln" data-layout-allow-overflow><span id="hb${i}" data-layout-allow-overlap data-layout-allow-occlusion><i class="mk" id="hm${i}"></i>${b}</span></span></h1></div>`).join(''));
+
+/* ── the phone ── */
+const T = 40, N = 14;
+const band = () => [...Array(N)].map((_, i) => { const u = i/(N-1), z = -T/2 + 2 + u*(T-4), c = Math.round(30 + Math.sin(u*Math.PI)*70);
+  return `<div class="slice${i ? '' : ' sh'}" style="transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+6})"></div>`; }).join('');
+const phone = (id, panes, extra = '') => `<div class="ph" id="${id}" data-layout-allow-overflow>
+  <div class="back"><div class="cams"><i style="left:22px;top:22px"></i><i style="left:98px;top:98px"></i></div></div>
+  ${band()}
+  <div class="front"><div class="body"></div><div class="scr">
+    <div class="sbar"><div class="t">9:41</div><div class="isl"></div><div class="r"><b style="height:8px"></b><b style="height:11px"></b><b style="height:14px"></b><b style="height:17px"></b><b class="bat"></b></div></div>
+    ${panes}<div class="glare"></div></div></div>${extra}</div>`;
+const tapPane = (sx, live) => `
+  <svg class="arcs" viewBox="0 0 508 1108">${[110,160,210].map((r,i)=>`<path id="arc${i}${sx}" d="M ${254-r} 540 A ${r} ${r*.7} 0 0 1 ${254+r} 540" fill="none" stroke="rgba(17,17,20,${[.28,.17,.10][i]})" stroke-width="${[5,4.4,3.8][i]}" stroke-linecap="round"/>`).join('')}</svg>
+  ${live ? `<div class="ring" id="tring" style="left:${254-170}px;top:${630-170}px;width:340px;height:340px"></div>` : ''}
+  <div class="pill" id="pill${sx}"><b>£45.75</b></div>
+  <svg class="mk2" id="mk2${sx}" viewBox="0 0 100 100" fill="#FFCF24">${MARK}</svg>
+  <div class="note" id="note${sx}"><i><svg viewBox="0 0 100 100" width="30" height="30" fill="#111114">${MARK}</svg></i>
+    <div class="tx"><div class="a">NeroPay</div><div class="b">Payment received · £45.75</div></div></div>`;
+
+/* the pieces that lift, in the phone's own coordinates (the screen sits 16px in) */
+const lift = (id, img, x, y, w, h, r) => { const [sx, sy] = px(x, y);
+  return `<div class="lift" id="${id}" style="left:${16+sx}px;top:${16+sy}px;width:${w*S}px;height:${h*S}px;border-radius:${r}px;
+    background-image:url(assets/${img});background-position:${-sx}px ${-sy+64}px"></div>`; };
+
+const KEYS = [['k4',20,568,173,180],['k5',225,568,173,180],['k7',20,780,173,180],['kc',20,1207,363,113]];
+const box = (x, y, w, h) => { const [a, b] = px(x, y); return `left:${a}px;top:${b}px;width:${w*S}px;height:${h*S}px`; };
+const ringAt = (id, x, y, d) => { const [a, b] = px(x, y); return `<div class="ring" id="${id}" style="left:${a-d/2}px;top:${b-d/2}px;width:${d}px;height:${d}px"></div>`; };
+
+$('rig').innerHTML = phone('ph', `
+  <div class="pane" id="s1"><img src="assets/app1.png" alt="">
+    <div class="patch" style="${box(100,160,500,150)}"></div>
+    <div id="amt" style="left:${100*S}px;top:${64+172*S}px;width:${500*S}px">£0.00</div>
+    ${KEYS.map(([id,x,y,w,h]) => `<div class="press${id==='kc'?' lt':''}" id="${id}" style="${box(x,y,w,h)}"></div>${ringAt('r'+id, x+w/2, y+h/2, 80)}`).join('')}
+  </div>
+  <div class="pane" id="s2" style="visibility:hidden">${tapPane('', true)}</div>
+  <div class="pane" id="s4" style="visibility:hidden"><img src="assets/app2.png" alt="">
+    <div class="press" id="card" style="${box(402,544,344,376)};border-radius:10px"></div>${ringAt('rcard', 574, 700, 90)}</div>
+  <div class="pane" id="s3" style="visibility:hidden"><div id="list"><img src="assets/app3.png" alt=""><div style="height:${(1320-335)*S}px;overflow:hidden"><img src="assets/app3.png" alt="" style="margin-top:-${335*S}px"></div></div>
+    <div id="hl" style="top:${64+335*S}px;height:${190*S}px"></div></div>
+  <div class="pane" id="s5" style="visibility:hidden"><img src="assets/app4.png" alt="">
+    <div id="cover" style="${box(142,196,600,354)}"></div></div>
+  <div class="pane" id="s6" style="visibility:hidden"><img src="assets/app5.png" alt="">
+    <div class="patch" style="${box(46,650,560,46)}"></div>
+    <div id="typed" style="left:${56*S}px;top:${64+659*S}px"><span id="tx"></span><i id="caret"></i></div>
+    <div class="press lt" id="send" style="${box(342,1166,410,84)};border-radius:8px"></div>${ringAt('rsend', 547, 1208, 90)}
+    <div class="note" id="note2" style="opacity:0"><i>${TICK}</i>
+      <div class="tx"><div class="a">Link sent</div><div class="b">Table 12 — balance · £82.40</div></div></div></div>`,
+  lift('lcard', 'app2.png', 402, 544, 344, 376, 10) +
+  lift('ltip', 'app4.png', 258, 282, 294, 66, 8) +
+  lift('lsnap', 'app4.png', 30, 906, 728, 404, 12));
+
+/* the finale phones: the menu, the payment arriving, the reports */
+$('fcL').innerHTML = phone('fpL', `<div class="pane"><img src="assets/app2.png" alt=""></div>`);
+$('fcR').innerHTML = phone('fpR', `<div class="pane"><img src="assets/app4.png" alt=""></div>`);
+$('fcC').innerHTML = phone('fpC', `<div class="pane">${tapPane('F', false)}</div>`);
+
+/* ── the timeline: seven bars, each cut on the bar ── */
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const LIFT = z => ({ z, scale:1.05, boxShadow:'0 40px 60px -20px rgba(17,17,20,.45)' });
+
+tl.set('#rig', { scale:1.04 }, 0);
+
+/* the ground's light drifts the whole way */
+[['#bl0', 90, 140], ['#bl1', 120, -120], ['#bl2', -110, -90]].forEach(([s, x, y]) =>
+  tl.fromTo(s, { x:0, y:0 }, { x, y, duration:17.8, ease:'sine.inOut' }, 0));
+
+/* headlines: the lines rise in through a mask, the marker draws, and they leave up before the cut */
+tl.fromTo('#scrim', { opacity:0 }, { opacity:1, duration:0.4 }, 0.1).to('#scrim', { opacity:0, duration:0.3 }, C(6) - 0.3);
+COPY.forEach((_, i) => { const s = i ? C(i) + 0.08 : 0.25, e = C(i + 1) - 0.2;
+  tl.fromTo(`#hk${i}`, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.35, ease:'power2.out' }, s)
+    .fromTo(`#ha${i}`, { yPercent:115 }, { yPercent:0, duration:0.5, ease:'power3.out' }, s + 0.04)
+    .fromTo(`#hb${i}`, { yPercent:115 }, { yPercent:0, duration:0.5, ease:'power3.out' }, s + 0.12)
+    .fromTo(`#hm${i}`, { scaleX:0 }, { scaleX:1, duration:0.45, ease:'power2.out' }, s + 0.42)
+    .to(`#ha${i}`, { yPercent:-115, duration:0.2, ease:'power2.in' }, e)
+    .to(`#hb${i}`, { yPercent:-115, duration:0.2, ease:'power2.in' }, e + 0.03)
+    .to(`#hk${i}`, { opacity:0, duration:0.18 }, e);
+});
+
+/* the live text: the keyed amount and the typed note, as functions of time */
+const AMT = [[B*1, '£0.04', 'k4'], [B*1.5, '£0.45', 'k5'], [B*2, '£4.57', 'k7'], [B*2.5, '£45.75', 'k5']];
+const NOTE = 'Table 12 — balance', T0 = C(5) + 0.35, T1 = C(5) + 1.25, SEND = C(5) + B*3;
+const amt = $('amt'), tx = $('tx'), caret = $('caret'), clock = { t:0 };
+tl.to(clock, { t:17.8, duration:17.8, ease:'none', onUpdate:() => { const t = clock.t;
+  let v = '£0.00'; AMT.forEach(([at, s]) => { if (t >= at) v = s; }); if (amt.textContent !== v) amt.textContent = v;
+  const n = Math.max(0, Math.min(NOTE.length, Math.floor((t - T0) / (T1 - T0) * NOTE.length)));
+  const w = NOTE.slice(0, n); if (tx.textContent !== w) tx.textContent = w;
+  caret.style.opacity = (t < SEND && (t < T1 || Math.floor((t - T1) * 2.4) % 2 === 0)) ? 1 : 0; } }, 0);
+
+/* 1 · the keypad. The phone swings in from the left, turned hard, and settles while the amount is keyed */
+tl.fromTo('#ph', { x:-1150, y:60, rotationY:62, rotationX:14, rotationZ:-12 },
+                 { x:0, y:0, rotationY:20, rotationX:8, rotationZ:-4, duration:0.8, ease:'power3.out' }, 0)
+  .to('#ph', { rotationY:9, rotationX:5, rotationZ:-2, y:-10, duration:C(1) - 1.0, ease:'sine.inOut' }, 0.8);
+const tap = (k, at, big) => tl.fromTo('#'+k, { opacity:0 }, { opacity:1, duration:0.05, immediateRender:false }, at)
+  .to('#'+k, { opacity:0, duration:0.22 }, at + 0.1)
+  .fromTo('#r'+k, { scale:.35, opacity:.95 }, { scale:big || 1.5, opacity:0, duration:0.45, ease:'power2.out', immediateRender:false }, at);
+AMT.forEach(([at, , k]) => { tl.fromTo('#amt', { scale:1.07 }, { scale:1, duration:0.22, ease:'power2.out', immediateRender:false }, at); tap(k, at); });
+tap('kc', B*3, 1.6);
+
+/* whip 1 · a full spin on the phone's own axis: the back passes the camera, the tap screen comes round */
+tl.to('#ph', { rotationY:189, rotationX:10, rotationZ:3, x:40, duration:0.28, ease:'power2.in' }, C(1) - 0.2)
+  .set('#s1', { visibility:'hidden' }, C(1)).set('#s2', { visibility:'visible' }, C(1))
+  .to('#ph', { rotationY:346, rotationX:6, rotationZ:3, x:30, duration:0.42, ease:'power3.out' }, C(1) + 0.08)
+  .to('#ph', { rotationY:338, rotationX:4, rotationZ:1, x:10, y:-20, duration:C(2) - C(1) - 0.7, ease:'sine.inOut' }, C(1) + 0.5);
+
+/* 2 · tap to pay: the amount comes up, the signal goes out on the beat, the notification drops */
+tl.fromTo('#pill', { scale:.7, opacity:0 }, { scale:1, opacity:1, duration:0.4, ease:'back.out(2)' }, C(1) + 0.3);
+[0,1,2].forEach(i => tl.fromTo('#arc'+i, { opacity:0 }, { opacity:1, duration:0.15 }, C(1) + 0.45 + i*0.08));
+[0,1,2].forEach(n => tl.fromTo('#tring', { scale:.5, opacity:.9 }, { scale:1.5, opacity:0, duration:B*0.95, ease:'power2.out', immediateRender:n===0 }, C(1) + B + n*B));
+tl.fromTo('#mk2', { scale:.4, opacity:0, transformOrigin:'50% 50%' }, { scale:1, opacity:1, duration:0.4, ease:'back.out(2.2)' }, C(1) + B*1.5)
+  .fromTo('#note', { y:-150, opacity:0 }, { y:0, opacity:1, duration:0.45, ease:'back.out(1.5)' }, C(1) + B*2.5);
+
+/* whip 2 · thrown off to the left; it comes back in from the right on the menu */
+tl.to('#ph', { x:-1300, rotationY:300, rotationZ:-8, duration:0.22, ease:'power2.in' }, C(2) - 0.2)
+  .set('#s2', { visibility:'hidden' }, C(2)).set('#s4', { visibility:'visible' }, C(2))
+  .fromTo('#ph', { x:1200, y:0, rotationY:-58, rotationX:10, rotationZ:8 },
+                 { x:0, rotationY:-24, rotationX:8, rotationZ:3, duration:0.5, ease:'power3.out', immediateRender:false }, C(2))
+  .to('#ph', { rotationY:-14, rotationX:5, rotationZ:1, y:-10, duration:C(3) - C(2) - 0.7, ease:'sine.inOut' }, C(2) + 0.5);
+
+/* 3 · the menu: a tap on the dish and the card lifts off the screen */
+tap('card', C(2) + B*1.5, 1.7);
+tl.set('#lcard', { opacity:1, z:20.5 }, C(2) + B*2)
+  .to('#lcard', { ...LIFT(115), duration:0.5, ease:'back.out(1.6)' }, C(2) + B*2)
+  .to('#lcard', { z:130, duration:C(3) - C(2) - B*2 - 0.7, ease:'sine.inOut' }, C(2) + B*2 + 0.5);
+
+/* whip 3 · the phone flies up and out; the cut lands on a close-up of the transactions list */
+tl.to('#ph', { y:-1500, rotationX:40, duration:0.22, ease:'power2.in' }, C(3) - 0.2)
+  .set('#lcard', { opacity:0 }, C(3))
+  .set('#s4', { visibility:'hidden' }, C(3)).set('#s3', { visibility:'visible' }, C(3))
+  .set('#rig', { scale:2.7, x:-620, y:1260 }, C(3))
+  .fromTo('#ph', { x:0, y:500, rotationY:-38, rotationX:-16, rotationZ:6 },
+                 { y:0, rotationY:-26, rotationX:8, rotationZ:3, duration:0.5, ease:'power3.out', immediateRender:false }, C(3))
+  .to('#rig', { scale:3.0, x:-700, y:1380, duration:C(4) - C(3) - 0.25, ease:'sine.inOut' }, C(3))
+  .to('#ph', { rotationY:-18, rotationX:5, duration:C(4) - C(3) - 0.75, ease:'sine.inOut' }, C(3) + 0.5);
+
+/* 4 · the list scrolls under the close-up and the NeroWeb row lights on the beat */
+tl.fromTo('#list', { y:0 }, { y:-240, duration:C(4) - C(3), ease:'power1.inOut' }, C(3))
+  .fromTo('#hl', { opacity:0 }, { opacity:1, duration:0.15, immediateRender:false }, C(3) + B*2)
+  .to('#hl', { opacity:0.5, duration:0.6 }, C(3) + B*2 + 0.2)
+  .fromTo('#hl', { y:0 }, { y:-240 * ((C(4) - C(3) - B*2) / (C(4) - C(3))), duration:C(4) - C(3) - B*2, ease:'none', immediateRender:false }, C(3) + B*2);
+
+/* whip 4 · a push through the screen: in harder, the cut, and a fast pull back to the whole phone on reports */
+tl.to('#rig', { scale:3.8, x:-900, y:1700, duration:0.25, ease:'power2.in' }, C(4) - 0.25)
+  .set('#s3', { visibility:'hidden' }, C(4)).set('#s5', { visibility:'visible' }, C(4))
+  .fromTo('#rig', { scale:2.6, x:-500, y:700 }, { scale:1.04, x:0, y:0, duration:0.6, ease:'power3.out', immediateRender:false }, C(4))
+  .fromTo('#ph', { rotationY:-4, rotationX:14, rotationZ:-6 }, { rotationY:18, rotationX:6, rotationZ:-3, duration:0.6, ease:'power3.out', immediateRender:false }, C(4))
+  .to('#ph', { rotationY:8, rotationX:4, rotationZ:-1, y:-10, duration:C(5) - C(4) - 0.8, ease:'sine.inOut' }, C(4) + 0.6);
+
+/* 5 · reports: the trend draws on, the tooltip lifts, then the channel split lifts */
+tl.fromTo('#cover', { scaleX:1 }, { scaleX:0, duration:0.9, ease:'power2.inOut' }, C(4) + 0.25)
+  .set('#ltip', { opacity:1, z:20.5 }, C(4) + B*2.5)
+  .to('#ltip', { ...LIFT(100), duration:0.45, ease:'back.out(1.8)' }, C(4) + B*2.5)
+  .set('#lsnap', { opacity:1, z:20.5 }, C(4) + B*3)
+  .to('#lsnap', { ...LIFT(90), scale:1.03, duration:0.5, ease:'back.out(1.5)' }, C(4) + B*3);
+
+/* whip 5 · the spin the other way; payment links comes round */
+tl.to('#ph', { rotationY:-170, rotationX:10, rotationZ:-3, x:-40, duration:0.28, ease:'power2.in' }, C(5) - 0.2)
+  .set(['#ltip', '#lsnap'], { opacity:0 }, C(5))
+  .set('#s5', { visibility:'hidden' }, C(5)).set('#s6', { visibility:'visible' }, C(5))
+  .to('#ph', { rotationY:-346, rotationX:6, rotationZ:-3, x:-20, duration:0.42, ease:'power3.out' }, C(5) + 0.08)
+  .to('#ph', { rotationY:-340, rotationX:4, rotationZ:-1, x:0, y:-15, duration:C(6) - C(5) - 0.7, ease:'sine.inOut' }, C(5) + 0.5);
+
+/* 6 · the note is typed, Send, and the link-sent toast drops */
+tap('send', SEND, 1.8);
+tl.fromTo('#note2', { y:-150, opacity:0 }, { y:0, opacity:1, duration:0.45, ease:'back.out(1.5)' }, SEND + B*0.5);
+
+/* whip 6 · thrown off right; three phones fan in on the beats */
+tl.to('#ph', { x:1400, rotationY:-280, rotationZ:8, duration:0.22, ease:'power2.in' }, C(6) - 0.2);
+const F = C(6);
+tl.fromTo('#fpC', { x:0, y:1500, z:0, scale:.76, rotationX:-40, rotationY:0, rotationZ:0 },
+                  { y:-30, rotationX:4, duration:0.55, ease:'power3.out' }, F)
+  .fromTo('#fpL', { x:-1400, y:-10, z:-300, scale:.74, rotationY:80, rotationZ:-4 },
+                  { x:-300, rotationY:28, duration:0.5, ease:'power3.out' }, F + B)
+  .fromTo('#fpR', { x:1400, y:-10, z:-300, scale:.74, rotationY:-80, rotationZ:4 },
+                  { x:300, rotationY:-28, duration:0.5, ease:'power3.out' }, F + B*1.5)
+  .to('#fpC', { rotationY:-6, y:-45, duration:C(7) - F - 0.55, ease:'sine.inOut' }, F + 0.55)
+  .to('#fpL', { rotationY:22, x:-315, duration:C(7) - F - B - 0.5, ease:'sine.inOut' }, F + B + 0.5)
+  .to('#fpR', { rotationY:-22, x:315, duration:C(7) - F - B*1.5 - 0.5, ease:'sine.inOut' }, F + B*1.5 + 0.5);
+
+/* out · the fan pulls back into the off-white and the sting takes it on the bar */
+tl.to('#fin', { scale:0.9, duration:0.7, ease:'power2.in', transformOrigin:'50% 55%' }, 13.7)
+  .fromTo('#fade', { opacity:0 }, { opacity:1, duration:0.55, ease:'power1.inOut' }, 13.75)
+  .fromTo('#sting', { opacity:0 }, { opacity:1, duration:0.15, ease:'power1.out' }, 14.334);
+
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>

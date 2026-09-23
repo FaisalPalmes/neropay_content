@@ -1,7 +1,7 @@
 #!/bin/bash
 # Lays the sound under a rendered picture and masters it to the house target (-14 LUFS, true peak under -1.5 dBTP).
-#   bash mix.sh renders/v8-picture.mp4 renders/FINAL-appstore-iphone-v8.mp4
-# Cues follow the v8 timeline in index.html (SW = the swipes, LAND = when each slide lands). Every file is from the
+#   bash mix.sh renders/v8-picture.mp4 renders/FINAL-appstore-iphone-v9.mp4
+# Cues follow the v9 timeline in index.html (SW = the swipes, LAND = when each slide lands). Every file is from the
 # committed, ledgered library. v5's mix is kept at archive/mix-v5.sh.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -21,7 +21,7 @@ CUES=(
   "click-soft 23.10 0.14" "pop 23.55 0.13"                        # Send, the amount field lifts
   "pop 2.65 0.07" "pop 5.50 0.07" "pop 7.60 0.07" "pop 9.85 0.07" "pop 11.25 0.07" "pop 11.65 0.07"  # the pop-ups
   "pop 14.05 0.07" "pop 15.55 0.07" "pop 19.90 0.07" "ping 23.30 0.06" "pop 24.10 0.07"
-  "whoosh 24.95 0.22" "impact-bass-1 25.74 0.18" "whoosh-short 25.78 0.20" "pop 26.72 0.16" "chime 26.95 0.12"  # the swish and the close
+  "whoosh 24.90 0.20" "impact-bass-1 26.82 0.20" "sparkle 27.15 0.10" "chime 27.55 0.08"  # the pull-back, the sting: letters meet at +0.92s, the light pass
 )
 ARGS=(-i "$IN" -i ../library/bgm/underscore-120-a.mp3)
 FC="[1:a]atrim=0:29,asetpts=N/SR/TB,volume=0.30,afade=t=in:st=0:d=0.5,afade=t=out:st=27.3:d=1.7,aformat=cl=stereo[bed];"
