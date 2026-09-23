@@ -38,5 +38,7 @@ video/*/renders/
 video/*/assets/bands/
 video/*/assets/mark.png
 video/*/assets/wordmark-white.png
+video/*/assets/wordmark-light.png
+video/*/assets/app/
 video/*/fonts/
 video/*/vendor/

@@ -16,7 +16,14 @@ for i in 1 2 3 4 5; do
   ffmpeg -y -loglevel error -i assets/screens/s$i.webp -vf "crop=923:1345:0:655" assets/bands/dev$i.png
 done
 
-# 2. the mark on transparency, keyed out of the app icon, for the glass tile on the close
+# 1b. v2: each screen cropped to the app card alone, so it fills the phone screen edge to edge
+mkdir -p assets/app
+for i in 1 2 3 4 5; do
+  ffmpeg -y -loglevel error -i assets/screens/s$i.webp -vf "crop=785:1320:69:680" assets/app/app$i.png
+done
+cp $ROOT/brand/logos/neropay-light-1200.png assets/wordmark-light.png
+
+# 2. the mark on transparency (v1 only — v2 draws the mark as vector), keyed out of the app icon, for the glass tile on the close
 ffmpeg -y -loglevel error -i $ROOT/brand/favicon/neropay-icon-512.png \
   -vf "colorkey=0xFFCF24:0.34:0.06,colorkey=0xFFD426:0.30:0.05,format=rgba,scale=1024:1024:flags=lanczos" \
   -frames:v 1 assets/mark.png
@@ -26,6 +33,6 @@ cp $ROOT/brand/logos/neropay-dark-1200.png assets/wordmark-white.png
 
 # 4. fonts and the GSAP build, vendored: this container reaches no CDN
 mkdir -p fonts vendor
-cp $ROOT/motion/assets/fonts/poppins-latin-{500,600,700}-normal.woff2 fonts/
+cp $ROOT/motion/assets/fonts/poppins-latin-{400,500,600,700}-normal.woff2 fonts/
 cp ../vendor/gsap.min.js vendor/gsap.min.js
 echo "assets rebuilt"

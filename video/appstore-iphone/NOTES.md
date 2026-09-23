@@ -1,4 +1,41 @@
-# App Store preview, iPhone — what was built and what is open
+# App Store preview, iPhone — v2 (23 Sep 2026) is current; v1 is below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v2.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.8 MB · −13.8 LUFS / −1.4 dBTP ·
+md5 `1c3db388fc0fc6d847861fd94af1c38c` · Higgsfield media `95de77ce-860a-41ec-940c-16572defa056`.
+
+## v2 — Faisal's notes on v1, and what changed
+
+v1 was "too flat — the same picture throughout". His notes, and the answer to each:
+
+| Note | v2 |
+|---|---|
+| A real phone, the screens on it, as if someone is using the app | A neutral handset drawn in code — status bar, camera island, side buttons, no maker's mark — with each screen cropped to the app card alone (x 69–853, y 680–2000 of his export) so it fills the phone screen edge to edge |
+| The camera moving in 3D between sections; the text in the same 3D space as the phone | One CSS 3D world. Each screen is a section — its copy and its phone standing together — 1,080px apart, alternating depth and angle. The camera is a pure function of time: it holds a section at an angle (never flat front-on), then flies to the next in 0.9s, lifting back mid-flight. A slow orbit runs on top so the view is never still |
+| The phone "flipping", swipes and whooshes between screens | The phone flips in edge-on as the camera arrives and flips away as it leaves; a whoosh on every flight |
+| No zooms — they zoomed into nothing | Removed |
+| A harsh line between the copy and the phone | The copy is set live in Poppins (kicker, headline, marker, sub, chips — his words verbatim), so the whole frame sits on one background with no seam. His wordmark stays placed artwork |
+| The background dynamic: the yellow light, the liquid-glass blur | Four soft lights (yellow, white, blue, blush) drift on their own clocks and in parallax against the camera, and three frosted panes float behind |
+| The intro | Kept exactly |
+| The close: not black — white with yellow lines; the liquid glass logo had black at the corners; the lines did not cover the frame | The shutter closes, the glass tile lands on the join, then the halves part again to leave a white close with two yellow stripes running edge to edge. The mark is drawn as vector from the two bars measured off `brand/favicon/neropay-icon-512.png`, so there is no keyed-image fringe |
+| Flicker and artefacts | Nothing carries a CSS filter any more; v1's drop-shadow on a scaling image and 90px blurs were re-rasterised every frame |
+
+Three build faults found and fixed before the render, for the next session:
+
+- **Duplicate ids.** The close's stripes were `st1`/`st2`, the same as two sections, so the stripe tween moved a
+  whole section of the world. Sections are `sec0…sec4` now.
+- **Coplanar layers in preserve-3d.** The phone body and screen share a plane; under `preserve-3d` Chromium split
+  them against each other and the dark body cut a diagonal band through the screen at some angles. `.phone` and
+  `.copy` are `transform-style: flat` — each turns as one object.
+- **The layout check and 3D text.** It measures straight bounding boxes, and a turned line's box grows past its
+  neighbour's. The rest-frame snapshot shows no real overlap, so the text blocks carry `data-layout-allow-overlap`.
+
+Rebuild: `bash make-assets.sh`, crop the app cards (in `make-assets.sh`), `npm run check`,
+`npx hyperframes render --fps 30 -o renders/v2-picture.mp4`, then `bash mix.sh renders/v2-picture.mp4 <out>`.
+v1's composition is kept at `archive/index-v1.html`.
+
+---
+
+# v1 (22 Sep 2026) — superseded
 
 **File** `renders/FINAL-appstore-iphone.mp4` · 886 × 1920 · 30 fps · 26.0s · 10.5 MB
 · −13.5 LUFS / −1.4 dBTP · md5 `41a8563735273d3d008210bcc2082674`.

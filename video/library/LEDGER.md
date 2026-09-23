@@ -104,3 +104,5 @@ CC0. The API route is used when the token is present. Every file is normalised t
 Used in `motion/neroconnect/nc01` v2 (17 Sep 2026): `neroconnect-pulse-100` at 0.20 ducked under the voice, and Pixabay sparkle, impact-bass-1/2, whoosh, whoosh-short, whoosh-cinematic, pop, click, click-soft, key-press, typing, chime, ping, notification — 54 cues generated from the composition's anchors by `mkmix.mjs`, none twice in a row.
 
 Used in the App Store preview (`video/appstore-iphone/`, 22 Sep 2026): `bgm/underscore-120-a.mp3` as the bed, and Pixabay whoosh-short (the shutter open, the four cuts, the close), click-soft (each push-in), impact-bass-1 (the mark landing), pop and chime (the end card). No `glitch-*`: they are crackle by construction.
+
+App Store preview v2 (23 Sep 2026): the same bed, plus Pixabay whoosh alternating with whoosh-short on the five flights, click-soft as each phone lands, whoosh on the shutter down, impact-bass-1 as the tile lands, pop and chime on the close. Cue sheet in `video/appstore-iphone/mix.sh`.

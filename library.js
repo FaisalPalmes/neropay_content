@@ -106,14 +106,15 @@ window.LIBRARY = {
       ] },
 
     { id: 'AS01', series: 'App Store', title: 'App preview — iPhone',
-      version: 'v1', rendered: '2026-09-22', secs: 26.0,
-      status: 'review', by: 'unrecorded — built while Faisal was away on 22 Sep and sent for his review',
-      waiting: 'Faisal watches it and rules on the five decisions in video/appstore-iphone/NOTES.md §5 — chiefly no voiceover, and the black end card instead of the wordmark on yellow.',
+      version: 'v2', rendered: '2026-09-23', secs: 29.0,
+      status: 'review', by: 'unrecorded — v2 rebuilt on Faisal\'s 23 Sep notes on v1 and sent for his review',
+      waiting: 'Faisal watches v2. v1 (22 Sep) was rejected as too flat; v2 is a 3D world with the screens in a phone.',
       build: 'video/appstore-iphone/', drive: null, backup: false, clearedFor: null, notCleared: null,
-      clearanceNote: 'It is a store listing asset, not a social post, so the platform question is Apple review rather than Route C. An App Preview must read as the app in use; this animates his own exported screens and keeps overlaid material to the brand open and close.',
-      note: 'Built from the five carousel screens Faisal exported, each cut into wordmark, copy and device bands so the layout moves without re-typesetting placed artwork. The Shutter opens it, cuts between every screen and closes it. No voiceover and no captions. The iPad and Play Store cuts are not made.',
+      clearanceNote: 'A store listing asset, not a social post, so the platform question is Apple review rather than Route C. An App Preview must read as the app in use; v2 shows his own app screens inside a phone.',
+      note: 'One CSS 3D world: each of his five screens is a section — live copy set in Poppins and a neutral code-drawn phone with the app card filling its screen — and the camera flies between them; the phone flips in as it lands. No zooms. The kept Shutter intro; a white close with two full-bleed yellow stripes and the mark drawn as vector. No voiceover, no captions. v1 is in archive/. The iPad and Play Store cuts are not made.',
       files: [
-        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.5', media: 'ffdeb658-553c-4f1a-a74b-03f6cfa97219', md5: '41a8563735273d3d008210bcc2082674' }
+        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.8', media: '95de77ce-860a-41ec-940c-16572defa056', md5: '1c3db388fc0fc6d847861fd94af1c38c' },
+        { crop: 'v1, superseded', px: '886×1920', lufs: '−13.5', media: 'ffdeb658-553c-4f1a-a74b-03f6cfa97219', md5: '41a8563735273d3d008210bcc2082674' }
       ] },
 
     { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
