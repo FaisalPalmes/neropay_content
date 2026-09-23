@@ -1,0 +1,10 @@
+M2 — "Four things to find on your statement" · photo opener · Higgsfield, photoreal image model, portrait 4:5, highest resolution offered (ideally 2160×2700, never below 1080×1350)
+
+PROMPT
+Top-down flat lay photograph looking straight down at a worn light-oak café counter. Soft natural daylight from a window on the left, gentle realistic shadows. Deep focus: everything sharp from edge to edge, no depth-of-field blur. The objects sit around the edges of the frame and leave a large, calm, empty stretch of plain wood across the middle. Top left, partly off the frame: a folded A4 paper statement with small grey print that cannot be read and no logos. Top right: a plain grey desk calculator. Beside it, a black ballpoint pen. Bottom left: a curling white till-receipt roll and three or four loose coins. Bottom right: a plain white espresso cup on a saucer. One small warm yellow accent: a yellow highlighter pen lying at an angle near the statement. Muted warm neutral palette, real wood grain, editorial, clean, quiet, photorealistic, shot on a full-frame camera at f/11.
+
+NEGATIVE
+logos, brand names, readable text, readable numbers, card terminal, card machine, phone, screen, laptop, people, hands, faces, bokeh, blur, shallow depth of field, vignette, harsh shadows, clutter in the centre, neon, oversaturated colour, illustration, 3D render
+
+ALTERNATIVE (if the flat lay feels staged) — eye level
+Photograph at eye level across the counter of a small independent café in the UK after closing, straight-on, camera locked off. Upper third: a plain shelf with glass jars and a stack of white cups against a pale painted wall. Lower third: the stainless-steel counter edge with a folded paper statement (illegible print, no logos), a pen and a white espresso cup. The middle of the frame is plain wall, calm and empty. Soft evening daylight, deep focus throughout, nothing blurred, muted warm palette with one small yellow accent. Photorealistic, editorial. Same negative list.

@@ -73,11 +73,16 @@ page.on('requestfailed', r => errors.push('request failed: ' + r.url()));
 
 const kickFor = p => p.pillar === 'Partner' ? 'NeroPay partners' : p.pillar === 'Statement' ? 'Explained by NeroPay' : p.pillar;
 
+const PHOTOS = join(HERE, 'photos');
+const photoFor = async id => { for (const ext of ['jpg', 'jpeg', 'png', 'webp']) { const f = join(PHOTOS, `${id}.${ext}`);
+  try { await readFile(f); return pathToFileURL(f).href; } catch {} } return null; };
+
 async function shoot(template, size, data, file) {
   const [w, h] = SIZES[size] || SIZES.sq;
   await page.setViewportSize({ width: w, height: h });
   await page.goto(pathToFileURL(join(TPL, template + '.html')).href, { waitUntil: 'load' });
   await page.evaluate(([lk, md]) => { if (lk === 'glass') { const d = document.documentElement; d.classList.add('glass'); for (const k in md) d.style.setProperty(k, md[k]); } }, [look, data.mood]);
+  if (data.photo) await page.evaluate(u => { const d = document.documentElement; d.classList.add('photo'); d.style.setProperty('--photo', `url("${u}")`); }, data.photo);
   /* never let a line break at a hyphen ("18-" / "month rule"): word joiners either side of every inner hyphen */
   const glue = v => typeof v === 'string' ? v.replace(/(\S)-(?=\S)/g, '$1⁠-⁠')
     : Array.isArray(v) ? v.map(glue) : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, glue(x)])) : v;
@@ -110,12 +115,12 @@ for (const p of targets) {
   for (let i = 0; i < assets.length; i++) {
     const a = assets[i], n = i + 1, size = a.size || (a.t === 'cards' ? 'pt' : a.t === 'cover' ? 'st' : 'sq');
     if (a.t === 'ref') { console.log(`${p.id}  ${n}  ref ${a.id} — video asset, not rendered here`); continue; }
-    const kick = a.kick || kickFor(p), mood = a.mood || moodFor(p.id);
+    const kick = a.kick || kickFor(p), mood = a.mood || moodFor(p.id), photo = i === 0 ? await photoFor(p.id) : null;
     if (a.t === 'cards') {
       const pngs = [];
       for (let j = 0; j < a.cards.length; j++) {
         const f = join(dir, `${p.id}-${n}-${j + 1}.png`);
-        await shoot('cards', size, { kick, i: j, total: a.cards.length, card: a.cards[j], mood }, f);
+        await shoot('cards', size, { kick, i: j, total: a.cards.length, card: a.cards[j], mood, photo: j === 0 ? photo : null }, f);
         pngs.push(f); sheet.push({ f, label: `${p.id} · ${j + 1}/${a.cards.length}` }); files++;
       }
       if (p.channel === 'linkedin' || a.pdf) { await pdfFrom(pngs, size, join(dir, `${p.id}-${n}.pdf`)); files++; }
@@ -125,7 +130,7 @@ for (const p of targets) {
       const data = a.t === 'stat' ? { kick, big: a.big, line: a.line, src: a.src }
         : a.t === 'quote' ? { kick, text: a.text, sub: a.sub, src: a.src }
         : { kick: a.kick || kickFor(p), title: a.title, sub: a.sub, ai: !!a.ai };
-      await shoot(a.t, size, { ...data, mood }, f);
+      await shoot(a.t, size, { ...data, mood, photo }, f);
       sheet.push({ f, label: `${p.id} · ${a.t}` }); files++;
       console.log(`${p.id}  ${n}  ${a.t} · ${size}`);
     }

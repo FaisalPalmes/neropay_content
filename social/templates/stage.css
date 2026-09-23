@@ -137,3 +137,22 @@ html.glass .kick,html.glass .tr,html.glass .src,html.glass .next{display:none}
 html.glass .rule{gap:8px}
 html.glass .rule::before,html.glass .rule::after{width:9px;height:40px;opacity:.85;transform:skewX(var(--shear))}
 html.glass .rule.sm::before,html.glass .rule.sm::after{width:8px;height:24px}
+
+/* v3.2 — the divider is a fading line (Faisal picked it from ten, 23 Sep 2026): yellow at the text edge,
+   gone by 260px. Replaces the double slash on the glass look. */
+html.glass .rule{display:block;width:260px;height:6px;border-radius:4px;gap:0;
+  background:linear-gradient(90deg,rgba(255,207,36,.9),rgba(255,207,36,0))}
+html.glass .rule::before,html.glass .rule::after{display:none}
+html.glass .rule.sm{width:200px;height:5px}
+
+/* the photo opener (Faisal, 23 Sep 2026): the first card of a post — the one that shows on the grid — can sit on
+   a real photograph. render.mjs looks for social/photos/<post id>.(jpg|png|webp) and, if one is there, sets
+   class="photo" and --photo on that card only; the rest of the carousel stays on the abstract ground. The
+   photo is left sharp (no bokeh, BRAND.md); the glass slab does the separating, and a light wash at the foot
+   keeps the wordmark readable. */
+html.photo .bgd{background:var(--photo) center/cover no-repeat}
+html.photo .frost{background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(255,255,255,.55) 100%)}
+html.photo .seam.line{display:none}
+html.photo .lglass{background:linear-gradient(135deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.74) 50%,rgba(255,255,255,.82) 100%);
+  -webkit-backdrop-filter:blur(18px) saturate(1.1);backdrop-filter:blur(18px) saturate(1.1)}
+html.photo .lglass .sheen{display:none}
