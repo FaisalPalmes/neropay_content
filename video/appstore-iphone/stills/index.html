@@ -240,27 +240,35 @@ const ARCS = (op=1) => `<svg class="fx" viewBox="0 0 265.3 579.3">${[60,88,116].
 const S5 = (under, arcs, pill, over='') => `<div class="scrn" style="background:linear-gradient(170deg,#FBEFF4 0%,#F2EEFA 45%,#E9F0FD 100%)">${bloom(-60,230,300,'rgba(255,170,205,.30)')}${bloom(60,360,320,'rgba(140,175,255,.28)')}
   ${under}${arcs}<div class="ctr" style="top:${CY-10}px;height:90px">${pill}</div>${over}<div class="home"></div></div>`;
 const AMT = '<b class="amt">£45.75</b>';
+/* v2 of the mark placements (Faisal, 23 Sep, on the first ten): the amount in the middle of the screen, the mark
+   below it towards the bottom, flat — no shadow — and the screen's own wallpaper a different colour from the
+   picture's pink-and-blue ground so the two no longer read as one wash. Five wallpapers, each with and without
+   the mark. The signal arcs stay, recoloured for each wallpaper. */
+const WP = {
+  white:  { bg:'#FFFFFF', arc:'17,17,20', a:[.16,.10,.06], pill:'#FFFFFF', ring:'rgba(17,17,20,.10)', ink:'#111114' },
+  cream:  { bg:'linear-gradient(180deg,#FCF8EE,#F7F0DE)', arc:'150,120,40', a:[.28,.17,.09], pill:'#FFFFFF', ring:'rgba(150,120,40,.18)', ink:'#111114' },
+  grey:   { bg:'linear-gradient(180deg,#F3F4F6,#E9EBEF)', arc:'17,17,20', a:[.18,.11,.06], pill:'#FFFFFF', ring:'rgba(17,17,20,.08)', ink:'#111114' },
+  butter: { bg:'linear-gradient(180deg,#FFF7DA,#FFEFB8)', arc:'255,255,255', a:[.95,.75,.5], pill:'#FFFFFF', ring:'rgba(180,140,0,.18)', ink:'#111114' },
+  dark:   { bg:'linear-gradient(180deg,#1A1A1F,#111114)', arc:'255,255,255', a:[.30,.18,.10], pill:'rgba(255,255,255,.08)', ring:'rgba(255,255,255,.18)', ink:'#FFFFFF' }
+};
+const PY = 332, MY = 468;                          /* pill centre, mark centre (screen px) */
+const flatMark = (fill, w=40) => `<svg viewBox="0 0 100 100" style="position:absolute;left:${(CX-w/2).toFixed(1)}px;top:${MY-w/2}px;width:${w}px;height:${w}px">${MARKP.map(pt=>`<polygon points="${pt}" fill="${fill}"/>`).join('')}</svg>`;
+const S6 = (wp, markFill) => { const W = WP[wp];
+  return `<div class="scrn${wp==='dark'?' dark':''}" style="background:${W.bg}">
+    <svg class="fx" viewBox="0 0 265.3 579.3">${[60,88,116].map((r,i)=>`<path d="M ${CX-r} ${PY-48} A ${r} ${r*.7} 0 0 1 ${CX+r} ${PY-48}" fill="none" stroke="rgba(${W.arc},${W.a[i]})" stroke-width="${[3,2.6,2.2][i]}" stroke-linecap="round"/>`).join('')}</svg>
+    <div class="ctr" style="top:${PY-42}px;height:84px"><div style="width:200px;height:84px;border-radius:42px;background:${W.pill};box-shadow:0 0 0 1px ${W.ring},0 14px 28px -18px rgba(17,17,20,.30);display:flex;align-items:center;justify-content:center"><b class="amt" style="color:${W.ink}">£45.75</b></div></div>
+    ${markFill ? flatMark(markFill) : ''}<div class="home"></div></div>`; };
 const MARKS = {
-  /* 1 — a small white glass mark leading the amount inside the pill */
-  1: () => S5('', ARCS(), PILL(`<span style="position:relative;width:28px;height:28px">${mark(0,0,28,'#D9D4F2',{style:'filter:drop-shadow(0 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 2px 4px rgba(90,80,160,.35))'})}</span>${AMT}`)),
-  /* 2 — a large glass mark behind everything, a watermark in the glass */
-  2: () => S5(mark(22,190,220,'glass',{op:.55,style:'filter:drop-shadow(0 6px 14px rgba(90,80,160,.18))'}), ARCS(.8), PILL(AMT)),
-  /* 3 — the mark in yellow, small, sitting on top of the pill like a badge */
-  3: () => S5('', ARCS(), PILL(AMT), mark(CX-15, CY-26, 30, '#FFCF24', {style:'filter:drop-shadow(0 2px 4px rgba(150,110,0,.3))'})),
-  /* 4 — the signal comes out of the mark: yellow mark at the arcs' origin */
-  4: () => S5('', ARCS(), PILL(AMT), mark(CX-17, CY-62, 34, '#FFCF24', {style:'filter:drop-shadow(0 2px 5px rgba(150,110,0,.3))'})),
-  /* 5 — a quiet white glass mark above the home indicator */
-  5: () => S5('', ARCS(), PILL(AMT), mark(CX-15, 516, 30, 'glass', {style:'filter:drop-shadow(0 2px 5px rgba(90,80,160,.45))'})),
-  /* 6 — a liquid glass tile with the yellow bars, the app icon, where the arcs start */
-  6: () => S5('', ARCS(), PILL(AMT), `<div style="position:absolute;left:${CX-26}px;top:${CY-88}px;width:52px;height:52px;border-radius:14px;background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(255,255,255,.5));backdrop-filter:blur(6px);box-shadow:inset 0 1.5px 0 #fff,0 0 0 1px rgba(255,255,255,.8),0 10px 20px -10px rgba(90,80,160,.4)">${mark(9,9,34,'#FFCF24')}</div>`),
-  /* 7 — the two bars replace the arcs: big glass bars over the pill */
-  7: () => S5('', mark(CX-70, CY-160, 140, 'glass', {style:'filter:drop-shadow(0 8px 16px rgba(90,80,160,.25))'}), PILL(AMT)),
-  /* 8 — the yellow mark trailing the amount in the pill */
-  8: () => S5('', ARCS(), PILL(`${AMT}<span style="position:relative;width:24px;height:24px">${mark(0,0,24,'#FFCF24')}</span>`)),
-  /* 9 — a big faint yellow mark washed into the screen's light */
-  9: () => S5(mark(-10,150,290,'#FFCF24',{op:.13}), ARCS(), PILL(AMT)),
-  /* 10 — embossed into the pill's glass, white on white, the amount beside it */
-  10: () => S5('', ARCS(), PILL(`<span style="position:relative;width:30px;height:30px">${mark(0,0,30,'#F4F2FB',{style:'filter:drop-shadow(0 1.5px 0 rgba(255,255,255,1)) drop-shadow(0 -1.5px 1px rgba(90,80,160,.55))'})}</span>${AMT}`))
+  1: () => S6('white'),
+  2: () => S6('white', '#FFCF24'),
+  3: () => S6('cream'),
+  4: () => S6('cream', '#111114'),
+  5: () => S6('grey'),
+  6: () => S6('grey', '#FFFFFF'),
+  7: () => S6('butter'),
+  8: () => S6('butter', '#FFFFFF'),
+  9: () => S6('dark'),
+  10: () => S6('dark', '#FFCF24')
 };
 const heroVariant = (v, m) => `<div class="gbg">${THEMES[HERO_THEME[v]]}<div class="disc"></div></div>
   <div class="cut"><div class="hscr">${m ? MARKS[m]() : SCREENS[v]()}<div class="lit"></div><div class="cs"></div></div><img src="assets/hero-cut.png" alt=""></div>`;
