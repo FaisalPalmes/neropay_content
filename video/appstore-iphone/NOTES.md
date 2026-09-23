@@ -1,19 +1,24 @@
-# App Store stills (23 Sep 2026) — `stills/`
+# App Store stills v2 (23 Sep 2026) — `stills/`
 
-Six 1320 × 2868 screenshots (Apple's 6.9" portrait size), rebuilt on Faisal's SumUp and Square references:
-`stills/index.html#1…#6`, rendered by `node stills/render.cjs` into `stills/out/` (git-ignored).
+Six 1320 × 2868 screenshots (Apple's 6.9" portrait size): `stills/index.html#1…#6`, rendered by
+`node stills/render.cjs` into `stills/out/` (git-ignored).
 
-1. **Hero** — a card tapped on a phone, photographed in Higgsfield (`stills/HIGGSFIELD-PROMPT.md`), headline
-   "Take card payments / on your phone." Slot only until the photograph and the app's tap screen arrive.
-2. **Keypad** — bare screenshot in the heavy yellow glass outline; his chips Card, Tap, Payment link on the edges.
-3. **NeroPOS** — in the phone; the cheesecake tile lifted off its own place and over the phone's edge.
-4. **Transactions** — bare in the glass outline; the NeroWeb sale lifted off its own row.
-5. **Reports** — in the phone; the total and the chart tooltip lifted.
-6. **Payment links** — in the phone; his three chips.
+Faisal's ruling on v1 of the stills: keep our own layout and copy, exactly as his export — wordmark, yellow rule,
+kicker, headline with the marker, sub, chips. The SumUp carousel was a reference for the art only: some screens
+inside a phone, some bare in a heavy yellow glass outline, with a piece of the screen lifted out over them. So the
+floating tags, the diagonal bar and the enlarged headline of v1 are gone.
 
-Headlines and chip words are his, verbatim; the sub-lines and kickers were dropped because a store thumbnail cannot
-carry them. One background element: the mark's bar at 46.5°. The screens are his 923 × 2000 export, so at App Store
-size they are upscaled about 1.3×; full-resolution device screenshots would make them sharper.
+1. **Hero** — his Higgsfield photograph (`stills/assets/hero-src.webp`, prompt in `HIGGSFIELD-PROMPT.md`), the green
+   screen keyed by `stills/key-hero.py` and the keypad screen placed underneath. Kicker, headline and sub are new
+   ("Contactless" / "Take card payments on your phone." / "Your customer taps their card on your phone.") and wait
+   on his approval; the tap screen replaces the keypad when he sends it.
+2. **Take a payment** — bare in the glass outline.
+3. **NeroPOS** — in the phone, the cheesecake lifted.
+4. **Transactions** — bare in the glass outline, the NeroWeb sale lifted.
+5. **Reports** — in the phone, the total and the chart tooltip lifted.
+6. **Payment links** — in the phone, the amount field lifted.
+
+The screens are his 923 × 2000 export, so at App Store size they are upscaled about 1.3×.
 
 # App Store preview, iPhone — v5 (23 Sep 2026) is current; v4 and earlier are below and superseded
 
