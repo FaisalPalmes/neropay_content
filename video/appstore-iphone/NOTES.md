@@ -1,3 +1,20 @@
+# App Store stills (23 Sep 2026) — `stills/`
+
+Six 1320 × 2868 screenshots (Apple's 6.9" portrait size), rebuilt on Faisal's SumUp and Square references:
+`stills/index.html#1…#6`, rendered by `node stills/render.cjs` into `stills/out/` (git-ignored).
+
+1. **Hero** — a card tapped on a phone, photographed in Higgsfield (`stills/HIGGSFIELD-PROMPT.md`), headline
+   "Take card payments / on your phone." Slot only until the photograph and the app's tap screen arrive.
+2. **Keypad** — bare screenshot in the heavy yellow glass outline; his chips Card, Tap, Payment link on the edges.
+3. **NeroPOS** — in the phone; the cheesecake tile lifted off its own place and over the phone's edge.
+4. **Transactions** — bare in the glass outline; the NeroWeb sale lifted off its own row.
+5. **Reports** — in the phone; the total and the chart tooltip lifted.
+6. **Payment links** — in the phone; his three chips.
+
+Headlines and chip words are his, verbatim; the sub-lines and kickers were dropped because a store thumbnail cannot
+carry them. One background element: the mark's bar at 46.5°. The screens are his 923 × 2000 export, so at App Store
+size they are upscaled about 1.3×; full-resolution device screenshots would make them sharper.
+
 # App Store preview, iPhone — v5 (23 Sep 2026) is current; v4 and earlier are below and superseded
 
 **File** `renders/FINAL-appstore-iphone-v5.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.4 MB · −13.9 LUFS / −1.8 dBTP ·

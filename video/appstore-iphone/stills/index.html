@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=660, height=1434">
+<title>NeroPay App Store stills</title>
+<!-- NeroPay — App Store carousel stills, iPhone 6.9", 23 Sep 2026. Laid out at 660 × 1434 CSS px and captured at
+     2× = 1320 × 2868, Apple's 6.9" portrait size. One frame per page load: stills/index.html#1 … #6 (render.cjs).
+     Faisal's brief from the SumUp and Square carousels: a tap-to-pay photograph first, then the features, mixing
+     screens inside a phone with bare screenshots in a heavy yellow glass outline, the feature tags floating over
+     the art, one strong headline on top. His headlines and chip words are verbatim from his v1 export. -->
+<style>
+@font-face{font-family:Poppins;src:url(../fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(../fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(../fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+:root{--yel:#FFCF24;--ink:#111114;--ground:#F4F3EF}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:660px;height:1434px;overflow:hidden;background:var(--ground)}
+.frame{position:absolute;inset:0;overflow:hidden;background:var(--ground)}
+
+/* the one background element: the mark's bar at 46.5deg, yellow, behind the art */
+.bar{position:absolute;width:1800px;height:210px;background:var(--yel);transform-origin:0 0;transform:rotate(46.5deg)}
+
+/* headline: his words, bigger than v1 because a store thumbnail is small */
+h1{position:absolute;left:44px;right:36px;top:92px;font:700 66px/1.02 Poppins;letter-spacing:-.04em;color:var(--ink)}
+h1 span{display:block}
+h1 .two{position:relative;display:inline-block;isolation:isolate}
+h1 .two::before{content:"";position:absolute;left:-8px;right:-10px;bottom:.07em;height:.42em;background:var(--yel);border-radius:4px;z-index:-1}
+
+/* a bare screenshot in a heavy yellow liquid-glass outline */
+.glass{position:absolute;padding:15px;border-radius:50px;
+  background:linear-gradient(150deg,#FFE789 0%,#FFCF24 30%,#F4BE0C 58%,#FFD94A 80%,#FFF0B0 100%);
+  box-shadow:0 50px 90px -40px rgba(17,17,20,.40),0 14px 30px -18px rgba(17,17,20,.25),
+    inset 0 3px 0 rgba(255,255,255,.85),inset 0 -3px 4px rgba(150,105,0,.35),inset 0 0 0 1.5px rgba(255,255,255,.35)}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(118deg,rgba(255,255,255,.65) 0%,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 70%,rgba(255,255,255,.35) 100%)}
+.glass .shot{position:relative;border-radius:36px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(120,90,0,.25)}
+.glass .shot img{display:block;width:100%}
+
+/* a flat, unbranded phone: the same front face as the video, no maker's mark */
+.phone{position:absolute;border-radius:74px;padding:12px;
+  background:linear-gradient(145deg,#4A4C51 0%,#26272B 40%,#17181B 64%,#3C3E43 100%);
+  box-shadow:0 60px 100px -45px rgba(17,17,20,.55),0 16px 34px -20px rgba(17,17,20,.35),
+    inset 0 0 0 2px rgba(255,255,255,.26),inset 0 0 0 7px #0F1012}
+.phone .scr{position:relative;border-radius:62px;overflow:hidden;background:#fff}
+.phone .sbar{height:64px;position:relative;background:#fff}
+.phone .sbar .t{position:absolute;left:42px;top:24px;font:600 19px Poppins;color:#111}
+.phone .sbar .isl{position:absolute;left:50%;top:18px;width:132px;height:38px;margin-left:-66px;border-radius:20px;background:#050506}
+.phone .sbar .r{position:absolute;right:38px;top:28px;display:flex;gap:5px;align-items:flex-end}
+.phone .sbar .r b{display:block;background:#111;border-radius:2px;width:4px}
+.phone .sbar .r b.bat{width:24px;height:12px;border-radius:4px;margin-left:6px}
+.phone .scr img{display:block;width:100%}
+
+/* feature tags floating over the art */
+.tag{position:absolute;display:flex;align-items:center;gap:10px;padding:14px 22px;border-radius:999px;background:#fff;
+  font:600 22px Poppins;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;
+  box-shadow:0 24px 40px -22px rgba(17,17,20,.45),0 4px 10px -6px rgba(17,17,20,.2),inset 0 0 0 1px rgba(17,17,20,.06)}
+.tag i{width:11px;height:11px;border-radius:50%;background:var(--yel);box-shadow:0 0 0 3px rgba(255,207,36,.28)}
+
+/* a piece of the screen lifted out and floated over the phone, the SumUp croissant */
+.lift{position:absolute;overflow:hidden;border-radius:22px;background:#fff;
+  box-shadow:0 40px 70px -30px rgba(17,17,20,.50),0 10px 22px -12px rgba(17,17,20,.30),inset 0 0 0 1px rgba(17,17,20,.06)}
+.lift img{position:absolute;display:block}
+
+/* the hero: the Higgsfield photograph fills the frame; the copy sits on it in white */
+.hero{position:absolute;inset:0;background:#D9D4CB center/cover no-repeat}
+.hero .ph{position:absolute;left:60px;right:60px;top:560px;height:360px;border:3px dashed rgba(17,17,20,.35);border-radius:28px;
+  display:flex;align-items:center;justify-content:center;text-align:center;font:600 22px/1.4 Poppins;color:rgba(17,17,20,.55)}
+.is1 h1{color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.25)} .is1 h1 .two{color:var(--ink);text-shadow:none}
+.hero .foot{position:absolute;left:44px;right:36px;bottom:96px;font:700 50px/1.04 Poppins;letter-spacing:-.035em;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.25)}
+</style>
+</head>
+<body>
+<div class="frame" id="f"></div>
+<script>
+/* app-card crops from make-assets.sh: 785 × 1320, cut from his 923 × 2000 export */
+const A = k => `../assets/app/app${k}.png`;
+const H = (a,b) => `<h1><span>${a}</span><span class="two">${b}</span></h1>`;
+const bar = (x,y) => `<div class="bar" style="left:${x}px;top:${y}px"></div>`;
+const tag = (t,x,y) => `<div class="tag" style="left:${x}px;top:${y}px"><i></i>${t}</div>`;
+const glass = (k,x,y,w) => `<div class="glass" style="left:${x}px;top:${y}px;width:${w}px"><div class="shot"><img src="${A(k)}" alt=""></div></div>`;
+const phone = (k,x,y,w) => `<div class="phone" style="left:${x}px;top:${y}px;width:${w}px"><div class="scr">
+  <div class="sbar"><div class="t">9:41</div><div class="isl"></div><div class="r"><b style="height:7px"></b><b style="height:10px"></b><b style="height:13px"></b><b style="height:16px"></b><b class="bat"></b></div></div>
+  <img src="${A(k)}" alt=""></div></div>`;
+/* lift(k, crop x,y,w,h in app-card px, placed at X,Y with width W) */
+const lift = (k,cx,cy,cw,ch,X,Y,W) => { const s = W/cw;
+  return `<div class="lift" style="left:${X}px;top:${Y}px;width:${W}px;height:${(ch*s).toFixed(1)}px">
+    <img src="${A(k)}" style="width:${(785*s).toFixed(1)}px;left:${(-cx*s).toFixed(1)}px;top:${(-cy*s).toFixed(1)}px" alt=""></div>`; };
+
+const F = {
+  /* 1 — the tap. The photograph comes from Higgsfield (prompt in NOTES.md); until it lands this is a slot. */
+  1: () => `<div class="hero" id="hero"><div class="ph">Higgsfield photograph<br>(hero.jpg)</div></div>
+            ${H('Take card payments','on your phone.')}`,
+  /* 2 — the keypad, bare; his three chips ride the outline, never over a key */
+  2: () => bar(-300,560) + H('Charge it in','three taps.') +
+            glass(1,60,320,540) + tag('Card',18,470) + tag('Tap',520,700) + tag('Payment link',180,1232),
+  /* 3 — NeroPOS in the phone, the cheesecake lifted straight up off its own tile and over the edge */
+  3: () => bar(-520,700) + H('Your menu,','on the till.') +
+            phone(2,86,320,488) + lift(2,402,543,345,377,320,700,270) + tag('Photos',20,560) + tag('Table map',24,1120),
+  /* 4 — transactions, bare, one sale lifted off its own row */
+  4: () => bar(-300,760) + H('Every sale,','one list.') +
+            glass(3,60,320,540) + lift(3,0,335,785,190,40,545,580) + tag('Terminal',20,1080) + tag('Web',470,1232),
+  /* 5 — reports in the phone, the total and the chart tooltip lifted off their own places */
+  5: () => bar(-520,620) + H('See what sold,','and where.') +
+            phone(4,86,320,488) + lift(4,20,752,370,132,50,826,300) + lift(4,254,282,300,66,240,555,260),
+  /* 6 — payment links in the phone, his three chips */
+  6: () => bar(-300,700) + H('Send a link.','Get paid.') +
+            phone(5,86,320,488) + tag('72-hour expiry',330,520) + tag('One-time use',20,820) + tag('By email',400,1212)
+};
+const n = +(location.hash.slice(1) || 1);
+const fr = document.getElementById('f'); fr.className = 'frame is'+n; fr.innerHTML = F[n]();
+if (n === 1) { const im = new Image(); im.onload = () => { const h = document.getElementById('hero'); h.style.backgroundImage = 'url(hero.jpg)'; h.innerHTML = ''; }; im.src = 'hero.jpg'; }
+</script>
+</body>
+</html>
