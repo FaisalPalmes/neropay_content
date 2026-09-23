@@ -123,10 +123,29 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
 .scrn .amt{font:700 34px/1 Poppins;letter-spacing:-.03em;color:#111114}
 .scrn svg.fx{position:absolute;left:0;top:0;width:265.3px;height:579.3px;overflow:visible}
 .scrn .ctr{position:absolute;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+
+/* ── photo slides (3, 5, 6): Faisal's green-screen hand shots, cut off the wall (cut-photo.py); the app is mapped
+   onto the keyed screen with a homography so it sits at the photo's own angle ── */
+.pht{position:absolute;left:0;top:0;transform-origin:0 0}
+.pht > img.cutimg{position:absolute;left:0;top:0;width:1116px;height:2000px;filter:drop-shadow(0 34px 40px rgba(30,30,60,.22)) drop-shadow(0 8px 12px rgba(30,30,60,.12))}
+.pscr{position:absolute;left:0;top:0;transform-origin:0 0;overflow:hidden;background:#fff}
+.pscr .in{position:absolute;inset:0;filter:blur(.5px) contrast(.95) brightness(.97) saturate(.95)}
+.pscr .st{height:44px;position:relative;background:#fff}
+.pscr .st .t{position:absolute;left:34px;top:14px;font:600 17px Poppins;color:#111}
+.pscr .st .r{position:absolute;right:30px;top:18px;display:flex;gap:4px;align-items:flex-end}
+.pscr .st .r b{display:block;background:#111;border-radius:2px;width:4px}
+.pscr .st .r b.bat{width:22px;height:11px;border-radius:3px;margin-left:5px}
+.pscr .in img{display:block;width:100%}
+.pscr .hm{position:absolute;left:50%;bottom:9px;width:130px;height:5px;margin-left:-65px;border-radius:3px;background:#111}
+.pscr .lt{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 35%,rgba(40,30,20,0) 60%,rgba(40,30,20,.07) 100%),
+             linear-gradient(118deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.10) 52%,rgba(255,255,255,0) 64%);
+  box-shadow:inset 0 0 10px rgba(0,0,0,.28),inset 0 0 3px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
 <div class="frame" id="f"></div>
+<script src="assets/photo-quads.js"></script>
 <script>
 /* app-card crops from make-assets.sh: 785 × 1320, cut from his 923 × 2000 export */
 const A = k => `../assets/app/app${k}.png`;
@@ -308,12 +327,45 @@ const GROUND = {
   5: bloom(300,300,700,'rgba(255,170,205,.34)') + bloom(0,1050,800,'rgba(140,175,255,.38)') + bloom(420,-220,520,'rgba(255,214,110,.26)') + disc(90,700,620),
   6: bloom(360,-200,680,'rgba(140,175,255,.42)') + bloom(240,880,700,'rgba(255,170,205,.38)') + bloom(-340,420,640,'rgba(200,170,255,.30)') + disc(-120,500,540)
 };
+
+/* ── photo slides ── */
+/* a CSS matrix3d that sends the rectangle (0,0)–(w,h) onto the quad p0 p1 p2 p3 (tl, tr, br, bl) */
+function homography(w, h, q) {
+  const src = [[0,0],[w,0],[w,h],[0,h]], A = [], B = [];
+  for (let i = 0; i < 4; i++) { const [x,y] = src[i], [u,v] = q[i];
+    A.push([x,y,1,0,0,0,-u*x,-u*y]); B.push(u); A.push([0,0,0,x,y,1,-v*x,-v*y]); B.push(v); }
+  for (let c = 0; c < 8; c++) { let m = c; for (let r = c+1; r < 8; r++) if (Math.abs(A[r][c]) > Math.abs(A[m][c])) m = r;
+    [A[c],A[m]] = [A[m],A[c]]; [B[c],B[m]] = [B[m],B[c]];
+    for (let r = 0; r < 8; r++) if (r !== c) { const f = A[r][c] / A[c][c]; for (let k = c; k < 8; k++) A[r][k] -= f*A[c][k]; B[r] -= f*B[c]; } }
+  const h8 = B.map((b,i) => b / A[i][i]);
+  const [a,b,c,d,e,f,g,k] = h8;
+  return `matrix3d(${[a,d,0,g, b,e,0,k, 0,0,1,0, c,f,0,1].map(n=>n.toFixed(8)).join(',')})`;
+}
+const PHOTO = { 3:{ name:'pos', app:2 }, 5:{ name:'reports', app:4 }, 6:{ name:'links', app:5 } };
+function photoSlide(n) {
+  const P = PHOTO[n], Q = PHOTOQ[P.name].quad, q = [Q.tl, Q.tr, Q.br, Q.bl];
+  const top = Math.min(Q.tl[1], Q.tr[1]), bot = Math.max(Q.bl[1], Q.br[1]);
+  /* scale: the phone about 640px tall (bigger than slide 1's, so the app reads), and never so small the arms stop short of the frame's bottom edge */
+  const s = Math.max(640 / (bot - top), 954 / (2000 - top) + .005);
+  const cx = (Q.tl[0] + Q.tr[0] + Q.br[0] + Q.bl[0]) / 4;
+  const ox = 330 - cx * s, oy = 480 - top * s;
+  /* the screen's content: laid out at 400 wide, as tall as the quad's own proportion */
+  const wq = (Math.hypot(Q.tr[0]-Q.tl[0], Q.tr[1]-Q.tl[1]) + Math.hypot(Q.br[0]-Q.bl[0], Q.br[1]-Q.bl[1])) / 2;
+  const hq = (Math.hypot(Q.bl[0]-Q.tl[0], Q.bl[1]-Q.tl[1]) + Math.hypot(Q.br[0]-Q.tr[0], Q.br[1]-Q.tr[1])) / 2;
+  const CW = 400, CH = Math.round(CW * hq / wq);
+  const M = homography(CW, CH, q);
+  return `<div class="pht" style="transform:translate(${ox.toFixed(1)}px,${oy.toFixed(1)}px) scale(${s.toFixed(4)})">
+    <div class="pscr" style="width:${CW}px;height:${CH}px;transform:${M}"><div class="in">
+      <div class="st"><div class="t">9:41</div><div class="r"><b style="height:6px"></b><b style="height:9px"></b><b style="height:12px"></b><b style="height:15px"></b><b class="bat"></b></div></div>
+      <img src="${A(P.app)}" alt=""><div class="hm"></div></div><div class="lt"></div></div>
+    <img class="cutimg" src="assets/photo-${P.name}-cut.png" alt=""></div>`;
+}
 const [n, v, m] = (location.hash.slice(1) || '1').split('-').map(Number);
 const fr = document.getElementById('f');
 fr.className = 'frame is' + n;
 /* frame 1 draws the art first so the copy sits above the hands; #1-k is one of the cut-out variants */
 fr.innerHTML = n === 1 ? (v ? heroVariant(v, m) : ART[1]()) + copy(COPY[1])
-             : `<div class="gbg">${GROUND[n]}</div>` + copy(COPY[n]) + ART[n]();
+             : `<div class="gbg">${GROUND[n]}</div>` + (PHOTO[n] && !v ? photoSlide(n) + copy(COPY[n]) : copy(COPY[n]) + ART[n]());
 </script>
 </body>
 </html>
