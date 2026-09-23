@@ -1,4 +1,19 @@
-# App Store preview, iPhone — v4 (23 Sep 2026) is current; v3, v2 and v1 are below and superseded
+# App Store preview, iPhone — v5 (23 Sep 2026) is current; v4 and earlier are below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v5.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.4 MB · −13.9 LUFS / −1.8 dBTP ·
+md5 `d8682c6cdd835e9ce7c8c739ea03e368` · Higgsfield media `cce72b47-2900-43de-8268-77beb2cdd6e0`.
+
+## v5 — Faisal's notes on v4, and what changed
+
+| Note | v5 |
+|---|---|
+| The frosted panes behind the phones read as a phone outline with a shadow | Removed. In their place, twelve narrow stripes at the mark's 46.5° made of clear glass (a pale fill, a bright rim, a faint shadow) stand in the 3D world at depths of 700–1,500px behind the sections, spread along the whole flight path. The camera flies past them, so they drift at their own parallax; they are just visible and never the subject |
+| The outro: the yellow comes in and covers the screen; make it turn into the logo's two lines in the same swish | One motion. Each yellow band is the logo bar itself under a stretch: it enters from its corner, meets the other on the 46.5° seam and covers the frame (25.75s), then draws straight down into its bar on the glass tile (26.75s). The same four corners travel the whole way, so there is no second set of shapes. The bars' seam-side edges are pinned to the seam so the two bands meet with no wedge |
+
+Mastering: the true peak came out at −1.0 dBTP on the first pass (the swish's thump), so `mix.sh` now limits at
+0.84 and targets −2.0 dBTP; the master is −1.8.
+
+# v4 (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v4.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.0 MB · −13.8 LUFS / −1.4 dBTP ·
 md5 `c636220bf84fc69db7b1411611f93c96` · Higgsfield media `f9cc3a68-b18a-4f7d-bd73-73c1892b5567`.

@@ -28,12 +28,12 @@ ffmpeg -y -loglevel error -i "$IN" \
 [6:a]volume=0.16,adelay=26720|26720[pp];\
 [7:a]volume=0.12,adelay=26950|26950[ch];\
 [bed][u0][f1][f2][f3][f4][l0][l1][l2][l3][l4][sd][imp][op][pp][ch]amix=inputs=16:normalize=0:duration=first[mx];\
-[mx]alimiter=limit=0.89:level=false,aformat=cl=stereo:r=48000[a]" \
+[mx]alimiter=limit=0.84:level=false,aformat=cl=stereo:r=48000[a]" \
  -map 0:v -map "[a]" -c:v copy -c:a pcm_s16le -shortest "$TMP/mixed.mov"
-J=$(ffmpeg -y -i "$TMP/mixed.mov" -vn -af "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json" -f null - 2>&1 | sed -n '/^{/,/^}/p')
+J=$(ffmpeg -y -i "$TMP/mixed.mov" -vn -af "loudnorm=I=-14:TP=-2.0:LRA=11:print_format=json" -f null - 2>&1 | sed -n '/^{/,/^}/p')
 read I TP LRA TH OFF <<< "$(echo "$J" | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['input_i'],d['input_tp'],d['input_lra'],d['input_thresh'],d['target_offset'])")"
 ffmpeg -y -loglevel error -i "$TMP/mixed.mov" \
- -af "loudnorm=I=-14:TP=-1.5:LRA=11:measured_I=$I:measured_TP=$TP:measured_LRA=$LRA:measured_thresh=$TH:offset=$OFF:linear=true,aformat=cl=stereo:r=48000" \
+ -af "loudnorm=I=-14:TP=-2.0:LRA=11:measured_I=$I:measured_TP=$TP:measured_LRA=$LRA:measured_thresh=$TH:offset=$OFF:linear=true,aformat=cl=stereo:r=48000" \
  -c:v copy -c:a aac -b:a 192k -t 29 -movflags +faststart "$OUT"
 rm -rf "$TMP"
 ffmpeg -i "$OUT" -vn -af "loudnorm=I=-14:TP=-1.5:print_format=summary" -f null - 2>&1 | grep -E "Input Integrated|Input True Peak"
