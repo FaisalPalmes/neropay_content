@@ -106,14 +106,15 @@ window.LIBRARY = {
       ] },
 
     { id: 'AS01', series: 'App Store', title: 'App preview — iPhone',
-      version: 'v2', rendered: '2026-09-23', secs: 29.0,
-      status: 'review', by: 'unrecorded — v2 rebuilt on Faisal\'s 23 Sep notes on v1 and sent for his review',
-      waiting: 'Faisal watches v2. v1 (22 Sep) was rejected as too flat; v2 is a 3D world with the screens in a phone.',
+      version: 'v3', rendered: '2026-09-23', secs: 29.0,
+      status: 'review', by: 'unrecorded — v3 rebuilt on Faisal\'s 23 Sep notes on v2 and sent for his review',
+      waiting: 'Faisal watches v3. v2 had no depth to the phone, the copy and phone in two places, and a close with too many colours; v1 (22 Sep) was too flat.',
       build: 'video/appstore-iphone/', drive: null, backup: false, clearedFor: null, notCleared: null,
-      clearanceNote: 'A store listing asset, not a social post, so the platform question is Apple review rather than Route C. An App Preview must read as the app in use; v2 shows his own app screens inside a phone.',
-      note: 'One CSS 3D world: each of his five screens is a section — live copy set in Poppins and a neutral code-drawn phone with the app card filling its screen — and the camera flies between them; the phone flips in as it lands. No zooms. The kept Shutter intro; a white close with two full-bleed yellow stripes and the mark drawn as vector. No voiceover, no captions. v1 is in archive/. The iPad and Play Store cuts are not made.',
+      clearanceNote: 'A store listing asset, not a social post, so the platform question is Apple review rather than Route C. An App Preview must read as the app in use; v3 shows his own app screens inside a phone.',
+      note: 'One CSS 3D world: each of his five screens is one unit — live copy in Poppins set on the phone\'s own front plane, directly above a solid code-drawn phone (64px deep, rounded metal band, side buttons) — turned together, with the camera flying between them. The kept Shutter intro; a one-colour close: white, the mark\'s two bars in yellow, the light wordmark. No voiceover, no captions. v1 and v2 are in archive/. The iPad and Play Store cuts are not made.',
       files: [
-        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.8', media: '95de77ce-860a-41ec-940c-16572defa056', md5: '1c3db388fc0fc6d847861fd94af1c38c' },
+        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.8', media: 'de6ff248-9d32-469a-8639-369397fcf441', md5: '1aa7e5c4fb371c2910e3f4e37f6e8bf3' },
+        { crop: 'v2, superseded', px: '886×1920', lufs: '−13.8', media: '95de77ce-860a-41ec-940c-16572defa056', md5: '1c3db388fc0fc6d847861fd94af1c38c' },
         { crop: 'v1, superseded', px: '886×1920', lufs: '−13.5', media: 'ffdeb658-553c-4f1a-a74b-03f6cfa97219', md5: '41a8563735273d3d008210bcc2082674' }
       ] },
 

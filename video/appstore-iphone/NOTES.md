@@ -1,7 +1,7 @@
 # App Store preview, iPhone — v3 (23 Sep 2026) is current; v2 and v1 are below and superseded
 
-**File** `renders/FINAL-appstore-iphone-v3.mp4` · 886 × 1920 · 30 fps · 29.0s · @SIZE@ · @LUFS@ ·
-md5 `@MD5@` · Higgsfield media `@MEDIA@`.
+**File** `renders/FINAL-appstore-iphone-v3.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.3 MB · −13.8 LUFS / −1.4 dBTP ·
+md5 `1aa7e5c4fb371c2910e3f4e37f6e8bf3` · Higgsfield media `de6ff248-9d32-469a-8639-369397fcf441`.
 
 ## v3 — Faisal's notes on v2, and what changed
 
