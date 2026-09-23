@@ -6,6 +6,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 HF="npx --yes hyperframes@0.8.31"
+# the outro is the locked logo sting (brand/sting, yellow); copied in, never rebuilt, and its last frame is the hold
+cp ../../brand/sting/neropay-sting-yellow-9x16.mp4 assets/sting-yellow-9x16.mp4
+ffmpeg -y -loglevel error -sseof -0.04 -i assets/sting-yellow-9x16.mp4 -frames:v 1 -update 1 assets/sting-yellow-9x16-last.png
 node stills/render.cjs layers
 $HF render --fps 30 -o renders/iphone-picture.mp4
 node make-formats.mjs

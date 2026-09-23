@@ -62,7 +62,28 @@ Told to Faisal with the delivery:
 - Play needs a 1024 × 500 feature graphic, which is not made.
 - The Play promo video goes up as a YouTube link.
 
-# App Store preview, iPhone — v8 (23 Sep 2026) is current; v7 and earlier are below and superseded
+# App Store preview — v9 (23 Sep 2026) is current; v8 and earlier are below and superseded
+
+| Store | File | Size | md5 | Higgsfield media |
+|---|---|---|---|---|
+| iPhone | `renders/FINAL-appstore-iphone-v9.mp4` · 886 × 1920 | 12.9 MB | `a539ae5716a855bbfbd57bc19f3f0cb9` | `cfc7a40d-e640-42b4-85d3-fa0e81347a7d` |
+| iPad | `renders/FINAL-appstore-ipad-v9.mp4` · 1200 × 1600 | 13.0 MB | `e4eff7b7f5c34c397ac32000ebaa55f7` | `7430d6ed-f276-442b-b321-477ff869b3e9` |
+| Google Play | `renders/FINAL-appstore-play-v9.mp4` · 1080 × 1920 | 14.4 MB | `730cd1a332d7e33646fbff4df2e3ae99` | `1c48f40e-4b1c-48e2-843e-78097c043bf5` |
+
+All 30 fps, 29.0s, −13.6 LUFS / −1.7 dBTP.
+
+## v9: the logo sting replaces the swish
+
+Faisal locked the logo sting on 23 Sep (`brand/sting/`) and asked for this preview to end on it. The edit up to
+24.9s is v8 unchanged. From 24.9s the payment-links slide pulls back (scale 0.82), the frame washes to the sting's
+off-white `#FBFAF7` by 25.9s, and the yellow 9:16 sting plays from 25.9s: wordmark, letters converge, the glass tile
+at 26.77–26.88s, the light pass, and its last frame holds to 29.0s. On iPad the 9:16 sting is cover-scaled into
+3:4, which crops only the empty ground above and below; the wordmark still fits the width. The sound is in
+`mix.sh`: a whoosh on the pull-back, `impact-bass-1` at 26.82s where the letters meet, a sparkle and a chime under
+the light pass. The sting files are copied in by `render-all.sh` and are git-ignored. Yellow was chosen because it
+is the only look that keeps Eray's colours (`brand/sting/README.md`, open question 2).
+
+# App Store preview, iPhone — v8 (23 Sep 2026) (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v8.mp4` · 886 × 1920 · 30 fps · 29.0s · 13.0 MB · −13.9 LUFS / −1.9 dBTP ·
 md5 `d1cbf2dc473d38e04c6b6eb788a8d766` · Higgsfield media `5fe76e7d-ae80-4b99-a508-2dd371b5335a`.
