@@ -107,6 +107,22 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
 /* the card's bottom edge runs (390,783)→(806,818) in the source: 4.8deg; its shadow falls on the glass below it */
 .hscr .cs{position:absolute;left:-20px;top:136px;width:330px;height:30px;transform-origin:0 0;transform:rotate(4.8deg);
   background:linear-gradient(to bottom,rgba(12,14,30,.34),rgba(12,14,30,0));filter:blur(3px)}
+
+/* ── frame 1 variants, #1-1 … #1-8 (Faisal, 23 Sep): the hands, phone and card cut off the wall (cut-hero.py) and set
+   on a blurred liquid-glass ground of soft mixed light; eight tap-ready screen designs, the yellow toned down ── */
+.gbg{position:absolute;inset:0;overflow:hidden;background:#F3F1EE}
+.gbg .bl{position:absolute;border-radius:50%}
+.gbg .disc{position:absolute;left:40px;top:430px;width:600px;height:600px;border-radius:50%;
+  background:linear-gradient(150deg,rgba(255,255,255,.42),rgba(255,255,255,.12));backdrop-filter:blur(26px) saturate(140%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.8),inset 0 0 0 1.5px rgba(255,255,255,.45),0 50px 90px -50px rgba(40,40,70,.25)}
+.cut{position:absolute;left:-70px;top:0;width:800px;height:1434px}
+.cut > img{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 28px 36px rgba(30,30,60,.22)) drop-shadow(0 6px 10px rgba(30,30,60,.12))}
+.scrn{position:absolute;inset:0;overflow:hidden;filter:blur(.35px) contrast(.96) brightness(.98) saturate(.96)}
+.scrn .home{position:absolute;left:50%;bottom:7px;width:92px;height:4px;margin-left:-46px;border-radius:3px;background:#111}
+.scrn.dark .home{background:#EDEDED}
+.scrn .amt{font:700 34px/1 Poppins;letter-spacing:-.03em;color:#111114}
+.scrn svg.fx{position:absolute;left:0;top:0;width:265.3px;height:579.3px;overflow:visible}
+.scrn .ctr{position:absolute;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
 </style>
 </head>
 <body>
@@ -157,11 +173,64 @@ const ART = {
   5: () => phone(4,86,492,488) + lift(4,20,752,370,132,50,998,300) + lift(4,254,282,300,66,240,727,260),
   6: () => phone(5,86,492,488) + lift(5,25,150,735,125,80,642,500)
 };
-const n = +(location.hash.slice(1) || 1);
+
+/* ── frame 1 variants ── */
+const CL = (c='#111114', w=2) => `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round"><path d="M6.5 8.5a5 5 0 0 1 0 7"/><path d="M10 6a9 9 0 0 1 0 12"/><path d="M13.5 3.5a13 13 0 0 1 0 17"/></svg>`;
+const CX = 132.65, CY = 360;                       /* the screen's visible centre, below the card */
+const ell = (ks, rx, ry, col, ws, dash='') => `<svg class="fx" viewBox="0 0 265.3 579.3">${ks.map((k,i)=>
+  `<ellipse cx="${CX}" cy="${CY}" rx="${(rx*k).toFixed(1)}" ry="${(ry*k).toFixed(1)}" fill="none" stroke="${col[i]}" stroke-width="${ws[i]}" ${dash}/>`).join('')}</svg>`;
+const bloom = (x,y,w,c) => `<div class="bl" style="position:absolute;border-radius:50%;left:${x}px;top:${y}px;width:${w}px;height:${w}px;background:radial-gradient(closest-side,${c},rgba(255,255,255,0))"></div>`;
+const SCREENS = {
+  /* 1 — calm pill: white, ink outline, grey ripples, one small yellow dot */
+  1: () => `<div class="scrn" style="background:#FAFAF8">${bloom(-40,220,300,'rgba(255,214,90,.16)')}${bloom(80,380,280,'rgba(130,160,255,.14)')}
+      ${ell([1.3,1.62,1.98,2.4],95,52,['rgba(17,17,20,.16)','rgba(17,17,20,.11)','rgba(17,17,20,.07)','rgba(17,17,20,.045)'],[1.4,1.2,1.1,1])}
+      <div class="ctr" style="top:${CY-52}px;height:104px"><div style="width:190px;height:104px;border-radius:52px;background:#fff;box-shadow:0 0 0 1.5px #111114,0 16px 30px -18px rgba(17,17,20,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">${CL()}<b class="amt">£45.75</b></div></div>
+      <i style="position:absolute;left:${CX-4}px;top:${CY+66}px;width:8px;height:8px;border-radius:50%;background:#FFCF24"></i><div class="home"></div></div>`,
+  /* 2 — round: a white disc, soft lilac-blue ripples */
+  2: () => `<div class="scrn" style="background:#F5F6FB">${bloom(-60,250,320,'rgba(170,150,255,.22)')}${bloom(60,330,300,'rgba(120,170,255,.18)')}
+      <svg class="fx" viewBox="0 0 265.3 579.3">${[1.35,1.75,2.2,2.7].map((k,i)=>`<circle cx="${CX}" cy="${CY}" r="${(70*k).toFixed(1)}" fill="none" stroke="rgba(110,120,230,${[.28,.18,.11,.06][i]})" stroke-width="1.4"/>`).join('')}</svg>
+      <div class="ctr" style="top:${CY-70}px;height:140px"><div style="width:140px;height:140px;border-radius:50%;background:#fff;box-shadow:0 18px 36px -18px rgba(60,60,140,.4),inset 0 0 0 1px rgba(17,17,20,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">${CL('#4A55C8')}<b class="amt" style="font-size:30px">£45.75</b></div></div><div class="home"></div></div>`,
+  /* 3 — dark: ink screen, a thin warm outline, white ripples */
+  3: () => `<div class="scrn dark" style="background:#141418">${bloom(-70,240,320,'rgba(255,200,60,.14)')}${bloom(70,360,300,'rgba(110,140,255,.18)')}
+      ${ell([1.3,1.62,1.98,2.4],95,52,['rgba(255,255,255,.22)','rgba(255,255,255,.14)','rgba(255,255,255,.08)','rgba(255,255,255,.045)'],[1.4,1.2,1.1,1])}
+      <div class="ctr" style="top:${CY-52}px;height:104px"><div style="width:190px;height:104px;border-radius:52px;background:rgba(255,255,255,.06);box-shadow:0 0 0 1.5px rgba(255,207,36,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">${CL('#FFFFFF')}<b class="amt" style="color:#fff">£45.75</b></div></div><div class="home"></div></div>`,
+  /* 4 — the symbol large in a pale disc, the amount under it as plain type */
+  4: () => `<div class="scrn" style="background:#FBFAF6">${bloom(-20,200,300,'rgba(255,214,90,.20)')}${bloom(70,420,260,'rgba(140,170,255,.14)')}
+      <div class="ctr" style="top:215px;height:250px"><div style="width:120px;height:120px;border-radius:50%;background:#FFF4CF;box-shadow:0 0 0 12px rgba(255,236,170,.35),0 0 0 26px rgba(255,236,170,.16);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="#111114" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 8.5a5 5 0 0 1 0 7"/><path d="M10 6a9 9 0 0 1 0 12"/><path d="M13.5 3.5a13 13 0 0 1 0 17"/></svg></div>
+      <b class="amt" style="margin-top:34px;font-size:40px">£45.75</b></div><div class="home"></div></div>`,
+  /* 5 — pastel pink to blue, a frosted pill, white signal arcs rising towards the card */
+  5: () => `<div class="scrn" style="background:linear-gradient(170deg,#FBEFF4 0%,#F2EEFA 45%,#E9F0FD 100%)">${bloom(-60,230,300,'rgba(255,170,205,.30)')}${bloom(60,360,320,'rgba(140,175,255,.28)')}
+      <svg class="fx" viewBox="0 0 265.3 579.3">${[60,88,116].map((r,i)=>`<path d="M ${CX-r} ${CY-40} A ${r} ${r*.7} 0 0 1 ${CX+r} ${CY-40}" fill="none" stroke="rgba(255,255,255,${[.95,.75,.5][i]})" stroke-width="${[3,2.6,2.2][i]}" stroke-linecap="round"/>`).join('')}</svg>
+      <div class="ctr" style="top:${CY-10}px;height:90px"><div style="width:200px;height:84px;border-radius:42px;background:rgba(255,255,255,.62);backdrop-filter:blur(8px);box-shadow:inset 0 1.5px 0 #fff,0 0 0 1px rgba(255,255,255,.7),0 16px 30px -16px rgba(90,80,160,.35);display:flex;align-items:center;justify-content:center"><b class="amt">£45.75</b></div></div><div class="home"></div></div>`,
+  /* 6 — halo: a soft light behind a large amount, nothing else but the symbol */
+  6: () => `<div class="scrn" style="background:#FAFAFA">
+      <div style="position:absolute;left:${CX-170}px;top:${CY-170}px;width:340px;height:340px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,221,120,.55),rgba(255,221,120,.18) 45%,rgba(150,175,255,.20) 70%,rgba(250,250,250,0))"></div>
+      <div class="ctr" style="top:${CY-60}px;height:120px">${CL('#111114',1.8)}<b class="amt" style="font-size:44px">£45.75</b></div><div class="home"></div></div>`,
+  /* 7 — a black pill, dashed grey ripples */
+  7: () => `<div class="scrn" style="background:#F2F2F4">${bloom(-40,240,300,'rgba(255,214,90,.14)')}${bloom(80,380,280,'rgba(130,160,255,.14)')}
+      ${ell([1.3,1.62,1.98,2.4],95,52,['rgba(17,17,20,.28)','rgba(17,17,20,.2)','rgba(17,17,20,.13)','rgba(17,17,20,.08)'],[1.4,1.3,1.2,1.1],'stroke-dasharray="3 6" stroke-linecap="round"')}
+      <div class="ctr" style="top:${CY-48}px;height:96px"><div style="width:186px;height:96px;border-radius:48px;background:#111114;box-shadow:0 18px 32px -16px rgba(17,17,20,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">${CL('#FFCF24',2)}<b class="amt" style="color:#fff">£45.75</b></div></div><div class="home"></div></div>`,
+  /* 8 — big signal arcs in a soft yellow-to-pink gradient, a small amount pill under them */
+  8: () => `<div class="scrn" style="background:#FBFAF8">${bloom(-40,230,300,'rgba(255,200,170,.18)')}${bloom(70,400,280,'rgba(140,170,255,.14)')}
+      <svg class="fx" viewBox="0 0 265.3 579.3"><defs><linearGradient id="ag" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F7C948"/><stop offset="1" stop-color="#F29BB8"/></linearGradient></defs>
+      ${[34,62,90].map((r,i)=>`<path d="M ${CX-r*.9} ${CY-10-r*.55} A ${r} ${r} 0 0 1 ${CX+r*.9} ${CY-10-r*.55}" transform="rotate(0)" fill="none" stroke="url(#ag)" stroke-opacity="${[1,.75,.5][i]}" stroke-width="${[7,6,5][i]}" stroke-linecap="round"/>`).join('')}</svg>
+      <div class="ctr" style="top:${CY+20}px;height:70px"><div style="padding:12px 26px;border-radius:40px;background:#fff;box-shadow:0 0 0 1px rgba(17,17,20,.08),0 14px 26px -16px rgba(17,17,20,.35)"><b class="amt" style="font-size:32px">£45.75</b></div></div><div class="home"></div></div>`
+};
+/* four grounds of mixed, blurred light; every one stays pale behind the copy, top left */
+const THEMES = {
+  a: `${bloom(260,-200,700,'rgba(255,214,90,.55)')}${bloom(-260,700,760,'rgba(255,196,120,.35)')}${bloom(320,900,620,'rgba(255,236,170,.4)')}`,
+  b: `${bloom(300,-160,660,'rgba(255,170,205,.45)')}${bloom(-280,640,780,'rgba(140,175,255,.40)')}${bloom(260,980,620,'rgba(200,170,255,.35)')}`,
+  c: `${bloom(280,-200,680,'rgba(255,214,90,.45)')}${bloom(-300,560,760,'rgba(195,165,255,.35)')}${bloom(250,960,660,'rgba(130,170,255,.38)')}`,
+  d: `${bloom(300,-180,660,'rgba(140,180,255,.40)')}${bloom(-280,700,760,'rgba(255,214,110,.40)')}${bloom(280,960,620,'rgba(255,175,200,.28)')}`
+};
+const HERO_THEME = { 1:'a', 2:'b', 3:'c', 4:'a', 5:'b', 6:'d', 7:'c', 8:'d' };
+const heroVariant = v => `<div class="gbg">${THEMES[HERO_THEME[v]]}<div class="disc"></div></div>
+  <div class="cut"><div class="hscr">${SCREENS[v]()}<div class="lit"></div><div class="cs"></div></div><img src="assets/hero-cut.png" alt=""></div>`;
+const [n, v] = (location.hash.slice(1) || '1').split('-').map(Number);
 const fr = document.getElementById('f');
 fr.className = 'frame is' + n;
-/* frame 1 draws the photo first so the copy sits on the wall above the hands */
-fr.innerHTML = n === 1 ? ART[1]() + copy(COPY[1]) : copy(COPY[n]) + ART[n]();
+/* frame 1 draws the art first so the copy sits above the hands; #1-k is one of the cut-out variants */
+fr.innerHTML = n === 1 ? (v ? heroVariant(v) : ART[1]()) + copy(COPY[1]) : copy(COPY[n]) + ART[n]();
 </script>
 </body>
 </html>
