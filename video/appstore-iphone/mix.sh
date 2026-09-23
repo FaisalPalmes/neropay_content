@@ -1,7 +1,7 @@
 #!/bin/bash
 # Lays the sound under a rendered picture and masters it to the house target (-14 LUFS, true peak under -1.5 dBTP).
-#   bash mix.sh renders/v6-picture.mp4 renders/FINAL-appstore-iphone-v6.mp4
-# Cues follow the v6 timeline in index.html (SW = the swipes, LAND = when each slide lands). Every file is from the
+#   bash mix.sh renders/v7-picture.mp4 renders/FINAL-appstore-iphone-v7.mp4
+# Cues follow the v7 timeline in index.html (SW = the swipes, LAND = when each slide lands). Every file is from the
 # committed, ledgered library. v5's mix is kept at archive/mix-v5.sh.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -19,6 +19,8 @@ CUES=(
   "pop 14.70 0.14"                                                # the NeroWeb row lifts
   "pop 18.85 0.13" "pop 19.30 0.10"                               # the total, the tooltip
   "click-soft 23.10 0.14" "pop 23.55 0.13"                        # Send, the amount field lifts
+  "pop 2.65 0.07" "pop 5.50 0.07" "pop 7.60 0.07" "pop 9.85 0.07" "pop 11.25 0.07" "pop 11.65 0.07"  # the pop-ups
+  "pop 14.05 0.07" "pop 15.55 0.07" "pop 19.90 0.07" "ping 23.30 0.06" "pop 24.10 0.07"
   "whoosh 24.95 0.22" "impact-bass-1 25.74 0.18" "whoosh-short 25.78 0.20" "pop 26.72 0.16" "chime 26.95 0.12"  # the swish and the close
 )
 ARGS=(-i "$IN" -i ../library/bgm/underscore-120-a.mp3)

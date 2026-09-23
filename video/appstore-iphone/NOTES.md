@@ -20,7 +20,23 @@ floating tags, the diagonal bar and the enlarged headline of v1 are gone.
 
 The screens are his 923 × 2000 export, so at App Store size they are upscaled about 1.3×.
 
-# App Store preview, iPhone — v6 (23 Sep 2026) is current; v5 and earlier are below and superseded
+# App Store preview, iPhone — v7 (23 Sep 2026) is current; v6 and earlier are below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v7.mp4` · 886 × 1920 · 30 fps · 29.0s · 12.9 MB · −13.9 LUFS / −1.8 dBTP ·
+md5 `5a044d460b3a8480024ceeb3a0ad8f46` · Higgsfield media `e4a8f9c0-f802-473b-878f-599af38d1060`.
+
+## v7: Faisal's notes on v6
+
+| Note | v7 |
+|---|---|
+| The keypad already shows the amount, so tapping it in means nothing | The amount starts at £0.00 and fills in live with each key, pence first as a till fills: £0.04, £0.45, £4.57, £45.75. It sits on a white patch over the export's figure and nudges on each press; then CHARGE, and it lifts off |
+| Pop-ups on every screen, so nothing is static | Eleven notes, one feature each, coming up in turn around the phone and drifting. Each is a white card with a yellow icon. Hero: "Take payments anywhere". Keypad: "Type any amount", "Card, tap or link". NeroPOS: "POS built in", "Online orders", "Take orders from your phone". Transactions: "Updates as you sell", "Visa & Mastercard". Reports: "Works with Xero & QuickBooks". Payment links: "Link sent", "Customer pays online". A soft pop sounds under each |
+
+Not added, from his list: **"flat rate"** and **"Amex"**. Whether pricing is flat, and whether it includes Amex, are
+open questions with Eray (`generation-pack.md`, open question 1; `CLAUDE.md` on the rate). They go in once he
+confirms.
+
+# App Store preview, iPhone — v6 (23 Sep 2026) (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v6.mp4` · 886 × 1920 · 30 fps · 29.0s · 12.4 MB · −13.9 LUFS / −1.9 dBTP ·
 md5 `86c981f5b73b20cfd5bd3b32e4304877` · Higgsfield media `27c2d347-6fe8-440c-85dd-5c8607a52f7a`.
