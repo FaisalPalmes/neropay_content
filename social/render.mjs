@@ -41,7 +41,10 @@ async function loadPlaywright() {
 
 const argv = process.argv.slice(2);
 const all = argv.includes('--all');
-const wanted = argv.filter(a => !a.startsWith('--'));
+const look = argv.includes('--look') ? argv[argv.indexOf('--look') + 1] : 'classic';  // glass is on trial, pending Faisal's ruling (23 Sep 2026)
+const MOODS = ['dawn', 'mist', 'blush'];
+const moodFor = id => MOODS[[...id].reduce((h, c) => h * 31 + c.charCodeAt(0) >>> 0, 7) % MOODS.length];
+const wanted = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--look');
 
 const posts = await (async () => {
   const src = await readFile(join(ROOT, 'posts.js'), 'utf8');
@@ -65,6 +68,7 @@ async function shoot(template, size, data, file) {
   const [w, h] = SIZES[size] || SIZES.sq;
   await page.setViewportSize({ width: w, height: h });
   await page.goto(pathToFileURL(join(TPL, template + '.html')).href, { waitUntil: 'load' });
+  await page.evaluate(([lk, md]) => { if (lk === 'glass') { document.documentElement.classList.add('glass'); document.documentElement.dataset.mood = md; } }, [look, data.mood]);
   await page.evaluate(d => window.fill(d), { ...data, size });
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: file, clip: { x: 0, y: 0, width: w, height: h } });
@@ -94,12 +98,12 @@ for (const p of targets) {
   for (let i = 0; i < assets.length; i++) {
     const a = assets[i], n = i + 1, size = a.size || (a.t === 'cards' ? 'pt' : a.t === 'cover' ? 'st' : 'sq');
     if (a.t === 'ref') { console.log(`${p.id}  ${n}  ref ${a.id} — video asset, not rendered here`); continue; }
-    const kick = a.kick || kickFor(p);
+    const kick = a.kick || kickFor(p), mood = a.mood || moodFor(p.id);
     if (a.t === 'cards') {
       const pngs = [];
       for (let j = 0; j < a.cards.length; j++) {
         const f = join(dir, `${p.id}-${n}-${j + 1}.png`);
-        await shoot('cards', size, { kick, i: j, total: a.cards.length, card: a.cards[j] }, f);
+        await shoot('cards', size, { kick, i: j, total: a.cards.length, card: a.cards[j], mood }, f);
         pngs.push(f); sheet.push({ f, label: `${p.id} · ${j + 1}/${a.cards.length}` }); files++;
       }
       if (p.channel === 'linkedin' || a.pdf) { await pdfFrom(pngs, size, join(dir, `${p.id}-${n}.pdf`)); files++; }
@@ -109,7 +113,7 @@ for (const p of targets) {
       const data = a.t === 'stat' ? { kick, big: a.big, line: a.line, src: a.src }
         : a.t === 'quote' ? { kick, text: a.text, sub: a.sub, src: a.src }
         : { kick: a.kick || kickFor(p), title: a.title, sub: a.sub, ai: !!a.ai };
-      await shoot(a.t, size, data, f);
+      await shoot(a.t, size, { ...data, mood }, f);
       sheet.push({ f, label: `${p.id} · ${a.t}` }); files++;
       console.log(`${p.id}  ${n}  ${a.t} · ${size}`);
     }
