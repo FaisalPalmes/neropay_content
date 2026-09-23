@@ -20,6 +20,48 @@ floating tags, the diagonal bar and the enlarged headline of v1 are gone.
 
 The screens are his 923 × 2000 export, so at App Store size they are upscaled about 1.3×.
 
+# Store formats: iPhone, iPad and Google Play (23 Sep 2026)
+
+Faisal asked for the same carousel and video for the iPad and for Google Play. `fit.js` holds the three formats:
+
+| Format | Canvas | Screenshots | Video |
+|---|---|---|---|
+| iPhone | 660 × 1434 | 1320 × 2868 | 886 × 1920 |
+| iPad | 1032 × 1376 | 2064 × 2752 | 1200 × 1600 |
+| Google Play | 810 × 1440 | 1080 × 1920 | 1080 × 1920 |
+
+Every other format refits the iPhone layout:
+
+- The copy scales by K.
+- The ground scales to cover the canvas.
+- The art scales and moves so it starts under the copy. Wherever a hand leaves its photograph, the photograph's edge
+  stays off the canvas, so no arm ends in mid-air. Which edges each photo's hands cross is measured from the cut-outs.
+
+The copy heights are a table (`COPYB`), measured with Poppins loaded, so the stills and the video fit identically.
+
+How to render:
+
+- Stills: `node stills/render.cjs ipad|play` writes to `stills/out/<fmt>/`.
+- Video: `bash render-all.sh` renders and masters all three. It writes `ipad.html` and `play.html` from `index.html`
+  (`make-formats.mjs`) for the render and deletes them after, because two root compositions fail `hyperframes check`.
+- The baked layers now have 400px spare each side, so the wider canvases never reach their edges.
+
+Masters, md5:
+
+- iPhone: `312a7231c793e30e4f5b8f8e5cb20518`
+- iPad: `c4e1b15b3af828cb1e63b604affadfa4`
+- Play: `c0f5fdb436cbf3c607ee5101d796d860`
+
+All three stores are in one zip, Higgsfield media `16e7bb4b-4919-4136-99c5-61608eaff051`.
+
+Told to Faisal with the delivery:
+
+- Apple expects app previews to be captured footage of the app, and these videos use hand photographs and animated
+  screens.
+- The iPad screenshots show iPhones (guideline 2.3.3).
+- Play needs a 1024 × 500 feature graphic, which is not made.
+- The Play promo video goes up as a YouTube link.
+
 # App Store preview, iPhone — v8 (23 Sep 2026) is current; v7 and earlier are below and superseded
 
 **File** `renders/FINAL-appstore-iphone-v8.mp4` · 886 × 1920 · 30 fps · 29.0s · 13.0 MB · −13.9 LUFS / −1.9 dBTP ·
