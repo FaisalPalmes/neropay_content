@@ -85,6 +85,21 @@ h1 .two::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.05em;h
 .hscr .ext .t{left:51.5%;width:46.2%;background:#EEEEEE}
 .hscr .safe{height:22px;position:relative;background:#fff}
 .hscr .safe i{position:absolute;left:50%;bottom:7px;width:92px;height:4px;margin-left:-46px;border-radius:3px;background:#111}
+/* the tap-ready screen (Faisal, 23 Sep): CHARGE has just been pressed, so the screen shows only the amount in an oval
+   with the contactless signal going out from it, on a white ground with a soft yellow and a soft blue bloom */
+.hscr .tap{position:absolute;inset:0;overflow:hidden;background:#FBFAF7;filter:blur(.35px) contrast(.95) brightness(.97) saturate(.95)}
+.hscr .tap .bloom{position:absolute;border-radius:50%}
+.hscr .tap .by{left:-60px;top:170px;width:330px;height:330px;background:radial-gradient(closest-side,rgba(255,207,36,.45),rgba(255,207,36,0))}
+.hscr .tap .bb{left:90px;top:360px;width:300px;height:300px;background:radial-gradient(closest-side,rgba(110,150,255,.30),rgba(110,150,255,0))}
+.hscr .tap .bb2{left:-90px;top:420px;width:220px;height:220px;background:radial-gradient(closest-side,rgba(150,180,255,.22),rgba(150,180,255,0))}
+.hscr .tap svg.rings{position:absolute;left:0;top:0;width:265.3px;height:579.3px;overflow:visible}
+.hscr .tap .oval{position:absolute;left:37.6px;top:300px;width:190px;height:104px;border-radius:52px;
+  background:linear-gradient(160deg,#FFFFFF,#FFF8DD);
+  box-shadow:0 0 0 3px #FFCF24,0 18px 34px -16px rgba(120,90,0,.45),0 0 40px rgba(255,207,36,.35),inset 0 2px 0 #fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.hscr .tap .oval svg{width:30px;height:30px}
+.hscr .tap .oval b{font:700 34px/1 Poppins;letter-spacing:-.03em;color:#111114}
+.hscr .tap .home{position:absolute;left:50%;bottom:7px;width:92px;height:4px;margin-left:-46px;border-radius:3px;background:#111}
 .hscr .lit{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(100deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 35%,rgba(40,30,20,0) 60%,rgba(40,30,20,.07) 100%),
              linear-gradient(118deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.10) 52%,rgba(255,255,255,0) 64%);
@@ -124,7 +139,17 @@ const lift = (k,cx,cy,cw,ch,X,Y,W) => { const s = W/cw;
    Glass: 560 wide at x 50, top 486 (image from x 65 / y 501, scale .675). Each lift covers its own original. */
 const ART = {
   1: () => `<div class="photo"><div class="hscr">
-      <div class="ui"><div class="crop"><img src="${A(1)}" alt=""></div><div class="ext"><b class="c"></b><b class="t"></b></div><div class="safe"><i></i></div></div>
+      <div class="tap">
+        <div class="bloom by"></div><div class="bloom bb"></div><div class="bloom bb2"></div>
+        <svg class="rings" viewBox="0 0 265.3 579.3">${[1.32,1.66,2.04,2.46].map((k,i)=>
+          `<ellipse cx="132.65" cy="352" rx="${(95*k).toFixed(1)}" ry="${(52*k).toFixed(1)}" fill="none"
+             stroke="rgba(245,190,20,${[.75,.5,.3,.16][i]})" stroke-width="${[2.4,2,1.6,1.3][i]}"/>`).join('')}</svg>
+        <div class="oval">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#111114" stroke-width="2" stroke-linecap="round">
+            <path d="M6.5 8.5a5 5 0 0 1 0 7"/><path d="M10 6a9 9 0 0 1 0 12"/><path d="M13.5 3.5a13 13 0 0 1 0 17"/></svg>
+          <b>£45.75</b></div>
+        <div class="home"></div>
+      </div>
       <div class="lit"></div><div class="cs"></div></div><img src="assets/hero-keyed.png" alt=""></div>`,
   2: () => glass(1,50,486,560),
   3: () => phone(2,86,492,488) + lift(2,402,543,345,377,320,872,270),
