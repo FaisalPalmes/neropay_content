@@ -106,14 +106,15 @@ window.LIBRARY = {
       ] },
 
     { id: 'AS01', series: 'App Store', title: 'App preview — iPhone',
-      version: 'v3', rendered: '2026-09-23', secs: 29.0,
-      status: 'review', by: 'unrecorded — v3 rebuilt on Faisal\'s 23 Sep notes on v2 and sent for his review',
-      waiting: 'Faisal watches v3. v2 had no depth to the phone, the copy and phone in two places, and a close with too many colours; v1 (22 Sep) was too flat.',
+      version: 'v4', rendered: '2026-09-23', secs: 29.0,
+      status: 'review', by: 'unrecorded — v4 rebuilt on Faisal\'s 23 Sep notes on v3 and sent for his review',
+      waiting: 'Faisal watches v4. v3 came in flat and snapped to 3D (fixed: no opacity on the 3D phone) and wanted a glass tile on the close; v2 had no depth to the phone, the copy and phone in two places, and a close with too many colours; v1 (22 Sep) was too flat.',
       build: 'video/appstore-iphone/', drive: null, backup: false, clearedFor: null, notCleared: null,
       clearanceNote: 'A store listing asset, not a social post, so the platform question is Apple review rather than Route C. An App Preview must read as the app in use; v3 shows his own app screens inside a phone.',
-      note: 'One CSS 3D world: each of his five screens is one unit — live copy in Poppins set on the phone\'s own front plane, directly above a solid code-drawn phone (64px deep, rounded metal band, side buttons) — turned together, with the camera flying between them. The kept Shutter intro; a one-colour close: white, the mark\'s two bars in yellow, the light wordmark. No voiceover, no captions. v1 and v2 are in archive/. The iPad and Play Store cuts are not made.',
+      note: 'One CSS 3D world: each of his five screens is one unit — live copy in Poppins set on the phone\'s own front plane, directly above a solid code-drawn phone (64px deep, rounded metal band, side buttons) — turned together; the phone leaps up into frame solid, and the camera flies between sections. The kept Shutter intro; a white close: a clear glass tile carrying the mark\'s two yellow bars, the light wordmark. No voiceover, no captions. v1–v3 are in archive/. The iPad and Play Store cuts are not made.',
       files: [
-        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.8', media: 'de6ff248-9d32-469a-8639-369397fcf441', md5: '1aa7e5c4fb371c2910e3f4e37f6e8bf3' },
+        { crop: '9:16 App Store iPhone', px: '886×1920', lufs: '−13.8', media: 'f9cc3a68-b18a-4f7d-bd73-73c1892b5567', md5: 'c636220bf84fc69db7b1411611f93c96' },
+        { crop: 'v3, superseded', px: '886×1920', lufs: '−13.8', media: 'de6ff248-9d32-469a-8639-369397fcf441', md5: '1aa7e5c4fb371c2910e3f4e37f6e8bf3' },
         { crop: 'v2, superseded', px: '886×1920', lufs: '−13.8', media: '95de77ce-860a-41ec-940c-16572defa056', md5: '1c3db388fc0fc6d847861fd94af1c38c' },
         { crop: 'v1, superseded', px: '886×1920', lufs: '−13.5', media: 'ffdeb658-553c-4f1a-a74b-03f6cfa97219', md5: '41a8563735273d3d008210bcc2082674' }
       ] },

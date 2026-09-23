@@ -108,3 +108,5 @@ Used in the App Store preview (`video/appstore-iphone/`, 22 Sep 2026): `bgm/unde
 App Store preview v2 (23 Sep 2026): the same bed, plus Pixabay whoosh alternating with whoosh-short on the five flights, click-soft as each phone lands, whoosh on the shutter down, impact-bass-1 as the tile lands, pop and chime on the close. Cue sheet in `video/appstore-iphone/mix.sh`.
 
 App Store preview v3 (23 Sep 2026): the v2 cues retimed to the v3 timeline, with impact-bass-1 moved to the shutter halves meeting (there is no tile now) and pop on the two yellow bars meeting. Cue sheet in `video/appstore-iphone/mix.sh`.
+
+App Store preview v4 (23 Sep 2026): the v3 cues with the five landing clicks moved to the new leap-in landing (0.95, 5.65, 10.75, 15.85, 20.95s).

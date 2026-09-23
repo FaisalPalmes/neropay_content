@@ -1,4 +1,19 @@
-# App Store preview, iPhone — v3 (23 Sep 2026) is current; v2 and v1 are below and superseded
+# App Store preview, iPhone — v4 (23 Sep 2026) is current; v3, v2 and v1 are below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v4.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.0 MB · −13.8 LUFS / −1.4 dBTP ·
+md5 `c636220bf84fc69db7b1411611f93c96` · Higgsfield media `f9cc3a68-b18a-4f7d-bd73-73c1892b5567`.
+
+## v4 — Faisal's notes on v3, and what changed
+
+| Note | v4 |
+|---|---|
+| The phone comes in 2D and flickers into 3D on the click | The cause: its entrance faded `opacity` 0→1, and Chromium flattens any `preserve-3d` group below opacity 1, so it was drawn flat until the fade ended — on the click. The phone never carries opacity now. It leaps up from below the frame, tilted, and lands at rest, solid in every frame; as the camera leaves it tilts away, still solid. `LESSONS.md` has the rule |
+| The buttons are there on some screens and not others | Same cause. The geometry is now identical in every frame: two volume keys on the left, power on the right, each a dense stack through the band so it reads as one solid key at any angle. Which side you see depends only on which way the phone is turned |
+| The close: keep the two yellow stripes, but put a clear liquid glass square around them | A clear glass tile — no colour and no yellow light, read by its rim, top highlight, inner thickness and soft shadow — rises in as the shutter parts; the bars slide in on it and a light sheen crosses it once. The wordmark sits below |
+
+Also: 24 band slices instead of 16 for a smoother rim; clicks retimed to the new landing.
+
+# v3 (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v3.mp4` · 886 × 1920 · 30 fps · 29.0s · 16.3 MB · −13.8 LUFS / −1.4 dBTP ·
 md5 `1aa7e5c4fb371c2910e3f4e37f6e8bf3` · Higgsfield media `de6ff248-9d32-469a-8639-369397fcf441`.
