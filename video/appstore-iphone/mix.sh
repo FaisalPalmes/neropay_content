@@ -1,7 +1,7 @@
 #!/bin/bash
 # Lays the sound under a rendered picture and masters it to the house target (-14 LUFS / -1.5 dBTP).
-#   bash mix.sh renders/v3-picture.mp4 renders/FINAL-appstore-iphone-v3.mp4
-# Cues follow the v3 timeline in index.html. Every file is from the committed, ledgered library.
+#   bash mix.sh renders/v4-picture.mp4 renders/FINAL-appstore-iphone-v4.mp4
+# Cues follow the v4 timeline in index.html. Every file is from the committed, ledgered library.
 # One effect per movement, never the same one twice running, and no glitch-* (crackle by construction).
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -17,11 +17,11 @@ ffmpeg -y -loglevel error -i "$IN" \
 [2:a]volume=0.22,adelay=9700|9700[f2];\
 [3:a]volume=0.20,adelay=14800|14800[f3];\
 [2:a]volume=0.22,adelay=19900|19900[f4];\
-[4:a]volume=0.12,adelay=800|800[l0];\
-[4:a]volume=0.12,adelay=5500|5500[l1];\
-[4:a]volume=0.12,adelay=10600|10600[l2];\
-[4:a]volume=0.12,adelay=15700|15700[l3];\
-[4:a]volume=0.12,adelay=20800|20800[l4];\
+[4:a]volume=0.12,adelay=950|950[l0];\
+[4:a]volume=0.12,adelay=5650|5650[l1];\
+[4:a]volume=0.12,adelay=10750|10750[l2];\
+[4:a]volume=0.12,adelay=15850|15850[l3];\
+[4:a]volume=0.12,adelay=20950|20950[l4];\
 [3:a]volume=0.22,adelay=24850|24850[sd];\
 [5:a]volume=0.22,adelay=25880|25880[imp];\
 [2:a]volume=0.20,adelay=26020|26020[op];\

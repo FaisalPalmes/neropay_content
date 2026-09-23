@@ -11,9 +11,6 @@
    real-phone thin — and the copy stands on the phone's own plane, aligned to its left edge, directly above it,
    turning with it: one unit per section, the same composition every time. The close is one colour: white, the
    mark's two bars in yellow as the only set of stripes, and the wordmark.
-   v4, same day: v3's phone faded in with opacity, which flattens a preserve-3d group, so it came in flat and
-   snapped to 3D as the fade ended. The phone never carries opacity now; it leaps up from below the frame, solid
-   the whole way, and tilts away as the camera leaves. The close keeps its bars and gains a clear glass tile.
    Still true from v2: one 3D world the camera flies through; the copy set live in Poppins; one fluid background;
    no CSS filter on anything that moves (v1's flicker). */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -89,23 +86,11 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
 .shut .half{position:absolute;left:0;width:100%;height:calc(50% + 2px);background:var(--yel)}
 .shut .half.t{top:0}.shut .half.b{top:50%}
 
-/* ── the close: white, a clear liquid glass tile carrying the mark's two yellow bars, the wordmark ── */
+/* ── the close: one colour. White, the mark's two bars in yellow, the wordmark ── */
 .close{background:#FBFAF7;z-index:38;overflow:hidden}
-.close .mark{position:absolute;left:283px;top:700px;width:320px;height:320px;overflow:visible}
-/* clear liquid glass: no colour of its own, read by its rim, its highlight and its shadow */
-.close .tile{position:absolute;left:233px;top:650px;width:420px;height:420px;border-radius:24%;overflow:hidden;
-  background:linear-gradient(150deg,rgba(255,255,255,.92) 0%,rgba(246,246,248,.55) 48%,rgba(236,237,241,.62) 100%);
-  box-shadow:0 60px 110px -40px rgba(17,17,20,.30),0 18px 36px -18px rgba(17,17,20,.16),
-    inset 0 2px 0 rgba(255,255,255,1),inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 0 0 14px rgba(255,255,255,.30),
-    inset 0 0 34px rgba(17,17,20,.08),inset 0 -3px 6px rgba(17,17,20,.05);
-  outline:1px solid rgba(17,17,20,.07);outline-offset:-1px}
-.close .tile::before{content:"";position:absolute;inset:0;border-radius:inherit;
-  background:radial-gradient(120% 70% at 30% 0%,rgba(255,255,255,.9),rgba(255,255,255,0) 60%)}
-.close .tile::after{content:"";position:absolute;left:12%;right:12%;bottom:5px;height:3px;border-radius:3px;
-  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,1),rgba(255,255,255,0))}
-.close .tile .sheen{position:absolute;inset:-10%;background:linear-gradient(115deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.85) 50%,rgba(255,255,255,0) 62%);transform:translateX(-120%)}
+.close .mark{position:absolute;left:283px;top:640px;width:320px;height:320px;overflow:visible}
 .close .mark polygon{fill:var(--yel)}
-.close .wm{position:absolute;left:213px;top:1150px;width:460px}
+.close .wm{position:absolute;left:213px;top:1040px;width:460px}
 .close .wm.alt{display:none}
 /* the alternative, shown as a still: the same close on yellow, white mark and white wordmark */
 #root.altclose .close{background:var(--yel)} #root.altclose .close .mark polygon{fill:#fff}
@@ -130,7 +115,6 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
   </div>
 
   <div class="clip close" id="close" data-start="25.88" data-duration="3.12" data-track-index="2">
-    <div class="tile" id="ctile"><div class="sheen" id="csheen"></div></div>
     <svg class="mark" viewBox="0 0 100 100" preserveAspectRatio="none" data-layout-allow-overflow>
       <!-- the two bars of the mark, measured from brand/favicon/neropay-icon-512.png -->
       <polygon id="bar1" points="21.3,0 36.1,0 83.5,49.2 83.5,70.1"/>
@@ -168,17 +152,16 @@ const POS = [
 const HOLD = [[0.0,4.6],[5.5,9.7],[10.6,14.8],[15.7,19.9],[20.8,26.4]];
 
 /* the band: slices from the back face to the front, lighter in the middle where a rounded edge catches light */
-const SLICES = 24, T = 64;
+const SLICES = 16, T = 64;
 const band = [...Array(SLICES)].map((_,i) => {
   const u = i/(SLICES-1), z = -T/2 + 2 + u*(T-4);
   const lift = Math.sin(u*Math.PI);                         /* 0 at the faces, 1 mid-edge */
   const c = Math.round(34 + lift*62);
   return `<div class="slice" style="transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+6})"></div>`;
 }).join('');
-/* the side keys: two volume on the left, power on the right, each a solid stack 2px apart through the middle
-   of the band, so they read as one object from any angle and are the same on every phone */
+/* the side keys stand out of the band, a few slices deep */
 const keys = [['l',250,82],['l',352,82],['r',300,150]].map(([side,top,h]) =>
-  [-12,-10,-8,-6,-4,-2,0,2,4,6,8,10,12].map(z => `<div class="key" style="${side==='l'?'left:-7px':'right:-7px'};top:${top}px;height:${h}px;transform:translateZ(${z}px)"></div>`).join('')).join('');
+  [-10,-4,2,8].map(z => `<div class="key" style="${side==='l'?'left:-7px':'right:-7px'};top:${top}px;height:${h}px;transform:translateZ(${z}px)"></div>`).join('')).join('');
 
 const world = document.getElementById('world');
 POS.forEach((p,k) => {
@@ -263,12 +246,7 @@ apply(0);
    landing together; on leaving, both go the other way ── */
 HOLD.forEach(([hin,hout],k) => {
   const arrive = k===0 ? 0.25 : hin-0.55, p='#p'+k;
-  /* never opacity on the phone: it is a preserve-3d group and any opacity below 1 flattens it to 2D, which is
-     what made v3's phone come in flat and snap to 3D as the fade finished. It leaps up from below the frame
-     instead, solid the whole way */
-  const side = k%2 ? 1 : -1;
-  tl.fromTo(p, { y:1500, z:-220, rotateX:30, rotateY:side*38, rotateZ:side*-5 },
-               { y:0, z:0, rotateX:0, rotateY:0, rotateZ:0, duration:1.0, ease:'back.out(1.1)' }, arrive);
+  tl.fromTo(p, { rotateY:82, z:-300, y:70, opacity:0 }, { rotateY:0, z:0, y:0, opacity:1, duration:0.9, ease:'power3.out' }, arrive);
   const c0 = arrive + 0.30;                                    /* the copy starts as the phone turns towards us */
   tl.fromTo('#r'+k, { scaleX:0, transformOrigin:'0 50%' }, { scaleX:1, duration:0.4, ease:'power3.out' }, c0)
     .fromTo('#k'+k, { y:16, opacity:0 }, { y:0, opacity:1, duration:0.45, ease:'power3.out' }, c0+0.05)
@@ -279,7 +257,7 @@ HOLD.forEach(([hin,hout],k) => {
   S[k].chips.forEach((_,j) => tl.fromTo(`#h${k}_${j}`, { y:18, opacity:0, scale:.92 },
                                                       { y:0, opacity:1, scale:1, duration:0.42, ease:'back.out(1.6)' }, c0+0.58+j*0.08));
   if (k < HOLD.length-1) {
-    tl.to(p, { rotateY:(k%2 ? 1 : -1)*-40, z:-260, duration:0.8, ease:'power2.in' }, hout-0.05)
+    tl.to(p, { rotateY:-78, z:-280, opacity:0, duration:0.7, ease:'power2.in' }, hout-0.05)
       .to('#c'+k, { opacity:0, duration:0.45, ease:'power2.in' }, hout);
   }
 });
@@ -294,8 +272,6 @@ tl.set('#sht',{y:'0%'},0).set('#shb',{y:'0%'},0)
   .to('#shb',{ y:'105%',  duration:0.62, ease:'power2.inOut' }, 26.0);
 
 /* the close: as the halves part, the mark's two bars travel in on the same axis and meet; then the wordmark */
-tl.fromTo('#ctile', { y:40, scale:.9, opacity:0 }, { y:0, scale:1, opacity:1, duration:0.6, ease:'power3.out' }, 25.98)
-  .fromTo('#csheen', { xPercent:-120 }, { xPercent:120, duration:0.9, ease:'power2.inOut' }, 26.75);
 tl.fromTo('#bar1', { x:260, y:-247 }, { x:0, y:0, duration:0.7, ease:'power3.out' }, 26.05)
   .fromTo('#bar2', { x:-260, y:247 }, { x:0, y:0, duration:0.7, ease:'power3.out' }, 26.10)
   .fromTo('#cwm',  { y:18, opacity:0 }, { y:0, opacity:1, duration:0.5, ease:'power3.out' }, 26.55)

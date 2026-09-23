@@ -363,6 +363,21 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
 10. **Panels over the presenter.** Rule: panels start at x ≥ 1110 on the 1920 frame for this set (Ava sits
     centre-frame); check a real-footage frame before the final render.
 
+## 23 Sep 2026 — App Store preview v3, Faisal's review
+
+1. **"It comes in 2D and flickers into 3D on the click."** The phone was a `preserve-3d` group and its entrance
+   tweened `opacity` from 0 to 1. Chromium flattens any `preserve-3d` element whose opacity is below 1, so the
+   phone was drawn flat for the whole fade and only became a solid on the frame the opacity reached 1 — the
+   frame the landing click played on. Rule: **never put opacity, filter, mask or `overflow:hidden` on a
+   `preserve-3d` element or any of its 3D ancestors.** Bring a 3D object in by motion (from off-frame, or from
+   edge-on), or fade its flat leaves one by one. Check a mid-entrance still, not only the rest frame.
+2. **"The buttons are there on some screens and gone on others."** Same cause: flattened, the side keys were
+   projected onto the phone's outline and showed on both sides; once solid, the far side's keys were hidden
+   behind the body. The fix above makes the geometry the same in every frame. The keys are also a dense stack
+   now (2px apart through the band) so they read as one solid object at any angle.
+3. **"Just two yellow lines alone" at the close.** The bare bars read as a graphic, not a logo. Rule: the mark
+   at a close sits in a tile, the way the app icon does; clear glass on a light ground, no coloured light.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on
