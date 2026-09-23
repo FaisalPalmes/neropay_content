@@ -20,7 +20,19 @@ floating tags, the diagonal bar and the enlarged headline of v1 are gone.
 
 The screens are his 923 × 2000 export, so at App Store size they are upscaled about 1.3×.
 
-# App Store preview, iPhone — v7 (23 Sep 2026) is current; v6 and earlier are below and superseded
+# App Store preview, iPhone — v8 (23 Sep 2026) is current; v7 and earlier are below and superseded
+
+**File** `renders/FINAL-appstore-iphone-v8.mp4` · 886 × 1920 · 30 fps · 29.0s · 13.0 MB · −13.9 LUFS / −1.9 dBTP ·
+md5 `d1cbf2dc473d38e04c6b6eb788a8d766` · Higgsfield media `5fe76e7d-ae80-4b99-a508-2dd371b5335a`.
+
+## v8: Faisal's notes on v7
+
+| Note | v8 |
+|---|---|
+| Once the full amount is typed, it should not pop out as its own glass overlay; a flash or a light going through it is enough | The amount lift is gone. The figure stays on the keypad, and a narrow white-and-gold light runs through its glyphs twice, left to right: when the last key goes in, and again as CHARGE is pressed. It is a gradient clipped to the text, with no panel and no filter. A soft sparkle sounds under it |
+| The pop-ups are too random: put them near the phone's top edge, slightly over it, each at a small tilt, still readable | Every pop-up straddles the top edge of its phone or glass outline, tilted between 2° and 6° either way. On the photographs they are anchored to the screen's own top corners through the homography, so they sit at the photo's angle. They swing in from twice their tilt and settle |
+
+# App Store preview, iPhone — v7 (23 Sep 2026) (superseded)
 
 **File** `renders/FINAL-appstore-iphone-v7.mp4` · 886 × 1920 · 30 fps · 29.0s · 12.9 MB · −13.9 LUFS / −1.8 dBTP ·
 md5 `5a044d460b3a8480024ceeb3a0ad8f46` · Higgsfield media `e4a8f9c0-f802-473b-878f-599af38d1060`.
