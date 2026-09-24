@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>NeroConnect explainer v3</title>
+<style>
+/* NeroConnect explainer v3 (24 Sep 2026), rebuilt on the new brand at Faisal's request.
+   His notes on v2: "the motion graphics could be a lot better, a bit clumsy and too much going on on the screen,
+   keep it more minimal; no pill-shaped overlays at all; more real, clear liquid glass; everything has a hard bevel
+   edge, I don't want that." So: one idea per frame, a headline and one glass object, nothing cropped by the frame;
+   clear glass with a hairline rim and a soft shadow, no thick inset rim, no pills anywhere; Poppins, ink and
+   #FFCF24 on the warm off-white ground; one soft yellow light that moves to a new place for each scene, and two
+   huge clear panes drifting behind. The take is the 18 Sep recording, unchanged; every reveal is pinned to the word
+   that says it (data-at = seconds on the film's timeline, the take sits at 0.6 s). The film ends on the locked
+   outro (brand/sting/outro.html, yellow), spliced in by render.cjs at OUTRO_AT.
+   Figures: only the seven approved in the 18 Sep kit (claims in README.md), plus the dashboard's "2". No rate, no
+   percentage, no date, no real company. */
+@font-face{font-family:P;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:P;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2)}
+:root{--yel:#FFCF24;--ink:#111114;--mute:#6B6B73;--live:#2FBF71}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#FBFAF7}
+body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+
+/* the world: paper, one light, two clear panes */
+#ground{position:absolute;inset:0;background:radial-gradient(140% 120% at 50% 45%,#FBFAF7 55%,#F3F0E8 100%)}
+#light{position:absolute;left:0;top:0;width:1500px;height:1500px;margin:-750px 0 0 -750px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,207,36,.34) 0%,rgba(255,207,36,.20) 22%,rgba(255,207,36,.08) 42%,rgba(255,207,36,.025) 58%,rgba(255,207,36,0) 70%)}
+.pane{position:absolute;width:1700px;height:1700px;border-radius:120px;
+  background:linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.06) 45%,rgba(255,255,255,.18));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 2px 0 rgba(255,255,255,.95),0 60px 120px -60px rgba(120,95,30,.16)}
+.pane i{position:absolute;top:-20%;bottom:-20%;left:-60%;width:220%;background:linear-gradient(105deg,rgba(255,255,255,0) 45%,rgba(255,255,255,.55) 49.5%,rgba(255,255,255,.12) 51%,rgba(255,255,255,0) 55%)}
+
+/* a scene: a layer the whole frame wide; its contents are placed absolutely */
+.sc{position:absolute;inset:0;opacity:0}
+.cam{position:absolute;inset:0;transform-origin:var(--ox,60%) var(--oy,50%)}
+
+/* type */
+.kick{position:absolute;display:flex;align-items:center;gap:14px;font:600 20px/1 P;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.kick b{display:block;width:34px;height:5px;border-radius:3px;background:var(--yel)}
+.h{position:absolute;font:700 76px/1.04 P;letter-spacing:-.035em}
+.h.xl{font-size:104px}
+.h .ln{display:block}
+.mk{position:relative;display:inline-block;isolation:isolate}
+.mk::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.07em;height:.36em;background:var(--yel);border-radius:3px;z-index:-1;
+  transform:scaleX(var(--m,0));transform-origin:0 50%}
+.sub{position:absolute;font:500 30px/1.35 P;color:var(--mute);letter-spacing:-.01em}
+.lab{font:500 22px/1.2 P;color:var(--mute);letter-spacing:-.005em}
+.big{font:600 58px/1 P;letter-spacing:-.03em}
+.mid{font:600 34px/1.15 P;letter-spacing:-.02em}
+
+/* clear glass: a translucent body, a hairline rim, a bright top edge, a soft shadow; no thick inset rim */
+.g{position:absolute;border-radius:30px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,.52) 0%,rgba(255,255,255,.17) 52%,rgba(255,255,255,.30) 100%);
+  box-shadow:0 50px 90px -46px rgba(70,56,20,.30),0 14px 30px -18px rgba(17,17,20,.10),
+    inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(120,96,30,.07),inset 0 0 60px rgba(255,255,255,.28);
+  outline:1px solid rgba(17,17,20,.045);outline-offset:-1px}
+.g::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(110% 55% at 20% 0%,rgba(255,255,255,.85),rgba(255,255,255,0) 58%),linear-gradient(0deg,rgba(255,255,255,.35),rgba(255,255,255,0) 18%)}
+.g::after{content:"";position:absolute;inset:-10%;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.7) 50%,rgba(255,255,255,0) 60%);
+  transform:translateX(var(--sh,-130%))}
+.g > *{position:relative;z-index:1}
+.row{display:flex;align-items:center;justify-content:space-between}
+.rule{position:absolute;left:0;top:18%;bottom:18%;width:5px;border-radius:0 3px 3px 0;background:var(--yel);transform:scaleY(var(--r,0))}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--live);margin-right:12px;vertical-align:1px}
+.ydot{background:var(--yel)}
+.hair{height:1px;background:rgba(17,17,20,.08)}
+</style></head>
+<body>
+<div id="ground"></div>
+<div id="light"></div>
+<div id="p1" class="pane"><i></i></div>
+<div id="p2" class="pane"><i></i></div>
+<div id="film"></div>
+<script>
+const W = 1920, H = 1080;
+const clamp = x => Math.max(0, Math.min(1, x));
+const outC = x => 1 - Math.pow(1 - x, 3), outE = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const io = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+const money = v => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/* Each scene: [start, end] on the film's timeline, where the light sits, and its markup. data-at is when an element
+   arrives (the word that says it); data-count counts a figure up from that moment; data-mark draws the yellow
+   marker; data-rule lights a card's yellow edge. Scenes overlap their neighbours by the crossfade. */
+const SC = [
+ { t: [0, 11.1], light: [1350, 620], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:190px" data-at="0.7"><b></b>NeroConnect</div>
+   <div class="g" style="left:150px;top:560px;width:500px;height:230px;padding:44px" data-at="2.3"><div class="big" style="margin-top:62px">Cafés</div></div>
+   <div class="g" style="left:710px;top:560px;width:500px;height:230px;padding:44px" data-at="3.0"><div class="big" style="margin-top:62px">Takeaways</div></div>
+   <div class="g" style="left:1270px;top:560px;width:500px;height:230px;padding:44px" data-at="3.64"><div class="big" style="margin-top:62px">Shops</div></div>
+   <div class="h" style="left:150px;top:250px;width:1500px" data-at="6.38"><span class="ln">Their card payments,</span><span class="ln">under <span class="mk" data-mark="8.9">your own brand.</span></span></div>
+   <div class="sub" style="left:150px;top:860px" data-at="10.1">Here's how it works.</div>` },
+
+ { t: [11.1, 23.5], light: [520, 760], ox: '70%', html: `
+   <div class="kick" style="left:150px;top:300px" data-at="11.5"><b></b>How it works</div>
+   <div class="h" style="left:150px;top:360px;width:640px" data-at="11.6"><span class="ln">Three</span><span class="ln"><span class="mk" data-mark="11.9">parts.</span></span></div>
+   ${[['13.2','NeroPay','Processes the payments. Handles the compliance.'],
+      ['16.5','You','Bring the merchants. Set the terms.'],
+      ['18.98','Your merchants','Take payments on your dashboard, on your domain.']].map((c, i) => `
+   <div class="g" style="left:900px;top:${190 + i * 240}px;width:870px;height:200px;padding:42px 52px" data-at="${c[0]}">
+     <i class="rule" data-rule="${c[0]}"></i>
+     <div class="lab">0${i + 1}</div><div class="mid" style="margin-top:14px">${c[1]}</div><div class="lab" style="margin-top:10px;color:#44444C">${c[2]}</div></div>`).join('')}` },
+
+ { t: [23.5, 30.7], light: [1400, 380], ox: '68%', html: `
+   <div class="h" style="left:150px;top:380px;width:620px" data-at="23.84"><span class="ln">Everything</span><span class="ln">in <span class="mk" data-mark="24.6">one place.</span></span></div>
+   <div class="g" style="left:860px;top:260px;width:910px;height:560px;padding:60px 64px" data-at="23.9">
+     <div class="lab" style="color:#44444C">Harbourline · Overview</div>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px 60px;margin-top:56px">
+       <div data-at="25.72"><div class="lab">Merchants live</div><div class="big" style="margin-top:16px" data-count="37" data-int="1">37</div></div>
+       <div data-at="27.24"><div class="lab">Taken</div><div class="big" style="margin-top:16px" data-count="1842.60">£1,842.60</div></div>
+       <div data-at="28.42"><div class="lab">You've earned</div><div class="big" style="margin-top:16px" data-count="18.35">£18.35</div></div>
+       <div data-at="29.52"><div class="lab"><span class="dot ydot"></span>Needs you today</div><div class="big" style="margin-top:16px">2</div></div>
+     </div></div>` },
+
+ { t: [30.7, 39.0], light: [480, 300], ox: '66%', html: `
+   <div class="h" style="left:150px;top:390px;width:640px" data-at="31.0"><span class="ln">What needs you,</span><span class="ln">at the top.</span></div>
+   <div class="kick" style="left:150px;top:620px" data-at="38.08"><b></b>Nothing hides</div>
+   ${[['32.8','Dispute','Respond in 3 days'],['33.54','Document requested','Due in 5 days'],['34.38','Proof of payment','Due in 7 days']].map((r, i) => `
+   <div class="g" style="left:900px;top:${250 + i * 200}px;width:870px;height:160px;padding:0 52px" data-at="${r[0]}">
+     ${i === 0 ? '<i class="rule" data-rule="35.9"></i>' : ''}
+     <div class="row" style="height:160px"><div class="mid">${r[1]}</div><div class="lab" data-at="37.22" style="color:${i === 0 ? '#111114' : 'var(--mute)'}">${r[2]}</div></div></div>`).join('')}` },
+
+ { t: [39.0, 45.6], light: [1450, 820], ox: '64%', html: `
+   <div class="h" style="left:150px;top:390px;width:620px" data-at="39.3"><span class="ln">Every merchant,</span><span class="ln"><span class="mk" data-mark="40.1">one screen.</span></span></div>
+   <div class="g" style="left:840px;top:170px;width:930px;height:740px;padding:48px 56px" data-at="39.3">
+     <div class="row lab" style="padding-bottom:20px"><span style="width:420px">Business</span><span style="width:170px" data-at="42.1">Status</span><span style="width:170px;text-align:right" data-at="43.9">ID checks</span></div>
+     ${['The Copper Kettle','Marlow Street Deli','Blue Anchor Fish Bar','Halcyon Coffee','Saffron Lane Tandoori','The Old Mill Bakery'].map((n, i) => `
+     <div class="hair"></div>
+     <div class="row" style="height:98px" data-at="${(41.24 + i * 0.12).toFixed(2)}"><span class="mid" style="width:420px;font-size:28px">${n}</span>
+       <span class="lab" style="width:170px;color:#111114" data-at="42.56">${i === 4 ? '<span class="dot" style="background:#C9C9CF"></span>Onboarding' : '<span class="dot"></span>Live'}</span>
+       <span class="lab" style="width:170px;text-align:right;color:#111114" data-at="${(44.4 + i * 0.1).toFixed(2)}">${i === 4 ? '<span style="color:var(--mute)">Pending</span>' : 'Verified'}</span></div>`).join('')}
+   </div>` },
+
+ { t: [45.6, 52.2], light: [960, 300], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:190px" data-at="45.86"><b></b>Adding a merchant</div>
+   <div class="h" style="left:150px;top:240px;width:1600px" data-at="45.9"><span class="ln">Five steps, then <span class="mk" data-mark="51.3">they're live.</span></span></div>
+   <div id="track" style="position:absolute;left:270px;top:643px;width:1380px;height:4px;border-radius:2px;background:rgba(17,17,20,.08)"><div id="fill" style="height:4px;border-radius:2px;background:var(--ink);transform-origin:0 50%;transform:scaleX(0)"></div></div>
+   ${['Person','Business','Addresses','Terms','Review'].map((s, i) => `
+   <div class="g" style="left:${200 + i * 345}px;top:575px;width:140px;height:140px;border-radius:70px;display:flex;align-items:center;justify-content:center" data-at="${(46.58 + i * 0.1).toFixed(2)}" data-step="${i}"><span class="mid">${i + 1}</span></div>
+   <div class="lab" style="position:absolute;left:${170 + i * 345}px;top:750px;width:200px;text-align:center;color:#111114" data-at="${(46.7 + i * 0.1).toFixed(2)}">${s}</div>`).join('')}
+   <div class="sub" style="left:150px;top:860px" data-at="49.28">NeroPay runs the checks.</div>` },
+
+ { t: [52.2, 65.1], light: [1480, 700], ox: '66%', html: `
+   <div class="kick" style="left:150px;top:300px" data-at="52.5"><b></b>Pricing</div>
+   <div class="h" style="left:150px;top:360px;width:640px" data-at="53.56"><span class="ln">Two things</span><span class="ln">agreed</span><span class="ln">up front.</span></div>
+   <div class="g" style="left:880px;top:150px;width:890px;height:150px;padding:0 50px" data-at="57.04"><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the processing fee</span><span class="lab">With NeroPay</span></div></div>
+   <div class="g" style="left:880px;top:330px;width:890px;height:150px;padding:0 50px" data-at="58.74"><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the monthly account fee</span><span class="lab">With NeroPay</span></div></div>
+   <div class="g" style="left:880px;top:560px;width:890px;height:330px;padding:56px 50px" data-at="60.98"><i class="rule" data-rule="63.98"></i>
+     <div class="lab">Everything else</div><div class="mid" style="margin-top:16px;font-size:30px" data-at="61.94">What your merchants are charged</div>
+     <div class="big" style="margin-top:34px" data-at="63.98"><span class="mk" data-mark="64.2">Yours to set.</span></div></div>` },
+
+ { t: [65.1, 71.7], light: [960, 760], ox: '50%', html: `
+   <div class="h" style="left:150px;top:220px;width:1600px" data-at="65.54"><span class="ln">It's <span class="mk" data-mark="65.8">simple maths.</span></span></div>
+   <div class="g" style="left:150px;top:420px;width:470px;height:260px;padding:52px" data-at="66.8"><div class="lab">Your fee</div><div class="big" style="margin-top:22px" data-count="41.20">£41.20</div></div>
+   <div class="h" style="left:648px;top:490px;color:var(--mute)" data-at="67.3">−</div>
+   <div class="g" style="left:725px;top:420px;width:470px;height:260px;padding:52px" data-at="67.78"><div class="lab">NeroPay's cost</div><div class="big" style="margin-top:22px" data-count="22.85">£22.85</div></div>
+   <div class="h" style="left:1222px;top:490px;color:var(--mute)" data-at="68.74">=</div>
+   <div class="g" style="left:1300px;top:420px;width:470px;height:260px;padding:52px" data-at="69.08"><i class="rule" data-rule="69.3"></i><div class="lab">Your margin</div><div class="big" style="margin-top:22px" data-count="18.35">£18.35</div></div>
+   <div class="sub" style="left:150px;top:760px" data-at="70.12">On every payment.</div>` },
+
+ { t: [71.7, 81.9], light: [560, 820], ox: '66%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="71.9"><span class="ln">A floor under</span><span class="ln"><span class="mk" data-mark="73.0">every price.</span></span></div>
+   <div class="g" style="left:860px;top:290px;width:910px;height:500px;padding:56px 60px" data-at="72.1">
+     <div class="lab">Your price for a service</div>
+     <div style="position:relative;margin-top:150px;height:6px;border-radius:3px;background:rgba(17,17,20,.08)">
+       <div style="position:absolute;left:0;width:34%;top:0;bottom:0;border-radius:3px;background:repeating-linear-gradient(135deg,rgba(17,17,20,.14) 0 6px,rgba(17,17,20,0) 6px 12px)" data-at="75.06"></div>
+       <div style="position:absolute;left:34%;top:-46px;width:3px;height:98px;margin-left:-1.5px;background:var(--ink)" data-at="75.32"></div>
+       <div class="lab" style="position:absolute;left:34%;top:-86px;transform:translateX(-50%);white-space:nowrap;color:#111114" data-at="75.32">NeroPay's cost</div>
+       <div id="knob" style="position:absolute;top:-19px;width:44px;height:44px;margin-left:-22px;border-radius:50%;background:#fff;box-shadow:0 8px 18px -6px rgba(17,17,20,.35),inset 0 0 0 1px rgba(17,17,20,.08)"></div>
+     </div>
+     <div class="lab" style="position:absolute;left:60px;top:300px;width:790px;color:#111114" data-at="76.1">You can't set it below NeroPay's cost.</div>
+     <div class="mid" style="position:absolute;left:60px;top:400px;width:790px;font-size:30px" data-at="79.66">At the floor, it passes through <span class="mk" data-mark="81.1">at cost.</span></div>
+   </div>` },
+
+ { t: [81.9, 89.2], light: [1450, 360], ox: '68%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="85.54"><span class="ln">Your brand.</span><span class="ln"><span class="mk" data-mark="87.1">Only yours.</span></span></div>
+   <div class="g" style="left:900px;top:130px;width:780px;height:820px;padding:0" data-at="82.0">
+     <div class="row" style="height:92px;padding:0 36px;border-bottom:1px solid rgba(17,17,20,.07)" data-at="83.02">
+       <span style="display:flex;gap:9px"><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i></span>
+       <span class="lab" style="color:#111114;font-size:24px">pay.harbourline.co.uk</span><span style="width:60px"></span></div>
+     <div style="display:flex;flex-direction:column;align-items:center;padding-top:110px">
+       <div data-at="82.14" style="display:flex;align-items:center;gap:18px"><i style="display:block;width:64px;height:64px;border-radius:16px;background:#1D3B53"></i><span style="font:700 44px/1 P;letter-spacing:-.02em;color:#1D3B53">Harbourline</span></div>
+       <div class="lab" style="margin-top:70px" data-at="84.1">Sign in to your payments</div>
+       <div style="margin-top:34px;width:520px;height:76px;border-radius:18px;background:#1D3B53;display:flex;align-items:center;justify-content:center;font:600 26px P;color:#fff" data-at="84.3">Sign in</div>
+       <div class="lab" style="margin-top:60px;font-size:20px" data-at="86.46">Merchant dashboard · Harbourline</div>
+     </div></div>` },
+
+ { t: [89.2, 96.9], light: [460, 520], ox: '62%', html: `
+   <div class="h" style="left:150px;top:300px;width:700px" data-at="91.44"><span class="ln">Your store.</span><span class="ln">Your prices.</span></div>
+   <div class="sub" style="left:150px;top:540px;width:640px" data-at="93.82">NeroPay ships them and supports them.</div>
+   <div class="sub" style="left:150px;top:600px;width:640px;color:#111114;font-weight:600" data-at="95.86"><span class="mk" data-mark="96.1">You keep the margin.</span></div>
+   <div class="g" style="left:960px;top:120px;width:380px;height:840px;padding:0;display:flex;align-items:flex-end;justify-content:center" data-at="89.42">
+     <img src="assets/terminal.png" style="position:absolute;left:-40px;top:0;width:460px;z-index:1">
+     <div class="lab" style="position:relative;z-index:2;margin-bottom:36px;color:#111114">Terminals</div></div>
+   <div class="g" style="left:1380px;top:120px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="90.12"><div class="lab">For the counter</div><div class="mid" style="margin-top:10px">Tills</div></div>
+   <div class="g" style="left:1380px;top:560px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="90.44"><div class="lab">Stands, rolls, cases</div><div class="mid" style="margin-top:10px">Accessories</div></div>` },
+
+ { t: [96.9, 102.3], light: [1400, 800], ox: '66%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="97.14"><span class="ln">What your</span><span class="ln">merchants</span><span class="ln"><span class="mk" data-mark="98.3">earn you.</span></span></div>
+   <div class="g" style="left:900px;top:170px;width:870px;height:740px;padding:30px 60px" data-at="97.2">
+     ${[['99.18','Payments','1842.60'],['100.02','Your fee','41.20'],['100.8','NeroPay\'s cost','22.85'],['101.84','What you keep','18.35']].map((r, i) => `
+     ${i ? '<div class="hair"></div>' : ''}
+     <div class="row" style="height:168px;position:relative" data-at="${r[0]}">${i === 3 ? '<i class="rule" data-rule="102.0" style="left:-60px"></i>' : ''}<span class="lab" style="font-size:26px;color:${i === 3 ? '#111114' : 'var(--mute)'}">${r[1]}</span><span class="big">${money(+r[2])}</span></div>`).join('')}
+   </div>` },
+
+ { t: [102.3, 107.1], light: [560, 280], ox: '64%', html: `
+   <div class="h" style="left:150px;top:390px;width:620px" data-at="102.46"><span class="ln">How it moves</span><span class="ln">over time.</span></div>
+   <div class="g" style="left:840px;top:190px;width:930px;height:700px;padding:52px 60px" data-at="102.5">
+     <div class="row"><span class="lab">Payments</span><span style="display:flex;gap:34px"><span class="lab" style="color:#111114" data-at="104.68"><span class="dot" style="background:var(--ink)"></span>Terminal</span><span class="lab" style="color:#111114" data-at="104.94"><span class="dot ydot"></span>Online</span></span></div>
+     <svg width="810" height="480" viewBox="0 0 810 480" style="margin-top:50px;overflow:visible">
+       ${[120, 240, 360].map(y => `<line x1="0" x2="810" y1="${y}" y2="${y}" stroke="rgba(17,17,20,.07)" stroke-width="1.5"/>`).join('')}
+       <path id="l1" d="M0,400 C90,380 140,330 220,320 S360,250 440,232 S600,150 680,138 S780,96 810,86" fill="none" stroke="#111114" stroke-width="5" stroke-linecap="round"/>
+       <path id="l2" d="M0,440 C100,430 160,410 240,398 S380,352 460,344 S620,300 700,282 S780,262 810,256" fill="none" stroke="#FFCF24" stroke-width="5" stroke-linecap="round"/>
+     </svg></div>` },
+
+ { t: [107.1, 113.5], light: [1420, 440], ox: '66%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="107.28"><span class="ln">Your balance.</span><span class="ln"><span class="mk" data-mark="108.2">Yours to move.</span></span></div>
+   <div class="g" id="res" style="left:1010px;top:420px;width:760px;height:380px;padding:0 56px 44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="109.4"><div class="row"><span class="lab" style="color:#111114">Reserve</span><span class="lab">Keeps payouts flowing</span></div></div>
+   <div class="g" style="left:880px;top:190px;width:760px;height:400px;padding:60px 56px" data-at="107.44"><div class="lab">Available balance</div><div class="big" style="margin-top:26px;font-size:84px" data-count="2418.36">£2,418.36</div><div class="lab" style="margin-top:36px;color:#111114" data-at="108.2">Move it when you like</div></div>` },
+
+ { t: [113.5, 122.95], light: [760, 820], ox: '60%', html: `
+   <div class="kick" style="left:150px;top:190px" data-at="113.72"><b></b>Support</div>
+   <div class="h" style="left:150px;top:240px;width:1600px" data-at="114.3"><span class="ln">Two tiers.</span></div>
+   <div class="g" style="left:150px;top:430px;width:720px;height:420px;padding:56px" data-at="115.46"><div class="lab">Free</div><div class="mid" style="margin-top:18px">The platform</div><div class="lab" style="margin-top:22px">Your dashboard, your settings, the guides.</div></div>
+   <div class="g" style="left:930px;top:430px;width:840px;height:420px;padding:56px" data-at="117.24"><i class="rule" data-rule="121.74"></i><div class="lab">Premium</div>
+     <div class="mid" style="margin-top:18px;font-size:30px" data-at="117.9">Your merchants' tickets, answered</div>
+     <div class="mid" style="margin-top:14px;font-size:30px" data-at="119.42">Their hardware, shipped</div>
+     <div class="mid" style="margin-top:14px;font-size:30px" data-at="120.96">The phone, picked up</div>
+     <div class="lab" style="margin-top:34px;color:#111114;font-size:26px" data-at="121.74"><span class="mk" data-mark="122.0">All in your name.</span></div></div>` },
+
+ { t: [122.95, 125.12], light: [960, 540], ox: '50%', html: `
+   <div class="h xl" style="left:0;right:0;top:360px;text-align:center" ><span class="ln" data-at="123.18">Your merchants.</span><span class="ln" data-at="124.28"><span class="mk" data-mark="124.4">Your brand.</span></span></div>` }
+];
+window.OUTRO_AT = 125.12;   /* the locked outro takes over here; render.cjs splices it in */
+window.DURATION = 131.0;
+
+const film = document.getElementById('film'), L = document.getElementById('light');
+const P1 = document.getElementById('p1'), P2 = document.getElementById('p2');
+SC.forEach(s => { const d = document.createElement('div'); d.className = 'sc';
+  d.innerHTML = `<div class="cam" style="--ox:${s.ox}">${s.html}</div>`; film.appendChild(d); s.el = d; s.cam = d.firstChild;
+  s.items = [...d.querySelectorAll('[data-at]')]; s.marks = [...d.querySelectorAll('[data-mark]')];
+  s.counts = [...d.querySelectorAll('[data-count]')]; s.rules = [...d.querySelectorAll('[data-rule]')];
+  s.glass = [...d.querySelectorAll('.g')]; });
+
+const XF = 0.4;
+window.setTime = function (t) {
+  /* the light glides to each scene's place over a second, starting as the scene arrives */
+  let lx = SC[0].light[0], ly = SC[0].light[1];
+  for (let i = 1; i < SC.length; i++) { const k = io(clamp((t - SC[i].t[0] + 0.3) / 1.4));
+    lx += (SC[i].light[0] - lx) * k; ly += (SC[i].light[1] - ly) * k; }
+  const endFade = 1 - clamp((t - 124.5) / 0.6);
+  L.style.transform = `translate(${lx}px,${ly}px)`; L.style.opacity = endFade;
+  P1.style.transform = `translate(${-700 + 60 * Math.sin(t / 19)}px,${-1150 + 40 * Math.cos(t / 23)}px) rotate(${38 + 1.5 * Math.sin(t / 17)}deg)`;
+  P2.style.transform = `translate(${1150 + 50 * Math.cos(t / 21)}px,${250 + 40 * Math.sin(t / 25)}px) rotate(${38 + 1.2 * Math.cos(t / 15)}deg)`;
+  P1.querySelector('i').style.transform = P2.querySelector('i').style.transform = `translateX(${((t * 6) % 140) - 70}%)`;
+  P1.style.opacity = P2.style.opacity = endFade;
+
+  for (const s of SC) {
+    const [a, b] = s.t;
+    if (t < a - 0.01 || t > b + XF) { s.el.style.display = 'none'; continue; }
+    s.el.style.display = '';
+    const vin = outC(clamp((t - a) / XF)), vout = 1 - io(clamp((t - b) / XF));
+    s.el.style.opacity = Math.min(vin, vout);
+    const push = (t - a) / (b - a);
+    s.cam.style.transform = `translateY(${-10 * io(clamp((t - b) / XF))}px) scale(${1 + 0.022 * push})`;
+    for (const e of s.items) { const p = outE(clamp((t - +e.dataset.at) / 0.55));
+      e.style.opacity = p; e.style.transform = (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${(1 - p) * 26}px)`;
+      if (e.classList.contains('g')) e.style.setProperty('--sh', `${-130 + 260 * io(clamp((t - +e.dataset.at - 0.15) / 1.0))}%`); }
+    for (const m of s.marks) m.style.setProperty('--m', outC(clamp((t - +m.dataset.mark) / 0.35)));
+    for (const r of s.rules) r.style.setProperty('--r', outC(clamp((t - +r.dataset.rule) / 0.35)));
+    for (const c of s.counts) { const at = +c.closest('[data-at]').dataset.at, v = +c.dataset.count;
+      const k = outC(clamp((t - at) / 0.9)); c.textContent = c.dataset.int ? String(Math.round(v * k)) : money(v * k); }
+  }
+  /* scene-specific moves */
+  const fill = document.getElementById('fill');
+  if (fill) fill.style.transform = `scaleX(${0.25 * io(clamp((t - 47.68) / 0.6)) + 0.5 * io(clamp((t - 48.3) / 1.2)) + 0.25 * io(clamp((t - 50.82) / 0.6))})`;
+  document.querySelectorAll('[data-step]').forEach(n => { const i = +n.dataset.step, lit = t > 47.7 + [0, .3, .7, 1.4, 3.2][i];
+    n.style.background = lit ? (i === 4 && t > 51.2 ? 'linear-gradient(160deg,#FFE27A,#FFCF24)' : 'rgba(255,255,255,.9)') : ''; });
+  const knob = document.getElementById('knob');
+  if (knob) { const k = io(clamp((t - 74.66) / 1.4)); const bump = t > 76.06 ? Math.sin(clamp((t - 76.06) / 0.35) * Math.PI) * 1.2 : 0;
+    knob.style.left = (78 - 44 * k + bump) + '%'; }
+  const l1 = document.getElementById('l1'), l2 = document.getElementById('l2');
+  if (l1) { for (const [p, at] of [[l1, 103.14], [l2, 104.9]]) { const len = p.getTotalLength(); p.style.strokeDasharray = len;
+    p.style.strokeDashoffset = len * (1 - io(clamp((t - at) / 1.8))); } }
+  const res = document.getElementById('res');
+  if (res) res.style.transform = `translateY(${(1 - outE(clamp((t - 109.4) / 0.7))) * -160}px)`;
+};
+window.setFrame = (n, fps = 25) => window.setTime(n / fps);
+window.setTime(0);
+</script></body></html>
