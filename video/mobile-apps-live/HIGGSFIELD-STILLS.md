@@ -42,7 +42,7 @@ exceptions into any other piece.** Everything else still applies:
 - **Aspect ratio: 16:9** for every shot. This is the landscape master.
 - **Workspace:** `9fbbb426`.
 - **Consistency:** generate each character's first shot, pick the best, then attach it as the reference
-  image for that character's other shots. The reference keeps the face, skin, hair and wardrobe the same.
+  image only where a shot deliberately repeats a person (none in the pilot). The reference keeps the face, skin, hair and wardrobe the same.
 - **Generate 4 per prompt** and send back the best one or two. Send every attempt where the screen stays
   flat green, even if the face is weaker. The screen is the harder part to get right.
 
@@ -96,7 +96,13 @@ men British or European; hyper-real skin; a new room for the couch shots; strong
 | **C** | Hannah, 28, British | Join: Ironvale (gym studio) | Her kitchen, early morning |
 | **D** | Theo, 28, British | Pay: Marigold (florist) | Terraced street, autumn |
 
-Kestrel is a barbershop in MA01. For Mia's shot we build a salon version of that screen (hair, nails,
+**Every shot is its own person** (Faisal, 24 Sep 2026). The video model cannot be trusted to keep a
+person and a room consistent between two shots, so the inserts no longer try to match the wide shots.
+The screen composites and the edit still carry the story. The cast names above belong to the wide
+shots; each insert has its own person, written in full in its prompt. Shots 05, 09 and 11 still assume
+a matching person and are rewritten on the same basis before they are generated.
+
+Kestrel is a barbershop in MA01. For the booking shot we build a salon version of that screen (hair, nails,
 brows). The screen is ours to change, so the still is not affected.
 
 **The loft (Mia's room, replacing the beige living room).** A converted red-brick mill apartment: one wall
@@ -124,39 +130,73 @@ Cinematic 16:9 film still from a premium smartphone app commercial. Dramatic low
 
 ---
 
-### 02. Top down over Leo's shoulder, ordering. Composite: Sage & Co, the order screen
+### 02. Over a man's shoulder at the kerb, ordering. Composite: Sage & Co, the order screen
 
-**Framing:** high over his shoulder looking straight down onto the phone, the white stripes of a pedestrian
-crossing far below as a graphic background.
-**Planned motion (4s):** he stands at the kerb and his thumb scrolls once, then taps. A slight handheld sway.
+**Framing:** from just behind and above his right shoulder, looking down about 35 degrees onto the phone,
+the zebra crossing blurred beyond it. His legs and feet stay out of frame. A camera looking steeply
+down past a shoulder shows the feet, and that is what looks wrong.
+**Planned motion (5s):** a subtle handheld sway. He stands still at the kerb, scrolls once, then taps.
 
 ```
-Cinematic 16:9 film still from a premium smartphone app commercial. High over-the-shoulder shot looking almost straight down past the right shoulder of a young man standing at the edge of a pedestrian crossing, onto the smartphone in his right hand held flat at waist height, the screen facing up at the camera, the phone centred and filling about 40% of the frame height. Far below, in soft focus, the bold white stripes of the crossing on dark asphalt run diagonally across the frame, with the toes of plain white leather trainers at the kerb. His thumb rests on the lower third of the screen, about to tap. All four corners of the screen are clearly visible. The screen is a perfectly flat, uniform, bright chroma-key green (#00FF00) from edge to edge, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, flat satin graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere. His hand is slim and well kept, fair with a warm olive undertone, visible knuckle creases, fine hairs on the back of the hand and neatly trimmed clean nails. He is 27, slim and fit. In soft focus at the top edge of the frame: the shoulder of a stone-coloured waxed cotton overshirt and a glimpse of short dark-brown hair. Low warm late-afternoon sun from the side. No road text, no signs, no readable text anywhere. Shot on an ARRI Alexa 35, 50mm spherical lens at f/2.8, phone and thumb pin-sharp, warm neutral grade, fine 35mm film grain, hyper-realistic, photoreal. Avoid: any interface or image on the phone screen, glare, reflections or shadows on the screen, notch, older-looking or wrinkled hands, bitten or unpainted nails on women, plastic skin, logos, Apple logo, brand names, readable text, signage, watermarks, extra fingers, deformed hands, CGI look.
+Cinematic 16:9 film still from a premium smartphone app commercial, shot like natural, unposed street photography. Over-the-shoulder shot from just behind and slightly above the right shoulder of a 27-year-old British man standing still at the kerb of a pedestrian crossing in a modern city district on an autumn afternoon, waiting to cross and ordering on his phone. The camera is at the height of his head, about 30 cm behind his right shoulder, looking down at about 35 degrees past his shoulder onto the phone.
+
+His posture is relaxed and natural: his weight is on his left leg, his shoulders are loose, and his head is tilted forward and down towards the phone. His left hand is in his trouser pocket, out of frame. His right upper arm hangs close to his side with the elbow bent at about 90 degrees, so the phone sits in front of his lower chest, about 35 cm from his face, with the screen tilted up towards his eyes.
+
+How he holds it: one-handed, the phone upright in portrait orientation and resting in his right palm. His four fingers curl around the left edge and the back, with their tips just visible along the left side between the top and bottom corners. His little finger is tucked flat against the back to support it, not under the bottom edge. His right thumb reaches across the lower third of the screen, about to tap.
+
+Framing: the phone is in the centre of the frame and fills about 40% of the frame height, the screen facing up towards the camera at a slight angle, all four corners of the screen clearly visible. In the top-left corner of the frame, in soft focus, are the curve of his right shoulder in a stone-coloured waxed cotton overshirt, the collar of an off-white heavyweight T-shirt, and the edge of his jaw with light, neatly kept dark stubble and short dark-brown hair freshly cut at the temple. The lower edge of the frame cuts across his forearm and the turned-back cuff of the overshirt. His legs and feet are not in the frame. The screen is a perfectly flat, uniform, bright chroma-key green (#00FF00) from edge to edge, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, flat satin graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+His hand is slim and well kept: fair skin with a warm olive undertone, visible knuckle creases, fine dark hairs on the back of the hand and wrist, faint veins and neatly trimmed clean nails. He is slim, fit and handsome in a natural, believable way, the kind of good-looking real person who does well on social media, not a retouched model. His personality: easy-going and organised, the friend who has already ordered by the time everyone arrives.
+
+Beyond the phone, heavily out of focus: the wet dark-grey asphalt of the road with the bold white stripes of the crossing running diagonally across the frame, a few fallen yellow leaves in the gutter, and the pale grey blister paving at the kerb edge. Further away, far out of focus: contemporary red-brick and glass buildings, warm low sun glinting off one window, the blurred shapes of two pedestrians waiting on the far side, and a street tree in autumn colour. No signs, no shopfronts, no number plates, no readable text.
+
+Shot on an ARRI Alexa 35, 40mm spherical lens at f/2.2, low warm late-afternoon sun from frame right catching the edge of his hand and the phone's frame, the phone and thumb pin-sharp, shallow depth of field, warm neutral grade, fine 35mm film grain, hyper-realistic, photoreal. Avoid: legs or feet in frame, stiff or awkward posture, arm held out unnaturally, any interface or image on the phone screen, glare, reflections or shadows on the screen, notch, fingers covering the screen corners, older-looking or wrinkled hands, plastic skin, logos, Apple logo, brand names, readable text, signage, watermarks, extra fingers, deformed hands, CGI look.
 ```
 
 ---
 
-### 03. Mia on the sofa, straight on (hero). Composite: none
+### 03. Mia on the floor against the sofa, straight on (hero). Composite: none
 
-**Framing:** straight on and symmetrical, from coffee-table height, a mustard mug soft in the foreground,
-the window-grid shadows across the brick behind her.
-**Planned motion (6s):** a very slow push-in over the mug. She scrolls, pauses, smiles, taps.
+**Framing:** straight on from coffee-table height. She sits on the floor with her back against the sofa,
+facing us, with the table and her mug soft in the foreground. The room is lived in, not a showroom.
+**Planned motion (6s):** a very slow push-in across the table. She scrolls, smiles, taps, and rests
+her head back against the sofa.
 
 ```
-Cinematic 16:9 film still from a premium smartphone app commercial. Straight-on, symmetrical shot from coffee-table height, looking across a low travertine coffee table at a 26-year-old woman of mixed Japanese and English heritage sitting in the middle of a deep olive-green velvet sofa, centred in the frame. A plain mustard-yellow ceramic mug sits on the table in the soft-focus foreground at the lower edge of the frame. She sits with her legs tucked up beside her, leaning into the sofa, holding a smartphone in both hands at chest height with its back facing the camera, looking down at it with a small private smile. She is slim and toned, and strikingly pretty in a natural, believable way, the kind of attractive real woman who does well on social media, not a retouched model. She has light skin with a warm undertone, soft almond-shaped dark-brown eyes, and fresh, soft natural makeup: a light dewy glow, groomed brows, defined lashes and a glossy rose-nude lip. Hyper-realistic skin: visible pores across the nose and cheeks, fine peach fuzz catching the light, subtle natural variation in tone, a real healthy sheen, individual eyelashes and brow hairs, shot like an unretouched high-end campaign portrait. Her long, glossy dark-brown hair is freshly blow-dried with soft face-framing layers falling past her shoulders. Her nails are a fresh gel manicure, medium-length almond shape, sheer milky pink with a fine gold line-art design on two nails. Her bare feet are tucked beside her with a fresh pedicure in the same milky pink. She wears a cropped cream cable-knit cardigan over a fitted white vest, relaxed light-blue straight-leg jeans, small gold huggie earrings and a fine gold chain necklace. A mustard-yellow cushion sits beside her. Her personality: warm, organised and a little bit of a planner; she books everything ahead and this is her treating herself. Behind her: a whitewashed exposed-brick wall in a converted mill apartment, warm afternoon sun from a tall black steel-framed factory window at frame left throwing the window's grid as sharp shadow lines across the brick and across the sofa, a trailing plant at the edge of frame, pale oak floorboards. No art with text, no books with readable spines, no logos. The phone: a modern unbranded smartphone with a flat satin graphite aluminium frame and a matte graphite glass back with a small two-lens camera module in a slim vertical pill at the top left, no logo or text anywhere. Shot on an ARRI Alexa 35, 40mm spherical lens at f/2.2, warm directional sunlight with soft fill, warm neutral grade, natural background falloff, fine 35mm film grain, hyper-realistic, photoreal. Avoid: older people, wrinkles, ageing skin, messy or unkempt hair, bitten or unpainted nails on women, plastic skin, airbrushed skin, waxy skin, beauty filter, logos, Apple logo, triangular camera module, brand names, readable text, signage, watermarks, extra fingers, deformed hands, oversaturated colour, HDR look, CGI look.
+Cinematic 16:9 film still from a premium smartphone app commercial, shot like a real, lived-in home, not a showroom. Straight-on shot from low down, at coffee-table height, of a 26-year-old woman of mixed Japanese and English heritage sitting on the floor of her living room, centred in the frame and facing the camera. She sits on a worn vintage rug with her back leaning against the front of a deep olive-green velvet three-seater sofa, her knees drawn up loosely and slightly apart and her forearms resting on her knees. She holds a smartphone in both hands at chest height with the back of the phone facing the camera, and looks down at the screen with a small, private, pleased smile, completely absorbed, not looking at the camera.
+
+Between her and the camera, in the soft-focus foreground along the lower edge of the frame, is a low, round travertine coffee table. On it: a plain mustard-yellow ceramic mug of tea, half drunk, with a faint ring on the stone beside it; a small lit candle in an amber glass jar; a folded pair of tortoiseshell glasses; and a small ceramic bowl of clementines. Her feet are hidden behind the table.
+
+Her: she is slim and toned, and strikingly pretty in a natural, believable way, the kind of attractive real woman who does well on social media, not a retouched model. She has light skin with a warm undertone, soft almond-shaped dark-brown eyes, and fresh, soft natural makeup: a light dewy glow, groomed brows, defined lashes and a glossy rose-nude lip. Hyper-realistic skin: visible pores across the nose and cheeks, fine peach fuzz catching the light, subtle natural variation in tone, a real healthy sheen, individual eyelashes and brow hairs, shot like an unretouched high-end campaign portrait. Her long, glossy dark-brown hair is freshly blow-dried with soft face-framing layers falling past her shoulders, one side tucked behind her ear. Her nails, visible on the fingers wrapped around the phone, are a fresh gel manicure: medium-length almond shape, sheer milky pink, with fine gold line-art on two nails. She wears small gold huggie earrings, a fine gold chain necklace and a thin gold ring on her right index finger. Her clothes: a cropped cream cable-knit cardigan with the sleeves slightly pushed up, over a fitted white ribbed vest, and relaxed light-blue straight-leg jeans with a slightly frayed hem. Her personality: warm, organised and a little bit of a planner; she books everything ahead and this is her treating herself.
+
+The sofa behind her is deep olive-green velvet and visibly used: the seat cushions are slightly creased, a chunky oatmeal knit throw is slumped over one arm and trailing down, a mustard-yellow linen cushion and a faded rust-coloured cushion are squashed into the corner, and an open paperback lies face down on the seat with its spine turned away.
+
+The room is a converted red-brick mill apartment in Manchester that has been lived in for years. Behind the sofa, the wall is whitewashed exposed brick with slightly uneven mortar and a few chips in the paint. On a floating oak shelf above the sofa: a large unframed abstract canvas leaning against the wall in loose terracotta, ochre and cream brushstrokes; two handmade ceramic vases, one holding dried pampas grass and eucalyptus; a small stack of books with their spines turned to the wall; and a trailing pothos spilling over the edge. At frame left, a tall black steel-framed factory window with a grid of small panes; warm late-afternoon sun comes through it and lays the window's grid as sharp shadow lines across the brick, across the sofa and across her shoulder. At frame right, a paper globe floor lamp glows warm, beside the edge of a tall fiddle-leaf fig in a woven basket. The floor is wide pale oak boards under a worn vintage rug in faded rust, cream and indigo. There is a large linen floor cushion beside her, and a plain canvas tote bag with nothing printed on it slumped against the sofa leg. Small signs of life: a charging cable trailing from behind the sofa and a pair of knitted socks kicked off at the edge of the rug. It is tidy enough to look good and messy enough to be real.
+
+The phone: a modern unbranded smartphone with a flat satin graphite aluminium frame and a matte graphite glass back with a small two-lens camera module in a slim vertical pill at the top left, no logo or text anywhere. Shot on an ARRI Alexa 35, 35mm spherical lens at f/2.2, warm directional sunlight from the window mixed with the warm glow of the lamp, soft fill, warm neutral grade, the foreground table softly out of focus, natural background falloff, fine 35mm film grain, hyper-realistic, photoreal. Avoid: showroom or catalogue styling, perfectly tidy room, looking at the camera, older people, wrinkles, ageing skin, messy or unkempt hair, bitten or unpainted nails, plastic skin, airbrushed skin, waxy skin, beauty filter, logos, Apple logo, triangular camera module, brand names, readable text, book titles, signage, watermarks, extra fingers, deformed hands, oversaturated colour, HDR look, CGI look.
 ```
 
 ---
 
-### 04. Mia's point of view, booking. Composite: Kestrel, salon version (service, then time slot)
+### 04. A different woman, her point of view in bed, booking. Composite: Kestrel, salon version (service, then time slot)
 
-**Framing:** her point of view, looking down at the phone in her hands, her knees and the olive velvet
-beyond, sun stripes from the window across her lap but not across the screen.
-**Planned motion (5s):** near-static, the faint movement of hands being held. Her thumb taps a service,
-then a time.
+**Framing:** her point of view, looking down at the phone above her crossed legs, on a crumpled bed on a
+Sunday morning. This is a different woman from 03 (see §4).
+**Planned motion (5s):** near-static, with the faint natural movement of hands holding a phone. Her thumb
+taps a service, then a time.
 
 ```
-Cinematic 16:9 film still from a premium smartphone app commercial. First-person point-of-view shot, looking down through a young woman's own eyes at a smartphone held in both of her hands above her lap as she sits on a deep olive-green velvet sofa, the screen facing up towards the camera at about 20 degrees, the phone centred and filling about 45% of the frame height. Her right thumb is lifted just above the lower half of the screen, about to tap. All four corners of the screen are clearly visible and no finger covers a corner. The screen is a perfectly flat, uniform, bright chroma-key green (#00FF00) from edge to edge, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, flat satin graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere. Beyond the phone, in soft focus: her knees in relaxed light-blue jeans, the cuffs of a cropped cream cable-knit cardigan at her wrists, the olive velvet of the sofa and a mustard-yellow cushion. Warm afternoon sun falls through a steel-framed factory window as sharp diagonal stripes of light and shadow across her jeans and the sofa, but not across the phone. Her hands are slim and elegant, with light skin with a warm undertone, hyper-realistic texture, visible knuckle creases and fine natural lines. Her nails are a fresh, flawless gel manicure: medium-length almond shape, sheer milky pink with fine gold line-art on two nails, the cuticles neat. A thin gold ring on her right index finger. She is 26, slim and toned. Shot on an ARRI Alexa 35, 32mm spherical lens at f/2.8, the phone and thumb pin-sharp, warm neutral grade, fine 35mm film grain, hyper-realistic, photoreal. Avoid: any interface or image on the phone screen, glare, reflections or shadows on the screen, notch, older-looking or wrinkled hands, bitten or unpainted nails on women, plastic skin, logos, Apple logo, brand names, readable text, signage, watermarks, extra fingers, deformed hands, CGI look.
+Cinematic 16:9 film still from a premium smartphone app commercial, shot like a real, lived-in home. First-person point-of-view shot through the eyes of a 25-year-old woman sitting cross-legged in the middle of her unmade double bed on a slow Sunday morning, looking down at the smartphone in her hands. The phone is upright in portrait orientation, held in both hands about 35 cm below her eyes and just above her crossed legs, with the screen facing up towards the camera and tilted about 20 degrees towards it. The phone is in the centre of the frame and fills about 45% of the frame height.
+
+How she holds it: the phone rests in her left palm, with her left fingers curled around the left edge and the back, and the fingertips just visible along the left side between the top and bottom corners. Her left little finger is tucked flat against the back, not under the bottom edge. Her right hand cups the right edge from below, and her right thumb is lifted just above the lower half of the screen, about to tap. All four corners of the screen are clearly visible and no finger covers a corner. The screen is a perfectly flat, uniform, bright chroma-key green (#00FF00) from edge to edge, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, flat satin graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands and nails: slim, elegant hands, fair skin with a warm peachy undertone, fine visible knuckle creases, faint blue veins on the backs of the hands, and hyper-realistic skin texture with fine lines, pores and a light natural sheen. Her nails are a fresh salon gel manicure in a short-to-medium almond shape, with a sheer glazed pearl-chrome finish on every nail and hand-painted nail art on three of them: a tiny gold star on the left ring finger, a fine white French tip on the right index finger, and a small cluster of three white dots on the right middle finger. The cuticles are immaculate and the gloss catches the window light. A thin gold stacking ring sits on her right ring finger and a delicate gold chain bracelet on her left wrist.
+
+What she wears, seen from her own point of view: an oversized soft sage-green knitted jumper with the sleeves pushed up to just below the elbow, and loose cream waffle-knit lounge trousers. Her crossed legs and knees fill the lower part of the frame below the phone, in soft focus. The ends of her long, wavy chestnut hair, freshly styled and glossy, fall into the top edge of the frame, out of focus. She is slim, well kept and pretty, 25 years old.
+
+The bed and the room, softly out of focus beyond her knees: a crumpled white stonewashed linen duvet and a rumpled oatmeal linen sheet around her; at the foot of the bed a chunky mustard-yellow knit blanket, folded but slipping; a wooden breakfast tray on the duvet with a half-eaten croissant on a small white plate, a glass of orange juice and a folded linen napkin. Beyond the bed are pale wooden floorboards and a round jute rug, a slim wooden clothes rail with a few neutral-toned garments on wooden hangers, and a warm white wall with a framed abstract print in soft blush and sand tones with no text. At frame left is a large sash window with sheer white linen curtains half drawn, and bright, soft morning daylight diffusing through them across the bed. A small leafy plant sits in a terracotta pot on the windowsill, and a white ceramic bedside lamp and a stack of two books with their spines turned away sit on an oak bedside table. A lived-in, calm, real bedroom.
+
+Shot on an ARRI Alexa 35, 32mm spherical lens at f/2.8, soft diffused window light from the left with no hard shadows on the phone, the phone, hands and nails pin-sharp, gentle falloff, warm neutral grade, fine 35mm film grain, hyper-realistic, photoreal. Avoid: any interface or image on the phone screen, glare, reflections or shadows on the screen, notch, fingers covering the screen corners, older-looking or wrinkled hands, bitten, chipped or unpainted nails, plastic skin, logos, Apple logo, brand names, readable text, book titles, watermarks, extra fingers, deformed hands, mirrors, CGI look.
 ```
 
 ---
@@ -247,15 +287,26 @@ four corners just inside it"*, 100mm macro at f/5.6. This is a cutaway for which
 
 ## 6. The pilot, before anything else
 
-Generate **03, 04 and 02** first: the sofa shot you described, its point-of-view insert, and the hardest insert
-(handheld, walking). Then make image-to-video clips of **04 and 02** only, at 5s and 1080p, with the
-prompt's planned motion plus this line, word for word:
+Generate **03, 04 and 02**. No reference images are needed, because each is its own person. Then make
+image-to-video clips of all three at 1080p: **03 at 6s, 04 at 5s, 02 at 5s**. If the model only offers 5
+or 10, choose 5; past about 6s, faces and hands start to morph. These are the video prompts:
 
+**03**
 ```
-The phone screen stays a perfectly flat, uniform chroma-key green for the entire clip; no interface, image or text ever appears on it. The hands keep five fingers throughout. Natural, unhurried movement.
+Very slow push-in across the coffee table towards her, the candle flame flickering gently in the foreground. She scrolls with her thumb, pauses, a small smile spreads, then she taps once and lets her head rest back against the sofa for a moment. The sunlight and the window-grid shadows stay still on the brick. The phone's back faces the camera throughout. Natural, unhurried, realistic movement.
 ```
 
-Tell me when they're done. I pull them from your Higgsfield generations through the sandbox, key them,
+**04**
+```
+Point of view, near-static, with only the faint natural movement of hands holding a phone and a slight breath. Her right thumb taps the lower half of the screen once, then again a moment later. The nails stay exactly as they are. The phone screen stays a perfectly flat, uniform chroma-key green for the entire clip; no interface, image or text ever appears on it. The hands keep five fingers throughout. Natural, unhurried movement.
+```
+
+**02**
+```
+Subtle handheld over-the-shoulder camera, breathing slightly. He stands still at the kerb; his thumb scrolls up once, then taps. In the soft background a pedestrian passes. His legs and feet stay out of frame. The phone screen stays a perfectly flat, uniform chroma-key green for the entire clip; no interface, image or text ever appears on it. The hands keep five fingers throughout. Natural, unhurried movement.
+```
+
+Tell me when they're done. I pull them from your Higgsfield generations through the sandbox, key 04 and 02,
 track the corners and composite the Kestrel and Sage & Co screens. I then send you the two composited
 clips. **Only then are the other shots worth generating.** If the green won't hold in the video model or
 the corners won't track, we change the method (for example, a still phone composited in post, or
