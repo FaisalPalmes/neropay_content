@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=1080, height=1920" />
 <script src="vendor/gsap.min.js"></script>
 <style>
-/* v4 (24 Sep 2026), Faisal's notes on v3: the phone stopped and started again (after it came in, and between moves),
+/* v5 (24 Sep 2026), Faisal's notes on v4: the clear-glass look only; no flip anywhere (the menu swipes in); a fast
+   entrance that eases into the middle; the glass behind is the mark's two bars, huge and cropped; a thicker phone.
+   v4 (24 Sep 2026), Faisal's notes on v3: the phone stopped and started again (after it came in, and between moves),
    so the phone and camera now run on one continuous monotone spline through their poses; the finale is keypad in
    the centre, reports left, transactions right; the pink, blue and lilac light is gone for blurred yellow light
    moving behind glass, in two variants (textured reeded glass, and clear angled panes).
@@ -41,7 +43,8 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
 #ribs{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,0) 0px,rgba(255,255,255,.55) 3px,rgba(255,255,255,.14) 12px,rgba(255,255,255,0) 26px,rgba(90,70,20,.03) 44px,rgba(90,70,20,.085) 52px,rgba(255,255,255,0) 54px)}
 #grain{position:absolute;inset:0;background:url(assets/grain.png) 0 0/1080px 1920px;mix-blend-mode:soft-light;opacity:.5}
 #panes{position:absolute;inset:0;perspective:1600px}
-.pn{position:absolute;border-radius:44px;overflow:hidden;
+.pn,#gmark{position:absolute;left:-380px;top:-300px;width:2400px;height:2400px;transform-origin:1300px 1200px}
+.pn{border-radius:44px;overflow:hidden;
   background:linear-gradient(135deg,rgba(255,255,255,.30),rgba(255,255,255,.05) 45%,rgba(255,255,255,.16));
   box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.9),inset 0 3px 0 rgba(255,255,255,.95),inset 0 -2px 0 rgba(160,125,40,.16),0 50px 100px -50px rgba(120,95,30,.28)}
 .pn i{position:absolute;top:-20%;bottom:-20%;left:-60%;width:220%;background:linear-gradient(105deg,rgba(255,255,255,0) 44%,rgba(255,255,255,.7) 49.5%,rgba(255,255,255,.18) 51%,rgba(255,255,255,0) 56%)}
@@ -63,12 +66,13 @@ h1 .mk{position:absolute;left:-6px;right:-8px;bottom:.06em;height:.38em;backgrou
 #rig{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 1050px}
 .ph{position:absolute;left:270px;top:480px;width:540px;height:1140px;transform-style:preserve-3d;transform-origin:50% 50%}
 .slice{position:absolute;inset:0;border-radius:88px}
+.btn{position:absolute;width:8px;border-radius:4px}
 .slice.sh{box-shadow:0 70px 110px -40px rgba(38,36,70,.42),0 20px 40px -20px rgba(38,36,70,.25)}
-.front{position:absolute;inset:0;transform-style:flat;transform:translateZ(20px)}
+.front{position:absolute;inset:0;transform-style:flat;transform:translateZ(32px)}
 .body{position:absolute;inset:0;border-radius:88px;background:#0B0B0D;
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),inset 0 0 0 7px #151517}
 .body::after{content:"";position:absolute;inset:2px;border-radius:86px;box-shadow:inset 0 2px 1px rgba(255,255,255,.30),inset 0 -2px 2px rgba(0,0,0,.5)}
-.back{position:absolute;inset:0;border-radius:88px;transform:translateZ(-20px) rotateY(180deg);
+.back{position:absolute;inset:0;border-radius:88px;transform:translateZ(-32px) rotateY(180deg);
   background:linear-gradient(155deg,#2E2F34 0%,#18191C 55%,#26272B 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}
 .back .cams{position:absolute;left:44px;top:44px;width:190px;height:190px;border-radius:52px;background:linear-gradient(150deg,#34353A,#1C1D20);
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.4)}
@@ -180,7 +184,7 @@ $('hdz').insertAdjacentHTML('beforeend', COPY.map(([k, a, c], i) =>
    <h1><span class="ln" data-layout-allow-overflow><span id="ha${i}" data-layout-allow-overlap data-layout-allow-occlusion>${a}</span></span><span class="ln" data-layout-allow-overflow><span id="hb${i}" data-layout-allow-overlap data-layout-allow-occlusion><i class="mk" id="hm${i}"></i>${c}</span></span></h1></div>`).join(''));
 
 /* ── the ground ── */
-const BG = window.BG || 'reeded';
+const BG = window.BG || 'pane';
 /* the light: two yellows, a pale gold and a warm white, each moving to a new place on every screen change */
 const LIGHT = [
   [1100, 'rgba(255,207,36,.50)', [[0,900,280],[3.3,820,560],[7.3,240,380],[10.6,880,1380],[13.7,280,1520],[15.6,800,420],[19.3,230,1260],[23.1,540,880],[31.5,540,960]]],
@@ -196,10 +200,18 @@ if (BG === 'reeded') {
     + '<div id="ribs"></div><div id="grain"></div>';
 } else {
   $('lights').innerHTML = lset();
-  $('panes').innerHTML = [[-140,160,760,1120],[500,800,740,1220],[560,-200,600,640]].map(([l,t,w,h], i) =>
-    `<div class="pn" id="pn${i}" style="left:${l}px;top:${t}px;width:${w}px;height:${h}px"><i id="sp${i}"></i></div>`).join('');
+  /* the glass is the mark's two bars at 24x, tilted and cropped by the frame, so it reads as glass first and the
+     logo only if you look for it: one bar's square end shows at the left edge, the rest runs off the frame */
+  $('panes').innerHTML = `<div id="gmark"><svg viewBox="0 0 100 100" width="2400" height="2400" overflow="visible">
+    <defs><linearGradient id="gfill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".44"/><stop offset=".45" stop-color="#fff" stop-opacity=".11"/><stop offset="1" stop-color="#fff" stop-opacity=".30"/></linearGradient>
+      <linearGradient id="gspec" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="40"><stop offset=".44" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset=".52" stop-color="#fff" stop-opacity=".2"/><stop offset=".58" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <clipPath id="gclip">${MARK}</clipPath></defs>
+    <g fill="none" stroke="rgba(160,120,20,.22)" stroke-width="0.12" transform="translate(0.14,0.2)">${MARK}</g>
+    <g fill="url(#gfill)" stroke="rgba(255,255,255,.92)" stroke-width="0.14" stroke-linejoin="round">${MARK}</g>
+    <g clip-path="url(#gclip)"><rect id="gsr" x="-100" y="-100" width="300" height="300" fill="url(#gspec)"/></g>
+  </svg></div>`;
 }
-const LB = [...document.querySelectorAll('.lb')];
+const LB = [...document.querySelectorAll('.lb')], GM = $('gmark'), GSR = $('gsr');
 
 /* ── smooth motion: every continuous move is a monotone cubic through its poses, so speed ramps up and down
    without the dead stops that one tween easing into the next produced ── */
@@ -215,9 +227,17 @@ const mono = pts => { const n = pts.length, T = pts.map(p => p[0]), V = pts.map(
 const LP = LIGHT.map(([d, , w]) => [mono(w.map(p => [p[0], p[1]])), mono(w.map(p => [p[0], p[2]])), d]);
 
 /* ── the phone ── */
-const T = 40, N = 14;
-const band = () => [...Array(N)].map((_, i) => { const u = i/(N-1), z = -T/2 + 2 + u*(T-4), c = Math.round(30 + Math.sin(u*Math.PI)*70);
-  return `<div class="slice${i ? '' : ' sh'}" style="transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+6})"></div>`; }).join('');
+/* v5: 64px deep (was 40), 26 layers so the band never shows gaps as it turns. The band is graphite with a polished
+   chamfer caught at each edge and a softer sheen between; the last layers step in a touch so the edges round off.
+   Side buttons are small stacks of their own. The front face and screen are unchanged, so every screen sits as before */
+const T = 64, N = 26;
+const band = () => [...Array(N)].map((_, i) => { const u = i/(N-1), z = -T/2 + 1 + u*(T-2), e = Math.abs(2*u - 1),
+    k = 2.6 * Math.max(0, (e - 0.78) / 0.22) ** 2,
+    c = Math.round(30 + 20*Math.sin(u*Math.PI) + 78*Math.exp(-(((u-0.12)/0.055)**2)) + 52*Math.exp(-(((u-0.88)/0.06)**2)) + 14*Math.exp(-(((u-0.5)/0.12)**2)));
+  return `<div class="slice${i ? '' : ' sh'}" style="inset:${k.toFixed(2)}px;border-radius:${(88-k).toFixed(2)}px;transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+5})"></div>`; }).join('')
+  + [...Array(7)].map((_, i) => { const z = -T*0.2 + i*(T*0.4/6), c = 58 + Math.round(26*Math.sin(i/6*Math.PI));
+    return [[-5,178,52],[-5,262,92],[-5,370,92],[537,300,138]].map(([x, y, h]) =>
+      `<div class="btn" style="left:${x}px;top:${y}px;height:${h}px;transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+5})"></div>`).join(''); }).join('');
 const phone = (id, panes, extra = '') => `<div class="ph" id="${id}" data-layout-allow-overflow>
   <div class="back"><div class="cams"><i style="left:22px;top:22px"></i><i style="left:98px;top:98px"></i></div></div>
   ${band()}
@@ -249,7 +269,7 @@ $('rig').innerHTML = phone('ph', `
     <div id="amt" style="left:${100*S}px;top:${64+172*S}px;width:${500*S}px">£0.00</div>
     ${KEYS.map(([id,x,y,w,h]) => `<div class="press${id==='kc'?' lt':''}" id="${id}" style="${box(x,y,w,h)}"></div>${ringAt('r'+id, x+w/2, y+h/2, 80)}`).join('')}`)}
     <div class="dim" id="d1"></div></div>
-  <div class="pane" id="s2" style="visibility:hidden">${tapPane('', true)}</div>
+  <div class="pane" id="s2" style="visibility:hidden">${tapPane('', true)}<div class="dim" id="d2"></div></div>
   <div class="pane" id="s4" style="visibility:hidden">${menu()}
     <div class="press" id="card" style="${box(402,544,344,376)};border-radius:10px"></div>${ringAt('rcard', 574, 700, 90)}
     <div class="dim" id="d4"></div></div>
@@ -278,11 +298,11 @@ $('fcR').innerHTML = phone('fpR', `<div class="pane"><img src="assets/app3.png" 
 /* the poses. Phone (x, y, turn, tilt, roll), the camera's push into the corner (p) and step back for the finale (q),
    and the two side phones. Times are the screen changes below */
 const PH = {
-  x:  mono([[0,-1150],[2.2,-10],[5.3,20],[7.32,10],[7.97,40],[8.62,10],[15.33,0],[31.5,0]]),
-  y:  mono([[0,60],[2.2,5],[4,-15],[7.32,-30],[7.97,-20],[8.62,-10],[12.8,-5],[15.33,-10],[23.14,-12],[24.54,0],[31.5,0]]),
-  rotationY: mono([[0,62],[2.2,22],[3.3,13],[5.3,2],[7.32,-6],[7.97,172],[8.62,348],[10.6,352],[11.29,350],[12.79,336],[13.73,338],[15.33,352],[17.3,366],[19.3,370],[23.14,364],[24.54,360],[26.6,357]]),
-  rotationX: mono([[0,14],[2.2,8],[5.3,5],[7.32,5],[7.97,9],[8.62,6],[11.29,6],[12.79,8],[13.73,7],[15.33,5],[23.14,4],[24.54,3],[31.5,3]]),
-  rotationZ: mono([[0,-12],[2.2,-4],[3.3,-2],[5.3,0],[7.32,1],[7.97,3],[8.62,1],[11.29,1],[12.79,3],[13.73,2],[15.33,1],[17.3,-2],[23.14,-1],[24.54,0],[31.5,0]])
+  x:  mono([[0,-1150],[0.9,-40],[2.2,-8],[5.3,20],[7.32,10],[8.62,0],[15.33,0],[31.5,0]]),
+  y:  mono([[0,60],[0.9,12],[2.2,4],[4,-15],[7.32,-30],[8.62,-15],[12.8,-5],[15.33,-10],[23.14,-12],[24.54,0],[31.5,0]]),
+  rotationY: mono([[0,62],[0.9,32],[2.2,20],[3.3,13],[5.3,2],[7.32,-6],[8.2,-12],[10.6,-8],[11.29,-10],[12.79,-24],[13.73,-22],[15.33,-8],[17.3,6],[19.3,10],[23.14,4],[24.54,0],[26.6,-3]]),
+  rotationX: mono([[0,14],[0.9,10],[2.2,8],[5.3,5],[8.62,6],[11.29,6],[12.79,8],[13.73,7],[15.33,5],[23.14,4],[24.54,3],[31.5,3]]),
+  rotationZ: mono([[0,-12],[0.9,-6],[2.2,-3],[3.3,-2],[5.3,0],[7.32,1],[8.62,2],[11.29,1],[12.79,3],[13.73,2],[15.33,1],[17.3,-2],[23.14,-1],[24.54,0],[31.5,0]])
 };
 const CP = mono([[0,0],[11.29,0],[12.79,0.9],[13.73,1],[15.33,0],[31.5,0]]);
 const CQ = mono([[0,0],[23.14,0],[24.54,1],[26.6,1.35]]);
@@ -296,10 +316,9 @@ const pose = t => {
   gsap.set(FPL, { x:FL.x(t), y:-40, z:-300, scale:.72, rotationY:FL.rotationY(t), rotationZ:-4 });
   gsap.set(FPR, { x:FR.x(t), y:-40, z:-300, scale:.72, rotationY:FR.rotationY(t), rotationZ:4 });
   LB.forEach(e => { const [fx, fy, d] = LP[+e.dataset.j]; e.style.transform = `translate(${(fx(t) - d/2).toFixed(1)}px,${(fy(t) - d/2).toFixed(1)}px)`; });
-  if (BG !== 'reeded') [0,1,2].forEach(i => {
-    const pn = $('pn'+i), a = [[30,-6,0],[-28,5,6],[-14,3,-22]][i], w = Math.sin(t*0.21 + i*2.1);
-    pn.style.transform = `rotateY(${a[0] + 5*w}deg) rotateZ(${a[1]}deg) rotateX(${a[2] + 2*w}deg)`;
-    $('sp'+i).style.transform = `translateX(${(((t*0.09 + i*0.37) % 1.2) - 0.6) * 100}%)`; });
+  if (BG !== 'reeded') { const w = Math.sin(t*0.19);
+    GM.style.transform = `rotateY(${-16 + 5*w}deg) rotateX(${9 + 2.5*Math.sin(t*0.13 + 1)}deg)`;
+    const k = ((t*0.075) % 1.3) - 0.65; GSR.setAttribute('transform', `translate(${(k*200).toFixed(2)},${(k*80).toFixed(2)})`); }
 };
 pose(0);
 
@@ -307,7 +326,7 @@ pose(0);
 window.__timelines = window.__timelines || {};
 const tl = gsap.timeline({ paused: true });
 const LIFT = (z, s) => ({ z, scale:s, boxShadow:'0 44px 64px -20px rgba(17,17,20,.42)' });
-const SETTLE = { z:20.5, scale:1, boxShadow:'0 0 0 rgba(17,17,20,0)' };
+const SETTLE = { z:32.5, scale:1, boxShadow:'0 0 0 rgba(17,17,20,0)' };
 
 
 /* headlines: the lines rise in through a mask, the marker draws, and they leave up before the next screen */
@@ -360,14 +379,18 @@ for (let c = 0; c < 4; c++) { const at = b(8.5 + c*2);
 }
 tl.fromTo('#note', { y:-150, opacity:0 }, { y:0, opacity:1, duration:0.6, ease:'back.out(1.4)' }, b(11.5));
 
-/* 3 · the one spin: the back passes the camera and the menu comes round */
-tl.set('#s2', { visibility:'hidden' }, b(14.4) + 0.5).set('#s4', { visibility:'visible', zIndex:3 }, b(14.4) + 0.5);
+/* 3 · the menu swipes in over the tap screen, as the other screens do; the phone never turns past a gentle angle */
+tl.set('#s4', { visibility:'visible', x:508, zIndex:3 }, b(14.4))
+  .to('#s4', { x:0, duration:0.7, ease:'power3.inOut' }, b(14.4))
+  .to('#s2', { x:-150, duration:0.7, ease:'power3.inOut' }, b(14.4))
+  .to('#d2', { opacity:.18, duration:0.7 }, b(14.4))
+  .set('#s2', { visibility:'hidden' }, b(14.4) + 0.75);
 
 /* the menu: a tap on the dish, the card lifts off the screen and grows, holds, and settles back */
 tap('card', b(17.5), 1.7);
-tl.set('#lcard', { opacity:1, z:20.5 }, b(18))
-  .to('#lcard', { ...LIFT(120, 1.12), duration:0.85, ease:'power3.out' }, b(18))
-  .to('#lcard', { z:135, scale:1.14, duration:b(19.9) - b(18) - 0.85, ease:'sine.inOut' }, b(18) + 0.85)
+tl.set('#lcard', { opacity:1, z:32.5 }, b(18))
+  .to('#lcard', { ...LIFT(132, 1.12), duration:0.85, ease:'power3.out' }, b(18))
+  .to('#lcard', { z:147, scale:1.14, duration:b(19.9) - b(18) - 0.85, ease:'sine.inOut' }, b(18) + 0.85)
   .to('#lcard', { ...SETTLE, duration:0.6, ease:'power2.inOut' }, b(19.9))
   .set('#lcard', { opacity:0 }, b(19.9) + 0.62);
 
@@ -393,10 +416,10 @@ tl.set('#s5', { visibility:'visible', x:508, zIndex:5 }, b(30.6))
   .to('#d3', { opacity:.18, duration:0.7 }, b(30.6))
   .set('#s3', { visibility:'hidden' }, b(30.6) + 0.75)
   .fromTo('#cover', { scaleX:1 }, { scaleX:0, duration:1.3, ease:'power2.inOut' }, b(31.6))
-  .set('#ltip', { opacity:1, z:20.5 }, b(34))
-  .to('#ltip', { ...LIFT(100, 1.06), duration:0.6, ease:'back.out(1.4)' }, b(34))
-  .set('#lsnap', { opacity:1, z:20.5 }, b(35))
-  .to('#lsnap', { ...LIFT(90, 1.04), duration:0.7, ease:'power3.out' }, b(35))
+  .set('#ltip', { opacity:1, z:32.5 }, b(34))
+  .to('#ltip', { ...LIFT(112, 1.06), duration:0.6, ease:'back.out(1.4)' }, b(34))
+  .set('#lsnap', { opacity:1, z:32.5 }, b(35))
+  .to('#lsnap', { ...LIFT(102, 1.04), duration:0.7, ease:'power3.out' }, b(35))
   .to(['#ltip', '#lsnap'], { ...SETTLE, duration:0.5, ease:'power2.inOut' }, b(37))
   .set(['#ltip', '#lsnap'], { opacity:0 }, b(37) + 0.52);
 

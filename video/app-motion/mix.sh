@@ -13,7 +13,7 @@ CUES=(
   "whoosh-short $(t "B*6.5") 0.13" "pop $(t "B*7.3") 0.13"
   "click-soft $(t "B*8.5") 0.06" "click-soft $(t "B*10.5") 0.05" "click-soft $(t "B*12.5") 0.05" "click-soft $(t "B*14.5") 0.04"
   "ping $(t "B*11.6") 0.10"
-  "whoosh $(t "B*14.4") 0.24"
+  "whoosh-short $(t "B*14.4") 0.15"
   "click-soft $(t "B*17.5") 0.14" "pop $(t "B*18") 0.13" "whoosh-short $(t "B*19.9") 0.07" "whoosh-short $(t "B*20.9") 0.13"
   "whoosh-cinematic $(t "B*22.2") 0.20" "pop $(t "B*25") 0.10" "whoosh $(t "B*27") 0.14"
   "whoosh-short $(t "B*30.6") 0.15" "sparkle $(t "B*31.6") 0.06" "pop $(t "B*34") 0.12" "pop $(t "B*35") 0.12" "whoosh-short $(t "B*37") 0.07"
