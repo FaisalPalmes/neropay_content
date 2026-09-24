@@ -54,7 +54,7 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   cues.push({ sfx: 'impact-bass-1', t: +(OUTRO_AT + 0.92).toFixed(3), gain: 0.2, why: 'the sting: the letters meet' });
   cues.push({ sfx: 'sparkle', t: +(OUTRO_AT + 2.05).toFixed(3), gain: 0.07, why: 'the line slides out under the tile' });
   cues.sort((a, b) => a.t - b.t);
-  const mix = { duration: DURATION, head: 0.6, vo: 'assets/vo-v31.mp3', target: -14, tp: -3.0,
+  const mix = { duration: DURATION, head: 0.6, vo: 'data/vo.mp3', target: -14, tp: -3.0,
     vo_filter: 'acompressor=threshold=-20dB:ratio=2.5:attack=8:release=160:makeup=1.6',
     bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.30, loop_at: 103.35,
       duck: { threshold: 0.03, ratio: 2.5, attack: 20, release: 500 }, fade: 3.0 }, cues };

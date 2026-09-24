@@ -22,11 +22,21 @@ const D = resolve(ep, 'data');
 if (!existsSync(resolve(D, 'vo-raw.mp3'))) { copyFileSync(resolve(D, 'vo.mp3'), resolve(D, 'vo-raw.mp3')); copyFileSync(resolve(D, 'vo_words.json'), resolve(D, 'vo_words-raw.json')); }
 const words = JSON.parse(readFileSync(resolve(D, 'vo_words-raw.json'), 'utf8'));
 const dur = +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', resolve(D, 'vo-raw.mp3')]).toString();
-/* the cuts: [from, to] in raw time, each removing (gap - GAP) from the middle of a silence */
+/* the cuts: [from, to] in raw time, each removing (gap - GAP) from the middle of a silence.
+   Guard (24 Sep 2026): a gap is only a gap if it is quiet. Whisper timed "Reports" in the NeroConnect explainer as starting
+   after its first syllable, the "silence" before it held "Re", and the cut took it out — the take said "ports". So every
+   cut is checked against the audio: if any 20 ms inside it is louder than -26 dBFS (speech; a breath is -32 to -38 and the gate takes it), the cut is skipped and reported. */
+const SR = 16000, pcm = new Float32Array((b => b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength))(
+  execFileSync('ffmpeg', ['-v', 'error', '-i', resolve(D, 'vo-raw.mp3'), '-ac', '1', '-ar', String(SR), '-f', 'f32le', '-'], { maxBuffer: 1 << 30 })));
+const loudest = (a, b) => { let m = 0; for (let x = Math.floor(a * SR); x + 320 <= b * SR; x += 160) {
+  let e = 0; for (let k = x; k < x + 320; k++) e += pcm[k] * pcm[k]; m = Math.max(m, e / 320); } return 10 * Math.log10(m + 1e-12); };
 const cuts = [];
 for (let i = 1; i < words.length; i++) {
   const g = words[i].s - words[i - 1].e;
-  if (g > MIN) { const remove = g - GAP, mid = (words[i - 1].e + words[i].s) / 2; cuts.push([mid - remove / 2, mid + remove / 2]); }
+  if (g > MIN) { const remove = g - GAP, mid = (words[i - 1].e + words[i].s) / 2, c = [mid - remove / 2, mid + remove / 2];
+    const db = loudest(c[0], c[1]);
+    if (db > -26) console.log(`  kept a ${g.toFixed(2)}s gap before "${words[i].w}" at ${words[i].s}s: sound in it (${db.toFixed(1)} dBFS), a word Whisper mistimed`);
+    else cuts.push(c); }
 }
 /* keep segments between cuts, concat */
 const keep = []; let t = 0;
