@@ -1,5 +1,5 @@
 {
- "duration": 145.1,
+ "duration": 147.6,
  "head": 0.6,
  "vo": "data/vo.mp3",
  "target": -14,
@@ -45,19 +45,19 @@
   },
   {
    "sfx": "pop",
-   "t": 13.25,
+   "t": 14.38,
    "gain": 0.06,
    "why": "a glass card lands"
   },
   {
    "sfx": "click-soft",
-   "t": 16.55,
+   "t": 17.71,
    "gain": 0.06,
    "why": "a glass card lands"
   },
   {
    "sfx": "pop",
-   "t": 19.03,
+   "t": 20.24,
    "gain": 0.06,
    "why": "a glass card lands"
   },
@@ -74,26 +74,26 @@
    "why": "a glass card lands"
   },
   {
-   "sfx": "pop",
-   "t": 32.85,
-   "gain": 0.06,
-   "why": "a glass card lands"
-  },
-  {
    "sfx": "whoosh-short",
    "t": 33.05,
    "gain": 0.06,
    "why": "scene change, on the beat"
   },
   {
+   "sfx": "pop",
+   "t": 35.29,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
    "sfx": "click-soft",
-   "t": 33.59,
+   "t": 35.99,
    "gain": 0.06,
    "why": "a glass card lands"
   },
   {
    "sfx": "pop",
-   "t": 34.43,
+   "t": 36.82,
    "gain": 0.06,
    "why": "a glass card lands"
   },
@@ -177,7 +177,7 @@
   },
   {
    "sfx": "click-soft",
-   "t": 74.86,
+   "t": 74.84,
    "gain": 0.06,
    "why": "a glass card lands"
   },
