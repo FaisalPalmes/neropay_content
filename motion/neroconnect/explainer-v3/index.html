@@ -296,5 +296,11 @@ window.setTime = function (t) {
   if (res) res.style.transform = `translateY(${Math.round((1 - outE(clamp((t - 109.4) / 0.7))) * -160)}px)`;
 };
 window.setFrame = (n, fps = 25) => window.setTime(n / fps);
+/* for check-still.cjs: a moment in each scene after its last reveal and before it leaves */
+window.SCENES_FOR_CHECK = () => SC.map((s, i) => {
+  const h = s.el.querySelector('.h'); if (!h) return { i, t: null };
+  const own = [h, ...h.querySelectorAll('[data-at],[data-mark]')];
+  const last = Math.max(s.t[0], ...own.map(e => +(e.dataset.at || e.dataset.mark || 0)));
+  const t = last + 0.9; return { i, t: t < s.t[1] - 0.15 ? t : null }; });
 window.setTime(0);
 </script></body></html>

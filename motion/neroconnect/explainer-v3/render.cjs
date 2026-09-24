@@ -18,6 +18,8 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   r.writeHead(200, { 'content-type': T[path.extname(f)] || 'application/octet-stream' }); fs.createReadStream(f).pipe(r); }).listen(0);
 
 (async () => {
+  /* the jitter gate: no render while any landed headline moves */
+  if (!A.includes('--from')) execFileSync('node', [path.join(HERE, 'check-still.cjs')], { stdio: 'inherit' });
   const port = srv.address().port, b = await chromium.launch();
   const mk = async url => { const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: W / 1920 });
     const errs = []; p.on('pageerror', e => errs.push(String(e))); await p.goto(url, { waitUntil: 'networkidle' });
@@ -61,7 +63,7 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   execFileSync('node', [path.join(REPO, 'motion/mix.mjs'), 'neroconnect/explainer-v3'], { stdio: 'inherit' });
   const name = path.join(OUT, `ncx-v3-${PREVIEW ? 'preview' : '16x9'}.mp4`);
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'), '-i', path.join(OUT, 'mix.m4a'),
-    '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-crf', PREVIEW ? '21' : '16', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-r', String(FPS),
+    '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-crf', PREVIEW ? '21' : '16', '-preset', PREVIEW ? 'medium' : 'slow', '-pix_fmt', 'yuv420p', '-r', String(FPS),
     '-c:a', 'copy', '-shortest', '-movflags', '+faststart', name]);
   console.log(name);
 })();
