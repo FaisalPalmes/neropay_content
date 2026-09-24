@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="vendor/gsap.min.js"></script>
+<style>
+/* NeroPay Mobile Apps — "Order. Book. Join. Pay." (MA01), 24 Sep 2026.
+   The storyboard and the four merchant apps are Cowork's handover (/brag-slim, 24 Sep), kept as built: four invented
+   businesses, each doing one thing in one tap. What changed, on Faisal's word: the charcoal frame is gone for the
+   light look he approved on AM02 (warm off-white, yellow light moving behind clear glass, the mark's bars as the
+   glass, the thick 3D phone on one continuous curve), NeroPay's own type is Poppins in the house headline style,
+   the pace is about 30 s instead of 21, "Available on Android & iOS" is the highlight line, and it ends on the locked
+   outro (brand/sting/outro.html) with neropay.app. The merchant screens keep their own fonts and colours: four
+   businesses looking nothing alike is the point.
+   Rails: no NeroPay price, rate or fee; the prices in the apps are the invented merchants' own; no real merchant,
+   person or data; nothing AI-generated; the only claims are Android and iOS, the merchant's own brand, their
+   existing booking, ordering and checkout, and set up in the NeroPay dashboard (Faisal confirmed, 24 Sep). */
+*{margin:0;padding:0;box-sizing:border-box}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-700-normal.woff2)format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-600-normal.woff2)format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-500-normal.woff2)format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:Poppins;src:url(fonts/poppins-latin-400-normal.woff2)format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:Inter;font-weight:400;src:url(merchant-fonts/inter-latin-400-normal.woff2);font-display:block}
+@font-face{font-family:Inter;font-weight:500;src:url(merchant-fonts/inter-latin-500-normal.woff2);font-display:block}
+@font-face{font-family:Inter;font-weight:600;src:url(merchant-fonts/inter-latin-600-normal.woff2);font-display:block}
+@font-face{font-family:Inter;font-weight:700;src:url(merchant-fonts/inter-latin-700-normal.woff2);font-display:block}
+@font-face{font-family:Inter;font-weight:800;src:url(merchant-fonts/inter-latin-800-normal.woff2);font-display:block}
+@font-face{font-family:Fraunces;font-weight:500;src:url(merchant-fonts/fraunces-latin-500-normal.woff2);font-display:block}
+@font-face{font-family:Fraunces;font-weight:600;src:url(merchant-fonts/fraunces-latin-600-normal.woff2);font-display:block}
+@font-face{font-family:Fraunces;font-weight:500;font-style:italic;src:url(merchant-fonts/fraunces-latin-500-italic.woff2);font-display:block}
+@font-face{font-family:Bebas;font-weight:400;src:url(merchant-fonts/bebas-neue-latin-400-normal.woff2);font-display:block}
+@font-face{font-family:Archivo;font-weight:700;src:url(merchant-fonts/archivo-latin-700-normal.woff2);font-display:block}
+@font-face{font-family:Archivo;font-weight:800;src:url(merchant-fonts/archivo-latin-800-normal.woff2);font-display:block}
+@font-face{font-family:Archivo;font-weight:900;src:url(merchant-fonts/archivo-latin-900-normal.woff2);font-display:block}
+@font-face{font-family:DMSerif;font-weight:400;src:url(merchant-fonts/dm-serif-display-latin-400-normal.woff2);font-display:block}
+@font-face{font-family:DMSerif;font-weight:400;font-style:italic;src:url(merchant-fonts/dm-serif-display-latin-400-italic.woff2);font-display:block}
+:root{--yel:#FFCF24;--ink:#111114}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#F4F1EA}
+body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#F4F1EA}
+.clip{position:absolute;inset:0}
+
+/* the ground: AM02's, warm off-white, yellow light that moves to a new place for every scene, behind clear glass
+   cut in the shape of the mark's two bars at 24x */
+.ground{background:linear-gradient(170deg,#F6F3EC 0%,#EEEAE1 100%)}
+.lset{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.lb{position:absolute;left:0;top:0;border-radius:50%}
+#panes{position:absolute;inset:0;perspective:1600px}
+#gmark{position:absolute;left:-380px;top:-300px;width:2400px;height:2400px;transform-origin:1300px 1200px}
+
+/* NeroPay's own type: the carousel headline style */
+#hdz{z-index:10;pointer-events:none}
+#scrim{position:absolute;left:-600px;right:-600px;top:-500px;height:970px;background:linear-gradient(180deg,rgba(246,243,236,.96) 0%,rgba(246,243,236,.9) 81.6%,rgba(246,243,236,0) 100%);opacity:0}
+.hlw{position:absolute;left:74px;right:60px;top:150px}
+.kick{display:flex;align-items:center;gap:14px;font:600 22px/1 Poppins;letter-spacing:.16em;text-transform:uppercase;color:#6B6B75}
+.kick i{display:block;width:34px;height:5px;border-radius:3px;background:var(--yel)}
+h1{margin-top:22px;font:700 78px/1.0 Poppins;letter-spacing:-.035em;color:var(--ink)}
+h1.sm{font-size:62px}
+h1.word{font-size:150px;line-height:.98;letter-spacing:-.05em;margin-top:14px}
+h1 .ln{display:block;overflow:hidden;padding:0 0 .08em 8px;margin:0 0 -.08em -8px}
+h1 .ln > span{display:inline-block;position:relative;isolation:isolate}
+h1 .mk{position:absolute;left:-6px;right:-8px;bottom:.06em;height:.38em;background:var(--yel);border-radius:3px;z-index:-1;transform-origin:0 50%}
+h1.word .mk{height:.26em;bottom:.1em}
+
+/* the highlight line on the reveal */
+#avail{position:absolute;left:0;right:0;top:1432px;text-align:center;z-index:11}
+#avail .row{display:inline-flex;align-items:baseline;gap:16px;font:500 40px/1 Poppins;letter-spacing:-.02em;color:#55555E}
+#avail .ln{display:inline-block;overflow:hidden;padding:0 8px .12em;vertical-align:bottom}
+#av1{display:inline-block}
+#avail b{display:inline-block;position:relative;isolation:isolate;font:700 64px/1 Poppins;letter-spacing:-.035em;color:var(--ink)}
+#avail b .mk{position:absolute;left:-8px;right:-10px;bottom:.04em;height:.36em;background:var(--yel);border-radius:4px;z-index:-1;transform-origin:0 50%}
+#dash{position:absolute;left:0;right:0;top:1540px;text-align:center;font:500 30px/1 Poppins;letter-spacing:-.01em;color:#6B6B75;z-index:11}
+
+/* the phone: AM02 v5's, 64px deep with a polished chamfer and side buttons */
+.cam{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 52%}
+#rig{position:absolute;left:0;top:0;width:1080px;height:1920px;transform-origin:540px 1050px}
+.ph{position:absolute;left:270px;top:480px;width:540px;height:1140px;transform-style:preserve-3d;transform-origin:50% 50%}
+.slice{position:absolute;inset:0;border-radius:88px}
+.slice.sh{box-shadow:0 70px 110px -40px rgba(38,36,70,.42),0 20px 40px -20px rgba(38,36,70,.25)}
+.btn{position:absolute;width:8px;border-radius:4px}
+.front{position:absolute;inset:0;transform-style:flat;transform:translateZ(32px)}
+.body{position:absolute;inset:0;border-radius:88px;background:#0B0B0D;box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),inset 0 0 0 7px #151517}
+.body::after{content:"";position:absolute;inset:2px;border-radius:86px;box-shadow:inset 0 2px 1px rgba(255,255,255,.30),inset 0 -2px 2px rgba(0,0,0,.5)}
+.back{position:absolute;inset:0;border-radius:88px;transform:translateZ(-32px) rotateY(180deg);background:linear-gradient(155deg,#2E2F34 0%,#18191C 55%,#26272B 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}
+.back .cams{position:absolute;left:44px;top:44px;width:190px;height:190px;border-radius:52px;background:linear-gradient(150deg,#34353A,#1C1D20);box-shadow:inset 0 0 0 2px rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.4)}
+.back .cams i{position:absolute;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a4560,#07080c 65%);box-shadow:0 0 0 6px #0f1012}
+.scr{position:absolute;left:16px;top:16px;width:508px;height:1108px;border-radius:72px;overflow:hidden;background:#000;clip-path:inset(0 round 72px)}
+.isl{position:absolute;left:50%;top:14px;width:150px;height:44px;margin-left:-75px;border-radius:24px;background:#050506;z-index:40}
+.hbar{position:absolute;left:50%;bottom:13px;width:170px;height:6px;margin-left:-85px;border-radius:3px;background:rgba(17,17,20,.82);z-index:40}
+.glare{position:absolute;inset:0;border-radius:72px;pointer-events:none;z-index:45;background:linear-gradient(118deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.14) 44%,rgba(255,255,255,0) 58%)}
+/* the merchant apps are laid out at 390 wide, as built, and scaled onto the 508 screen: 390 x 850.6 fills it exactly */
+.app{position:absolute;left:0;top:0;width:390px;height:850.6px;transform:scale(1.302564);transform-origin:0 0;overflow:hidden;font-family:Inter,system-ui,sans-serif;color:#F4F4F6}
+.fcam{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 50%}
+
+/* ---- the merchant apps (Cowork's handover, unchanged except the home screen below) ---- */
+.layer{position:absolute;inset:0;overflow:hidden}
+.sb{height:48px;display:flex;align-items:center;justify-content:space-between;padding:6px 30px 0 34px;font-size:15px;font-weight:600}
+.sb .sig{display:flex;gap:4px;align-items:center}.sb .sig i{display:block;background:currentColor;border-radius:2px}
+/* home screen */
+.home{background:radial-gradient(360px 420px at 15% 8%, #3A3F31, transparent 70%),radial-gradient(420px 420px at 95% 95%, #2B2B36, transparent 70%),#17171C;color:#EDEDF2}
+.hgrid{display:grid;grid-template-columns:repeat(4,1fr);row-gap:26px;padding:30px 22px 0}
+.happ{display:flex;flex-direction:column;align-items:center;gap:8px;height:92px}
+.hic{width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,.085);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);position:relative}
+.hic.blank::after{content:"";position:absolute;inset:21px;border-radius:6px;border:2px solid rgba(255,255,255,.18)}
+.hic.blank.c::after{border-radius:50%}
+.hlbl{width:38px;height:6px;border-radius:3px;background:rgba(255,255,255,.15)}
+.mic{width:64px;height:64px;border-radius:16px;overflow:hidden;display:grid;place-items:center;box-shadow:0 10px 22px rgba(0,0,0,.45)}
+.mname{font-size:12.5px;font-weight:600;color:#fff;white-space:nowrap}
+.hdock{position:absolute;left:18px;right:18px;bottom:22px;height:92px;border-radius:30px;background:rgba(255,255,255,.08);display:flex;justify-content:space-evenly;align-items:center}
+.hpager{position:absolute;bottom:128px;left:0;right:0;display:flex;justify-content:center;gap:8px}
+.hpager i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}.hpager i:first-child{background:rgba(255,255,255,.8)}
+#launch{position:absolute;background:#FCF9F4;z-index:30;opacity:0}
+
+/* Sage & Co */
+.sage{background:#FCF9F4;color:#2E3225}
+.sage .bar{display:flex;align-items:center;gap:12px;padding:6px 22px 14px}
+.sage .bar img{width:40px;height:40px;border-radius:11px}
+.sage .bar b{font-family:Fraunces,serif;font-weight:600;font-size:25px;flex:1}
+.sage .burger{width:24px;display:grid;gap:5px}.sage .burger i{height:2.5px;border-radius:2px;background:#2E3225}
+.sage .hero{margin:0 16px;border-radius:26px;background:#74805C;color:#FCF9F4;padding:24px 22px 22px;position:relative;overflow:hidden}
+.sage .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:210px;height:210px;border-radius:50%;border:2px solid rgba(252,249,244,.2)}
+.sage .k{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.8;font-weight:600}
+.sage h2{font-family:Fraunces,serif;font-weight:500;font-size:40px;line-height:1.04;margin:8px 0 6px}
+.sage h2 em{font-style:italic}
+.sage .hero p{font-size:15px;opacity:.85}
+.sage .sec{padding:22px 22px 0}
+.sage h3{font-size:18px;font-weight:700}
+.sage .item{display:flex;gap:14px;align-items:center;margin-top:14px}
+.sage .th{width:56px;height:56px;border-radius:15px;background:#E7E4D6;display:grid;place-items:center}
+.sage .th svg{width:32px;height:32px}
+.sage .nm{flex:1;display:grid;gap:2px}.sage .nm b{font-size:16.5px;font-weight:600}.sage .nm small{font-size:13.5px;color:#7B7E6E}
+.sage .pr{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;margin-right:4px}
+.sage .add{width:38px;height:38px;border-radius:12px;background:#74805C;color:#FCF9F4;display:grid;place-items:center;font-size:24px;font-weight:500;line-height:1}
+.sage .add.done{background:#2E3225}
+.sage .basket{position:absolute;left:16px;right:16px;bottom:22px;border-radius:22px;background:#2E3225;color:#FCF9F4;display:flex;align-items:center;padding:16px 16px 16px 22px}
+.sage .basket .q{font-size:14px;opacity:.72}.sage .basket .tot{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
+.sage .basket .go{margin-left:auto;background:#FCF9F4;color:#2E3225;font-size:16px;font-weight:700;padding:14px 18px;border-radius:14px}
+
+/* Kestrel Barbers */
+.kes{background:#16181C;color:#F2EFE8}
+.kes .hd{padding:10px 24px 0;display:flex;align-items:flex-end;gap:10px}
+.kes .hd b{font-family:Bebas;font-size:52px;letter-spacing:.04em;line-height:.9;color:#F2EFE8}
+.kes .hd span{font-size:12px;letter-spacing:.3em;color:#C8A15A;font-weight:700;padding-bottom:6px}
+.kes .rule{height:2px;background:#C8A15A;margin:14px 24px 0;width:56px}
+.kes .svc{margin:22px 18px 0;border-radius:18px;background:#1F2228;box-shadow:inset 0 0 0 1.5px #C8A15A;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.kes .svc b{font-size:18px;font-weight:700}.kes .svc small{display:block;font-size:13.5px;color:#9B968A;margin-top:3px}
+.kes .svc .p{font-size:17px;font-weight:700;color:#C8A15A;font-variant-numeric:tabular-nums}
+.kes .lab{font-family:Bebas;font-size:24px;letter-spacing:.08em;color:#9B968A;padding:22px 24px 0}
+.kes .days{display:flex;gap:10px;padding:10px 18px 0}
+.kes .day{flex:1;border-radius:14px;background:#1F2228;text-align:center;padding:12px 0}
+.kes .day small{display:block;font-size:12px;letter-spacing:.14em;color:#9B968A;font-weight:700}
+.kes .day b{font-family:Bebas;font-size:32px;letter-spacing:.02em}
+.kes .day.on{box-shadow:inset 0 0 0 2px #C8A15A}.kes .day.on small{color:#C8A15A}
+.kes .times{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 18px 0}
+.kes .tm{border-radius:12px;background:#1F2228;text-align:center;padding:15px 0;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+.kes .tm.x{color:#55524B;text-decoration:line-through}
+.kes .tm.on{background:#C8A15A;color:#16181C}
+.kes .toast{position:absolute;left:16px;right:16px;bottom:24px;border-radius:20px;background:#F2EFE8;color:#16181C;padding:18px 20px;display:flex;gap:14px;align-items:center}
+.kes .toast .ck{width:42px;height:42px;border-radius:50%;background:#C8A15A;display:grid;place-items:center}
+.kes .toast b{font-size:18px;font-weight:800;display:block}.kes .toast small{font-size:14px;color:#55524B}
+
+/* Ironvale Studio */
+.iro{background:#0B0D12;color:#fff}
+.iro .hd{padding:10px 24px 0}
+.iro .hd b{font-family:Archivo;font-weight:900;font-size:34px;letter-spacing:.08em;display:block;line-height:1}
+.iro .hd span{font-family:Archivo;font-weight:700;font-size:13px;letter-spacing:.42em;color:#3D7BFF}
+.iro .tabs{display:flex;gap:8px;padding:22px 20px 0}
+.iro .tab{font-size:15px;font-weight:700;padding:10px 16px;border-radius:999px;background:#161A22;color:#8B93A7}
+.iro .tab.on{background:#fff;color:#0B0D12}
+.iro .cls{margin:14px 16px 0;border-radius:22px;background:#141821;padding:18px 18px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center}
+.iro .cls .t{font-family:Archivo;font-weight:900;font-size:26px;letter-spacing:.03em}
+.iro .cls .m{font-size:14px;color:#8B93A7;grid-column:1}
+.iro .cls .sp{font-size:14px;font-weight:700;color:#3D7BFF;grid-column:1}
+.iro .cls .j{grid-row:1/4;grid-column:2;font-size:16px;font-weight:800;padding:14px 20px;border-radius:14px;background:#3D7BFF;color:#fff;white-space:nowrap}
+.iro .cls .j.in{background:#fff;color:#0B0D12}
+.iro .cls .j.full{background:#1D2230;color:#5F667A}
+.iro .cls.hi{box-shadow:inset 0 0 0 2px #3D7BFF}
+
+/* Marigold Lane */
+.mar{background:#FBF1EE;color:#4A2338}
+.mar .hd{display:flex;align-items:center;justify-content:space-between;padding:8px 24px 0}
+.mar .hd b{font-family:DMSerif;font-weight:400;font-size:32px}
+.mar .hd b em{font-style:italic;color:#C9772A}
+.mar .bag{width:26px;height:26px;border:2.5px solid #4A2338;border-radius:6px 6px 8px 8px}
+.mar .art{margin:18px 16px 0;border-radius:28px;background:#F3DCD6;height:330px;position:relative;overflow:hidden}
+.mar .art svg{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px}
+.mar .info{padding:20px 24px 0}
+.mar .info h2{font-family:DMSerif;font-weight:400;font-size:34px;line-height:1.05}
+.mar .info p{font-size:15px;color:#8A6474;margin-top:6px}
+.mar .row{display:flex;justify-content:space-between;align-items:center;padding:14px 24px 0}
+.mar .row .p{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.mar .row .d{font-size:14px;font-weight:600;padding:9px 14px;border-radius:999px;background:#F3DCD6}
+.mar .pay{position:absolute;left:16px;right:16px;bottom:24px;border-radius:20px;background:#4A2338;color:#FBF1EE;text-align:center;padding:21px 0;font-size:19px;font-weight:700}
+.mar .sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:30px 30px 0 0;padding:14px 24px 34px;box-shadow:0 -20px 40px rgba(74,35,56,.18)}
+.mar .sheet .grab{width:44px;height:5px;border-radius:3px;background:#E5D6DB;margin:0 auto 18px}
+.mar .sheet .ttl{font-size:15px;color:#8A6474;font-weight:600}
+.mar .sheet .amt{font-size:40px;font-weight:800;margin:4px 0 16px;font-variant-numeric:tabular-nums}
+.mar .card{display:flex;align-items:center;gap:12px;padding:15px 16px;border-radius:16px;background:#FBF1EE;font-size:16px;font-weight:600}
+.mar .card i{width:40px;height:27px;border-radius:5px;background:linear-gradient(135deg,#4A2338,#8A4C6C)}
+.mar .confirm{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;border-radius:18px;padding:19px 0;font-size:19px;font-weight:800;background:#4A2338;color:#fff}
+.mar .confirm .ok{width:30px;height:30px;border-radius:50%;background:#2F9E62;display:none;place-items:center}
+
+
+/* ---- the home screen, re-lit for the light look ---- */
+.home{background:radial-gradient(300px 300px at 88% 14%,rgba(255,207,36,.42),rgba(255,207,36,0) 70%),radial-gradient(340px 340px at 8% 92%,rgba(255,196,120,.30),rgba(255,196,120,0) 70%),linear-gradient(170deg,#F8F4EB,#EEE8DC);color:#1E1E24}
+.home .hic{background:rgba(255,255,255,.62);box-shadow:inset 0 0 0 1px rgba(255,255,255,.9),0 6px 14px -8px rgba(60,45,10,.25)}
+.home .hic.blank::after{border-color:rgba(17,17,20,.14)}
+.home .hlbl{background:rgba(17,17,20,.12)}
+.home .mic{box-shadow:0 10px 20px -6px rgba(60,45,10,.35)}
+.home .mname{color:#1E1E24}
+.home .hdock{background:rgba(255,255,255,.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
+.home .hpager i{background:rgba(17,17,20,.2)}.home .hpager i:first-child{background:rgba(17,17,20,.7)}
+#launch{position:absolute;z-index:30;opacity:0}
+/* the touch: a press you can see on light and dark screens, and the yellow ring going out from under it */
+.touch{position:absolute;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;z-index:60;opacity:0;pointer-events:none}
+.touch i{position:absolute;inset:0;border-radius:50%;background:rgba(120,120,128,.34);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5)}
+.touch b{position:absolute;inset:0;border-radius:50%;border:2.5px solid rgba(255,207,36,.95);box-shadow:0 0 0 2px rgba(255,207,36,.2)}
+
+#fade{background:#FBF9F7;z-index:20;opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="29.9" data-width="1080" data-height="1920">
+
+  <div class="clip ground" id="ground" data-start="0" data-duration="29.9" data-track-index="0">
+    <div class="lset" id="lights" data-layout-allow-overflow></div>
+    <div id="panes" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip" id="fin" data-start="20.2" data-duration="4.7" data-track-index="1">
+    <div class="fcam" id="fc0" data-layout-allow-overflow></div>
+    <div class="fcam" id="fc1" data-layout-allow-overflow></div>
+    <div class="fcam" id="fc2" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip cam" id="cam" data-start="0" data-duration="24.9" data-track-index="2">
+    <div id="rig" data-layout-allow-overflow></div>
+  </div>
+
+  <div class="clip" id="hdz" data-start="0" data-duration="24.9" data-track-index="3">
+    <div id="scrim"></div>
+    <div id="avail" data-layout-allow-overlap><span class="row"><span class="ln"><span id="av1" data-layout-allow-occlusion>Available on</span></span><span class="ln"><b id="av2" data-layout-allow-occlusion><i class="mk" id="avm"></i>Android &amp; iOS</b></span></span></div>
+    <div id="dash" data-layout-allow-overlap>Create yours in the NeroPay dashboard</div>
+  </div>
+
+  <!-- the end: the ground washes to the outro's off-white and stays up under it; the locked outro (yellow) plays
+       opaque with "Available on Android & iOS" over neropay.app -->
+  <div class="clip" id="fade" data-start="24.2" data-duration="5.7" data-track-index="4"></div>
+  <video class="clip" id="outro" src="assets/outro-android-ios.mp4" data-start="24.9" data-duration="5.0" data-track-index="5" muted playsinline style="width:100%;height:100%;object-fit:contain;z-index:21;background:#FBF9F7"></video>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const MARK = '<polygon points="21.3,0 36.1,0 83.5,49.2 83.5,70.1"/><polygon points="16.7,33.2 16.7,50.4 63.9,100 80.9,100"/>';
+
+/* ── the story ── */
+const T = { tap1:4.0, launch:4.15, sage:4.8, kes:8.6, iro:12.4, mar:16.2, reveal:20.2, fade:24.3, outro:24.9, end:29.9 };
+const SL = 0.6;                                         /* a screen slides in over this long, ending on its beat */
+
+/* ── smooth motion: a monotone cubic through each set of poses (AM02 v4 onwards) ── */
+const mono = pts => { const n = pts.length, X = pts.map(p => p[0]), V = pts.map(p => p[1]), d = [], m = [];
+  for (let i = 0; i < n - 1; i++) d[i] = (V[i+1] - V[i]) / (X[i+1] - X[i]);
+  m[0] = d[0]; m[n-1] = d[n-2];
+  for (let i = 1; i < n - 1; i++) { const h0 = X[i] - X[i-1], h1 = X[i+1] - X[i];
+    m[i] = d[i-1] * d[i] <= 0 ? 0 : 3 * (h0 + h1) / ((2*h1 + h0) / d[i-1] + (h1 + 2*h0) / d[i]); }
+  return t => { if (t <= X[0]) return V[0]; if (t >= X[n-1]) return V[n-1];
+    let i = 0; while (t > X[i+1]) i++;
+    const h = X[i+1] - X[i], u = (t - X[i]) / h, u2 = u*u, u3 = u2*u;
+    return (2*u3 - 3*u2 + 1)*V[i] + (u3 - 2*u2 + u)*h*m[i] + (-2*u3 + 3*u2)*V[i+1] + (u3 - u2)*h*m[i+1]; }; };
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x)), lin = (t, a, b) => clamp((t - a) / (b - a)), lerp = (a, b, x) => a + (b - a) * x;
+const eo = x => 1 - Math.pow(1 - x, 3), eio = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+const back = x => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3*Math.pow(x - 1, 3) + c1*Math.pow(x - 1, 2); };
+
+/* ── the ground ── */
+const LIGHT = [
+  [1100, 'rgba(255,207,36,.50)', [[0,880,300],[4.8,300,420],[8.6,860,1380],[12.4,260,1500],[16.2,820,420],[20.2,540,860],[29.9,540,960]]],
+  [ 820, 'rgba(255,196,40,.36)', [[0,160,1500],[4.8,900,1500],[8.6,180,520],[12.4,880,380],[16.2,180,1500],[20.2,180,1460],[29.9,880,1500]]],
+  [ 640, 'rgba(255,226,120,.42)', [[0,560,1000],[4.8,700,900],[8.6,520,980],[12.4,600,1000],[16.2,440,980],[20.2,860,420],[29.9,300,1200]]],
+  [ 900, 'rgba(255,255,255,.70)', [[0,200,560],[4.8,860,640],[8.6,300,1100],[12.4,760,1200],[16.2,300,760],[20.2,300,300],[29.9,540,1500]]]
+];
+$('lights').innerHTML = LIGHT.map(([d, c], j) => `<div class="lb" data-j="${j}" style="width:${d}px;height:${d}px;background:radial-gradient(closest-side,${c},${c.replace(/[\d.]+\)$/, '0)')})"></div>`).join('');
+$('panes').innerHTML = `<div id="gmark"><svg viewBox="0 0 100 100" width="2400" height="2400" overflow="visible">
+  <defs><linearGradient id="gfill" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".44"/><stop offset=".45" stop-color="#fff" stop-opacity=".11"/><stop offset="1" stop-color="#fff" stop-opacity=".30"/></linearGradient>
+    <linearGradient id="gspec" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="40"><stop offset=".44" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".75"/><stop offset=".52" stop-color="#fff" stop-opacity=".2"/><stop offset=".58" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="gclip">${MARK}</clipPath></defs>
+  <g fill="none" stroke="rgba(160,120,20,.22)" stroke-width="0.12" transform="translate(0.14,0.2)">${MARK}</g>
+  <g fill="url(#gfill)" stroke="rgba(255,255,255,.92)" stroke-width="0.14" stroke-linejoin="round">${MARK}</g>
+  <g clip-path="url(#gclip)"><rect id="gsr" x="-100" y="-100" width="300" height="300" fill="url(#gspec)"/></g></svg></div>`;
+const LB = [...document.querySelectorAll('.lb')], GM = $('gmark'), GSR = $('gsr');
+const LP = LIGHT.map(([d, , w]) => [mono(w.map(p => [p[0], p[1]])), mono(w.map(p => [p[0], p[2]])), d]);
+
+/* ── the headlines ── */
+const HD = [
+  { k:'NeroPay Mobile Apps', a:'Put your business', b:'on their home screen.', s:0.35, e:T.launch - 0.1 },
+  { k:'Cafés', w:'Order.', s:T.sage + 0.05, e:T.kes - SL - 0.05 },
+  { k:'Barbers & salons', w:'Book.', s:T.kes + 0.05, e:T.iro - SL - 0.05 },
+  { k:'Gyms & studios', w:'Join.', s:T.iro + 0.05, e:T.mar - SL - 0.05 },
+  { k:'Shops & florists', w:'Pay.', s:T.mar + 0.05, e:T.reveal - 0.1 },
+  { k:'Mobile Apps', a:'Your booking page or store,', b:'as your own app.', sm:true, s:T.reveal + 0.45, e:T.fade - 0.25 }
+];
+$('hdz').insertAdjacentHTML('beforeend', HD.map((h, i) => `<div class="hlw"><div class="kick" id="hk${i}" data-layout-allow-overlap><i></i>${h.k.replace('&', '&amp;')}</div>` +
+  (h.w ? `<h1 class="word"><span class="ln" data-layout-allow-overflow><span id="hb${i}" data-layout-allow-overlap data-layout-allow-occlusion><i class="mk" id="hm${i}"></i>${h.w}</span></span></h1></div>`
+       : `<h1${h.sm ? ' class="sm"' : ''}><span class="ln" data-layout-allow-overflow><span id="ha${i}" data-layout-allow-overlap data-layout-allow-occlusion>${h.a}</span></span><span class="ln" data-layout-allow-overflow><span id="hb${i}" data-layout-allow-overlap data-layout-allow-occlusion><i class="mk" id="hm${i}"></i>${h.b}</span></span></h1></div>`)).join(''));
+
+/* ── the phone ── */
+const TH = 64, N = 26;
+const band = () => [...Array(N)].map((_, i) => { const u = i/(N-1), z = -TH/2 + 1 + u*(TH-2), e = Math.abs(2*u - 1),
+    k = 2.6 * Math.max(0, (e - 0.78) / 0.22) ** 2,
+    c = Math.round(30 + 20*Math.sin(u*Math.PI) + 78*Math.exp(-(((u-0.12)/0.055)**2)) + 52*Math.exp(-(((u-0.88)/0.06)**2)) + 14*Math.exp(-(((u-0.5)/0.12)**2)));
+  return `<div class="slice${i ? '' : ' sh'}" style="inset:${k.toFixed(2)}px;border-radius:${(88-k).toFixed(2)}px;transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+5})"></div>`; }).join('')
+  + [...Array(7)].map((_, i) => { const z = -TH*0.2 + i*(TH*0.4/6), c = 58 + Math.round(26*Math.sin(i/6*Math.PI));
+    return [[-5,178,52],[-5,262,92],[-5,370,92],[537,300,138]].map(([x, y, h]) =>
+      `<div class="btn" style="left:${x}px;top:${y}px;height:${h}px;transform:translateZ(${z.toFixed(1)}px);background:rgb(${c},${c+2},${c+5})"></div>`).join(''); }).join('');
+const phone = (id, app, hbar) => `<div class="ph" id="${id}" data-layout-allow-overflow>
+  <div class="back"><div class="cams"><i style="left:22px;top:22px"></i><i style="left:98px;top:98px"></i></div></div>
+  ${band()}
+  <div class="front"><div class="body"></div><div class="scr">${app}<div class="isl"></div><div class="hbar" id="${hbar}"></div><div class="glare"></div></div></div></div>`;
+
+$('rig').innerHTML = phone('ph', `<div class="app" id="app">
+<!-- HOME -->
+    <div class="layer home" id="home">
+      <div class="sb"><span>9:41</span><span class="sig"><i style="width:4px;height:7px"></i><i style="width:4px;height:10px"></i><i style="width:4px;height:13px"></i><i style="width:24px;height:12px;border-radius:4px;margin-left:4px"></i></span></div>
+      <div class="hgrid" id="hgrid"></div>
+      <div class="hpager"><i></i><i></i><i></i></div>
+      <div class="hdock"><div class="hic blank"></div><div class="hic blank c"></div><div class="hic blank"></div><div class="hic blank c"></div></div>
+    </div>
+    <div id="launch"></div>
+
+    <!-- SAGE -->
+    <div class="layer sage" id="sage">
+      <div class="sb" style="color:#2E3225"><span>9:41</span><span class="sig"><i style="width:4px;height:7px"></i><i style="width:4px;height:10px"></i><i style="width:4px;height:13px"></i><i style="width:24px;height:12px;border-radius:4px;margin-left:4px"></i></span></div>
+      <div class="bar"><img src="assets/sage-icon.svg" alt=""><b>Sage &amp; Co</b><span class="burger"><i></i><i></i><i></i></span></div>
+      <div class="hero"><div class="k">Café · Kitchen</div><h2>Sit. Stay.<br><em>Savour.</em></h2><p>Open today until 17:00</p></div>
+      <div class="sec"><h3>Popular</h3>
+        <div class="item"><span class="th"><svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M9 3c-.8 1 .8 2 0 3M12.5 3c-.8 1 .8 2 0 3"/></svg></span><span class="nm"><b>Flat white</b><small>Oat or whole milk</small></span><span class="pr">£3.40</span><span class="add" data-k="sageadd">+</span></div>
+        <div class="item"><span class="th"><svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 5 0 0 1 16 0v1H4z"/><path d="M3.5 14.5h17M5 17.5h14a1.5 1.5 0 0 0 1.5-1.5"/><path d="M5 17.5A1.5 1.5 0 0 1 3.5 16"/></svg></span><span class="nm"><b>Sourdough toastie</b><small>Cheddar, leek, mustard</small></span><span class="pr">£7.20</span><span class="add">+</span></div>
+        <div class="item"><span class="th"><svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h10l-1.2 14H8.2z"/><path d="M6.5 9h11"/></svg></span><span class="nm"><b>Iced latte</b><small>Double shot</small></span><span class="pr">£3.90</span><span class="add">+</span></div>
+        <div class="item"><span class="th"><svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6.5"/><path d="M12 6.5V4M9.5 4.5 12 6.5l2.5-2"/></svg></span><span class="nm"><b>Seasonal fruit bowl</b><small>Yoghurt, honey, oats</small></span><span class="pr">£5.80</span><span class="add">+</span></div>
+      </div>
+      <div class="basket" data-k="basket"><span><span class="q">Basket · <span data-k="bq">1 item</span></span><br><span class="tot" data-k="btot">£3.40</span></span><span class="go" data-k="checkout">Checkout</span></div>
+    </div>
+
+    <!-- KESTREL -->
+    <div class="layer kes" id="kes">
+      <div class="sb"><span>9:41</span><span class="sig"><i style="width:4px;height:7px"></i><i style="width:4px;height:10px"></i><i style="width:4px;height:13px"></i><i style="width:24px;height:12px;border-radius:4px;margin-left:4px"></i></span></div>
+      <div class="hd"><b>KESTREL</b><span>BARBERS</span></div>
+      <div class="rule"></div>
+      <div class="svc"><div><b>Skin fade</b><small>45 min · with Dan</small></div><span class="p">£24.00</span></div>
+      <div class="lab">CHOOSE A DAY</div>
+      <div class="days"><div class="day"><small>THU</small><b>18</b></div><div class="day"><small>FRI</small><b>19</b></div><div class="day on"><small>SAT</small><b>20</b></div><div class="day"><small>SUN</small><b>21</b></div></div>
+      <div class="lab">CHOOSE A TIME</div>
+      <div class="times"><div class="tm">09:00</div><div class="tm x">09:30</div><div class="tm">10:00</div><div class="tm" data-k="slot">10:30</div><div class="tm">11:00</div><div class="tm x">11:30</div><div class="tm">13:00</div><div class="tm">13:30</div><div class="tm">14:00</div></div>
+      <div class="toast" data-k="toast"><span class="ck"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16181C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span><b>Booked · Sat 20, 10:30</b><small>Skin fade with Dan</small></span></div>
+    </div>
+
+    <!-- IRONVALE -->
+    <div class="layer iro" id="iro">
+      <div class="sb"><span>9:41</span><span class="sig"><i style="width:4px;height:7px"></i><i style="width:4px;height:10px"></i><i style="width:4px;height:13px"></i><i style="width:24px;height:12px;border-radius:4px;margin-left:4px"></i></span></div>
+      <div class="hd"><b>IRONVALE</b><span>STUDIO</span></div>
+      <div class="tabs"><span class="tab on">Today</span><span class="tab">Tomorrow</span><span class="tab">This week</span></div>
+      <div class="cls hi" data-k="spincard"><span class="t">SPIN</span><span class="m">18:00 · 45 min · Coach Maya</span><span class="sp" data-k="spots">3 spots left</span><span class="j" data-k="join">Join</span></div>
+      <div class="cls"><span class="t">HIIT</span><span class="m">19:00 · 30 min · Coach Theo</span><span class="sp">6 spots left</span><span class="j">Join</span></div>
+      <div class="cls"><span class="t">YOGA FLOW</span><span class="m">20:15 · 60 min · Coach Ines</span><span class="sp" style="color:#5F667A">Class full</span><span class="j full">Waitlist</span></div>
+      <div class="cls"><span class="t">STRENGTH</span><span class="m">07:00 tomorrow · 50 min</span><span class="sp">8 spots left</span><span class="j">Join</span></div>
+    </div>
+
+    <!-- MARIGOLD -->
+    <div class="layer mar" id="mar">
+      <div class="sb"><span>9:41</span><span class="sig"><i style="width:4px;height:7px"></i><i style="width:4px;height:10px"></i><i style="width:4px;height:13px"></i><i style="width:24px;height:12px;border-radius:4px;margin-left:4px"></i></span></div>
+      <div class="hd"><b>Marigold <em>Lane</em></b><span class="bag"></span></div>
+      <div class="art"><svg viewBox="0 0 300 300">
+        <path d="M150 300 L150 170 M150 210 L112 150 M150 220 L192 158" stroke="#5E7A4E" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <path d="M150 250 C120 240 108 222 104 204 C126 208 142 222 150 250Z M150 244 C178 236 192 218 196 200 C174 204 158 218 150 244Z" fill="#7C9A69"/>
+        <g transform="translate(150 118)"><g fill="#E8973A"><circle r="26" cx="0" cy="-30"/><circle r="26" cx="29" cy="-9"/><circle r="26" cx="18" cy="25"/><circle r="26" cx="-18" cy="25"/><circle r="26" cx="-29" cy="-9"/></g><circle r="20" fill="#4A2338"/></g>
+        <g transform="translate(96 150) scale(.72)"><g fill="#D9607B"><circle r="26" cx="0" cy="-30"/><circle r="26" cx="29" cy="-9"/><circle r="26" cx="18" cy="25"/><circle r="26" cx="-18" cy="25"/><circle r="26" cx="-29" cy="-9"/></g><circle r="19" fill="#FBF1EE"/></g>
+        <g transform="translate(206 146) scale(.66)"><g fill="#F2C14E"><circle r="26" cx="0" cy="-30"/><circle r="26" cx="29" cy="-9"/><circle r="26" cx="18" cy="25"/><circle r="26" cx="-18" cy="25"/><circle r="26" cx="-29" cy="-9"/></g><circle r="19" fill="#4A2338"/></g>
+      </svg></div>
+      <div class="info"><h2>The Sunday Bunch</h2><p>Seasonal stems, hand-tied and wrapped</p></div>
+      <div class="row"><span class="p">£28.00</span><span class="d">Delivery tomorrow · 9–12</span></div>
+      <div class="pay" data-k="pay">Pay £28.00</div>
+      <div class="sheet" data-k="sheet"><div class="grab"></div><div class="ttl">Pay Marigold Lane</div><div class="amt">£28.00</div>
+        <div class="card"><i></i>Card ending 1827</div>
+        <div class="confirm" data-k="confirm"><span class="ok" data-k="ok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span data-k="ctext">Confirm payment</span></div></div>
+    </div>
+
+    <div id="launch"></div>
+    <div class="touch" id="touch"><i></i><b></b></div>
+  </div>`, 'hbar');
+
+/* the home screen: twenty icons, four of them the merchants' */
+const ICONS = {
+  sage:`<div class="mic"><img src="assets/sage-icon.svg" style="width:64px;height:64px"></div>`,
+  kes:`<div class="mic" style="background:#16181C;box-shadow:inset 0 0 0 2px #C8A15A,0 10px 20px -6px rgba(60,45,10,.35)"><span style="font-family:Bebas;font-size:44px;color:#C8A15A;line-height:1;margin-top:4px">K</span></div>`,
+  iro:`<div class="mic" style="background:#3D7BFF"><svg width="40" height="40" viewBox="0 0 40 40"><path d="M4 32 L16 12 L22 22 L27 15 L36 32Z" fill="#fff"/></svg></div>`,
+  mar:`<div class="mic" style="background:#F3DCD6"><svg width="44" height="44" viewBox="-40 -40 80 80"><g fill="#E8973A"><circle r="13" cx="0" cy="-15"/><circle r="13" cx="14" cy="-5"/><circle r="13" cx="9" cy="12"/><circle r="13" cx="-9" cy="12"/><circle r="13" cx="-14" cy="-5"/></g><circle r="10" fill="#4A2338"/></svg></div>`
+};
+const NAMES = { sage:'Sage &amp; Co', kes:'Kestrel', iro:'Ironvale', mar:'Marigold' };
+const SLOTS = { 5:'sage', 7:'kes', 10:'iro', 12:'mar' };
+const hg = $('hgrid');
+for (let i = 0; i < 20; i++) { const m = SLOTS[i], d = document.createElement('div'); d.className = 'happ';
+  d.innerHTML = m ? `<div class="mwrap" data-m="${m}" style="display:flex;flex-direction:column;align-items:center;gap:8px">${ICONS[m]}<span class="mname">${NAMES[m]}</span></div>`
+                  : `<div class="hic blank ${i%3==1 ? 'c' : ''}"></div><div class="hlbl"></div>`;
+  hg.appendChild(d); }
+const APP = $('app');
+/* where an element sits on the 390-wide app, whatever positioned boxes it is inside */
+const at = el => { let x = 0, y = 0, e = el; while (e && e !== APP) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; }
+  return { x, y, w: el.offsetWidth, h: el.offsetHeight }; };
+
+/* ── each app's own moment, as a function of the seconds since its scene began (the handover's, slowed) ── */
+const Q = el => (s => el.querySelector(s));
+function sageState(root, t) { const q = Q(root), add = q('[data-k=sageadd]'), bk = q('[data-k=basket]');
+  const on = t >= 1.05; add.classList.toggle('done', on); add.textContent = on ? '✓' : '+';
+  add.style.transform = `scale(${t >= 0.95 && t < 1.12 ? .88 : 1})`;
+  const b = eo(lin(t, 1.2, 1.7)); bk.style.transform = `translateY(${(1-b)*140}px)`; bk.style.opacity = b;
+  q('[data-k=checkout]').style.transform = `scale(${t >= 2.4 && t < 2.62 ? .93 : 1})`; }
+function kesState(root, t) { const q = Q(root);
+  q('[data-k=slot]').classList.toggle('on', t >= 1.45);
+  const b = eo(lin(t, 1.75, 2.25)), tt = q('[data-k=toast]'); tt.style.transform = `translateY(${(1-b)*160}px)`; tt.style.opacity = b; }
+function iroState(root, t) { const q = Q(root), j = q('[data-k=join]'), on = t >= 1.45;
+  j.classList.toggle('in', on); j.textContent = on ? "You're in ✓" : 'Join'; q('[data-k=spots]').textContent = on ? '2 spots left' : '3 spots left';
+  j.style.transform = `scale(${t >= 1.35 && t < 1.55 ? .93 : 1})`; }
+function marState(root, t) { const q = Q(root);
+  const b = eo(lin(t, 1.3, 1.85)); q('[data-k=sheet]').style.transform = `translateY(${(1-b)*420}px)`;
+  q('[data-k=pay]').style.transform = `scale(${t >= 1.1 && t < 1.3 ? .95 : 1})`;
+  const done = t >= 2.55; q('[data-k=confirm]').style.background = done ? '#2F9E62' : '#4A2338';
+  q('[data-k=ok]').style.display = done ? 'grid' : 'none'; q('[data-k=ctext]').textContent = done ? 'Payment confirmed' : 'Confirm payment';
+  q('[data-k=confirm]').style.transform = `scale(${t >= 2.35 && t < 2.55 ? .96 : 1})`; }
+const LAYERS = { sage:$('sage'), kes:$('kes'), iro:$('iro'), mar:$('mar') };
+const STATE = { sage:sageState, kes:kesState, iro:iroState, mar:marState };
+
+/* the three other phones for the reveal, each on its app's end state */
+['sage', 'kes', 'iro'].forEach((id, i) => {
+  const L = LAYERS[id].cloneNode(true); L.id = ''; L.style.transform = 'none'; L.style.opacity = 1;
+  $('fc' + i).innerHTML = phone('fp' + i, `<div class="app" id="app${i}"></div>`, 'hb' + i);
+  $('app' + i).appendChild(L); STATE[id](L, 9);
+  $('hb' + i).style.background = id === 'sage' ? 'rgba(17,17,20,.82)' : 'rgba(255,255,255,.85)';
+});
+
+/* ── the poses: the phone, the camera's gentle push while each app is used, the three reveal phones ── */
+const PH = {
+  x: mono([[0,0],[T.reveal,0],[T.reveal+1.0,357.7],[T.fade,360],[29.9,362]]),
+  y: mono([[0,1150],[1.0,40],[2.2,6],[4.0,0],[T.reveal,-6],[T.reveal+1.0,-10],[T.fade,-14],[29.9,-16]]),
+  scale: mono([[0,1],[T.reveal,1],[T.reveal+1.0,0.4135],[T.fade,0.419],[29.9,0.423]]),
+  rotationY: mono([[0,-22],[1.0,-9],[2.2,-4],[4.0,4],[6.6,-5],[8.6,-8],[10.5,5],[12.4,7],[14.3,-5],[16.2,-6],[18.2,5],[T.reveal,4],[T.reveal+1.0,-12],[T.fade,-10],[29.9,-9]]),
+  rotationX: mono([[0,34],[1.0,10],[2.2,6],[T.reveal,4],[T.reveal+1.0,5],[29.9,4]]),
+  rotationZ: mono([[0,7],[1.0,2],[2.2,0],[8.6,-1],[12.4,1],[16.2,-1],[T.reveal,0],[29.9,0]])
+};
+const CAM = mono([[0,1.04],[T.sage,1.04],[6.6,1.10],[T.kes,1.06],[10.4,1.11],[T.iro,1.06],[14.2,1.11],[T.mar,1.06],[18.2,1.11],[T.reveal,1.04],[29.9,1.04]]);
+const ROW = [-372, -124, 124], RY = [12, 4, -4];   /* four phones 248 apart: 52px clear of each frame edge */
+const FP = ROW.map((x, i) => { const t0 = T.reveal + 0.35 + i*0.14;
+  return { t0, y: mono([[t0,1250],[t0+0.6,16],[t0+1.3,-10],[29.9,-16]]), x, ry: mono([[t0,RY[i]*2.2],[t0+1.3,RY[i]],[29.9,RY[i]*0.85]]) }; });
+const PHE = $('ph'), RIG = $('rig'), FPE = [0,1,2].map(i => $('fp' + i));
+
+/* ── the frame: everything that is a function of time ── */
+const TAPS = [[T.tap1, () => at(document.querySelector('.mwrap[data-m=sage] .mic'))],
+  [T.sage+1.0, () => at(LAYERS.sage.querySelector('[data-k=sageadd]'))], [T.sage+2.45, () => at(LAYERS.sage.querySelector('[data-k=checkout]'))],
+  [T.kes+1.4, () => at(LAYERS.kes.querySelector('[data-k=slot]'))], [T.iro+1.4, () => at(LAYERS.iro.querySelector('[data-k=join]'))],
+  [T.mar+1.15, () => at(LAYERS.mar.querySelector('[data-k=pay]'))], [T.mar+2.4, () => at(LAYERS.mar.querySelector('[data-k=confirm]'))]];
+const ORDER = ['sage', 'kes', 'iro', 'mar'], STARTS = [T.sage, T.kes, T.iro, T.mar];
+const frame = t => {
+  /* the ground */
+  LB.forEach(e => { const [fx, fy, d] = LP[+e.dataset.j]; e.style.transform = `translate(${(fx(t) - d/2).toFixed(1)}px,${(fy(t) - d/2).toFixed(1)}px)`; });
+  GM.style.transform = `rotateY(${-16 + 5*Math.sin(t*0.19)}deg) rotateX(${9 + 2.5*Math.sin(t*0.13 + 1)}deg)`;
+  const k = ((t*0.075) % 1.3) - 0.65; GSR.setAttribute('transform', `translate(${(k*200).toFixed(2)},${(k*80).toFixed(2)})`);
+
+  /* the phones */
+  gsap.set(PHE, { x:PH.x(t), y:PH.y(t), scale:PH.scale(t), rotationY:PH.rotationY(t), rotationX:PH.rotationX(t), rotationZ:PH.rotationZ(t) });
+  gsap.set(RIG, { scale:CAM(t) });
+  FP.forEach((f, i) => gsap.set(FPE[i], { x:f.x, y:f.y(t), scale:0.43, rotationY:f.ry(t), rotationX:5 }));
+
+  /* the home screen's icons pop in */
+  document.querySelectorAll('.mwrap').forEach((w, i) => { const p = lin(t, 1.0 + i*0.35, 1.5 + i*0.35);
+    w.style.transform = `scale(${p <= 0 ? 0 : back(p)})`; w.style.opacity = p > 0 ? 1 : 0; });
+
+  /* the Sage & Co icon opens into its app */
+  const L = $('launch'), lp = eio(lin(t, T.launch, T.launch + 0.6));
+  if (t >= T.launch && t < T.sage + 0.25) { const r = at(document.querySelector('.mwrap[data-m=sage] .mic'));
+    Object.assign(L.style, { opacity:1, left:lerp(r.x, 0, lp)+'px', top:lerp(r.y, 0, lp)+'px', width:lerp(r.w, 390, lp)+'px',
+      height:lerp(r.h, 850.6, lp)+'px', borderRadius:lerp(16, 50, lp)+'px', background: lp < .35 ? '#74805C' : '#FCF9F4' }); }
+  else L.style.opacity = 0;
+  $('home').style.opacity = t < T.sage + 0.1 ? 1 : 0;
+
+  /* the apps slide in one after another, the way switching between them looks on a phone */
+  ORDER.forEach((id, i) => { const el = LAYERS[id]; let x, o = 1;
+    if (i === 0) { o = eo(lin(t, T.sage - 0.25, T.sage)); x = 0; }
+    else x = lerp(390, 0, eio(lin(t, STARTS[i] - SL, STARTS[i])));
+    if (i < 3) x -= eio(lin(t, STARTS[i+1] - SL, STARTS[i+1])) * 390;
+    el.style.opacity = o; el.style.transform = `translateX(${x.toFixed(2)}px)`;
+    STATE[id](el, t - STARTS[i]); });
+
+  /* the home bar follows the screen: dark on the light apps, light on the dark ones */
+  const cur = t < T.sage ? 'home' : ORDER[STARTS.filter(s => t >= s - SL/2).length - 1];
+  $('hbar').style.background = (cur === 'kes' || cur === 'iro') ? 'rgba(255,255,255,.85)' : 'rgba(17,17,20,.82)';
+
+  /* the touch: a press, then the ring going out */
+  const tc = $('touch'); let shown = false;
+  TAPS.forEach(([t0, where]) => { if (t >= t0 - 0.12 && t < t0 + 0.55) { const r = where(), p = lin(t, t0 - 0.12, t0 + 0.55);
+    shown = true; tc.style.left = (r.x + r.w/2) + 'px'; tc.style.top = (r.y + r.h/2) + 'px';
+    const press = p < .2 ? lerp(1.25, .85, p/.2) : lerp(.85, 1, (p-.2)/.8), ring = p < .2 ? 1 : lerp(1, 2.1, eo((p-.2)/.8));
+    tc.style.opacity = p < .12 ? p/.12 : p > .55 ? (1 - p)/.45 : 1;
+    tc.children[0].style.transform = `scale(${press})`; tc.children[1].style.transform = `scale(${ring})`;
+    tc.children[1].style.opacity = p < .2 ? 0 : 1 - (p-.2)/.8; } });
+  if (!shown) tc.style.opacity = 0;
+};
+
+/* ── the timeline ── */
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+const clock = { t:0 };
+tl.to(clock, { t:29.9, duration:29.9, ease:'none', onUpdate:() => frame(clock.t) }, 0);
+frame(0);
+
+/* headlines: the lines rise in through a mask and the marker draws; they leave up before the next scene */
+tl.fromTo('#scrim', { opacity:0 }, { opacity:1, duration:0.5 }, 0.1).to('#scrim', { opacity:0, duration:0.4 }, T.fade - 0.3);
+HD.forEach((h, i) => {
+  tl.fromTo(`#hk${i}`, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.45, ease:'power2.out' }, h.s)
+    .fromTo(`#hb${i}`, { yPercent:115 }, { yPercent:0, duration:0.65, ease:'power3.out' }, h.s + (h.w ? 0.08 : 0.16))
+    .fromTo(`#hm${i}`, { scaleX:0 }, { scaleX:1, duration:0.55, ease:'power2.out' }, h.s + 0.5)
+    .to(`#hb${i}`, { yPercent:-115, duration:0.3, ease:'power2.in' }, h.e + 0.05)
+    .to(`#hk${i}`, { opacity:0, duration:0.25 }, h.e);
+  if (!h.w) tl.fromTo(`#ha${i}`, { yPercent:115 }, { yPercent:0, duration:0.65, ease:'power3.out' }, h.s + 0.05)
+    .to(`#ha${i}`, { yPercent:-115, duration:0.3, ease:'power2.in' }, h.e);
+});
+/* the highlight: Available on Android & iOS, then where it is made */
+tl.fromTo('#av1', { yPercent:120 }, { yPercent:0, duration:0.6, ease:'power3.out' }, T.reveal + 1.5)
+  .fromTo('#av2', { yPercent:120 }, { yPercent:0, duration:0.65, ease:'power3.out' }, T.reveal + 1.62)
+  .fromTo('#avm', { scaleX:0 }, { scaleX:1, duration:0.6, ease:'power2.out' }, T.reveal + 2.05)
+  .fromTo('#dash', { opacity:0, y:14 }, { opacity:1, y:0, duration:0.5, ease:'power2.out' }, T.reveal + 2.4)
+  .to(['#avail', '#dash'], { opacity:0, duration:0.3 }, T.fade - 0.1);
+
+/* out: the row pulls back into the off-white, which is fully up before the phones' clips end */
+tl.to(['#fc0', '#fc1', '#fc2', '#cam'], { scale:0.9, duration:0.7, ease:'power2.in', transformOrigin:'50% 54%' }, T.fade - 0.2)
+  .fromTo('#fade', { opacity:0 }, { opacity:1, duration:0.5, ease:'power1.inOut' }, T.fade);
+
+window.__timelines['main'] = tl;
+</script>
+</body>
+</html>
