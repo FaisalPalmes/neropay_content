@@ -130,6 +130,38 @@ Cinematic 16:9 film still from a premium smartphone app commercial. Dramatic low
 
 ---
 
+### 02C. Close-up at the table, golden hour (pilot). Composite: Sage & Co, the order screen
+
+**Framing:** Faisal's reference of 24 Sep: a high-angle close-up from above and behind her shoulder,
+two hands holding the phone over a terrazzo table, a pastry on an oak tray and a coffee beside it,
+mustard knit cuffs, and low golden sun from the side throwing long hand shadows across the table. Faceless.
+Shallow depth of field is allowed here. It replaces 02A and 02B in the pilot; they are parked. The sun
+is kept off the screen so the green stays even for the key.
+**Planned motion (5s):**
+```
+Static camera with a very slight, slow drift in. Her right thumb taps the middle of the screen once, then again a moment later. A faint wisp of steam rises from the coffee. The golden sunlight and the long shadows stay steady; the hands' shadows move only with the hands. No one else appears. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+```
+Warm, natural lifestyle photograph, looking like a real frame from a 35mm film camera, not a render. A high-angle close-up from just above and behind a young woman's right shoulder, looking down at about 45 degrees onto her two hands holding a smartphone over a terrazzo table on a quiet late afternoon at home. We see only her hands, her wrists and the ends of her sleeves; her face, head and shoulder are not in the frame. She is the only person in the image.
+
+How she holds it: the phone is upright in portrait orientation, held in both hands about 15 cm above the table, tilted up towards her at about 30 degrees, so the camera sees the screen at a slight angle. Her left hand cradles the phone from the left and below, the left thumb resting along the left edge and her left fingers behind the phone. Her right hand holds the right edge from behind, and her right thumb is lifted just above the middle of the screen, about to tap. The phone sits left of centre in the frame and fills about 50% of the frame height. All four corners of the screen are clearly visible and no finger or palm covers a corner. The phone is the true size of a 6.1-inch phone in a woman's hands.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands: slim, elegant young hands with long fingers and light skin with a warm golden undertone. Real skin texture with fine creases over the knuckles, faint veins on the backs of the hands and a little natural pinkness at the fingertips. Her nails are a fresh gel manicure in a medium-length almond shape, soft milky nude with a thin gold chrome French tip, glossy, with neat cuticles. A thin gold ring on her right middle finger. The cuffs of a chunky mustard-yellow ribbed-knit jumper come down over her wrists at the lower edge of the frame, the knit texture sharp and detailed.
+
+The table: a pale beige terrazzo top with scattered chips of cream, rust and grey stone, a real matte surface with fine wear. To the right of the phone, slightly out of focus: a light oak serving tray with a glossy, twisted cinnamon knot pastry on it, and beyond that a speckled off-white handmade ceramic cup of black coffee with a faint wisp of steam. Beyond the table, far out of focus: the curved oak back of a dining chair with a cream upholstered seat, and a warm plaster wall.
+
+Light: golden hour. Low, warm evening sun comes in through a window at frame right and falls across the table and the backs of her hands, casting long, soft shadows of her hands and the phone to the left across the terrazzo. The light is warm but natural: golden highlights on the skin and the pastry, soft warm shadows, and warm bounce light from the table. The sunlight falls on the table and her hands, not across the phone screen, which stays evenly lit.
+
+Photographed on a 50mm lens at f/2, a shallow depth of field: the hands, nails and phone sharp, the pastry slightly soft, the coffee cup softer, the chair and wall melting into smooth, creamy blur. Warm, natural colour, true skin tones, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched, like a high-end lifestyle photograph for an app.
+
+Avoid: her face, her head, a second person, a person in the background, AI-generated look, CGI, render, orange skin, oversaturated colour, HDR, teal and orange grade, glowing edges, oversharpening, plastic skin, neon or glowing green screen, sunlight, glare or shadows on the screen, fingers or palm covering the screen corners, chunky or older-looking hands, chipped or unpainted nails, logos, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
+```
+
+---
+
 ### 02A. Faceless, over the shoulder, against a building wall. Composite: Sage & Co, the order screen
 
 **Framing:** faceless. The frame cuts below his ear. A 25-year-old mixed-race athlete, light-skinned,
@@ -382,7 +414,7 @@ four corners just inside it"*, 100mm macro at f/5.6. This is a cutaway for which
 
 ## 6. The pilot, before anything else
 
-Generate **03, 04 and 02A or 02B**. Only 03 takes a reference image: Faisal's character sheet for Mia, attached as image 1. Then make
+Generate **03, 04 and 02C**. Only 03 takes a reference image: Faisal's character sheet for Mia, attached as image 1. Then make
 image-to-video clips of all three at 1080p: **03 at 6s, 04 at 5s, 02 at 5s**. If the model only offers 5
 or 10, choose 5; past about 6s, faces and hands start to morph. These are the video prompts:
 
