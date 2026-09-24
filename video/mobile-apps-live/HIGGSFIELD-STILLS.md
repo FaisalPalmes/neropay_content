@@ -412,6 +412,127 @@ reference.
 extreme close-up of the thumb touching the lower half of the screen, the phone filling the frame with all
 four corners just inside it"*, 100mm macro at f/5.6. This is a cutaway for whichever app needs it.
 
+## 5b. Reference-style shots (Faisal's board, 24 Sep 2026)
+
+Five looks from references Faisal sent, for video starting frames and for still adverts. The three
+object-only shots (P1–P3) have no hands, so they are the most reliable composites of all. Static
+adverts made from them belong to the images session; these frames serve both.
+
+### P1. The phone on a suede chair, yellow studio. Composite: home screen with the four apps (the hero)
+
+Reference: a phone lying on a channel-tufted suede chair on an orange sweep. Ours is on brand yellow. No hands, so it is the easiest shot to composite, and it works as a static advert too.
+
+**Planned motion (5s):**
+```
+Very slow, smooth push-in towards the phone from above, with a slight turn. Nothing else moves; the light stays steady on the suede. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. No people, no hands.
+```
+
+```
+Minimal, bold still-life photograph for an app advert, looking like a real studio photograph shot on film, not a render. A smartphone lies face up on the seat of a plush, channel-tufted lounge chair upholstered in soft oatmeal-cream suede, the seat made of deep, rounded horizontal channels that curve and sag slightly like a real cushion. The chair sits in a studio where the floor and the wall are one seamless sweep of warm sunflower yellow (close to #FFCF24), a real painted cyclorama with a faint texture and a soft gradient of light falloff, the yellow filling every part of the frame around the chair. A slim bent-oak frame of the chair shows at the lower corners.
+
+The camera looks down at the chair from above at about 70 degrees, with the phone in the exact centre of the frame, lying slightly angled along the curve of the channels, filling about 40% of the frame height. The phone rests naturally in the soft suede, which dips a little under its weight. All four corners of the screen are clearly visible. The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Light: one large soft key light from the upper left, like a big window, giving the suede a soft sheen and gentle shadows in each channel, a soft contact shadow under the phone, and warm yellow light bouncing up from the floor onto the cream suede. The phone screen stays evenly lit and matte. Photographed on a 50mm lens at f/5.6, everything in focus from the phone to the chair edges. Natural colour, true-to-life whites, gentle contrast, real film grain, faint lens softness towards the corners. Photoreal, hyper-realistic, unretouched, like a high-end commercial photograph for an app.
+
+Avoid: people, hands, other objects, props, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, a flat digital yellow fill, lemon or neon yellow, orange.
+```
+
+---
+
+### P2. The phone on an oak table, bands of sun. Composite: Marigold, "Payment confirmed"
+
+Reference: a phone on the edge of a round oak table, crossed by hard window light, a tablet beside it. The phone sits inside one band of sun, because a shadow edge across the green would break the key.
+
+**Planned motion (5s):**
+```
+Very slow, smooth slide along the table edge towards the phone. The bands of sunlight drift very slightly, as if a cloud passes; no shadow edge crosses the phone screen. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. No people, no hands.
+```
+
+```
+Quiet, sunlit still-life photograph for an app advert, looking like a real photograph shot on film, not a render. A smartphone lies face up near the curved edge of a round, pale oak dining table with a fine, straight wood grain and a softly rounded, layered edge. Beside it, to the left and partly out of frame, lies a tablet with its dark screen switched off and no logo. The table is in a calm, modern flat; the wall and floor behind are soft warm grey and far out of focus.
+
+Low afternoon sun comes through a window out of frame and falls across the table in broad, clean diagonal bands of warm light and cool shadow. The phone lies entirely inside one band of sunlight, so no shadow edge crosses its screen; the sharp edge of the next shadow band runs across the table just beyond it. The phone casts a short, crisp shadow on the wood.
+
+The camera looks down at about 40 degrees from the side of the table, the phone in the centre of the frame, turned at a slight angle to the lens, filling about 35% of the frame height. All four corners of the screen are clearly visible. The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Photographed on a 50mm lens at f/2.8, the phone and the table edge around it sharp, the tablet slightly soft, the background melting into soft grey. Natural colour, true-to-life whites, gentle contrast, real film grain, faint lens softness towards the corners. Photoreal, hyper-realistic, unretouched, like a high-end commercial photograph for an app.
+
+Avoid: people, hands, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, a shadow edge crossing the phone screen, clutter, a logo on the tablet.
+```
+
+---
+
+### P3. The phone between a laptop and a coffee. Composite: Sage & Co, the order screen
+
+Reference: a phone on a beige desk between a laptop and a coffee, with soft window shadows. The laptop carries no logo.
+
+**Planned motion (5s):**
+```
+Very slow, smooth push-in towards the phone. A faint wisp of steam rises from the coffee. The window light stays steady; no shadow edge crosses the phone screen. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. No people, no hands.
+```
+
+```
+Soft, real workspace still-life photograph for an app advert, looking like a real photograph shot on film, not a render. A smartphone lies face up on a warm beige desk, between an open silver aluminium laptop at the upper left of the frame and a plain white ceramic cup of black coffee at the lower right, only partly in frame. The laptop has no logo anywhere, and its keyboard keys are too soft and far to read. The desk surface is a matte, warm sand-beige laminate with faint real wear.
+
+Soft late-afternoon window light falls across the desk in wide, gentle diagonal bands of light and soft shadow, from a window out of frame at the upper right. The phone lies fully inside one band of light, so no shadow edge crosses its screen. The phone casts a soft shadow on the desk.
+
+The camera looks down at about 55 degrees, the phone in the centre of the frame and turned at a slight angle, filling about 45% of the frame height. All four corners of the screen are clearly visible. The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Photographed on a 50mm lens at f/2.8, the phone sharp, the laptop and cup softly out of focus at the frame edges. Warm, calm and minimal. Natural colour, true-to-life whites, gentle contrast, real film grain, faint lens softness towards the corners. Photoreal, hyper-realistic, unretouched, like a high-end commercial photograph for an app.
+
+Avoid: people, hands, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, a logo on the laptop, readable keys, a shadow edge crossing the phone screen, clutter, papers, notebooks with text.
+```
+
+---
+
+### 02D. Over the shoulder, hair in the foreground (Faisal attaches the reference). Composite: Sage & Co or Kestrel
+
+Reference: the high over-the-shoulder shot looking past her hair onto two hands and the phone, pavement far below. Faisal attaches that image, and the prompt tells the model to take only the angle and framing from it, recast to his casting rule.
+
+**Planned motion (5s):**
+```
+Subtle handheld over-the-shoulder camera, breathing slightly. Her hair sways a little in a light breeze. Her right thumb taps the screen once, then again a moment later. Her face never enters the frame. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+```
+Use the attached reference image for the camera angle, framing and composition only: the high over-the-shoulder view looking down past her hair onto two hands holding a phone, with the pavement blurred far below. Replace the person, her hair, her clothes, the phone and the screen with what is described here.
+
+Candid street photograph, looking like a real frame shot on film, not a render. A high-angle over-the-shoulder shot from just behind and above the right shoulder of a 25-year-old woman standing on a city pavement, looking down at the smartphone in her hands. Her face is not in the frame. Long, glossy, straight chestnut-brown hair falls down the left side of the frame in the soft-focus foreground, hanging past her shoulder. She holds the phone upright in both hands at the height of her waist: her left hand holds the top-left of the phone from behind, her right hand holds the right edge from behind, and her right thumb is on the lower third of the screen, tapping. The phone sits in the centre of the frame, filling about 40% of the frame height, the screen tilted up towards her and seen by the camera at a slight angle. All four corners of the screen are clearly visible and no finger covers a corner. The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands: slim, elegant young hands with light skin and a warm undertone, real skin texture with fine creases over the knuckles. Her nails are a fresh gel manicure, medium almond shape, glossy sheer pink with fine gold line-art on three nails. She wears a soft pale-blue knitted cardigan, its cuff at her right wrist, over a pale blue and white floral cotton dress, visible below the phone in soft focus.
+
+Far below and behind, heavily out of focus: grey concrete paving slabs with their joints running diagonally, on an overcast day. Soft, even daylight, no sun, no hard shadows. Photographed on a 50mm lens at f/2.2, the hands and phone sharp, the hair in the foreground soft, the pavement a smooth blur. Natural colour, true-to-life whites, gentle contrast, real film grain, faint lens softness towards the corners. Photoreal, hyper-realistic, unretouched, like a high-end commercial photograph for an app.
+
+Avoid: her face, a second person, the person from the reference image, braids, dark skin on the hands, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, fingers covering the screen corners, chipped or unpainted nails, extra fingers, deformed hands.
+```
+
+---
+
+### F1. Direct flash, a hand holds the phone out, hard shadow on the wall. Composite: Ironvale, "Join"
+
+Reference: an on-camera flash shot, a hand holding the phone out over white trousers, the hand's hard shadow on the wall. The risk is flash glare on the screen: the prompt moves the flash off-axis and asks for a matte screen. Check the still before animating it.
+
+**Planned motion (5s):**
+```
+Near-static, with the faint natural movement of a hand holding a phone out. The hard shadow on the wall moves with the hand. No one else appears. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. The hand keeps five fingers throughout.
+```
+
+```
+Direct-flash photograph, like a real point-and-shoot or on-camera flash shot on film, not a render. A first-person view of a young man sitting on the floor, holding a smartphone out in front of him in his right hand at chest height, the screen facing the camera, while his legs stretch out below in soft, white waffle-knit lounge trousers. He is the only person in the image; his face is not in the frame.
+
+A hard, direct flash from just above the camera lights the hand, the phone and the white fabric brightly, and throws one crisp, dark shadow of the hand and the phone onto the warm taupe plaster wall behind. The flash is slightly off to the left of the lens so its reflection does not land on the phone screen. The rest of the room falls off into warm, dim shadow, as it does in real flash photography.
+
+How he holds it: the phone upright, gripped from the left side, his fingers wrapped around the right edge with the fingertips just showing, his thumb resting along the left edge, not on the screen. The phone is in the centre of the frame and fills about 45% of the frame height, square to the camera with a slight tilt. All four corners of the screen are clearly visible. The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+His hand: a young man's hand, slim, light skin with a warm undertone, real skin texture with creases over the knuckles, short clean nails. The cuff of a white waffle-knit long-sleeved top at the wrist. Below, his knees and white trousers, one bare foot soft at the edge of the frame. 25 years old, slim, well kept.
+
+Photographed on a 35mm lens at f/5.6 with direct flash: bright, flat light on the subject, crisp hard shadows, slightly warm ambient falloff, true colour, real film grain. Editorial, raw and stylish. Photoreal, hyper-realistic, unretouched.
+
+Avoid: his face, a second person, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, a flash hotspot or reflection on the screen, soft or diffused light, bokeh, extra fingers, deformed hands.
+```
+
+---
+
 ## 6. The pilot, before anything else
 
 Generate **03, 04 and 02C**. Only 03 takes a reference image: Faisal's character sheet for Mia, attached as image 1. Then make
