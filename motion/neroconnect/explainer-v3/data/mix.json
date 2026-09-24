@@ -3,7 +3,7 @@
  "head": 0.6,
  "vo": "../explainer/data/vo-master.mp3",
  "target": -14,
- "tp": -2,
+ "tp": -3,
  "vo_filter": "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=160:makeup=1.6",
  "bed": {
   "file": "video/library/bgm/neroconnect-pulse-100.mp3",
