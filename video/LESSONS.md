@@ -387,6 +387,19 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    for example, count off-palette pixels along the frame edges frame by frame.
 2. **A press has to read on the thing pressed.** A dark flash disappears on a black button. Lighten the dark ones.
 
+## App motion, light v1 (24 Sep 2026) — Faisal's notes
+
+1. **"Way too fast."** v1 put six screens and a finale into 17.8s, a bar each. He wants 20–30s, with each screen
+   held long enough to read and every touch slow and deliberate. Rule: a screen gets at least seven beats at
+   118 bpm, a touch gets a beat of its own before the next thing happens, and a lift settles back rather than cutting away.
+2. **"The screenshot is cut off at the bottom."** The app-card exports stop mid-UI (the CHARGE and TAP buttons,
+   the reports snapshot card), and a phone screen is taller than the export. Rule: never place an export on a
+   phone screen as-is. Finish every cut edge in code (the button, the card's bottom border, the sheet's edge)
+   and give the screen a home indicator, so it reads as a whole screen.
+3. **Hard whips between every screen read as frantic.** Rule: use the app's own transitions where they exist
+   (a push, a swipe, a sheet rising), keep one spin as the signature move, and after a macro close-up pull back
+   out to the whole screen rather than cutting away.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on
