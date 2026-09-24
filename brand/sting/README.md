@@ -20,7 +20,13 @@ bars grows out of the pile, one light reflection crosses the glass, and it holds
 
 There is no shutter in it. Faisal chose this motion over the shutter squeeze and over a mix of the two.
 
-## The three looks
+## The looks — yellow and white, locked 24 Sep 2026
+
+Faisal, 24 Sep 2026: *"I'm gonna lock in the yellow and the white as the two variants that we will use, depending on
+whichever one we wanna use."* **Silver is retired** from the sting and the outro. Its CSS stays in the source so
+nothing breaks, but its masters are deleted and no video uses it. (The silver glass stamp on the social carousels
+is a separate asset owned by the CONTENT IMAGES session and is not affected.)
+
 
 All three are on the off-white ground `#FBFAF7`, with **no glow**. Faisal rejected the yellow glow behind the
 glass. The glass effect comes from the tile itself: the body gradient, a 14px rim, a top highlight, a bottom
@@ -30,9 +36,9 @@ caustic line, raised bars with a drop shadow, and the light pass.
 |---|---|---|
 | `yellow` | yellow glass | ink |
 | `white` | white glass | yellow |
-| `silver` | silver glass | yellow |
+| ~~`silver`~~ | silver glass | yellow (retired 24 Sep) |
 
-Faisal has not ruled which look is the default.
+Either is fine; the video picks. Yellow is the only one that keeps Eray's colours.
 
 ## The outro — locked 24 Sep 2026
 
@@ -59,8 +65,8 @@ saving or earnings wording, and for paid Meta the Route C rules apply to this li
 upload carries it.
 
 
-- `neropay-sting-{yellow,white,silver}-{9x16,16x9,1x1}.mp4`: nine masters, 60fps, H.264, 2.6s, silent.
-- `neropay-outro-{yellow,white,silver}-{9x16,16x9,1x1}.mp4`: nine outro masters, 5.0s, silent, default subtext.
+- `neropay-sting-{yellow,white}-{9x16,16x9,1x1}.mp4`: six masters, 60fps, H.264, 2.6s, silent.
+- `neropay-outro-{yellow,white}-{9x16,16x9,1x1}.mp4`: six outro masters, 5.0s, silent, default subtext.
 - `outro.html`: the outro source, with the same parameters as `index.html` plus `small` / `big`.
 - `fonts/`: Poppins 500 and 600 (latin), vendored, because the web container blocks font CDNs.
 - `index.html`: the source. `?v=` picks the look, `?fmt=9x16|16x9|1x1` the frame, and `?bg=none` gives a
@@ -84,5 +90,5 @@ Geometry comes from `BRAND-MOTION.md` §2: tile radius 15.5%, bars at 46.5°, ta
 ## Open with Eray. It is locked for use, but these are his to answer
 
 1. The motion cuts his wordmark into letters and moves them. They are not deformed, but it is still his artwork being taken apart.
-2. `white` and `silver` recolour the symbol (yellow bars on a pale tile). `yellow` keeps his colours.
+2. `white` recolours the symbol (yellow bars on a pale tile). `yellow` keeps his colours.
 3. The glass tiles are our rebuild of the icon, not supplied artwork.

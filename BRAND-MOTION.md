@@ -140,3 +140,5 @@ components above stay a spec that nobody has built.
 **The outro, locked 24 Sep 2026.** The same sting, then the tile rises and a subtext line slides out beneath it,
 ending centred. The subtext varies per video and defaults to *Follow for more / @neropayapp*. The fast timing is
 the official one: Faisal rejected a slower retime the same day. See `brand/sting/outro.html` and the README.
+
+**Two looks, 24 Sep 2026:** yellow and white. Silver is retired from the sting and the outro.

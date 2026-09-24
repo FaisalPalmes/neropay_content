@@ -64,6 +64,13 @@ large across the middle, empty space doing work. Type alternates left, right and
 in the same place twice running. Captions are drawn in the picture (grey Poppins, the current word ink on a yellow
 marker, a small pop on each word), never a black strap.
 
+**The end of every video is locked** (Faisal, 23–24 Sep 2026). A NeroPay video ends on the outro in `brand/sting/`:
+the wordmark's letters converge into a glass tile, the tile rises, and a subtext line slides out beneath it. Yellow or
+white glass, nothing else. The subtext changes per video (`outro.html?small=…&big=…`, or `window.setSub()` from a
+composition); the motion and its fast timing do not. Drop in the MP4 or render the page frame by frame. Add the sound
+in the video's own mix. `brand/sting/README.md` is the spec. `video/app-motion/` already ends on it, with `neropay.app`
+as the subtext.
+
 **Brand rules that never bend** (`CLAUDE.md`): "Nero" ink/white, "Pay" yellow; the terminal is the only branded object; no
 NeroPay cards, mugs, pens; everything sharp and deep, no bokeh; no price or rate on screen; never Verifone or Stripe.
 

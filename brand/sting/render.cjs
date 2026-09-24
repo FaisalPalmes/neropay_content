@@ -1,5 +1,5 @@
 // Renders the locked NeroPay logo sting and outro: every look x every format, 60fps, H.264.
-//   node brand/sting/render.cjs                        all eighteen masters into brand/sting/
+//   node brand/sting/render.cjs                        all twelve masters into brand/sting/
 //   node brand/sting/render.cjs outro yellow 16x9      one of them (piece: sting | outro)
 //   SMALL="Next episode" BIG="The Maths, part two" node brand/sting/render.cjs outro yellow 16x9 out.mp4
 //                                                      an outro with its own subtext, to a named file
@@ -11,7 +11,7 @@ const PIECES = { sting: ['index.html', 2.6], outro: ['outro.html', 5.0] };
 const SIZE = { '9x16': [1080, 1920], '16x9': [1920, 1080], '1x1': [1080, 1080] };
 const [, , A, B, C, NAMED] = process.argv;
 const WHICH = A ? [A] : Object.keys(PIECES);
-const LOOKS = B ? [B] : ['yellow', 'white', 'silver'];
+const LOOKS = B ? [B] : ['yellow', 'white'];
 const FMTS = C ? [C] : Object.keys(SIZE);
 const SUBQ = (process.env.SMALL !== undefined ? '&small=' + encodeURIComponent(process.env.SMALL) : '') + (process.env.BIG ? '&big=' + encodeURIComponent(process.env.BIG) : '');
 const TYPES = { '.html': 'text/html', '.png': 'image/png', '.woff2': 'font/woff2' };
