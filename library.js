@@ -178,14 +178,15 @@ window.LIBRARY = {
       ] },
 
     { id: 'NCEX', series: 'NeroConnect', title: 'NeroConnect explainer',
-      version: 'v3.5', rendered: '2026-09-24', secs: 136,
+      version: 'v3.6', rendered: '2026-09-24', secs: 145,
       status: 'review', by: 'content video session, 24 Sep 2026 — v3 rebuilt at Faisal\'s request, awaiting his review',
-      waiting: 'Faisal watches v3.5 (24 Sep, his notes on v3.4): the whole script re-voiced in one take (the spliced "minimum" passage was audible; take 3, 2,272 credits), every reveal retimed to it and audited against the words, the flashed cards back in place (the v3.4 flash rule knocked them into page flow: a card off the bottom in two scenes, an overlap in pricing), a layout gate added before every render, the close "Then check out NeroConnect", and the NeroConnect outro he picked (yellow, "Check out NeroConnect at / docs.neropay.app"). Still open: the VO says "never lose money" (on screen: "No payment priced at a loss"), and the D1–D3 opening photos.',
+      waiting: 'Faisal watches v3.6 (24 Sep, his notes on v3.5 and the two previews he okayed): opening A ("Look at the card machine on any shop counter. There\'s a name on it … it can be yours") on his NeroPay terminal photo, the bezel swapping to YOUR LOGO; the brand scene full screen, the same terminal swapping to Keelstone Pay on "logo" then pulling back beside the login card; "no payment is ever priced at a loss" in the voice; the whole script re-voiced as take 4; the music steady and quieter; the stutter after "Your logo" fixed (motion/tighten.mjs now cuts only true silence). Real dashboard screenshots: he may still send them, previews first.',
       build: 'motion/neroconnect/explainer-v3/ (v2 kept at explainer/)', drive: 'https://drive.google.com/drive/folders/1hVAZJFL5uLPqC4ATJzpoO9QkvvM9dpaP',
       backup: false, clearedFor: null, notCleared: null,
       note: 'Figures on screen are the seven approved in the overlay kit; the platform is the invented Keelstone Pay (Harbourline until v3.3) and the merchants the invented set. Placeholder brand throughout.',
       files: [
-      { crop: '16:9 master', px: '1920×1080', mb: 26.8, md5: '67621e18daca246fe25ade6f28f657b1', lufs: '−14.08', where: 'v3.5 sent in chat 24 Sep 2026; not yet in Drive' },
+      { crop: '16:9 master', px: '1920×1080', mb: 28.7, md5: 'bf73b41e4f93c88133b2e92f10121e7a', lufs: '−14.07', where: 'v3.6 sent in chat 24 Sep 2026; not yet in Drive' },
+      { crop: 'v3.5 16:9 (superseded)', px: '1920×1080', mb: 26.8, md5: '67621e18daca246fe25ade6f28f657b1' },
       { crop: 'v3.4 16:9 (superseded)', px: '1920×1080', mb: 28.4, md5: '64ecf30908b128377de905d13ca18bdc' },
       { crop: 'v2 16:9 master (superseded)', px: '1920×1080', mb: 62.5, media: '243e9316-3761-4f7e-8883-799780616ac2', md5: 'f56bea4a7f82761407b4e344283480ca' }] },
 
