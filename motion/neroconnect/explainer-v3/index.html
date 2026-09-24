@@ -228,7 +228,7 @@ const SC = [
      <div class="mid" style="margin-top:14px;font-size:30px" data-at="120.96">The phone, picked up</div>
      <div class="lab" style="margin-top:34px;color:#111114;font-size:26px" data-at="121.74"><span class="mk" data-mark="122.0">All in your name.</span></div></div>` },
 
- { t: [122.95, 125.12], light: [960, 540], ox: '50%', html: `
+ { t: [122.95, 124.72], light: [960, 540], ox: '50%', html: `
    <div class="h xl" style="left:0;right:0;top:360px;text-align:center" ><span class="ln" data-at="123.18">Your merchants.</span><span class="ln" data-at="124.28"><span class="mk" data-mark="124.4">Your brand.</span></span></div>` }
 ];
 window.OUTRO_AT = 125.12;   /* the locked outro takes over here; render.cjs splices it in */
@@ -250,6 +250,7 @@ window.setTime = function (t) {
     lx += (SC[i].light[0] - lx) * k; ly += (SC[i].light[1] - ly) * k; }
   const endFade = 1 - clamp((t - 124.5) / 0.6);
   L.style.transform = `translate(${lx}px,${ly}px)`; L.style.opacity = endFade;
+  document.getElementById('ground').style.opacity = endFade;   /* plain #FBFAF7 underneath, the outro's own ground */
   P1.style.transform = `translate(${-700 + 60 * Math.sin(t / 19)}px,${-1150 + 40 * Math.cos(t / 23)}px) rotate(${38 + 1.5 * Math.sin(t / 17)}deg)`;
   P2.style.transform = `translate(${1150 + 50 * Math.cos(t / 21)}px,${250 + 40 * Math.sin(t / 25)}px) rotate(${38 + 1.2 * Math.cos(t / 15)}deg)`;
   P1.querySelector('i').style.transform = P2.querySelector('i').style.transform = `translateX(${((t * 6) % 140) - 70}%)`;
