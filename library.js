@@ -138,15 +138,16 @@ window.LIBRARY = {
         { crop: '9:16', px: '1080×1920', lufs: '−13.7', media: '8c0ea0f3-6efb-41b9-bf85-a64c4f898296', md5: '682343ce495912a513292241349e1117' }
       ] },
 
-    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, ends on the logo rising over neropay.app',
-      version: 'v2', rendered: '2026-09-24', secs: 31.2,
-      status: 'review', by: 'unrecorded — v2 made on Faisal\'s 24 Sep notes on v1 and sent for his review',
-      waiting: 'Faisal watches v2. The end card (the sting, then the mark rising and neropay.app dropping in under it) is built here on top of the locked sting, because the other session\'s version was not in the repo; swap it in if that one is pushed.',
+    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, ends on the locked outro with neropay.app',
+      version: 'v3', rendered: '2026-09-24', secs: 31.5,
+      status: 'review', by: 'unrecorded — v3 made on Faisal\'s 24 Sep note on v2 (a ghost of the phones under the wordmark at 26s) and sent for his review; he said everything else was fine',
+      waiting: 'Faisal watches v3: the only changes from v2 are the fix at 26s and the end card, now the locked outro (brand/sting/outro.html) with its subtext set to neropay.app.',
       build: 'video/app-motion/', drive: null, backup: false, clearedFor: null, notCleared: null,
       clearanceNote: 'Not assessed. Demo figures only; no rate, no price, no coins or money counters; nothing lifted out of a screen is a total; the phone back is plain so the terminal stays the only branded object. For paid Meta, Route C would need checking: the reports screen shows channel figures and the headlines include "Get paid."',
-      note: 'v2 on Faisal\'s notes (too fast; screens cut off at the bottom; hold the tap screen with a subtle contactless animation; pull out from the transactions close-up to the whole screen; slower payment link and finale; new end card). 31.2s, 62 beats of partner-upbeat-118. Every export is finished in code where it was cut (the CHARGE and TAP buttons, the snapshot card, the sheet edge) with a home indicator on every screen. Moves between screens are the app\'s own where they can be: CHARGE slides the tap screen in, one spin to the menu, transactions slides in and the camera pushes into its corner then pulls back to the whole list, reports swipes in, the payment link rises as a sheet, the phone steps back as two more slide in beside it. The tap screen holds for eight beats with the signal breathing out every other beat. The locked yellow sting plays with its hit on beat 54, then its last frame rises and neropay.app drops in under the mark. 120 fps blended to 30 for motion blur.',
+      note: 'v2 on Faisal\'s notes (too fast; screens cut off at the bottom; hold the tap screen with a subtle contactless animation; pull out from the transactions close-up to the whole screen; slower payment link and finale; new end card). 31.2s, 62 beats of partner-upbeat-118. Every export is finished in code where it was cut (the CHARGE and TAP buttons, the snapshot card, the sheet edge) with a home indicator on every screen. Moves between screens are the app\'s own where they can be: CHARGE slides the tap screen in, one spin to the menu, transactions slides in and the camera pushes into its corner then pulls back to the whole list, reports swipes in, the payment link rises as a sheet, the phone steps back as two more slide in beside it. The tap screen holds for eight beats with the signal breathing out every other beat. Since v3 it ends on the locked yellow outro (brand/sting/outro.html, rendered by make-assets.sh with the subtext neropay.app), its hit on beat 54; the off-white wash stays up under it and the phone clips end before it starts. 120 fps blended to 30 for motion blur.',
       files: [
-        { crop: '9:16', px: '1080×1920', lufs: '−14.1', media: '63ad00fc-7e12-4f44-a613-c6de7fe6ff00', md5: '3264ed7d13fd597f2c8a07882c0e763f' },
+        { crop: '9:16', px: '1080×1920', lufs: '−14.1', media: '053b90da-2ccf-4ce5-bda2-c060a1fe088e', md5: 'cb92b5055b2006622dd16168c2d313da' },
+        { crop: 'v2, superseded', px: '1080×1920', lufs: '−14.1', media: '63ad00fc-7e12-4f44-a613-c6de7fe6ff00', md5: '3264ed7d13fd597f2c8a07882c0e763f' },
         { crop: 'v1, superseded', px: '1080×1920', lufs: '−13.9', media: '08ccf8f2-090c-435e-a01a-c0e4ab8a05ab', md5: '1855e2b633b3667a2966989c474c03f4' }
       ] },
 
