@@ -33,9 +33,15 @@ const loudest = (a, b) => { let m = 0; for (let x = Math.floor(a * SR); x + 320 
 const cuts = [];
 for (let i = 1; i < words.length; i++) {
   const g = words[i].s - words[i - 1].e;
-  if (g > MIN) { const remove = g - GAP, mid = (words[i - 1].e + words[i].s) / 2, c = [mid - remove / 2, mid + remove / 2];
-    const db = loudest(c[0], c[1]);
-    if (db > -26) console.log(`  kept a ${g.toFixed(2)}s gap before "${words[i].w}" at ${words[i].s}s: sound in it (${db.toFixed(1)} dBFS), a word Whisper mistimed`);
+  if (g > MIN) { const remove = g - GAP, a0 = words[i - 1].e, b0 = words[i].s;
+    /* place the cut on the quietest stretch of the gap, not its middle (NeroConnect v3.6, 24 Sep 2026): "logo" trailed off
+       for 0.3 s past Whisper's end, the middle cut landed in that tail at -27 dBFS (under the -26 guard) and chopped it, which
+       Faisal heard as a stutter. Slide the cut across the gap in 10 ms steps and keep the position whose loudest 20 ms is lowest. */
+    let c = [(a0 + b0) / 2 - remove / 2, (a0 + b0) / 2 + remove / 2], db = loudest(c[0], c[1]);
+    for (let x = a0; x + remove <= b0 + 1e-9; x += 0.01) { const d = loudest(x, x + remove); if (d < db - 0.5) { db = d; c = [x, x + remove]; } }
+    /* only true silence is cut: -40 dBFS (was -26, which let the "logo" cut through a word's tail). A gap with no silent stretch
+       long enough is kept whole: it is a word Whisper mistimed, a trailing sound or a breath the gate will take */
+    if (db > -40) console.log(`  kept a ${g.toFixed(2)}s gap before "${words[i].w}" at ${words[i].s}s: no silent stretch (${db.toFixed(1)} dBFS)`);
     else cuts.push(c); }
 }
 /* keep segments between cuts, concat */
