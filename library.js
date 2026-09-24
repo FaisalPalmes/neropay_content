@@ -138,15 +138,16 @@ window.LIBRARY = {
         { crop: '9:16', px: '1080×1920', lufs: '−13.7', media: '8c0ea0f3-6efb-41b9-bf85-a64c4f898296', md5: '682343ce495912a513292241349e1117' }
       ] },
 
-    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, ends on the logo sting',
-      version: 'v1', rendered: '2026-09-24', secs: 17.8,
-      status: 'review', by: 'unrecorded — made on Faisal\'s 23 Sep instruction ("the full app motion video too, light version only"), sent for his review',
-      waiting: 'Faisal watches it. Screen recordings from the demo account would replace the exported app cards if he wants the screens to move more.',
+    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, ends on the logo rising over neropay.app',
+      version: 'v2', rendered: '2026-09-24', secs: 31.2,
+      status: 'review', by: 'unrecorded — v2 made on Faisal\'s 24 Sep notes on v1 and sent for his review',
+      waiting: 'Faisal watches v2. The end card (the sting, then the mark rising and neropay.app dropping in under it) is built here on top of the locked sting, because the other session\'s version was not in the repo; swap it in if that one is pushed.',
       build: 'video/app-motion/', drive: null, backup: false, clearedFor: null, notCleared: null,
       clearanceNote: 'Not assessed. Demo figures only; no rate, no price, no coins or money counters; nothing lifted out of a screen is a total; the phone back is plain so the terminal stays the only branded object. For paid Meta, Route C would need checking: the reports screen shows channel figures and the headlines include "Get paid."',
-      note: 'AM01\'s grammar on the App Store carousel\'s light ground, with its approved headlines. Seven bars of partner-upbeat-118: keypad filling live; spin to the tap screen and notification; thrown off and back on the NeroPOS menu, the dish card lifting off the screen in 3D; a macro close-up of the transactions list; a push through to reports, the trend drawing on and the tooltip and channel split lifting; spin to payment links, the note typed live, Send and a link-sent toast; three phones fan in. It washes to off-white and the locked yellow logo sting (brand/sting) plays with its bass hit on beat 30, where the letters meet. 120 fps blended to 30 for motion blur.',
+      note: 'v2 on Faisal\'s notes (too fast; screens cut off at the bottom; hold the tap screen with a subtle contactless animation; pull out from the transactions close-up to the whole screen; slower payment link and finale; new end card). 31.2s, 62 beats of partner-upbeat-118. Every export is finished in code where it was cut (the CHARGE and TAP buttons, the snapshot card, the sheet edge) with a home indicator on every screen. Moves between screens are the app\'s own where they can be: CHARGE slides the tap screen in, one spin to the menu, transactions slides in and the camera pushes into its corner then pulls back to the whole list, reports swipes in, the payment link rises as a sheet, the phone steps back as two more slide in beside it. The tap screen holds for eight beats with the signal breathing out every other beat. The locked yellow sting plays with its hit on beat 54, then its last frame rises and neropay.app drops in under the mark. 120 fps blended to 30 for motion blur.',
       files: [
-        { crop: '9:16', px: '1080×1920', lufs: '−13.9', media: '08ccf8f2-090c-435e-a01a-c0e4ab8a05ab', md5: '1855e2b633b3667a2966989c474c03f4' }
+        { crop: '9:16', px: '1080×1920', lufs: '−14.1', media: '63ad00fc-7e12-4f44-a613-c6de7fe6ff00', md5: '3264ed7d13fd597f2c8a07882c0e763f' },
+        { crop: 'v1, superseded', px: '1080×1920', lufs: '−13.9', media: '08ccf8f2-090c-435e-a01a-c0e4ab8a05ab', md5: '1855e2b633b3667a2966989c474c03f4' }
       ] },
 
     { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
