@@ -55,7 +55,7 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   cues.push({ sfx: 'sparkle', t: +(OUTRO_AT + 2.05).toFixed(3), gain: 0.07, why: 'the line slides out under the tile' });
   cues.sort((a, b) => a.t - b.t);
   const mix = { duration: DURATION, head: 0.6, vo: 'data/vo.mp3', target: -14, tp: -3.0,
-    vo_filter: 'acompressor=threshold=-20dB:ratio=2.5:attack=8:release=160:makeup=1.6',
+    vo_filter: 'acompressor=threshold=-24dB:ratio=2.5:attack=5:release=120:makeup=1,alimiter=limit=0.30:attack=1:release=60:level=false',   /* the v3.3 take is more dynamic (crest 20.7 dB): a compressor and a peak limiter on the voice */
     bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.30, loop_at: 103.35,
       duck: { threshold: 0.03, ratio: 2.5, attack: 20, release: 500 }, fade: 3.0 }, cues };
   fs.mkdirSync(path.join(HERE, 'data'), { recursive: true });
