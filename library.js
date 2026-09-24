@@ -138,6 +138,17 @@ window.LIBRARY = {
         { crop: '9:16', px: '1080×1920', lufs: '−13.7', media: '8c0ea0f3-6efb-41b9-bf85-a64c4f898296', md5: '682343ce495912a513292241349e1117' }
       ] },
 
+    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, ends on the logo sting',
+      version: 'v1', rendered: '2026-09-24', secs: 17.8,
+      status: 'review', by: 'unrecorded — made on Faisal\'s 23 Sep instruction ("the full app motion video too, light version only"), sent for his review',
+      waiting: 'Faisal watches it. Screen recordings from the demo account would replace the exported app cards if he wants the screens to move more.',
+      build: 'video/app-motion/', drive: null, backup: false, clearedFor: null, notCleared: null,
+      clearanceNote: 'Not assessed. Demo figures only; no rate, no price, no coins or money counters; nothing lifted out of a screen is a total; the phone back is plain so the terminal stays the only branded object. For paid Meta, Route C would need checking: the reports screen shows channel figures and the headlines include "Get paid."',
+      note: 'AM01\'s grammar on the App Store carousel\'s light ground, with its approved headlines. Seven bars of partner-upbeat-118: keypad filling live; spin to the tap screen and notification; thrown off and back on the NeroPOS menu, the dish card lifting off the screen in 3D; a macro close-up of the transactions list; a push through to reports, the trend drawing on and the tooltip and channel split lifting; spin to payment links, the note typed live, Send and a link-sent toast; three phones fan in. It washes to off-white and the locked yellow logo sting (brand/sting) plays with its bass hit on beat 30, where the letters meet. 120 fps blended to 30 for motion blur.',
+      files: [
+        { crop: '9:16', px: '1080×1920', lufs: '−13.9', media: '08ccf8f2-090c-435e-a01a-c0e4ab8a05ab', md5: '1855e2b633b3667a2966989c474c03f4' }
+      ] },
+
     { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
       version: 'v2', rendered: '2026-09-17', secs: null,
       status: 'review', by: 'unrecorded',
