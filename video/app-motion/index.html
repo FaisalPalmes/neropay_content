@@ -242,7 +242,7 @@ tl.set('#rig', { scale:1.04 }, 0);
   tl.fromTo(s, { x:0, y:0 }, { x, y, duration:31.2, ease:'sine.inOut' }, 0));
 
 /* headlines: the lines rise in through a mask, the marker draws, and they leave up before the next screen */
-const HD = [[0.3, b(6.3)], [b(7.2), b(14.1)], [b(15.4), b(21.3)], [b(22.4), b(30.3)], [b(31.2), b(37.5)], [b(38.5), b(45.2)]];
+const HD = [[0.3, b(6.3)], [b(7.2), b(14.1)], [b(15.4), b(20.7)], [b(21.8), b(30.3)], [b(31.2), b(37.5)], [b(38.5), b(45.2)]];
 tl.fromTo('#scrim', { opacity:0 }, { opacity:1, duration:0.5 }, 0.1).to('#scrim', { opacity:0, duration:0.5 }, b(45.3));
 HD.forEach(([s, e], i) => {
   tl.fromTo(`#hk${i}`, { opacity:0, y:12 }, { opacity:1, y:0, duration:0.45, ease:'power2.out' }, s)
@@ -300,31 +300,31 @@ tl.fromTo('#note', { y:-150, opacity:0 }, { y:0, opacity:1, duration:0.6, ease:'
 tl.to('#ph', { rotationY:170, rotationX:8, rotationZ:2, x:30, y:-20, duration:0.55, ease:'power2.in' }, b(14.4))
   .set('#s2', { visibility:'hidden' }, b(14.4) + 0.5).set('#s4', { visibility:'visible', zIndex:3 }, b(14.4) + 0.5)
   .to('#ph', { rotationY:352, rotationX:6, rotationZ:1, x:0, y:-10, duration:0.75, ease:'power3.out' }, b(14.4) + 0.55)
-  .to('#ph', { rotationY:342, rotationX:5, rotationZ:1, duration:b(21.4) - b(14.4) - 1.3, ease:'sine.inOut' }, b(14.4) + 1.3);
+  .to('#ph', { rotationY:342, rotationX:5, rotationZ:1, duration:b(22.2) - b(14.4) - 1.3, ease:'sine.inOut' }, b(14.4) + 1.3);
 
 /* the menu: a tap on the dish, the card lifts off the screen and grows, holds, and settles back */
 tap('card', b(17.5), 1.7);
 tl.set('#lcard', { opacity:1, z:20.5 }, b(18))
   .to('#lcard', { ...LIFT(120, 1.12), duration:0.85, ease:'power3.out' }, b(18))
-  .to('#lcard', { z:135, scale:1.14, duration:b(20.4) - b(18) - 0.85, ease:'sine.inOut' }, b(18) + 0.85)
-  .to('#lcard', { ...SETTLE, duration:0.6, ease:'power2.inOut' }, b(20.4))
-  .set('#lcard', { opacity:0 }, b(20.4) + 0.62);
+  .to('#lcard', { z:135, scale:1.14, duration:b(19.9) - b(18) - 0.85, ease:'sine.inOut' }, b(18) + 0.85)
+  .to('#lcard', { ...SETTLE, duration:0.6, ease:'power2.inOut' }, b(19.9))
+  .set('#lcard', { opacity:0 }, b(19.9) + 0.62);
 
-/* 4 · the camera pushes into the phone's corner while the transactions screen slides in */
-tl.to('#rig', { scale:2.7, x:-620, y:1260, duration:1.2, ease:'power2.inOut' }, b(21.4))
-  .to('#ph', { rotationY:334, rotationX:8, rotationZ:3, duration:1.2, ease:'power2.inOut' }, b(21.4))
-  .set('#s3', { visibility:'visible', x:508, zIndex:4 }, b(21.6))
-  .to('#s3', { x:0, duration:0.65, ease:'power3.inOut' }, b(21.6))
-  .to('#s4', { x:-150, duration:0.65, ease:'power3.inOut' }, b(21.6))
-  .to('#d4', { opacity:.18, duration:0.65 }, b(21.6))
-  .set('#s4', { visibility:'hidden' }, b(21.6) + 0.7)
-  .to('#rig', { scale:2.9, x:-680, y:1330, duration:b(27) - b(21.4) - 1.2, ease:'sine.inOut' }, b(21.4) + 1.2)
-  .to('#ph', { rotationY:340, rotationX:5, duration:b(27) - b(21.4) - 1.2, ease:'sine.inOut' }, b(21.4) + 1.2);
+/* 4 · the transactions screen slides in while the phone is still wide, then the camera pushes into its corner */
+tl.set('#s3', { visibility:'visible', x:508, zIndex:4 }, b(20.9))
+  .to('#s3', { x:0, duration:0.7, ease:'power3.inOut' }, b(20.9))
+  .to('#s4', { x:-150, duration:0.7, ease:'power3.inOut' }, b(20.9))
+  .to('#d4', { opacity:.18, duration:0.7 }, b(20.9))
+  .set('#s4', { visibility:'hidden' }, b(20.9) + 0.75)
+  .to('#rig', { scale:2.7, x:-620, y:1260, duration:1.5, ease:'power2.inOut' }, b(22.2))
+  .to('#ph', { rotationY:334, rotationX:8, rotationZ:3, duration:1.5, ease:'power2.inOut' }, b(22.2))
+  .to('#rig', { scale:2.9, x:-680, y:1330, duration:b(27) - b(22.2) - 1.5, ease:'sine.inOut' }, b(22.2) + 1.5)
+  .to('#ph', { rotationY:340, rotationX:5, duration:b(27) - b(22.2) - 1.5, ease:'sine.inOut' }, b(22.2) + 1.5);
 
 /* the close-up: the list drifts up under the corner and the NeroWeb row lights */
-tl.to('#list', { y:-150, duration:b(27) - b(23), ease:'power1.inOut' }, b(23))
-  .fromTo('#hl', { opacity:0 }, { opacity:1, duration:0.2, immediateRender:false }, b(24.5))
-  .to('#hl', { opacity:0.55, duration:0.8 }, b(24.5) + 0.25);
+tl.to('#list', { y:-150, duration:b(27) - b(24.2), ease:'power1.inOut' }, b(24.2))
+  .fromTo('#hl', { opacity:0 }, { opacity:1, duration:0.2, immediateRender:false }, b(25))
+  .to('#hl', { opacity:0.55, duration:0.8 }, b(25) + 0.25);
 
 /* 5 · the pull out to the whole screen, the list easing back to the top */
 tl.to('#rig', { scale:1.04, x:0, y:0, duration:1.6, ease:'power2.inOut' }, b(27))
