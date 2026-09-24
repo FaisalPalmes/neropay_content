@@ -53,16 +53,24 @@ const [W, H] = ({ '9x16': [1080, 1920], '16x9': [1920, 1080], '1x1': [1080, 1080
 document.body.className = V + (Q.get('bg') === 'none' ? ' alpha' : '');
 document.documentElement.style.cssText = document.body.style.cssText = `width:${W}px;height:${H}px`;
 // letter runs measured from brand/logos/neropay-light-1200.png (1200x219): n e r o p a y
-const RUNS = [[9,181],[191,358],[365,476],[478,648],[655,828],[834,1006],[1013,1191]];
-const CX = W / 2, CY = H / 2, WMW = 800, K = WMW / 1200, WMH = 219 * K, S = 360;
-const WX = CX - WMW / 2, WY = CY - WMH / 2;
+// ?mark=neroconnect: the draft NeroConnect lockup (connect-mark.py, PREVIEW 24 Sep 2026, not signed off by Eray). Same
+// letter size where it fits, scaled down where it doesn't; its x-height sits exactly where neropay's does. Default unchanged.
+const MARKS = {
+  neropay:     { src: '../logos/neropay-light-1200.png', w: 1200, h: 219, cy: 109.5,
+                 runs: [[9,181],[191,358],[365,476],[478,648],[655,828],[834,1006],[1013,1191]] },
+  neroconnect: { src: 'neroconnect-light.png', w: 1845, h: 255, cy: 145.5,
+                 runs: [[10,182],[191,358],[367,478],[487,656],[665,820],[829,998],[1007,1179],[1188,1360],[1369,1536],[1545,1700],[1709,1835]] } };
+const M = MARKS[Q.get('mark')] || MARKS.neropay, RUNS = M.runs;
+const CX = W / 2, CY = H / 2, K = Math.min(800 / 1200, (W - 120) / M.w), WMW = M.w * K, WMH = M.h * K, S = 360;
+const WX = CX - WMW / 2, WY = CY - M.cy * K;
+const SPREAD = 84 / (RUNS.length - 1);                   // the pile's spread: 14px a letter for neropay, the same overall width for any word
 const clamp = x => Math.max(0, Math.min(1, x));
 const outC = x => 1 - Math.pow(1 - x, 3), inQ = x => x * x * x * x, io = x => x < .5 ? 2*x*x : 1 - Math.pow(-2*x+2, 2)/2;
 const wm = document.getElementById('wm'), mark = document.getElementById('mark');
 mark.style.left = (CX - S / 2) + 'px'; mark.style.top = (CY - S / 2) + 'px';
 const L = RUNS.map(([a, b]) => { const d = document.createElement('div'); d.className = 'ltr';
   d.style.width = (b - a) * K + 'px'; d.style.height = WMH + 'px';
-  d.style.backgroundPosition = (-a * K) + 'px 0'; d.dataset.a = a; d.dataset.b = b; wm.appendChild(d); return d; });
+  d.style.backgroundPosition = (-a * K) + 'px 0'; d.style.backgroundImage = `url(${M.src})`; d.style.backgroundSize = WMW + 'px auto'; d.dataset.a = a; d.dataset.b = b; wm.appendChild(d); return d; });
 mark.innerHTML = '<div class="tile"><div class="lift"><div class="bars"></div></div><div class="sheen"></div><div class="edge"></div></div>';
 const sheen = mark.querySelector('.sheen');
 /* 0-0.45s the wordmark holds · 0.45-0.92s the seven letters, kept rigid, accelerate together and pile
@@ -83,7 +91,7 @@ const GAP = 56;
 window.setTime = function (t) {
   const p = inQ(clamp((t - 0.45) / 0.47));
   L.forEach((d, i) => { const a = +d.dataset.a, b = +d.dataset.b, home = WX + a * K, w = (b - a) * K;
-    d.style.left = (home + (CX - w / 2 + (i - 3) * 14 - home) * p) + 'px'; d.style.top = WY + 'px';
+    d.style.left = (home + (CX - w / 2 + (i - (RUNS.length - 1) / 2) * SPREAD - home) * p) + 'px'; d.style.top = WY + 'px';
     d.style.opacity = t < 0.95 ? 1 : 0; });
   const q = clamp((t - 0.86) / 0.12);
   mark.style.opacity = q > 0 ? 1 : 0;

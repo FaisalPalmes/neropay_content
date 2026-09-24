@@ -14,6 +14,7 @@ const WHICH = A ? [A] : Object.keys(PIECES);
 const LOOKS = B ? [B] : ['yellow', 'white'];
 const FMTS = C ? [C] : Object.keys(SIZE);
 const SUBQ = (process.env.SMALL !== undefined ? '&small=' + encodeURIComponent(process.env.SMALL) : '') + (process.env.BIG ? '&big=' + encodeURIComponent(process.env.BIG) : '');
+const MARKQ = process.env.MARK ? '&mark=' + encodeURIComponent(process.env.MARK) : '';   // MARK=neroconnect: the draft NeroConnect lockup (preview)
 const TYPES = { '.html': 'text/html', '.png': 'image/png', '.woff2': 'font/woff2' };
 const server = http.createServer((q, r) => {
   const f = path.join(ROOT, decodeURIComponent(q.url.split('?')[0]));
@@ -27,7 +28,7 @@ const server = http.createServer((q, r) => {
     const [w, h] = SIZE[fmt], tmp = fs.mkdtempSync(path.join(require('os').tmpdir(), 'sting-'));
     const p = await b.newPage({ viewport: { width: w, height: h } }); const errs = [];
     p.on('pageerror', e => errs.push(String(e)));
-    await p.goto(`http://127.0.0.1:${port}/sting/${page}?v=${v}&fmt=${fmt}${piece === 'outro' ? SUBQ : ''}`, { waitUntil: 'networkidle' });
+    await p.goto(`http://127.0.0.1:${port}/sting/${page}?v=${v}&fmt=${fmt}${piece === 'outro' ? SUBQ + MARKQ : ''}`, { waitUntil: 'networkidle' });
     await p.evaluate(() => document.fonts.ready);
     const n = Math.round(DUR * FPS);
     for (let f = 0; f < n; f++) { await p.evaluate(k => window.setFrame(k, 60), f);
