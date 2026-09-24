@@ -8,5 +8,7 @@ mkdir -p vendor fonts assets
 cp ../vendor/gsap.min.js vendor/
 cp ../../motion/node_modules/@fontsource/poppins/files/poppins-latin-{400,500,600,700}-normal.woff2 fonts/
 cp ../app-motion-test/assets/app{1,2,3,4,5}.png assets/
+# the grain for the textured glass, made once: static noise, laid on in soft-light
+ffmpeg -y -loglevel error -f lavfi -i "color=c=gray:s=540x960,noise=alls=60:allf=u,format=gray" -frames:v 1 assets/grain.png
 # the locked outro (brand/sting/outro.html), yellow, with this video's subtext
 (cd ../.. && SMALL="" BIG="neropay.app" node brand/sting/render.cjs outro yellow 9x16 video/app-motion/assets/outro-yellow-9x16-neropay-app.mp4)
