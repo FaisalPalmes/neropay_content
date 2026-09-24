@@ -11,6 +11,7 @@ import cv2, numpy as np, subprocess, argparse, json, os, math
 
 ap = argparse.ArgumentParser()
 ap.add_argument('plate'); ap.add_argument('cards'); ap.add_argument('out'); ap.add_argument('--box', required=True)
+ap.add_argument('--layer', help='also write the cards alone as an RGBA PNG sequence, pinned to frame 0 (for a Fusion planar transform)')
 a = ap.parse_args()
 x0, y0, x1, y1 = [int(v) for v in a.box.split(',')]
 
@@ -81,5 +82,22 @@ for n, f in enumerate(frames):
         reg = reg * (1 - al) + cc[..., :3] * al
         out[ya:yb, xa:xb] = reg
     ff.stdin.write((np.clip(out, 0, 1) * 255).astype(np.uint8).tobytes())
+    if a.layer:   # the same cards, animated in place at the frame-0 phone position, on transparency
+        os.makedirs(a.layer, exist_ok=True); L = np.zeros((H0, W0, 4), np.float32); ph = ph0; cx, cy = C[0]
+        for i, (name, (ox, oy), t0, hgt) in enumerate(CARDS):
+            p = (t - t0) / 0.55
+            if p <= 0: continue
+            e, k = eo(p), back(p); img = imgs[name]; sc = (hgt * ph) / img.shape[0] * (0.88 + 0.12 * k)
+            fx = cx + ox * ph * (0.55 + 0.45 * e); fy = cy + oy * ph * (0.55 + 0.45 * e) + 3.0 * math.sin(2 * math.pi * (t / 3.2 + i * 0.27)) * (ph / 95)
+            w, h = int(img.shape[1] * sc), int(img.shape[0] * sc)
+            if w < 4: continue
+            c = cv2.resize(img, (w, h), interpolation=cv2.INTER_AREA); X, Y = int(round(fx - w / 2)), int(round(fy - h / 2))
+            xa, ya, xb, yb = max(0, X), max(0, Y), min(W0, X + w), min(H0, Y + h)
+            if xa >= xb or ya >= yb: continue
+            cc = c[ya - Y:yb - Y, xa - X:xb - X].copy(); cc[..., 3:] *= e
+            dst = L[ya:yb, xa:xb]; al = cc[..., 3:]
+            dst[..., :3] = cc[..., :3] * al + dst[..., :3] * (1 - al); dst[..., 3:] = al + dst[..., 3:] * (1 - al)
+        rgb = np.where(L[..., 3:] > 0, L[..., :3] / np.maximum(L[..., 3:], 1e-6), 0)   # PNG wants straight alpha
+        cv2.imwrite(os.path.join(a.layer, f'{n:04d}.png'), (np.dstack([rgb, L[..., 3]]) * 255).clip(0, 255).astype(np.uint8))
 ff.stdin.close(); ff.wait()
 print(a.out, len(frames), 'scale', round(float(S[0]), 3), '->', round(float(S[-1]), 3))

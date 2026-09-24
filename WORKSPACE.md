@@ -1,7 +1,7 @@
 # Workspace: where every file lives
 
 Written 25 Sep 2026 for Faisal's home PC, the Samsung SSD, the MacBook and Google Drive. A local Claude Code session
-reads this first and builds the folders from §5. One rule sits above the rest: **the register (`library.js`) is the
+reads this first (with `LOCAL-HANDOVER.md`) and builds the folders from §5. One rule sits above the rest: **the register (`library.js`) is the
 record, and folders are only storage.** Moving a file to an `Approved` folder does not approve it.
 
 ## 1. Who holds what
@@ -23,10 +23,11 @@ The loop: generate → work on `E:` → Faisal approves → master to Drive → 
 
 ## 2. The SSD (`E:`)
 
-- **Format.** Check it: File Explorer → right-click `E:` → Properties → File system. **exFAT** works on Windows and Mac;
-  leave it. **NTFS** is read-only on a Mac: copy the existing 200–300 GB off, check the copy, erase it as **ExFAT,
-  GUID Partition Map** (Disk Utility on the MacBook is the reliable way), copy back. Formatting erases everything.
-- **Always eject before unplugging.** exFAT has no journal, so a pull mid-write can corrupt files.
+- **Format: NTFS, kept** (Faisal, 25 Sep 2026). The SSD stays at home, plugged into the PC. The MacBook doesn't
+  write to it (NTFS is read-only on a Mac); Faisal drives the PC session from the MacBook with `claude remote-control`
+  instead. If that changes, the switch to exFAT is: copy everything off, erase it as ExFAT with a GUID Partition Map,
+  copy it back.
+- **Always eject before unplugging.** A pull mid-write can corrupt what is being written.
 - **The letter stays `E:`.** Pin it in Windows Disk Management (right-click the volume → Change Drive Letter) so paths
   never move.
 - The new work lives in `E:\nPanda\`, so what is already on the SSD is untouched.
