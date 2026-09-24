@@ -1,0 +1,293 @@
+{
+ "duration": 131,
+ "head": 0.6,
+ "vo": "../explainer/data/vo-master.mp3",
+ "target": -14,
+ "tp": -2,
+ "vo_filter": "acompressor=threshold=-20dB:ratio=2.5:attack=8:release=160:makeup=1.6",
+ "bed": {
+  "file": "video/library/bgm/neroconnect-pulse-100.mp3",
+  "t": 0,
+  "gain": 0.17,
+  "loop_at": 103.35,
+  "duck": {
+   "threshold": 0.025,
+   "ratio": 5,
+   "attack": 12,
+   "release": 420
+  },
+  "fade": 2.8
+ },
+ "cues": [
+  {
+   "sfx": "click-soft",
+   "t": 2.35,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 3.05,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 3.69,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 10.95,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "pop",
+   "t": 13.25,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 16.55,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 19.03,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 23.35,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 23.95,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 30.55,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "pop",
+   "t": 32.85,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 33.59,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 34.43,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 38.85,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 39.35,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 45.45,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "pop",
+   "t": 46.63,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 52.05,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 57.09,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 58.79,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 61.03,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 64.95,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "pop",
+   "t": 66.85,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 67.83,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 69.13,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 71.55,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 72.15,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 81.75,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "pop",
+   "t": 82.05,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 89.05,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 89.47,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 90.17,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 96.75,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 97.25,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 102.15,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "pop",
+   "t": 102.55,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 106.95,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 107.49,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 109.45,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 113.35,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 115.51,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "pop",
+   "t": 117.29,
+   "gain": 0.06,
+   "why": "a glass card lands"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 122.8,
+   "gain": 0.05,
+   "why": "scene change"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 126.04,
+   "gain": 0.2,
+   "why": "the sting: the letters meet"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 127.17,
+   "gain": 0.07,
+   "why": "the line slides out under the tile"
+  }
+ ]
+}
