@@ -134,7 +134,7 @@ Cinematic 16:9 film still from a premium smartphone app commercial. Dramatic low
 
 **Framing:** faceless. The frame cuts below his ear. A 25-year-old mixed-race athlete, light-skinned,
 against one plain rendered wall split by a single diagonal shadow line. The setting is real but reads
-as abstract, and nothing competes with the screen. His Pinterest references are the model: the hand and
+as abstract, and nothing competes with the screen. Faisal's Pinterest references are the model: the hand and
 phone carry the shot and the background stays quiet.
 **Planned motion (5s):**
 ```
