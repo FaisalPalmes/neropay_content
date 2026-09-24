@@ -156,6 +156,17 @@ window.LIBRARY = {
         { crop: 'v1, superseded', px: '1080×1920', lufs: '−13.9', media: '08ccf8f2-090c-435e-a01a-c0e4ab8a05ab', md5: '1855e2b633b3667a2966989c474c03f4' }
       ] },
 
+    { id: 'MA01', series: 'Mobile Apps', title: 'Mobile Apps — "Order. Book. Join. Pay." (four merchants, their own app)',
+      version: 'v1', rendered: '2026-09-24', secs: 29.9,
+      status: 'review', by: 'unrecorded — Faisal asked for the full edit on 24 Sep ("go ahead and actually run me a full final edit"), sent for his review',
+      waiting: 'Faisal watches v1. Before posting: a Companies House check on Sage & Co, Kestrel Barbers, Ironvale Studio and Marigold Lane (a web search found no exact UK match; it is US-based and not exhaustive).',
+      build: 'video/mobile-apps/', drive: null, backup: false, clearedFor: null, notCleared: null,
+      clearanceNote: 'Not assessed. Organic is the intended use (Reels, TikTok, Stories); the handover holds paid Meta until Faisal says otherwise, and Route C would need a look at "Pay £28.00". Claims are the four Faisal confirmed on 24 Sep: Android and iOS, the merchant\'s own brand, their existing booking, ordering and checkout, set up in the NeroPay dashboard. No NeroPay price, rate or fee; the prices in the apps are the invented merchants\' own. No real merchant, person or data; nothing AI-generated.',
+      note: 'Cowork\'s /brag-slim storyboard (handover of 24 Sep) rebuilt on the AM02 light look: warm off-white, yellow light moving behind the glass mark, the 64px-deep 3D phone on one continuous curve, headlines in Poppins in the house style. A home screen with four merchant icons popping in, a tap opens Sage & Co, then Order (café), Book (barber), Join (gym studio), Pay (florist), each app sliding in as on a phone with a visible touch; the phone steps back into a row of four with "Available on Android & iOS" as the highlight and "Create yours in the NeroPay dashboard"; ends on the locked yellow outro with Available on Android & iOS over neropay.app. The merchant screens keep their own fonts and colours. 120 fps blended to 30 for motion blur. Share copy is Cowork\'s share-copy.txt.',
+      files: [
+        { crop: '9:16', px: '1080×1920', lufs: '−14.2', media: 'eef1ff75-3790-4552-af47-94ec8d09c53a', md5: '44a17c96f671e298e8e52fa5c315f0c4' }
+      ] },
+
     { id: 'NC01', series: 'NeroConnect', title: 'NeroConnect — the intro video',
       version: 'v2', rendered: '2026-09-17', secs: null,
       status: 'review', by: 'unrecorded',
