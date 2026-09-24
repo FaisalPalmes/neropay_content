@@ -90,3 +90,30 @@ Interior of a small independent corner shop by the till: neat shelves of unbrand
 
 **Rail 4:** a generated image in the film is synthetic content, so the upload needs the altered-or-synthetic setting and
 the description line. The voice already needs both.
+
+---
+
+## D. The opening, hyper-real (24 Sep 2026: Faisal found C1–C3 "super fake")
+
+These replace the café, takeaway and shop tiles. **Attach the front-on unbranded terminal (image A3) as the reference to
+all three**, so the hardware matches the rest of the film. Aspect ratio **3:2**, which is the tile's shape, so nothing
+gets cropped away. Faisal's call: people are allowed, faceless, with hands and arms only. That departs from
+`motion/CLAUDE.md`'s "no people" plate rule for this film.
+
+**D1: café.** 3:2
+```
+Photograph taken inside a real, lived-in independent café in Manchester, mid-morning. On the pale oak counter, in the lower middle of the frame, stands the card payment terminal from the attached reference image, exactly that hardware, its screen showing a plain payment keypad, with "YOUR LOGO" in dark grey on the bezel and no other text. A customer's hand, seen from the side with only the wrist and sleeve in frame, holds a plain matte card with no numbers, no name and no logo, a few centimetres above the terminal, about to tap. Behind the counter, a barista, visible only from the chest down in a dark apron, steams milk at a well-used espresso machine with scuffed steel and coffee grounds on the drip tray. A glass cake stand with real, slightly uneven pastries. Real textures: fingerprints on the glass, worn wood grain, a folded cloth, a few coins in a saucer. Natural window daylight from the left, mixed with warm interior light. Shot on a full-frame camera with a 35mm lens at f/8: everything sharp, deep depth of field, no bokeh. Documentary photography, true colour, subtle film grain, not CGI, no plastic sheen. No faces, no heads in frame. No signs, no menus with writing, no brand names, no logos anywhere except "YOUR LOGO" on the terminal.
+```
+
+**D2: takeaway.** 3:2
+```
+Photograph taken inside a real, busy independent takeaway on a Manchester high street, early evening. A long brushed-steel counter with visible scratches and wipe marks runs across the frame. On the counter, in the lower middle, stands the card payment terminal from the attached reference image, exactly that hardware, its screen showing a plain payment keypad, with "YOUR LOGO" in dark grey on the bezel and no other text. A staff member, visible only from the chest down in a black apron and black t-shirt, folds the top of a brown paper takeaway bag with both hands beside the terminal. Behind, a heated glass food display with real trays of curries, rice and fried food, slightly steamy glass, warm overhead lights. White tiled wall with grey grout. Real textures: grease sheen, crumpled napkins, a stack of foil containers. Shot on a full-frame camera with a 35mm lens at f/8: everything sharp, deep depth of field, no bokeh. Documentary photography, true colour, subtle film grain, not CGI, no plastic sheen. No faces, no heads in frame. No signs, no menu boards with writing, no brand names, no logos anywhere except "YOUR LOGO" on the terminal.
+```
+
+**D3: shop.** 3:2
+```
+Photograph taken inside a real independent corner shop in Manchester, daytime. A worn laminate shop counter runs across the lower half of the frame. On it stand the card payment terminal from the attached reference image, exactly that hardware, its screen showing a plain payment keypad, with "YOUR LOGO" in dark grey on the bezel and no other text, and beside it a black steel cash drawer with a black metal finish, scuffed and used, not wooden. The shopkeeper's hands and forearms, sleeves rolled, rest on the counter, sliding a small paper bag across; no face or head in frame. Behind, real shelves of everyday groceries in mixed plain packaging with no readable labels, some gaps and uneven stock. Real textures: price-gun stickers without legible text, a scratched counter edge, a small tray of change. Bright, slightly cool shop lighting from above. Shot on a full-frame camera with a 35mm lens at f/8: everything sharp, deep depth of field, no bokeh. Documentary photography, true colour, subtle film grain, not CGI, no plastic sheen. No faces, no heads in frame. No readable text, no brand names, no logos anywhere except "YOUR LOGO" on the terminal.
+```
+
+If "YOUR LOGO" comes out misspelled, generate with the bezel left blank. At tile size nobody reads it, and a wrong word is
+worse than none.

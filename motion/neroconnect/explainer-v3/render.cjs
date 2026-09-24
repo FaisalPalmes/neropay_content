@@ -48,14 +48,16 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   const cues = []; let last = -9, k = 0;
   for (const t of arrivals) { if (t - last < 0.45 || t >= OUTRO_AT) continue; last = t;
     cues.push({ sfx: ['click-soft', 'pop'][k++ % 2], t: +(t + 0.05).toFixed(3), gain: 0.06, why: 'a glass card lands' }); }
-  starts.forEach((t, i) => cues.push({ sfx: ['whoosh-short', 'whoosh'][i % 2], t: +(t - 0.15).toFixed(3), gain: 0.05, why: 'scene change' }));
+  /* scene changes land on the bed's beat (neroconnect-pulse-100: 99.85 bpm from 0), the nearest beat to the cut */
+  const BEAT = 60 / 99.85;
+  starts.forEach((t, i) => cues.push({ sfx: ['whoosh-short', 'whoosh'][i % 2], t: +(Math.round((t - 0.15) / BEAT) * BEAT).toFixed(3), gain: 0.06, why: 'scene change, on the beat' }));
   cues.push({ sfx: 'impact-bass-1', t: +(OUTRO_AT + 0.92).toFixed(3), gain: 0.2, why: 'the sting: the letters meet' });
   cues.push({ sfx: 'sparkle', t: +(OUTRO_AT + 2.05).toFixed(3), gain: 0.07, why: 'the line slides out under the tile' });
   cues.sort((a, b) => a.t - b.t);
-  const mix = { duration: DURATION, head: 0.6, vo: '../explainer/data/vo-master.mp3', target: -14, tp: -3.0,
+  const mix = { duration: DURATION, head: 0.6, vo: 'assets/vo-v31.mp3', target: -14, tp: -3.0,
     vo_filter: 'acompressor=threshold=-20dB:ratio=2.5:attack=8:release=160:makeup=1.6',
-    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.17, loop_at: 103.35,
-      duck: { threshold: 0.025, ratio: 5, attack: 12, release: 420 }, fade: 2.8 }, cues };
+    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.30, loop_at: 103.35,
+      duck: { threshold: 0.03, ratio: 2.5, attack: 20, release: 500 }, fade: 3.0 }, cues };
   fs.mkdirSync(path.join(HERE, 'data'), { recursive: true });
   fs.writeFileSync(path.join(HERE, 'data/mix.json'), JSON.stringify(mix, null, 1));
   if (arg('--from') !== null || arg('--to') !== null) { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'),
