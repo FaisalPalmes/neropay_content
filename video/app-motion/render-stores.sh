@@ -15,6 +15,7 @@ wait
 for f in iphone ipad; do
   ffmpeg -y -loglevel error -i renders/$f-120.mp4 -vf "tmix=frames=4:weights='1 1 1 1',fps=30" -c:v libx264 -crf 15 -pix_fmt yuv420p renders/$f-30blur.mp4
   bash mix.sh renders/$f-30blur.mp4 renders/$f-mixed.mp4
-  ffmpeg -y -loglevel error -i renders/$f-mixed.mp4 -t 30 -c:v copy -af "afade=t=out:st=29.2:d=0.8" -c:a aac -b:a 192k -movflags +faststart renders/FINAL-app-motion-$f.mp4
+  # exactly 900 frames: a stream copy can only cut on a keyframe and ran two frames past Apple's 30s limit
+  ffmpeg -y -loglevel error -i renders/$f-mixed.mp4 -frames:v 900 -t 30 -c:v libx264 -crf 16 -pix_fmt yuv420p -af "afade=t=out:st=29.2:d=0.8,volume=-0.6dB" -c:a aac -b:a 192k -movflags +faststart renders/FINAL-app-motion-$f.mp4
   ffmpeg -i renders/FINAL-app-motion-$f.mp4 -vn -af "loudnorm=I=-14:TP=-1.5:print_format=summary" -f null - 2>&1 | grep -E "Input Integrated|Input True Peak"
 done

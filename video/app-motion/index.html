@@ -51,7 +51,8 @@ body{font-family:Poppins,sans-serif;-webkit-font-smoothing:antialiased}
 
 /* the headline: the carousel's type, over a scrim of the ground so a close-up never fights it */
 #hdz{z-index:10;pointer-events:none}
-#scrim{position:absolute;left:0;right:0;top:0;height:470px;background:linear-gradient(180deg,rgba(246,243,236,.96) 0%,rgba(246,243,236,.9) 62%,rgba(246,243,236,0) 100%);opacity:0}
+/* the scrim runs well past the 1080 frame so the store formats, which scale this layer down, never show its edge */
+#scrim{position:absolute;left:-600px;right:-600px;top:-500px;height:970px;background:linear-gradient(180deg,rgba(246,243,236,.96) 0%,rgba(246,243,236,.9) 81.6%,rgba(246,243,236,0) 100%);opacity:0}
 .hd{position:absolute;left:74px;right:60px;top:150px}
 .kick{display:flex;align-items:center;gap:14px;font:600 22px/1 Poppins;letter-spacing:.16em;text-transform:uppercase;color:#6B6B75}
 .kick i{display:block;width:34px;height:5px;border-radius:3px;background:var(--yel)}

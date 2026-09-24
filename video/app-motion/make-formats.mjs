@@ -9,7 +9,8 @@ for (const [name, W, H] of [['iphone', 886, 1920], ['ipad', 1200, 1600]]) {
     .replace('html,body{width:1080px;height:1920px', `html,body{width:${W}px;height:${H}px`)
     .replace('#root{position:relative;width:1080px;height:1920px', `#root{position:relative;width:${W}px;height:${H}px`)
     .replace('data-width="1080" data-height="1920"', `data-width="${W}" data-height="${H}"`)
+    .replace('assets/outro-yellow-9x16-neropay-app.mp4', `assets/outro-neropay-app-${name}.mp4`)
     .replace('<script src="vendor/gsap.min.js"></script>', `<script>window.FMT = [${W}, ${H}]</script><script src="vendor/gsap.min.js"></script>`);
-  if (!s.includes(`window.FMT = [${W}`) || !s.includes(`data-width="${W}"`)) throw new Error('format replace failed: ' + name);
+  if (!s.includes(`outro-neropay-app-${name}`) || !s.includes(`window.FMT = [${W}`) || !s.includes(`data-width="${W}"`)) throw new Error('format replace failed: ' + name);
   writeFileSync(new URL(`./${name}.html`, import.meta.url), s);
 }
