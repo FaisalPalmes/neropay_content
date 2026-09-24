@@ -117,3 +117,24 @@ Photograph taken inside a real independent corner shop in Manchester, daytime. A
 
 If "YOUR LOGO" comes out misspelled, generate with the bezel left blank. At tile size nobody reads it, and a wrong word is
 worse than none.
+
+---
+
+## E. The brand swap, full screen (24 Sep 2026, Faisal's v3.5 notes)
+
+The brand scene becomes a full-frame swap: the NeroPay-branded terminal on screen, and on "Your logo" its branding changes
+to Keelstone Pay (the invented platform in the film). For the swap to read as the *same* terminal changing, the two images
+must match pixel for pixel apart from the branding. So **E1 is an edit of Faisal's NeroPay terminal photo, not a new
+generation**: attach that exact image and change nothing but the marks. Use **Nano Banana Pro (edit)**, same aspect ratio
+as the source, `quality: high`, `resolution: 2k`.
+
+**E1: the same terminal, branded Keelstone Pay.** Attach the NeroPay terminal photo.
+```
+Edit the attached product photo of a card payment terminal. Change ONLY the branding; everything else must stay exactly as it is: the camera angle, framing, crop, lighting, shadows, background, the hardware's shape, colours, materials, buttons, printer head, contactless symbol, and every pixel that is not a logo. Replace every "NeroPay" wordmark and logo, wherever it appears (on the bezel, on the printer head, on the screen, on the back), with the brand "Keelstone Pay": a small solid rounded-square icon in royal blue (#2350D8) with a bold white capital "K" centred in it, followed by the words "Keelstone Pay" in a clean, bold, geometric sans-serif, with "Keelstone" in dark navy (#1A2E6B) and "Pay" in royal blue (#2350D8). Same size and position as the NeroPay mark it replaces, looking printed on the plastic or displayed on the screen, not pasted on. If the screen shows a NeroPay logo or name, show the Keelstone Pay logo in the same place instead. No other text changes. No yellow anywhere on the branding. Photographic, crisp, everything in focus, no bokeh.
+```
+If the blue comes out purple or teal, add *"pure royal blue, like #2350D8, not purple, not teal"*. If "Keelstone" is misspelt,
+regenerate: a misspelt brand on a hero shot is worse than none. Check the spelling letter by letter: K-E-E-L-S-T-O-N-E.
+
+**What the swap does on screen:** the NeroPay terminal fills the frame; on "Your logo" a band of light sweeps across it and
+the Keelstone Pay version is revealed behind the band (the two images are aligned, so only the marks change); the camera then
+pulls back and the terminal settles on the right beside the login card, on "Your domain" and "Your login link".
