@@ -167,14 +167,14 @@ window.LIBRARY = {
       ] },
 
     { id: 'NCEX', series: 'NeroConnect', title: 'NeroConnect explainer',
-      version: 'v3', rendered: '2026-09-24', secs: 131,
+      version: 'v3.1', rendered: '2026-09-24', secs: 131,
       status: 'review', by: 'content video session, 24 Sep 2026 — v3 rebuilt at Faisal\'s request, awaiting his review',
-      waiting: 'Faisal watches v3: rebuilt on the new brand from his 24 Sep notes on v2 (minimal, clear glass, no pills, no bevel edges, Poppins, ends on the locked yellow outro). Same take as v2. Two script points open: re-voice "so you can never lose money on a service" (rail 2 register) and the "your merchant see" slip. The 17 Sep vs 18 Sep question is settled by his 24 Sep script, which carries margin, reports and support tiers. The master exists only as a chat attachment until it is put in the Drive folder. No 9:16 or 1:1 cut yet.',
+      waiting: 'Faisal watches v3.1 (24 Sep): v3 plus his Higgsfield photos (the unbranded terminal with YOUR LOGO, till, accessories, café, takeaway, shop) in the opening, branding, store and close, and the text jitter fixed (type is never scaled; check-still.cjs gates every render). v3 was rebuilt on the new brand from his 24 Sep notes on v2 (minimal, clear glass, no pills, no bevel edges, Poppins, ends on the locked yellow outro). Same take as v2. Two script points open: re-voice "so you can never lose money on a service" (rail 2 register) and the "your merchant see" slip. The 17 Sep vs 18 Sep question is settled by his 24 Sep script, which carries margin, reports and support tiers. The master exists only as a chat attachment until it is put in the Drive folder. No 9:16 or 1:1 cut yet.',
       build: 'motion/neroconnect/explainer-v3/ (v2 kept at explainer/)', drive: 'https://drive.google.com/drive/folders/1hVAZJFL5uLPqC4ATJzpoO9QkvvM9dpaP',
       backup: false, clearedFor: null, notCleared: null,
       note: 'Figures on screen are the seven approved in the overlay kit and the invented Harbourline names. Placeholder brand throughout.',
       files: [
-      { crop: '16:9 master', px: '1920×1080', mb: 23.1, md5: '5ea1fd6a0510822dbb642cab782a50b4', lufs: '−14.05', where: 'sent in chat 24 Sep 2026; not yet in Drive' },
+      { crop: '16:9 master', px: '1920×1080', mb: 29.6, md5: '3c60c2303315c7cc11f95e4298176de3', lufs: '−14.05', where: 'v3.1 sent in chat 24 Sep 2026; not yet in Drive' },
       { crop: 'v2 16:9 master (superseded)', px: '1920×1080', mb: 62.5, media: '243e9316-3761-4f7e-8883-799780616ac2', md5: 'f56bea4a7f82761407b4e344283480ca' }] },
 
     { id: 'PP01', series: 'Partner Programme', title: 'The Partner Programme',
