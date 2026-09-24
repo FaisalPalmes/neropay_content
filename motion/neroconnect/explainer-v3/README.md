@@ -16,19 +16,29 @@ v2 (`../explainer/`) is left as it was. This folder is the whole of v3.
 | 3–4 things per frame, cards cropped by the frame, captions laid over cards | one headline and one glass object per frame; nothing is cut by the frame; no captions (the headline carries the line) |
 | thick 14px inset rims (the "bevel"), pills everywhere | clear glass: a translucent body, a hairline rim, a bright top edge, a soft shadow, one sheen as it lands; **no pill shape anywhere** |
 | three drifting coloured lights | one soft yellow light that moves to a new place each scene, and two huge clear panes drifting behind, as in the app motion |
-| its own end card with socials | the locked outro (`brand/sting/outro.html`, yellow) with "The full guides are at / docs.neropay.app" as its line |
+| its own end card with socials | the locked outro (`brand/sting/outro.html`, yellow) with the NeroConnect wordmark (`?mark=neroconnect`, Faisal 24 Sep) and "Check out NeroConnect at / docs.neropay.app" as its line |
 
 ## The take
 
-The 18 Sep recording, unchanged: Olivia, `eleven_v3`, tightened and gated (`../explainer/data/vo-master.mp3`, 128.3 s).
-Faisal's script of 24 Sep matches it word for word, and the pacing held up against the new cut, so it was not
-re-voiced (no ElevenLabs credits spent). Every reveal is pinned to the word that says it: `data-at` in `index.html` is
-seconds on the film's timeline, and the take starts at 0.6 s.
+**Take 3 (v3.5, 24 Sep 2026) is the one that ships**: Olivia, `eleven_v3`, one continuous take of the whole revised script
+(take 2's text and delivery tags, "minimum" for "floor", and the close "Then check out NeroConnect"), tightened
+`--gap .32 --min .45 --tempo 1.03`, gated `--inset .12 --max -30`, 130.8 s. Faisal asked for it because the v3.4 splice of a
+separately voiced "minimum" passage was audible. Word timings are from faster-whisper in the Higgsfield sandbox; every reveal
+was moved from the v3.4 take with `retime.py`, then audited against the new words (118 anchors, all within 0.3 s of the word
+that earns them). Older takes stay in `data/` (`vo-take2-*`, `seg-minimum.mp3`, `vo_words-v34.json`) and are not used.
+`data-at` in `index.html` is seconds on the film's timeline, and the take starts at 0.6 s.
+
+## Two gates run before every render
+
+- `check-still.cjs`: once landed, no headline moves (the v3 jitter).
+- `check-layout.cjs`: every card and headline sits inside the frame with a 40 px margin, no two cards overlap, nothing covers
+  a headline or the corner mark (`data-layered` marks a card stacked on purpose). Added after v3.4 shipped with flashed cards
+  knocked out of place: the flash's `[data-hit]{position:relative}` overrode the cards' absolute placement.
 
 ## Files
 
 - `index.html`: the whole film as one page, sixteen scenes, driven by `setTime(t)`. It is deterministic, with no clock.
-- `render.cjs`: renders the frames (25 fps), splices in the outro from `OUTRO_AT` (125.12 s), writes `data/mix.json`
+- `render.cjs`: renders the frames (25 fps), splices in the outro from `OUTRO_AT` (127.4 s), runs both gates first, writes `data/mix.json`
   from the page's own timings, runs `motion/mix.mjs`, then muxes. `--preview` renders at 720p; `--from/--to` renders a slice.
 - `stills.cjs`: review stills at given times.
 - `data/mix.json`: generated. The bed is `neroconnect-pulse-100` (already in the ledger) at 0.17, ducked under the

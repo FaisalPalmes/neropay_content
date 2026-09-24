@@ -2,8 +2,8 @@
 //   node render.cjs --preview        1280×720 review cut  → out/ncx-v3-preview.mp4
 //   node render.cjs                  1920×1080 master      → out/ncx-v3-16x9.mp4
 //   node render.cjs --from 60 --to 75 --preview   a slice, for checking one stretch
-// Frames at 25 fps from index.html's setTime(t); from OUTRO_AT the frames come from brand/sting/outro.html (yellow,
-// "The full guides are at / docs.neropay.app"), served over http because Chromium drops a CSS mask on a file:// page.
+// Frames at 25 fps from index.html's setTime(t); from OUTRO_AT the frames come from brand/sting/outro.html (yellow, the
+// NeroConnect lockup Faisal picked on 24 Sep, "Check out NeroConnect at / docs.neropay.app"), served over http because Chromium drops a CSS mask on a file:// page.
 // Cues come from the page itself (every glass arrival, every scene change), so a retime re-times the sound too.
 const { chromium } = require(require('child_process').execSync('npm root -g', { encoding: 'utf8' }).trim() + '/playwright');
 const http = require('http'), fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
@@ -19,13 +19,13 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
 
 (async () => {
   /* the jitter gate: no render while any landed headline moves */
-  if (!A.includes('--from')) execFileSync('node', [path.join(HERE, 'check-still.cjs')], { stdio: 'inherit' });
+  if (!A.includes('--from')) for (const g of ['check-still.cjs', 'check-layout.cjs']) execFileSync('node', [path.join(HERE, g)], { stdio: 'inherit' });
   const port = srv.address().port, b = await chromium.launch();
   const mk = async url => { const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: W / 1920 });
     const errs = []; p.on('pageerror', e => errs.push(String(e))); await p.goto(url, { waitUntil: 'networkidle' });
     await p.evaluate(() => document.fonts.ready); p.errs = errs; return p; };
   const film = await mk(`http://127.0.0.1:${port}/motion/neroconnect/explainer-v3/index.html`);
-  const outro = await mk(`http://127.0.0.1:${port}/brand/sting/outro.html?v=yellow&fmt=16x9&small=${encodeURIComponent('The full guides are at')}&big=docs.neropay.app`);
+  const outro = await mk(`http://127.0.0.1:${port}/brand/sting/outro.html?v=yellow&fmt=16x9&mark=neroconnect&small=${encodeURIComponent('Check out NeroConnect at')}&big=docs.neropay.app`);
   const { OUTRO_AT, DURATION, arrivals, scenes } = await film.evaluate(() => ({ OUTRO_AT, DURATION,
     arrivals: [...document.querySelectorAll('.g[data-at]')].map(e => +e.dataset.at).sort((a, b) => a - b),
     scenes: [...document.querySelectorAll('.sc')].map((_, i) => i) }));

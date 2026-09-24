@@ -69,7 +69,7 @@ body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiase
 .hitfx{position:absolute;left:-14px;right:-14px;top:-10px;bottom:-10px;border-radius:14px;pointer-events:none;opacity:0;
   background:rgba(255,207,36,.26);box-shadow:0 0 0 2px rgba(255,207,36,.55),0 0 34px rgba(255,207,36,.35)}
 .g > .hitfx{position:absolute;inset:0;border-radius:inherit;z-index:0}
-[data-hit]{position:relative}
+[data-hit]:not(.g){position:relative}   /* never on a card: a .g is placed absolutely, and v3.4 knocked the flashed cards into page flow (Faisal's screenshots, 24 Sep) */
 /* the mark, small, bottom right, the whole film: the locked sting's yellow glass tile (brand/sting), 78 px */
 #bug{position:absolute;right:58px;bottom:50px;width:78px;height:74.6px;opacity:0;z-index:20}
 #bug .t{position:absolute;inset:0;border-radius:12px;overflow:hidden;
@@ -104,160 +104,160 @@ const money = v => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, 
    arrives (the word that says it); data-count counts a figure up from that moment; data-mark draws the yellow
    marker; data-rule lights a card's yellow edge. Scenes overlap their neighbours by the crossfade. */
 const SC = [
- { t: [0, 11.95], light: [1760, 170], ox: '50%', html: `
-   <div class="kick" style="left:150px;top:190px" data-at="0.72"><b></b>NeroConnect</div>
-   <div class="g" style="left:150px;top:500px;width:500px;height:420px;padding:0" data-at="2.25"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/cafe.webp" style="object-position:50% 88%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Cafés</div></div>
-   <div class="g" style="left:710px;top:500px;width:500px;height:420px;padding:0" data-at="2.93"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/takeaway.webp" style="object-position:50% 80%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaways</div></div>
-   <div class="g" style="left:1270px;top:500px;width:500px;height:420px;padding:0" data-at="3.77"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/shop.webp" style="object-position:50% 92%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Shops</div></div>
-   <div class="h" style="left:150px;top:250px;width:1500px" data-at="6.57"><span class="ln">Their card payments,</span><span class="ln">under <span class="mk" data-mark="9.51">your own brand.</span></span></div>
-   <div class="sub" style="left:150px;top:955px" data-at="10.90">Here's how it works.</div>` },
+ { t: [0, 10.43], light: [1760, 170], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:190px" data-at="0.69"><b></b>NeroConnect</div>
+   <div class="g" style="left:150px;top:500px;width:500px;height:420px;padding:0" data-at="2.19"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/cafe.webp" style="object-position:50% 88%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Cafés</div></div>
+   <div class="g" style="left:710px;top:500px;width:500px;height:420px;padding:0" data-at="2.79"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/takeaway.webp" style="object-position:50% 80%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaways</div></div>
+   <div class="g" style="left:1270px;top:500px;width:500px;height:420px;padding:0" data-at="3.50"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/shop.webp" style="object-position:50% 92%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Shops</div></div>
+   <div class="h" style="left:150px;top:250px;width:1500px" data-at="5.81"><span class="ln">Their card payments,</span><span class="ln">under <span class="mk" data-mark="8.21">your own brand.</span></span></div>
+   <div class="sub" style="left:150px;top:955px" data-at="9.46">Here's how it works.</div>` },
 
- { t: [11.95, 24.99], light: [180, 960], ox: '70%', html: `
-   <div class="kick" style="left:150px;top:300px" data-at="12.21"><b></b>How it works</div>
-   <div class="h" style="left:150px;top:360px;width:640px" data-at="12.37"><span class="ln">Three</span><span class="ln"><span class="mk" data-mark="12.72">parts.</span></span></div>
-   ${[['14.33','NeroPay','Processes the payments. Handles the compliance.'],
-      ['17.66','You','Bring the merchants. Set the terms.'],
-      ['20.19','Your merchants','Take payments on your dashboard, on your domain.']].map((c, i) => `
+ { t: [10.43, 22.02], light: [180, 960], ox: '70%', html: `
+   <div class="kick" style="left:150px;top:300px" data-at="10.70"><b></b>How it works</div>
+   <div class="h" style="left:150px;top:360px;width:640px" data-at="10.80"><span class="ln">Three</span><span class="ln"><span class="mk" data-mark="11.11">parts.</span></span></div>
+   ${[['12.35','NeroPay','Processes the payments. Handles the compliance.'],
+      ['15.37','You','Bring the merchants. Set the terms.'],
+      ['17.69','Your merchants','Take payments on your dashboard, on your domain.']].map((c, i) => `
    <div class="g" style="left:900px;top:${190 + i * 240}px;width:870px;height:200px;padding:42px 52px" data-at="${c[0]}" data-hit>
      <i class="rule" data-rule="${c[0]}"></i>
      <div class="lab">0${i + 1}</div><div class="mid" style="margin-top:14px">${c[1]}</div><div class="lab" style="margin-top:10px;color:#44444C">${c[2]}</div></div>`).join('')}` },
 
- { t: [24.99, 32.97], light: [1790, 900], ox: '68%', html: `
-   <div class="h" style="left:150px;top:380px;width:620px" data-at="25.20"><span class="ln">Everything</span><span class="ln">in <span class="mk" data-mark="26.63">one place.</span></span></div>
-   <div class="g" style="left:860px;top:260px;width:910px;height:560px;padding:60px 64px" data-at="25.31">
+ { t: [22.02, 29.05], light: [1790, 900], ox: '68%', html: `
+   <div class="h" style="left:150px;top:380px;width:620px" data-at="22.23"><span class="ln">Everything</span><span class="ln">in <span class="mk" data-mark="23.11">one place.</span></span></div>
+   <div class="g" style="left:860px;top:260px;width:910px;height:560px;padding:60px 64px" data-at="22.30">
      <div class="lab" style="color:#44444C">Keelstone Pay · Overview</div>
      <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px 60px;margin-top:56px">
-       <div data-at="27.71" data-hit><div class="lab">Merchants live</div><div class="big" style="margin-top:16px" data-count="37" data-int="1">37</div></div>
-       <div data-at="29.24" data-hit><div class="lab">Taken</div><div class="big" style="margin-top:16px" data-count="1842.60">£1,842.60</div></div>
-       <div data-at="30.45" data-hit><div class="lab">You've earned</div><div class="big" style="margin-top:16px" data-count="18.35">£18.35</div></div>
-       <div data-at="31.44" data-hit><div class="lab"><span class="dot ydot"></span>Needs you today</div><div class="big" style="margin-top:16px">2</div></div>
+       <div data-at="24.06" data-hit><div class="lab">Merchants live</div><div class="big" style="margin-top:16px" data-count="37" data-int="1">37</div></div>
+       <div data-at="25.69" data-hit><div class="lab">Taken</div><div class="big" style="margin-top:16px" data-count="1842.60">£1,842.60</div></div>
+       <div data-at="26.80" data-hit><div class="lab">You've earned</div><div class="big" style="margin-top:16px" data-count="18.35">£18.35</div></div>
+       <div data-at="27.88" data-hit><div class="lab"><span class="dot ydot"></span>Needs you today</div><div class="big" style="margin-top:16px">2</div></div>
      </div></div>` },
 
- { t: [32.97, 41.40], light: [140, 130], ox: '66%', html: `
-   <div class="h" style="left:150px;top:390px;width:640px" data-at="33.17"><span class="ln">What needs you,</span><span class="ln">at the top.</span></div>
-   <div class="kick" style="left:150px;top:620px" data-at="40.41"><b></b>Nothing hides</div>
-   ${[['35.24','Dispute','Respond in 3 days'],['35.94','Document requested','Due in 5 days'],['36.77','Proof of payment','Due in 7 days']].map((r, i) => `
+ { t: [29.05, 36.88], light: [140, 130], ox: '66%', html: `
+   <div class="h" style="left:150px;top:390px;width:640px" data-at="29.25"><span class="ln">What needs you,</span><span class="ln">at the top.</span></div>
+   <div class="kick" style="left:150px;top:620px" data-at="36.08"><b></b>Nothing hides</div>
+   ${[['31.22','Dispute','Respond in 3 days'],['31.96','Document requested','Due in 5 days'],['32.77','Proof of payment','Due in 7 days']].map((r, i) => `
    <div class="g" style="left:900px;top:${250 + i * 200}px;width:870px;height:160px;padding:0 52px" data-at="${r[0]}" data-hit>
-     ${i === 0 ? '<i class="rule" data-rule="38.47"></i>' : ''}
-     <div class="row" style="height:160px"><div class="mid">${r[1]}</div><div class="lab" data-at="39.75" style="color:${i === 0 ? '#111114' : 'var(--mute)'}">${r[2]}</div></div></div>`).join('')}` },
+     ${i === 0 ? '<i class="rule" data-rule="34.22"></i>' : ''}
+     <div class="row" style="height:160px"><div class="mid">${r[1]}</div><div class="lab" data-at="35.40" style="color:${i === 0 ? '#111114' : 'var(--mute)'}">${r[2]}</div></div></div>`).join('')}` },
 
- { t: [41.40, 48.17], light: [1800, 280], ox: '64%', html: `
-   <div class="h" style="left:150px;top:390px;width:620px" data-at="41.59"><span class="ln">Every merchant,</span><span class="ln"><span class="mk" data-mark="42.63">one screen.</span></span></div>
-   <div class="g" style="left:840px;top:170px;width:930px;height:740px;padding:48px 56px" data-at="41.59">
-     <div class="row lab" style="padding-bottom:20px"><span style="width:420px">Business</span><span style="width:170px" data-at="44.71">Status</span><span style="width:170px;text-align:right" data-at="46.58">ID checks</span></div>
+ { t: [36.88, 43.10], light: [1800, 280], ox: '64%', html: `
+   <div class="h" style="left:150px;top:390px;width:620px" data-at="37.07"><span class="ln">Every merchant,</span><span class="ln"><span class="mk" data-mark="37.99">one screen.</span></span></div>
+   <div class="g" style="left:840px;top:170px;width:930px;height:740px;padding:48px 56px" data-at="37.07">
+     <div class="row lab" style="padding-bottom:20px"><span style="width:420px">Business</span><span style="width:170px" data-at="39.94">Status</span><span style="width:170px;text-align:right" data-at="41.59">ID checks</span></div>
      ${['The Copper Kettle','Marlow Street Deli','Blue Anchor Fish Bar','Halcyon Coffee','Saffron Lane Tandoori','The Old Mill Bakery'].map((n, i) => `
      <div class="hair"></div>
-     <div class="row" style="height:98px;margin:0 -56px;padding:0 56px;position:relative${i === 4 ? '' : ''}" data-at="${(43.75 + i * 0.12).toFixed(2)}" ${i === 4 ? 'data-flash="46.19"' : ''}>${i === 4 ? '<i class="rule" data-rule="46.19"></i>' : ''}<span class="mid" style="width:420px;font-size:28px">${n}</span>
-       <span class="lab" style="width:170px;color:#111114" data-at="45.28">${i === 4 ? '<span class="dot" style="background:#C9C9CF"></span>Onboarding' : '<span class="dot"></span>Live'}</span>
-       <span class="lab" style="width:170px;text-align:right;color:#111114" data-at="${(47.07 + i * 0.1).toFixed(2)}">${i === 4 ? '<span style="color:var(--mute)">Pending</span>' : 'Verified'}</span></div>`).join('')}
+     <div class="row" style="height:98px;margin:0 -56px;padding:0 56px;position:relative${i === 4 ? '' : ''}" data-at="${(39.05 + i * 0.12).toFixed(2)}" ${i === 4 ? 'data-flash="41.22"' : ''}>${i === 4 ? '<i class="rule" data-rule="41.22"></i>' : ''}<span class="mid" style="width:420px;font-size:28px">${n}</span>
+       <span class="lab" style="width:170px;color:#111114" data-at="40.39">${i === 4 ? '<span class="dot" style="background:#C9C9CF"></span>Onboarding' : '<span class="dot"></span>Live'}</span>
+       <span class="lab" style="width:170px;text-align:right;color:#111114" data-at="${(42.06 + i * 0.1).toFixed(2)}">${i === 4 ? '<span style="color:var(--mute)">Pending</span>' : 'Verified'}</span></div>`).join('')}
    </div>` },
 
- { t: [48.17, 55.25], light: [260, 1010], ox: '50%', html: `
-   <div class="kick" style="left:150px;top:190px" data-at="48.31"><b></b>Adding a merchant</div>
-   <div class="h" style="left:150px;top:240px;width:1600px" data-at="48.37"><span class="ln">Five steps, then <span class="mk" data-mark="54.43">they're live.</span></span></div>
-   <div id="track" style="position:absolute;left:270px;top:643px;width:1380px;height:4px;border-radius:2px;background:rgba(17,17,20,.10)" data-at="49.32"><div id="fill" style="position:absolute;left:0;top:-3px;width:1380px;height:10px;border-radius:5px;background:var(--yel);transform-origin:0 50%;transform:scaleX(0)"></div></div>
+ { t: [43.10, 50.06], light: [260, 1010], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:190px" data-at="43.24"><b></b>Adding a merchant</div>
+   <div class="h" style="left:150px;top:240px;width:1600px" data-at="43.26"><span class="ln">Five steps, then <span class="mk" data-mark="48.78">they're live.</span></span></div>
+   <div id="track" style="position:absolute;left:270px;top:643px;width:1380px;height:4px;border-radius:2px;background:rgba(17,17,20,.10)" data-at="43.96"><div id="fill" style="position:absolute;left:0;top:-3px;width:1380px;height:10px;border-radius:5px;background:var(--yel);transform-origin:0 50%;transform:scaleX(0)"></div></div>
    ${['Person','Business','Addresses','Terms','Review'].map((s, i) => `
-   <div class="g" style="left:${200 + i * 345}px;top:575px;width:140px;height:140px;border-radius:70px;display:flex;align-items:center;justify-content:center" data-at="${(49.32 + i * 0.1).toFixed(2)}" data-step="${i}"><span class="mid">${i + 1}</span></div>
-   <div class="lab" style="position:absolute;left:${170 + i * 345}px;top:750px;width:200px;text-align:center;color:#111114" data-at="${(49.49 + i * 0.1).toFixed(2)}">${s}</div>`).join('')}
-   <div class="sub" style="left:150px;top:860px" data-at="52.30">NeroPay runs the checks.</div>` },
+   <div class="g" style="left:${200 + i * 345}px;top:575px;width:140px;height:140px;border-radius:70px;display:flex;align-items:center;justify-content:center" data-at="${(43.96 + i * 0.1).toFixed(2)}" data-step="${i}"><span class="mid">${i + 1}</span></div>
+   <div class="lab" style="position:absolute;left:${170 + i * 345}px;top:750px;width:200px;text-align:center;color:#111114" data-at="${(44.09 + i * 0.1).toFixed(2)}">${s}</div>`).join('')}
+   <div class="sub" style="left:150px;top:860px" data-at="46.17">NeroPay runs the checks.</div>` },
 
- { t: [55.25, 67.78], light: [1770, 1000], ox: '66%', html: `
-   <div class="kick" style="left:150px;top:300px" data-at="55.44"><b></b>Pricing</div>
-   <div class="h" style="left:150px;top:360px;width:640px" data-at="56.02"><span class="ln">Two things</span><span class="ln">agreed</span><span class="ln">up front.</span></div>
-   <div class="g" style="left:880px;top:150px;width:890px;height:150px;padding:0 50px" data-at="59.16" data-hit><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the processing fee</span><span class="lab">With NeroPay</span></div></div>
-   <div class="g" style="left:880px;top:330px;width:890px;height:150px;padding:0 50px" data-at="60.97" data-hit><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the monthly account fee</span><span class="lab">With NeroPay</span></div></div>
-   <div class="g" style="left:880px;top:560px;width:890px;height:330px;padding:56px 50px" data-at="63.14"><i class="rule" data-rule="66.58"></i>
-     <div class="lab">Everything else</div><div class="mid" style="margin-top:16px;font-size:30px" data-at="64.31">What your merchants are charged</div>
-     <div class="big" style="margin-top:34px" data-at="66.58"><span class="mk" data-mark="66.82">Yours to set.</span></div></div>` },
+ { t: [50.06, 62.38], light: [1770, 1000], ox: '66%', html: `
+   <div class="kick" style="left:150px;top:300px" data-at="50.87"><b></b>Pricing</div>
+   <div class="h" style="left:150px;top:360px;width:640px" data-at="51.36"><span class="ln">Two things</span><span class="ln">agreed</span><span class="ln">up front.</span></div>
+   <div class="g" style="left:880px;top:150px;width:890px;height:150px;padding:0 50px" data-at="54.13" data-hit><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the processing fee</span><span class="lab">With NeroPay</span></div></div>
+   <div class="g" style="left:880px;top:330px;width:890px;height:150px;padding:0 50px" data-at="55.50" data-hit><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the monthly account fee</span><span class="lab">With NeroPay</span></div></div>
+   <div class="g" style="left:880px;top:560px;width:890px;height:330px;padding:56px 50px" data-at="58.03"><i class="rule" data-rule="61.16"></i>
+     <div class="lab">Everything else</div><div class="mid" style="margin-top:16px;font-size:30px" data-at="59.14">What your merchants are charged</div>
+     <div class="big" style="margin-top:34px" data-at="61.16"><span class="mk" data-mark="61.47">Yours to set.</span></div></div>` },
 
- { t: [67.78, 74.42], light: [150, 250], ox: '50%', html: `
-   <div class="h" style="left:150px;top:220px;width:1600px" data-at="68.25"><span class="ln">It's <span class="mk" data-mark="68.57">simple maths.</span></span></div>
-   <div class="g" style="left:150px;top:420px;width:470px;height:260px;padding:52px" data-at="69.49"><div class="lab">Your fee</div><div class="big" style="margin-top:22px" data-count="41.20">£41.20</div></div>
-   <div class="h" style="left:648px;top:490px;color:var(--mute)" data-at="69.98">−</div>
-   <div class="g" style="left:725px;top:420px;width:470px;height:260px;padding:52px" data-at="70.56"><div class="lab">NeroPay's cost</div><div class="big" style="margin-top:22px" data-count="22.85">£22.85</div></div>
-   <div class="h" style="left:1222px;top:490px;color:var(--mute)" data-at="71.55">=</div>
-   <div class="g" style="left:1300px;top:420px;width:470px;height:260px;padding:52px" data-at="72.02" data-hit><i class="rule" data-rule="72.25"></i><div class="lab">Your margin</div><div class="big" style="margin-top:22px" data-count="18.35">£18.35</div></div>
-   <div class="sub" style="left:150px;top:760px" data-at="72.89">On every payment.</div>` },
+ { t: [62.38, 68.66], light: [150, 250], ox: '50%', html: `
+   <div class="h" style="left:150px;top:220px;width:1600px" data-at="62.66"><span class="ln">It's <span class="mk" data-mark="62.94">simple maths.</span></span></div>
+   <div class="g" style="left:150px;top:420px;width:470px;height:260px;padding:52px" data-at="63.78"><div class="lab">Your fee</div><div class="big" style="margin-top:22px" data-count="41.20">£41.20</div></div>
+   <div class="h" style="left:648px;top:490px;color:var(--mute)" data-at="64.33">−</div>
+   <div class="g" style="left:725px;top:420px;width:470px;height:260px;padding:52px" data-at="64.83"><div class="lab">NeroPay's cost</div><div class="big" style="margin-top:22px" data-count="22.85">£22.85</div></div>
+   <div class="h" style="left:1222px;top:490px;color:var(--mute)" data-at="65.75">=</div>
+   <div class="g" style="left:1300px;top:420px;width:470px;height:260px;padding:52px" data-at="66.21" data-hit><i class="rule" data-rule="66.45"></i><div class="lab">Your margin</div><div class="big" style="margin-top:22px" data-count="18.35">£18.35</div></div>
+   <div class="sub" style="left:150px;top:760px" data-at="67.10">On every payment.</div>` },
 
- { t: [74.42, 84.74], light: [1810, 640], ox: '66%', html: `
-   <div class="h" style="left:150px;top:380px;width:640px" data-at="74.50"><span class="ln">Every price has</span><span class="ln">a <span class="mk" data-mark="75.49">minimum.</span></span></div>
-   <div class="g" style="left:860px;top:290px;width:910px;height:500px;padding:56px 60px" data-at="74.79">
+ { t: [68.66, 78.35], light: [1810, 640], ox: '66%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="68.75"><span class="ln">Every price has</span><span class="ln">a <span class="mk" data-mark="69.72">minimum.</span></span></div>
+   <div class="g" style="left:860px;top:290px;width:910px;height:500px;padding:56px 60px" data-at="69.04">
      <div class="lab">Your price for a service</div>
      <div style="position:relative;margin-top:150px;height:6px;border-radius:3px;background:rgba(17,17,20,.08)">
-       <div style="position:absolute;left:0;width:34%;top:0;bottom:0;border-radius:3px;background:repeating-linear-gradient(135deg,rgba(17,17,20,.14) 0 6px,rgba(17,17,20,0) 6px 12px)" data-at="77.63"></div>
-       <div style="position:absolute;left:34%;top:-46px;width:3px;height:98px;margin-left:-1.5px;background:var(--ink)" data-at="77.98"></div>
-       <div class="lab" style="position:absolute;left:34%;top:-86px;transform:translateX(-50%);white-space:nowrap;color:#111114" data-at="77.98">Minimum: NeroPay's cost</div>
+       <div style="position:absolute;left:0;width:34%;top:0;bottom:0;border-radius:3px;background:repeating-linear-gradient(135deg,rgba(17,17,20,.14) 0 6px,rgba(17,17,20,0) 6px 12px)" data-at="71.88"></div>
+       <div style="position:absolute;left:34%;top:-46px;width:3px;height:98px;margin-left:-1.5px;background:var(--ink)" data-at="72.25"></div>
+       <div class="lab" style="position:absolute;left:34%;top:-86px;transform:translateX(-50%);white-space:nowrap;color:#111114" data-at="72.25">Minimum: NeroPay's cost</div>
        <div id="knob" style="position:absolute;top:-19px;width:44px;height:44px;margin-left:-22px;border-radius:50%;background:#fff;box-shadow:0 8px 18px -6px rgba(17,17,20,.35),inset 0 0 0 1px rgba(17,17,20,.08)"></div>
      </div>
-     <div class="lab" style="position:absolute;left:60px;top:300px;width:790px;color:#111114" data-at="78.64">You can't set it below NeroPay's cost.</div>
-     <div class="mid" style="position:absolute;left:60px;top:352px;width:790px;font-size:34px" data-at="79.43"><span class="mk" data-mark="80.09">No payment priced at a loss.</span></div>
-     <div class="lab" style="position:absolute;left:60px;top:430px;width:790px;color:#111114" data-at="82.00">At the minimum, it passes through <span class="mk" data-mark="84.17">at cost.</span></div>
+     <div class="lab" style="position:absolute;left:60px;top:300px;width:790px;color:#111114" data-at="72.99">You can't set it below NeroPay's cost.</div>
+     <div class="mid" style="position:absolute;left:60px;top:352px;width:790px;font-size:34px" data-at="73.59"><span class="mk" data-mark="74.27">No payment priced at a loss.</span></div>
+     <div class="lab" style="position:absolute;left:60px;top:430px;width:790px;color:#111114" data-at="75.71">At the minimum, it passes through <span class="mk" data-mark="77.59">at cost.</span></div>
    </div>` },
 
- { t: [84.74, 93.60], light: [120, 940], ox: '68%', html: `
-   <img class="prod" src="assets/terminal-34.webp" style="left:-10px;top:150px;width:770px" data-at="84.89" data-push>
-   <div class="h" style="left:150px;top:120px;width:840px" data-at="88.15"><span class="ln">Your brand.</span><span class="ln"><span class="mk" data-mark="90.46">Only your brand.</span></span></div>
-   <div class="g" style="left:1010px;top:130px;width:760px;height:820px;padding:0" data-at="86.01">
-     <div class="row" style="height:92px;padding:0 36px;border-bottom:1px solid rgba(17,17,20,.07)" data-at="86.04">
+ { t: [78.35, 85.61], light: [120, 940], ox: '68%', html: `
+   <img class="prod" src="assets/terminal-34.webp" style="left:-10px;top:150px;width:770px" data-at="78.49" data-push>
+   <div class="h" style="left:150px;top:120px;width:840px" data-at="81.20"><span class="ln">Your brand.</span><span class="ln"><span class="mk" data-mark="83.21">Only your brand.</span></span></div>
+   <div class="g" style="left:1010px;top:130px;width:760px;height:820px;padding:0" data-at="79.32">
+     <div class="row" style="height:92px;padding:0 36px;border-bottom:1px solid rgba(17,17,20,.07)" data-at="79.35">
        <span style="display:flex;gap:9px"><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i></span>
        <span class="lab" style="color:#111114;font-size:24px">pay.keelstonepay.co.uk</span><span style="width:60px"></span></div>
      <div style="display:flex;flex-direction:column;align-items:center;padding-top:110px">
-       <div data-at="84.89" style="display:flex;align-items:center;gap:18px"><i style="display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:16px;background:linear-gradient(150deg,#3B6BF0,#2350D8);font:700 36px/1 P;font-style:normal;color:#fff">K</i><span style="font:700 44px/1 P;letter-spacing:-.02em;color:#1A2E6B">Keelstone <span style="color:#2350D8">Pay</span></span></div>
-       <div class="lab" style="margin-top:70px" data-at="86.89">Sign in to your payments</div>
-       <div style="margin-top:34px;width:520px;height:76px;border-radius:18px;background:#2350D8;display:flex;align-items:center;justify-content:center;font:600 26px P;color:#fff" data-at="87.18">Sign in</div>
-       <div class="lab" style="margin-top:60px;font-size:20px" data-at="89.43">Merchant dashboard · Keelstone Pay</div>
+       <div data-at="78.49" style="display:flex;align-items:center;gap:18px"><i style="display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:16px;background:linear-gradient(150deg,#3B6BF0,#2350D8);font:700 36px/1 P;font-style:normal;color:#fff">K</i><span style="font:700 44px/1 P;letter-spacing:-.02em;color:#1A2E6B">Keelstone <span style="color:#2350D8">Pay</span></span></div>
+       <div class="lab" style="margin-top:70px" data-at="80.10">Sign in to your payments</div>
+       <div style="margin-top:34px;width:520px;height:76px;border-radius:18px;background:#2350D8;display:flex;align-items:center;justify-content:center;font:600 26px P;color:#fff" data-at="80.26">Sign in</div>
+       <div class="lab" style="margin-top:60px;font-size:20px" data-at="82.39">Merchant dashboard · Keelstone Pay</div>
      </div></div>` },
 
- { t: [93.60, 104.63], light: [1790, 140], ox: '62%', html: `
-   <div class="h xl" style="left:150px;top:230px;width:760px"><span class="ln" data-at="97.08"><span class="mk" data-mark="97.46">Your store.</span></span><span class="ln" data-at="98.29"><span class="mk" data-mark="98.60">Your prices.</span></span></div>
-   <div class="sub" style="left:150px;top:520px;width:640px" data-at="100.27">NeroPay ships them and supports them.</div>
-   <div class="sub" style="left:150px;top:580px;width:640px;color:#111114;font-weight:600" data-at="102.81"><span class="mk" data-mark="103.24">You keep the margin.</span></div>
-   <div class="g" style="left:960px;top:120px;width:380px;height:840px;padding:0;display:flex;align-items:flex-end;justify-content:center" data-at="94.13">
+ { t: [85.61, 93.93], light: [1790, 140], ox: '62%', html: `
+   <div class="h xl" style="left:150px;top:230px;width:760px"><span class="ln" data-at="88.25"><span class="mk" data-mark="88.54">Your store.</span></span><span class="ln" data-at="89.27"><span class="mk" data-mark="89.55">Your prices.</span></span></div>
+   <div class="sub" style="left:150px;top:520px;width:640px" data-at="90.65">NeroPay ships them and supports them.</div>
+   <div class="sub" style="left:150px;top:580px;width:640px;color:#111114;font-weight:600" data-at="92.77"><span class="mk" data-mark="93.14">You keep the margin.</span></div>
+   <div class="g" style="left:960px;top:120px;width:380px;height:840px;padding:0;display:flex;align-items:flex-end;justify-content:center" data-at="85.74">
      <img class="prod" src="assets/terminal-front.webp" style="left:-189px;top:-104px;width:757px" data-push>
      <div class="lab" style="position:relative;z-index:2;margin-bottom:36px;color:#111114">Terminals</div></div>
-   <div class="g" style="left:1380px;top:120px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="94.79"><img class="prod" src="assets/till.webp" style="left:5px;top:-105px;width:380px" data-push><div class="lab" style="position:relative">For the counter</div><div class="mid" style="margin-top:10px;position:relative">Tills</div></div>
-   <div class="g" style="left:1380px;top:560px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="95.26"><img class="prod" src="assets/accessories.webp" style="left:-10px;top:-90px;width:410px" data-push><div class="lab" style="position:relative">Docks, rolls, cables</div><div class="mid" style="margin-top:10px;position:relative">Accessories</div></div>` },
+   <div class="g" style="left:1380px;top:120px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="86.33"><img class="prod" src="assets/till.webp" style="left:5px;top:-105px;width:380px" data-push><div class="lab" style="position:relative">For the counter</div><div class="mid" style="margin-top:10px;position:relative">Tills</div></div>
+   <div class="g" style="left:1380px;top:560px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="86.68"><img class="prod" src="assets/accessories.webp" style="left:-10px;top:-90px;width:410px" data-push><div class="lab" style="position:relative">Docks, rolls, cables</div><div class="mid" style="margin-top:10px;position:relative">Accessories</div></div>` },
 
- { t: [104.63, 111.26], light: [190, 110], ox: '66%', html: `
-   <div class="h" style="left:150px;top:380px;width:640px" data-at="105.18"><span class="ln">What your</span><span class="ln">merchants</span><span class="ln"><span class="mk" data-mark="106.40">earn you.</span></span></div>
-   <div class="g" style="left:900px;top:170px;width:870px;height:740px;padding:30px 60px" data-at="105.25">
-     ${[['107.36','Payments','1842.60'],['108.21','Your fee','41.20'],['109.45','NeroPay\'s cost','22.85'],['110.50','What you keep','18.35']].map((r, i) => `
+ { t: [93.93, 100.66], light: [190, 110], ox: '66%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="94.56"><span class="ln">What your</span><span class="ln">merchants</span><span class="ln"><span class="mk" data-mark="95.95">earn you.</span></span></div>
+   <div class="g" style="left:900px;top:170px;width:870px;height:740px;padding:30px 60px" data-at="94.69">
+     ${[['97.06','Payments','1842.60'],['97.84','Your fee','41.20'],['99.02','NeroPay\'s cost','22.85'],['100.02','What you keep','18.35']].map((r, i) => `
      ${i ? '<div class="hair"></div>' : ''}
-     <div class="row" style="height:168px;position:relative" data-at="${r[0]}" data-hit data-slide>${i === 3 ? '<i class="rule" data-rule="110.81" style="left:-60px"></i>' : ''}<span class="lab" style="font-size:26px;color:${i === 3 ? '#111114' : 'var(--mute)'}">${r[1]}</span><span class="big" data-count="${r[2]}">${money(+r[2])}</span></div>`).join('')}
+     <div class="row" style="height:168px;position:relative" data-at="${r[0]}" data-hit data-slide>${i === 3 ? '<i class="rule" data-rule="100.29" style="left:-60px"></i>' : ''}<span class="lab" style="font-size:26px;color:${i === 3 ? '#111114' : 'var(--mute)'}">${r[1]}</span><span class="big" data-count="${r[2]}">${money(+r[2])}</span></div>`).join('')}
    </div>` },
 
- { t: [111.26, 116.14], light: [1790, 960], ox: '64%', html: `
-   <div class="h" style="left:150px;top:390px;width:620px" data-at="111.47"><span class="ln">How it moves</span><span class="ln">over time.</span></div>
-   <div class="g" style="left:840px;top:190px;width:930px;height:700px;padding:52px 60px" data-at="111.51">
-     <div class="row"><span class="lab">Payments</span><span style="display:flex;gap:34px"><span class="lab" style="color:#111114" data-at="113.65"><span class="dot" style="background:var(--ink)"></span>Terminal</span><span class="lab" style="color:#111114" data-at="113.96"><span class="dot ydot"></span>Online</span></span></div>
+ { t: [100.66, 105.44], light: [1790, 960], ox: '64%', html: `
+   <div class="h" style="left:150px;top:390px;width:620px" data-at="100.84"><span class="ln">How it moves</span><span class="ln">over time.</span></div>
+   <div class="g" style="left:840px;top:190px;width:930px;height:700px;padding:52px 60px" data-at="100.87">
+     <div class="row"><span class="lab">Payments</span><span style="display:flex;gap:34px"><span class="lab" style="color:#111114" data-at="103.41"><span class="dot" style="background:var(--ink)"></span>Terminal</span><span class="lab" style="color:#111114" data-at="103.45"><span class="dot ydot"></span>Online</span></span></div>
      <svg width="810" height="480" viewBox="0 0 810 480" style="margin-top:50px;overflow:visible">
        ${[120, 240, 360].map(y => `<line x1="0" x2="810" y1="${y}" y2="${y}" stroke="rgba(17,17,20,.07)" stroke-width="1.5"/>`).join('')}
        <path id="l1" d="M0,400 C90,380 140,330 220,320 S360,250 440,232 S600,150 680,138 S780,96 810,86" fill="none" stroke="#111114" stroke-width="5" stroke-linecap="round"/>
        <path id="l2" d="M0,440 C100,430 160,410 240,398 S380,352 460,344 S620,300 700,282 S780,262 810,256" fill="none" stroke="#FFCF24" stroke-width="5" stroke-linecap="round"/>
      </svg></div>` },
 
- { t: [116.14, 123.77], light: [130, 560], ox: '66%', html: `
-   <div class="h" style="left:150px;top:380px;width:640px" data-at="116.25"><span class="ln">Your balance.</span><span class="ln"><span class="mk" data-mark="117.72">Yours to move.</span></span></div>
-   <div class="g" id="res" style="left:1010px;top:420px;width:760px;height:380px;padding:0 56px 44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="118.89"><div class="row"><span class="lab" style="color:#111114">Reserve</span><span class="lab">Keeps payouts flowing</span></div></div>
-   <div class="g" style="left:880px;top:190px;width:760px;height:400px;padding:60px 56px" data-at="116.56" data-hit><div class="lab">Available balance</div><div class="big" style="margin-top:26px;font-size:84px" data-count="2418.36">£2,418.36</div><div class="lab" style="margin-top:36px;color:#111114" data-at="117.72">Move it when you like</div></div>` },
+ { t: [105.44, 112.29], light: [130, 560], ox: '66%', html: `
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="105.55"><span class="ln">Your balance.</span><span class="ln"><span class="mk" data-mark="106.73">Yours to move.</span></span></div>
+   <div class="g" id="res" data-layered style="left:1010px;top:420px;width:760px;height:380px;padding:0 56px 44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="107.83"><div class="row"><span class="lab" style="color:#111114">Reserve</span><span class="lab">Keeps payouts flowing</span></div></div>
+   <div class="g" style="left:880px;top:190px;width:760px;height:400px;padding:60px 56px" data-at="105.79" data-hit><div class="lab">Available balance</div><div class="big" style="margin-top:26px;font-size:84px" data-count="2418.36">£2,418.36</div><div class="lab" style="margin-top:36px;color:#111114" data-at="106.73">Move it when you like</div></div>` },
 
- { t: [123.77, 133.37], light: [1640, 110], ox: '60%', html: `
-   <div class="kick" style="left:150px;top:190px" data-at="124.35"><b></b>Support</div>
-   <div class="h" style="left:150px;top:240px;width:1600px" data-at="124.72"><span class="ln">Two tiers.</span></div>
-   <div class="g" style="left:150px;top:430px;width:720px;height:420px;padding:56px" data-at="125.92"><div class="lab">Free</div><div class="mid" style="margin-top:18px">The platform</div><div class="lab" style="margin-top:22px">Your dashboard, your settings, the guides.</div></div>
-   <div class="g" style="left:930px;top:430px;width:840px;height:420px;padding:56px" data-at="127.32"><i class="rule" data-rule="131.65"></i><div class="lab">Premium</div>
-     <div class="mid" style="margin-top:18px;font-size:30px" data-at="128.12" data-hit>Your merchants' tickets, answered</div>
-     <div class="mid" style="margin-top:14px;font-size:30px" data-at="129.47" data-hit>Their hardware, shipped</div>
-     <div class="mid" style="margin-top:14px;font-size:30px" data-at="130.89" data-hit>The phone, picked up</div>
-     <div class="lab" style="margin-top:34px;color:#111114;font-size:26px" data-at="131.65"><span class="mk" data-mark="132.12">All in your name.</span></div></div>` },
+ { t: [112.29, 122.05], light: [1640, 110], ox: '60%', html: `
+   <div class="kick" style="left:150px;top:190px" data-at="112.42"><b></b>Support</div>
+   <div class="h" style="left:150px;top:240px;width:1600px" data-at="113.00"><span class="ln">Two tiers.</span></div>
+   <div class="g" style="left:150px;top:430px;width:720px;height:420px;padding:56px" data-at="114.20"><div class="lab">Free</div><div class="mid" style="margin-top:18px">The platform</div><div class="lab" style="margin-top:22px">Your dashboard, your settings, the guides.</div></div>
+   <div class="g" style="left:930px;top:430px;width:840px;height:420px;padding:56px" data-at="115.43"><i class="rule" data-rule="120.47"></i><div class="lab">Premium</div>
+     <div class="mid" style="margin-top:18px;font-size:30px" data-at="116.88" data-hit>Your merchants' tickets, answered</div>
+     <div class="mid" style="margin-top:14px;font-size:30px" data-at="118.31" data-hit>Their hardware, shipped</div>
+     <div class="mid" style="margin-top:14px;font-size:30px" data-at="119.64" data-hit>The phone, picked up</div>
+     <div class="lab" style="margin-top:34px;color:#111114;font-size:26px" data-at="120.47"><span class="mk" data-mark="121.02">All in your name.</span></div></div>` },
 
- { t: [133.37, 138.9], light: [260, 900], ox: '50%', html: `
+ { t: [122.05, 127.00], light: [260, 900], ox: '50%', html: `
    <div class="ph" style="left:0;top:0;width:1920px;height:1080px"><img src="assets/terminal-counter.webp" data-push></div>
-   <div class="h xl" style="left:150px;top:300px" ><span class="ln" data-at="133.51">Your merchants.</span><span class="ln" data-at="134.62"><span class="mk" data-mark="134.8">Your brand.</span></span></div>
-   <div class="mid" style="position:absolute;left:150px;top:585px;width:1000px;font-size:40px;font-weight:500;color:#2A2A30;line-height:1.3" data-at="135.47">So… are you ready to run payments<br>under <span class="mk" data-mark="137.75" style="font-weight:600;color:#111114">your own name?</span></div>` }
+   <div class="h xl" style="left:150px;top:300px" ><span class="ln" data-at="122.19">Your merchants.</span><span class="ln" data-at="123.21"><span class="mk" data-mark="123.37">Your brand.</span></span></div>
+   <div class="mid" style="position:absolute;left:150px;top:585px;width:1000px;font-size:40px;font-weight:500;color:#2A2A30;line-height:1.3" data-at="124.04">So… are you ready to run payments<br>under <span class="mk" data-mark="125.87" style="font-weight:600;color:#111114">your own name?</span></div>` }
 ];
-window.OUTRO_AT = 139.3;   /* the locked outro takes over here; render.cjs splices it in */
-window.DURATION = 147.6;   /* the outro holds its last frame 2.5 s longer (Faisal, 24 Sep) */
+window.OUTRO_AT = 127.4;   /* the locked outro takes over here (render.cjs splices it in): the neroconnect wordmark is still whole as she says "NeroConnect" (127.57) and the line slides out on "at docs" (129.37) */
+window.DURATION = 135.7;   /* the outro holds its last frame 2.5 s longer (Faisal, 24 Sep) */
 
 const film = document.getElementById('film'), L = document.getElementById('light');
 const P1 = document.getElementById('p1'), P2 = document.getElementById('p2');
@@ -310,18 +310,18 @@ window.setTime = function (t) {
   /* scene-specific moves */
   const fill = document.getElementById('fill');
   /* the steps she names: details (1, 2) · NeroPay runs the checks (3, 4) · taking payments (5) */
-  const STEP = [50.72, 51.18, 52.74, 53.20, 54.23];
+  const STEP = [45.24, 45.72, 47.21, 47.67, 48.60];
   if (fill) { let f = 0; for (let i = 1; i < 5; i++) f += 0.25 * io(clamp((t - STEP[i] + 0.35) / 0.5)); fill.style.transform = `scaleX(${f})`; }
   document.querySelectorAll('[data-step]').forEach(n => { const i = +n.dataset.step, lit = t > STEP[i];
     n.style.background = lit ? (i === 4 ? 'linear-gradient(160deg,#FFE27A,#FFCF24)' : 'rgba(255,248,220,.95)') : ''; });
   const knob = document.getElementById('knob');
-  if (knob) { const k = io(clamp((t - 77.20) / 1.4)); const bump = t > 78.60 ? Math.sin(clamp((t - 78.60) / 0.35) * Math.PI) * 1.2 : 0;
+  if (knob) { const k = io(clamp((t - 71.36) / 1.4)); const bump = t > 72.95 ? Math.sin(clamp((t - 72.95) / 0.35) * Math.PI) * 1.2 : 0;
     knob.style.left = (78 - 44 * k + bump) + '%'; }
   const l1 = document.getElementById('l1'), l2 = document.getElementById('l2');
-  if (l1) { for (const [p, at] of [[l1, 112.02], [l2, 113.91]]) { const len = p.getTotalLength(); p.style.strokeDasharray = len;
+  if (l1) { for (const [p, at] of [[l1, 101.25], [l2, 103.45]]) { const len = p.getTotalLength(); p.style.strokeDasharray = len;
     p.style.strokeDashoffset = len * (1 - io(clamp((t - at) / 1.8))); } }
   const res = document.getElementById('res');
-  if (res) res.style.transform = `translateY(${Math.round((1 - outE(clamp((t - 118.89) / 0.7))) * -160)}px)`;
+  if (res) res.style.transform = `translateY(${Math.round((1 - outE(clamp((t - 107.83) / 0.7))) * -160)}px)`;
 };
 window.setFrame = (n, fps = 25) => window.setTime(n / fps);
 /* for check-still.cjs: a moment in each scene after its last reveal and before it leaves */

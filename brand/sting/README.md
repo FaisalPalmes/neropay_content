@@ -92,3 +92,18 @@ Geometry comes from `BRAND-MOTION.md` §2: tile radius 15.5%, bars at 46.5°, ta
 1. The motion cuts his wordmark into letters and moves them. They are not deformed, but it is still his artwork being taken apart.
 2. `white` recolours the symbol (yellow bars on a pale tile). `yellow` keeps his colours.
 3. The glass tiles are our rebuild of the icon, not supplied artwork.
+
+## The NeroConnect outro — Faisal, 24 Sep 2026
+
+Faisal, 24 Sep 2026, on the previews: *"I like the first one … the yellow one … let's use that one."* Every
+**NeroConnect** video ends on the outro with `?mark=neroconnect` (or `MARK=neroconnect` for `render.cjs`), the
+**yellow** look, and the subtext *Check out NeroConnect at / docs.neropay.app*. Motion and timing are the locked
+outro's, unchanged; only the wordmark differs. Every other NeroPay video keeps the `neropay` outro.
+
+The lockup (`neroconnect-light.png`, built by `connect-mark.py`) is not typeset: "nero" is Eray's artwork untouched,
+and "connect" reuses the artwork's own o, n and e drawn the way "pay" is drawn (yellow inside a 4 px ink contour).
+**The artwork has no c and no t**, so those two were constructed from the o's strokes and corners. `BRAND.md` §5 says
+the letterform cannot be extended; this is a hand extension for video, so it wants Eray's sight before it goes on
+anything beyond NeroConnect videos (a site header, print, the dashboard).
+
+    MARK=neroconnect SMALL="Check out NeroConnect at" BIG="docs.neropay.app" node brand/sting/render.cjs outro yellow 16x9 out.mp4
