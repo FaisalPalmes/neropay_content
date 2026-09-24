@@ -65,6 +65,10 @@ fi
 #     package beside it. Point it at the same Chromium with PW_EXECUTABLE_PATH and PW_HEADLESS=true when you run it.
 ( cd .claude/skills/playwright-scripts && [ -d node_modules/playwright ] || npm install --no-audit --no-fund --loglevel=error >/dev/null 2>&1 ) || true
 
+# 3d. Python image tools. Pillow ships with the image; OpenCV (headless, no GUI libs) is added for crops,
+#     reframes, face and feature detection on stills and video frames. Faisal asked for both, 24 Sep 2026.
+python3 -c "import cv2" 2>/dev/null || pip install -q --break-system-packages opencv-python-headless >/dev/null 2>&1 || true
+
 # 4. keep HyperFrames quiet about skills: they are committed under .claude/skills
 echo 'export HYPERFRAMES_SKIP_SKILLS=1' >> "$CLAUDE_ENV_FILE"
 

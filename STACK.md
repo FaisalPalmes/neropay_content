@@ -165,6 +165,8 @@ has the detail.
 | Poppins | `@fontsource/poppins` in `edit/` | brand typeface; local file, never Google Fonts |
 | ffmpeg / ffprobe | system build, paths exported by the session-start hook | Remotion's bundled ffmpeg is built `--disable-filters` and fails HyperFrames frame extraction (LESSONS #57) |
 | Chrome | HyperFrames' headless shell, or the pre-installed Playwright one | fetched by the hook |
+| Pillow | 12.3, in the image | `from PIL import Image` — crops, resizes, contact sheets, alpha masks |
+| OpenCV | `opencv-python-headless` 5.0 (with numpy), pip-installed by the hook | `import cv2` — frame analysis, face/feature detection for auto-reframing, perspective and optical flow. Headless build: no `imshow` |
 
 `.claude/hooks/session-start.sh` installs all of this — **but it exits immediately in a local
 session** (`CLAUDE_CODE_REMOTE != true`), so a local machine needs Node 22, a real ffmpeg,
