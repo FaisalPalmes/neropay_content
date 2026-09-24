@@ -65,6 +65,12 @@ body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiase
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--live);margin-right:12px;vertical-align:1px}
 .ydot{background:var(--yel)}
 .hair{height:1px;background:rgba(17,17,20,.08)}
+/* photographs (Higgsfield, 24 Sep 2026): a photo fills its frame; a product shot sits on the glass with its studio
+   ground multiplied away and its edges feathered, so there is no cut-out line. Only the bitmap is scaled for the
+   slow push; type never is (the v3 jitter: scaling text re-snaps its glyphs to the pixel grid every frame). */
+.ph{position:absolute;overflow:hidden}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+.prod{position:absolute;mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
 </style></head>
 <body>
 <div id="ground"></div>
@@ -85,11 +91,11 @@ const money = v => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, 
 const SC = [
  { t: [0, 11.1], light: [1350, 620], ox: '50%', html: `
    <div class="kick" style="left:150px;top:190px" data-at="0.7"><b></b>NeroConnect</div>
-   <div class="g" style="left:150px;top:560px;width:500px;height:230px;padding:44px" data-at="2.3"><div class="big" style="margin-top:62px">Cafés</div></div>
-   <div class="g" style="left:710px;top:560px;width:500px;height:230px;padding:44px" data-at="3.0"><div class="big" style="margin-top:62px">Takeaways</div></div>
-   <div class="g" style="left:1270px;top:560px;width:500px;height:230px;padding:44px" data-at="3.64"><div class="big" style="margin-top:62px">Shops</div></div>
+   <div class="g" style="left:150px;top:500px;width:500px;height:420px;padding:0" data-at="2.3"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/cafe.webp" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Cafés</div></div>
+   <div class="g" style="left:710px;top:500px;width:500px;height:420px;padding:0" data-at="3.0"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/takeaway.webp" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaways</div></div>
+   <div class="g" style="left:1270px;top:500px;width:500px;height:420px;padding:0" data-at="3.64"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/shop-shelves.webp" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Shops</div></div>
    <div class="h" style="left:150px;top:250px;width:1500px" data-at="6.38"><span class="ln">Their card payments,</span><span class="ln">under <span class="mk" data-mark="8.9">your own brand.</span></span></div>
-   <div class="sub" style="left:150px;top:860px" data-at="10.1">Here's how it works.</div>` },
+   <div class="sub" style="left:150px;top:955px" data-at="10.1">Here's how it works.</div>` },
 
  { t: [11.1, 23.5], light: [520, 760], ox: '70%', html: `
    <div class="kick" style="left:150px;top:300px" data-at="11.5"><b></b>How it works</div>
@@ -173,8 +179,9 @@ const SC = [
    </div>` },
 
  { t: [81.9, 89.2], light: [1450, 360], ox: '68%', html: `
-   <div class="h" style="left:150px;top:380px;width:640px" data-at="85.54"><span class="ln">Your brand.</span><span class="ln"><span class="mk" data-mark="87.1">Only yours.</span></span></div>
-   <div class="g" style="left:900px;top:130px;width:780px;height:820px;padding:0" data-at="82.0">
+   <img class="prod" src="assets/terminal-34.webp" style="left:-10px;top:150px;width:770px" data-at="82.14" data-push>
+   <div class="h" style="left:150px;top:120px;width:840px" data-at="85.54"><span class="ln">Your brand. <span class="mk" data-mark="87.1">Only yours.</span></span></div>
+   <div class="g" style="left:1010px;top:130px;width:760px;height:820px;padding:0" data-at="83.0">
      <div class="row" style="height:92px;padding:0 36px;border-bottom:1px solid rgba(17,17,20,.07)" data-at="83.02">
        <span style="display:flex;gap:9px"><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i></span>
        <span class="lab" style="color:#111114;font-size:24px">pay.harbourline.co.uk</span><span style="width:60px"></span></div>
@@ -190,10 +197,10 @@ const SC = [
    <div class="sub" style="left:150px;top:540px;width:640px" data-at="93.82">NeroPay ships them and supports them.</div>
    <div class="sub" style="left:150px;top:600px;width:640px;color:#111114;font-weight:600" data-at="95.86"><span class="mk" data-mark="96.1">You keep the margin.</span></div>
    <div class="g" style="left:960px;top:120px;width:380px;height:840px;padding:0;display:flex;align-items:flex-end;justify-content:center" data-at="89.42">
-     <img src="assets/terminal.png" style="position:absolute;left:-40px;top:0;width:460px;z-index:1">
+     <img class="prod" src="assets/terminal-front.webp" style="left:-189px;top:-104px;width:757px" data-push>
      <div class="lab" style="position:relative;z-index:2;margin-bottom:36px;color:#111114">Terminals</div></div>
-   <div class="g" style="left:1380px;top:120px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="90.12"><div class="lab">For the counter</div><div class="mid" style="margin-top:10px">Tills</div></div>
-   <div class="g" style="left:1380px;top:560px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="90.44"><div class="lab">Stands, rolls, cases</div><div class="mid" style="margin-top:10px">Accessories</div></div>` },
+   <div class="g" style="left:1380px;top:120px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="90.12"><img class="prod" src="assets/till.webp" style="left:5px;top:-105px;width:380px" data-push><div class="lab" style="position:relative">For the counter</div><div class="mid" style="margin-top:10px;position:relative">Tills</div></div>
+   <div class="g" style="left:1380px;top:560px;width:390px;height:400px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="90.44"><img class="prod" src="assets/accessories.webp" style="left:-10px;top:-90px;width:410px" data-push><div class="lab" style="position:relative">Docks, rolls, cables</div><div class="mid" style="margin-top:10px;position:relative">Accessories</div></div>` },
 
  { t: [96.9, 102.3], light: [1400, 800], ox: '66%', html: `
    <div class="h" style="left:150px;top:380px;width:640px" data-at="97.14"><span class="ln">What your</span><span class="ln">merchants</span><span class="ln"><span class="mk" data-mark="98.3">earn you.</span></span></div>
@@ -229,7 +236,8 @@ const SC = [
      <div class="lab" style="margin-top:34px;color:#111114;font-size:26px" data-at="121.74"><span class="mk" data-mark="122.0">All in your name.</span></div></div>` },
 
  { t: [122.95, 124.72], light: [960, 540], ox: '50%', html: `
-   <div class="h xl" style="left:0;right:0;top:360px;text-align:center" ><span class="ln" data-at="123.18">Your merchants.</span><span class="ln" data-at="124.28"><span class="mk" data-mark="124.4">Your brand.</span></span></div>` }
+   <div class="ph" style="left:0;top:0;width:1920px;height:1080px"><img src="assets/terminal-counter.webp" data-push></div>
+   <div class="h xl" style="left:150px;top:380px" ><span class="ln" data-at="123.18">Your merchants.</span><span class="ln" data-at="124.28"><span class="mk" data-mark="124.4">Your brand.</span></span></div>` }
 ];
 window.OUTRO_AT = 125.12;   /* the locked outro takes over here; render.cjs splices it in */
 window.DURATION = 131.0;
@@ -263,9 +271,10 @@ window.setTime = function (t) {
     const vin = outC(clamp((t - a) / XF)), vout = 1 - io(clamp((t - b) / XF));
     s.el.style.opacity = Math.min(vin, vout);
     const push = (t - a) / (b - a);
-    s.cam.style.transform = `translateY(${-10 * io(clamp((t - b) / XF))}px) scale(${1 + 0.022 * push})`;
+    s.cam.style.transform = `translateY(${Math.round(-10 * io(clamp((t - b) / XF)))}px)`;
+    for (const im of s.el.querySelectorAll('[data-push]')) im.style.scale = String(1 + 0.03 * push);
     for (const e of s.items) { const p = outE(clamp((t - +e.dataset.at) / 0.55));
-      e.style.opacity = p; e.style.transform = (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${(1 - p) * 26}px)`;
+      e.style.opacity = p; e.style.transform = (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${Math.round((1 - p) * 26)}px)`;
       if (e.classList.contains('g')) e.style.setProperty('--sh', `${-130 + 260 * io(clamp((t - +e.dataset.at - 0.15) / 1.0))}%`); }
     for (const m of s.marks) m.style.setProperty('--m', outC(clamp((t - +m.dataset.mark) / 0.35)));
     for (const r of s.rules) r.style.setProperty('--r', outC(clamp((t - +r.dataset.rule) / 0.35)));
@@ -284,7 +293,7 @@ window.setTime = function (t) {
   if (l1) { for (const [p, at] of [[l1, 103.14], [l2, 104.9]]) { const len = p.getTotalLength(); p.style.strokeDasharray = len;
     p.style.strokeDashoffset = len * (1 - io(clamp((t - at) / 1.8))); } }
   const res = document.getElementById('res');
-  if (res) res.style.transform = `translateY(${(1 - outE(clamp((t - 109.4) / 0.7))) * -160}px)`;
+  if (res) res.style.transform = `translateY(${Math.round((1 - outE(clamp((t - 109.4) / 0.7))) * -160)}px)`;
 };
 window.setFrame = (n, fps = 25) => window.setTime(n / fps);
 window.setTime(0);
