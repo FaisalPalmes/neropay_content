@@ -560,6 +560,16 @@ clips. **Only then are the other shots worth generating.** If the green won't ho
 the corners won't track, we change the method (for example, a still phone composited in post, or
 tracking markers) before spending credits on the other eight.
 
+**Pilot result, 24 Sep 2026: passed.** Three Kling 3.0 clips (5s, 1912x1080, 24 fps) from Faisal's stills: the
+pavement over-the-shoulder, the terrazzo table and Mia on the floor. With the locked prompts the green held in both
+screen clips; Kling added a notch and some glare to the pavement phone, and both are kept (the notch reads as a real
+phone; the glare is lifted off the green and laid back over the app). Screens: Sage & Co on the pavement, a new pink
+nail-salon app (Rosehip Nails, invented; needs the same Companies House check) on the table, Marigold Lane as floating
+glass cards around Mia's phone. Taps are timed to the fingertip track, and the time slot is scrolled to sit under her
+finger when she taps. Tools: `tools/comp_video.py` (key, track, composite), `tools/float_cards.py` (phone track and
+cards), `screens/` (app screens and cards, rendered with Playwright). Corner and phone tracks are in `pilot/`, so new
+screens go in without re-tracking.
+
 ## 7. What happens after the pilot
 
 1. The remaining stills, then the clips, landscape 16:9.

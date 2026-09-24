@@ -1,0 +1,40 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Floating app cards for the Mia shot (Marigold Lane, florist). Each card is screenshotted on a transparent
+     ground (render-cards.cjs); the compositor blurs the plate under each card so the glass reads as glass. -->
+<style>
+@font-face{font-family:Inter;font-weight:500;src:url(../../mobile-apps/merchant-fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../mobile-apps/merchant-fonts/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../mobile-apps/merchant-fonts/inter-latin-700-normal.woff2)}
+@font-face{font-family:DMSerif;font-weight:400;src:url(../../mobile-apps/merchant-fonts/dm-serif-display-latin-400-normal.woff2)}
+@font-face{font-family:DMSerif;font-weight:400;font-style:italic;src:url(../../mobile-apps/merchant-fonts/dm-serif-display-latin-400-italic.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:transparent;font-family:Inter,sans-serif;color:#2A1620}
+.wrap{position:absolute;left:0;top:0;padding:30px 30px 46px}
+.card{background:rgba(255,255,255,.66);border:1.5px solid rgba(255,255,255,.85);border-radius:24px;
+  box-shadow:0 18px 38px rgba(60,30,20,.20),inset 0 1px 0 rgba(255,255,255,.9);display:flex;align-items:center;gap:14px;padding:14px 18px 14px 14px}
+.ic{width:46px;height:46px;border-radius:14px;background:#F3DCD6;display:grid;place-items:center;flex:none}
+.k{font-size:11px;letter-spacing:.14em;font-weight:700;color:#A0707F;text-transform:uppercase}
+.t{font-family:DMSerif,serif;font-size:22px;line-height:1.1}.t em{font-style:italic;color:#C06A2B}
+.s{font-size:13.5px;color:#6E5160;font-weight:500;margin-top:2px}
+.pr{font-size:20px;font-weight:700;margin-left:10px;font-variant-numeric:tabular-nums}
+.big{width:300px;flex-direction:column;align-items:stretch;padding:14px}
+.big .img{height:150px;border-radius:16px;background:#F3DCD6;display:grid;place-items:center}
+.big .row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:12px;padding:0 4px}
+.ok{width:46px;height:46px;border-radius:50%;background:#2F9E62;display:grid;place-items:center;color:#fff;font-size:22px;font-weight:700;flex:none}
+</style></head><body>
+<script>
+const flower = s => `<svg width="${s}" height="${s}" viewBox="-40 -40 80 80"><g fill="#E8973A"><circle r="13" cx="0" cy="-15"/><circle r="13" cx="14" cy="-5"/><circle r="13" cx="9" cy="12"/><circle r="13" cx="-9" cy="12"/><circle r="13" cx="-14" cy="-5"/></g><circle r="10" fill="#4A2338"/></svg>`;
+const bunch = `<svg width="190" height="130" viewBox="0 0 190 130"><path d="M95 128 L80 70 M95 128 L95 62 M95 128 L112 72" stroke="#5E8A4E" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <g transform="translate(70 58) scale(.55)"><g fill="#E8973A"><circle r="13" cx="0" cy="-15"/><circle r="13" cx="14" cy="-5"/><circle r="13" cx="9" cy="12"/><circle r="13" cx="-9" cy="12"/><circle r="13" cx="-14" cy="-5"/></g><circle r="10" fill="#4A2338"/></g>
+  <g transform="translate(96 40) scale(.7)"><g fill="#D9566F"><circle r="13" cx="0" cy="-15"/><circle r="13" cx="14" cy="-5"/><circle r="13" cx="9" cy="12"/><circle r="13" cx="-9" cy="12"/><circle r="13" cx="-14" cy="-5"/></g><circle r="10" fill="#FBEFD9"/></g>
+  <g transform="translate(122 62) scale(.5)"><g fill="#F2C641"><circle r="13" cx="0" cy="-15"/><circle r="13" cx="14" cy="-5"/><circle r="13" cx="9" cy="12"/><circle r="13" cx="-9" cy="12"/><circle r="13" cx="-14" cy="-5"/></g><circle r="10" fill="#4A2338"/></g></svg>`;
+const CARDS = {
+  shop: `<div class="card"><span class="ic">${flower(30)}</span><span><div class="t">Marigold <em>Lane</em></div><div class="s">Florist · open now</div></span></div>`,
+  bunch: `<div class="card big"><div class="img">${bunch}</div><div class="row"><span><div class="t">The Sunday Bunch</div><div class="s">Seasonal stems, hand-tied</div></span><span class="pr">£28.00</span></div></div>`,
+  deliver: `<div class="card"><span class="ic" style="background:#F6E7C9"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A5A1F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span><span><div class="k">Delivery</div><div class="t" style="font-size:20px">Tomorrow, 9–12</div></span></div>`,
+  paid: `<div class="card"><span class="ok">✓</span><span><div class="t" style="font-size:21px">Payment confirmed</div><div class="s">Marigold Lane · £28.00</div></span></div>`
+};
+const id = new URLSearchParams(location.search).get('card') || 'shop';
+document.body.innerHTML = `<div class="wrap" id="w">${CARDS[id]}</div>`;
+</script></body></html>

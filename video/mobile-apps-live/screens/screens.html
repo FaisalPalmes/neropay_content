@@ -1,0 +1,145 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Flat app screens for the live-action pilot. ?app=sage|nail. render(t) sets the screen for t seconds into the clip;
+     the timings follow the fingers in the Higgsfield clips (tip tracks in ../tools). Screens are 390x844 CSS px. -->
+<style>
+@font-face{font-family:Inter;font-weight:400;src:url(../../mobile-apps/merchant-fonts/inter-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(../../mobile-apps/merchant-fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:600;src:url(../../mobile-apps/merchant-fonts/inter-latin-600-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(../../mobile-apps/merchant-fonts/inter-latin-700-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:500;src:url(../../mobile-apps/merchant-fonts/fraunces-latin-500-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:600;src:url(../../mobile-apps/merchant-fonts/fraunces-latin-600-normal.woff2)}
+@font-face{font-family:Fraunces;font-weight:500;font-style:italic;src:url(../../mobile-apps/merchant-fonts/fraunces-latin-500-italic.woff2)}
+@font-face{font-family:DMSerif;font-weight:400;src:url(../../mobile-apps/merchant-fonts/dm-serif-display-latin-400-normal.woff2)}
+@font-face{font-family:DMSerif;font-weight:400;font-style:italic;src:url(../../mobile-apps/merchant-fonts/dm-serif-display-latin-400-italic.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:390px;height:844px;overflow:hidden}
+.app{position:absolute;inset:0;overflow:hidden;font-family:Inter,sans-serif}
+.sb{position:absolute;left:0;right:0;top:0;height:50px;display:flex;align-items:center;justify-content:space-between;padding:8px 32px 0 36px;font-size:15px;font-weight:600;z-index:5}
+.sig{display:flex;gap:4px;align-items:center}.sig i{display:block;background:currentColor;border-radius:2px}
+.scroll{position:absolute;left:0;right:0;top:0;will-change:transform}
+
+/* ── Sage & Co (café), the MA01 look ── */
+.sage{background:#FCF9F4;color:#2E3225}
+.sage .bar{display:flex;align-items:center;gap:12px;padding:60px 22px 14px}
+.sage .bar img{width:40px;height:40px;border-radius:11px}
+.sage .bar b{font-family:Fraunces,serif;font-weight:600;font-size:25px;flex:1}
+.sage .burger{width:24px;display:grid;gap:5px}.sage .burger i{height:2.5px;border-radius:2px;background:#2E3225}
+.sage .hero{margin:0 16px;height:176px;border-radius:26px;background:#74805C;color:#FCF9F4;padding:24px 22px 22px;position:relative;overflow:hidden}
+.sage .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:210px;height:210px;border-radius:50%;border:2px solid rgba(252,249,244,.2)}
+.sage .k{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.8;font-weight:600}
+.sage h2{font-family:Fraunces,serif;font-weight:500;font-size:40px;line-height:1.04;margin:8px 0 6px}.sage h2 em{font-style:italic}
+.sage .hero p{font-size:15px;opacity:.85}
+.sage h3{font-size:18px;font-weight:700;padding:22px 22px 4px}
+.sage .item{height:70px;display:flex;gap:14px;align-items:center;margin:0 16px;padding:0 6px;border-radius:18px;transition:none}
+.sage .item.hit{background:#EFEBDD}
+.sage .th{width:54px;height:54px;border-radius:15px;background:#E7E4D6;display:grid;place-items:center}
+.sage .th svg{width:30px;height:30px}
+.sage .nm{flex:1;display:grid;gap:2px}.sage .nm b{font-size:16.5px;font-weight:600}.sage .nm small{font-size:13.5px;color:#7B7E6E}
+.sage .pr{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;margin-right:4px}
+.sage .add{width:38px;height:38px;border-radius:12px;background:#74805C;color:#FCF9F4;display:grid;place-items:center;font-size:24px;font-weight:500;line-height:1}
+.sage .add.done{background:#2E3225;font-size:18px}
+.sage .basket{position:absolute;left:16px;right:16px;bottom:26px;border-radius:22px;background:#2E3225;color:#FCF9F4;display:flex;align-items:center;padding:16px 16px 16px 22px;z-index:6}
+.sage .basket .q{font-size:14px;opacity:.72}.sage .basket .tot{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums}
+.sage .basket .go{margin-left:auto;background:#FCF9F4;color:#2E3225;font-size:16px;font-weight:700;padding:14px 18px;border-radius:14px}
+.sage .fade{position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(#FCF9F4 72%,rgba(252,249,244,0));z-index:4}
+
+/* ── Rosehip Nails (nail salon), pink ── */
+.nail{background:#FFF5F7;color:#3B1D2B}
+.nail .hd{padding:62px 24px 16px;display:flex;align-items:center;gap:12px}
+.nail .logo{font-family:DMSerif,serif;font-size:31px;line-height:1;flex:1}.nail .logo em{font-style:italic;color:#C2527E}
+.nail .logo small{display:block;font-family:Inter,sans-serif;font-size:10.5px;letter-spacing:.24em;font-weight:600;color:#B07A92;margin-top:5px}
+.nail .av{width:40px;height:40px;border-radius:50%;background:#F6D3DF;display:grid;place-items:center}
+.nail .hero{margin:0 16px;height:150px;border-radius:26px;background:linear-gradient(135deg,#F4B6CB,#E58AAE);color:#fff;padding:22px;position:relative;overflow:hidden}
+.nail .hero::after{content:"";position:absolute;right:-40px;bottom:-70px;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.18)}
+.nail .hero .k{font-size:12px;letter-spacing:.16em;font-weight:600;text-transform:uppercase;opacity:.9}
+.nail .hero h2{font-family:DMSerif,serif;font-weight:400;font-size:34px;line-height:1.05;margin:8px 0 6px}.nail .hero h2 em{font-style:italic}
+.nail .hero p{font-size:14px;opacity:.95}
+.nail h3{font-size:17px;font-weight:700;padding:22px 24px 8px;display:flex;justify-content:space-between}.nail h3 span{font-size:13px;font-weight:500;color:#B07A92}
+.nail .svc{height:74px;margin:0 16px 10px;border-radius:20px;background:#fff;border:1.5px solid #F4DDE5;display:flex;align-items:center;gap:14px;padding:0 16px}
+.nail .svc .dot{width:44px;height:44px;border-radius:14px;background:#FBE3EA;display:grid;place-items:center}
+.nail .svc .nm{flex:1;display:grid;gap:3px}.nail .svc b{font-size:16px;font-weight:600}.nail .svc small{font-size:13px;color:#9C7385}
+.nail .svc .pr{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+.nail .svc .tick{width:26px;height:26px;border-radius:50%;border:1.5px solid #E9C3D2;display:grid;place-items:center;color:#fff;font-size:14px}
+.nail .svc.on{border-color:#C2527E;background:#FFF0F5}.nail .svc.on .tick{background:#C2527E;border-color:#C2527E}
+.nail .days{display:flex;gap:10px;padding:0 16px}
+.nail .day{flex:1;height:70px;border-radius:18px;background:#fff;border:1.5px solid #F4DDE5;display:grid;place-items:center;align-content:center;gap:2px}
+.nail .day small{font-size:11px;font-weight:600;letter-spacing:.1em;color:#B07A92}.nail .day b{font-size:22px;font-weight:700}
+.nail .day.on{background:#3B1D2B;border-color:#3B1D2B;color:#fff}.nail .day.on small{color:#F4B6CB}
+.nail .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 16px 0}
+.nail .slot{height:50px;border-radius:15px;background:#fff;border:1.5px solid #F4DDE5;display:grid;place-items:center;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.nail .slot.off{color:#D8B9C6;text-decoration:line-through;background:#FFF5F7}
+.nail .slot.on{background:#C2527E;border-color:#C2527E;color:#fff}
+.nail .toast{position:absolute;left:16px;right:16px;bottom:26px;border-radius:22px;background:#3B1D2B;color:#fff;display:flex;align-items:center;gap:14px;padding:16px 18px;z-index:6}
+.nail .toast .ok{width:40px;height:40px;border-radius:50%;background:#E58AAE;display:grid;place-items:center;font-size:20px}
+.nail .toast b{font-size:16px;display:block}.nail .toast small{font-size:13px;opacity:.75}
+.nail .fade{position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(#FFF5F7 72%,rgba(255,245,247,0));z-index:4}
+.nail .techs{display:flex;gap:10px;padding:0 16px}.nail .tech{flex:1;height:96px;border-radius:18px;background:#fff;border:1.5px solid #F4DDE5;display:grid;place-items:center;align-content:center;gap:8px}.nail .tech i{width:44px;height:44px;border-radius:50%}.nail .tech b{font-size:14px}.nail .tech.on{border-color:#C2527E}
+.nail .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px}.nail .chips span{padding:10px 14px;border-radius:999px;background:#fff;border:1.5px solid #F4DDE5;font-size:14px;font-weight:500}
+.tap{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:rgba(0,0,0,.10);pointer-events:none;z-index:7;opacity:0}
+</style></head><body>
+<div id="root"></div>
+<script>
+const SIG = '<span class="sig"><i style="width:4px;height:7px"></i><i style="width:4px;height:10px"></i><i style="width:4px;height:13px"></i><i style="width:24px;height:12px;border-radius:4px;margin-left:4px"></i></span>';
+const cup = '<svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/></svg>';
+const bread = '<svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 5 0 0 1 16 0v1H4z"/><path d="M3.5 14.5h17M5 17.5h14"/></svg>';
+const glass = '<svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h10l-1.2 14H8.2z"/><path d="M6.5 9h11"/></svg>';
+const bowl = '<svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="6.5"/><path d="M12 6.5V4"/></svg>';
+const knot = '<svg viewBox="0 0 24 24" fill="none" stroke="#5F6A4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8c4-3 9 0 7 4s-8 3-7-1 7-6 9-1"/><path d="M6 15c3 3 9 3 12 0"/></svg>';
+const APP = new URLSearchParams(location.search).get('app') || 'sage';
+const root = document.getElementById('root');
+const cl = (x, a, b) => Math.min(b, Math.max(a, x)), lin = (t, a, b) => cl((t - a) / (b - a), 0, 1);
+const eo = x => 1 - Math.pow(1 - x, 3), eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+
+if (APP === 'sage') {
+  const items = [[cup,'Flat white','Oat or whole milk','£3.40'],[bread,'Sourdough toastie','Cheddar, leek, mustard','£7.20'],[glass,'Iced latte','Double shot','£3.90'],
+                 [bowl,'Seasonal fruit bowl','Yoghurt, honey, oats','£5.80'],[knot,'Cinnamon knot','Baked this morning','£3.60'],[cup,'Oat cappuccino','Single or double','£3.70']];
+  root.innerHTML = `<div class="app sage"><div class="sb">9:41${SIG}</div><div class="fade"></div><div class="scroll" id="sc">
+    <div class="bar"><img src="sage-icon.svg" alt=""><b>Sage &amp; Co</b><span class="burger"><i></i><i></i><i></i></span></div>
+    <div class="hero"><div class="k">Café · Kitchen</div><h2>Sit. Stay.<br><em>Savour.</em></h2><p>Order ahead, skip the queue</p></div>
+    <h3>Popular</h3>${items.map((it, i) => `<div class="item" id="it${i}"><span class="th">${it[0]}</span><span class="nm"><b>${it[1]}</b><small>${it[2]}</small></span><span class="pr">${it[3]}</span><span class="add" id="ad${i}">+</span></div>`).join('')}
+    <div style="height:200px"></div></div>
+    <div class="basket" id="bk"><span><span class="q">Basket · 1 item · ready in 8 min</span><br><span class="tot">£3.60</span></span><span class="go">Checkout</span></div>
+    <div class="tap" id="tap"></div></div>`;
+  window.render = t => {
+    // thumb drags up 2.08→2.62 (≈92px), eases back a little as it settles; tap on the cinnamon knot at 3.33
+    const s = 92 * eio(lin(t, 2.05, 2.65)) + 6 * eo(lin(t, 2.65, 3.1));
+    document.getElementById('sc').style.transform = `translateY(${-s}px)`;
+    const hit = t >= 3.28 && t < 3.55, on = t >= 3.38;
+    document.getElementById('it4').classList.toggle('hit', hit);
+    const ad = document.getElementById('ad4'); ad.classList.toggle('done', on); ad.textContent = on ? '✓' : '+';
+    ad.style.transform = `scale(${t >= 3.3 && t < 3.42 ? .86 : 1})`;
+    const b = eo(lin(t, 3.5, 3.95)), bk = document.getElementById('bk');
+    bk.style.transform = `translateY(${(1 - b) * 150}px)`; bk.style.opacity = b;
+  };
+} else {
+  const svcs = [['Gel manicure','45 min · with Ella','£32'],['BIAB overlay','60 min · builder gel','£38'],['Gel pedicure','50 min · with Ella','£35'],['Nail art','15 min · add-on, per set','£8']];
+  const slots = [['09:30',1],['10:00',0],['10:30',1],['11:00',0],['11:30',0],['12:00',1],['13:00',0],['13:30',0],['14:30',0]];
+  root.innerHTML = `<div class="app nail"><div class="sb">9:41${SIG}</div><div class="fade"></div><div class="scroll" id="sc">
+    <div class="hd"><div class="logo">Rosehip <em>nails</em><small>NAIL STUDIO · BOOK ONLINE</small></div><div class="av"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C2527E" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div></div>
+    <div class="hero"><div class="k">Treat yourself</div><h2>Fresh set,<br><em>fresh week.</em></h2><p>Next free slot today at 14:30</p></div>
+    <h3>Choose a treatment</h3>${svcs.map((s, i) => `<div class="svc" id="sv${i}"><span class="dot"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C2527E" stroke-width="1.7" stroke-linejoin="round"><rect x="10" y="2.5" width="4" height="6" rx="1"/><rect x="7" y="8.5" width="10" height="13" rx="3"/><path d="M7 14h10"/></svg></span><span class="nm"><b>${s[0]}</b><small>${s[1]}</small></span><span class="pr">${s[2]}</span><span class="tick">✓</span></div>`).join('')}
+    <h3>Choose a day <span>September</span></h3><div class="days">${[['THU',18],['FRI',19],['SAT',20],['SUN',21]].map(d => `<div class="day${d[1] === 20 ? ' on' : ''}"><small>${d[0]}</small><b>${d[1]}</b></div>`).join('')}</div>
+    <h3>Choose a time</h3><div class="slots">${slots.map((s, i) => `<div class="slot${s[1] ? ' off' : ''}" id="sl${i}">${s[0]}</div>`).join('')}</div>
+    <h3>Your nail tech</h3><div class="techs">${[['Ella','#F6D3DF'],['Priya','#F9E0C9'],['Maya','#E4DDF3']].map((p, i) => `<div class="tech${i === 0 ? ' on' : ''}"><i style="background:${p[1]}"></i><b>${p[0]}</b></div>`).join('')}</div>
+    <h3>Add-ons</h3><div class="chips"><span>Chrome finish</span><span>French tip</span><span>Nail art</span><span>Cuticle oil</span></div>
+    <div style="height:420px"></div></div>
+    <div class="toast" id="to"><span class="ok">✓</span><span><b>Booked · Sat 20, 11:30</b><small>Gel pedicure with Ella · Rosehip Nails</small></span></div>
+    <div class="tap" id="tap"></div></div>`;
+  // the slot under her fingertip when she taps at ≈4.3 (fingertip ≈ x195, y190 on the 390x844 screen)
+  const SL = document.getElementById('sl4'), TGT = SL.offsetTop + SL.offsetHeight / 2 - 190;
+  window.render = t => {
+    // finger taps the row under it (Gel pedicure) at ≈2.3, drags up 2.62→3.65 and flicks the list on,
+    // settling with 11:30 under the fingertip for the tap at ≈4.3; she lifts at 4.5 and the booking lands
+    const s = TGT * (0.55 * eio(lin(t, 2.6, 3.65)) + 0.45 * eo(lin(t, 3.4, 4.15)));
+    document.getElementById('sc').style.transform = `translateY(${-s}px)`;
+    const sel = t >= 2.3, sv = document.getElementById('sv2'); sv.classList.toggle('on', sel);
+    sv.style.transform = `scale(${t >= 2.25 && t < 2.42 ? .97 : 1})`;
+    SL.classList.toggle('on', t >= 4.28);
+    SL.style.transform = `scale(${t >= 4.22 && t < 4.36 ? .93 : 1})`;
+    const b = eo(lin(t, 4.5, 4.9)), to = document.getElementById('to');
+    to.style.transform = `translateY(${(1 - b) * 150}px)`; to.style.opacity = b;
+  };
+}
+window.render(0);
+</script></body></html>
