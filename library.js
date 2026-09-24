@@ -138,16 +138,17 @@ window.LIBRARY = {
         { crop: '9:16', px: '1080×1920', lufs: '−13.7', media: '8c0ea0f3-6efb-41b9-bf85-a64c4f898296', md5: '682343ce495912a513292241349e1117' }
       ] },
 
-    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, yellow light behind glass, ends on the locked outro',
-      version: 'v4', rendered: '2026-09-24', secs: 31.5,
-      status: 'review', by: 'unrecorded — v4 made on Faisal\'s 24 Sep notes on v3 and sent for his review, in two background variants for him to choose between',
-      waiting: 'Faisal picks a background: textured liquid glass (reeded) or clear angled glass (glass). Changes from v3: the phone and camera move on one continuous curve with no stops; the finale is keypad centre, reports left, transactions right; the pink, blue and lilac light is replaced by blurred yellow light that moves to a new place on every screen change, behind glass.',
+    { id: 'AM02', series: 'App motion', title: 'App motion — light, six screens, clear glass with the mark behind, ends on the locked outro',
+      version: 'v5', rendered: '2026-09-24', secs: 31.5,
+      status: 'review', by: 'unrecorded — v5 made on Faisal\'s 24 Sep notes on v4 (he chose the clear-glass look over the textured one) and sent for his review',
+      waiting: 'Faisal watches v5. Changes from v4: clear glass only; no flip anywhere (the menu swipes in like the other screens); the phone comes in fast and eases into the middle; the glass behind is the mark\'s two bars at 24x, tilted and cropped so it reads as glass first; the phone is 64px deep (was 40) with a polished chamfer and side buttons, screens unchanged.',
       build: 'video/app-motion/', drive: null, backup: false, clearedFor: null, notCleared: null,
       clearanceNote: 'Not assessed. Demo figures only; no rate, no price, no coins or money counters; nothing lifted out of a screen is a total; the phone back is plain so the terminal stays the only branded object. For paid Meta, Route C would need checking: the reports screen shows channel figures and the headlines include "Get paid."',
       note: 'v2 on Faisal\'s notes (too fast; screens cut off at the bottom; hold the tap screen with a subtle contactless animation; pull out from the transactions close-up to the whole screen; slower payment link and finale; new end card). 31.2s, 62 beats of partner-upbeat-118. Every export is finished in code where it was cut (the CHARGE and TAP buttons, the snapshot card, the sheet edge) with a home indicator on every screen. Moves between screens are the app\'s own where they can be: CHARGE slides the tap screen in, one spin to the menu, transactions slides in and the camera pushes into its corner then pulls back to the whole list, reports swipes in, the payment link rises as a sheet, the phone steps back as two more slide in beside it. The tap screen holds for eight beats with the signal breathing out every other beat. Since v3 it ends on the locked yellow outro (brand/sting/outro.html, rendered by make-assets.sh with the subtext neropay.app), its hit on beat 54; the off-white wash stays up under it and the phone clips end before it starts. 120 fps blended to 30 for motion blur.',
       files: [
-        { crop: '9:16, textured glass', px: '1080×1920', lufs: '−14.1', media: '08b9c58d-b8ea-4cec-9733-a892d5b81c3c', md5: '50a07c96539bf78034dad9c6fb4e4b40' },
-        { crop: '9:16, clear glass', px: '1080×1920', lufs: '−14.1', media: '2868ba15-113f-4ad3-b826-32e3c88e3da8', md5: 'fc785dff4faeda9f630ada52f880761f' },
+        { crop: '9:16', px: '1080×1920', lufs: '−14.2', media: '4fbbc3b2-71d0-4c05-84af-109b4e030cd6', md5: '734d97a64b8690a3e62a12108a40374a' },
+        { crop: 'v4 textured glass, superseded', px: '1080×1920', lufs: '−14.1', media: '08b9c58d-b8ea-4cec-9733-a892d5b81c3c', md5: '50a07c96539bf78034dad9c6fb4e4b40' },
+        { crop: 'v4 clear glass, superseded', px: '1080×1920', lufs: '−14.1', media: '2868ba15-113f-4ad3-b826-32e3c88e3da8', md5: 'fc785dff4faeda9f630ada52f880761f' },
         { crop: 'v3, superseded', px: '1080×1920', lufs: '−14.1', media: '053b90da-2ccf-4ce5-bda2-c060a1fe088e', md5: 'cb92b5055b2006622dd16168c2d313da' },
         { crop: 'v2, superseded', px: '1080×1920', lufs: '−14.1', media: '63ad00fc-7e12-4f44-a613-c6de7fe6ff00', md5: '3264ed7d13fd597f2c8a07882c0e763f' },
         { crop: 'v1, superseded', px: '1080×1920', lufs: '−13.9', media: '08ccf8f2-090c-435e-a01a-c0e4ab8a05ab', md5: '1855e2b633b3667a2966989c474c03f4' }
