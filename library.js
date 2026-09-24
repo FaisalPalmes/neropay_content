@@ -179,7 +179,7 @@ window.LIBRARY = {
 
     { id: 'NCEX', series: 'NeroConnect', title: 'NeroConnect explainer',
       version: 'v3.6', rendered: '2026-09-24', secs: 145,
-      status: 'review', by: 'content video session, 24 Sep 2026 — v3 rebuilt at Faisal\'s request, awaiting his review',
+      status: 'approved', by: 'Faisal, 24 Sep 2026, in chat with the content video session — "approve for now" (v3.6; he may still add real dashboard screenshots)',
       waiting: 'Faisal watches v3.6 (24 Sep, his notes on v3.5 and the two previews he okayed): opening A ("Look at the card machine on any shop counter. There\'s a name on it … it can be yours") on his NeroPay terminal photo, the bezel swapping to YOUR LOGO; the brand scene full screen, the same terminal swapping to Keelstone Pay on "logo" then pulling back beside the login card; "no payment is ever priced at a loss" in the voice; the whole script re-voiced as take 4; the music steady and quieter; the stutter after "Your logo" fixed (motion/tighten.mjs now cuts only true silence). Real dashboard screenshots: he may still send them, previews first.',
       build: 'motion/neroconnect/explainer-v3/ (v2 kept at explainer/)', drive: 'https://drive.google.com/drive/folders/1hVAZJFL5uLPqC4ATJzpoO9QkvvM9dpaP',
       backup: false, clearedFor: null, notCleared: null,
