@@ -503,7 +503,7 @@ Her hands: slim, elegant young hands with light skin and a warm undertone, real 
 
 Far below and behind, heavily out of focus: grey concrete paving slabs with their joints running diagonally, on an overcast day. Soft, even daylight, no sun, no hard shadows. Photographed on a 50mm lens at f/2.2, the hands and phone sharp, the hair in the foreground soft, the pavement a smooth blur. Natural colour, true-to-life whites, gentle contrast, real film grain, faint lens softness towards the corners. Photoreal, hyper-realistic, unretouched, like a high-end commercial photograph for an app.
 
-Avoid: her face, a second person, the person from the reference image, braids, dark skin on the hands, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, fingers covering the screen corners, chipped or unpainted nails, extra fingers, deformed hands.
+Avoid: her face, a second person, the person from the reference image, braids, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, neon or glowing green screen, glare, reflections or shadows on the screen, logos, Apple logo, bitten-apple logo, brand names, readable text, watermarks, fingers covering the screen corners, chipped or unpainted nails, extra fingers, deformed hands.
 ```
 
 ---
