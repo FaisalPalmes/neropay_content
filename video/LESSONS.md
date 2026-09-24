@@ -409,6 +409,14 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    (the sting and outro already start on the same off-white, so they need no fade). Check the handover frame by frame
    in the render, not only in snapshots.
 
+## App motion, light v3 (24 Sep 2026) — Faisal's note
+
+1. **"It comes in from the left and kind of stops, then it rotates again."** Each move was its own tween easing
+   out to zero, and the next one started from zero, so the phone parked between every move. Rule: drive anything
+   that moves through several poses (the phone, the camera) from one continuous curve through all of them, a
+   monotone cubic, so speed only reaches zero where the direction actually reverses. Screen changes, taps and
+   lifts stay as tweens on top of it.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on
