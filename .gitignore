@@ -43,6 +43,8 @@ video/*/assets/app/
 video/*/assets/sting-*
 video/app-motion/assets/
 video/app-motion/glass.html
+video/app-motion/iphone.html
+video/app-motion/ipad.html
 video/*/fonts/
 video/*/vendor/
 video/appstore-iphone/stills/out/

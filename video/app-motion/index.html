@@ -156,11 +156,18 @@ svg.arcs{position:absolute;left:0;top:0;width:508px;height:1108px;overflow:visib
        starts, and the locked outro (brand/sting/outro.html, yellow, subtext "neropay.app") plays opaque with its
        letters meeting on beat 54, then the tile rises and the subtext slides out under it -->
   <div class="clip" id="fade" data-start="25.8" data-duration="5.7" data-track-index="4"></div>
-  <video class="clip" id="outro" src="assets/outro-yellow-9x16-neropay-app.mp4" data-start="26.54" data-duration="4.96" data-track-index="5" muted playsinline style="width:100%;height:100%;object-fit:cover;z-index:21;background:#FBF9F7"></video>
+  <video class="clip" id="outro" src="assets/outro-yellow-9x16-neropay-app.mp4" data-start="26.54" data-duration="4.96" data-track-index="5" muted playsinline style="width:100%;height:100%;object-fit:contain;z-index:21;background:#FBF9F7"></video>
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
+
+/* store formats (make-formats.mjs sets window.FMT and the frame size): the ground and the wash fill the whole frame,
+   the phones and headlines are the 1080 x 1920 layout scaled to fit and centred, and the outro is contained on its
+   own off-white, so nothing is cropped at 886 x 1920 (iPhone) or 1200 x 1600 (iPad) */
+if (window.FMT) { const [W, H] = window.FMT, k = Math.min(W / 1080, H / 1920), ox = (W - 1080*k) / 2, oy = (H - 1920*k) / 2;
+  ['cam', 'fin', 'hdz'].forEach(id => Object.assign($(id).style, { width:'1080px', height:'1920px', right:'auto', bottom:'auto',
+    transformOrigin:'0 0', transform:`translate(${ox}px,${oy}px) scale(${k})` })); }
 const B = 60 / 118;                                   /* one beat of the bed */
 const b = n => n * B;                                 /* beat n */
 const S = 508 / 784;                                  /* the app-card export onto the screen */
@@ -438,7 +445,7 @@ tl.set('#s1', { visibility:'visible', x:-508, zIndex:8 }, b(45.5))
   .to('#s1', { x:0, duration:0.9, ease:'power2.inOut' }, b(45.5));
 
 /* out · the three pull back into the off-white, which is fully up before the phones' clips end at 26.5s */
-tl.to('#fin', { scale:0.88, duration:0.9, ease:'power2.in', transformOrigin:'50% 52%' }, 25.7)
+tl.to(['#fcL', '#fcR'], { scale:0.88, duration:0.9, ease:'power2.in', transformOrigin:'50% 52%' }, 25.7)
   .fromTo('#fade', { opacity:0 }, { opacity:1, duration:0.55, ease:'power1.inOut' }, 25.85);
 
 window.__timelines['main'] = tl;
