@@ -136,3 +136,7 @@ comes in three looks (yellow glass with ink bars, white glass with yellow bars, 
 all on off-white and none with a glow. The source, nine masters and the open questions for Eray are in
 `brand/sting/`, and `brand/sting/README.md` is the spec. Use the files; don't rebuild the motion. The Shutter
 components above stay a spec that nobody has built.
+
+**The outro, locked 24 Sep 2026.** The same sting, then the tile rises and a subtext line slides out beneath it,
+ending centred. The subtext varies per video and defaults to *Follow for more / @neropayapp*. The fast timing is
+the official one: Faisal rejected a slower retime the same day. See `brand/sting/outro.html` and the README.

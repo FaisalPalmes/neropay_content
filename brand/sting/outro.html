@@ -1,0 +1,101 @@
+<!doctype html>
+<!-- The NeroPay outro, locked by Faisal 24 Sep 2026: the logo sting, then the tile rises and a subtext line slides out under it. See README.md.
+     ?v=yellow|white|silver   ?fmt=9x16|16x9|1x1   ?bg=none (transparent, for compositing)
+     window.setTime(seconds) or window.setFrame(n, fps) drives it; nothing runs on a clock. -->
+<html><head><meta charset="utf-8"><title>NeroPay outro</title>
+<style>
+  html,body{margin:0;overflow:hidden;background:#FBFAF7}
+  body.alpha{background:transparent}
+  #wm{position:absolute;inset:0}
+  .ltr{position:absolute;background:url(../logos/neropay-light-1200.png) no-repeat;background-size:800px auto}
+  #mark{position:absolute;width:360px;height:360px;opacity:0;z-index:2}
+  .tile{position:absolute;left:0;top:7.7px;width:360px;height:344.6px;border-radius:56px;overflow:hidden;
+    background:var(--fill);box-shadow:var(--drop),var(--rim);outline:1px solid var(--line);outline-offset:-1px}
+  .tile::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 70% at 30% 0%,var(--hi),rgba(255,255,255,0) 60%)}
+  .tile::after{content:"";position:absolute;left:14%;right:14%;bottom:5px;height:3px;border-radius:3px;
+    background:linear-gradient(90deg,rgba(255,255,255,0),var(--caustic),rgba(255,255,255,0))}
+  .lift{position:absolute;left:0;top:-7.7px;width:360px;height:360px;filter:drop-shadow(0 6px 7px var(--barshadow))}
+  .bars{position:absolute;inset:0;background:var(--bars);-webkit-mask:url(bars-mask.png) 0 0/360px 360px no-repeat;mask:url(bars-mask.png) 0 0/360px 360px no-repeat}
+  .sheen{position:absolute;inset:-10%;background:linear-gradient(115deg,rgba(255,255,255,0) 38%,var(--sheen) 50%,rgba(255,255,255,0) 62%)}
+  .edge{position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px var(--edge),inset 0 2px 0 var(--edge)}
+
+  /* yellow glass, ink bars */
+  .yellow{--fill:linear-gradient(150deg,rgba(255,224,104,.98) 0%,#FFCF24 50%,#F4BC08 100%);
+    --drop:0 60px 110px -40px rgba(17,17,20,.32),0 18px 36px -18px rgba(17,17,20,.18);
+    --rim:inset 0 0 0 14px rgba(255,255,255,.14),inset 0 0 40px rgba(160,110,0,.22),inset 0 -3px 6px rgba(120,80,0,.18);
+    --line:rgba(120,86,0,.12);--hi:rgba(255,255,255,.75);--caustic:rgba(255,255,255,.9);--edge:rgba(255,255,255,.7);
+    --bars:linear-gradient(160deg,#2a2a30,#111114 60%);--barshadow:rgba(90,60,0,.35);--sheen:rgba(255,255,255,.7)}
+  /* white glass, yellow bars */
+  .white{--fill:linear-gradient(150deg,#FFFFFF 0%,#F3F3F5 50%,#E9EAEE 100%);
+    --drop:0 60px 110px -40px rgba(17,17,20,.30),0 18px 36px -18px rgba(17,17,20,.16);
+    --rim:inset 0 0 0 14px rgba(255,255,255,.55),inset 0 0 34px rgba(17,17,20,.10),inset 0 -3px 6px rgba(17,17,20,.07);
+    --line:rgba(17,17,20,.08);--hi:rgba(255,255,255,1);--caustic:#fff;--edge:rgba(255,255,255,1);
+    --bars:linear-gradient(160deg,#FFDD60,#FFCF24 55%,#F0BA00);--barshadow:rgba(150,110,0,.30);--sheen:rgba(255,255,255,.95)}
+  /* silver glass, yellow bars */
+  .silver{--fill:linear-gradient(150deg,#F4F5F8 0%,#C9CCD3 45%,#E6E8EC 70%,#B7BBC4 100%);
+    --drop:0 60px 110px -40px rgba(17,17,20,.38),0 18px 36px -18px rgba(17,17,20,.20);
+    --rim:inset 0 0 0 14px rgba(255,255,255,.28),inset 0 0 34px rgba(17,17,20,.14),inset 0 -3px 6px rgba(17,17,20,.12);
+    --line:rgba(17,17,20,.12);--hi:rgba(255,255,255,.95);--caustic:#fff;--edge:rgba(255,255,255,.9);
+    --bars:linear-gradient(160deg,#FFDD60,#FFCF24 55%,#F0BA00);--barshadow:rgba(40,40,50,.35);--sheen:rgba(255,255,255,.9)}
+  .blackY{--bars:linear-gradient(160deg,#FFDD60,#FFCF24 55%,#F0BA00)}
+
+  @font-face{font-family:P;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+  @font-face{font-family:P;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+  #sub{position:absolute;z-index:1;left:0;width:100%;text-align:center;font-family:P;color:#111114;opacity:0;letter-spacing:-0.02em;line-height:1}
+  #sub .big{font-size:52px;font-weight:600}
+  #sub .small{font-size:30px;font-weight:500;color:#6B6B73;letter-spacing:-0.005em;margin-bottom:14px}
+</style></head>
+<body><div id="wm"></div><div id="mark"></div><div id="sub"></div>
+<script>
+const Q = new URLSearchParams(location.search);
+const V = Q.get('v') || 'yellow';
+const [W, H] = ({ '9x16': [1080, 1920], '16x9': [1920, 1080], '1x1': [1080, 1080] })[Q.get('fmt') || '9x16'];
+document.body.className = V + (Q.get('bg') === 'none' ? ' alpha' : '');
+document.documentElement.style.cssText = document.body.style.cssText = `width:${W}px;height:${H}px`;
+// letter runs measured from brand/logos/neropay-light-1200.png (1200x219): n e r o p a y
+const RUNS = [[9,181],[191,358],[365,476],[478,648],[655,828],[834,1006],[1013,1191]];
+const CX = W / 2, CY = H / 2, WMW = 800, K = WMW / 1200, WMH = 219 * K, S = 360;
+const WX = CX - WMW / 2, WY = CY - WMH / 2;
+const clamp = x => Math.max(0, Math.min(1, x));
+const outC = x => 1 - Math.pow(1 - x, 3), inQ = x => x * x * x * x, io = x => x < .5 ? 2*x*x : 1 - Math.pow(-2*x+2, 2)/2;
+const wm = document.getElementById('wm'), mark = document.getElementById('mark');
+mark.style.left = (CX - S / 2) + 'px'; mark.style.top = (CY - S / 2) + 'px';
+const L = RUNS.map(([a, b]) => { const d = document.createElement('div'); d.className = 'ltr';
+  d.style.width = (b - a) * K + 'px'; d.style.height = WMH + 'px';
+  d.style.backgroundPosition = (-a * K) + 'px 0'; d.dataset.a = a; d.dataset.b = b; wm.appendChild(d); return d; });
+mark.innerHTML = '<div class="tile"><div class="lift"><div class="bars"></div></div><div class="sheen"></div><div class="edge"></div></div>';
+const sheen = mark.querySelector('.sheen');
+/* 0-0.45s the wordmark holds · 0.45-0.92s the seven letters, kept rigid, accelerate together and pile
+   · 0.86-0.98s the glass tile grows out of the pile · 1.15-1.80s one light pass · holds to 2.6s */
+window.DURATION = 5.0;
+/* The outro: the locked sting unchanged to 1.85s, then the tile rises (1.85-2.45s) and a line slides out
+   from under it (1.97-2.52s); the pair sits centred. The line varies per video:
+   ?small=...&big=...  (defaults "Follow for more" / "@neropayapp"; small= empty drops the top line)
+   or window.setSub(small, big) from a composition. */
+const sub = document.getElementById('sub');
+window.setSub = function (small, big) {
+  sub.innerHTML = '';
+  if (small) { const e = document.createElement('div'); e.className = 'small'; e.textContent = small; sub.appendChild(e); }
+  const e = document.createElement('div'); e.className = 'big'; e.textContent = big; sub.appendChild(e);
+};
+window.setSub(Q.has('small') ? Q.get('small') : 'Follow for more', Q.get('big') || '@neropayapp');
+const GAP = 56;
+window.setTime = function (t) {
+  const p = inQ(clamp((t - 0.45) / 0.47));
+  L.forEach((d, i) => { const a = +d.dataset.a, b = +d.dataset.b, home = WX + a * K, w = (b - a) * K;
+    d.style.left = (home + (CX - w / 2 + (i - 3) * 14 - home) * p) + 'px'; d.style.top = WY + 'px';
+    d.style.opacity = t < 0.95 ? 1 : 0; });
+  const q = clamp((t - 0.86) / 0.12);
+  mark.style.opacity = q > 0 ? 1 : 0;
+  mark.style.transform = `scale(${0.30 + 0.70 * outC(q)})`;
+  sheen.style.transform = `translateX(${-120 + 240 * io(clamp((t - 1.15) / 0.65))}%)`;
+  const h = sub.offsetHeight, TH = 344.6, rise = (GAP + h) / 2;
+  const u = io(clamp((t - 1.85) / 0.60)), d = outC(clamp((t - 1.97) / 0.55));
+  mark.style.transform += ` translateY(${-rise * u / (0.30 + 0.70 * outC(q) || 1)}px)`;
+  const final = CY - TH / 2 - rise + TH + GAP;              // top of the subtext once settled
+  sub.style.top = (final - 34 * (1 - d)) + 'px';
+  sub.style.opacity = d;
+};
+window.setFrame = (n, fps = 60) => window.setTime(n / fps);
+window.setTime(0);
+</script></body></html>
