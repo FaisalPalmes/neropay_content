@@ -130,7 +130,69 @@ Cinematic 16:9 film still from a premium smartphone app commercial. Dramatic low
 
 ---
 
-### 02. Over a man's shoulder at the kerb, ordering. Composite: Sage & Co, the order screen
+### 02A. Faceless, over the shoulder, against a building wall. Composite: Sage & Co, the order screen
+
+**Framing:** faceless. The frame cuts below his ear. A 25-year-old mixed-race athlete, light-skinned,
+against one plain rendered wall split by a single diagonal shadow line. The setting is real but reads
+as abstract, and nothing competes with the screen. His Pinterest references are the model: the hand and
+phone carry the shot and the background stays quiet.
+**Planned motion (5s):**
+```
+Subtle handheld camera, breathing slightly. He stands still; his thumb scrolls up once, then taps. The shadow line on the wall stays still. His face never enters the frame. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. The hand keeps five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+```
+Candid, minimal photograph, looking like a real frame from a 35mm film camera, not a render. A faceless over-the-shoulder shot of a 25-year-old athletic man of mixed Black and white British heritage, light-skinned with a warm golden-brown tone, standing close to the plain side wall of a modern building and looking down at the phone in his right hand. His face is not in the picture: the top edge of the frame cuts just below his ear, so we see only the side of his neck, the back of his right shoulder, his right arm, his hand and the phone.
+
+The camera is just behind and slightly above his right shoulder, about 25 cm away, looking down at about 25 degrees past the shoulder onto the phone. He stands relaxed, his weight on one leg, his right elbow bent and tucked against his side, so the phone sits in front of his lower chest with the screen tilted up towards his eyes. The camera sees the screen at a slight angle, as in a real over-the-shoulder shot.
+
+How he holds it: one-handed, the phone upright, its lower half resting across his palm and the base of his fingers, his four fingers wrapped around the left edge with their tips just showing along that edge, his little finger tucked under the back near the bottom to support it, and his thumb resting on the lower third of the screen, slightly bent, about to tap. The phone is the true size of a 6.1-inch phone in a grown man's hand. All four corners of the screen are clearly visible and no finger covers a corner.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, flat graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Him: an athlete's build, broad shoulders and a lean, strong forearm with visible veins and defined muscle. Real skin with visible pores, fine hairs on the forearm and the back of the hand, natural creases over the knuckles, short clean nails. He wears a fitted plain black short-sleeved technical T-shirt with no logo, the fabric creasing naturally at the shoulder seam. The side of his neck shows a fresh, clean skin fade at the hairline. Slim, fit, well kept, mid-twenties.
+
+The environment is real but reads as abstract: behind the phone, filling the whole background, is one large, plain, smooth wall of warm off-white rendered concrete on the side of a modern building, with a faint real texture, a few hairline cracks and fine weathering. Nothing else is in the frame: no windows, no signs, no people, no street. Sunlight falls on the upper part of the wall, and the shadow of a neighbouring building cuts across it in one clean diagonal line, dividing the wall into a warm sunlit plane and a cool shaded plane. He stands in the open shade, so his arm, hand and the phone are lit by soft, even, cool daylight, with no sun on them.
+
+Photographed on a 50mm lens at f/2.8, the phone and thumb sharp, the wall softly out of focus but its texture and the shadow line still readable. Natural, slightly muted colour, true-to-life whites, gentle contrast, real film grain, faint lens softness towards the corners. Minimal, graphic and quiet, with all attention on the screen. Photoreal, hyper-realistic, unretouched.
+
+Avoid: his face, his eyes, his nose, his mouth, the back of his head filling the frame, AI-generated look, CGI, render, golden hour, glowing highlights, rim light, HDR, teal and orange grade, oversaturated colour, oversharpening, plastic skin, heavy bokeh, a busy background, windows, people, signs, text, neon or glowing green screen, glare or shadows on the screen, fingers covering the screen corners, oversized hand, fingers pinching the phone, the screen flat-on to the camera, logos, Apple logo, brand names, watermarks, extra fingers, deformed hands.
+```
+
+---
+
+### 02B. The same shot in a yellow studio. Composite: Sage & Co, the order screen
+
+**Framing:** the same as 02A, on a warm sunflower-yellow seamless paper backdrop, in a white T-shirt.
+The brand yellow as a place.
+**Planned motion (5s):**
+```
+Subtle handheld camera, breathing slightly. He stands still against the yellow backdrop; his thumb scrolls up once, then taps. His face never enters the frame. The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, image or text ever appears on it. The hand keeps five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+```
+Minimal studio photograph, looking like a real frame from a 35mm film camera in a real photo studio, not a render. A faceless over-the-shoulder shot of a 25-year-old athletic man of mixed Black and white British heritage, light-skinned with a warm golden-brown tone, standing in front of a warm sunflower-yellow seamless paper backdrop (close to #FFCF24) and looking down at the phone in his right hand. His face is not in the picture: the top edge of the frame cuts just below his ear, so we see only the side of his neck, the back of his right shoulder, his right arm, his hand and the phone.
+
+The camera is just behind and slightly above his right shoulder, about 25 cm away, looking down at about 25 degrees past the shoulder onto the phone. He stands relaxed, his weight on one leg, his right elbow bent and tucked against his side, so the phone sits in front of his lower chest with the screen tilted up towards his eyes. The camera sees the screen at a slight angle, as in a real over-the-shoulder shot.
+
+How he holds it: one-handed, the phone upright, its lower half resting across his palm and the base of his fingers, his four fingers wrapped around the left edge with their tips just showing along that edge, his little finger tucked under the back near the bottom to support it, and his thumb resting on the lower third of the screen, slightly bent, about to tap. The phone is the true size of a 6.1-inch phone in a grown man's hand. All four corners of the screen are clearly visible and no finger covers a corner.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, flat graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Him: an athlete's build, broad shoulders and a lean, strong forearm with visible veins and defined muscle. Real skin with visible pores, fine hairs on the forearm and the back of the hand, natural creases over the knuckles, short clean nails. He wears a fitted plain white heavyweight cotton T-shirt with no logo, the fabric creasing naturally at the shoulder seam. The side of his neck shows a fresh, clean skin fade at the hairline. Slim, fit, well kept, mid-twenties.
+
+The studio: a real seamless paper backdrop in warm sunflower yellow fills the whole background, with the faint texture of the paper, a gentle gradient where the light falls off towards the edges, and a soft, slightly darker band where the paper curves down to the floor far behind him. Nothing else is in the frame. Lighting: one large soft key light from the upper left through a big diffuser, and a little warm yellow light bouncing off the backdrop onto the edge of his arm and shoulder, as it would in a real studio. The phone screen stays evenly lit and matte.
+
+Photographed on a 50mm lens at f/2.8, the phone and thumb sharp, the backdrop softly out of focus. Natural colour with a clean white T-shirt and a true, warm yellow, gentle contrast, real film grain, faint lens softness towards the corners. Minimal, graphic and bold, with all attention on the screen. Photoreal, hyper-realistic, unretouched.
+
+Avoid: his face, his eyes, his nose, his mouth, the back of his head filling the frame, AI-generated look, CGI, render, a flat digital yellow fill, lemon or neon yellow, orange, glowing highlights, rim light, HDR, oversaturated colour, oversharpening, plastic skin, props, objects, other people, text, neon or glowing green screen, glare or shadows on the screen, fingers covering the screen corners, oversized hand, fingers pinching the phone, the screen flat-on to the camera, logos, Apple logo, brand names, watermarks, extra fingers, deformed hands.
+```
+
+---
+
+### 02 (street, superseded). Over a man's shoulder at the kerb, ordering. Composite: Sage & Co, the order screen
+
+*Superseded on 24 Sep 2026 by 02A and 02B below: Faisal wants the over-the-shoulder shot faceless, in a quiet setting, with the screen as the focus. Kept for reference.*
 
 **Framing:** from just behind and above his right shoulder, looking down about 35 degrees onto the phone,
 the zebra crossing blurred beyond it. His legs and feet stay out of frame. A camera looking steeply
@@ -315,7 +377,7 @@ four corners just inside it"*, 100mm macro at f/5.6. This is a cutaway for which
 
 ## 6. The pilot, before anything else
 
-Generate **03, 04 and 02**. Only 03 takes a reference image: Faisal's character sheet for Mia, attached as image 1. Then make
+Generate **03, 04 and 02A or 02B**. Only 03 takes a reference image: Faisal's character sheet for Mia, attached as image 1. Then make
 image-to-video clips of all three at 1080p: **03 at 6s, 04 at 5s, 02 at 5s**. If the model only offers 5
 or 10, choose 5; past about 6s, faces and hands start to morph. These are the video prompts:
 
