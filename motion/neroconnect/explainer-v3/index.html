@@ -65,6 +65,11 @@ body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiase
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--live);margin-right:12px;vertical-align:1px}
 .ydot{background:var(--yel)}
 .hair{height:1px;background:rgba(17,17,20,.08)}
+/* the pointer (24 Sep 2026): whatever she names flashes a soft yellow wash as it lands, then lets go */
+.hitfx{position:absolute;left:-14px;right:-14px;top:-10px;bottom:-10px;border-radius:14px;pointer-events:none;opacity:0;
+  background:rgba(255,207,36,.26);box-shadow:0 0 0 2px rgba(255,207,36,.55),0 0 34px rgba(255,207,36,.35)}
+.g > .hitfx{position:absolute;inset:0;border-radius:inherit;z-index:0}
+[data-hit]{position:relative}
 /* the mark, small, bottom right, the whole film: the locked sting's yellow glass tile (brand/sting), 78 px */
 #bug{position:absolute;right:58px;bottom:50px;width:78px;height:74.6px;opacity:0;z-index:20}
 #bug .t{position:absolute;inset:0;border-radius:12px;overflow:hidden;
@@ -110,29 +115,29 @@ const SC = [
  { t: [11.95, 24.99], light: [180, 960], ox: '70%', html: `
    <div class="kick" style="left:150px;top:300px" data-at="12.21"><b></b>How it works</div>
    <div class="h" style="left:150px;top:360px;width:640px" data-at="12.37"><span class="ln">Three</span><span class="ln"><span class="mk" data-mark="12.72">parts.</span></span></div>
-   ${[['13.2','NeroPay','Processes the payments. Handles the compliance.'],
-      ['16.5','You','Bring the merchants. Set the terms.'],
-      ['18.98','Your merchants','Take payments on your dashboard, on your domain.']].map((c, i) => `
-   <div class="g" style="left:900px;top:${190 + i * 240}px;width:870px;height:200px;padding:42px 52px" data-at="${c[0]}">
+   ${[['14.33','NeroPay','Processes the payments. Handles the compliance.'],
+      ['17.66','You','Bring the merchants. Set the terms.'],
+      ['20.19','Your merchants','Take payments on your dashboard, on your domain.']].map((c, i) => `
+   <div class="g" style="left:900px;top:${190 + i * 240}px;width:870px;height:200px;padding:42px 52px" data-at="${c[0]}" data-hit>
      <i class="rule" data-rule="${c[0]}"></i>
      <div class="lab">0${i + 1}</div><div class="mid" style="margin-top:14px">${c[1]}</div><div class="lab" style="margin-top:10px;color:#44444C">${c[2]}</div></div>`).join('')}` },
 
  { t: [24.99, 32.97], light: [1790, 900], ox: '68%', html: `
    <div class="h" style="left:150px;top:380px;width:620px" data-at="25.20"><span class="ln">Everything</span><span class="ln">in <span class="mk" data-mark="26.63">one place.</span></span></div>
    <div class="g" style="left:860px;top:260px;width:910px;height:560px;padding:60px 64px" data-at="25.31">
-     <div class="lab" style="color:#44444C">Harbourline · Overview</div>
+     <div class="lab" style="color:#44444C">Keelstone Pay · Overview</div>
      <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px 60px;margin-top:56px">
-       <div data-at="27.71"><div class="lab">Merchants live</div><div class="big" style="margin-top:16px" data-count="37" data-int="1">37</div></div>
-       <div data-at="29.24"><div class="lab">Taken</div><div class="big" style="margin-top:16px" data-count="1842.60">£1,842.60</div></div>
-       <div data-at="30.45"><div class="lab">You've earned</div><div class="big" style="margin-top:16px" data-count="18.35">£18.35</div></div>
-       <div data-at="31.44"><div class="lab"><span class="dot ydot"></span>Needs you today</div><div class="big" style="margin-top:16px">2</div></div>
+       <div data-at="27.71" data-hit><div class="lab">Merchants live</div><div class="big" style="margin-top:16px" data-count="37" data-int="1">37</div></div>
+       <div data-at="29.24" data-hit><div class="lab">Taken</div><div class="big" style="margin-top:16px" data-count="1842.60">£1,842.60</div></div>
+       <div data-at="30.45" data-hit><div class="lab">You've earned</div><div class="big" style="margin-top:16px" data-count="18.35">£18.35</div></div>
+       <div data-at="31.44" data-hit><div class="lab"><span class="dot ydot"></span>Needs you today</div><div class="big" style="margin-top:16px">2</div></div>
      </div></div>` },
 
  { t: [32.97, 41.40], light: [140, 130], ox: '66%', html: `
    <div class="h" style="left:150px;top:390px;width:640px" data-at="33.17"><span class="ln">What needs you,</span><span class="ln">at the top.</span></div>
    <div class="kick" style="left:150px;top:620px" data-at="40.41"><b></b>Nothing hides</div>
-   ${[['32.8','Dispute','Respond in 3 days'],['33.54','Document requested','Due in 5 days'],['34.38','Proof of payment','Due in 7 days']].map((r, i) => `
-   <div class="g" style="left:900px;top:${250 + i * 200}px;width:870px;height:160px;padding:0 52px" data-at="${r[0]}">
+   ${[['35.24','Dispute','Respond in 3 days'],['35.94','Document requested','Due in 5 days'],['36.77','Proof of payment','Due in 7 days']].map((r, i) => `
+   <div class="g" style="left:900px;top:${250 + i * 200}px;width:870px;height:160px;padding:0 52px" data-at="${r[0]}" data-hit>
      ${i === 0 ? '<i class="rule" data-rule="38.47"></i>' : ''}
      <div class="row" style="height:160px"><div class="mid">${r[1]}</div><div class="lab" data-at="39.75" style="color:${i === 0 ? '#111114' : 'var(--mute)'}">${r[2]}</div></div></div>`).join('')}` },
 
@@ -159,8 +164,8 @@ const SC = [
  { t: [55.25, 67.78], light: [1770, 1000], ox: '66%', html: `
    <div class="kick" style="left:150px;top:300px" data-at="55.44"><b></b>Pricing</div>
    <div class="h" style="left:150px;top:360px;width:640px" data-at="56.02"><span class="ln">Two things</span><span class="ln">agreed</span><span class="ln">up front.</span></div>
-   <div class="g" style="left:880px;top:150px;width:890px;height:150px;padding:0 50px" data-at="59.16"><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the processing fee</span><span class="lab">With NeroPay</span></div></div>
-   <div class="g" style="left:880px;top:330px;width:890px;height:150px;padding:0 50px" data-at="60.97"><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the monthly account fee</span><span class="lab">With NeroPay</span></div></div>
+   <div class="g" style="left:880px;top:150px;width:890px;height:150px;padding:0 50px" data-at="59.16" data-hit><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the processing fee</span><span class="lab">With NeroPay</span></div></div>
+   <div class="g" style="left:880px;top:330px;width:890px;height:150px;padding:0 50px" data-at="60.97" data-hit><div class="row" style="height:150px"><span class="mid" style="font-size:30px">Who pays the monthly account fee</span><span class="lab">With NeroPay</span></div></div>
    <div class="g" style="left:880px;top:560px;width:890px;height:330px;padding:56px 50px" data-at="63.14"><i class="rule" data-rule="66.58"></i>
      <div class="lab">Everything else</div><div class="mid" style="margin-top:16px;font-size:30px" data-at="64.31">What your merchants are charged</div>
      <div class="big" style="margin-top:34px" data-at="66.58"><span class="mk" data-mark="66.82">Yours to set.</span></div></div>` },
@@ -171,22 +176,22 @@ const SC = [
    <div class="h" style="left:648px;top:490px;color:var(--mute)" data-at="69.98">−</div>
    <div class="g" style="left:725px;top:420px;width:470px;height:260px;padding:52px" data-at="70.56"><div class="lab">NeroPay's cost</div><div class="big" style="margin-top:22px" data-count="22.85">£22.85</div></div>
    <div class="h" style="left:1222px;top:490px;color:var(--mute)" data-at="71.55">=</div>
-   <div class="g" style="left:1300px;top:420px;width:470px;height:260px;padding:52px" data-at="72.02"><i class="rule" data-rule="72.25"></i><div class="lab">Your margin</div><div class="big" style="margin-top:22px" data-count="18.35">£18.35</div></div>
+   <div class="g" style="left:1300px;top:420px;width:470px;height:260px;padding:52px" data-at="72.02" data-hit><i class="rule" data-rule="72.25"></i><div class="lab">Your margin</div><div class="big" style="margin-top:22px" data-count="18.35">£18.35</div></div>
    <div class="sub" style="left:150px;top:760px" data-at="72.89">On every payment.</div>` },
 
  { t: [74.42, 84.74], light: [1810, 640], ox: '66%', html: `
-   <div class="h" style="left:150px;top:380px;width:640px" data-at="74.54"><span class="ln">A floor under</span><span class="ln"><span class="mk" data-mark="75.90">every price.</span></span></div>
-   <div class="g" style="left:860px;top:290px;width:910px;height:500px;padding:56px 60px" data-at="74.81">
+   <div class="h" style="left:150px;top:380px;width:640px" data-at="74.50"><span class="ln">Every price has</span><span class="ln">a <span class="mk" data-mark="75.49">minimum.</span></span></div>
+   <div class="g" style="left:860px;top:290px;width:910px;height:500px;padding:56px 60px" data-at="74.79">
      <div class="lab">Your price for a service</div>
      <div style="position:relative;margin-top:150px;height:6px;border-radius:3px;background:rgba(17,17,20,.08)">
-       <div style="position:absolute;left:0;width:34%;top:0;bottom:0;border-radius:3px;background:repeating-linear-gradient(135deg,rgba(17,17,20,.14) 0 6px,rgba(17,17,20,0) 6px 12px)" data-at="78.06"></div>
-       <div style="position:absolute;left:34%;top:-46px;width:3px;height:98px;margin-left:-1.5px;background:var(--ink)" data-at="78.35"></div>
-       <div class="lab" style="position:absolute;left:34%;top:-86px;transform:translateX(-50%);white-space:nowrap;color:#111114" data-at="78.35">NeroPay's cost</div>
+       <div style="position:absolute;left:0;width:34%;top:0;bottom:0;border-radius:3px;background:repeating-linear-gradient(135deg,rgba(17,17,20,.14) 0 6px,rgba(17,17,20,0) 6px 12px)" data-at="77.63"></div>
+       <div style="position:absolute;left:34%;top:-46px;width:3px;height:98px;margin-left:-1.5px;background:var(--ink)" data-at="77.98"></div>
+       <div class="lab" style="position:absolute;left:34%;top:-86px;transform:translateX(-50%);white-space:nowrap;color:#111114" data-at="77.98">Minimum: NeroPay's cost</div>
        <div id="knob" style="position:absolute;top:-19px;width:44px;height:44px;margin-left:-22px;border-radius:50%;background:#fff;box-shadow:0 8px 18px -6px rgba(17,17,20,.35),inset 0 0 0 1px rgba(17,17,20,.08)"></div>
      </div>
-     <div class="lab" style="position:absolute;left:60px;top:300px;width:790px;color:#111114" data-at="79.14">You can't set it below NeroPay's cost.</div>
-     <div class="mid" style="position:absolute;left:60px;top:352px;width:790px;font-size:34px" data-at="79.86"><span class="mk" data-mark="80.48">No payment priced at a loss.</span></div>
-     <div class="lab" style="position:absolute;left:60px;top:430px;width:790px;color:#111114" data-at="82.72">At the floor, it passes through <span class="mk" data-mark="84.08">at cost.</span></div>
+     <div class="lab" style="position:absolute;left:60px;top:300px;width:790px;color:#111114" data-at="78.64">You can't set it below NeroPay's cost.</div>
+     <div class="mid" style="position:absolute;left:60px;top:352px;width:790px;font-size:34px" data-at="79.43"><span class="mk" data-mark="80.09">No payment priced at a loss.</span></div>
+     <div class="lab" style="position:absolute;left:60px;top:430px;width:790px;color:#111114" data-at="82.00">At the minimum, it passes through <span class="mk" data-mark="84.17">at cost.</span></div>
    </div>` },
 
  { t: [84.74, 93.60], light: [120, 940], ox: '68%', html: `
@@ -195,12 +200,12 @@ const SC = [
    <div class="g" style="left:1010px;top:130px;width:760px;height:820px;padding:0" data-at="86.01">
      <div class="row" style="height:92px;padding:0 36px;border-bottom:1px solid rgba(17,17,20,.07)" data-at="86.04">
        <span style="display:flex;gap:9px"><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i><i style="width:14px;height:14px;border-radius:50%;background:rgba(17,17,20,.12)"></i></span>
-       <span class="lab" style="color:#111114;font-size:24px">pay.harbourline.co.uk</span><span style="width:60px"></span></div>
+       <span class="lab" style="color:#111114;font-size:24px">pay.keelstonepay.co.uk</span><span style="width:60px"></span></div>
      <div style="display:flex;flex-direction:column;align-items:center;padding-top:110px">
-       <div data-at="84.89" style="display:flex;align-items:center;gap:18px"><i style="display:block;width:64px;height:64px;border-radius:16px;background:#1D3B53"></i><span style="font:700 44px/1 P;letter-spacing:-.02em;color:#1D3B53">Harbourline</span></div>
+       <div data-at="84.89" style="display:flex;align-items:center;gap:18px"><i style="display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:16px;background:linear-gradient(150deg,#3B6BF0,#2350D8);font:700 36px/1 P;font-style:normal;color:#fff">K</i><span style="font:700 44px/1 P;letter-spacing:-.02em;color:#1A2E6B">Keelstone <span style="color:#2350D8">Pay</span></span></div>
        <div class="lab" style="margin-top:70px" data-at="86.89">Sign in to your payments</div>
-       <div style="margin-top:34px;width:520px;height:76px;border-radius:18px;background:#1D3B53;display:flex;align-items:center;justify-content:center;font:600 26px P;color:#fff" data-at="87.18">Sign in</div>
-       <div class="lab" style="margin-top:60px;font-size:20px" data-at="89.43">Merchant dashboard · Harbourline</div>
+       <div style="margin-top:34px;width:520px;height:76px;border-radius:18px;background:#2350D8;display:flex;align-items:center;justify-content:center;font:600 26px P;color:#fff" data-at="87.18">Sign in</div>
+       <div class="lab" style="margin-top:60px;font-size:20px" data-at="89.43">Merchant dashboard · Keelstone Pay</div>
      </div></div>` },
 
  { t: [93.60, 104.63], light: [1790, 140], ox: '62%', html: `
@@ -216,9 +221,9 @@ const SC = [
  { t: [104.63, 111.26], light: [190, 110], ox: '66%', html: `
    <div class="h" style="left:150px;top:380px;width:640px" data-at="105.18"><span class="ln">What your</span><span class="ln">merchants</span><span class="ln"><span class="mk" data-mark="106.40">earn you.</span></span></div>
    <div class="g" style="left:900px;top:170px;width:870px;height:740px;padding:30px 60px" data-at="105.25">
-     ${[['99.18','Payments','1842.60'],['100.02','Your fee','41.20'],['100.8','NeroPay\'s cost','22.85'],['101.84','What you keep','18.35']].map((r, i) => `
+     ${[['107.36','Payments','1842.60'],['108.21','Your fee','41.20'],['109.45','NeroPay\'s cost','22.85'],['110.50','What you keep','18.35']].map((r, i) => `
      ${i ? '<div class="hair"></div>' : ''}
-     <div class="row" style="height:168px;position:relative" data-at="${r[0]}">${i === 3 ? '<i class="rule" data-rule="110.81" style="left:-60px"></i>' : ''}<span class="lab" style="font-size:26px;color:${i === 3 ? '#111114' : 'var(--mute)'}">${r[1]}</span><span class="big">${money(+r[2])}</span></div>`).join('')}
+     <div class="row" style="height:168px;position:relative" data-at="${r[0]}" data-hit data-slide>${i === 3 ? '<i class="rule" data-rule="110.81" style="left:-60px"></i>' : ''}<span class="lab" style="font-size:26px;color:${i === 3 ? '#111114' : 'var(--mute)'}">${r[1]}</span><span class="big" data-count="${r[2]}">${money(+r[2])}</span></div>`).join('')}
    </div>` },
 
  { t: [111.26, 116.14], light: [1790, 960], ox: '64%', html: `
@@ -234,16 +239,16 @@ const SC = [
  { t: [116.14, 123.77], light: [130, 560], ox: '66%', html: `
    <div class="h" style="left:150px;top:380px;width:640px" data-at="116.25"><span class="ln">Your balance.</span><span class="ln"><span class="mk" data-mark="117.72">Yours to move.</span></span></div>
    <div class="g" id="res" style="left:1010px;top:420px;width:760px;height:380px;padding:0 56px 44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="118.89"><div class="row"><span class="lab" style="color:#111114">Reserve</span><span class="lab">Keeps payouts flowing</span></div></div>
-   <div class="g" style="left:880px;top:190px;width:760px;height:400px;padding:60px 56px" data-at="116.56"><div class="lab">Available balance</div><div class="big" style="margin-top:26px;font-size:84px" data-count="2418.36">£2,418.36</div><div class="lab" style="margin-top:36px;color:#111114" data-at="117.72">Move it when you like</div></div>` },
+   <div class="g" style="left:880px;top:190px;width:760px;height:400px;padding:60px 56px" data-at="116.56" data-hit><div class="lab">Available balance</div><div class="big" style="margin-top:26px;font-size:84px" data-count="2418.36">£2,418.36</div><div class="lab" style="margin-top:36px;color:#111114" data-at="117.72">Move it when you like</div></div>` },
 
  { t: [123.77, 133.37], light: [1640, 110], ox: '60%', html: `
    <div class="kick" style="left:150px;top:190px" data-at="124.35"><b></b>Support</div>
    <div class="h" style="left:150px;top:240px;width:1600px" data-at="124.72"><span class="ln">Two tiers.</span></div>
    <div class="g" style="left:150px;top:430px;width:720px;height:420px;padding:56px" data-at="125.92"><div class="lab">Free</div><div class="mid" style="margin-top:18px">The platform</div><div class="lab" style="margin-top:22px">Your dashboard, your settings, the guides.</div></div>
    <div class="g" style="left:930px;top:430px;width:840px;height:420px;padding:56px" data-at="127.32"><i class="rule" data-rule="131.65"></i><div class="lab">Premium</div>
-     <div class="mid" style="margin-top:18px;font-size:30px" data-at="128.12">Your merchants' tickets, answered</div>
-     <div class="mid" style="margin-top:14px;font-size:30px" data-at="129.47">Their hardware, shipped</div>
-     <div class="mid" style="margin-top:14px;font-size:30px" data-at="130.89">The phone, picked up</div>
+     <div class="mid" style="margin-top:18px;font-size:30px" data-at="128.12" data-hit>Your merchants' tickets, answered</div>
+     <div class="mid" style="margin-top:14px;font-size:30px" data-at="129.47" data-hit>Their hardware, shipped</div>
+     <div class="mid" style="margin-top:14px;font-size:30px" data-at="130.89" data-hit>The phone, picked up</div>
      <div class="lab" style="margin-top:34px;color:#111114;font-size:26px" data-at="131.65"><span class="mk" data-mark="132.12">All in your name.</span></div></div>` },
 
  { t: [133.37, 138.9], light: [260, 900], ox: '50%', html: `
@@ -252,7 +257,7 @@ const SC = [
    <div class="mid" style="position:absolute;left:150px;top:585px;width:1000px;font-size:40px;font-weight:500;color:#2A2A30;line-height:1.3" data-at="135.47">So… are you ready to run payments<br>under <span class="mk" data-mark="137.75" style="font-weight:600;color:#111114">your own name?</span></div>` }
 ];
 window.OUTRO_AT = 139.3;   /* the locked outro takes over here; render.cjs splices it in */
-window.DURATION = 145.1;
+window.DURATION = 147.6;   /* the outro holds its last frame 2.5 s longer (Faisal, 24 Sep) */
 
 const film = document.getElementById('film'), L = document.getElementById('light');
 const P1 = document.getElementById('p1'), P2 = document.getElementById('p2');
@@ -260,7 +265,8 @@ SC.forEach(s => { const d = document.createElement('div'); d.className = 'sc';
   d.innerHTML = `<div class="cam" style="--ox:${s.ox}">${s.html}</div>`; film.appendChild(d); s.el = d; s.cam = d.firstChild;
   s.items = [...d.querySelectorAll('[data-at]')]; s.marks = [...d.querySelectorAll('[data-mark]')];
   s.counts = [...d.querySelectorAll('[data-count]')]; s.rules = [...d.querySelectorAll('[data-rule]')];
-  s.glass = [...d.querySelectorAll('.g')]; });
+  s.glass = [...d.querySelectorAll('.g')];
+  s.hits = [...d.querySelectorAll('[data-hit]')].map(e => { const fx = document.createElement('i'); fx.className = 'hitfx'; e.prepend(fx); return [e, fx]; }); });
 
 const XF = 0.4;
 window.setTime = function (t) {
@@ -292,8 +298,10 @@ window.setTime = function (t) {
     s.cam.style.transform = `translateY(${Math.round(-10 * io(clamp((t - b) / XF)))}px)`;
     for (const im of s.el.querySelectorAll('[data-push]')) im.style.scale = String(1 + 0.03 * push);
     for (const e of s.items) { const p = outE(clamp((t - +e.dataset.at) / 0.55));
-      e.style.opacity = p; e.style.transform = (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${Math.round((1 - p) * 26)}px)`;
+      e.style.opacity = p; e.style.transform = e.dataset.slide !== undefined ? `translateX(${Math.round((1 - p) * 90)}px)` : (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${Math.round((1 - p) * 26)}px)`;
       if (e.classList.contains('g')) e.style.setProperty('--sh', `${-130 + 260 * io(clamp((t - +e.dataset.at - 0.15) / 1.0))}%`); }
+    for (const [e, fx] of s.hits) { const d = t - +e.dataset.at - 0.12;
+      fx.style.opacity = d < 0 ? 0 : d < 0.18 ? d / 0.18 : Math.max(0, 1 - (d - 0.18) / 1.0); }
     for (const m of s.marks) m.style.setProperty('--m', outC(clamp((t - +m.dataset.mark) / 0.35)));
     for (const r of s.rules) r.style.setProperty('--r', outC(clamp((t - +r.dataset.rule) / 0.35)));
     for (const c of s.counts) { const at = +c.closest('[data-at]').dataset.at, v = +c.dataset.count;
@@ -302,12 +310,12 @@ window.setTime = function (t) {
   /* scene-specific moves */
   const fill = document.getElementById('fill');
   /* the steps she names: details (1, 2) · NeroPay runs the checks (3, 4) · taking payments (5) */
-  const STEP = [50.58, 51.18, 52.30, 53.20, 53.90];
+  const STEP = [50.72, 51.18, 52.74, 53.20, 54.23];
   if (fill) { let f = 0; for (let i = 1; i < 5; i++) f += 0.25 * io(clamp((t - STEP[i] + 0.35) / 0.5)); fill.style.transform = `scaleX(${f})`; }
   document.querySelectorAll('[data-step]').forEach(n => { const i = +n.dataset.step, lit = t > STEP[i];
     n.style.background = lit ? (i === 4 ? 'linear-gradient(160deg,#FFE27A,#FFCF24)' : 'rgba(255,248,220,.95)') : ''; });
   const knob = document.getElementById('knob');
-  if (knob) { const k = io(clamp((t - 77.61) / 1.4)); const bump = t > 79.10 ? Math.sin(clamp((t - 79.10) / 0.35) * Math.PI) * 1.2 : 0;
+  if (knob) { const k = io(clamp((t - 77.20) / 1.4)); const bump = t > 78.60 ? Math.sin(clamp((t - 78.60) / 0.35) * Math.PI) * 1.2 : 0;
     knob.style.left = (78 - 44 * k + bump) + '%'; }
   const l1 = document.getElementById('l1'), l2 = document.getElementById('l2');
   if (l1) { for (const [p, at] of [[l1, 112.02], [l2, 113.91]]) { const len = p.getTotalLength(); p.style.strokeDasharray = len;

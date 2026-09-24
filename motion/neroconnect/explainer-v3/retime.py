@@ -49,8 +49,10 @@ pats = [r'(data-(?:at|mark|rule|flash)=")([\d.]+)(")',                  # attrib
         r'(\{ t: \[)([\d.]+)(,)', r'(\{ t: \[[\d.]+, )([\d.]+)(\])',     # scene spans
         r'(\$\{\()([\d.]+)( \+ i)',                                        # stagger bases
         r'(\(t - )([\d.]+)(\))', r'(\(t - )([\d.]+)( \+)', r'(t > )([\d.]+)( \?)',   # scene-specific moves
-        r'(\[l[12], )([\d.]+)(\])']
+        r'(\[l[12], )([\d.]+)(\])',
+        r"(\[')([\d.]+)(')"]                                              # times written as text inside the card lists (missed on 24 Sep: ten reveals stayed on the old take)
+if '--quoted-only' in a: pats = pats[-1:]
 for p in pats: s = re.sub(p, sub, s)
-s = re.sub(r'(const STEP = \[)([^\]]+)(\])', lambda m: m.group(1) + ', '.join(f'{f(float(v)):.2f}' for v in m.group(2).split(',')) + m.group(3), s)
+if '--quoted-only' not in a: s = re.sub(r'(const STEP = \[)([^\]]+)(\])', lambda m: m.group(1) + ', '.join(f'{f(float(v)):.2f}' for v in m.group(2).split(',')) + m.group(3), s)
 page.write_text(s)
 print(f'retimed {n} values (+ the step list)', file=sys.stderr)
