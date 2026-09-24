@@ -20,10 +20,10 @@ CUES=(
   "whoosh-short $(t "B*37.9") 0.15" "typing $(t "B*39.2") 0.08" "click $(t "B*42.8") 0.18" "ping $(t "B*43.4") 0.10"
   "whoosh $(t "B*45.5") 0.15" "whoosh-short $(t "B*46") 0.11" "whoosh-short $(t "B*46.6") 0.11"
   "whoosh $(t "25.7") 0.16" "impact-bass-1 $(t "B*54") 0.22" "sparkle $(t "26.54+1.2") 0.09"
-  "whoosh-short $(t "29.35") 0.12" "pop $(t "29.8") 0.10" "chime $(t "29.95") 0.08"
+  "whoosh-short $(t "26.54+1.85") 0.12" "pop $(t "26.54+2.0") 0.10" "chime $(t "26.54+2.2") 0.08"
 )
 ARGS=(-i "$IN" -i ../library/bgm/partner-upbeat-118.mp3)
-FC="[1:a]atrim=0:31.2,asetpts=N/SR/TB,volume=0.55,afade=t=out:st=28.6:d=2.6,aformat=cl=stereo[bed];"
+FC="[1:a]atrim=0:31.5,asetpts=N/SR/TB,volume=0.55,afade=t=out:st=29.0:d=2.5,aformat=cl=stereo[bed];"
 MIX="[bed]"; i=2
 for c in "${CUES[@]}"; do read -r f ms g <<< "$c"
   ARGS+=(-i "$L/$f.mp3"); FC+="[$i:a]volume=$g,adelay=$ms|$ms,aformat=cl=stereo[c$i];"; MIX+="[c$i]"; i=$((i+1)); done
@@ -32,6 +32,6 @@ ffmpeg -y -loglevel error "${ARGS[@]}" -filter_complex "$FC" -map 0:v -map "[a]"
 J=$(ffmpeg -y -i "$TMP/m.mov" -vn -af "loudnorm=I=-14:TP=-2.0:LRA=11:print_format=json" -f null - 2>&1 | sed -n '/^{/,/^}/p')
 read I TP LRA TH OFF <<< "$(echo "$J" | python3 -c "import json,sys;d=json.load(sys.stdin);print(d['input_i'],d['input_tp'],d['input_lra'],d['input_thresh'],d['target_offset'])")"
 ffmpeg -y -loglevel error -i "$TMP/m.mov" -af "loudnorm=I=-14:TP=-2.0:LRA=11:measured_I=$I:measured_TP=$TP:measured_LRA=$LRA:measured_thresh=$TH:offset=$OFF:linear=true,aformat=cl=stereo:r=48000" \
-  -c:v copy -c:a aac -b:a 192k -t 31.2 -movflags +faststart "$OUT"
+  -c:v copy -c:a aac -b:a 192k -t 31.5 -movflags +faststart "$OUT"
 rm -rf "$TMP"
 ffmpeg -i "$OUT" -vn -af "loudnorm=I=-14:TP=-1.5:print_format=summary" -f null - 2>&1 | grep -E "Input Integrated|Input True Peak"

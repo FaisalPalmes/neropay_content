@@ -8,7 +8,7 @@
 /* NeroPay — app motion, light, v2 (24 Sep 2026). Faisal's notes on v1: too fast; make it 20–30s; let the tap
    screen hold with a subtle contactless animation; no screen cut off at the bottom; more time and slower,
    deliberate touches on every screen; after the transactions close-up, pull out to the whole screen; the payment
-   link slower and seamless; the finale slower; end on the sting with the logo rising and "neropay.app" under it.
+   link slower and seamless; the finale slower; end on the locked outro with "neropay.app" under the mark.
    So the moves between screens are now the app's own where they can be (a push, a swipe, a sheet), with one
    spin kept, and every export is finished off in code where it was cut: the CHARGE and TAP buttons, the
    snapshot card, the sheet's edge, and a home indicator on every screen.
@@ -105,29 +105,25 @@ svg.arcs{position:absolute;left:0;top:0;width:508px;height:1108px;overflow:visib
 /* the finale: the two side phones, each in its own camera behind the main one */
 .fcam{position:absolute;inset:0;perspective:2200px;perspective-origin:50% 50%}
 
-/* the end: the sting, then the mark rises and the address drops in under it */
+/* the end: the off-white wash that the outro plays on */
 #fade{background:#FBF9F7;z-index:20;opacity:0}
-#endz{z-index:22;background:#FBF9F7}
-#endz img{position:absolute;left:0;top:0;width:1080px;height:1920px}
-#urlm{position:absolute;left:0;right:0;top:1040px;height:96px;overflow:hidden}
-#url{position:absolute;left:0;right:0;top:0;text-align:center;font:600 60px/96px Poppins;letter-spacing:-.025em;color:var(--ink)}
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="main" data-start="0" data-duration="31.2" data-width="1080" data-height="1920">
+<div id="root" data-composition-id="main" data-start="0" data-duration="31.5" data-width="1080" data-height="1920">
 
-  <div class="clip ground" id="ground" data-start="0" data-duration="31.2" data-track-index="0">
+  <div class="clip ground" id="ground" data-start="0" data-duration="31.5" data-track-index="0">
     <div class="bl" id="bl0" data-layout-allow-overflow style="left:420px;top:-260px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,170,205,.55),rgba(255,170,205,0))"></div>
     <div class="bl" id="bl1" data-layout-allow-overflow style="left:-420px;top:760px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(140,175,255,.50),rgba(140,175,255,0))"></div>
     <div class="bl" id="bl2" data-layout-allow-overflow style="left:420px;top:1180px;width:860px;height:860px;background:radial-gradient(closest-side,rgba(200,170,255,.42),rgba(200,170,255,0))"></div>
   </div>
 
-  <div class="clip" id="fin" data-start="23.0" data-duration="3.6" data-track-index="1">
+  <div class="clip" id="fin" data-start="23.0" data-duration="3.5" data-track-index="1">
     <div class="fcam" id="fcL" data-layout-allow-overflow></div>
     <div class="fcam" id="fcR" data-layout-allow-overflow></div>
   </div>
 
-  <div class="clip cam" id="cam" data-start="0" data-duration="26.6" data-track-index="2">
+  <div class="clip cam" id="cam" data-start="0" data-duration="26.5" data-track-index="2">
     <div id="rig" data-layout-allow-overflow></div>
   </div>
 
@@ -135,14 +131,11 @@ svg.arcs{position:absolute;left:0;top:0;width:508px;height:1108px;overflow:visib
     <div id="scrim"></div>
   </div>
 
-  <!-- the end: the frame washes to the sting's off-white, the locked sting (brand/sting, yellow) plays with its
-       letters meeting on beat 54, then its last frame rises and neropay.app drops in under the mark -->
-  <div class="clip" id="fade" data-start="25.8" data-duration="0.8" data-track-index="4"></div>
-  <video class="clip" id="sting" src="assets/sting-yellow-9x16.mp4" data-start="26.54" data-duration="2.6" data-track-index="5" muted playsinline style="width:100%;height:100%;object-fit:cover;z-index:21;background:#FBF9F7"></video>
-  <div class="clip" id="endz" data-start="29.14" data-duration="2.06" data-track-index="5">
-    <img id="endimg" src="assets/sting-yellow-9x16-last.png" alt="">
-    <div id="urlm"><div id="url" data-layout-allow-overlap data-layout-allow-occlusion>neropay.app</div></div>
-  </div>
+  <!-- the end: the frame washes to the outro's off-white and stays up underneath it, the phones are gone before it
+       starts, and the locked outro (brand/sting/outro.html, yellow, subtext "neropay.app") plays opaque with its
+       letters meeting on beat 54, then the tile rises and the subtext slides out under it -->
+  <div class="clip" id="fade" data-start="25.8" data-duration="5.7" data-track-index="4"></div>
+  <video class="clip" id="outro" src="assets/outro-yellow-9x16-neropay-app.mp4" data-start="26.54" data-duration="4.96" data-track-index="5" muted playsinline style="width:100%;height:100%;object-fit:cover;z-index:21;background:#FBF9F7"></video>
 </div>
 
 <script>
@@ -239,7 +232,7 @@ tl.set('#rig', { scale:1.04 }, 0);
 
 /* the ground's light drifts the whole way */
 [['#bl0', 110, 170], ['#bl1', 150, -150], ['#bl2', -130, -110]].forEach(([s, x, y]) =>
-  tl.fromTo(s, { x:0, y:0 }, { x, y, duration:31.2, ease:'sine.inOut' }, 0));
+  tl.fromTo(s, { x:0, y:0 }, { x, y, duration:31.5, ease:'sine.inOut' }, 0));
 
 /* headlines: the lines rise in through a mask, the marker draws, and they leave up before the next screen */
 const HD = [[0.3, b(6.3)], [b(7.2), b(14.1)], [b(15.4), b(20.7)], [b(21.8), b(30.3)], [b(31.2), b(37.5)], [b(38.5), b(45.2)]];
@@ -263,7 +256,7 @@ const tap = (k, at, big) => tl.fromTo('#'+k, { opacity:0 }, { opacity:1, duratio
 const AMT = [[b(2), '£0.04', 'k4'], [b(2.5), '£0.45', 'k5'], [b(3), '£4.57', 'k7'], [b(3.5), '£45.75', 'k5']];
 const NOTE = 'Table 12 — balance', T0 = b(39.2), T1 = b(41.8), SEND = b(42.8);
 const amt = $('amt'), tx = $('tx'), caret = $('caret'), clock = { t:0 };
-tl.to(clock, { t:31.2, duration:31.2, ease:'none', onUpdate:() => { const t = clock.t;
+tl.to(clock, { t:31.5, duration:31.5, ease:'none', onUpdate:() => { const t = clock.t;
   let v = '£0.00'; AMT.forEach(([at, s]) => { if (t >= at) v = s; }); if (amt.textContent !== v) amt.textContent = v;
   const n = Math.max(0, Math.min(NOTE.length, Math.floor((t - T0) / (T1 - T0) * NOTE.length)));
   const w = NOTE.slice(0, n); if (tx.textContent !== w) tx.textContent = w;
@@ -367,15 +360,10 @@ tl.to('#rig', { scale:0.8, y:-40, duration:1.4, ease:'power2.inOut' }, b(45.5))
   .to('#fpR', { x:315, rotationY:-21, duration:b(51) - b(46.6) - 1.3, ease:'sine.inOut' }, b(46.6) + 1.3)
   .to('#ph', { rotationY:356, duration:b(51) - b(45.5) - 1.4, ease:'sine.inOut' }, b(45.5) + 1.4);
 
-/* out · the three pull back into the off-white; the sting plays with its letters meeting on beat 54 */
+/* out · the three pull back into the off-white, which is fully up before the phones' clips end at 26.5s */
 tl.to('#rig', { scale:0.7, duration:0.9, ease:'power2.in' }, 25.7)
   .to('#fin', { scale:0.88, duration:0.9, ease:'power2.in', transformOrigin:'50% 52%' }, 25.7)
-  .fromTo('#fade', { opacity:0 }, { opacity:1, duration:0.6, ease:'power1.inOut' }, 25.9)
-  .fromTo('#sting', { opacity:0 }, { opacity:1, duration:0.12, ease:'power1.out' }, 26.54);
-
-/* the end: the mark rises, and the address comes down out from under it */
-tl.to('#endimg', { y:-150, duration:0.9, ease:'power3.inOut' }, 29.35)
-  .fromTo('#url', { yPercent:-105 }, { yPercent:0, duration:0.7, ease:'power3.out' }, 29.75);
+  .fromTo('#fade', { opacity:0 }, { opacity:1, duration:0.55, ease:'power1.inOut' }, 25.85);
 
 window.__timelines['main'] = tl;
 </script>
