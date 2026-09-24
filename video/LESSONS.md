@@ -400,6 +400,15 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    (a push, a swipe, a sheet rising), keep one spin as the signature move, and after a macro close-up pull back
    out to the whole screen rather than cutting away.
 
+## App motion, light v2 (24 Sep 2026) — Faisal's note
+
+1. **"Two other overlays in a transparent manner" under the wordmark at 26s.** The off-white wash clip ended on the
+   same frame as the phone clips, while the sting was still fading in over 0.12s, so for two frames the phones and
+   the ground's light showed through a half-opaque wordmark. Rule: a wash that hands over to an end card stays up
+   to the end of the video, the scene's clips end before the card starts, and the card comes in at full opacity
+   (the sting and outro already start on the same off-white, so they need no fade). Check the handover frame by frame
+   in the render, not only in snapshots.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on
