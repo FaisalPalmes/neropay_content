@@ -1221,6 +1221,29 @@ Light: her table sits in the warm, soft open shade under the café's charcoal aw
 Avoid: a styled flat lay, objects spread out evenly, everything neatly inside the frame, a bright or saturated green tablecloth, green objects touching the phone, food, plates, cups, sunglasses, a napkin, her face, her head, her shoulders, a second person at the table, the phone lying flat with no one holding it, a hand coming in from the side, fingers covering the screen corners, a finger lying along the edge of the screen, AI-generated look, CGI, render, heavy orange light, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, neon or glowing green screen, glare, reflections or shadows on the screen, chipped or unpainted nails, logos on the bag, logos, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
 ```
 
+**C2 surroundings edit, 25 Sep 2026.** Faisal kept the table, the framing, the phone and her hands, but the
+surroundings sat too close:
+- The planter was hard against her right-hand side.
+- The neighbouring table crowded the left edge.
+
+The edit moves the planter in front of her table, towards the road (the top of the frame, as in C1), and leaves only
+a sliver of the neighbouring chair on the left. The paving fills the space between.
+
+**C2 edit (attach Faisal's chosen C2; use an image-edit model)**
+```
+Edit the attached photograph. Keep the round table with its sage-green linen cloth, everything on it, the phone and its green screen, both of her hands, her sleeves, her lap and the arms of her chair exactly as they are, in exactly the same place and size in the frame. Change only what is around the table:
+
+1. The right side: remove the dark grey planter box with the ivy and the white hydrangeas completely from the right side of the frame. In its place, continue the grey clay brick paving in the same running bond, with a few fallen yellow leaves and the same warm low sunlight and long soft shadows as the paving around it, so that there is clear open space, about a metre, between her table and the right edge of the frame.
+
+2. The top, towards the road: put the planter there instead. Along the top edge of the frame, about a metre beyond the far edge of the table, runs the long dark grey planter box spilling with trailing ivy and clusters of white hydrangeas, lying horizontally across the frame, parallel to the top edge, cut by the top edge so that only its near half shows, with a gap in it directly beyond her table. It is the planter that separates the terrace from the pavement and the road.
+
+3. The left side: move the neighbouring table much further away, out of the frame. Only the rounded woven back of one grey-brown wicker armchair with its cream cushion remains, cut off by the left edge of the frame, about a metre from her table. Between her table and that chair, open brick paving with a few fallen leaves.
+
+The result: her table stands alone in the middle of the frame with open paving all around it, a single wicker chair just in at the left edge, and the ivy and hydrangea planter across the top of the frame towards the road. Same camera, same height, same lens, same framing, same light, same colours, same film grain.
+
+Avoid: any change to the table, the tablecloth, the objects on the table, the phone, the screen, the green, her hands, her nails, her jewellery, her jumper, her jeans or her chair; moving or resizing the table; a planter on the right; a whole table on the left; new people; new objects; flowers on the table other than the vase; a different angle or light.
+```
+
 **C3. Same POV, the food just served (an edit of your chosen C2: attach it and use an image-edit model)**
 ```
 Edit the attached photograph. Add only these things, as if they have just been served and not yet touched:
