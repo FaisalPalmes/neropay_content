@@ -61,7 +61,7 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
        103.35 s, so its own fade played mid-film and then it came back at full level; the ducking pumped between sentences.
        Now: looped at bar 39 (93.74 s, before its fade), one steady level with no ducking, faded only at the very end.
        25 Sep: Faisal on v3.6, "way too loud … 20% of the current": gain 0.18 -> 0.036, the voice untouched. */
-    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.036, loop_at: +(39 * 4 * 60 / 99.85).toFixed(3), fade: 3.0 }, cues };
+    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.0072, loop_at: +(39 * 4 * 60 / 99.85).toFixed(3), fade: 3.0 }, cues };   /* 25 Sep, second pass: 20% again (0.036 -> 0.0072), the voice untouched */
   fs.mkdirSync(path.join(HERE, 'data'), { recursive: true });
   fs.writeFileSync(path.join(HERE, 'data/mix.json'), JSON.stringify(mix, null, 1));
   if (arg('--from') !== null || arg('--to') !== null) { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'),

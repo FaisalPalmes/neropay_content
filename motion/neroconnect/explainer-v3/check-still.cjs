@@ -17,7 +17,7 @@ const SQ = process.argv.includes('1x1') || process.env.FMT === '1x1';   /* the 1
     const inks = [];
     for (const k of [0, 1, 2]) {
       await p.evaluate(t => setTime(t), s.t + k / 25);
-      const box = await p.evaluate(i => { const r = document.querySelectorAll('.sc')[i].querySelector('.h').getBoundingClientRect();
+      const box = await p.evaluate(i => { const r = document.querySelectorAll('.sc')[i].querySelector('.h:not(#swaph)').getBoundingClientRect();
         return { x: Math.floor(r.x), y: Math.floor(r.y), width: Math.ceil(r.width), height: Math.ceil(r.height) }; }, s.i);
       const buf = await p.screenshot({ clip: box });
       inks.push(await p.evaluate(async b64 => { const img = new Image(); img.src = 'data:image/png;base64,' + b64; await img.decode();

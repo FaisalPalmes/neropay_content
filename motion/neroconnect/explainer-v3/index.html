@@ -104,7 +104,7 @@ body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiase
 const SQ = new URLSearchParams(location.search).get('fmt') === '1x1';
 const W = SQ ? 1080 : 1920, H = 1080;
 /* the swap plates' geometry, [left, top, width]: full frame, and beside the login card after the pull-back */
-const PL = SQ ? { swapFull: [55, 245, 1000], swapSplit: [305, 153, 1000] } : { swapFull: [497, -213, 1450], swapSplit: [965, 120, 1000] };
+const PL = SQ ? { swapFull: [330, 92, 900], swapSplit: [305, 153, 1000] } : { swapFull: [497, -213, 1450], swapSplit: [965, 120, 1000] };
 const clamp = x => Math.max(0, Math.min(1, x));
 const outC = x => 1 - Math.pow(1 - x, 3), outE = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
 const io = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
@@ -122,9 +122,9 @@ const SC = [
 
  { t: [6.62, 15.30], light: [1760, 170], ox: '50%', html: `
    <div class="kick" style="left:150px;top:190px" data-at="6.83"><b></b>NeroConnect</div>
-   <div class="g" style="left:150px;top:500px;width:500px;height:420px;padding:0" data-at="8.54"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/cafe.webp" style="object-position:50% 88%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Cafés</div></div>
-   <div class="g" style="left:710px;top:500px;width:500px;height:420px;padding:0" data-at="8.85"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/takeaway.webp" style="object-position:50% 80%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaways</div></div>
-   <div class="g" style="left:1270px;top:500px;width:500px;height:420px;padding:0" data-at="9.51"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/shop.webp" style="object-position:50% 92%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Shops</div></div>
+   <div class="g" style="left:150px;top:500px;width:500px;height:420px;padding:0" data-at="8.54"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/tile-cafe.webp" style="object-position:50% 50%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Cafés</div></div>
+   <div class="g" style="left:710px;top:500px;width:500px;height:420px;padding:0" data-at="8.85"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/tile-takeaway.webp" style="object-position:50% 62%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaways</div></div>
+   <div class="g" style="left:1270px;top:500px;width:500px;height:420px;padding:0" data-at="9.51"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/tile-restaurant.webp" style="object-position:50% 52%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Restaurants</div></div>
    <div class="h" style="left:150px;top:250px;width:1500px" data-at="10.33"><span class="ln">Their card payments,</span><span class="ln">under <span class="mk" data-mark="11.71">your own brand.</span></span></div>
    <div class="sub" style="left:150px;top:955px" data-at="12.79">We'll call them <span class="mk" data-mark="13.59" style="color:#111114">your merchants.</span></div>
    <div class="sub" style="right:150px;top:955px;color:#111114" data-at="14.39">Here's how it works.</div>` },
@@ -355,7 +355,7 @@ window.setTime = function (t) {
 window.setFrame = (n, fps = 25) => window.setTime(n / fps);
 /* for check-still.cjs: a moment in each scene after its last reveal and before it leaves */
 window.SCENES_FOR_CHECK = () => SC.map((s, i) => {
-  const h = s.el.querySelector('.h'); if (!h) return { i, t: null };
+  const h = s.el.querySelector('.h:not(#swaph)'); if (!h) return { i, t: null };   /* "Your logo." leaves before the scene settles */
   const own = [h, ...h.querySelectorAll('[data-at],[data-mark]')];
   const last = Math.max(s.t[0], ...own.map(e => +(e.dataset.at || e.dataset.mark || 0)));
   const t = last + 0.9; return { i, t: t < s.t[1] - 0.15 ? t : null }; });
@@ -370,7 +370,7 @@ if (SQ) document.fonts.ready.then(() => {
   const M = 70, TOP = 80, GAP = 46;
   SC.forEach(sc => { sc.el.style.display = ''; });        /* hidden scenes measure as zero: show them all to measure */
   const HAND = {                                     /* scene index: hand placements, [left, top, width?] by selector */
-    0: { '#hook': [55, 245, 1000] },
+    0: { '#hook': [330, 92, 900] },
     10: { '#swap': PL.swapFull },
   };
   SC.forEach((sc, i) => {
@@ -431,11 +431,16 @@ if (SQ) document.fonts.ready.then(() => {
       q.style.width = '520px'; q.style.fontSize = '34px'; q.style.top = (h.offsetTop + h.offsetHeight + 34) + 'px';
       sc.cam.querySelector('.ph img').style.objectPosition = '60% 50%';
     }
+    if (i === 0) {                                    /* the hook: the terminal right of centre, the lines in a column on the left, centred */
+      const k = sc.cam.querySelector('.kick'), hs = [...sc.cam.querySelectorAll(':scope > .h')];
+      hs.forEach(h => { h.style.fontSize = '60px'; h.style.width = '470px'; });
+      k.style.top = '360px'; hs[0].style.top = '400px'; hs[1].style.top = (400 + hs[0].offsetHeight + 34) + 'px';
+    }
     if (i === 10) {                                   /* after the pull-back: headline top, login card left, terminal right */
       const card = sc.cam.querySelector('.g'), brand = [...sc.cam.querySelectorAll('.h')].find(e => e.id !== 'swaph');
       const logo = sc.cam.querySelector('#swaph');
       brand.style.left = M + 'px'; brand.style.top = TOP + 'px'; brand.style.width = (W - 2 * M) + 'px';
-      logo.style.left = M + 'px'; logo.style.top = '110px';
+      logo.style.left = M + 'px'; logo.style.top = '490px';   /* "Your logo." beside the full-frame terminal, at its middle */
       const k = 0.62; card.style.transformOrigin = '0 0'; card.style.scale = String(k);
       card.style.left = M + 'px'; card.style.top = (brand.offsetTop + brand.offsetHeight + GAP) + 'px';
     }
