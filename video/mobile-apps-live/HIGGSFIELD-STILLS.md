@@ -1227,11 +1227,12 @@ surroundings sat too close:
 - The neighbouring table crowded the left edge.
 
 The edit moves the planter in front of her table, towards the road (the top of the frame, as in C1), and leaves only
-a sliver of the neighbouring chair on the left. The paving fills the space between.
+a sliver of the neighbouring chair on the left. The paving fills the space between. Faisal's second note: her knees were
+pressed together under the table, while in C1 her legs sit out to her right. The edit angles them out and crosses them.
 
 **C2 edit (attach Faisal's chosen C2; use an image-edit model)**
 ```
-Edit the attached photograph. Keep the round table with its sage-green linen cloth, everything on it, the phone and its green screen, both of her hands, her sleeves, her lap and the arms of her chair exactly as they are, in exactly the same place and size in the frame. Change only what is around the table:
+Edit the attached photograph. Keep the round table with its sage-green linen cloth, everything on it, the phone and its green screen, both of her hands and her forearms in their jumper sleeves exactly as they are, in exactly the same place and size in the frame. Change only her legs and what is around the table:
 
 1. The right side: remove the dark grey planter box with the ivy and the white hydrangeas completely from the right side of the frame. In its place, continue the grey clay brick paving in the same running bond, with a few fallen yellow leaves and the same warm low sunlight and long soft shadows as the paving around it, so that there is clear open space, about a metre, between her table and the right edge of the frame.
 
@@ -1239,9 +1240,11 @@ Edit the attached photograph. Keep the round table with its sage-green linen clo
 
 3. The left side: move the neighbouring table much further away, out of the frame. Only the rounded woven back of one grey-brown wicker armchair with its cream cushion remains, cut off by the left edge of the frame, about a metre from her table. Between her table and that chair, open brick paving with a few fallen leaves.
 
-The result: her table stands alone in the middle of the frame with open paving all around it, a single wicker chair just in at the left edge, and the ivy and hydrangea planter across the top of the frame towards the road. Same camera, same height, same lens, same framing, same light, same colours, same film grain.
+4. Her legs, sitting naturally as she does in the wide shot of the café: her upper body still faces the table, but her legs are angled out to her right, relaxed and slightly crossed, her right knee resting over her left, both knees pointing towards the lower right corner of the frame, out beside the table rather than tucked under it. From above we see her thighs in light-wash straight-leg jeans running diagonally from the bottom of the frame towards the lower right, her knees just past the right-hand edge of the tablecloth, the denim creasing naturally at the knee and hip, not pressed together side by side under the table. The rounded woven wicker arms of her chair still show at the bottom of the frame, turned slightly with her. A candid, comfortable way of sitting, as if she has settled in.
 
-Avoid: any change to the table, the tablecloth, the objects on the table, the phone, the screen, the green, her hands, her nails, her jewellery, her jumper, her jeans or her chair; moving or resizing the table; a planter on the right; a whole table on the left; new people; new objects; flowers on the table other than the vase; a different angle or light.
+The result: her table stands alone in the middle of the frame with open paving all around it, her legs angled out to her right beside it, a single wicker chair just in at the left edge, and the ivy and hydrangea planter across the top of the frame towards the road. Same camera, same height, same lens, same framing, same light, same colours, same film grain.
+
+Avoid: any change to the table, the tablecloth, the objects on the table, the phone, the screen, the green, her hands, her forearms, her nails, her jewellery or her jumper; her knees pressed together; her legs straight under the table; her legs covering the phone or the table; extra legs or feet; moving or resizing the table; a planter on the right; a whole table on the left; new people; new objects; flowers on the table other than the vase; a different angle or light.
 ```
 
 **C3. Same POV, the food just served (an edit of your chosen C2: attach it and use an image-edit model)**
