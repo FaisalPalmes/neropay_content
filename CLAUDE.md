@@ -373,6 +373,10 @@ Six states, in order: `brief` → `building` → `review` → `ready` → `appro
 - **`backup: false` is a live problem.** The master exists only as a Higgsfield CDN link, valid while that
   account holds it. A session cannot fix it — the Drive connector will not carry a file that size. Only
   Faisal can download it into the Drive folder; then a session flips the flag.
+- **Every final render also goes into that week's report folder** (Faisal, 25 Sep 2026): `7.3_Weekly_Report` →
+  `YYYYMMDD_Weekly-Report` for the Friday of the week. Finals only, every crop. His weekly-report session reads that folder.
+  Uploads go through the Drive API from the container with the `GDRIVE_*` environment credentials, not the connector;
+  put the Drive link in the row's `drive` field once it is there. `.claude/NOTICES.md` carries the detail.
 - **`clearedFor` says where a video may go**, and `null` means nobody has assessed it — not that it is
   cleared. Organic and paid Meta are separate decisions: MG02 is cleared for YouTube, organic and the
   website and refused for paid Meta under Route C. B1 and PP02 are flagged and unruled.
