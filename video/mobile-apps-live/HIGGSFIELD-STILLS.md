@@ -842,24 +842,48 @@ Light: late morning, a bright, clear, sunny day, the sun high and only slightly 
 Avoid: a styled flat lay, objects spread out evenly, everything neatly inside the frame, objects on the very edge of the table, her face, her head, her shoulders, a second person at the table, an empty chair facing the table, a wall or fence behind the table, the phone lying flat with no one holding it, a hand coming in from the side, fingers covering the screen corners, a finger lying along the edge of the screen, a napkin, AI-generated look, CGI, render, golden hour, orange light, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, plastic-looking food, neon or glowing green screen, glare, reflections or shadows on the screen, a sun edge across the phone, green objects touching the phone, chipped or unpainted nails, red nails, logos on the bag, logos, Apple logo, brand names, readable text, writing on the awning, printed straws, watermarks, extra fingers, deformed hands.
 ```
 
-**C1. The top of the dive, over the rooftops (attach your chosen C2 as image 1)**
+**C2 chosen, 25 Sep 2026.** Faisal kept the v3 result.
+
+**C1 v2, 25 Sep 2026.** The rooftop still was a postcard: the café was a small detail in a wide city view, with no
+link to C2. C1 now starts close enough that her table is already in frame, so the flight to C2 is short and holds
+together in Kling. There are two options; C1a is the recommendation. Both attach the chosen C2 as image 1.
+
+**C1a. Across the street, first-floor height (recommended; attach C2 as image 1)**
 ```
-Use the attached image (image 1) only for the café terrace far below: the sage-green scalloped awning, the white marble tables, the rattan chairs and the bright late-morning light. Everything else comes from this prompt.
+Use the attached image (image 1) as the same place and the same moment, seen from further away: the same round white marble table at the front of the terrace, the same woman in the oversized cream cable-knit jumper and light-wash jeans sitting at it, the same tan leather bag, tortoiseshell sunglasses, iced matcha, water carafe and brunch plate on her table, the same woven rattan chairs, the same sage-green awning with its scalloped hem, the same terracotta planter of lavender and black cast-iron post, the same granite kerb, double yellow line and drain grate, and the same bright late-morning light. Keep all of it exactly as it is there; only the camera position changes.
 
-Aerial photograph from an FPV drone, looking like a real frame from a drone camera, not a render. Framing, like a real photograph: nothing needs to be fully in the frame; buildings, roofs, cars and people are cut by the frame edges and hide parts of each other, as in a real, unplanned drone shot. Late morning on a bright, sunny autumn day. The drone hovers about 40 metres above the rooftops of a city-centre district of converted red-brick Victorian warehouses in the north of England, looking forward and down at about 45 degrees.
+Photograph from a small drone hovering across a narrow street from a café, looking like a real frame from a drone camera, not a render. Framing, like a real photograph: nothing needs to be fully in the frame; the awning, the shopfront, the tables, the people and the street are cut by the frame edges and hide parts of each other, as in a real, unplanned shot.
 
-What is in the frame, from front to back:
-- In the foreground, below and ahead of the drone: the flat roof of a warehouse with grey bitumen felt, a row of three glass skylights, two galvanised steel air vents, a low brick parapet with sandstone coping stones, and a small roof garden in one corner with four wooden planters of ornamental grasses and a pair of folding chairs.
-- In the middle distance, left and right: pitched Welsh slate roofs with lead flashing, tall red-brick chimney stacks with clay pots, rusted black iron fire escapes zig-zagging down the side walls, and rows of tall arched warehouse windows with dark frames.
-- Through the centre of the frame: a narrow one-way street runs away from the camera between the buildings like a canyon, about 12 metres wide, with pale grey pavements on both sides, a dark asphalt road with a worn double yellow line along each kerb, three parked cars with no readable plates, a cyclist and a few people walking.
-- At the bottom of that street, small but clear and in the exact centre of the frame: the café's pavement terrace, a sage-green canvas awning with a scalloped hem over a sage-painted timber shopfront with big windows, and in front of it two rows of small round white marble tables with rattan chairs, about eight tables in all, a few of them taken by people eating and talking, one terracotta planter of lavender at each end.
-- In the far distance: more red-brick rooftops fading into a light haze, and a clear pale-blue sky with a few small white clouds along the top edge of the frame.
+The drone hovers about 4 metres above the road on the far side of the street, level with the first-floor windows and about 8 metres from the café, looking across and down at the terrace at about 35 degrees.
 
-Light: bright late-morning sun from the upper left, high in the sky and only slightly warm, not golden hour; the red brick is lit a clean terracotta, the slate roofs catch a silvery sheen, and short, crisp shadows fall to the lower right. The café terrace is in sunlight with the awning casting shade over the tables nearest the shopfront. No recognisable landmarks, no famous buildings, no towers you could name.
+What is in the frame:
+- The top third: the café's shopfront of sage-green painted timber with tall windows showing soft reflections and a glimpse of warm pendant lights inside, and no writing anywhere. The sage-green canvas awning projects out over the terrace, its scalloped hem running across the frame and cut by both side edges.
+- The middle: the pavement terrace under and in front of the awning. A front row of three small round white marble tables with rattan chairs along the kerb and a second row in the awning's shade behind them. Two or three other customers in their mid to late twenties eat and talk. A terracotta planter of lavender stands at the right end, beside a black cast-iron post.
+- Her table: the front table just left of centre, right at the kerb under the awning's hem. She sits facing the street, her head bowed to the phone in her hands, her long glossy chestnut-brown hair falling forward and hiding most of her face. On her table: the brunch plate, the iced matcha, the carafe, the sunglasses and the tan bag.
+- The bottom third: the granite kerb, the worn double yellow line, the cast-iron drain grate with a few fallen leaves in the gutter, the dark asphalt road in bright sun, and the rear half of a parked bicycle cut off by the lower left corner.
 
-Photographed on an 18mm lens at f/5.6, sharp across the frame, a very slight natural lens distortion at the edges. Natural colour, clean and true, gentle contrast, a little atmospheric haze in the distance, fine grain. Photoreal, hyper-realistic.
+Light: late morning on a bright, clear, sunny autumn day, the sun high and only slightly warm, not golden hour. The road and the kerb are in full sun; the terrace tables sit in the clean open shade of the awning, with the crisp scalloped shadow of its hem on the paving just in front of them. Short, crisp shadows. Photographed on a 24mm lens at f/5.6, sharp across the frame. Natural colour, true whites, clean and fresh, gentle contrast, fine grain. Photoreal, hyper-realistic.
 
-Avoid: everything neatly arranged inside the frame, recognisable landmarks, famous buildings, readable signs, shop names, logos, text, writing on the awning, readable number plates, golden hour, sunset, orange light, fisheye distortion, tilt-shift miniature look, toy-town look, CGI, render, video-game look, HDR, oversaturated colour, orange-and-teal grade, oversharpening, warped or bending buildings, watermarks.
+Avoid: a different café, table or woman from image 1, her face turned to the camera, a wide city view, rooftops filling the frame, everything neatly arranged inside the frame, readable signs, shop names, writing on the awning or windows, logos, readable number plates, golden hour, sunset, orange light, fisheye distortion, tilt-shift miniature look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, warped buildings, watermarks.
+```
+
+**C1b. Street-level FPV skim (more dynamic, riskier; attach C2 as image 1)**
+```
+Use the attached image (image 1) as the same place and the same moment, seen from further away: the same round white marble table at the front of the terrace, the same woman in the oversized cream cable-knit jumper and light-wash jeans sitting at it, the same tan leather bag, tortoiseshell sunglasses, iced matcha, water carafe and brunch plate on her table, the same woven rattan chairs, the same sage-green awning with its scalloped hem, the same terracotta planter of lavender and black cast-iron post, the same granite kerb, double yellow line and drain grate, and the same bright late-morning light. Keep all of it exactly as it is there; only the camera position changes.
+
+Photograph from an FPV drone flying fast and low along a narrow city street, looking like a real frame from a drone camera in flight, not a render. Framing, like a real photograph: nothing needs to be fully in the frame; cars, people, the awning and the buildings are cut by the frame edges and hide parts of each other, as in a real, unplanned shot.
+
+The drone flies about 1.5 metres above the road, down the middle of the lane, about 20 metres from the café, looking straight ahead along the street, with the café's terrace ahead on the right.
+
+What is in the frame:
+- The road rushes towards the lens at the bottom of the frame: dark asphalt with a worn double yellow line along the right-hand kerb and a slight motion blur on the nearest few metres.
+- On the right, running away into the frame in perspective: the pavement, then the café terrace with its sage-green scalloped awning, the row of small round white marble tables with rattan chairs along the kerb, and the terracotta planter of lavender and black cast-iron post. Her table is the nearest front table, with the woman from image 1 bent over her phone.
+- On the left: two parked cars cut by the left edge, with no readable plates, and red-brick warehouse frontages with tall arched windows rising out of frame.
+- Ahead: a cyclist in the distance, a few people walking on both pavements, the street narrowing into soft haze.
+
+Light: late morning on a bright, clear, sunny autumn day, the sun high and only slightly warm, not golden hour. The road in full sun, the terrace in the awning's shade. Photographed on an 18mm lens at f/5.6, the middle distance sharp, a little motion blur in the near foreground only. Natural colour, clean and true, gentle contrast, fine grain. Photoreal, hyper-realistic.
+
+Avoid: a different café, table or woman from image 1, a wide city view, rooftops, everything neatly arranged inside the frame, readable signs, shop names, writing on the awning, logos, readable number plates, golden hour, sunset, orange light, fisheye distortion, heavy motion blur everywhere, tilt-shift look, CGI, render, video-game look, HDR, oversaturated colour, oversharpening, warped buildings, watermarks.
 ```
 
 **C3. Inside the café (the app's hero photo, then the live shot it becomes)**
