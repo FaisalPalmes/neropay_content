@@ -178,14 +178,16 @@ window.LIBRARY = {
       ] },
 
     { id: 'NCEX', series: 'NeroConnect', title: 'NeroConnect explainer',
-      version: 'v3.6', rendered: '2026-09-24', secs: 145,
+      version: 'v3.6.1', rendered: '2026-09-25', secs: 145,
       status: 'approved', by: 'Faisal, 24 Sep 2026, in chat with the content video session — "approve for now" (v3.6; he may still add real dashboard screenshots)',
       waiting: 'Approved for now (v3.6). Before it goes out: the master into Drive (backup false), and clearedFor is unassessed. What v3.6 is: opening A ("Look at the card machine on any shop counter. There\'s a name on it … it can be yours") on his NeroPay terminal photo, the bezel swapping to YOUR LOGO; the brand scene full screen, the same terminal swapping to Keelstone Pay on "logo" then pulling back beside the login card; "no payment is ever priced at a loss" in the voice; the whole script re-voiced as take 4; the music steady and quieter; the stutter after "Your logo" fixed (motion/tighten.mjs now cuts only true silence). Open: real dashboard screenshots, if he sends them (previews first, then a re-render and a fresh approval).',
       build: 'motion/neroconnect/explainer-v3/ (v2 kept at explainer/)', drive: 'https://drive.google.com/drive/folders/1hVAZJFL5uLPqC4ATJzpoO9QkvvM9dpaP',
       backup: false, clearedFor: null, notCleared: null,
       note: 'Figures on screen are the seven approved in the overlay kit; the platform is the invented Keelstone Pay (Harbourline until v3.3) and the merchants the invented set. Placeholder brand throughout.',
       files: [
-      { crop: '16:9 master', px: '1920×1080', mb: 28.7, md5: 'bf73b41e4f93c88133b2e92f10121e7a', lufs: '−14.07', where: 'v3.6 sent in chat 24 Sep 2026; not yet in Drive' },
+      { crop: '16:9 master', px: '1920×1080', mb: 28.6, md5: '4a95c79a5875e35b854d30956b6f1cec', lufs: '−15.57', where: 'v3.6.1 (music at 20%, voice at the v3.6 level; Faisal 25 Sep) sent in chat; not yet in Drive' },
+      { crop: '1:1', px: '1080×1080', mb: 21.0, md5: 'fc480f805caa1d5e11e8bf83bb40f9fe', lufs: '−15.57', where: 'v3.6.1 square, re-laid per scene (Faisal 25 Sep), sent in chat; not yet in Drive' },
+      { crop: 'v3.6 16:9 (superseded: music too loud)', px: '1920×1080', mb: 28.7, md5: 'bf73b41e4f93c88133b2e92f10121e7a' },
       { crop: 'v3.5 16:9 (superseded)', px: '1920×1080', mb: 26.8, md5: '67621e18daca246fe25ade6f28f657b1' },
       { crop: 'v3.4 16:9 (superseded)', px: '1920×1080', mb: 28.4, md5: '64ecf30908b128377de905d13ca18bdc' },
       { crop: 'v2 16:9 master (superseded)', px: '1920×1080', mb: 62.5, media: '243e9316-3761-4f7e-8883-799780616ac2', md5: 'f56bea4a7f82761407b4e344283480ca' }] },
