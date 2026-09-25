@@ -926,20 +926,21 @@ Avoid: a styled showroom, everything neatly arranged inside the frame, staff, an
 
 ### Café v3: the static opener (25 Sep 2026; replaces C1a, C1b and C3)
 
-Faisal scrapped the FPV dive. The café sequence is now three shots:
+Faisal scrapped the FPV dive. The café sequence is now three shots, named in edit order. "The overhead" is the
+chosen v3 brunch still above (once called C2); C2 and C3 are edits of it.
 
 | # | Shot | Edit | What happens |
 |---|---|---|---|
-| W1 | Wide, front-on from across the street, static | 0–2.5 s | She has just arrived: bag, sunglasses and water on the table, no food. She uses her phone. At about 2.5 s a passer-by crosses right in front of the lens and the frame goes dark. |
-| E2 | Her POV of the empty table (an edit of the chosen C2) | 2.5–5.5 s | Cut on the dark frame. Tap 1: the Sage & Co icon on her home screen. The app opens on "Welcome back, your usual". Tap 2: "Order to table", then the confirmation. |
-| E3 | Same POV, food on the table (an edit of the chosen C2) | 5.5–7 s | A hard cut on the confirmation sound: same framing, the food is there, the screen says "Enjoy". She lifts her finger and picks up her fork. |
+| C1 | Wide, front-on from across the street, static | 0–2.5 s | She has just arrived: bag, sunglasses and water on the table, no food. She uses her phone. At about 2.5 s a passer-by crosses right in front of the lens and the frame goes dark. |
+| C2 | Her POV of the empty table (an edit of the overhead) | 2.5–5.5 s | Cut on the dark frame. Tap 1: the Sage & Co icon on her home screen. The app opens on "Welcome back, your usual". Tap 2: "Order to table", then the confirmation. |
+| C3 | Same POV, food on the table (an edit of the overhead) | 5.5–7 s | A hard cut on the confirmation sound: same framing, the food is there, the screen says "Enjoy". She lifts her finger and picks up her fork. |
 
 - **"Your usual"** gets the order done in two taps. It is also the loyalty point a café owner cares about.
 - **The food appears on a jump cut** between two identical frames, never generated in Kling.
 - **The shopfront's fascia sign is left blank** in the still. "Sage & Co" is added in post, so the café and the app
   read as one business without AI lettering.
 
-**W1. The wide, front-on from across the street (new still)**
+**C1. The wide, front-on from across the street (new still)**
 ```
 Candid street photograph of a café terrace, looking like a real frame from a film camera on a tripod, not a render. Framing, like a real photograph: nothing needs to be fully in the frame; the shopfront, the awning, the tables, the chairs and the people are cut by the frame edges and hide parts of each other, as in a real, unposed shot.
 
@@ -966,7 +967,7 @@ Light: late morning on a bright, clear, sunny autumn day, the sun high and sligh
 Avoid: any lettering, logo or picture on the fascia sign, readable text anywhere, writing on the awning or windows, shop names, logos, food on her table, other drinks on her table, her hand on her face, looking into the camera, her in the centre of the frame, a tilted or angled camera, a wide city view, a car in front of the café, readable number plates, everything neatly arranged inside the frame, golden hour, sunset, orange light, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, beauty filter, older-looking people, chipped or unpainted nails, watermarks, extra fingers, deformed hands.
 ```
 
-**E2. Her POV, the empty table (an edit of the chosen C2: attach it and use an image-edit model)**
+**C2. Her POV, the empty table (an edit of the overhead: attach it and use an image-edit model)**
 ```
 Edit the attached photograph. Make only these changes:
 1. Remove the plate of food and the fork and knife on it completely. Where the plate was, show clean bare white Carrara marble with its natural grey veining, continuing the veins around it, with no crumbs, stains or shadow left behind.
@@ -978,7 +979,7 @@ Keep everything else exactly as it is, pixel for pixel where possible: the camer
 Avoid: any change to the phone, the screen or the green, anything on the screen, a new object, a napkin, a menu, crumbs, a ring of liquid, changes to her hands or nails, changes to the light, a different angle.
 ```
 
-**E3. Same POV, the food just served (an edit of the chosen C2: attach it and use an image-edit model)**
+**C3. Same POV, the food just served (an edit of the overhead: attach it and use an image-edit model)**
 ```
 Edit the attached photograph. Make only these changes, so the brunch looks as if it has just been served and not yet touched:
 1. Both slices of toasted sourdough whole, with no corner cut off and no bite taken.
@@ -992,17 +993,17 @@ Keep everything else exactly as it is, pixel for pixel where possible: the camer
 Avoid: any change to the phone, the screen or the green, anything on the screen, moving the plate, extra food, a napkin, changes to her hands or nails, changes to the light, a different angle.
 ```
 
-**W1 motion (5 s; 2–3 takes)**
+**C1 motion (5 s; 2–3 takes)**
 ```
 Static, locked-off camera on a tripod; the camera does not move at all. She sits at her table using her phone: her right index finger taps the screen once, she scrolls with it, glances up at the street for a moment, then looks back down at the phone with a small smile. Behind her, the other customers talk and move naturally, and a leaf drifts along the pavement. At about two and a half seconds, a man in a dark navy wool coat walks quickly across the frame from right to left, very close to the lens, within half a metre of it, so that for about half a second his out-of-focus dark coat fills the whole frame and it goes almost completely dark. He passes out of frame on the left, and the café terrace is seen again, unchanged. Only that one person passes the camera. Natural, unhurried, realistic movement; the hands keep five fingers throughout.
 ```
 
-**E2 motion (5 s; 2–3 takes)**
+**C2 motion (5 s; 2–3 takes)**
 ```
 The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level, its base resting on the table; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right hand moves. At about one second her index finger taps the upper half of the screen once, a clear, deliberate press and lift, then hovers. At about three seconds it taps the lower middle of the screen once, a clear, deliberate press and lift, then hovers just above the screen for the rest of the clip. The finger never covers a corner of the screen or lies along its edge. Nothing else on the table moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
 ```
 
-**E3 motion (5 s; one take)**
+**C3 motion (5 s; one take)**
 ```
 The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. At about half a second her right index finger lifts off the screen, and her right hand moves away to the right, below the phone, and picks up the brass-handled fork from the rim of the plate, holding it naturally. A faint wisp of steam rises from the poached egg; the ice in the matcha glints. Nothing else moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
 ```
