@@ -1,0 +1,131 @@
+{
+ "duration": 57.82,
+ "head": 0.6,
+ "vo": "data/vo.mp3",
+ "target": -16,
+ "tp": -1,
+ "vo_filter": "acompressor=threshold=-26dB:ratio=1.7:attack=12:release=160:makeup=1",
+ "bed": {
+  "file": "video/library/bgm/partner-upbeat-118.mp3",
+  "t": 0,
+  "gain": 0.0072,
+  "loop_at": 57.026,
+  "fade": 3
+ },
+ "cues": [
+  {
+   "sfx": "click-soft",
+   "t": 2.36,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 3.25,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 4.09,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 4.98,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 10.183,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 16.802,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 24.44,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 25.47,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 26.18,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 27.71,
+   "gain": 0.12,
+   "why": "the Active Partner badge lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 28.513,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 34.24,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 34.77,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 35.3,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "pop",
+   "t": 35.89,
+   "gain": 0.06,
+   "why": "a shop lights"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 41.752,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 45.825,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 50.44,
+   "gain": 0.2,
+   "why": "the sting: the letters meet"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 51.57,
+   "gain": 0.07,
+   "why": "the line slides out under the tile"
+  }
+ ]
+}

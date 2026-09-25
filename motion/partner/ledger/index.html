@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Partner Programme: The Ledger</title>
+<style>
+/* Partner Programme advert, style B, "The Ledger" (25 Sep 2026). Built by the CONTENT VIDEO session at Faisal's request for
+   two new explainer styles. A ruled paper page and one ledger sheet: every step of the programme prints as a line, the figures
+   in mono with their condition on the same line, "Active Partner" stamped across, the sheet scrolling as it grows; a big
+   kinetic phrase on the left tracks her words. Figures from motion/partner/BRIEF.md v4; every one sits with its condition. */
+@font-face{font-family:M;font-weight:400;src:url(fonts/martian-mono-latin-400-normal.woff2)}
+@font-face{font-family:M;font-weight:700;src:url(fonts/martian-mono-latin-700-normal.woff2)}
+@font-face{font-family:P;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:P;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2)}
+:root{--yel:#FFCF24;--ink:#111114;--mute:#6B6B73;--live:#2FBF71}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#FBFAF7}   /* 1:1: the adapter at the foot narrows them to 1080 */
+body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+
+/* the world: paper, one light, two clear panes */
+#ground{position:absolute;inset:0;background:radial-gradient(140% 120% at 50% 45%,#FBFAF7 55%,#F3F0E8 100%)}
+#light{position:absolute;left:0;top:0;width:1500px;height:1500px;margin:-750px 0 0 -750px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,207,36,.34) 0%,rgba(255,207,36,.20) 22%,rgba(255,207,36,.08) 42%,rgba(255,207,36,.025) 58%,rgba(255,207,36,0) 70%)}
+.pane{position:absolute;width:1700px;height:1700px;border-radius:120px;
+  background:linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.06) 45%,rgba(255,255,255,.18));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 2px 0 rgba(255,255,255,.95),0 60px 120px -60px rgba(120,95,30,.16)}
+.pane i{position:absolute;top:-20%;bottom:-20%;left:-60%;width:220%;background:linear-gradient(105deg,rgba(255,255,255,0) 45%,rgba(255,255,255,.55) 49.5%,rgba(255,255,255,.12) 51%,rgba(255,255,255,0) 55%)}
+
+/* a scene: a layer the whole frame wide; its contents are placed absolutely */
+.sc{position:absolute;inset:0;opacity:0}
+.cam{position:absolute;inset:0;transform-origin:var(--ox,60%) var(--oy,50%)}
+
+/* type */
+.kick{position:absolute;display:flex;align-items:center;gap:14px;font:600 20px/1 P;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.kick b{display:block;width:34px;height:5px;border-radius:3px;background:var(--yel)}
+.h{position:absolute;font:700 76px/1.04 P;letter-spacing:-.035em}
+.h.xl{font-size:104px}
+.h .ln{display:block}
+.mk{position:relative;display:inline-block;isolation:isolate}
+.mk::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.07em;height:.36em;background:var(--yel);border-radius:3px;z-index:-1;
+  transform:scaleX(var(--m,0));transform-origin:0 50%}
+.sub{position:absolute;font:500 30px/1.35 P;color:var(--mute);letter-spacing:-.01em}
+.lab{font:500 22px/1.2 P;color:var(--mute);letter-spacing:-.005em}
+.big{font:600 58px/1 P;letter-spacing:-.03em}
+.mid{font:600 34px/1.15 P;letter-spacing:-.02em}
+
+/* clear glass: a translucent body, a hairline rim, a bright top edge, a soft shadow; no thick inset rim */
+.g{position:absolute;border-radius:30px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,.52) 0%,rgba(255,255,255,.17) 52%,rgba(255,255,255,.30) 100%);
+  box-shadow:0 50px 90px -46px rgba(70,56,20,.30),0 14px 30px -18px rgba(17,17,20,.10),
+    inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(120,96,30,.07),inset 0 0 60px rgba(255,255,255,.28);
+  outline:1px solid rgba(17,17,20,.045);outline-offset:-1px}
+.g::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(110% 55% at 20% 0%,rgba(255,255,255,.85),rgba(255,255,255,0) 58%),linear-gradient(0deg,rgba(255,255,255,.35),rgba(255,255,255,0) 18%)}
+.g::after{content:"";position:absolute;inset:-10%;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.7) 50%,rgba(255,255,255,0) 60%);
+  transform:translateX(var(--sh,-130%))}
+.g > *{position:relative;z-index:1}
+.row{display:flex;align-items:center;justify-content:space-between}
+.rule{position:absolute;left:0;top:18%;bottom:18%;width:5px;border-radius:0 3px 3px 0;background:var(--yel);transform:scaleY(var(--r,0))}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--live);margin-right:12px;vertical-align:1px}
+.ydot{background:var(--yel)}
+.hair{height:1px;background:rgba(17,17,20,.08)}
+/* the pointer (24 Sep 2026): whatever she names flashes a soft yellow wash as it lands, then lets go */
+.hitfx{position:absolute;left:-14px;right:-14px;top:-10px;bottom:-10px;border-radius:14px;pointer-events:none;opacity:0;
+  background:rgba(255,207,36,.26);box-shadow:0 0 0 2px rgba(255,207,36,.55),0 0 34px rgba(255,207,36,.35)}
+.g > .hitfx{position:absolute;inset:0;border-radius:inherit;z-index:0}
+[data-hit]:not(.g){position:relative}   /* never on a card: a .g is placed absolutely, and v3.4 knocked the flashed cards into page flow (Faisal's screenshots, 24 Sep) */
+/* the mark, small, bottom right, the whole film: the locked sting's yellow glass tile (brand/sting), 78 px */
+#bug{position:absolute;right:58px;bottom:50px;width:78px;height:74.6px;opacity:0;z-index:20}
+#bug .t{position:absolute;inset:0;border-radius:12px;overflow:hidden;
+  background:linear-gradient(150deg,rgba(255,224,104,.98) 0%,#FFCF24 50%,#F4BC08 100%);
+  box-shadow:0 14px 26px -12px rgba(17,17,20,.30),0 4px 9px -5px rgba(17,17,20,.16),inset 0 0 0 3px rgba(255,255,255,.14),
+    inset 0 0 10px rgba(160,110,0,.22),inset 0 -1px 2px rgba(120,80,0,.18),inset 0 0 0 1px rgba(255,255,255,.7),inset 0 1px 0 rgba(255,255,255,.7)}
+#bug .t::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 30% 0%,rgba(255,255,255,.75),rgba(255,255,255,0) 58%)}
+#bug .bars{position:absolute;left:0;top:-1.7px;width:78px;height:78px;background:linear-gradient(160deg,#2a2a30,#111114 60%);
+  -webkit-mask:url(data:image/png;base64,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) 0 0/78px 78px no-repeat;mask:url(data:image/png;base64,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) 0 0/78px 78px no-repeat}
+/* photographs (Higgsfield, 24 Sep 2026): a photo fills its frame; a product shot sits on the glass with its studio
+   ground multiplied away and its edges feathered, so there is no cut-out line. Only the bitmap is scaled for the
+   slow push; type never is (the v3 jitter: scaling text re-snaps its glyphs to the pixel grid every frame). */
+.ph{position:absolute;overflow:hidden}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+/* the swap plates (v3.6, 24 Sep 2026): Faisal's terminal photo in three pixel-aligned versions (NeroPay, YOUR LOGO,
+   Keelstone Pay), their ground lifted to the paper so they sit on the page. The top plate is revealed through a moving
+   gradient mask with a band of light riding its edge, so only the marks change. Only the bitmap is scaled, never type. */
+.plate{position:absolute;-webkit-mask-image:radial-gradient(closest-side,#000 80%,transparent 100%);mask-image:radial-gradient(closest-side,#000 80%,transparent 100%)}
+.plate img{position:absolute;inset:0;width:100%;height:100%}
+.plate .top{-webkit-mask-image:linear-gradient(115deg,#000 var(--w,0%),transparent calc(var(--w,0%) + 7%));mask-image:linear-gradient(115deg,#000 var(--w,0%),transparent calc(var(--w,0%) + 7%))}
+.plate .band{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,0) calc(var(--w,0%) - 4%),rgba(255,255,255,.75) calc(var(--w,0%) + 3%),rgba(255,255,255,0) calc(var(--w,0%) + 10%));opacity:var(--bo,0)}
+/* the two modules (brief Part 3): a big figure over its condition, and a line that climbs as the state moves */
+.fig{position:absolute;left:0;width:1920px;text-align:center;font:700 176px/1 P;letter-spacing:-.045em}
+.cond{position:absolute;left:0;width:1920px;text-align:center;font:500 34px/1.3 P;color:var(--ink);letter-spacing:-.015em}
+.cond.dim{color:var(--mute);font-size:28px}
+.center{position:absolute;left:0;width:1920px;text-align:center}
+.track{position:absolute;height:6px;border-radius:3px;background:rgba(17,17,20,.10)}
+.track i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--yel)}
+.tick{position:absolute;width:2px;height:26px;background:rgba(17,17,20,.28)}
+.tl{position:absolute;font:600 24px/1 P;color:var(--mute);transform:translateX(-50%);white-space:nowrap}
+.knob{position:absolute;width:44px;height:44px;border-radius:50%;margin:-19px 0 0 -22px;background:#fff;
+  box-shadow:0 10px 24px -8px rgba(17,17,20,.35),inset 0 0 0 6px var(--yel)}
+svg.climb{position:absolute;overflow:visible}
+svg.climb .ln{fill:none;stroke:#111114;stroke-width:6;stroke-linejoin:round;stroke-linecap:round}
+svg.climb .ar{fill:rgba(255,207,36,.28)}
+svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:0 26px;height:62px;border-radius:14px;font:600 26px/1 P}
+.cal{display:flex;gap:18px}
+.cal b{width:92px;height:92px;border-radius:20px;display:flex;align-items:center;justify-content:center;font:700 40px/1 P;
+  background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1.5px rgba(17,17,20,.10)}
+.net{display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
+.net i{height:46px;border-radius:12px;background:rgba(17,17,20,.07);transition:none}
+.badge{display:inline-flex;align-items:center;gap:14px;height:66px;padding:0 28px;border-radius:16px;background:var(--yel);font:700 28px/1 P}
+/* the capsule: slides up, a fill runs across as the business is set up, and on "live" the dot turns green with two ripples and
+   the label flips up. The money moment: £100 lands, the bar runs to its first mark; on "three hundred" it runs on past £200 to
+   £300, the "–£300" opens beside the £100 and the bar flashes with sparks. Only real tier values are ever on screen. */
+.cap{position:relative;display:inline-flex;align-items:center;gap:16px;height:72px;padding:0 30px;border-radius:18px;overflow:visible;
+  background:rgba(255,255,255,.62);box-shadow:0 18px 40px -22px rgba(17,17,20,.28),inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1.5px 0 #fff;font:600 28px/1 P}
+.capfill{position:absolute;left:0;top:0;bottom:0;border-radius:18px;background:linear-gradient(90deg,rgba(255,207,36,.28),rgba(255,207,36,.10));width:0}
+.cap .dot{position:relative;margin:0;width:16px;height:16px;z-index:1}
+.capw{position:relative;display:inline-block;height:34px;overflow:hidden;z-index:1;min-width:330px;text-align:left}
+.capt{position:absolute;left:0;top:0;white-space:nowrap;line-height:34px}
+.ring{position:absolute;left:38px;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:3px solid var(--live);opacity:0;pointer-events:none}
+.fig .grow{display:inline-block;overflow:hidden;vertical-align:top;white-space:nowrap}
+.fig .hitfx{position:absolute;left:50%;width:900px;margin-left:-450px;top:-20px;bottom:-20px;border-radius:30px}
+.mbar{position:absolute;height:14px;border-radius:7px;background:rgba(17,17,20,.08)}
+.mbar > i#mfill{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:linear-gradient(90deg,#FFE27A,#FFCF24)}
+.mbar > b{position:absolute;left:0;top:-14px;bottom:-14px;border-radius:20px;background:radial-gradient(closest-side,rgba(255,207,36,.55),rgba(255,207,36,0));opacity:0}
+.mt{position:absolute;top:-8px;width:3px;height:30px;margin-left:-1.5px;background:rgba(17,17,20,.25);border-radius:2px}
+.ml{position:absolute;top:34px;transform:translateX(-50%);font:600 24px/1 P;color:var(--mute);white-space:nowrap}
+.spark{position:absolute;left:900px;top:7px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFCF24;opacity:0}
+/* the page */
+#ground{background:repeating-linear-gradient(180deg,rgba(17,17,20,0) 0 63px,rgba(17,17,20,.055) 63px 64px),#FBFAF7 !important}
+#p1,#p2{display:none}
+#light{opacity:.55 !important}
+.kin{position:absolute;font:700 92px/1.02 P;letter-spacing:-.04em}
+.kin .w{display:inline-block}
+#sheet{position:absolute;left:840px;top:0;width:930px;height:1080px;overflow:hidden}
+#rows{position:absolute;left:0;top:0;width:930px}
+.lrow{position:absolute;left:0;width:930px;background:#fff;border-radius:6px;box-shadow:0 1px 0 rgba(17,17,20,.06),0 18px 40px -26px rgba(17,17,20,.25);
+  display:grid;grid-template-columns:70px 1fr 240px;align-items:center;padding:0 34px;opacity:0}
+.lrow .n{font:400 22px/1 M;color:var(--mute)}
+.lrow .e{font:600 30px/1.2 P;letter-spacing:-.015em}
+.lrow .e small{display:block;font:400 21px/1.3 M;color:var(--mute);letter-spacing:0;margin-top:6px}
+.lrow .v{font:700 40px/1 M;text-align:right;letter-spacing:-.02em}
+.lrow .wipe{position:absolute;inset:0;background:#fff;border-radius:6px;transform-origin:100% 50%}
+.lrow.sub{box-shadow:none;background:rgba(255,255,255,.72)}
+.stamp{position:absolute;font:700 56px/1 M;letter-spacing:0;color:#111114;padding:14px 30px;border:6px solid #111114;border-radius:14px;
+  background:rgba(255,207,36,.92);transform-origin:50% 50%;opacity:0;white-space:nowrap}
+.ladder{display:flex;gap:10px;justify-content:flex-end}
+.ladder b{font:700 26px/1 M;padding:8px 10px;border-radius:8px;background:rgba(17,17,20,.05);color:var(--mute)}
+.prod{position:absolute;mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+</style></head>
+<body>
+<div id="ground"></div>
+<div id="light"></div>
+<div id="p1" class="pane"><i></i></div>
+<div id="p2" class="pane"><i></i></div>
+<div id="film"></div>
+<div id="sheet"><div id="rows">
+  <div class="lrow sub" data-row="1.63" style="top:64px;height:56px;grid-template-columns:1fr 240px;box-shadow:none;background:none"><span class="n" style="letter-spacing:.08em">PARTNER LEDGER · ONE INTRODUCTION</span><span class="n" style="text-align:right">£ PER BUSINESS</span><i class="wipe" style="background:#FBFAF7"></i></div>
+  <div class="lrow" data-row="3.61" style="top:140px;height:120px"><span class="n">01</span><span class="e">Introduced · The Copper Kettle<small data-sub="5.78">Set up and supported by NeroPay</small></span><span class="v">—</span><i class="wipe"></i></div>
+  <div class="lrow" data-row="8.23" style="top:276px;height:104px"><span class="n">02</span><span class="e"><span class="dot"></span>Live · taking card payments</span><span class="v" style="color:var(--live)">●</span><i class="wipe"></i></div>
+  <div class="lrow" data-row="11.80" style="top:396px;height:92px"><span class="n">03</span><span class="e">Bonus, per business</span><span class="v"></span><i class="wipe"></i></div>
+  <div class="lrow sub" data-row="13.20" data-flash="13.20" style="top:496px;height:96px"><span class="n"></span><span class="e">£0–£20,000<small>in its first 30 days</small></span><span class="v">£100</span><i class="wipe"></i></div>
+  <div class="lrow sub" data-row="14.74" data-flash="14.74" style="top:600px;height:96px"><span class="n"></span><span class="e">£20,000–£39,999<small>in its first 30 days</small></span><span class="v">£200</span><i class="wipe"></i></div>
+  <div class="lrow sub" data-row="18.91" data-flash="18.91" style="top:704px;height:96px"><span class="n"></span><span class="e">£40,000+<small>in its first 30 days</small></span><span class="v">£300</span><i class="wipe"></i></div>
+  <div class="lrow" data-row="24.06" style="top:824px;height:120px"><span class="n">04</span><span class="e">New active merchants this month<small>calendar month</small></span><span class="v" id="cnt"><span data-sub="24.58">1</span> <span data-sub="25.12">2</span> <span data-sub="25.51">3</span></span><i class="wipe"></i></div>
+  <div class="lrow" data-row="30.02" style="top:960px;height:120px"><span class="n">05</span><span class="e">Revenue share · whole network<small data-sub="32.60">of what its card payments earn NeroPay</small></span><span class="v" id="rv"></span><i class="wipe"></i></div>
+  <div class="lrow sub" data-row="34.64" style="top:1096px;height:120px;grid-template-columns:70px 330px 1fr"><span class="n"></span><span class="e" id="rcond">3–20 new active<small>merchants this month</small></span><span class="ladder"><b data-lad="35.00">20%</b><b data-lad="35.55">25%</b><b data-lad="36.10">30%</b><b data-lad="36.60">35%</b><b data-lad="36.91">40%</b></span><i class="wipe"></i></div>
+  <div class="lrow" data-row="40.56" style="top:1232px;height:104px"><span class="n">06</span><span class="e">Under three this month</span><span class="v" style="color:var(--mute);font-size:28px" data-sub="41.90">no revenue share</span><i class="wipe"></i></div>
+  <div class="lrow" data-row="43.22" data-flash="44.89" style="top:1352px;height:104px"><span class="n">07</span><span class="e">Bonuses</span><span class="v" style="font-size:30px"><span class="mk" data-mark="44.89">either way</span></span><i class="wipe"></i></div>
+  <div class="stamp" id="stamp" data-stamp="28.93" style="left:190px;top:900px">ACTIVE PARTNER</div>
+</div></div>
+<div id="bug"><div class="t"><div class="bars"></div></div></div>
+<script>
+const SQ = new URLSearchParams(location.search).get('fmt') === '1x1';
+const W = SQ ? 1080 : 1920, H = 1080;
+/* the swap plates' geometry, [left, top, width]: full frame, and beside the login card after the pull-back */
+const PL = SQ ? { swapFull: [55, 245, 1000], swapSplit: [305, 153, 1000] } : { swapFull: [497, -213, 1450], swapSplit: [965, 120, 1000] };
+const clamp = x => Math.max(0, Math.min(1, x));
+const outC = x => 1 - Math.pow(1 - x, 3), outE = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const io = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+const money = v => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/* Each scene: [start, end] on the film's timeline, where the light sits, and its markup. data-at is when an element
+   arrives (the word that says it); data-count counts a figure up from that moment; data-mark draws the yellow
+   marker; data-rule lights a card's yellow edge. Scenes overlap their neighbours by the crossfade. */
+const SC = [
+ { t: [0, 3.50], light: [300, 200], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:300px" data-at="0.60"><b></b>NeroPay Partners</div>
+   <div class="kin" style="left:150px;top:350px;width:640px"><span class="w" data-at="0.60">What's</span> <span class="w" data-at="0.99">one</span> <span class="w" data-at="1.16">introduction</span> <span class="w mk" data-at="1.63" data-mark="1.70">worth?</span></div>` },
+ { t: [3.50, 11.10], light: [300, 900], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:300px;width:640px"><span class="ln" data-at="3.61">You introduce.</span><span class="ln" data-at="5.78">We set up.</span><span class="ln" data-at="6.75">We support.</span></div>
+   <div class="sub" style="left:150px;top:640px;color:#111114;font-size:36px" data-at="10.00">That's <span class="mk" data-mark="10.31">one line.</span></div>` },
+ { t: [11.10, 23.95], light: [300, 200], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:300px;width:640px"><span class="ln" data-at="11.18">Every line</span><span class="ln" data-at="11.80">pays a <span class="mk" data-mark="12.52">bonus.</span></span></div>
+   <div class="sub" style="left:150px;top:560px;color:#111114;font-size:36px" data-at="21.18">Per business.</div>
+   <div class="sub" style="left:150px;top:620px;color:#111114;font-size:36px" data-at="22.19"><span class="mk" data-mark="22.30">Every business.</span></div>` },
+ { t: [23.95, 29.90], light: [300, 900], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:300px;width:640px"><span class="ln" data-at="24.06">Three new</span><span class="ln" data-at="25.12">active merchants</span><span class="ln" data-at="26.29">in a month.</span></div>` },
+ { t: [29.90, 40.45], light: [300, 200], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:280px;width:640px"><span class="ln" data-at="30.02">A share of</span><span class="ln" data-at="31.51">your <span class="mk" data-mark="31.65">whole network.</span></span></div>
+   <div class="sub" style="left:150px;top:720px;width:600px" data-at="32.60">What its card payments earn NeroPay.</div>` },
+ { t: [40.45, 45.90], light: [300, 900], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:300px;width:640px"><span class="ln" data-at="40.56">Under three?</span></div>
+   <div class="sub" style="left:150px;top:430px;color:#111114;font-size:36px" data-at="41.90">No revenue share that month.</div>
+   <div class="kin" style="left:150px;top:540px;width:640px;font-size:76px" data-at="43.22">Bonuses stay.<br><span class="mk" data-mark="44.89">Either way.</span></div>` },
+ { t: [45.90, 49.40], light: [300, 200], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:250px;width:640px;font-size:76px"><span class="ln" data-at="46.02">Every line is</span><span class="ln" data-at="46.85">a real business,</span><span class="ln" data-at="47.65"><span class="mk" data-mark="47.70">trading.</span></span></div>
+   <div style="position:absolute;left:150px;top:740px;width:620px;font:500 21px/1.45 P;color:var(--mute)" data-at="46.02">Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Full terms at neropay.app/partners.</div>` }
+];
+window.OUTRO_AT = 49.10;   /* the neropartner outro: the wordmark is whole as she says "NeroPay" (49.44); its line slides out at 51.07 */
+window.DURATION = 57.40;
+
+const film = document.getElementById('film'), L = document.getElementById('light');
+const P1 = document.getElementById('p1'), P2 = document.getElementById('p2');
+SC.forEach(s => { const d = document.createElement('div'); d.className = 'sc';
+  d.innerHTML = `<div class="cam" style="--ox:${s.ox}">${s.html}</div>`; film.appendChild(d); s.el = d; s.cam = d.firstChild;
+  s.items = [...d.querySelectorAll('[data-at]')]; s.marks = [...d.querySelectorAll('[data-mark]')];
+  s.counts = [...d.querySelectorAll('[data-count]')]; s.rules = [...d.querySelectorAll('[data-rule]')];
+  s.glass = [...d.querySelectorAll('.g')];
+  s.hits = [...d.querySelectorAll('[data-hit]')].map(e => { const fx = document.createElement('i'); fx.className = 'hitfx'; e.prepend(fx); return [e, fx]; }); });
+
+const XF = 0.4;
+window.setTime = function (t) {
+  /* the light glides to each scene's place over a second, starting as the scene arrives */
+  let lx = SC[0].light[0], ly = SC[0].light[1];
+  for (let i = 1; i < SC.length; i++) { const k = io(clamp((t - SC[i].t[0] + 0.6) / 2.4));
+    lx += (SC[i].light[0] - lx) * k; ly += (SC[i].light[1] - ly) * k; }
+  lx += 110 * Math.sin(t / 5.3) + 50 * Math.sin(t / 2.9); ly += 80 * Math.cos(t / 6.1) + 40 * Math.sin(t / 3.7);   /* it never stops moving */
+  const endFade = 1 - clamp((t - (OUTRO_AT - 0.7)) / 0.6);
+  L.style.transform = `translate(${lx}px,${ly}px)`; L.style.opacity = endFade;
+  document.getElementById('ground').style.opacity = endFade;   /* plain #FBFAF7 underneath, the outro's own ground */
+  P1.style.transform = `translate(${-700 + 60 * Math.sin(t / 19)}px,${-1150 + 40 * Math.cos(t / 23)}px) rotate(${38 + 1.5 * Math.sin(t / 17)}deg)`;
+  P2.style.transform = `translate(${1150 + 50 * Math.cos(t / 21)}px,${250 + 40 * Math.sin(t / 25)}px) rotate(${38 + 1.2 * Math.cos(t / 15)}deg)`;
+  P1.querySelector('i').style.transform = P2.querySelector('i').style.transform = `translateX(${((t * 6) % 140) - 70}%)`;
+  P1.style.opacity = P2.style.opacity = endFade;
+  document.getElementById('bug').style.opacity = 0.92 * outC(clamp((t - 0.60) / 0.8)) * (1 - clamp((t - (OUTRO_AT - 1.2)) / 0.5));
+  /* the row she is pointing at: a yellow wash that pulses twice and stays faintly lit */
+  document.querySelectorAll('[data-flash]').forEach(r => { const d = t - +r.dataset.flash;
+    const a = d < 0 ? 0 : 0.10 + (d < 1.4 ? 0.22 * Math.max(0, Math.sin(d / 0.7 * 2 * Math.PI)) : 0);
+    r.style.boxShadow = `inset 0 0 0 999px rgba(255,207,36,${a.toFixed(3)})`; });
+
+  for (const s of SC) {
+    const [a, b] = s.t;
+    if (t < a - 0.01 || t > b + XF) { s.el.style.display = 'none'; continue; }
+    s.el.style.display = '';
+    const vin = outC(clamp((t - a) / XF)), vout = 1 - io(clamp((t - b) / XF));
+    s.el.style.opacity = Math.min(vin, vout);
+    const push = (t - a) / (b - a);
+    s.cam.style.transform = `translateY(${Math.round(-10 * io(clamp((t - b) / XF)))}px)`;
+    for (const im of s.el.querySelectorAll('[data-push]')) im.style.scale = String(1 + 0.03 * push);
+    for (const e of s.items) { const p = outE(clamp((t - +e.dataset.at) / 0.55)) * (e.dataset.out ? 1 - clamp((t - +e.dataset.out) / 0.3) : 1);   /* data-out: leaves */
+      e.style.opacity = p; e.style.transform = e.dataset.slide !== undefined ? `translateX(${Math.round((1 - p) * 90)}px)` : (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${Math.round((1 - p) * 26)}px)`;
+      if (e.classList.contains('g')) e.style.setProperty('--sh', `${-130 + 260 * io(clamp((t - +e.dataset.at - 0.15) / 1.0))}%`); }
+    for (const [e, fx] of s.hits) { const d = t - +(e.dataset.hat || e.dataset.at) - 0.12;   /* data-hat: flash later than it arrives */
+      fx.style.opacity = d < 0 ? 0 : d < 0.18 ? d / 0.18 : Math.max(0, 1 - (d - 0.18) / 1.0); }
+    for (const m of s.marks) m.style.setProperty('--m', outC(clamp((t - +m.dataset.mark) / 0.35)));
+    for (const r of s.rules) r.style.setProperty('--r', outC(clamp((t - +r.dataset.rule) / 0.35)));
+    for (const c of s.counts) { const at = +c.closest('[data-at]').dataset.at, v = +c.dataset.count;
+      const k = outC(clamp((t - at) / 0.9)); c.textContent = c.dataset.int ? String(Math.round(v * k)) : money(v * k); }
+  }
+  /* ---- the ledger: rows print (a white wipe draws back to the right), subs and marks arrive on their words, the stamp slams,
+     the revenue share steps through every band, and the sheet scrolls so the newest line sits in view */
+  const rows = [...document.querySelectorAll('[data-row]')];
+  let target = 0;
+  for (const r of rows) { const at = +r.dataset.row, k = clamp((t - at) / 0.5);
+    r.style.opacity = t < at ? 0 : 1; r.querySelector('.wipe').style.transform = `scaleX(${(1 - io(k)).toFixed(3)})`;
+    const bottom = r.offsetTop + r.offsetHeight; if (t >= at) target = Math.max(target, bottom); }
+  document.querySelectorAll('[data-sub]').forEach(e => { e.style.opacity = outE(clamp((t - +e.dataset.sub) / 0.4)).toFixed(3); });
+  /* scroll: each time a row lands below 940 px, the sheet glides up over 0.7 s */
+  let off = 0; for (const r of rows) { const at = +r.dataset.row, need = Math.max(0, r.offsetTop + r.offsetHeight - 940);
+    if (need > 0) { const k = io(clamp((t - at + 0.15) / 0.7)); off = Math.max(off, need * k); } }
+  document.getElementById('rows').style.transform = `translateY(${-Math.round(off)}px)`;
+  /* the stamp: slams from 1.5x with a little rotation, then sits */
+  const st = document.getElementById('stamp'); { const d = t - +st.dataset.stamp, k = clamp(d / 0.22);
+    const dk = io(clamp((t - 29.75) / 0.55));   /* then it shrinks and docks into row 04's value column, clear of every line */
+    const cx = st.offsetLeft + st.offsetWidth / 2, cy = st.offsetTop + st.offsetHeight / 2, tx = 930 - 34 - 118, ty = 884;
+    st.style.opacity = d < 0 ? 0 : 1;
+    st.style.transform = `translate(${((tx - cx) * dk).toFixed(1)}px,${((ty - cy) * dk).toFixed(1)}px) rotate(${(-7 + 3 * dk).toFixed(2)}deg) scale(${((1.5 - 0.5 * outC(k)) * (1 - 0.62 * dk)).toFixed(3)})`;
+    document.getElementById('cnt').style.opacity = (1 - clamp((t - 29.65) / 0.25)).toFixed(3); }
+  /* revenue share: the value and its band move together, every band passed */
+  const RB = [['20', '3–20 new active', 'merchants this month', 35.00], ['25', '21–35 new active', 'merchants this month', 35.55], ['30', '36–60 new active', 'merchants this month', 36.10],
+    ['35', '61–110 new active', 'merchants this month', 36.60], ['40', '111+ new active', 'merchants in one month', 36.91]];
+  const rv = document.getElementById('rv'), rc = document.getElementById('rcond');
+  if (rv) { let cur = null; for (const b of RB) if (t >= b[3] - 0.36) cur = b;
+    rv.textContent = t >= 34.64 && cur ? cur[0] + '%' : ''; if (cur) rc.innerHTML = cur[1] + '<small>' + cur[2] + '</small>';
+    document.querySelectorAll('[data-lad]').forEach(b => { const on = t >= +b.dataset.lad - 0.36; b.style.background = on ? 'var(--yel)' : ''; b.style.color = on ? '#111114' : ''; }); }
+};
+window.setFrame = (n, fps = 25) => window.setTime(n / fps);
+/* for check-still.cjs: a moment in each scene after its last reveal and before it leaves */
+window.SCENES_FOR_CHECK = () => SC.map((s, i) => {
+  const h = s.el.querySelector('.h'); if (!h) return { i, t: null };
+  const own = [h, ...h.querySelectorAll('[data-at],[data-mark]')];
+  const last = Math.max(s.t[0], ...own.map(e => +(e.dataset.at || e.dataset.mark || 0)));
+  const t = last + 0.9; return { i, t: t < s.t[1] - 0.15 ? t : null }; });
+
+/* ---- the 1:1 square (Faisal, 25 Sep 2026: "redo overlays and re layout so it all makes sense and nothing overlaps").
+   Every scene is laid out at 16:9, measured, then re-placed for 1080 x 1080: its headline column (kickers, headlines, subs
+   on the left) keeps its type size and moves to the top-left; everything else (the glass, the diagrams) moves as one block
+   below it, scaled once and statically to fit what is left, centred; lines that sat at the foot stay at the foot. A static
+   scale never shimmers (the v3 jitter came from animating a scale). The hook, the swap and the close are placed by hand. */
+window.LAYOUT_READY = true;   /* 16:9 only for now; the NeroConnect square adapter is not carried over */
+window.setTime(0);
+</script></body></html>

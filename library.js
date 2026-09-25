@@ -204,6 +204,26 @@ window.LIBRARY = {
       { crop: '16:9 master', px: '1920×1080', mb: 24.8, md5: 'de919bd74a71857240b5446b0040ca33', lufs: '−16.02', where: 'v2 sent in chat 25 Sep 2026; not yet in Drive. Mastered to -16 LUFS / -1 dBTP for range (crest 8.8 vs 5.4 in v1)' },
       { crop: 'v1 16:9 (superseded)', px: '1920×1080', mb: 24.3, md5: '8a36211655e5c7ed84cf74da4a2aa1fc' }] },
 
+    { id: 'PPL', series: 'Partner Programme', title: 'Partner Programme: The Ledger',
+      version: 'v1', rendered: '2026-09-25', secs: 57.4,
+      status: 'review', by: 'content video session, 25 Sep 2026 — one of two new explainer styles Faisal asked for ("2 brand new style of explain videos"), awaiting his review',
+      waiting: 'Faisal watches it. Listen for three things Whisper could not settle: "£100 as standard", the top band said as a hundred and ten merchants (not pounds), and the URL at the end. The take says the takings condition aloud ("£200 if they take more than £20,000 in their first 30 days"), which the 17 Sep PP01 ruling kept off the voice; his call whether that holds here. The outro\'s neropartner lockup is hand-built and Eray has not seen it.',
+      build: 'motion/partner/ledger/ (claims.md beside it)', drive: null,
+      backup: false, clearedFor: null, notCleared: null,
+      note: 'Style B. A ruled page and one ledger sheet: every step of the programme prints as a line with its figure and condition on the same row, an ACTIVE PARTNER stamp slams on and docks, the revenue share steps through every band. Kinetic headline on the left. Voice Olivia, one take. Mastered -16 LUFS / -1 dBTP like PPX v2.',
+      files: [
+        { crop: '16:9 master', px: '1920×1080', mb: 6.6, md5: '0064c001c37e7e8303065b0e68aeca64', lufs: '−16.03', where: 'sent in chat 25 Sep 2026; not yet in Drive' }] },
+
+    { id: 'PPS', series: 'Partner Programme', title: 'Partner Programme: The High Street',
+      version: 'v1', rendered: '2026-09-25', secs: 57.8,
+      status: 'review', by: 'content video session, 25 Sep 2026 — one of two new explainer styles Faisal asked for, awaiting his review',
+      waiting: 'Faisal watches it. Listen for "NeroPay" (Whisper heard "NiroPay") and the URL at the end. The take says the bonus is "set by what it takes in its first 30 days", which the 17 Sep PP01 ruling kept off the voice; his call. The neropartner outro lockup is hand-built and Eray has not seen it.',
+      build: 'motion/partner/street/ (claims.md beside it)', drive: null,
+      backup: false, clearedFor: null, notCleared: null,
+      note: 'Style C. A drawn high street the camera walks: shops light as she names them, lines run from You to every business introduced, the bonus and the share land above the roofs with their conditions, the whole network lights up. No place or business named. Voice Olivia, one take. Mastered -16 LUFS / -1 dBTP.',
+      files: [
+        { crop: '16:9 master', px: '1920×1080', mb: 13.2, md5: '9ed58d9ed213daa65a5b8b7baba45e2f', lufs: '−16.03', where: 'sent in chat 25 Sep 2026; not yet in Drive' }] },
+
     { id: 'PP01', series: 'Partner Programme', title: 'The Partner Programme',
       version: 'v4', rendered: '2026-09-17', secs: 68,
       status: 'review', by: 'unrecorded',

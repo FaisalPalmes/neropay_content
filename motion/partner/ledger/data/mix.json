@@ -1,0 +1,143 @@
+{
+ "duration": 57.4,
+ "head": 0.6,
+ "vo": "data/vo.mp3",
+ "target": -16,
+ "tp": -1,
+ "vo_filter": "acompressor=threshold=-26dB:ratio=1.7:attack=12:release=160:makeup=1",
+ "bed": {
+  "file": "video/library/bgm/partner-upbeat-118.mp3",
+  "t": 0,
+  "gain": 0.0072,
+  "loop_at": 57.026,
+  "fade": 3
+ },
+ "cues": [
+  {
+   "sfx": "click-soft",
+   "t": 1.68,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 3.564,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "pop",
+   "t": 3.66,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 8.28,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 11.202,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "pop",
+   "t": 11.85,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 13.25,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "pop",
+   "t": 14.79,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 18.96,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 23.931,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "pop",
+   "t": 24.11,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "impact-bass-2",
+   "t": 29.05,
+   "gain": 0.12,
+   "why": "the ACTIVE PARTNER stamp lands"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 29.532,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 30.07,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "pop",
+   "t": 34.69,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "whoosh-short",
+   "t": 40.224,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "click-soft",
+   "t": 40.61,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "pop",
+   "t": 43.27,
+   "gain": 0.06,
+   "why": "a ledger line prints"
+  },
+  {
+   "sfx": "whoosh",
+   "t": 45.825,
+   "gain": 0.06,
+   "why": "scene change, on the beat"
+  },
+  {
+   "sfx": "impact-bass-1",
+   "t": 50.02,
+   "gain": 0.2,
+   "why": "the sting: the letters meet"
+  },
+  {
+   "sfx": "sparkle",
+   "t": 51.15,
+   "gain": 0.07,
+   "why": "the line slides out under the tile"
+  }
+ ]
+}

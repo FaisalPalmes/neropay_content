@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Partner Programme: The High Street</title>
+<style>
+/* Partner Programme advert, style C, "The High Street" (25 Sep 2026). Built by the CONTENT VIDEO session at Faisal's request for
+   two new explainer styles. A drawn street of shopfronts the camera walks along: each shop lights on the word that names it,
+   lines run from "You" to every business introduced, the bonus and the share land in the band above the roofs with their
+   conditions, and the whole network lights up. Figures from motion/partner/BRIEF.md v4; every one sits with its condition. */
+@font-face{font-family:P;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:P;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+@font-face{font-family:P;font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2)}
+:root{--yel:#FFCF24;--ink:#111114;--mute:#6B6B73;--live:#2FBF71}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#FBFAF7}   /* 1:1: the adapter at the foot narrows them to 1080 */
+body{font-family:P,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+
+/* the world: paper, one light, two clear panes */
+#ground{position:absolute;inset:0;background:radial-gradient(140% 120% at 50% 45%,#FBFAF7 55%,#F3F0E8 100%)}
+#light{position:absolute;left:0;top:0;width:1500px;height:1500px;margin:-750px 0 0 -750px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,207,36,.34) 0%,rgba(255,207,36,.20) 22%,rgba(255,207,36,.08) 42%,rgba(255,207,36,.025) 58%,rgba(255,207,36,0) 70%)}
+.pane{position:absolute;width:1700px;height:1700px;border-radius:120px;
+  background:linear-gradient(135deg,rgba(255,255,255,.34),rgba(255,255,255,.06) 45%,rgba(255,255,255,.18));
+  box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 2px 0 rgba(255,255,255,.95),0 60px 120px -60px rgba(120,95,30,.16)}
+.pane i{position:absolute;top:-20%;bottom:-20%;left:-60%;width:220%;background:linear-gradient(105deg,rgba(255,255,255,0) 45%,rgba(255,255,255,.55) 49.5%,rgba(255,255,255,.12) 51%,rgba(255,255,255,0) 55%)}
+
+/* a scene: a layer the whole frame wide; its contents are placed absolutely */
+.sc{position:absolute;inset:0;opacity:0}
+.cam{position:absolute;inset:0;transform-origin:var(--ox,60%) var(--oy,50%)}
+
+/* type */
+.kick{position:absolute;display:flex;align-items:center;gap:14px;font:600 20px/1 P;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.kick b{display:block;width:34px;height:5px;border-radius:3px;background:var(--yel)}
+.h{position:absolute;font:700 76px/1.04 P;letter-spacing:-.035em}
+.h.xl{font-size:104px}
+.h .ln{display:block}
+.mk{position:relative;display:inline-block;isolation:isolate}
+.mk::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.07em;height:.36em;background:var(--yel);border-radius:3px;z-index:-1;
+  transform:scaleX(var(--m,0));transform-origin:0 50%}
+.sub{position:absolute;font:500 30px/1.35 P;color:var(--mute);letter-spacing:-.01em}
+.lab{font:500 22px/1.2 P;color:var(--mute);letter-spacing:-.005em}
+.big{font:600 58px/1 P;letter-spacing:-.03em}
+.mid{font:600 34px/1.15 P;letter-spacing:-.02em}
+
+/* clear glass: a translucent body, a hairline rim, a bright top edge, a soft shadow; no thick inset rim */
+.g{position:absolute;border-radius:30px;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,.52) 0%,rgba(255,255,255,.17) 52%,rgba(255,255,255,.30) 100%);
+  box-shadow:0 50px 90px -46px rgba(70,56,20,.30),0 14px 30px -18px rgba(17,17,20,.10),
+    inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1.5px 0 rgba(255,255,255,1),inset 0 -1px 0 rgba(120,96,30,.07),inset 0 0 60px rgba(255,255,255,.28);
+  outline:1px solid rgba(17,17,20,.045);outline-offset:-1px}
+.g::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(110% 55% at 20% 0%,rgba(255,255,255,.85),rgba(255,255,255,0) 58%),linear-gradient(0deg,rgba(255,255,255,.35),rgba(255,255,255,0) 18%)}
+.g::after{content:"";position:absolute;inset:-10%;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.7) 50%,rgba(255,255,255,0) 60%);
+  transform:translateX(var(--sh,-130%))}
+.g > *{position:relative;z-index:1}
+.row{display:flex;align-items:center;justify-content:space-between}
+.rule{position:absolute;left:0;top:18%;bottom:18%;width:5px;border-radius:0 3px 3px 0;background:var(--yel);transform:scaleY(var(--r,0))}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--live);margin-right:12px;vertical-align:1px}
+.ydot{background:var(--yel)}
+.hair{height:1px;background:rgba(17,17,20,.08)}
+/* the pointer (24 Sep 2026): whatever she names flashes a soft yellow wash as it lands, then lets go */
+.hitfx{position:absolute;left:-14px;right:-14px;top:-10px;bottom:-10px;border-radius:14px;pointer-events:none;opacity:0;
+  background:rgba(255,207,36,.26);box-shadow:0 0 0 2px rgba(255,207,36,.55),0 0 34px rgba(255,207,36,.35)}
+.g > .hitfx{position:absolute;inset:0;border-radius:inherit;z-index:0}
+[data-hit]:not(.g){position:relative}   /* never on a card: a .g is placed absolutely, and v3.4 knocked the flashed cards into page flow (Faisal's screenshots, 24 Sep) */
+/* the mark, small, bottom right, the whole film: the locked sting's yellow glass tile (brand/sting), 78 px */
+#bug{position:absolute;right:58px;bottom:50px;width:78px;height:74.6px;opacity:0;z-index:20}
+#bug .t{position:absolute;inset:0;border-radius:12px;overflow:hidden;
+  background:linear-gradient(150deg,rgba(255,224,104,.98) 0%,#FFCF24 50%,#F4BC08 100%);
+  box-shadow:0 14px 26px -12px rgba(17,17,20,.30),0 4px 9px -5px rgba(17,17,20,.16),inset 0 0 0 3px rgba(255,255,255,.14),
+    inset 0 0 10px rgba(160,110,0,.22),inset 0 -1px 2px rgba(120,80,0,.18),inset 0 0 0 1px rgba(255,255,255,.7),inset 0 1px 0 rgba(255,255,255,.7)}
+#bug .t::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 30% 0%,rgba(255,255,255,.75),rgba(255,255,255,0) 58%)}
+#bug .bars{position:absolute;left:0;top:-1.7px;width:78px;height:78px;background:linear-gradient(160deg,#2a2a30,#111114 60%);
+  -webkit-mask:url(data:image/png;base64,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) 0 0/78px 78px no-repeat;mask:url(data:image/png;base64,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) 0 0/78px 78px no-repeat}
+/* photographs (Higgsfield, 24 Sep 2026): a photo fills its frame; a product shot sits on the glass with its studio
+   ground multiplied away and its edges feathered, so there is no cut-out line. Only the bitmap is scaled for the
+   slow push; type never is (the v3 jitter: scaling text re-snaps its glyphs to the pixel grid every frame). */
+.ph{position:absolute;overflow:hidden}
+.ph img{display:block;width:100%;height:100%;object-fit:cover}
+/* the swap plates (v3.6, 24 Sep 2026): Faisal's terminal photo in three pixel-aligned versions (NeroPay, YOUR LOGO,
+   Keelstone Pay), their ground lifted to the paper so they sit on the page. The top plate is revealed through a moving
+   gradient mask with a band of light riding its edge, so only the marks change. Only the bitmap is scaled, never type. */
+.plate{position:absolute;-webkit-mask-image:radial-gradient(closest-side,#000 80%,transparent 100%);mask-image:radial-gradient(closest-side,#000 80%,transparent 100%)}
+.plate img{position:absolute;inset:0;width:100%;height:100%}
+.plate .top{-webkit-mask-image:linear-gradient(115deg,#000 var(--w,0%),transparent calc(var(--w,0%) + 7%));mask-image:linear-gradient(115deg,#000 var(--w,0%),transparent calc(var(--w,0%) + 7%))}
+.plate .band{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,0) calc(var(--w,0%) - 4%),rgba(255,255,255,.75) calc(var(--w,0%) + 3%),rgba(255,255,255,0) calc(var(--w,0%) + 10%));opacity:var(--bo,0)}
+/* the two modules (brief Part 3): a big figure over its condition, and a line that climbs as the state moves */
+.fig{position:absolute;left:0;width:1920px;text-align:center;font:700 176px/1 P;letter-spacing:-.045em}
+.cond{position:absolute;left:0;width:1920px;text-align:center;font:500 34px/1.3 P;color:var(--ink);letter-spacing:-.015em}
+.cond.dim{color:var(--mute);font-size:28px}
+.center{position:absolute;left:0;width:1920px;text-align:center}
+.track{position:absolute;height:6px;border-radius:3px;background:rgba(17,17,20,.10)}
+.track i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--yel)}
+.tick{position:absolute;width:2px;height:26px;background:rgba(17,17,20,.28)}
+.tl{position:absolute;font:600 24px/1 P;color:var(--mute);transform:translateX(-50%);white-space:nowrap}
+.knob{position:absolute;width:44px;height:44px;border-radius:50%;margin:-19px 0 0 -22px;background:#fff;
+  box-shadow:0 10px 24px -8px rgba(17,17,20,.35),inset 0 0 0 6px var(--yel)}
+svg.climb{position:absolute;overflow:visible}
+svg.climb .ln{fill:none;stroke:#111114;stroke-width:6;stroke-linejoin:round;stroke-linecap:round}
+svg.climb .ar{fill:rgba(255,207,36,.28)}
+svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
+.chip{display:inline-flex;align-items:center;gap:12px;padding:0 26px;height:62px;border-radius:14px;font:600 26px/1 P}
+.cal{display:flex;gap:18px}
+.cal b{width:92px;height:92px;border-radius:20px;display:flex;align-items:center;justify-content:center;font:700 40px/1 P;
+  background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1.5px rgba(17,17,20,.10)}
+.net{display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
+.net i{height:46px;border-radius:12px;background:rgba(17,17,20,.07);transition:none}
+.badge{display:inline-flex;align-items:center;gap:14px;height:66px;padding:0 28px;border-radius:16px;background:var(--yel);font:700 28px/1 P}
+/* the capsule: slides up, a fill runs across as the business is set up, and on "live" the dot turns green with two ripples and
+   the label flips up. The money moment: £100 lands, the bar runs to its first mark; on "three hundred" it runs on past £200 to
+   £300, the "–£300" opens beside the £100 and the bar flashes with sparks. Only real tier values are ever on screen. */
+.cap{position:relative;display:inline-flex;align-items:center;gap:16px;height:72px;padding:0 30px;border-radius:18px;overflow:visible;
+  background:rgba(255,255,255,.62);box-shadow:0 18px 40px -22px rgba(17,17,20,.28),inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1.5px 0 #fff;font:600 28px/1 P}
+.capfill{position:absolute;left:0;top:0;bottom:0;border-radius:18px;background:linear-gradient(90deg,rgba(255,207,36,.28),rgba(255,207,36,.10));width:0}
+.cap .dot{position:relative;margin:0;width:16px;height:16px;z-index:1}
+.capw{position:relative;display:inline-block;height:34px;overflow:hidden;z-index:1;min-width:330px;text-align:left}
+.capt{position:absolute;left:0;top:0;white-space:nowrap;line-height:34px}
+.ring{position:absolute;left:38px;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:3px solid var(--live);opacity:0;pointer-events:none}
+.fig .grow{display:inline-block;overflow:hidden;vertical-align:top;white-space:nowrap}
+.fig .hitfx{position:absolute;left:50%;width:900px;margin-left:-450px;top:-20px;bottom:-20px;border-radius:30px}
+.mbar{position:absolute;height:14px;border-radius:7px;background:rgba(17,17,20,.08)}
+.mbar > i#mfill{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:linear-gradient(90deg,#FFE27A,#FFCF24)}
+.mbar > b{position:absolute;left:0;top:-14px;bottom:-14px;border-radius:20px;background:radial-gradient(closest-side,rgba(255,207,36,.55),rgba(255,207,36,0));opacity:0}
+.mt{position:absolute;top:-8px;width:3px;height:30px;margin-left:-1.5px;background:rgba(17,17,20,.25);border-radius:2px}
+.ml{position:absolute;top:34px;transform:translateX(-50%);font:600 24px/1 P;color:var(--mute);white-space:nowrap}
+.spark{position:absolute;left:900px;top:7px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFCF24;opacity:0}
+/* the street */
+#p1,#p2{display:none}
+#light{opacity:.6 !important}
+.kin{position:absolute;font:700 84px/1.02 P;letter-spacing:-.04em}
+#street{position:absolute;left:0;top:0;width:4400px;height:1080px}
+#pave{position:absolute;left:-200px;right:-200px;top:960px;height:120px;background:linear-gradient(180deg,#ECE7DC,#E4DED1)}
+#pave::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:#D6CFC0}
+#pave i{position:absolute;top:44px;width:2px;height:76px;background:rgba(17,17,20,.06)}
+.shop{position:absolute;bottom:120px;border-radius:10px 10px 0 0;box-shadow:0 30px 60px -40px rgba(17,17,20,.35),inset 0 0 0 1px rgba(17,17,20,.06)}
+.shop .cor{position:absolute;left:-8px;right:-8px;top:-14px;height:18px;border-radius:6px;background:inherit;filter:brightness(.94);box-shadow:inset 0 0 0 1px rgba(17,17,20,.06)}
+.shop .sign{position:absolute;left:18px;right:18px;top:22px;height:58px;border-radius:8px;background:#26262C;color:#FBFAF7;
+  display:flex;align-items:center;justify-content:center;font:600 26px/1 P;letter-spacing:.02em;overflow:hidden}
+.shop .sign b{position:absolute;inset:0;background:var(--yel);opacity:0}
+.shop .sign span{position:relative}
+.shop .awn{position:absolute;left:8px;right:8px;top:96px;height:44px;border-radius:0 0 12px 12px;
+  background:repeating-linear-gradient(90deg,var(--a1) 0 30px,#F7F4EE 30px 60px);overflow:hidden}
+.shop .awn b{position:absolute;inset:0;background:repeating-linear-gradient(90deg,#FFCF24 0 30px,#FFF3C4 30px 60px);opacity:0}
+.shop .win{position:absolute;left:22px;top:156px;bottom:0;border-radius:6px 6px 0 0;background:linear-gradient(170deg,#DCE3E8,#C9D2D9);overflow:hidden;
+  box-shadow:inset 0 0 0 5px #F7F4EE}
+.shop .win b{position:absolute;inset:0;background:radial-gradient(90% 80% at 50% 70%,#FFE68A,#FFCF24 60%,#F4BC08);opacity:0}
+.shop .win::after{content:"";position:absolute;left:-40%;top:0;width:40%;height:100%;background:linear-gradient(105deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));transform:skewX(-12deg) translateX(60px)}
+.shop .door{position:absolute;right:22px;top:176px;bottom:0;width:64px;border-radius:6px 6px 0 0;background:#2E2E34;box-shadow:inset 0 0 0 5px #F7F4EE}
+.shop .live{position:absolute;left:50%;top:-58px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;height:40px;padding:0 16px;border-radius:12px;
+  background:#fff;box-shadow:0 12px 26px -14px rgba(17,17,20,.4);font:600 20px/1 P;white-space:nowrap;opacity:0}
+.shop .live .dot{margin:0}
+#net{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;pointer-events:none}
+#net path{fill:none;stroke:#111114;stroke-width:3;stroke-linecap:round;stroke-dasharray:6 9}
+#net circle{fill:#FFCF24;stroke:#111114;stroke-width:3}
+#you{position:absolute;left:960px;top:486px;width:0;height:0;opacity:0}
+#you .pin{position:absolute;left:-44px;top:-44px;width:88px;height:88px;border-radius:50%;background:var(--yel);display:flex;align-items:center;justify-content:center;
+  font:700 26px/1 P;box-shadow:0 16px 34px -14px rgba(17,17,20,.45),inset 0 0 0 4px #fff}
+.list{font:600 30px/1 P;letter-spacing:-.015em}
+.list div{display:flex;align-items:center;gap:16px;height:62px}
+.list i{width:34px;height:34px;border-radius:10px;background:rgba(17,17,20,.07);display:flex;align-items:center;justify-content:center;font:700 22px/1 P;font-style:normal;color:#111114}
+.term{position:absolute;-webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
+.term img{width:100%;height:100%;display:block}
+.chips{display:flex;gap:10px}
+.chips b{font:600 22px/1 P;padding:10px 14px;border-radius:10px;background:rgba(17,17,20,.06);color:var(--mute)}
+</style></head>
+<body>
+<div id="ground"></div>
+<div id="light"></div>
+<div id="p1" class="pane"><i></i></div>
+<div id="p2" class="pane"><i></i></div>
+<div id="street"><div id="pave"><i style="left:0px"></i><i style="left:180px"></i><i style="left:360px"></i><i style="left:540px"></i><i style="left:720px"></i><i style="left:900px"></i><i style="left:1080px"></i><i style="left:1260px"></i><i style="left:1440px"></i><i style="left:1620px"></i><i style="left:1800px"></i><i style="left:1980px"></i><i style="left:2160px"></i><i style="left:2340px"></i><i style="left:2520px"></i><i style="left:2700px"></i><i style="left:2880px"></i><i style="left:3060px"></i><i style="left:3240px"></i><i style="left:3420px"></i><i style="left:3600px"></i><i style="left:3780px"></i><i style="left:3960px"></i><i style="left:4140px"></i><i style="left:4320px"></i><i style="left:4500px"></i></div>
+<div class="shop" data-i="0" style="left:110px;width:300px;height:330px;background:#E9E4DA;--a1:#C9BFAE"><i class="cor"></i><div class="sign"><b></b><span>Bakery</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="1" style="left:432px;width:290px;height:380px;background:#E4DFD6;--a1:#D9A7A0"><i class="cor"></i><div class="sign"><b></b><span>Café</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div><div class="live"><span class="dot"></span>Live</div></div>
+<div class="shop" data-i="2" style="left:744px;width:260px;height:350px;background:#DCD6CB;--a1:#9FB3C8"><i class="cor"></i><div class="sign"><b></b><span>Barber</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="3" style="left:1026px;width:300px;height:395px;background:#EDE8DF;--a1:#D7B98F"><i class="cor"></i><div class="sign"><b></b><span>Takeaway</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="4" style="left:1348px;width:320px;height:340px;background:#E2DDD2;--a1:#A9C2A4"><i class="cor"></i><div class="sign"><b></b><span>Corner Shop</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="5" style="left:1690px;width:270px;height:370px;background:#E9E4DA;--a1:#D8B4C9"><i class="cor"></i><div class="sign"><b></b><span>Florist</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="6" style="left:1982px;width:300px;height:330px;background:#DED8CC;--a1:#B8C79E"><i class="cor"></i><div class="sign"><b></b><span>Grocer</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="7" style="left:2304px;width:260px;height:390px;background:#E6E1D8;--a1:#CDB49A"><i class="cor"></i><div class="sign"><b></b><span>Deli</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="8" style="left:2586px;width:330px;height:360px;background:#DCD6CB;--a1:#C29C94"><i class="cor"></i><div class="sign"><b></b><span>Restaurant</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="9" style="left:2938px;width:320px;height:340px;background:#E9E4DA;--a1:#A7BBCF"><i class="cor"></i><div class="sign"><b></b><span>Launderette</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="10" style="left:3280px;width:270px;height:380px;background:#E2DDD2;--a1:#CFA0A0"><i class="cor"></i><div class="sign"><b></b><span>Butcher</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="11" style="left:3572px;width:280px;height:350px;background:#EDE8DF;--a1:#D7B4D6"><i class="cor"></i><div class="sign"><b></b><span>Nail Bar</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="12" style="left:3874px;width:270px;height:330px;background:#DED8CC;--a1:#B3B0A6"><i class="cor"></i><div class="sign"><b></b><span>Tailor</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+<div class="shop" data-i="13" style="left:4166px;width:300px;height:385px;background:#E4DFD6;--a1:#D5BF9A"><i class="cor"></i><div class="sign"><b></b><span>Bakehouse</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
+</div>
+<svg id="net"></svg>
+<div id="you"><div class="pin">You</div></div>
+<div id="film"></div>
+<div id="bug"><div class="t"><div class="bars"></div></div></div>
+<script>
+const SQ = false, W = 1920, H = 1080;
+const clamp = x => Math.max(0, Math.min(1, x));
+const outC = x => 1 - Math.pow(1 - x, 3), outE = x => x >= 1 ? 1 : 1 - Math.pow(2, -10 * x);
+const io = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
+
+/* Each scene: [start, end] on the film's timeline, where the light sits, and its markup. data-at is when an element
+   arrives (the word that says it); data-mark draws the yellow marker; data-out makes it leave. The band above the roofs
+   (y 80–420) carries the type; the street below carries the network. */
+const SC = [
+ { t: [0, 10.35], light: [300, 250], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:92px" data-at="0.60"><b></b>NeroPay Partners</div>
+   <div class="kin h" style="left:150px;top:130px;width:1200px"><span class="ln"><span data-at="0.60">Walk down any</span> <span class="mk" data-at="1.38" data-mark="1.45">high street.</span></span></div>
+   <div class="sub" style="left:150px;top:250px;color:#111114;font-size:36px" data-at="5.86">Every one of them takes <span class="mk" data-mark="6.89">card payments.</span></div>
+   <div class="sub" style="left:150px;top:306px;font-size:32px" data-at="8.13">You probably know someone behind the counter.</div>` },
+ { t: [10.35, 16.95], light: [1500, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:760px"><span class="ln" data-at="10.45">Introduce them</span><span class="ln" data-at="11.05">to <span class="mk" data-mark="11.22">NeroPay.</span></span></div>
+   <div class="g" style="left:1040px;top:70px;width:760px;height:360px" data-at="12.12" data-rule="12.41"><i class="rule"></i>
+     <div class="kick" style="left:44px;top:40px;position:absolute"><b></b>We handle</div>
+     <div class="list" style="position:absolute;left:44px;top:84px">
+       <div data-at="12.93"><i data-tick="12.93"></i>The setup</div>
+       <div data-at="13.67"><i data-tick="13.67"></i>The terminal</div>
+       <div data-at="14.58"><i data-tick="14.81"></i>Free POS software</div>
+       <div data-at="16.15"><i data-tick="16.31"></i>The support</div></div>
+     <div class="term" style="left:450px;top:30px;width:300px;height:300px" data-at="13.67"><img src="assets/plate-neropay.webp"></div></div>` },
+ { t: [16.95, 24.45], light: [1400, 200], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:760px"><span class="ln" data-at="17.01">When they go live,</span><span class="ln" data-at="18.10">you get a <span class="mk" data-mark="18.72">bonus.</span></span></div>
+   <div style="position:absolute;left:1040px;top:84px;font:700 132px/1 P;letter-spacing:-.045em;white-space:nowrap" data-at="19.36" data-hit data-hat="20.02">£100<span class="grow" id="grow" style="display:inline-block;overflow:hidden;vertical-align:top;white-space:nowrap">–£300</span></div>
+   <div class="mid" style="position:absolute;left:1044px;top:246px" data-at="20.62">per business</div>
+   <div class="chips" style="position:absolute;left:1040px;top:310px" data-at="22.08"><b>under £20,000 · £100</b><b>£20,000–£39,999 · £200</b><b>£40,000+ · £300</b></div>
+   <div class="lab" style="position:absolute;left:1044px;top:372px" data-at="19.36">by its card takings in its first 30 days</div>` },
+ { t: [24.45, 28.62], light: [1500, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:820px"><span class="ln" data-at="24.79">Three new</span><span class="ln" data-at="25.82">active merchants</span><span class="ln" data-at="26.54">in a <span class="mk" data-mark="26.83">month.</span></span></div>
+   <div class="g" style="left:1100px;top:80px;width:680px;height:300px" data-at="24.79"><div class="kick" style="position:absolute;left:44px;top:44px"><b></b>This calendar month</div>
+     <div class="cal" style="position:absolute;left:44px;top:92px"><b data-lit="25.42">1</b><b data-lit="25.82">2</b><b data-lit="26.13">3</b></div>
+     <div class="badge" style="position:absolute;left:44px;top:208px" data-stamp="27.61">Active Partner</div></div>` },
+ { t: [28.62, 41.65], light: [1450, 220], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:800px"><span class="ln" data-at="28.72" data-out="36.55">A share of your</span><span class="ln" data-at="30.21" data-out="36.55">whole <span class="mk" data-mark="30.37">network.</span></span></div>
+   <div class="sub" style="left:150px;top:320px;color:#111114;font-size:32px" data-at="32.79" data-out="36.55">Not just the new three.</div>
+   <div class="sub" style="left:150px;top:368px;font-size:32px" data-at="34.19" data-out="36.55">Every active merchant you've introduced.</div>
+   <div class="kin" style="left:150px;top:130px;width:800px" data-at="36.74"><span class="ln">Bring more,</span><br><span class="ln">the rate <span class="mk" data-mark="38.06">climbs.</span></span></div>
+   <div id="pct" style="position:absolute;left:1080px;top:60px;font:700 170px/1 P;letter-spacing:-.05em" data-at="28.99" data-hit></div>
+   <div id="pcond" class="mid" style="position:absolute;left:1086px;top:238px" data-at="28.99"></div>
+   <div class="lab" style="position:absolute;left:1086px;top:290px;font-size:26px" data-at="30.37">of what their card payments earn NeroPay</div>
+   <div class="chips" id="lad" style="position:absolute;left:1082px;top:340px" data-at="36.74"><b data-lad="28.99">20%</b><b data-lad="38.23">25%</b><b data-lad="38.70">30%</b><b data-lad="39.05">35%</b><b data-lad="39.38">40%</b></div>` },
+ { t: [41.65, 46.20], light: [300, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:900px"><span class="ln" data-at="41.77">Fewer than three?</span></div>
+   <div class="sub" style="left:150px;top:236px;color:#111114;font-size:36px" data-at="42.85">No revenue share that month.</div>
+   <div class="kin" style="left:1040px;top:130px;width:760px;font-size:72px" data-at="44.66">Your bonus is yours <span class="mk" data-mark="45.45">either way.</span></div>` },
+ { t: [46.20, 49.90], light: [900, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:800px"><span class="ln"><span data-at="46.29">So, who's on</span> <span class="mk" data-at="47.36" data-mark="47.69">your street?</span></span></div>
+   <div style="position:absolute;left:1060px;top:120px;width:700px;font:500 21px/1.45 P;color:var(--mute)" data-at="46.35">Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Full terms at neropay.app/partners.</div>` }
+];
+window.OUTRO_AT = 49.52;   /* the neropartner outro: the wordmark is whole as she says "NeroPay" (49.86) */
+window.DURATION = 57.82;
+/* for the render's sound: a soft tick as each shop lights, a thud on the badge */
+const LIT = [ [1, 2.31, 10.45], [2, 3.20, 10.60], [3, 4.04, 10.75], [4, 4.93, 10.90], [5, 25.42, 25.42], [6, 25.82, 25.82], [7, 26.13, 26.13],
+  [8, 34.19, 34.19], [9, 34.45, 34.45], [10, 34.72, 34.72], [11, 34.98, 34.98], [12, 35.25, 35.25], [13, 35.53, 35.53], [0, 35.84, 35.84] ];   /* [shop, sign lights, fully lit + joined to You] */
+window.SFX_AT = [...new Set(LIT.map(l => l[1]))].sort((a, b) => a - b);
+window.STAMP_AT = 27.61;
+/* the camera along the street: [time, x], eased between keys; it walks, holds, pans to the new three, runs the street, settles */
+const CAM = [[0, 0], [10, 120], [24.4, 200], [25.2, 760], [32.7, 820], [35.9, 2628], [36.4, 2628], [39.6, 1350], [46.2, 1420], [49.9, 1560]];
+const camAt = t => { for (let i = 1; i < CAM.length; i++) if (t <= CAM[i][0]) { const [a, x0] = CAM[i - 1], [b, x1] = CAM[i];
+  const k = (t - a) / (b - a); const e = (b - a) > 2.5 && x1 - x0 < 300 ? k : io(k); return x0 + (x1 - x0) * e; } return CAM[CAM.length - 1][1]; };
+
+const film = document.getElementById('film'), L = document.getElementById('light');
+SC.forEach(s => { const d = document.createElement('div'); d.className = 'sc';
+  d.innerHTML = `<div class="cam" style="--ox:${s.ox}">${s.html}</div>`; film.appendChild(d); s.el = d; s.cam = d.firstChild;
+  s.items = [...d.querySelectorAll('[data-at]')]; s.marks = [...d.querySelectorAll('[data-mark]')]; s.rules = [...d.querySelectorAll('[data-rule]')];
+  s.hits = [...d.querySelectorAll('[data-hit]')].map(e => { const fx = document.createElement('i'); fx.className = 'hitfx'; e.prepend(fx); return [e, fx]; }); });
+const shops = [...document.querySelectorAll('.shop')], street = document.getElementById('street'), net = document.getElementById('net'), you = document.getElementById('you');
+net.innerHTML = LIT.map(() => '<path d=""/>').join('') + LIT.map(() => '<circle r="7" cx="-99" cy="-99"/>').join('');
+const paths = [...net.querySelectorAll('path')], dots = [...net.querySelectorAll('circle')];
+
+const XF = 0.4;
+window.setTime = function (t) {
+  let lx = SC[0].light[0], ly = SC[0].light[1];
+  for (let i = 1; i < SC.length; i++) { const k = io(clamp((t - SC[i].t[0] + 0.6) / 2.4));
+    lx += (SC[i].light[0] - lx) * k; ly += (SC[i].light[1] - ly) * k; }
+  lx += 110 * Math.sin(t / 5.3) + 50 * Math.sin(t / 2.9); ly += 80 * Math.cos(t / 6.1) + 40 * Math.sin(t / 3.7);
+  const endFade = 1 - clamp((t - (OUTRO_AT - 0.7)) / 0.6);
+  L.style.transform = `translate(${lx}px,${ly}px)`; L.style.opacity = endFade;
+  document.getElementById('ground').style.opacity = endFade;
+  document.getElementById('bug').style.opacity = 0.92 * outC(clamp((t - 0.60) / 0.8)) * (1 - clamp((t - (OUTRO_AT - 1.2)) / 0.5));
+
+  /* the street: whole pixels only, so the signs never shimmer */
+  const cx = Math.round(camAt(t)); street.style.transform = `translateX(${-cx}px)`; street.style.opacity = endFade;
+  for (const [i, a, b] of LIT) { const sh = shops[i];
+    const sg = outC(clamp((t - a) / 0.3)), full = outC(clamp((t - b) / 0.45));
+    sh.querySelector('.sign b').style.opacity = sg; sh.querySelector('.sign span').style.color = sg > .5 ? '#111114' : '';
+    sh.querySelector('.awn b').style.opacity = full; sh.querySelector('.win b').style.opacity = 0.85 * full;
+    const pop = t >= a && t < a + 0.3 ? 1 + 0.04 * Math.sin((t - a) / 0.3 * Math.PI) : 1; sh.style.transform = `scale(${pop.toFixed(4)})`; sh.style.transformOrigin = '50% 100%'; }
+  const live = shops[1].querySelector('.live'); { const k = outE(clamp((t - 17.49) / 0.45)); live.style.opacity = k; live.style.transform = `translateX(-50%) translateY(${Math.round((1 - k) * 16)}px)`; }
+  /* You, and a line from You to every business introduced; dimmed while the quiet month is said */
+  const yk = outE(clamp((t - 8.13) / 0.5)); you.style.opacity = yk * endFade; you.style.transform = `scale(${(0.6 + 0.4 * yk).toFixed(3)})`;
+  const dim = 1 - 0.65 * clamp((t - 42.85) / 0.4) * (1 - clamp((t - 44.66) / 0.4));
+  net.style.opacity = dim * endFade;
+  LIT.forEach(([i, , b], j) => { const sh = shops[i], k = io(clamp((t - b) / 0.6));
+    const x1 = sh.offsetLeft + sh.offsetWidth / 2 - cx, y1 = sh.offsetTop + 10, x0 = 960, y0 = 486;
+    if (k <= 0) { paths[j].setAttribute('d', ''); dots[j].setAttribute('cx', -99); return; }
+    const qx = (x0 + x1) / 2, qy = Math.min(y0, y1) - 70;   /* a soft arc, cut at k by de Casteljau */
+    const ax = x0 + (qx - x0) * k, ay = y0 + (qy - y0) * k, bx = qx + (x1 - qx) * k, by = qy + (y1 - qy) * k;
+    const ex = ax + (bx - ax) * k, ey = ay + (by - ay) * k;
+    paths[j].setAttribute('d', `M${x0},${y0} Q${ax.toFixed(1)},${ay.toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)}`);
+    dots[j].setAttribute('cx', ex.toFixed(1)); dots[j].setAttribute('cy', ey.toFixed(1));
+    const vis = clamp(1 - (Math.abs(x1 - 960) - 820) / 260).toFixed(3);   /* a shop well off-frame keeps its line, unseen: no bundle at the pin */
+    paths[j].style.opacity = dots[j].style.opacity = vis; });
+
+  for (const s of SC) {
+    const [a, b] = s.t;
+    if (t < a - 0.01 || t > b + XF) { s.el.style.display = 'none'; continue; }
+    s.el.style.display = '';
+    const vin = outC(clamp((t - a) / XF)), vout = 1 - io(clamp((t - b) / XF));
+    s.el.style.opacity = Math.min(vin, vout);
+    s.cam.style.transform = `translateY(${Math.round(-10 * io(clamp((t - b) / XF)))}px)`;
+    for (const e of s.items) { const p = outE(clamp((t - +e.dataset.at) / 0.55)) * (e.dataset.out ? 1 - clamp((t - +e.dataset.out) / 0.3) : 1);
+      e.style.opacity = p; e.style.transform = (e.style.transform || '').replace(/translateY\([^)]*\)/, '') + ` translateY(${Math.round((1 - p) * 26)}px)`;
+      if (e.classList.contains('g')) e.style.setProperty('--sh', `${-130 + 260 * io(clamp((t - +e.dataset.at - 0.15) / 1.0))}%`); }
+    for (const [e, fx] of s.hits) { const d1 = t - +e.dataset.at - 0.12, d2 = e.dataset.hat ? t - +e.dataset.hat - 0.12 : -1;
+      const f = d => d < 0 ? 0 : d < 0.18 ? d / 0.18 : Math.max(0, 1 - (d - 0.18) / 1.0); fx.style.opacity = Math.max(f(d1), f(d2)); }
+    for (const m of s.marks) m.style.setProperty('--m', outC(clamp((t - +m.dataset.mark) / 0.35)));
+    for (const r of s.rules) r.style.setProperty('--r', outC(clamp((t - +r.dataset.rule) / 0.35)));
+  }
+  /* ticks, calendar days and the badge */
+  document.querySelectorAll('[data-tick]').forEach(e => { const on = t >= +e.dataset.tick; e.textContent = on ? '✓' : ''; e.style.background = on ? 'var(--yel)' : ''; });
+  document.querySelectorAll('[data-lit]').forEach(e => { const on = t >= +e.dataset.lit; e.style.background = on ? 'var(--yel)' : ''; });
+  document.querySelectorAll('[data-stamp]').forEach(e => { const d = t - +e.dataset.stamp, k = clamp(d / 0.2);
+    e.style.opacity = d < 0 ? 0 : 1; e.style.transform = `scale(${(1.4 - 0.4 * outC(k)).toFixed(3)})`; e.style.transformOrigin = '0 50%'; });
+  /* the bonus: £100 lands, then the range opens to £300 on "three hundred" */
+  const g = document.getElementById('grow'); if (g) g.style.width = (g.scrollWidth * outC(clamp((t - 20.02) / 0.4))).toFixed(1) + 'px';
+  /* the revenue share: rate and band move together, every band passed, never a count */
+  const RB = [['20%', '3–20 new active merchants this month', 28.99], ['25%', '21–35 new active merchants this month', 38.23], ['30%', '36–60 new active merchants this month', 38.70],
+    ['35%', '61–110 new active merchants this month', 39.05], ['40%', '111+ new active merchants in one month', 39.38]];
+  const pc = document.getElementById('pct'); if (pc) { let cur = RB[0]; for (const r of RB) if (t >= r[2]) cur = r;
+    pc.lastChild.nodeType === 3 ? pc.lastChild.textContent = cur[0] : pc.append(cur[0]); document.getElementById('pcond').textContent = cur[1];
+    const since = t - cur[2]; pc.style.scale = cur !== RB[0] && since < 0.25 ? String(1 + 0.05 * Math.sin(since / 0.25 * Math.PI)) : '1';
+    document.querySelectorAll('[data-lad]').forEach(b => { const on = t >= +b.dataset.lad; b.style.background = on ? 'var(--yel)' : ''; b.style.color = on ? '#111114' : ''; }); }
+};
+window.setFrame = (n, fps = 25) => window.setTime(n / fps);
+window.SCENES_FOR_CHECK = () => SC.map((s, i) => {
+  const h = s.el.querySelector('.h'); if (!h) return { i, t: null };
+  const own = [h, ...h.querySelectorAll('[data-at],[data-mark]')];
+  const last = Math.max(s.t[0], ...own.map(e => +(e.dataset.at || e.dataset.mark || 0)));
+  const t = last + 0.9; return { i, t: t < s.t[1] - 0.15 ? t : null }; });
+window.LAYOUT_READY = true;
+window.setTime(0);
+</script></body></html>
