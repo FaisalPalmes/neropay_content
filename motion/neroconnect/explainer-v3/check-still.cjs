@@ -5,9 +5,11 @@
 //   node check-still.cjs          exit 1 on a moving headline
 const { chromium } = require(require('child_process').execSync('npm root -g', { encoding: 'utf8' }).trim() + '/playwright');
 const path = require('path');
+const SQ = process.argv.includes('1x1') || process.env.FMT === '1x1';   /* the 1:1 square (25 Sep 2026) */
 (async () => {
-  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1920, height: 1080 } });
-  await p.goto('file://' + path.resolve(__dirname, 'index.html')); await p.evaluate(() => document.fonts.ready);
+  const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: SQ ? 1080 : 1920, height: 1080 } });
+  await p.goto('file://' + path.resolve(__dirname, 'index.html') + (SQ ? '?fmt=1x1' : '')); await p.evaluate(() => document.fonts.ready);
+  await p.waitForFunction(() => window.LAYOUT_READY === true);
   const scenes = await p.evaluate(() => SCENES_FOR_CHECK());
   let fail = 0;
   for (const s of scenes) {

@@ -8,7 +8,7 @@
  "bed": {
   "file": "video/library/bgm/neroconnect-pulse-100.mp3",
   "t": 0,
-  "gain": 0.18,
+  "gain": 0.036,
   "loop_at": 93.741,
   "fade": 3
  },

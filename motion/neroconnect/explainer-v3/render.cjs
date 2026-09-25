@@ -8,10 +8,11 @@
 const { chromium } = require(require('child_process').execSync('npm root -g', { encoding: 'utf8' }).trim() + '/playwright');
 const http = require('http'), fs = require('fs'), path = require('path'), { execFileSync } = require('child_process');
 const HERE = __dirname, REPO = path.resolve(HERE, '../../..'), FPS = 25;
-const A = process.argv.slice(2), PREVIEW = A.includes('--preview');
+const A = process.argv.slice(2), PREVIEW = A.includes('--preview'), SQ = A.includes('--square');   /* --square: the 1:1 (25 Sep 2026) */
 const arg = k => A.includes(k) ? +A[A.indexOf(k) + 1] : null;
-const [W, H] = PREVIEW ? [1280, 720] : [1920, 1080];
-const OUT = path.join(HERE, 'out'), FR = path.join(OUT, PREVIEW ? 'frames-preview' : 'frames');
+const [VW, VH] = SQ ? [1080, 1080] : [1920, 1080];
+const [W, H] = SQ ? [1080, 1080] : PREVIEW ? [1280, 720] : [1920, 1080];
+const OUT = path.join(HERE, 'out'), FR = path.join(OUT, SQ ? 'frames-1x1' : PREVIEW ? 'frames-preview' : 'frames');
 const T = { '.html': 'text/html', '.png': 'image/png', '.woff2': 'font/woff2', '.js': 'text/javascript' };
 const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURIComponent(q.url.split('?')[0]));
   if (!f.startsWith(REPO) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); }
@@ -19,13 +20,13 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
 
 (async () => {
   /* the jitter gate: no render while any landed headline moves */
-  if (!A.includes('--from')) for (const g of ['check-still.cjs', 'check-layout.cjs']) execFileSync('node', [path.join(HERE, g)], { stdio: 'inherit' });
+  if (!A.includes('--from')) for (const g of ['check-still.cjs', 'check-layout.cjs']) execFileSync('node', [path.join(HERE, g)].concat(SQ ? ['1x1'] : []), { stdio: 'inherit' });
   const port = srv.address().port, b = await chromium.launch();
-  const mk = async url => { const p = await b.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: W / 1920 });
+  const mk = async url => { const p = await b.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: W / VW });
     const errs = []; p.on('pageerror', e => errs.push(String(e))); await p.goto(url, { waitUntil: 'networkidle' });
-    await p.evaluate(() => document.fonts.ready); p.errs = errs; return p; };
-  const film = await mk(`http://127.0.0.1:${port}/motion/neroconnect/explainer-v3/index.html`);
-  const outro = await mk(`http://127.0.0.1:${port}/brand/sting/outro.html?v=yellow&fmt=16x9&mark=neroconnect&small=${encodeURIComponent('Check out NeroConnect at')}&big=docs.neropay.app`);
+    await p.evaluate(() => document.fonts.ready); await p.waitForFunction(() => window.LAYOUT_READY !== false); p.errs = errs; return p; };
+  const film = await mk(`http://127.0.0.1:${port}/motion/neroconnect/explainer-v3/index.html${SQ ? '?fmt=1x1' : ''}`);
+  const outro = await mk(`http://127.0.0.1:${port}/brand/sting/outro.html?v=yellow&fmt=${SQ ? '1x1' : '16x9'}&mark=neroconnect&small=${encodeURIComponent('Check out NeroConnect at')}&big=docs.neropay.app`);
   const { OUTRO_AT, DURATION, arrivals, scenes } = await film.evaluate(() => ({ OUTRO_AT, DURATION,
     arrivals: [...document.querySelectorAll('.g[data-at]')].map(e => +e.dataset.at).sort((a, b) => a - b),
     scenes: [...document.querySelectorAll('.sc')].map((_, i) => i) }));
@@ -58,15 +59,24 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
     vo_filter: 'acompressor=threshold=-24dB:ratio=2.5:attack=5:release=120:makeup=1,alimiter=limit=0.30:attack=1:release=60:level=false',   /* the v3.3 take is more dynamic (crest 20.7 dB): a compressor and a peak limiter on the voice */
     /* the bed, per Faisal on v3.5 (24 Sep): too loud and uneven. The track fades itself out from 95 s, and v3.5 looped it at
        103.35 s, so its own fade played mid-film and then it came back at full level; the ducking pumped between sentences.
-       Now: looped at bar 39 (93.74 s, before its fade), one steady level with no ducking, faded only at the very end. */
-    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.18, loop_at: +(39 * 4 * 60 / 99.85).toFixed(3), fade: 3.0 }, cues };
+       Now: looped at bar 39 (93.74 s, before its fade), one steady level with no ducking, faded only at the very end.
+       25 Sep: Faisal on v3.6, "way too loud … 20% of the current": gain 0.18 -> 0.036, the voice untouched. */
+    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.036, loop_at: +(39 * 4 * 60 / 99.85).toFixed(3), fade: 3.0 }, cues };
   fs.mkdirSync(path.join(HERE, 'data'), { recursive: true });
   fs.writeFileSync(path.join(HERE, 'data/mix.json'), JSON.stringify(mix, null, 1));
   if (arg('--from') !== null || arg('--to') !== null) { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'),
       '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', path.join(OUT, 'slice.mp4')]); console.log(path.join(OUT, 'slice.mp4')); return; }
-  execFileSync('node', [path.join(REPO, 'motion/mix.mjs'), 'neroconnect/explainer-v3'], { stdio: 'inherit' });
-  const name = path.join(OUT, `ncx-v3-${PREVIEW ? 'preview' : '16x9'}.mp4`);
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'), '-i', path.join(OUT, 'mix.m4a'),
+  if (!SQ) {
+    execFileSync('node', [path.join(REPO, 'motion/mix.mjs'), 'neroconnect/explainer-v3'], { stdio: 'inherit' });
+    /* v3.6.1 (Faisal, 25 Sep): the music at 20% and the voice exactly where v3.6 had it. mix.mjs normalises the whole mix to
+       -14 LUFS, which with the music gone pushed the voice up ~2.8 dB; so the raw mix gets v3.6's own master gain (+10.08 dB)
+       and a true-peak limiter run at 4x (the AAC pass had put inter-sample peaks over 0 dBTP). Lands at about -15.6 LUFS. */
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(OUT, 'mix-raw.wav'), '-af',
+      'volume=10.08dB,aresample=192000,alimiter=limit=0.79:attack=3:release=60:level=false,aresample=48000', '-c:a', 'aac', '-b:a', '192k', path.join(OUT, 'mix.m4a')]);
+    fs.copyFileSync(path.join(OUT, 'mix.m4a'), path.join(OUT, 'mix-16x9.m4a'));
+  }
+  const name = path.join(OUT, `ncx-v3-${SQ ? '1x1' : PREVIEW ? 'preview' : '16x9'}.mp4`);
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'), '-i', path.join(OUT, SQ ? 'mix-16x9.m4a' : 'mix.m4a'),
     '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-crf', PREVIEW ? '21' : '16', '-preset', PREVIEW ? 'medium' : 'slow', '-pix_fmt', 'yuv420p', '-r', String(FPS),
     '-c:a', 'copy', '-shortest', '-movflags', '+faststart', name]);
   console.log(name);
