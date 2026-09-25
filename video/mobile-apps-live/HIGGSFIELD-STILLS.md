@@ -1008,6 +1008,110 @@ The phone screen stays a solid, flat, matte chroma-key green for the entire clip
 The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. At about half a second her right index finger lifts off the screen, and her right hand moves away to the right, below the phone, and picks up the brass-handled fork from the rim of the plate, holding it naturally. A faint wisp of steam rises from the poached egg; the ice in the matcha glints. Nothing else moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
 ```
 
+### Café v4: the high-street terrace (25 Sep 2026; replaces the look of v3)
+
+Faisal sent two references: a café terrace under a dark retractable awning, and a long terrace under a cream awning
+with lights on its arms. The café is now a modern café on a British high street:
+- a charcoal retractable awning on black aluminium arms, with spotlights and warm bulbs;
+- floor-to-ceiling black-framed glazing and warm interior light;
+- olive trees and planter boxes of greenery with white flowers;
+- woven wicker armchairs with cream cushions around round tables in muted sage linen;
+- grey brick paving with a few autumn leaves.
+
+The shots and the edit are unchanged from v3. C1 and C2 are new stills; C3 is an edit of C2, so the food reveal
+cuts between identical frames. The awning's front valance is left blank so "Sage & Co" can go on in post.
+
+The light is soft, warm late-afternoon daylight just before golden hour, with the interior lights, the wall lanterns
+and the awning's spotlights on, as in both references. The tablecloths are a muted, greyish sage and never bright
+green, so they don't compete with the green screen.
+
+**C1. The wide, front-on from across the high street (new still)**
+```
+Candid street photograph of a modern café terrace on a British high street, looking like a real frame from a film camera on a tripod, not a render. Framing, like a real photograph: nothing needs to be fully in the frame; the building, the awning, the planters, the tables, the chairs and the people are cut by the frame edges and hide parts of each other, as in a real, unposed shot.
+
+The camera: on the far pavement across the road, at standing eye level (about 1.6 metres), pointing straight at the café, square to its front, level, not tilted. Static, locked-off on a tripod. A 35mm lens at f/4.
+
+Composition by the rule of thirds: the woman sits at the lower-left third of the frame; her head and the phone in her hands sit on the intersection one third in from the left edge and two thirds down from the top. The café front and its awning fill the upper two thirds of the frame. The road runs along the bottom of the frame.
+
+The building: the ground floor of a handsome three-storey building on a busy high street, its upper floors in pale cream stone with tall sash windows, cut off by the top of the frame. The café's ground floor is one long front of floor-to-ceiling glazing in slim black steel frames, divided into tall panes, with cream stone pillars between the bays. Behind the glass, a warm, glowing interior: pale oak slatted blinds half raised, warm pendant lights, a long counter with a glass pastry cabinet, shelves with plants, and a few people inside, softly out of focus. Between the bays, black cylindrical wall lanterns glow warmly on the pillars.
+
+The awning: a deep charcoal-black canvas retractable awning, extended about three and a half metres out over the terrace on slim black aluminium folding arms, the canvas taut and slightly curved. Under it, a row of small black track spotlights on the front rail and a few warm bulb lights hanging from the arms, all switched on. The awning's front edge carries a flat charcoal valance about 25 cm deep, running the full width, completely blank, with no lettering, logo or picture on it.
+
+The terrace, on the broad pavement between the glazing and the road: two rows of round café tables, each dressed in a muted, greyish sage-green linen tablecloth falling in soft folds almost to the ground, and each with a small white ceramic vase of white spray roses and a sprig of greenery. Around them, woven wicker armchairs in warm grey-brown with rounded backs and arms, cream seat cushions and slim pale wooden legs. Olive trees in large matte black planters stand between the windows. Along the front of the terrace runs a line of low, knee-height dark grey planter boxes spilling with soft greenery, trailing ivy and white hydrangeas, broken by a gap in front of her table. The pavement is laid in grey clay brick pavers in a running bond, with a few yellow autumn leaves on them.
+
+Her table: the front-row table at the left third of the frame, just behind the gap in the planters. She sits behind it in a wicker armchair with her back to the café's glazing, facing the street and the camera.
+
+Her: a woman in her mid-twenties, slim and fit, attractive and photogenic in a natural, believable way, not a retouched model. Light skin with a warm undertone, fresh natural makeup, soft brows. Long, glossy chestnut-brown hair, freshly blow-dried, falling over her shoulders. Hyper-realistic skin: visible pores, fine peach fuzz, subtle variation in tone. She wears an oversized chunky cream cable-knit jumper with the sleeves pushed up to her forearms and light-wash straight-leg jeans. Her nails are a fresh gel manicure, medium-length almond shape, glossy light pink with fine gold line-art. A fine gold chain bracelet on her left wrist, a thin gold ring on her right hand. She has just sat down: relaxed, her forearms resting on the table, holding her phone in her left hand low over the table, her right index finger reaching for its screen, the back of the phone towards the camera. She looks down at it with a small, easy smile.
+
+On her table, and nothing else: the small white vase of white roses in the middle; her compact tan leather crossbody bag with a gold clasp on the table's right side (her left), its thin strap hanging over the edge; a pair of folded tortoiseshell sunglasses beside it; a clear glass water carafe and a half-full clear tumbler towards the front. No food, no plates, no other drinks.
+
+Around her: the neighbouring table to the right is empty, its wicker chairs tucked in. Further right and in the back row, softly: three or four other customers in their mid to late twenties at their tables, a couple talking over coffee, a man reading on his phone. On the pavement near the kerb at the right, a young plane tree in a black iron tree grate, its leaves turning yellow, and a slim black street lamp.
+
+The road: along the bottom of the frame, the near kerb, then a strip of grey asphalt road with faded white lane markings and no cars in front of the café, the far kerb and the start of the café's pavement.
+
+Light: soft, warm late-afternoon daylight on a clear autumn day, just before golden hour, gentle and clean rather than orange. The terrace under the awning sits in bright, soft open shade; the awning's spotlights, the hanging bulbs, the wall lanterns and the interior lights are all on, glowing warmly; a soft warm rim of daylight on her hair; the road and the pavement in front of the planters in gentle sun with long soft shadows. Natural colour, true whites, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: any lettering, logo or picture on the awning's valance, readable text anywhere, writing on the windows, shop names, logos, bright or saturated green tablecloths, food on her table, other drinks on her table, her hand on her face, looking into the camera, her in the centre of the frame, the planters hiding her, a tilted or angled camera, a car or bus in front of the café, readable number plates, everything neatly arranged inside the frame, dusk, night, heavy orange sunset light, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, beauty filter, older-looking people, chipped or unpainted nails, watermarks, extra fingers, deformed hands.
+```
+
+**C2. Her POV, the empty table (new still)**
+```
+Overhead photograph of a café table on a high-street terrace, looking like a real candid frame shot on film, not a render and not a styled flat lay. Soft, warm late-afternoon daylight on a clear autumn day, just before golden hour. The camera points straight down from about 1.2 metres above a round café table, about 70 cm across, dressed in a muted, greyish sage-green linen tablecloth with soft natural creases and folds falling over its edge. The table is in the middle of the frame. The top of the frame is the street side; the bottom of the frame is where she sits.
+
+Framing, like a real photograph: nothing needs to be fully in the frame. Objects overlap and hide parts of each other, and the edges of the frame cut through the table, the chairs, the paving and anything near them, as they would in a real, unposed photo. The only things that must be fully visible are the phone's screen, with all four of its corners, and her pointing finger.
+
+Where she sits: at the bottom edge of the frame, facing the street, in a woven wicker armchair in warm grey-brown with a cream seat cushion. From above we see only the two rounded woven wicker arms of her chair, cut by the lower corners of the frame, and between them her knees and thighs in light-wash straight-leg jeans. We never see her face, head or shoulders. Her forearms come up onto the table from the bottom edge of the frame, in the pushed-up sleeves of an oversized chunky cream cable-knit jumper.
+
+How she uses the phone, as a real person does: she holds it in her left hand, low over the table just in front of her, her left forearm resting along the near edge of the table. The phone is upright in portrait orientation, its top pointing away from her towards the street, its base resting lightly on the tablecloth, and it leans back in her hand at a shallow angle of about 20 degrees, so the screen faces up towards the camera. Her left fingers wrap around the left side and the back of the phone, their tips just showing along the left side between the corners, and her left thumb rests on the phone's left frame, not on the screen. Her right hand comes up from her side of the table, from below the phone, wrist relaxed, her right forearm resting on the table edge: her index finger is extended and hovers about a centimetre above the upper half of the screen, about to tap, her other fingers loosely curled under. The rest of her right hand stays below the phone, off the screen. The phone is in the centre of the frame and fills about 40% of the frame height. All four corners of the screen are clearly visible, with the thin black bezel showing all the way round, and no finger lies along an edge.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands: slim, elegant young hands with light skin and a warm undertone, hyper-real texture with fine creases over the knuckles, faint veins on the backs of the hands and a little natural pinkness at the fingertips. Her nails are a fresh salon gel manicure, medium-length almond shape, glossy soft light pink, with fine hand-painted gold gel line-art swirling across three nails and a small gold foil fleck on the others, neat cuticles. A fine gold chain bracelet on her left wrist and a thin gold ring on her right middle finger.
+
+On the table, as she left it when she sat down, and nothing else:
+- Beyond the phone, just right of the middle of the table: a small white ceramic bud vase of white spray roses with a sprig of greenery.
+- On the left side of the table, in from the edge: a clear glass water carafe and a half-full clear tumbler standing together.
+- Beside the carafe, nearer to her: a pair of folded tortoiseshell sunglasses.
+- On the left side of the table near her left elbow: her compact tan leather crossbody bag with a gold clasp, its thin strap trailing loosely over the table edge and out of the frame.
+- The right side of the table is bare tablecloth, with a few soft creases in the linen. No food, no plates, no cups.
+
+Around the table, seen from above, all partly cut by the frame edges:
+- Grey clay brick pavers in a running bond under and around the table, with a few yellow autumn leaves on them.
+- Left: part of the neighbouring table in the same sage linen, with a wicker armchair tucked under it.
+- Top left: the rim of a large matte black planter with the base of an olive tree's trunk and a few fallen olive leaves.
+- Top right: part of a low dark grey planter box spilling with trailing ivy and white hydrangeas.
+
+Light: the table sits in the bright, soft open shade under the café's awning, lit evenly by warm late-afternoon daylight bouncing off the pale paving, with a little warm glow from the awning's lights; soft shadows under the carafe, the vase and her hands. No sun edge and no shadow line cross the phone. Photographed on a 35mm lens at f/5.6, everything on the table sharp. Natural colour, true whites, warm and clean, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: a styled flat lay, objects spread out evenly, everything neatly inside the frame, a bright or saturated green tablecloth, green objects touching the phone, food, plates, cups, a napkin, her face, her head, her shoulders, a second person at the table, the phone lying flat with no one holding it, a hand coming in from the side, fingers covering the screen corners, a finger lying along the edge of the screen, AI-generated look, CGI, render, dusk, heavy orange light, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, neon or glowing green screen, glare, reflections or shadows on the screen, chipped or unpainted nails, logos on the bag, logos, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
+```
+
+**C3. Same POV, the food just served (an edit of your chosen C2: attach it and use an image-edit model)**
+```
+Edit the attached photograph. Add only these things, as if they have just been served and not yet touched:
+1. Her brunch, on the table just beyond the phone and a little to the right, so that the phone overlaps the near rim of the plate: a round speckled oatmeal stoneware plate with two whole slices of toasted sourdough topped with whipped ricotta, roasted cherry tomatoes on the vine and a whole, unbroken soft poached egg, finished with a light drizzle of olive oil, cracked black pepper and flaky salt. A clean fork and knife with brushed-brass handles lie side by side on the right-hand rim of the plate. The plate casts a soft shadow on the linen and makes a slight dip in the tablecloth.
+2. An iced matcha latte in a clear, straight-sided glass, a soft milky pale jade green over white milk, full, with clear ice cubes and a plain white paper straw, standing beyond the plate towards the middle of the table, well in from its edge, next to the vase of roses.
+
+Keep everything else exactly as it is, pixel for pixel where possible: the camera angle and framing, the phone and its flat chroma-key green screen with all four corners and the black bezel visible, both of her hands and her hovering finger, her nails, bracelet and ring, the cream jumper sleeves, her jeans, the wicker chair arms, the tan bag and its strap, the sunglasses, the carafe and tumbler, the vase of roses, the tablecloth and its folds, the neighbouring table, the planters, the paving, the leaves and the light.
+
+Avoid: any change to the phone, the screen or the green, anything on the screen, anything covering the screen, moving any existing object, cut or eaten food, a broken yolk, crumbs, a napkin, extra dishes, changes to her hands or nails, changes to the light, a different angle.
+```
+
+**C1 motion (5 s; 2–3 takes)**
+```
+Static, locked-off camera on a tripod; the camera does not move at all. She sits at her table using her phone: her right index finger taps the screen once, she scrolls with it, glances up at the street for a moment, then looks back down at the phone with a small smile. Behind her, the other customers talk and move naturally, the leaves of the plane tree stir, and the awning's canvas moves very slightly in a light breeze. At about two and a half seconds, a man in a dark navy wool coat walks quickly across the frame from right to left, very close to the lens, within half a metre of it, so that for about half a second his out-of-focus dark coat fills the whole frame and it goes almost completely dark. He passes out of frame on the left, and the terrace is seen again, unchanged. Only that one person passes the camera. Natural, unhurried, realistic movement; the hands keep five fingers throughout.
+```
+
+**C2 motion (5 s; 2–3 takes)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level, its base resting on the tablecloth; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right hand moves. At about one second her index finger taps the upper half of the screen once, a clear, deliberate press and lift, then hovers. At about three seconds it taps the lower middle of the screen once, a clear, deliberate press and lift, then hovers just above the screen for the rest of the clip. The finger never covers a corner of the screen or lies along its edge. The roses stir very slightly in the breeze; nothing else on the table moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+**C3 motion (5 s; one take)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. At about half a second her right hand moves away to the right, below the phone, and picks up the brass-handled fork from the rim of the plate, holding it naturally. A faint wisp of steam rises from the poached egg; the ice in the matcha glints. Nothing else moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
 ### Athlete
 
 The geography, fixed for every shot:
