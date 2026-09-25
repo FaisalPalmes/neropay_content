@@ -1,20 +1,22 @@
-"""Write the liquid-glass overlay specs for the three pilot shots (render with screens/render-overlay.cjs).
+"""Write the liquid-glass overlay specs for the three pilot shots (sprites: screens/render-sprites.cjs; comp: glass_comp.py).
 
 python3 build_overlay.py <workdir>
 
 <workdir> holds fr-street/, fr-table/, fr-mia/ (the composited or plate frames) and street-t4.json, table-t4.json,
-mia-cam.json (the tracks). Cards on the screen shots follow the tracked phone (centre and size, lightly smoothed);
-Mia's follow the camera track, so they sit in the room while the camera pushes in.
+mia-cam.json (the tracks), and fingers-sage.json / fingers-nail.json (tools/fingers.py), which time the cards to the
+taps. Cards on the screen shots follow the tracked phone (centre and size, Savitzky-Golay 13); Mia's follow the camera's
+push-in fitted as a quadratic in time, not the frame-by-frame track, so the handheld wobble is dropped and they glide
+(Faisal, 25 Sep 2026: "not track pixel by pixel… more forgiving, for that shot only").
 """
 import json, sys, os, glob, math, numpy as np
 
 W = sys.argv[1]
-def sg(x, w=11, p=2):
+def sg(x, w=13, p=2):
     h = w // 2; V = np.vander(np.arange(-h, h + 1), p + 1, increasing=True); c = np.linalg.pinv(V)[0]
     xp = np.pad(x, h, mode='reflect', reflect_type='odd'); return np.convolve(xp, c[::-1], 'valid')
 def ease(p): p = min(1, max(0, p)); return 1 - (1 - p) ** 4
 
-LEAF = '<img src="sage-icon.svg" style="width:40px;height:40px;border-radius:10px" alt="">'
+PHOTO = '<img src="img/croissant.jpg" style="width:62px;height:62px;border-radius:18px;object-fit:cover" alt="">'
 CLOCK = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
 POLISH = '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C2527E" stroke-width="1.8" stroke-linejoin="round"><rect x="10" y="2.5" width="4" height="6" rx="1"/><rect x="7" y="8.5" width="10" height="13" rx="3"/><path d="M7 14h10"/></svg>'
 FLOWER = '<svg width="36" height="36" viewBox="-40 -40 80 80"><g fill="#E8973A"><circle r="13" cx="0" cy="-15"/><circle r="13" cx="14" cy="-5"/><circle r="13" cx="9" cy="12"/><circle r="13" cx="-9" cy="12"/><circle r="13" cx="-14" cy="-5"/></g><circle r="10" fill="#4A2338"/></svg>'
@@ -41,17 +43,21 @@ def cards_on_phone(cx, cy, hh, defs):
     return out
 
 specs = {}
-# pavement: the cut starts at plate frame 24, so t here is cut time (tap on the cinnamon knot at 3.33s plate = 2.33s cut)
+fs, fn = json.load(open(os.path.join(W, 'fingers-sage.json'))), json.load(open(os.path.join(W, 'fingers-nail.json')))
+# pavement: the cut starts at plate frame 24, so cut time = plate time - 1; the add lands when the thumb lifts
+up = fs['press'][1] - 1
 fr = sorted(glob.glob(os.path.join(W, 'fr-street', '*.png'))); cx, cy, hh = phone_anchor('street-t4.json', 24, len(fr))
 specs['street'] = {'w': 1912, 'h': 1080, 'frames': fr, 'cards': cards_on_phone(cx, cy, hh, [
-    ('a', card(LEAF, '#74805C', k='Added to your order', t='Cinnamon knot', pr='£3.60'), 2.42, 0.88, -0.12, 1.0),
-    ('b', card(CLOCK, '#2E3225', k='Sage &amp; Co', t='Ready in 8 min', s='Collect at the counter'), 2.95, 0.88, 0.1, 1.0)])}
+    ('a', card(PHOTO, '#E9E4D7', k='Added to your order', t='Almond croissant', pr='£3.40'), up + 0.06, 0.88, -0.12, 1.0),
+    ('b', card(CLOCK, '#2E3225', k='Sage &amp; Co', t='Ready in 8 min', s='Collect at the counter'), up + 0.5, 0.88, 0.1, 1.0)])}
 fr = sorted(glob.glob(os.path.join(W, 'fr-table', '*.png'))); cx, cy, hh = phone_anchor('table-t4.json', 0, len(fr))
 specs['table'] = {'w': 1912, 'h': 1080, 'frames': fr, 'cards': cards_on_phone(cx, cy, hh, [
-    ('a', card(POLISH, '#F6D3DF', k='Rosehip Nails', t='Gel pedicure', s='50 min · with Ella', pr='£35'), 2.36, -0.8, -0.2, 1.0),
-    ('b', card('✓', '#34C759', k='Booked', t='Sat 20 · 11:30', s='Rosehip Nails', icclass='ok'), 4.56, -0.8, 0.02, 1.0)])}
+    ('a', card(POLISH, '#F6D3DF', k='Rosehip Nails', t='Gel pedicure', s='50 min · with Ella', pr='£35'), fn['press1'][1] + 0.2, -0.8, -0.2, 1.0),
+    ('b', card('✓', '#34C759', k='Booked', t='Sat 20 · 11:30', s='Rosehip Nails', icclass='ok'), fn['press3'][1] + 0.26, -0.8, 0.02, 1.0)])}
 # Mia: frame-0 phone centre and height, then the camera's similarity transform per frame
 fr = sorted(glob.glob(os.path.join(W, 'fr-mia', '*.png'))); cam = json.load(open(os.path.join(W, 'mia-cam.json')))
+tt = np.arange(len(cam['scale'])) / 24
+cam = {k: np.polyval(np.polyfit(tt, cam[k], 1 if k == 'rot' else 2), tt).tolist() for k in ('scale', 'rot', 'tx', 'ty')}
 P0, PH = np.array([945.0, 458.0]), 110.0
 defs = [('shop', card(FLOWER, '#F3DCD6', t='Marigold Lane', s='Florist · open now'), 0.35, -2.7, -0.55),
         ('bunch', card(FLOWER, '#F3DCD6', t='The Sunday Bunch', s='Seasonal, hand-tied', pr='£28.00'), 1.05, -2.9, 1.05),

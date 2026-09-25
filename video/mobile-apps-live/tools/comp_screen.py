@@ -26,11 +26,14 @@ ap.add_argument('--radius', type=float, default=45.0, help='screen corner radius
 a = ap.parse_args()
 tint = np.array([float(x) for x in a.tint.split(',')], np.float32)
 
-cap = cv2.VideoCapture(a.plate); frames = []
-while True:
-    ok, f = cap.read()
-    if not ok: break
-    frames.append(f)
+# decode with full chroma interpolation: the plate's colour is stored at half resolution, and a key read from
+# nearest-upsampled chroma cuts a finger's edge in 2 px stairs
+_pr = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', a.plate],
+                     capture_output=True, text=True, check=True).stdout.strip().split(',')
+_w, _h = int(_pr[0]), int(_pr[1])
+_raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', a.plate, '-sws_flags', 'spline+accurate_rnd+full_chroma_int+full_chroma_inp',
+                       '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-'], capture_output=True, check=True).stdout
+frames = list(np.frombuffer(_raw, np.uint8).reshape(-1, _h, _w, 3))
 H0, W0 = frames[0].shape[:2]
 T = json.load(open(a.track)); raw = np.array(T['raw'], np.float64)
 
@@ -43,6 +46,11 @@ for c in range(4):
 def at(t):   # corners at fractional frame t (for the shutter)
     t = min(max(t, 0), len(Q) - 1); i = int(np.floor(t)); j = min(i + 1, len(Q) - 1); u = t - i
     return Q[i] * (1 - u) + Q[j] * u
+def guided(I, p, r=2, eps=2e-4):
+    """He et al.'s guided filter: p's edges snapped to the guide I (full-resolution luma)."""
+    bf = lambda v: cv2.boxFilter(v, -1, (2 * r + 1, 2 * r + 1))
+    mI, mp = bf(I), bf(p); A = (bf(I * p) - mI * mp) / (bf(I * I) - mI * mI + eps); B = mp - A * mI
+    return bf(A) * I + bf(B)
 def grow(q, px):   # push each corner out along its diagonal by px
     c = q.mean(0); v = q - c; return c + v * (1 + px / np.linalg.norm(v, axis=1, keepdims=True))
 
@@ -93,16 +101,35 @@ for n in range(a.start, end):
     # plus any strong green just outside the outline (AI video bends the phone's edges a little): the warped app
     # is edge-replicated there, so the green takes the app's own edge colour instead of showing as a sliver
     gk = sstep(dom, 0.06, 0.14) * (cv2.dilate((inside > 0.02).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0)
-    alpha = (np.maximum(inside, gk) * (1 - occ))[..., None]
     # glare: the green's own brightness, blurred wide so painted text can't come back, above its base level
     Yb = cv2.GaussianBlur(luma, (0, 0), 16); core = (dom > 0.2) & (inside > 0.99)
     base = np.median(Yb[core]) if core.any() else Yb.mean()
     glare = np.clip(Yb - base * 1.06, 0, 1)[..., None] * a.glare
     if a.notch: glare = glare * (1 - notch_px)
     out = x.copy(); reg = out[y0:y1, x0:x1]
-    # despill whatever the plate keeps near the screen (finger edges, the bezel's inner line)
+    # where a finger crosses the screen, unmix instead of cutting: each edge pixel is skin over green in some share,
+    # so take the green out (a local clean-green estimate) and put the app in, in the same share. Motion blur and the
+    # finger's soft edge survive with no dark rim. The share comes from green dominance, snapped to the luma's edges.
+    W = np.maximum(inside, gk)
+    pure = ((dom > 0.2) & (inside > 0.9)).astype(np.float32)
+    gc = np.median(reg[pure > 0], 0) if pure.any() else np.float32([0.2, 0.7, 0.2])
+    den = cv2.GaussianBlur(pure, (0, 0), 10)[..., None]
+    Gm = (cv2.GaussianBlur(reg * pure[..., None], (0, 0), 10) + gc * 1e-3) / (den + 1e-3)
+    dG = Gm[..., 1] - np.maximum(Gm[..., 0], Gm[..., 2])
+    sk = occ > 0.95; dF = float(np.clip(np.median(dom[sk]), -0.3, -0.03)) if sk.sum() > 50 else -0.12
+    near = cv2.GaussianBlur(cv2.dilate((occ > 0.5).astype(np.uint8), np.ones((9, 9), np.uint8)).astype(np.float32), (0, 0), 2)
+    fa = np.clip((dG - dom) / np.maximum(dG - dF, 0.05), 0, 1) * near
+    fa = np.clip(guided(luma.astype(np.float32), fa.astype(np.float32)), 0, 1) ** 0.8
+    fg = np.clip(reg - (1 - fa)[..., None] * Gm, 0, 1) * sstep(fa, 0.0, 0.08)[..., None]
+    # no green left in the skin share; the spill's light goes back as neutral light (the screen does light the
+    # fingertip), so a despilled finger doesn't turn grey
+    cap_g = np.maximum(fg[..., 0], fg[..., 2]) * 1.02; spill = np.clip(fg[..., 1] - cap_g, 0, 1)
+    fg[..., 1] = np.minimum(fg[..., 1], cap_g); fg = np.clip(fg + spill[..., None] * 0.8, 0, 1)
+    fg[..., 1] = np.maximum(fg[..., 1], np.minimum(fg[..., 0], fg[..., 2]))              # nor a magenta rim from over-subtraction
+    scr_out = fg + (1 - fa)[..., None] * np.clip(app * a.dim * tint + glare, 0, 1)
+    # despill whatever the plate keeps around the outline (the bezel's inner line)
     reg[..., 1] = np.where(inside > 0.001, np.minimum(reg[..., 1], np.maximum(reg[..., 0], reg[..., 2]) * 1.03), reg[..., 1])
-    reg[:] = reg * (1 - alpha) + np.clip(app * a.dim * tint + glare, 0, 1) * alpha
+    reg[:] = reg * (1 - W[..., None]) + scr_out * W[..., None]
     res = (np.clip(out, 0, 1) * 255).astype(np.uint8)
     # QC: strong green left anywhere near the screen after the composite
     rr = res[y0:y1, x0:x1].astype(np.float32) / 255

@@ -439,6 +439,17 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    the edge), not one whose outside is dark, because the street phone's bezel sits on grey pavement. v3: median 0.31px
    (street) and 0.28px (table), 95% within 1.2px, zero green pixels on every frame. Overlay cards follow the phone's
    smoothed centre, or on a wide shot the camera track (`tools/camera_track.py`), never the raw corners.
+4. **"The icons are super jittery" (the Mia push-in).** Two causes. The cards drifted about 0.4 px a frame, and Chromium
+   snaps text to whole pixels, so each card stepped a pixel every two or three frames. And they rode the camera track
+   frame by frame, whose handheld wobble (1.4 px rms) was as large as the motion itself. Rule: never let the browser
+   place a moving card. Render each card once as a 3x sprite (shadow, shape, face; `screens/render-sprites.cjs`) and
+   composite it in Python with a prefilter and bilinear resampling at the float position (`tools/glass_comp.py`), which
+   also does the backdrop blur. On a camera move, pin cards to a smooth fit of the move (a quadratic in time), not the
+   raw track. Faisal asked for that "forgiving" pinning on this shot only; the phone shots still follow the phone.
+5. **"Accurate finger interaction."** v3's app timings were guessed from contact sheets. Rule: track the fingertip on
+   the rectified screen (`tools/fingers.py`). The press point is the pad, 18 px behind the nail along the finger. A drag
+   scrolls the content 1:1 with the pad, then releases with its own speed. Each press target is placed where the pad
+   actually was. Check it by drawing the pad on the rendered screen at the press frame.
 
 ## Standing rules for every edit
 
