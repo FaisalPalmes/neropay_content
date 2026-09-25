@@ -84,6 +84,40 @@ together.
 
 **The avoid line, which goes at the end of every prompt.** It is already included below.
 
+### Phone motion for green-screen plates (25 Sep 2026)
+
+This comes from the local DaVinci session's track of the pilot. The tracker follows the edge where the green meets the
+black bezel, on every frame.
+
+- **What tracks.** Slow, smooth drift: the table phone moved about 60 px over 5 s, about 1.2 px a frame. Fingers over the
+  screen and green spill on skin are fine.
+- **What breaks it.**
+  - Fast side-to-side tilting: the pavement phone reversed about ten times in 5 s, and the edit could use only its
+    last two seconds.
+  - Jolts of 5–6 px in one frame.
+  - A finger lying along an edge for more than about a second.
+  - Two corners covered at once.
+- **So every screen shot:**
+  - The phone rests on something, or both hands hold it steady and level, with the forearms supported where the
+    pose allows.
+  - The phone does not wobble, rock, tilt or twist, and it keeps its exact shape and size.
+  - Only the thumb or finger moves.
+  - The camera is "static camera with a very slight, slow drift in". If it must feel handheld, no more than a barely
+    perceptible slow breath.
+  - One action at a time, at normal speed: a tap is a clear press and lift, and a scroll is one slow drag up the
+    screen. Each action is given a rough second in the prompt, so the app can be built to it.
+- **Every motion prompt opens with the screen lock and names Kling's failures.** Kling painted a notch and status-bar
+  icons onto the pavement green from about 1 s, and a pale glare swept across it at 2–3 s. The standard opening is:
+  *"The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar,
+  icon, image, text, glare, sweep of light or reflection ever appears on it."*
+- **The still decides as much as the prompt.**
+  - The phone is at least 40% of the frame height.
+  - The screen is within about 35 degrees of facing the lens.
+  - All four corners are visible, with the black bezel showing all the way round.
+  - No sun edge or shadow edge crosses the screen.
+  - Nothing green is near the phone.
+- **Generate 2–3 takes of every screen clip.** The local session tracks them and keeps the steadiest.
+
 ## 4. The cast
 
 Revised 24 Sep 2026 on Faisal's notes: light-skinned, European-looking or mixed Asian and European; the
@@ -587,3 +621,141 @@ screens go in without re-tracking.
 - The copy has to say who the ad is for. The frames show customers, but the buyer is a merchant.
   Without a line like "Your customers. Your app." a viewer reads it as a consumer app. That line is
   drafted at the edit, not now.
+
+## 9. The full ad (25 Sep 2026)
+
+The pilot passed in DaVinci (v05): tracking and spill are solved. This is the shot list for the full 16:9 advert, about
+30 s plus the locked outro. The three pilot stills stay: the pavement, the terrazzo table and Mia on the floor. Five
+stills are new. Every screen shot follows *Phone motion for green-screen plates* (§3).
+
+**Clips.** Use Kling 3.0: 5 s, 1080p, 24 fps. Make 2–3 takes of every clip with a green screen and one of the others.
+Regenerate the **pavement** clip from its existing start still: its phone rocks. The **table** and **Mia** clips
+tracked cleanly and stay. Their new motion prompts are here for a retake only if the edit needs one.
+
+| # | Shot | Still | Screen | Edit (s) | Line on screen (draft) |
+|---|---|---|---|---|---|
+| 1 | The tap, yellow studio | new | home screen, taps Sage & Co | 0–2.5 | Your shop, on their phone. |
+| 2 | Pavement, over the shoulder | have | Sage & Co: scroll, add | 2.5–6 | Order. |
+| 3 | Terrazzo table | have | Rosehip Nails: service, scroll, time | 6–9.5 | Book. |
+| 4 | Hannah through the doorway | new | none (back of phone) | 9.5–11.5 | |
+| 5 | Overhead on the worktop | new | Ironvale: class, Join | 11.5–14.5 | Join. |
+| 6 | Mia on the floor | have | none (glass cards in the room) | 14.5–18 | |
+| 7 | Mia's hands, paying | new | Marigold Lane: basket, Pay | 18–20.5 | Pay. |
+| 8 | The phone on the yellow chair (P1) | new | home screen, the four apps land | 20.5–26 | Your customers. Your app. / Available on Android & iOS |
+| | Locked yellow outro | | | 26–29 | neropay.app |
+
+The lines are drafts for the edit, not approved copy. §8 still applies: the ad has to say it is for the merchant.
+
+### 9.1 The tap, yellow studio (new). Screen: home screen, the finger opens Sage & Co
+
+**Still**
+```
+Minimal studio photograph, looking like a real frame shot on film in a real photo studio, not a render. A close-up of a young woman's two hands holding a smartphone upright in portrait orientation in front of a warm sunflower-yellow seamless paper backdrop (close to #FFCF24). We see only her hands, her wrists and the cuffs of her sleeves; she is the only person in the image and her face is not in the frame.
+
+The phone is in the centre of the frame at chest height, about 40 cm from the lens, facing the camera almost squarely with a slight tilt back of about 15 degrees, and fills about 65% of the frame height. Her left hand holds it from below and behind: the phone's lower edge rests on her left fingers, and her left thumb rests along the left side of the phone's frame, not on the screen. Her right hand is raised beside the phone at the lower right, the index finger extended and relaxed about 3 cm in front of the upper half of the screen, about to tap. All four corners of the screen are clearly visible, with the thin black bezel showing all the way round; no finger covers a corner or lies along an edge.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands: slim, elegant young hands with long fingers and light skin with a warm undertone. Hyper-real skin texture: fine creases over the knuckles, faint veins on the backs of the hands, a little natural pinkness at the fingertips. Her nails are a fresh gel manicure, medium-length soft almond shape, glossy sheer nude with a fine gold chrome tip, neat cuticles. A thin gold ring on her right ring finger. The crisp cuffs of a white cotton shirt at her wrists.
+
+Light: one large soft key light from the upper left through a big diffuser, and warm yellow light bouncing off the backdrop onto the backs of her hands and the edge of the phone's frame, as it would in a real studio. The screen stays evenly lit and matte, with no reflection of the light. Photographed on an 85mm lens at f/5.6, the hands and the whole phone sharp, the backdrop smooth with the faint texture of the paper. Natural colour, true warm yellow, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: her face, a second person, props, AI-generated look, CGI, render, a flat digital yellow fill, lemon or neon yellow, orange, glowing highlights, HDR, oversaturated colour, oversharpening, plastic skin, neon or glowing green screen, glare or a reflection of the light on the screen, fingers covering the screen corners, oversized hands, chipped or unpainted nails, logos, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
+```
+
+**Motion (5 s)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone completely steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right hand moves. At about one second her index finger moves in and taps the upper half of the screen once, a clear, deliberate press and lift. The hand then lowers slowly out of the frame at the lower right, never covering a corner of the screen. The yellow backdrop and the light stay still. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.2 Pavement, over the shoulder (have the still: regenerate the clip). Screen: Sage & Co, scroll, then add
+
+Start still: `hf_20260924_215954_d057fbb2-509b-4d6b-b598-f1a8e771bee3.png`.
+
+**Motion (5 s)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. She holds the phone steady and level in both hands, close to her body; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Her hair in the foreground stays still. Only her right thumb moves. At about one second it lands on the lower third of the screen and drags slowly and smoothly up to the middle in one scroll, then lifts. At about three seconds it taps the lower middle of the screen once, a clear, deliberate press and lift, then stays just above the screen for the rest of the clip. The thumb never lies along the edge of the screen. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.3 Terrazzo table (have the still and a good clip; retake only if needed). Screen: Rosehip Nails
+
+**Motion (5 s)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right hand moves. At about one second her index finger taps the middle of the screen once, a clear, deliberate press and lift. At about two seconds it touches the lower third of the screen and drags slowly up to the upper third in one smooth scroll, then lifts. At about four seconds it taps the upper third of the screen once, then the hand withdraws to the right. The finger never covers a corner of the screen. A faint wisp of steam rises from the coffee; the golden sunlight and the long shadows stay still. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.4 Hannah through the doorway (new). Screen: none, the back of the phone faces us
+
+**Still**
+```
+Candid documentary-style photograph of a real home, looking like a frame from a 35mm film camera, not a render. A frame-within-a-frame shot from a dim hallway, looking through an open doorway whose painted dark-grey frame borders the image, into a bright, modern kitchen in a Manchester flat at seven in the morning. In the centre of the doorway, a 28-year-old British woman leans with her hip against a pale quartz worktop, dressed for training before work. She holds a plain mustard-yellow ceramic mug of coffee in her left hand and a smartphone in her right hand at waist height, the back of the phone facing the camera, and looks down at it with a focused, pleased expression. She is the only person in the image.
+
+She is slim and athletic, and pretty in a natural, believable way, not a retouched model. She has fair, clear skin with a light dusting of freckles across the nose and a fresh healthy flush, and minimal fresh makeup: groomed brows, a touch of mascara, a tinted lip balm. Hyper-real skin: visible pores, fine peach fuzz catching the light, subtle variation in tone, individual lashes. Her long honey-blonde hair is in a sleek high ponytail, glossy and well cared for. Her nails are a fresh gel manicure, short-to-medium squoval shape in milky pink with a small chrome accent on the ring finger. She wears a fitted charcoal half-zip training top with the sleeves pushed up, black full-length leggings and white socks.
+
+The kitchen is lived in and tidy: matte sage-green flat-fronted cabinets, a white tiled splashback, a kettle, a wooden chopping board leaning against the tiles, a bowl of bananas, a set of keys and a rolled grey gym towel on the worktop. Soft, cool early daylight comes through a window at frame right, with one warm band of low sun across the worktop behind her. The hallway in the foreground is dim, with the soft edge of a coat on a hook at frame left. The phone: a modern unbranded smartphone with a flat graphite aluminium frame and a matte graphite glass back with a small two-lens camera module in a slim vertical pill at the top left, no logo or text anywhere. Photographed on a 40mm lens at f/4, the doorway frame soft and dark, the kitchen bright and readable. Natural, slightly muted colour, true-to-life whites, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: a second person, older people, wrinkles, messy or unkempt hair, bitten or unpainted nails, AI-generated look, CGI, render, showroom kitchen, golden glow over everything, HDR, teal and orange grade, oversaturated colour, oversharpening, plastic skin, beauty filter, the phone screen facing the camera, logos on appliances, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
+```
+
+**Motion (5 s)**
+```
+Slow, smooth dolly forward towards the doorway, steady, no shake. She takes a sip of coffee, looks down at the phone, a small smile spreads, and she taps it once with her thumb. The back of the phone faces the camera throughout. The window light and the band of sun stay still. She is the only person in the scene. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.5 Overhead on the worktop (new). Screen: Ironvale, a class, then "Join"
+
+The easiest shot to track: the phone lies flat and never moves.
+
+**Still**
+```
+Clean overhead photograph, looking like a real frame shot on film, not a render. The camera points straight down at a pale grey-veined white quartz kitchen worktop. A smartphone lies flat on the worktop, face up, slightly left of the centre of the frame, square to the frame edges, filling about 55% of the frame height. A young woman's right hand comes in from the right-hand edge of the frame, level with the middle of the phone, her index finger extended and hovering just above the middle of the screen, about to tap. Her hand stays to the right of the phone and does not cover any corner of it. All four corners of the screen are clearly visible, with the thin black bezel showing all the way round.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hand: slim and fair, hyper-real skin with fine knuckle creases, a fresh gel manicure in milky pink, short-to-medium squoval, with a small chrome accent on the ring finger, and the pushed-up sleeve of a charcoal training top at the wrist. Around the phone, in a loose, natural arrangement: a plain mustard-yellow ceramic mug of black coffee at the upper left with a wisp of steam, a rolled grey gym towel at the upper right, a set of plain keys at the lower left. A soft diagonal band of warm morning sun crosses the worktop at the upper left and stops well short of the phone; the phone and the hand are in soft, even daylight. Photographed on a 50mm lens at f/5.6, the whole phone and the hand sharp. Natural colour, true-to-life whites, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: a second person, any face, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, plastic skin, neon or glowing green screen, glare, reflections or shadows on the screen, a sun edge across the phone, the hand covering a corner of the phone, green objects near the phone, chipped or unpainted nails, logos, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
+```
+
+**Motion (5 s)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Locked-off overhead camera, completely still. The phone lies flat on the worktop and does not move at all. At about one second her index finger taps the middle of the screen once, a clear, deliberate press and lift. At about three seconds it taps the lower third of the screen once more, then the hand slides back out of the frame to the right. Her hand never covers a corner of the phone. Steam rises gently from the mug; the band of sunlight stays still. The hand keeps five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.6 Mia on the floor (have the still and a good clip; retake only if needed). Screen: none, glass cards in the room
+
+**Motion (5 s)**
+```
+Locked-off camera with a very slow, smooth push-in across the coffee table towards her; no shake and no handheld movement. The candle flame flickers gently in the foreground. She holds the phone in both hands with her forearms resting on her knees, its back to the camera throughout. She scrolls with her thumb, pauses, a small smile spreads, then she taps once and lets her head rest back against the sofa for a moment. The daylight and the lamp stay steady. She is the only person in the scene. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.7 Mia's hands, paying (new). Screen: Marigold Lane, the basket, then "Pay"
+
+Her point of view in the same room as 9.6: the same cardigan, jeans, nails and ring. No face, so no reference image is needed.
+
+**Still**
+```
+Candid first-person photograph in a real, lived-in home, looking like a frame from a 35mm film camera, not a render. The camera is the eyes of a young woman sitting on a worn rug on the floor of her living room with her back against a sofa, looking down at the smartphone in her own hands. The only parts of her we see are her two hands, her forearms in the cuffs of a cream cable-knit cardigan with the sleeves pushed up, and her knees in relaxed light-blue straight-leg jeans. She is the only person in the image: no face, no second person, no reflection.
+
+Her forearms rest on her drawn-up knees, which keeps the phone steady. She holds the phone upright in portrait orientation in both hands just above her knees, about 35 cm below her eyes, with the screen facing up towards the camera and tilted slightly towards it. The phone is in the centre of the frame and fills about 50% of the frame height. Her left hand cradles it from the left and behind, the left fingertips just visible along the left side between the corners. Her right hand holds the right edge from behind, and her right thumb is lifted just above the lower half of the screen, about to tap. All four corners of the screen are clearly visible, with the thin black bezel showing all the way round; no finger covers a corner or lies along an edge.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen indoors, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands: slim, elegant young hands with light skin and a warm undertone, hyper-real texture with fine knuckle creases and a little natural pinkness at the fingertips. Her nails are a fresh gel manicure, medium-length almond shape, sheer milky pink, with fine gold line-art on two nails; a thin gold ring on her right index finger. Beyond her knees, soft but readable: the edge of a low round travertine coffee table with a plain mustard-yellow ceramic mug of tea on it, a worn vintage rug in faded rust, cream and indigo, pale oak floorboards, and a pair of socks kicked off by the rug. Light: a bright overcast afternoon, soft even daylight from a window at the left mixed with the warm glow of a lamp; no sun beams and no hard shadows on the phone. Photographed on a 28mm lens at f/4 from her eye level, the hands, nails and phone sharp, the room soft. Natural, slightly muted colour, true-to-life whites, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: a second person, any face, any head, a selfie, AI-generated look, CGI, render, showroom styling, golden hour, HDR, teal and orange grade, oversaturated colour, oversharpening, plastic skin, neon or glowing green screen, glare or shadows on the screen, fingers covering the screen corners, green objects near the phone, chunky or older-looking hands, chipped or unpainted nails, logos, Apple logo, brand names, readable text, watermarks, extra fingers, deformed hands.
+```
+
+**Motion (5 s)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her forearms rest on her knees and the phone stays steady and level in her hands; it does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right thumb moves. At about one second it lands on the lower third of the screen and drags slowly up to the middle in one scroll, then lifts. At about three seconds it taps the lower middle of the screen once, a clear, deliberate press and lift, then rests just above the screen. The thumb never lies along the edge of the screen. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+### 9.8 The phone on the yellow chair (new: the P1 still in §5b). Screen: home screen, the four apps land, then the end line
+
+Use the P1 still prompt as written in §5b.
+
+**Motion (5 s)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Very slow, smooth push-in straight down towards the phone, with no rotation and no shake. The phone lies still on the suede and nothing in the scene moves; the light stays steady. No people, no hands.
+```
