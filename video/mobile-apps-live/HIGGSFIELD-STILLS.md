@@ -1100,7 +1100,7 @@ options). The logo is at `screens/img/sage-co-logo-cream.png` (cream on a transp
 image 2. If the lettering comes back altered, keep the unbranded C1 and the logo goes on in post; the shot is static,
 so it will sit perfectly.
 
-**C1 brand edit (image 1: the chosen C1; image 2: sage-co-logo-on-charcoal.png)**
+**C1 brand edit (image 1: the chosen C1; image 2: sage-co-logo-16x9.png, the logo on a 16:9 charcoal canvas; Higgsfield rejects references wider than 2.5:1)**
 ```
 Edit the attached photograph (image 1). Make only one change: add the café's logo from image 2 to the front valance of the black awning.
 
