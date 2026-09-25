@@ -194,14 +194,15 @@ window.LIBRARY = {
       { crop: 'v2 16:9 master (superseded)', px: '1920×1080', mb: 62.5, media: '243e9316-3761-4f7e-8883-799780616ac2', md5: 'f56bea4a7f82761407b4e344283480ca' }] },
 
     { id: 'PPX', series: 'Partner Programme', title: 'Partner Programme explainer (docs)',
-      version: 'v1', rendered: '2026-09-25', secs: 142,
+      version: 'v2', rendered: '2026-09-25', secs: 140,
       status: 'review', by: 'content video session, 25 Sep 2026 — made at Faisal\'s request with creative freedom, awaiting his review',
-      waiting: 'Faisal watches v1. The terms link is neropay.app/partners at his instruction; the brief\'s approved line says partners.neropay.app, so both need to resolve. The outro\'s neropartner lockup is hand-built from the artwork and Eray has not seen it.',
+      waiting: 'Faisal watches v2 (his notes on v1: his three photos in the tiles, the restaurant line, a livelier capsule and a £100→£300 bar with a flash, no "conditions included", POS for EPOS, more dynamic range). Listen for whether she says P-O-S or "poss" at 0:21. The terms link is neropay.app/partners at his instruction; the brief\'s approved line says partners.neropay.app, so both need to resolve. The outro\'s neropartner lockup is hand-built from the artwork and Eray has not seen it.',
       build: 'motion/partner/explainer/ (claims.md beside it)', drive: null,
       backup: false, clearedFor: null, notCleared: null,
       note: 'For docs.neropay.app and the partner page. Every figure from motion/partner/BRIEF.md v4 with its condition in the same frame; the Bonus Dial and the Rate Climb compute figure and condition from one state and step without count-ups (a count-up put 37% beside 111+ in the first cut, fixed before delivery). Voice Olivia, take 1 in the ledger. Music at the NeroConnect v3.6.1 level.',
       files: [
-      { crop: '16:9 master', px: '1920×1080', mb: 24.3, md5: '8a36211655e5c7ed84cf74da4a2aa1fc', lufs: '−13.99', where: 'sent in chat 25 Sep 2026; not yet in Drive' }] },
+      { crop: '16:9 master', px: '1920×1080', mb: 24.8, md5: 'de919bd74a71857240b5446b0040ca33', lufs: '−16.02', where: 'v2 sent in chat 25 Sep 2026; not yet in Drive. Mastered to -16 LUFS / -1 dBTP for range (crest 8.8 vs 5.4 in v1)' },
+      { crop: 'v1 16:9 (superseded)', px: '1920×1080', mb: 24.3, md5: '8a36211655e5c7ed84cf74da4a2aa1fc' }] },
 
     { id: 'PP01', series: 'Partner Programme', title: 'The Partner Programme',
       version: 'v4', rendered: '2026-09-17', secs: 68,
