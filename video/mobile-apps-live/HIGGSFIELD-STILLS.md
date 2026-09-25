@@ -1094,6 +1094,27 @@ Light: soft, warm late-afternoon daylight on a clear autumn day, just before gol
 Avoid: an angled view, a three-quarter view, the building turning away or receding, converging lines, a vanishing point, a wide-angle or fisheye lens, tilted verticals, a tilted horizon, a low or high camera, her at the edge of the frame, her in the centre of the frame, the planters hiding her, any lettering, logo or picture on the awning's valance, readable text anywhere, writing on the windows, shop names, logos, bright or saturated green tablecloths, food on her table, her hand on her face, looking into the camera, a car or bus in front of the café, readable number plates, dusk, night, heavy orange sunset light, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, beauty filter, older-looking people, chipped or unpainted nails, watermarks, extra fingers, deformed hands.
 ```
 
+**C1 branded, 25 Sep 2026.** Faisal kept the straight-on C1 and picked **Sage & Co** (option 01 of the six logo
+options). The logo is at `screens/img/sage-co-logo-cream.png` (cream on a transparent background) and
+`sage-co-logo-on-charcoal.png`. Add it with an image edit: attach the chosen C1 as image 1 and the logo on charcoal as
+image 2. If the lettering comes back altered, keep the unbranded C1 and the logo goes on in post; the shot is static,
+so it will sit perfectly.
+
+**C1 brand edit (image 1: the chosen C1; image 2: sage-co-logo-on-charcoal.png)**
+```
+Edit the attached photograph (image 1). Make only one change: add the café's logo from image 2 to the front valance of the black awning.
+
+The logo: copy it exactly from image 2, letter for letter and stroke for stroke: the small sage-sprig emblem followed by the words "Sage & Co", with an italic ampersand, in a classic serif. Do not redraw, restyle, respell or add to it. Its colour is a soft warm cream (#EFE8DA).
+
+Where it goes: on the flat vertical front band of the awning, the dark strip that runs horizontally across the whole width of the frame just above the café's windows. Centre the logo horizontally in the middle of the frame, above the café's central glazed bay, and vertically in the middle of that band. Its height is about half the band's height, so there is clear dark margin above and below it; its width is about a fifth of the frame's width.
+
+How it looks: printed onto the awning's charcoal canvas, not glowing and not a separate sign. The cream is matte, with the fabric's fine woven texture showing through it. It follows the canvas's slight sag and soft shading, it is a little darker where the band is in shadow, and it is exactly as sharp as the awning around it, with the same slight softness and film grain as the rest of the photograph. It is lit by the same soft late-afternoon daylight as the awning.
+
+Keep everything else in the photograph exactly as it is, pixel for pixel: the woman, her pose, her phone, her table and everything on it, the other customers, the café's glazing, the interior, the lanterns, the bulbs, the olive trees, the planters, the tables and chairs, the paving, the leaves, the plane tree, the lamp post, the kerb, the road, the camera angle, the framing and the light.
+
+Avoid: changing the logo's lettering, spelling or shape, extra text, a second logo, repeated logos along the awning, glowing or neon letters, a sign board or plaque, letters in any colour other than soft cream, the logo on the windows or elsewhere, any other change to the image.
+```
+
 **C2. Her POV, the empty table (new still)**
 ```
 Overhead photograph of a café table on a high-street terrace, looking like a real candid frame shot on film, not a render and not a styled flat lay. Soft, warm late-afternoon daylight on a clear autumn day, just before golden hour. The camera points straight down from about 1.2 metres above a round café table, about 70 cm across, dressed in a muted, greyish sage-green linen tablecloth with soft natural creases and folds falling over its edge. The table is in the middle of the frame. The top of the frame is the street side; the bottom of the frame is where she sits.
