@@ -450,6 +450,11 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    the rectified screen (`tools/fingers.py`). The press point is the pad, 18 px behind the nail along the finger. A drag
    scrolls the content 1:1 with the pad, then releases with its own speed. Each press target is placed where the pad
    actually was. Check it by drawing the pad on the rendered screen at the press frame.
+6. **Finger edges over the screen were stepped and rimmed** (caught on the v4 check, before Faisal saw it). The plate's
+   colour is stored at half resolution, and a colour key cut at that resolution gives 2 px stairs. Edge pixels were
+   also either all skin or all screen, so the despilled blend showed as an olive rim. Rule: decode with
+   `full_chroma_int`, and unmix edge pixels. Subtract the local clean green in the skin's share, add the app in the
+   rest, and snap that share to the luma edges with a guided filter (`comp_screen.py`).
 
 ## Standing rules for every edit
 
