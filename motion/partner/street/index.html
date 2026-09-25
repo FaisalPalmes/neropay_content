@@ -4,7 +4,8 @@
 /* Partner Programme advert, style C, "The High Street" (25 Sep 2026). Built by the CONTENT VIDEO session at Faisal's request for
    two new explainer styles. A drawn street of shopfronts the camera walks along: each shop lights on the word that names it,
    lines run from "You" to every business introduced, the bonus and the share land in the band above the roofs with their
-   conditions, and the whole network lights up. Figures from motion/partner/BRIEF.md v4; every one sits with its condition. */
+   conditions, and the whole network lights up. v2 (25 Sep 2026, Faisal): each business carries its bonus tag, the
+   quiet-month section is gone, and a phone shows how to start: the app, Partner Programme, your own QR code. Figures from motion/partner/BRIEF.md v4; every one sits with its condition. */
 @font-face{font-family:P;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
 @font-face{font-family:P;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
 @font-face{font-family:P;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
@@ -152,7 +153,7 @@ svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
 #net{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;pointer-events:none}
 #net path{fill:none;stroke:#111114;stroke-width:3;stroke-linecap:round;stroke-dasharray:6 9}
 #net circle{fill:#FFCF24;stroke:#111114;stroke-width:3}
-#you{position:absolute;left:960px;top:486px;width:0;height:0;opacity:0}
+#you{position:absolute;left:960px;top:446px;width:0;height:0;opacity:0}
 #you .pin{position:absolute;left:-44px;top:-44px;width:88px;height:88px;border-radius:50%;background:var(--yel);display:flex;align-items:center;justify-content:center;
   font:700 26px/1 P;box-shadow:0 16px 34px -14px rgba(17,17,20,.45),inset 0 0 0 4px #fff}
 .list{font:600 30px/1 P;letter-spacing:-.015em}
@@ -162,6 +163,49 @@ svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
 .term img{width:100%;height:100%;display:block}
 .chips{display:flex;gap:10px}
 .chips b{font:600 22px/1 P;padding:10px 14px;border-radius:10px;background:rgba(17,17,20,.06);color:var(--mute)}
+#tags{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none}
+.tag{position:absolute;display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;border-radius:12px;background:#fff;white-space:nowrap;
+  box-shadow:0 12px 26px -14px rgba(17,17,20,.45),inset 0 0 0 1px rgba(17,17,20,.06);font:700 24px/1 P;letter-spacing:-.02em;transform-origin:50% 100%}
+.tag em{font-style:normal;font:700 20px/1 P;padding:6px 8px;border-radius:8px;background:var(--yel)}
+#legend{position:absolute;left:150px;top:1004px;font:500 22px/1.2 P;color:var(--mute);opacity:0}
+.phone{position:absolute;left:1250px;top:120px;width:370px;height:760px;border-radius:58px;background:#16161A;padding:13px;opacity:0;
+  box-shadow:0 60px 110px -50px rgba(17,17,20,.55),0 18px 40px -20px rgba(17,17,20,.35),inset 0 0 0 2px #2A2A30}
+.scr{position:relative;width:100%;height:100%;border-radius:46px;overflow:hidden;background:#FBFAF7}
+.scr .v{position:absolute;inset:0;opacity:0}
+.notch{position:absolute;left:50%;top:12px;width:104px;height:30px;margin-left:-52px;border-radius:16px;background:#16161A;z-index:5}
+.apps{position:absolute;left:34px;top:110px;display:grid;grid-template-columns:repeat(3,72px);gap:34px 38px}
+.apps i,.apps b{display:block}
+.apps i{width:72px;height:72px;border-radius:18px;background:rgba(17,17,20,.08)}
+.apps b{position:relative;width:72px;height:72px;border-radius:18px;background:linear-gradient(150deg,#FFE068,#FFCF24 55%,#F4BC08);box-shadow:0 10px 20px -10px rgba(17,17,20,.4);overflow:hidden}
+.apps b::before{content:"";position:absolute;left:18px;top:14px;width:10px;height:48px;background:#111114;border-radius:3px;transform:skewX(-35deg)}
+.apps b::after{content:"";position:absolute;left:38px;top:14px;width:10px;height:48px;background:#111114;border-radius:3px;transform:skewX(-35deg)}
+.apps small{display:block;text-align:center;font:600 15px/1 P;margin-top:8px;color:#111114}
+.ring2{position:absolute;inset:-7px;border-radius:24px;border:4px solid rgba(17,17,20,.12)}
+.hdr{position:absolute;left:28px;right:28px;top:64px;height:40px;display:flex;align-items:center}
+.hdr img{height:28px}
+.menu{position:absolute;left:20px;right:20px;top:130px}
+.menu div{position:relative;height:74px;border-radius:16px;display:flex;align-items:center;padding:0 20px;font:600 22px/1 P;margin-bottom:10px;background:#fff;box-shadow:0 1px 0 rgba(17,17,20,.06);overflow:hidden}
+.menu div span{position:relative}
+.menu .hl{position:absolute;inset:0;background:var(--yel);opacity:0}
+.menu i.chev{position:absolute;right:20px;top:28px;width:12px;height:12px;border-right:3px solid #9A9AA2;border-top:3px solid #9A9AA2;transform:rotate(45deg)}
+.pp h4{position:absolute;left:28px;top:70px;font:700 30px/1.1 P;letter-spacing:-.03em}
+.pp .k{position:absolute;left:28px;top:124px;font:600 15px/1 P;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.qr{position:absolute;left:55px;top:160px;width:234px;height:234px;padding:14px;border-radius:20px;background:#fff;box-shadow:0 16px 34px -18px rgba(17,17,20,.35)}
+.qr canvas{width:206px;height:206px;display:block}
+.pp .btn{position:absolute;left:28px;right:28px;top:432px;height:64px;border-radius:16px;background:var(--yel);display:flex;align-items:center;justify-content:center;font:700 22px/1 P}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:250px;border-radius:30px 30px 0 0;background:#fff;box-shadow:0 -20px 40px -20px rgba(17,17,20,.35);transform:translateY(100%)}
+.sheet .row3{position:absolute;left:30px;right:30px;top:60px;display:flex;justify-content:space-between}
+.sheet .row3 div{width:84px;text-align:center;font:600 15px/1.2 P}
+.sheet .row3 i{display:block;width:66px;height:66px;margin:0 auto 10px;border-radius:50%;background:rgba(17,17,20,.08)}
+.sheet .row3 div:first-child i{background:var(--yel)}
+.sheet h5{position:absolute;left:30px;top:22px;font:600 17px/1 P;color:var(--mute)}
+.toast{position:absolute;left:18px;right:18px;top:54px;height:76px;border-radius:20px;background:#fff;box-shadow:0 18px 36px -16px rgba(17,17,20,.4);
+  display:flex;align-items:center;gap:14px;padding:0 18px;font:600 19px/1.25 P;opacity:0;z-index:4}
+.toast .dot{margin:0;width:14px;height:14px}
+.tap{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;background:rgba(17,17,20,.18);opacity:0;z-index:6}
+.steps{position:absolute;left:150px;top:300px}
+.steps div{display:flex;align-items:center;gap:20px;height:70px;font:600 36px/1 P;letter-spacing:-.02em}
+.steps b{width:48px;height:48px;border-radius:14px;background:var(--yel);display:flex;align-items:center;justify-content:center;font:700 24px/1 P}
 </style></head>
 <body>
 <div id="ground"></div>
@@ -170,7 +214,7 @@ svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
 <div id="p2" class="pane"><i></i></div>
 <div id="street"><div id="pave"><i style="left:0px"></i><i style="left:180px"></i><i style="left:360px"></i><i style="left:540px"></i><i style="left:720px"></i><i style="left:900px"></i><i style="left:1080px"></i><i style="left:1260px"></i><i style="left:1440px"></i><i style="left:1620px"></i><i style="left:1800px"></i><i style="left:1980px"></i><i style="left:2160px"></i><i style="left:2340px"></i><i style="left:2520px"></i><i style="left:2700px"></i><i style="left:2880px"></i><i style="left:3060px"></i><i style="left:3240px"></i><i style="left:3420px"></i><i style="left:3600px"></i><i style="left:3780px"></i><i style="left:3960px"></i><i style="left:4140px"></i><i style="left:4320px"></i><i style="left:4500px"></i></div>
 <div class="shop" data-i="0" style="left:110px;width:300px;height:330px;background:#E9E4DA;--a1:#C9BFAE"><i class="cor"></i><div class="sign"><b></b><span>Bakery</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
-<div class="shop" data-i="1" style="left:432px;width:290px;height:380px;background:#E4DFD6;--a1:#D9A7A0"><i class="cor"></i><div class="sign"><b></b><span>Café</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div><div class="live"><span class="dot"></span>Live</div></div>
+<div class="shop" data-i="1" style="left:432px;width:290px;height:380px;background:#E4DFD6;--a1:#D9A7A0"><i class="cor"></i><div class="sign"><b></b><span>Café</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
 <div class="shop" data-i="2" style="left:744px;width:260px;height:350px;background:#DCD6CB;--a1:#9FB3C8"><i class="cor"></i><div class="sign"><b></b><span>Barber</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
 <div class="shop" data-i="3" style="left:1026px;width:300px;height:395px;background:#EDE8DF;--a1:#D7B98F"><i class="cor"></i><div class="sign"><b></b><span>Takeaway</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
 <div class="shop" data-i="4" style="left:1348px;width:320px;height:340px;background:#E2DDD2;--a1:#A9C2A4"><i class="cor"></i><div class="sign"><b></b><span>Corner Shop</span></div><div class="awn"><b></b></div><div class="win" style="right:100px"><b></b></div><div class="door"></div></div>
@@ -186,6 +230,16 @@ svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
 </div>
 <svg id="net"></svg>
 <div id="you"><div class="pin">You</div></div>
+<div id="tags"></div>
+<div id="legend">Bonus per business, by its card takings in its first 30 days · share rate by new active merchants that month</div>
+<div class="phone" id="phone"><div class="scr"><i class="notch"></i>
+  <div class="v" id="vA"><div class="apps"><div><i></i></div><div><i></i></div><div><i></i></div><div><i></i></div><div><b id="appic"><i class="ring2" id="ring2"></i></b><small>NeroPay</small></div><div><i></i></div><div><i></i></div><div><i></i></div><div><i></i></div></div></div>
+  <div class="v" id="vB"><div class="hdr"><img src="assets/neropay-light-320.png"></div><div class="menu"><div><span>Payments</span><i class="chev"></i></div><div><span>Terminal</span><i class="chev"></i></div><div><span>Reports</span><i class="chev"></i></div><div id="ppRow"><b class="hl" id="ppHl"></b><span>Partner Programme</span><i class="chev"></i></div></div></div>
+  <div class="v pp" id="vC"><h4>Partner Programme</h4><div class="k">Your code</div><div class="qr"><canvas id="qr" width="206" height="206"></canvas></div><div class="btn" id="shareBtn">Share your code</div>
+    <div class="sheet" id="sheet"><h5>Share</h5><div class="row3"><div><i></i>Message</div><div><i></i>Email</div><div><i></i>Copy link</div></div></div></div>
+  <div class="toast" id="toast"><span class="dot"></span><span>New sign-up<br><span style="color:var(--mute);font-weight:500">from your code</span></span></div>
+  <i class="tap" id="tap"></i>
+</div></div>
 <div id="film"></div>
 <div id="bug"><div class="t"><div class="bars"></div></div></div>
 <script>
@@ -196,62 +250,68 @@ const io = x => x < .5 ? 4*x*x*x : 1 - Math.pow(-2*x + 2, 3) / 2;
 
 /* Each scene: [start, end] on the film's timeline, where the light sits, and its markup. data-at is when an element
    arrives (the word that says it); data-mark draws the yellow marker; data-out makes it leave. The band above the roofs
-   (y 80–420) carries the type; the street below carries the network. */
+   (y 80–420) carries the type; the street below carries the network. v2 timings: take 2 (25 Sep 2026). */
 const SC = [
- { t: [0, 10.35], light: [300, 250], ox: '50%', html: `
+ { t: [0, 11.00], light: [300, 250], ox: '50%', html: `
    <div class="kick" style="left:150px;top:92px" data-at="0.60"><b></b>NeroPay Partners</div>
-   <div class="kin h" style="left:150px;top:130px;width:1200px"><span class="ln"><span data-at="0.60">Walk down any</span> <span class="mk" data-at="1.38" data-mark="1.45">high street.</span></span></div>
-   <div class="sub" style="left:150px;top:250px;color:#111114;font-size:36px" data-at="5.86">Every one of them takes <span class="mk" data-mark="6.89">card payments.</span></div>
-   <div class="sub" style="left:150px;top:306px;font-size:32px" data-at="8.13">You probably know someone behind the counter.</div>` },
- { t: [10.35, 16.95], light: [1500, 250], ox: '50%', html: `
-   <div class="kin h" style="left:150px;top:130px;width:760px"><span class="ln" data-at="10.45">Introduce them</span><span class="ln" data-at="11.05">to <span class="mk" data-mark="11.22">NeroPay.</span></span></div>
-   <div class="g" style="left:1040px;top:70px;width:760px;height:360px" data-at="12.12" data-rule="12.41"><i class="rule"></i>
+   <div class="kin h" style="left:150px;top:130px;width:1200px"><span class="ln"><span data-at="0.60">Walk down any</span> <span class="mk" data-at="1.49" data-mark="1.55">high street.</span></span></div>
+   <div class="sub" style="left:150px;top:250px;color:#111114;font-size:36px" data-at="6.44">Every one of them takes <span class="mk" data-mark="7.55">card payments.</span></div>
+   <div class="sub" style="left:150px;top:306px;font-size:32px" data-at="8.64">You probably know someone behind the counter.</div>` },
+ { t: [11.00, 17.45], light: [1500, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:760px"><span class="ln" data-at="11.14">Introduce them</span><span class="ln" data-at="11.73">to <span class="mk" data-mark="11.92">NeroPay.</span></span></div>
+   <div class="g" style="left:1040px;top:70px;width:760px;height:360px" data-at="12.79" data-rule="12.99"><i class="rule"></i>
      <div class="kick" style="left:44px;top:40px;position:absolute"><b></b>We handle</div>
      <div class="list" style="position:absolute;left:44px;top:84px">
-       <div data-at="12.93"><i data-tick="12.93"></i>The setup</div>
-       <div data-at="13.67"><i data-tick="13.67"></i>The terminal</div>
-       <div data-at="14.58"><i data-tick="14.81"></i>Free POS software</div>
-       <div data-at="16.15"><i data-tick="16.31"></i>The support</div></div>
-     <div class="term" style="left:450px;top:30px;width:300px;height:300px" data-at="13.67"><img src="assets/plate-neropay.webp"></div></div>` },
- { t: [16.95, 24.45], light: [1400, 200], ox: '50%', html: `
-   <div class="kin h" style="left:150px;top:130px;width:760px"><span class="ln" data-at="17.01">When they go live,</span><span class="ln" data-at="18.10">you get a <span class="mk" data-mark="18.72">bonus.</span></span></div>
-   <div style="position:absolute;left:1040px;top:84px;font:700 132px/1 P;letter-spacing:-.045em;white-space:nowrap" data-at="19.36" data-hit data-hat="20.02">£100<span class="grow" id="grow" style="display:inline-block;overflow:hidden;vertical-align:top;white-space:nowrap">–£300</span></div>
-   <div class="mid" style="position:absolute;left:1044px;top:246px" data-at="20.62">per business</div>
-   <div class="chips" style="position:absolute;left:1040px;top:310px" data-at="22.08"><b>under £20,000 · £100</b><b>£20,000–£39,999 · £200</b><b>£40,000+ · £300</b></div>
-   <div class="lab" style="position:absolute;left:1044px;top:372px" data-at="19.36">by its card takings in its first 30 days</div>` },
- { t: [24.45, 28.62], light: [1500, 250], ox: '50%', html: `
-   <div class="kin h" style="left:150px;top:130px;width:820px"><span class="ln" data-at="24.79">Three new</span><span class="ln" data-at="25.82">active merchants</span><span class="ln" data-at="26.54">in a <span class="mk" data-mark="26.83">month.</span></span></div>
-   <div class="g" style="left:1100px;top:80px;width:680px;height:300px" data-at="24.79"><div class="kick" style="position:absolute;left:44px;top:44px"><b></b>This calendar month</div>
-     <div class="cal" style="position:absolute;left:44px;top:92px"><b data-lit="25.42">1</b><b data-lit="25.82">2</b><b data-lit="26.13">3</b></div>
-     <div class="badge" style="position:absolute;left:44px;top:208px" data-stamp="27.61">Active Partner</div></div>` },
- { t: [28.62, 41.65], light: [1450, 220], ox: '50%', html: `
-   <div class="kin h" style="left:150px;top:130px;width:800px"><span class="ln" data-at="28.72" data-out="36.55">A share of your</span><span class="ln" data-at="30.21" data-out="36.55">whole <span class="mk" data-mark="30.37">network.</span></span></div>
-   <div class="sub" style="left:150px;top:320px;color:#111114;font-size:32px" data-at="32.79" data-out="36.55">Not just the new three.</div>
-   <div class="sub" style="left:150px;top:368px;font-size:32px" data-at="34.19" data-out="36.55">Every active merchant you've introduced.</div>
-   <div class="kin" style="left:150px;top:130px;width:800px" data-at="36.74"><span class="ln">Bring more,</span><br><span class="ln">the rate <span class="mk" data-mark="38.06">climbs.</span></span></div>
-   <div id="pct" style="position:absolute;left:1080px;top:60px;font:700 170px/1 P;letter-spacing:-.05em" data-at="28.99" data-hit></div>
-   <div id="pcond" class="mid" style="position:absolute;left:1086px;top:238px" data-at="28.99"></div>
-   <div class="lab" style="position:absolute;left:1086px;top:290px;font-size:26px" data-at="30.37">of what their card payments earn NeroPay</div>
-   <div class="chips" id="lad" style="position:absolute;left:1082px;top:340px" data-at="36.74"><b data-lad="28.99">20%</b><b data-lad="38.23">25%</b><b data-lad="38.70">30%</b><b data-lad="39.05">35%</b><b data-lad="39.38">40%</b></div>` },
- { t: [41.65, 46.20], light: [300, 250], ox: '50%', html: `
-   <div class="kin h" style="left:150px;top:130px;width:900px"><span class="ln" data-at="41.77">Fewer than three?</span></div>
-   <div class="sub" style="left:150px;top:236px;color:#111114;font-size:36px" data-at="42.85">No revenue share that month.</div>
-   <div class="kin" style="left:1040px;top:130px;width:760px;font-size:72px" data-at="44.66">Your bonus is yours <span class="mk" data-mark="45.45">either way.</span></div>` },
- { t: [46.20, 49.90], light: [900, 250], ox: '50%', html: `
-   <div class="kin h" style="left:150px;top:130px;width:800px"><span class="ln"><span data-at="46.29">So, who's on</span> <span class="mk" data-at="47.36" data-mark="47.69">your street?</span></span></div>
-   <div style="position:absolute;left:1060px;top:120px;width:700px;font:500 21px/1.45 P;color:var(--mute)" data-at="46.35">Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Full terms at neropay.app/partners.</div>` }
+       <div data-at="13.53"><i data-tick="13.53"></i>The setup</div>
+       <div data-at="14.27"><i data-tick="14.27"></i>The terminal</div>
+       <div data-at="15.11"><i data-tick="15.36"></i>Free POS software</div>
+       <div data-at="16.70"><i data-tick="16.85"></i>The support</div></div>
+     <div class="term" style="left:450px;top:30px;width:300px;height:300px" data-at="14.27"><img src="assets/plate-neropay.webp"></div></div>` },
+ { t: [17.45, 25.95], light: [1400, 200], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:860px;font-size:72px"><span class="ln" data-at="17.59">Once they've been live</span><span class="ln" data-at="19.77">30 days, we pay you</span><span class="ln" data-at="21.44">a <span class="mk" data-mark="21.59">bonus.</span></span></div>
+   <div style="position:absolute;left:1060px;top:84px;font:700 132px/1 P;letter-spacing:-.045em;white-space:nowrap" data-at="22.21" data-hit data-hat="23.07">£100<span class="grow" id="grow" style="display:inline-block;overflow:hidden;vertical-align:top;white-space:nowrap">–£300</span></div>
+   <div class="mid" style="position:absolute;left:1064px;top:246px" data-at="23.96">per business</div>
+   <div class="chips" style="position:absolute;left:1060px;top:310px" data-at="24.41"><b>under £20,000 · £100</b><b>£20,000–£39,999 · £200</b><b>£40,000+ · £300</b></div>
+   <div class="lab" style="position:absolute;left:1064px;top:372px" data-at="22.21">by its card takings in its first 30 days</div>` },
+ { t: [25.95, 31.10], light: [1500, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:860px"><span class="ln" data-at="26.12">Three or more new</span><span class="ln" data-at="27.49">active merchants</span><span class="ln" data-at="28.41">in a <span class="mk" data-mark="28.74">month.</span></span></div>
+   <div class="g" style="left:1100px;top:80px;width:680px;height:300px" data-at="26.12"><div class="kick" style="position:absolute;left:44px;top:44px"><b></b>This calendar month</div>
+     <div class="cal" style="position:absolute;left:44px;top:92px"><b data-lit="26.46">1</b><b data-lit="27.20">2</b><b data-lit="27.98">3</b><b data-lit="28.41" style="color:var(--mute)">+</b></div>
+     <div class="badge" style="position:absolute;left:44px;top:208px" data-stamp="29.96">Active Partner</div></div>` },
+ { t: [31.10, 44.62], light: [1450, 220], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:800px"><span class="ln" data-at="31.22" data-out="39.10">A share of your</span><span class="ln" data-at="32.70" data-out="39.10">whole <span class="mk" data-mark="32.85">network.</span></span></div>
+   <div class="sub" style="left:150px;top:320px;color:#111114;font-size:32px" data-at="35.34" data-out="39.10">Not just the new three.</div>
+   <div class="sub" style="left:150px;top:368px;font-size:32px" data-at="36.79" data-out="39.10">Every active merchant you've introduced.</div>
+   <div class="kin" style="left:150px;top:130px;width:800px" data-at="39.26"><span class="ln">Bring more,</span><br><span class="ln">the rate <span class="mk" data-mark="40.93">climbs.</span></span></div>
+   <div id="pct" style="position:absolute;left:1080px;top:60px;font:700 170px/1 P;letter-spacing:-.05em" data-at="31.55" data-hit></div>
+   <div id="pcond" class="mid" style="position:absolute;left:1086px;top:238px" data-at="31.55"></div>
+   <div class="lab" style="position:absolute;left:1086px;top:290px;font-size:26px" data-at="32.85">of what their card payments earn NeroPay</div>
+   <div class="chips" id="lad" style="position:absolute;left:1082px;top:336px" data-at="39.26"><b data-lad="31.55">20%</b><b data-lad="40.93">25%</b><b data-lad="41.36">30%</b><b data-lad="41.75">35%</b><b data-lad="42.12">40%</b></div>
+   <div class="lab" style="position:absolute;left:1086px;top:392px;font-size:22px" data-at="42.60">Most partners start at 20%: three a month.</div>` },
+ { t: [44.62, 54.78], light: [700, 300], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:1000px"><span class="ln" data-at="44.77">Getting started takes</span><span class="ln" data-at="45.69">a <span class="mk" data-mark="45.90">few minutes.</span></span></div>
+   <div class="steps"><div data-at="46.76"><b>1</b>Download the NeroPay app</div><div data-at="48.41"><b>2</b>Open Partner Programme</div><div data-at="49.75"><b>3</b>Share your own QR code</div></div>
+   <div class="sub" style="left:150px;top:560px;color:#111114;font-size:40px;font-weight:600" data-at="54.06">They sign up. <span class="mk" data-mark="54.13">That's it.</span></div>` },
+ { t: [54.78, 59.50], light: [900, 250], ox: '50%', html: `
+   <div class="kin h" style="left:150px;top:130px;width:880px;font-size:70px"><span class="ln" data-at="54.91">So, who's the first person</span><span class="ln" data-at="56.74">you'd send <span class="mk" data-mark="57.28">your code</span> to?</span></div>
+   <div style="position:absolute;left:1060px;top:120px;width:700px;font:500 21px/1.45 P;color:var(--mute)" data-at="55.00">Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Full terms at neropay.app/partners.</div>` }
 ];
-window.OUTRO_AT = 49.52;   /* the neropartner outro: the wordmark is whole as she says "NeroPay" (49.86) */
-window.DURATION = 57.82;
-/* for the render's sound: a soft tick as each shop lights, a thud on the badge */
-const LIT = [ [1, 2.31, 10.45], [2, 3.20, 10.60], [3, 4.04, 10.75], [4, 4.93, 10.90], [5, 25.42, 25.42], [6, 25.82, 25.82], [7, 26.13, 26.13],
-  [8, 34.19, 34.19], [9, 34.45, 34.45], [10, 34.72, 34.72], [11, 34.98, 34.98], [12, 35.25, 35.25], [13, 35.53, 35.53], [0, 35.84, 35.84] ];   /* [shop, sign lights, fully lit + joined to You] */
-window.SFX_AT = [...new Set(LIT.map(l => l[1]))].sort((a, b) => a - b);
-window.STAMP_AT = 27.61;
-/* the camera along the street: [time, x], eased between keys; it walks, holds, pans to the new three, runs the street, settles */
-const CAM = [[0, 0], [10, 120], [24.4, 200], [25.2, 760], [32.7, 820], [35.9, 2628], [36.4, 2628], [39.6, 1350], [46.2, 1420], [49.9, 1560]];
+window.OUTRO_AT = 59.11;   /* the neropartner outro: the wordmark is whole as she says "NeroPay" (59.45) */
+window.DURATION = 67.41;
+/* [shop, sign lights, fully lit + joined to You, its bonus]. The Bakery and the Tailor never join: the network is the
+   businesses you introduced, not the whole street. Each bonus is a real tier; the share rate is the partner's, the same on
+   every tag, and climbs on every tag at once. */
+const LIT = [ [1, 2.87, 11.14, 200], [2, 3.69, 11.29, 100], [3, 4.54, 11.44, 300], [4, 5.49, 11.59, 100], [5, 26.46, 26.46, 200], [6, 27.20, 27.20, 300], [7, 27.98, 27.98, 100],
+  [8, 36.79, 36.79, 100], [9, 37.07, 37.07, 200], [10, 37.35, 37.35, 100], [11, 37.63, 37.63, 300], [13, 37.91, 37.91, 200] ];
+const TAG_AT = { 1: 22.21, 2: 22.50, 3: 23.07, 4: 23.35 };   /* the first four get their tags as she says the bonus; the rest as they light */
+window.SFX_AT = [...new Set(LIT.map(l => l[1]))].concat([46.76, 48.66, 50.41, 51.57, 53.18]).sort((a, b) => a - b);
+/* the camera along the street: [time, x], eased between keys */
+const CAM = [[0, 0], [11, 120], [25.5, 200], [26.3, 760], [35.2, 820], [38.4, 2628], [38.9, 2628], [42.2, 1350], [54.8, 1420], [59.2, 1560]];
 const camAt = t => { for (let i = 1; i < CAM.length; i++) if (t <= CAM[i][0]) { const [a, x0] = CAM[i - 1], [b, x1] = CAM[i];
   const k = (t - a) / (b - a); const e = (b - a) > 2.5 && x1 - x0 < 300 ? k : io(k); return x0 + (x1 - x0) * e; } return CAM[CAM.length - 1][1]; };
+const RB = [['20%', '3–20 new active merchants this month', 31.55], ['25%', '21–35 new active merchants this month', 40.93], ['30%', '36–60 new active merchants this month', 41.36],
+  ['35%', '61–110 new active merchants this month', 41.75], ['40%', '111+ new active merchants in one month', 42.12]];
+const rateAt = t => { let cur = null; for (const r of RB) if (t >= r[2]) cur = r; return cur; };
 
 const film = document.getElementById('film'), L = document.getElementById('light');
 SC.forEach(s => { const d = document.createElement('div'); d.className = 'sc';
@@ -261,6 +321,18 @@ SC.forEach(s => { const d = document.createElement('div'); d.className = 'sc';
 const shops = [...document.querySelectorAll('.shop')], street = document.getElementById('street'), net = document.getElementById('net'), you = document.getElementById('you');
 net.innerHTML = LIT.map(() => '<path d=""/>').join('') + LIT.map(() => '<circle r="7" cx="-99" cy="-99"/>').join('');
 const paths = [...net.querySelectorAll('path')], dots = [...net.querySelectorAll('circle')];
+const tagsEl = document.getElementById('tags');
+const tags = LIT.map(([i, , , v]) => { const d = document.createElement('div'); d.className = 'tag'; d.innerHTML = `£${v}<em></em>`; tagsEl.appendChild(d); return d; });
+/* the QR: finder squares and a seeded field of modules, drawn in; not a real code (nothing to scan off a video) */
+const qrC = document.getElementById('qr'), qx = qrC.getContext('2d'), N = 25, CELL = 206 / N;
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const mods = []; const finder = (r, c) => [[0, 0], [0, N - 7], [N - 7, 0]].some(([a, b]) => r >= a && r < a + 7 && c >= b && c < b + 7);
+for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (!finder(r, c) && rnd() < 0.47) mods.push([r, c, rnd()]);
+function drawQR(k) { qx.clearRect(0, 0, 206, 206); qx.fillStyle = '#111114';
+  for (const [a, b] of [[0, 0], [0, N - 7], [N - 7, 0]]) { const e = outC(clamp(k * 3)); if (!e) continue;
+    qx.globalAlpha = e; qx.fillRect(b * CELL, a * CELL, 7 * CELL, 7 * CELL); qx.clearRect((b + 1) * CELL, (a + 1) * CELL, 5 * CELL, 5 * CELL); qx.fillRect((b + 2) * CELL, (a + 2) * CELL, 3 * CELL, 3 * CELL); }
+  qx.globalAlpha = 1; for (const [r, c, o] of mods) if (o < k) qx.fillRect(c * CELL, r * CELL, CELL + 0.3, CELL + 0.3); }
+const $ = id => document.getElementById(id);
 
 const XF = 0.4;
 window.setTime = function (t) {
@@ -270,31 +342,41 @@ window.setTime = function (t) {
   lx += 110 * Math.sin(t / 5.3) + 50 * Math.sin(t / 2.9); ly += 80 * Math.cos(t / 6.1) + 40 * Math.sin(t / 3.7);
   const endFade = 1 - clamp((t - (OUTRO_AT - 0.7)) / 0.6);
   L.style.transform = `translate(${lx}px,${ly}px)`; L.style.opacity = endFade;
-  document.getElementById('ground').style.opacity = endFade;
-  document.getElementById('bug').style.opacity = 0.92 * outC(clamp((t - 0.60) / 0.8)) * (1 - clamp((t - (OUTRO_AT - 1.2)) / 0.5));
+  $('ground').style.opacity = endFade;
+  $('bug').style.opacity = 0.92 * outC(clamp((t - 0.60) / 0.8)) * (1 - clamp((t - (OUTRO_AT - 1.2)) / 0.5));
 
-  /* the street: whole pixels only, so the signs never shimmer */
-  const cx = Math.round(camAt(t)); street.style.transform = `translateX(${-cx}px)`; street.style.opacity = endFade;
+  /* the phone scene ghosts the street and everything on it */
+  const ghost = 1 - 0.84 * io(clamp((t - 44.62) / 0.6)) * (1 - io(clamp((t - 54.60) / 0.6)));
+  const cx = Math.round(camAt(t)); street.style.transform = `translateX(${-cx}px)`; street.style.opacity = endFade * ghost;
   for (const [i, a, b] of LIT) { const sh = shops[i];
     const sg = outC(clamp((t - a) / 0.3)), full = outC(clamp((t - b) / 0.45));
     sh.querySelector('.sign b').style.opacity = sg; sh.querySelector('.sign span').style.color = sg > .5 ? '#111114' : '';
     sh.querySelector('.awn b').style.opacity = full; sh.querySelector('.win b').style.opacity = 0.85 * full;
     const pop = t >= a && t < a + 0.3 ? 1 + 0.04 * Math.sin((t - a) / 0.3 * Math.PI) : 1; sh.style.transform = `scale(${pop.toFixed(4)})`; sh.style.transformOrigin = '50% 100%'; }
-  const live = shops[1].querySelector('.live'); { const k = outE(clamp((t - 17.49) / 0.45)); live.style.opacity = k; live.style.transform = `translateX(-50%) translateY(${Math.round((1 - k) * 16)}px)`; }
-  /* You, and a line from You to every business introduced; dimmed while the quiet month is said */
-  const yk = outE(clamp((t - 8.13) / 0.5)); you.style.opacity = yk * endFade; you.style.transform = `scale(${(0.6 + 0.4 * yk).toFixed(3)})`;
-  const dim = 1 - 0.65 * clamp((t - 42.85) / 0.4) * (1 - clamp((t - 44.66) / 0.4));
-  net.style.opacity = dim * endFade;
+  /* You, and a line from You to every business introduced */
+  const yk = outE(clamp((t - 8.93) / 0.5)); you.style.opacity = yk * endFade * ghost; you.style.transform = `scale(${(0.6 + 0.4 * yk).toFixed(3)})`;
+  net.style.opacity = endFade * ghost;
   LIT.forEach(([i, , b], j) => { const sh = shops[i], k = io(clamp((t - b) / 0.6));
-    const x1 = sh.offsetLeft + sh.offsetWidth / 2 - cx, y1 = sh.offsetTop + 10, x0 = 960, y0 = 486;
+    const x1 = sh.offsetLeft + sh.offsetWidth / 2 - cx, y1 = sh.offsetTop + 10, x0 = 960, y0 = 446;
     if (k <= 0) { paths[j].setAttribute('d', ''); dots[j].setAttribute('cx', -99); return; }
-    const qx = (x0 + x1) / 2, qy = Math.min(y0, y1) - 70;   /* a soft arc, cut at k by de Casteljau */
-    const ax = x0 + (qx - x0) * k, ay = y0 + (qy - y0) * k, bx = qx + (x1 - qx) * k, by = qy + (y1 - qy) * k;
+    const qx2 = (x0 + x1) / 2, qy = Math.min(y0, y1) - 70;
+    const ax = x0 + (qx2 - x0) * k, ay = y0 + (qy - y0) * k, bx = qx2 + (x1 - qx2) * k, by = qy + (y1 - qy) * k;
     const ex = ax + (bx - ax) * k, ey = ay + (by - ay) * k;
     paths[j].setAttribute('d', `M${x0},${y0} Q${ax.toFixed(1)},${ay.toFixed(1)} ${ex.toFixed(1)},${ey.toFixed(1)}`);
     dots[j].setAttribute('cx', ex.toFixed(1)); dots[j].setAttribute('cy', ey.toFixed(1));
-    const vis = clamp(1 - (Math.abs(x1 - 960) - 820) / 260).toFixed(3);   /* a shop well off-frame keeps its line, unseen: no bundle at the pin */
+    const vis = clamp(1 - (Math.abs(x1 - 960) - 820) / 260).toFixed(3);
     paths[j].style.opacity = dots[j].style.opacity = vis; });
+  /* the bonus tags over each business: its own tier, then "+ the share rate" once the share starts, stepping with it */
+  const rate = rateAt(t);
+  LIT.forEach(([i, , b], j) => { const sh = shops[i], at = TAG_AT[i] || b + 0.3, d = t - at, tg = tags[j];
+    if (d < 0) { tg.style.opacity = 0; return; }
+    const k = outE(clamp(d / 0.4)), x = sh.offsetLeft + sh.offsetWidth / 2 - cx, w = tg.offsetWidth;
+    tg.style.left = Math.round(x - w / 2) + 'px'; tg.style.top = Math.round(sh.offsetTop - 62 + (1 - k) * 14) + 'px';
+    tg.style.opacity = (k * endFade * ghost).toFixed(3);
+    const pop = d < 0.25 ? 1 + 0.12 * Math.sin(d / 0.25 * Math.PI) : 1; tg.style.transform = `scale(${pop.toFixed(3)})`;
+    const em = tg.lastChild; em.textContent = rate ? '+ ' + rate[0] : ''; em.style.display = rate ? '' : 'none';
+    const since = rate ? t - rate[2] : 9; em.style.transform = since < 0.25 ? `scale(${(1 + 0.18 * Math.sin(since / 0.25 * Math.PI)).toFixed(3)})` : ''; });
+  $('legend').style.opacity = (outC(clamp((t - 22.21) / 0.5)) * endFade * ghost).toFixed(3);
 
   for (const s of SC) {
     const [a, b] = s.t;
@@ -311,20 +393,35 @@ window.setTime = function (t) {
     for (const m of s.marks) m.style.setProperty('--m', outC(clamp((t - +m.dataset.mark) / 0.35)));
     for (const r of s.rules) r.style.setProperty('--r', outC(clamp((t - +r.dataset.rule) / 0.35)));
   }
-  /* ticks, calendar days and the badge */
   document.querySelectorAll('[data-tick]').forEach(e => { const on = t >= +e.dataset.tick; e.textContent = on ? '✓' : ''; e.style.background = on ? 'var(--yel)' : ''; });
   document.querySelectorAll('[data-lit]').forEach(e => { const on = t >= +e.dataset.lit; e.style.background = on ? 'var(--yel)' : ''; });
   document.querySelectorAll('[data-stamp]').forEach(e => { const d = t - +e.dataset.stamp, k = clamp(d / 0.2);
     e.style.opacity = d < 0 ? 0 : 1; e.style.transform = `scale(${(1.4 - 0.4 * outC(k)).toFixed(3)})`; e.style.transformOrigin = '0 50%'; });
-  /* the bonus: £100 lands, then the range opens to £300 on "three hundred" */
-  const g = document.getElementById('grow'); if (g) g.style.width = (g.scrollWidth * outC(clamp((t - 20.02) / 0.4))).toFixed(1) + 'px';
-  /* the revenue share: rate and band move together, every band passed, never a count */
-  const RB = [['20%', '3–20 new active merchants this month', 28.99], ['25%', '21–35 new active merchants this month', 38.23], ['30%', '36–60 new active merchants this month', 38.70],
-    ['35%', '61–110 new active merchants this month', 39.05], ['40%', '111+ new active merchants in one month', 39.38]];
-  const pc = document.getElementById('pct'); if (pc) { let cur = RB[0]; for (const r of RB) if (t >= r[2]) cur = r;
-    pc.lastChild.nodeType === 3 ? pc.lastChild.textContent = cur[0] : pc.append(cur[0]); document.getElementById('pcond').textContent = cur[1];
+  const g = $('grow'); if (g) g.style.width = (g.scrollWidth * outC(clamp((t - 23.07) / 0.4))).toFixed(1) + 'px';
+  const pc = $('pct'); if (pc) { const cur = rate || RB[0];
+    pc.lastChild.nodeType === 3 ? pc.lastChild.textContent = cur[0] : pc.append(cur[0]); $('pcond').textContent = cur[1];
     const since = t - cur[2]; pc.style.scale = cur !== RB[0] && since < 0.25 ? String(1 + 0.05 * Math.sin(since / 0.25 * Math.PI)) : '1';
     document.querySelectorAll('[data-lad]').forEach(b => { const on = t >= +b.dataset.lad; b.style.background = on ? 'var(--yel)' : ''; b.style.color = on ? '#111114' : ''; }); }
+
+  /* the phone: rises on "download", home screen with the app installing, tapped open; the menu, Partner Programme tapped;
+     your code draws in; the share sheet slides up on "share it"; a sign-up lands on "sign up"; it sinks as the question comes */
+  const ph = $('phone'), pin = outE(clamp((t - 46.40) / 0.6)), pout = io(clamp((t - 54.55) / 0.5));
+  ph.style.opacity = (pin * (1 - pout)).toFixed(3); ph.style.transform = `translateY(${Math.round((1 - pin) * 80 + pout * 90)}px)`;
+  const view = (id, a, b) => { $(id).style.opacity = (clamp((t - a) / 0.25) * (b ? 1 - clamp((t - b) / 0.25) : 1)).toFixed(3); };
+  view('vA', 46.40, 48.10); view('vB', 48.10, 49.60); view('vC', 49.60, 0);
+  const inst = clamp((t - 46.76) / 0.9); $('ring2').style.borderColor = inst < 1 ? `rgba(17,17,20,.12)` : 'rgba(255,207,36,0)';
+  $('ring2').style.background = inst > 0 && inst < 1 ? `conic-gradient(rgba(17,17,20,.35) ${inst * 360}deg, transparent 0)` : 'none';
+  $('ring2').style.mask = $('ring2').style.webkitMask = 'radial-gradient(closest-side, transparent 86%, #000 88%)';
+  $('appic').style.transform = t > 47.85 && t < 48.05 ? 'scale(.92)' : '';
+  $('ppHl').style.opacity = (0.9 * clamp((t - 48.66) / 0.15)).toFixed(3);
+  drawQR(clamp((t - 50.41) / 0.7));
+  $('sheet').style.transform = `translateY(${(100 * (1 - outE(clamp((t - 51.57) / 0.4))) + 100 * io(clamp((t - 52.80) / 0.35))).toFixed(1)}%)`;
+  $('shareBtn').style.transform = t > 51.45 && t < 51.62 ? 'scale(.96)' : '';
+  const tk = outE(clamp((t - 53.18) / 0.4)); $('toast').style.opacity = tk.toFixed(3); $('toast').style.transform = `translateY(${Math.round((1 - tk) * -30)}px)`;
+  /* the taps: a soft press where the thumb would land */
+  const TAPS = [[47.85, 196, 328], [48.60, 172, 478], [51.42, 172, 477]]; let ta = 0, tx = 0, ty = 0;
+  for (const [at, x, y] of TAPS) { const d = t - at; if (d >= 0 && d < 0.45) { ta = d < 0.1 ? d / 0.1 : 1 - (d - 0.1) / 0.35; tx = x; ty = y; } }
+  $('tap').style.opacity = (0.9 * ta).toFixed(3); $('tap').style.left = tx + 'px'; $('tap').style.top = ty + 'px';
 };
 window.setFrame = (n, fps = 25) => window.setTime(n / fps);
 window.SCENES_FOR_CHECK = () => SC.map((s, i) => {

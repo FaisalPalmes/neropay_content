@@ -50,7 +50,7 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   const cues = []; let last = -9, k = 0;
   for (const t of arrivals) { if (t - last < 0.45 || t >= OUTRO_AT) continue; last = t;
     cues.push({ sfx: ['click-soft', 'pop'][k++ % 2], t: +(t + 0.05).toFixed(3), gain: 0.06, why: 'a shop lights' }); }
-  cues.push({ sfx: 'impact-bass-2', t: 27.61 + 0.1, gain: 0.12, why: 'the Active Partner badge lands' });
+  cues.push({ sfx: 'impact-bass-2', t: 29.96 + 0.1, gain: 0.12, why: 'the Active Partner badge lands' });
   /* scene changes land on the bed's beat, the nearest beat to the cut */
   const BEAT = 60 / 117.84;   /* partner-upbeat-118, measured 117.84 bpm */
   starts.forEach((t, i) => cues.push({ sfx: ['whoosh-short', 'whoosh'][i % 2], t: +(Math.round((t - 0.15) / BEAT) * BEAT).toFixed(3), gain: 0.06, why: 'scene change, on the beat' }));

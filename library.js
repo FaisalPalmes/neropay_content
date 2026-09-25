@@ -215,14 +215,15 @@ window.LIBRARY = {
         { crop: '16:9 master', px: '1920×1080', mb: 6.6, md5: '0064c001c37e7e8303065b0e68aeca64', lufs: '−16.03', where: 'sent in chat 25 Sep 2026; not yet in Drive' }] },
 
     { id: 'PPS', series: 'Partner Programme', title: 'Partner Programme: The High Street',
-      version: 'v1', rendered: '2026-09-25', secs: 57.8,
-      status: 'review', by: 'content video session, 25 Sep 2026 — one of two new explainer styles Faisal asked for, awaiting his review',
-      waiting: 'Faisal watches it. Listen for "NeroPay" (Whisper heard "NiroPay") and the URL at the end. The take says the bonus is "set by what it takes in its first 30 days", which the 17 Sep PP01 ruling kept off the voice; his call. The neropartner outro lockup is hand-built and Eray has not seen it.',
+      version: 'v2', rendered: '2026-09-25', secs: 67.4,
+      status: 'review', by: 'content video session, 25 Sep 2026 — Faisal picked this style over the Ledger ("I love the second version") and asked for v2; awaiting his review of v2',
+      waiting: 'Faisal watches v2 (his notes on v1: a bonus tag over each business, no quiet-month section, how to start in the app with your own QR code, a closing question). The tags carry one share rate, not a different % per shop as he sketched: the rate is the partner\'s, set by the month\'s count (claims.md explains). The phone screens are a drawn mock and the QR is not a real code; real app screens can be swapped in. The brief\'s "yours either way" line is gone with the quiet month, on his instruction. The neropartner outro lockup is hand-built and Eray has not seen it.',
       build: 'motion/partner/street/ (claims.md beside it)', drive: null,
       backup: false, clearedFor: null, notCleared: null,
-      note: 'Style C. A drawn high street the camera walks: shops light as she names them, lines run from You to every business introduced, the bonus and the share land above the roofs with their conditions, the whole network lights up. No place or business named. Voice Olivia, one take. Mastered -16 LUFS / -1 dBTP.',
+      note: 'Style C. A drawn high street the camera walks: shops light as she names them, lines run from You to every business introduced, the bonus and the share land above the roofs with their conditions, the whole network lights up. v2 adds a £ tag over each business with the share rate climbing on every tag, and a phone scene: the NeroPay app, Partner Programme, your QR code, a sign-up. No place or business named. Voice Olivia, one take. Mastered -16 LUFS / -1 dBTP.',
       files: [
-        { crop: '16:9 master', px: '1920×1080', mb: 13.2, md5: '9ed58d9ed213daa65a5b8b7baba45e2f', lufs: '−16.03', where: 'sent in chat 25 Sep 2026; not yet in Drive' }] },
+        { crop: '16:9 master', px: '1920×1080', mb: 16.6, md5: 'f5ffc3a4c5939d4a42f7a8599bd64634', lufs: '−16.02', where: 'v2 sent in chat 25 Sep 2026; not yet in Drive' },
+        { crop: 'v1 16:9 (superseded)', px: '1920×1080', mb: 13.2, md5: '9ed58d9ed213daa65a5b8b7baba45e2f' }] },
 
     { id: 'PP01', series: 'Partner Programme', title: 'The Partner Programme',
       version: 'v4', rendered: '2026-09-17', secs: 68,
