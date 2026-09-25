@@ -1,4 +1,5 @@
-// NeroConnect explainer v3 — render the film, splice in the locked outro, write the sound cues, mix, mux.
+// Partner Programme explainer (25 Sep 2026) — render the film, splice in the locked outro, write the sound cues, mix, mux.
+// Built on the NeroConnect explainer v3.6 renderer.
 //   node render.cjs --preview        1280×720 review cut  → out/ncx-v3-preview.mp4
 //   node render.cjs                  1920×1080 master      → out/ncx-v3-16x9.mp4
 //   node render.cjs --from 60 --to 75 --preview   a slice, for checking one stretch
@@ -25,8 +26,8 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   const mk = async url => { const p = await b.newPage({ viewport: { width: VW, height: VH }, deviceScaleFactor: W / VW });
     const errs = []; p.on('pageerror', e => errs.push(String(e))); await p.goto(url, { waitUntil: 'networkidle' });
     await p.evaluate(() => document.fonts.ready); await p.waitForFunction(() => window.LAYOUT_READY !== false); p.errs = errs; return p; };
-  const film = await mk(`http://127.0.0.1:${port}/motion/neroconnect/explainer-v3/index.html${SQ ? '?fmt=1x1' : ''}`);
-  const outro = await mk(`http://127.0.0.1:${port}/brand/sting/outro.html?v=yellow&fmt=${SQ ? '1x1' : '16x9'}&mark=neroconnect&small=${encodeURIComponent('Check out NeroConnect at')}&big=docs.neropay.app`);
+  const film = await mk(`http://127.0.0.1:${port}/motion/partner/explainer/index.html${SQ ? '?fmt=1x1' : ''}`);
+  const outro = await mk(`http://127.0.0.1:${port}/brand/sting/outro.html?v=yellow&fmt=${SQ ? '1x1' : '16x9'}&mark=neropartner&small=${encodeURIComponent('For more info, visit')}&big=neropay.app/partners`);
   const { OUTRO_AT, DURATION, arrivals, scenes } = await film.evaluate(() => ({ OUTRO_AT, DURATION,
     arrivals: [...document.querySelectorAll('.g[data-at]')].map(e => +e.dataset.at).sort((a, b) => a - b),
     scenes: [...document.querySelectorAll('.sc')].map((_, i) => i) }));
@@ -49,8 +50,8 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   const cues = []; let last = -9, k = 0;
   for (const t of arrivals) { if (t - last < 0.45 || t >= OUTRO_AT) continue; last = t;
     cues.push({ sfx: ['click-soft', 'pop'][k++ % 2], t: +(t + 0.05).toFixed(3), gain: 0.06, why: 'a glass card lands' }); }
-  /* scene changes land on the bed's beat (neroconnect-pulse-100: 99.85 bpm from 0), the nearest beat to the cut */
-  const BEAT = 60 / 99.85;
+  /* scene changes land on the bed's beat, the nearest beat to the cut */
+  const BEAT = 60 / 117.84;   /* partner-upbeat-118, measured 117.84 bpm */
   starts.forEach((t, i) => cues.push({ sfx: ['whoosh-short', 'whoosh'][i % 2], t: +(Math.round((t - 0.15) / BEAT) * BEAT).toFixed(3), gain: 0.06, why: 'scene change, on the beat' }));
   cues.push({ sfx: 'impact-bass-1', t: +(OUTRO_AT + 0.92).toFixed(3), gain: 0.2, why: 'the sting: the letters meet' });
   cues.push({ sfx: 'sparkle', t: +(OUTRO_AT + 2.05).toFixed(3), gain: 0.07, why: 'the line slides out under the tile' });
@@ -61,22 +62,14 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
        103.35 s, so its own fade played mid-film and then it came back at full level; the ducking pumped between sentences.
        Now: looped at bar 39 (93.74 s, before its fade), one steady level with no ducking, faded only at the very end.
        25 Sep: Faisal on v3.6, "way too loud … 20% of the current": gain 0.18 -> 0.036, the voice untouched. */
-    bed: { file: 'video/library/bgm/neroconnect-pulse-100.mp3', t: 0, gain: 0.036, loop_at: +(39 * 4 * 60 / 99.85).toFixed(3), fade: 3.0 }, cues };
+    bed: { file: 'video/library/bgm/partner-upbeat-118.mp3', t: 0, gain: 0.036, loop_at: +(28 * 4 * 60 / 117.84).toFixed(3), fade: 3.0 }, cues };   /* the PP01 bed, as low as the NeroConnect v3.6.1 music; looped on bar 28, before its own fade at ~58 s */
   fs.mkdirSync(path.join(HERE, 'data'), { recursive: true });
   fs.writeFileSync(path.join(HERE, 'data/mix.json'), JSON.stringify(mix, null, 1));
   if (arg('--from') !== null || arg('--to') !== null) { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'),
       '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', path.join(OUT, 'slice.mp4')]); console.log(path.join(OUT, 'slice.mp4')); return; }
-  if (!SQ) {
-    execFileSync('node', [path.join(REPO, 'motion/mix.mjs'), 'neroconnect/explainer-v3'], { stdio: 'inherit' });
-    /* v3.6.1 (Faisal, 25 Sep): the music at 20% and the voice exactly where v3.6 had it. mix.mjs normalises the whole mix to
-       -14 LUFS, which with the music gone pushed the voice up ~2.8 dB; so the raw mix gets v3.6's own master gain (+10.08 dB)
-       and a true-peak limiter run at 4x (the AAC pass had put inter-sample peaks over 0 dBTP). Lands at about -15.6 LUFS. */
-    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', path.join(OUT, 'mix-raw.wav'), '-af',
-      'volume=10.08dB,aresample=192000,alimiter=limit=0.79:attack=3:release=60:level=false,aresample=48000', '-c:a', 'aac', '-b:a', '192k', path.join(OUT, 'mix.m4a')]);
-    fs.copyFileSync(path.join(OUT, 'mix.m4a'), path.join(OUT, 'mix-16x9.m4a'));
-  }
-  const name = path.join(OUT, `ncx-v3-${SQ ? '1x1' : PREVIEW ? 'preview' : '16x9'}.mp4`);
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'), '-i', path.join(OUT, SQ ? 'mix-16x9.m4a' : 'mix.m4a'),
+  execFileSync('node', [path.join(REPO, 'motion/mix.mjs'), 'partner/explainer'], { stdio: 'inherit' });
+  const name = path.join(OUT, `partner-explainer-${SQ ? '1x1' : PREVIEW ? 'preview' : '16x9'}.mp4`);
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'), '-i', path.join(OUT, 'mix.m4a'),
     '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-crf', PREVIEW ? '21' : '16', '-preset', PREVIEW ? 'medium' : 'slow', '-pix_fmt', 'yuv420p', '-r', String(FPS),
     '-c:a', 'copy', '-shortest', '-movflags', '+faststart', name]);
   console.log(name);

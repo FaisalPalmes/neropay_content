@@ -107,3 +107,11 @@ the letterform cannot be extended; this is a hand extension for video, so it wan
 anything beyond NeroConnect videos (a site header, print, the dashboard).
 
     MARK=neroconnect SMALL="Check out NeroConnect at" BIG="docs.neropay.app" node brand/sting/render.cjs outro yellow 16x9 out.mp4
+
+## The Partner outro — 25 Sep 2026
+
+Faisal, 25 Sep 2026, for the Partner Programme explainer: *"we can swap the connect and pay for partner for this video … follow
+us for more info at neropay.app/partners."* Partner videos end on the outro with `?mark=neropartner` (`MARK=neropartner`), the
+yellow look, and the subtext *For more info, visit / neropay.app/partners*. `neropartner-light.png` is built by
+`python3 connect-mark.py partner`: "nero" and the yellow p and a are Eray's artwork untouched; r, n and e are the artwork's own
+letters recoloured; t is the one built for NeroConnect. The same caveat applies: Eray has not seen the hand-built letters.
