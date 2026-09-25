@@ -42,13 +42,13 @@ straight after. Commit messages are short, plain and in the present tense, and c
 
 1. **Tools** (winget or the official installers): Git for Windows, Node 22, Python 3.12, ffmpeg (a full build, e.g.
    `winget install Gyan.FFmpeg`), and Google Drive for desktop and DaVinci Resolve, which Faisal has already.
-2. **The workspace.** Run the PowerShell in `WORKSPACE.md` §5. It builds `H:\NeroPay` and `E:\nPanda` and clones the
+2. **The workspace.** Run the PowerShell in `WORKSPACE.md` §5. It builds `D:\01 Client Work\nPanda` and `E:\nPanda` and clones the
    repo. **NeroPay only:** don't touch anything else on `E:`; the 200–300 GB already there stays where it is.
 3. **The SSD stays NTFS** (Faisal, 25 Sep 2026). It stays at home, plugged into this PC. The MacBook doesn't write to
    it; Faisal drives this session from the MacBook instead (§6).
 4. **The toolchain in the repo:**
    ```powershell
-   cd H:\NeroPay\repos\neropay_content
+   cd "D:\01 Client Work\nPanda\repos\neropay_content"
    cd video;  npm install;  npx hyperframes browser ensure;  npx hyperframes doctor;  cd ..
    cd motion; npm install;  npx playwright install chromium;  cd ..
    py -m pip install opencv-python numpy
@@ -97,7 +97,7 @@ a person has to draw the region and press track. Guide Faisal through it step by
 DaVinci interface yourself.
 
 **Project.** Timeline 1920x1080, 24 fps. Media from `E:\nPanda\...`. Put the cache on `E:\nPanda\_DaVinci-Cache` and
-the project library on `H:\NeroPay\davinci\project-library`.
+the project library on `D:\01 Client Work\nPanda\davinci\project-library`.
 
 **Screen replacement (pavement and table), in a Fusion comp:**
 1. `MediaIn1` is the plate. `MediaIn2` is the screen PNG sequence (`04_Screens\nail` or `\sage`), set to 24 fps and

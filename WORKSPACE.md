@@ -1,6 +1,6 @@
 # Workspace: where every file lives
 
-Written 25 Sep 2026 for Faisal's home PC, the Samsung SSD, the MacBook and Google Drive. A local Claude Code session
+Written 25 Sep 2026 for Faisal's home PC (internal drive `D:`, updated from `H:` the same day), the Samsung SSD, the MacBook and Google Drive. A local Claude Code session
 reads this first (with `LOCAL-HANDOVER.md`) and builds the folders from §5. One rule sits above the rest: **the register (`library.js`) is the
 record, and folders are only storage.** Moving a file to an `Approved` folder does not approve it.
 
@@ -8,7 +8,7 @@ record, and folders are only storage.** Moving a file to an `Approved` folder do
 
 | Place | Drive | Role | Holds |
 |---|---|---|---|
-| PC hard disk | `H:` | The engine room | This repo (code), Claude Code sessions, DaVinci's project library, tools, temp |
+| PC internal drive | `D:` (`D:\01 Client Work\nPanda`) | The engine room | This repo (code), Claude Code sessions, DaVinci's project library, tools, temp |
 | Samsung SSD | `E:` | Active work | Media for pieces in progress: generations, plates, screens, DaVinci media and cache, renders |
 | Google Drive | `G:` (Drive for desktop) | Library and record | Brand, references, approved masters, everything delivered, operations, archive |
 
@@ -17,7 +17,7 @@ The loop: generate → work on `E:` → Faisal approves → master to Drive → 
 - **Code never goes on the SSD.** Git and `node_modules` break on exFAT, and they differ between Windows and Mac. Each
   machine keeps its own clone; GitHub keeps them in step. Pull before you start, push when you finish.
 - **Claude Code history stays on the machine that ran it.** Continuity comes from this repo, not from session history.
-  To work from the MacBook, leave the PC on and run `claude remote-control` in `H:\NeroPay` so the PC session appears
+  To work from the MacBook, leave the PC on and run `claude remote-control` in the repo folder so the PC session appears
   in the Claude Code app.
 - **Big media never goes in git.** It lives on `E:` while it is worked on and on Drive once it is approved.
 
@@ -58,7 +58,7 @@ social if it ever needs its own home. No passwords go in `Tool-Accounts`: it rec
 ## 4. The trees
 
 ```
-H:\NeroPay\
+D:\01 Client Work\nPanda\          NeroPay only; other clients live beside it in 01 Client Work
 ├─ CLAUDE.md                 short: "read repos\neropay_content\WORKSPACE.md", plus the drive letters
 ├─ repos\
 │  └─ neropay_content\       the git clone; start sessions here
@@ -75,7 +75,7 @@ E:\nPanda\
 ├─ 04_Images\                statics, cards, carousels
 ├─ 05_Paid-Ads\              ad creative in progress
 ├─ 07_Audio\                 voiceovers, music, sfx in progress
-├─ _DaVinci-Cache\           render and optimised-media cache (the SSD is faster than the H: hard disk)
+├─ _DaVinci-Cache\           render and optimised-media cache (on the SSD for speed)
 └─ _Template\                copy this to start a piece
    ├─ 01_Brief\              brief, prompts, references
    ├─ 02_Source\             raw generations, untouched
@@ -92,20 +92,20 @@ A piece is one folder named by its register ID: `E:\nPanda\02_Video\MA02_mobile-
 ## 5. Build it (PowerShell, on the PC)
 
 ```powershell
-$h = 'H:\NeroPay'
+$h = 'D:\01 Client Work\nPanda'
 'repos','davinci\project-library','davinci\gallery','tools','scratch' | % { New-Item -ItemType Directory -Force "$h\$_" | Out-Null }
 $e = 'E:\nPanda'
 '00_Inbox','02_Video','03_Motion','04_Images','05_Paid-Ads','07_Audio','_DaVinci-Cache' | % { New-Item -ItemType Directory -Force "$e\$_" | Out-Null }
 '01_Brief','02_Source','03_Plates','04_Screens','05_Project','06_Renders','07_Exports\16x9','07_Exports\9x16','07_Exports\1x1','07_Exports\4x5' |
   % { New-Item -ItemType Directory -Force "$e\_Template\$_" | Out-Null }
 git clone https://github.com/FaisalPalmes/neropay_content.git "$h\repos\neropay_content"
-Set-Content "$h\CLAUDE.md" "Workspace root. Read repos\neropay_content\WORKSPACE.md first. Hard disk H:, SSD E: (E:\nPanda), Google Drive G:."
+Set-Content "$h\CLAUDE.md" "Workspace root. Read repos\neropay_content\WORKSPACE.md first. Internal D:, SSD E: (E:\nPanda), Google Drive G:."
 ```
 
 Start a session with access to all three:
 
 ```powershell
-cd H:\NeroPay\repos\neropay_content
+cd "D:\01 Client Work\nPanda\repos\neropay_content"
 claude --add-dir E:\nPanda --add-dir "G:\My Drive\01 - PROJECTS\01 - CLIENTS\02 - nPanda\nPanda"
 ```
 
