@@ -429,8 +429,16 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    0.35px, 95% within 1px, zero green pixels left.
 2. **The video model paints onto the green.** Kling added a notch that fades in over the first second, a fake status
    bar, a home bar and moving glare, even with the screen-lock prompt. Rule: never let the green key decide what sits in
-   front of the screen; only skin does. Draw the notch into the app so it is locked and clean, and trim the frames
-   where the model is still changing the phone.
+   front of the screen; only skin does. Trim the frames where the model is still changing the phone. (v3: Faisal
+   does not want a bezel, notch or top blur at all, so the app now fills the whole screen outline.)
+3. **"Pixel perfect, as if you were a rotoscoper at ILM."** A fixed green threshold put every edge about 1.3px outside
+   the true one; the verifier only saw it once it used each profile's own inside/outside midpoint. The tracker now uses
+   that adaptive midpoint too. Two more faults the verifier caught: the corner radius was guessed (45) when the plates
+   measure 36 (street) and 37 (table), which left green in the table's corners; and a fingertip on the table's right
+   edge was taken for the screen edge for seven frames. Rule: reject a profile whose outside is skin (redness just past
+   the edge), not one whose outside is dark, because the street phone's bezel sits on grey pavement. v3: median 0.31px
+   (street) and 0.28px (table), 95% within 1.2px, zero green pixels on every frame. Overlay cards follow the phone's
+   smoothed centre, or on a wide shot the camera track (`tools/camera_track.py`), never the raw corners.
 
 ## Standing rules for every edit
 

@@ -21,6 +21,7 @@ ap.add_argument('--start', type=int, default=0); ap.add_argument('--end', type=i
 ap.add_argument('--dim', type=float, default=0.9); ap.add_argument('--tint', default='1,1,1')
 ap.add_argument('--glare', type=float, default=0.45); ap.add_argument('--grow', type=float, default=0.3)
 ap.add_argument('--notch', help='x0,x1,depth,radius on the 390-wide screen: draw a clean notch into the app (the plate\'s is ignored)')
+ap.add_argument('--png', help='also write each composited frame as a PNG here (for the glass pass)')
 ap.add_argument('--radius', type=float, default=45.0, help='screen corner radius on the 390-wide screen, measured from the plate')
 a = ap.parse_args()
 tint = np.array([float(x) for x in a.tint.split(',')], np.float32)
@@ -94,9 +95,9 @@ for n in range(a.start, end):
     gk = sstep(dom, 0.06, 0.14) * (cv2.dilate((inside > 0.02).astype(np.uint8), np.ones((9, 9), np.uint8)) > 0)
     alpha = (np.maximum(inside, gk) * (1 - occ))[..., None]
     # glare: the green's own brightness, blurred wide so painted text can't come back, above its base level
-    Yb = cv2.GaussianBlur(luma, (0, 0), 7); core = (dom > 0.2) & (inside > 0.99)
+    Yb = cv2.GaussianBlur(luma, (0, 0), 16); core = (dom > 0.2) & (inside > 0.99)
     base = np.median(Yb[core]) if core.any() else Yb.mean()
-    glare = np.clip(Yb - base * 1.03, 0, 1)[..., None] * a.glare
+    glare = np.clip(Yb - base * 1.06, 0, 1)[..., None] * a.glare
     if a.notch: glare = glare * (1 - notch_px)
     out = x.copy(); reg = out[y0:y1, x0:x1]
     # despill whatever the plate keeps near the screen (finger edges, the bezel's inner line)
@@ -107,5 +108,6 @@ for n in range(a.start, end):
     rr = res[y0:y1, x0:x1].astype(np.float32) / 255
     qc.append(int(((rr[..., 1] - np.maximum(rr[..., 0], rr[..., 2])) > 0.12).sum()))
     ff.stdin.write(res.tobytes())
+    if a.png: os.makedirs(a.png, exist_ok=True); cv2.imwrite(os.path.join(a.png, f'{n - a.start:04d}.png'), res)
 ff.stdin.close(); ff.wait()
 print(a.out, 'frames', end - a.start, 'green px left per frame: max', max(qc), 'mean', round(float(np.mean(qc)), 1))

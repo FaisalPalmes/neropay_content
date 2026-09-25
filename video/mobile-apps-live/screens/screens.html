@@ -15,12 +15,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:390px;height:844px;overflow:hidden}
 .app{position:absolute;inset:0;overflow:hidden;font-family:Inter,sans-serif}
-.sb{position:absolute;left:0;right:0;top:0;height:50px;display:flex;align-items:center;justify-content:space-between;padding:8px 32px 0 36px;font-size:15px;font-weight:600;z-index:5}
+.sb{position:absolute;left:0;right:0;top:0;height:54px;background:var(--bar);display:flex;align-items:center;justify-content:space-between;padding:8px 32px 0 36px;font-size:15px;font-weight:600;z-index:5}
 .sig{display:flex;gap:4px;align-items:center}.sig i{display:block;background:currentColor;border-radius:2px}
 .scroll{position:absolute;left:0;right:0;top:0;will-change:transform}
 
 /* ── Sage & Co (café), the MA01 look ── */
-.sage{background:#FCF9F4;color:#2E3225}
+.sage{background:#FCF9F4;color:#2E3225;--bar:#FCF9F4}
 .sage .bar{display:flex;align-items:center;gap:12px;padding:60px 22px 14px}
 .sage .bar img{width:40px;height:40px;border-radius:11px}
 .sage .bar b{font-family:Fraunces,serif;font-weight:600;font-size:25px;flex:1}
@@ -45,7 +45,7 @@ html,body{width:390px;height:844px;overflow:hidden}
 .sage .fade{position:absolute;left:0;right:0;top:0;height:64px;background:linear-gradient(#FCF9F4 72%,rgba(252,249,244,0));z-index:4}
 
 /* ── Rosehip Nails (nail salon), pink ── */
-.nail{background:#FFF5F7;color:#3B1D2B}
+.nail{background:#FFF5F7;color:#3B1D2B;--bar:#FFF5F7}
 .nail .hd{padding:62px 24px 16px;display:flex;align-items:center;gap:12px}
 .nail .logo{font-family:DMSerif,serif;font-size:31px;line-height:1;flex:1}.nail .logo em{font-style:italic;color:#C2527E}
 .nail .logo small{display:block;font-family:Inter,sans-serif;font-size:10.5px;letter-spacing:.24em;font-weight:600;color:#B07A92;margin-top:5px}
@@ -94,7 +94,7 @@ const eo = x => 1 - Math.pow(1 - x, 3), eio = x => x < .5 ? 4 * x * x * x : 1 - 
 if (APP === 'sage') {
   const items = [[cup,'Flat white','Oat or whole milk','£3.40'],[bread,'Sourdough toastie','Cheddar, leek, mustard','£7.20'],[glass,'Iced latte','Double shot','£3.90'],
                  [bowl,'Seasonal fruit bowl','Yoghurt, honey, oats','£5.80'],[knot,'Cinnamon knot','Baked this morning','£3.60'],[cup,'Oat cappuccino','Single or double','£3.70']];
-  root.innerHTML = `<div class="app sage"><div class="sb">9:41${SIG}</div><div class="fade"></div><div class="scroll" id="sc">
+  root.innerHTML = `<div class="app sage"><div class="sb">9:41${SIG}</div><div class="scroll" id="sc">
     <div class="bar"><img src="sage-icon.svg" alt=""><b>Sage &amp; Co</b><span class="burger"><i></i><i></i><i></i></span></div>
     <div class="hero"><div class="k">Café · Kitchen</div><h2>Sit. Stay.<br><em>Savour.</em></h2><p>Order ahead, skip the queue</p></div>
     <h3>Popular</h3>${items.map((it, i) => `<div class="item" id="it${i}"><span class="th">${it[0]}</span><span class="nm"><b>${it[1]}</b><small>${it[2]}</small></span><span class="pr">${it[3]}</span><span class="add" id="ad${i}">+</span></div>`).join('')}
@@ -115,7 +115,7 @@ if (APP === 'sage') {
 } else {
   const svcs = [['Gel manicure','45 min · with Ella','£32'],['BIAB overlay','60 min · builder gel','£38'],['Gel pedicure','50 min · with Ella','£35'],['Nail art','15 min · add-on, per set','£8']];
   const slots = [['09:30',1],['10:00',0],['10:30',1],['11:00',0],['11:30',0],['12:00',1],['13:00',0],['13:30',0],['14:30',0]];
-  root.innerHTML = `<div class="app nail"><div class="sb">9:41${SIG}</div><div class="fade"></div><div class="scroll" id="sc">
+  root.innerHTML = `<div class="app nail"><div class="sb">9:41${SIG}</div><div class="scroll" id="sc">
     <div class="hd"><div class="logo">Rosehip <em>nails</em><small>NAIL STUDIO · BOOK ONLINE</small></div><div class="av"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C2527E" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></div></div>
     <div class="hero"><div class="k">Treat yourself</div><h2>Fresh set,<br><em>fresh week.</em></h2><p>Next free slot today at 14:30</p></div>
     <h3>Choose a treatment</h3>${svcs.map((s, i) => `<div class="svc" id="sv${i}"><span class="dot"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C2527E" stroke-width="1.7" stroke-linejoin="round"><rect x="10" y="2.5" width="4" height="6" rx="1"/><rect x="7" y="8.5" width="10" height="13" rx="3"/><path d="M7 14h10"/></svg></span><span class="nm"><b>${s[0]}</b><small>${s[1]}</small></span><span class="pr">${s[2]}</span><span class="tick">✓</span></div>`).join('')}

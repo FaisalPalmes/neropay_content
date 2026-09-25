@@ -14,32 +14,37 @@ sys.path.insert(0, os.path.dirname(__file__))
 from comp_still import quad as rough_quad
 
 def keymap(f):
+    """Green dominance, unclipped: the edge is found where it crosses halfway between its local inside and outside levels."""
     x = f.astype(np.float32) / 255
-    dom = x[..., 1] - np.maximum(x[..., 0], x[..., 2])
-    return np.clip((dom - 0.02) / 0.10, 0, 1)
+    return (x[..., 1] - np.maximum(x[..., 0], x[..., 2])).astype(np.float32)
 
-def fit_side(k, p, q, inward, n=120, half=10.0, step=0.25):
-    d = q - p; L = np.linalg.norm(d); u = d / L
+def fit_side(k, p, q, inward, n=160, half=10.0, step=0.2, lum=None):
+    d = q - p
     ts = np.linspace(0.14, 0.86, n)
-    offs = np.arange(-half, half + step, step)                     # from inside (-) to outside (+)
-    base = p[None] + ts[:, None] * d[None]                         # n x 2
+    offs = np.arange(-half, half + step / 2, step)                  # from inside (-) to outside (+)
+    base = p[None] + ts[:, None] * d[None]
     pts = base[:, None, :] - inward[None, None, :] * offs[None, :, None]
-    mx, my = pts[..., 0].astype(np.float32), pts[..., 1].astype(np.float32)
-    prof = cv2.remap(k, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)   # n x m
+    prof = cv2.remap(k, pts[..., 0].astype(np.float32), pts[..., 1].astype(np.float32), cv2.INTER_CUBIC,
+                     borderMode=cv2.BORDER_REPLICATE)
+    if lum is not None:   # what lies just outside a real screen edge is the bezel, never a finger
+        lp = cv2.remap(lum, pts[..., 0].astype(np.float32), pts[..., 1].astype(np.float32), cv2.INTER_LINEAR,
+                       borderMode=cv2.BORDER_REPLICATE)
     out = []
     for i in range(n):
-        pr = prof[i]
-        if pr[:12].mean() < 0.75 or pr[-12:].mean() > 0.25: continue   # covered or not an edge here
-        j = np.where((pr[:-1] >= 0.5) & (pr[1:] < 0.5))[0]
+        pr = prof[i]; lo_in, hi_out = np.median(pr[:15]), np.median(pr[-15:])
+        if lum is not None and np.median(lp[i, 58:73]) > 0.03: continue   # skin just outside: a finger's edge, not the screen's
+        if lo_in < 0.18 or hi_out > 0.08 or lo_in - hi_out < 0.15: continue   # covered by a finger, or no clean edge
+        mid = (lo_in + hi_out) / 2
+        j = np.where((pr[:-1] >= mid) & (pr[1:] < mid))[0]
         if len(j) != 1: continue
-        j = j[0]; a, b = pr[j], pr[j + 1]; s = offs[j] + (a - 0.5) / (a - b) * step
+        j = j[0]; a, b = pr[j], pr[j + 1]; s = offs[j] + (a - mid) / (a - b) * step
         out.append(base[i] - inward * s)
     out = np.array(out, np.float32)
-    if len(out) < 12: return None, len(out)
+    if len(out) < 14: return None, len(out)
     vx, vy, x0, y0 = cv2.fitLine(out, cv2.DIST_HUBER, 0, 0.01, 0.01).ravel()
     nrm = np.array([-vy, vx]); r = np.abs((out - [x0, y0]) @ nrm)
-    keep = out[r < 0.8]
-    if len(keep) >= 12: vx, vy, x0, y0 = cv2.fitLine(keep, cv2.DIST_L2, 0, 0.01, 0.01).ravel()
+    keep = out[r < max(0.6, 2.5 * np.median(r))]
+    if len(keep) >= 14: vx, vy, x0, y0 = cv2.fitLine(keep, cv2.DIST_L2, 0, 0.01, 0.01).ravel()
     return (np.array([x0, y0]), np.array([vx, vy])), len(out)
 
 def corners(lines):
@@ -52,7 +57,8 @@ def corners(lines):
 def track(frames):
     raw, counts, prev = [], [], None
     for f in frames:
-        k = keymap(f)
+        k = keymap(f); xf = f.astype(np.float32) / 255
+        lum = (xf[..., 2] - xf[..., 1]).astype(np.float32)   # redness: skin and nails are red over green, the bezel is not
         Q0 = rough_quad(f) if prev is None else prev
         c = Q0.mean(0); lines = []; cnt = []
         for i in range(4):
@@ -60,7 +66,7 @@ def track(frames):
             mid = (p + q) / 2; inward = c - mid; e = q - p
             nrm = np.array([-e[1], e[0]]); nrm /= np.linalg.norm(nrm)
             inward = nrm if nrm @ inward > 0 else -nrm
-            ln, m = fit_side(k, p, q, inward); cnt.append(m)
+            ln, m = fit_side(k, p, q, inward, lum=lum); cnt.append(m)
             lines.append(ln)
         if any(l is None for l in lines):                          # a side fully covered: fall back to the rough fit
             Q = rough_quad(f)
@@ -73,7 +79,7 @@ def track(frames):
                 p, q = Q[i], Q[(i + 1) % 4]; e = q - p
                 nrm = np.array([-e[1], e[0]]); nrm /= np.linalg.norm(nrm)
                 inward = nrm if nrm @ (c - (p + q) / 2) > 0 else -nrm
-                ln, m = fit_side(k, p, q, inward); lines2.append(ln)
+                ln, m = fit_side(k, p, q, inward, lum=lum); lines2.append(ln)
             if not any(l is None for l in lines2): Q = corners(lines2)
         raw.append(Q); counts.append(cnt); prev = Q
     return np.array(raw), counts
