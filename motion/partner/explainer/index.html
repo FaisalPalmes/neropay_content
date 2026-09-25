@@ -145,7 +145,7 @@ const SC = [
  { t: [6.45, 16.55], light: [960, 120], ox: '50%', html: `
    <div class="center" style="top:170px;font:600 46px/1.2 P;letter-spacing:-.02em" data-at="6.60">Introduce one to NeroPay.</div>
    <div class="center" style="top:260px" data-at="8.83"><span class="chip g" style="position:relative;display:inline-flex"><span class="dot" id="golive" style="background:#C9C9CF;margin-right:0"></span><span id="golivet">When they go live</span></span></div>
-   <div class="fig" style="top:390px" data-at="10.87"><span data-at="10.87">£100</span><span data-at="12.17">–£300</span></div>
+   <div class="fig" style="top:390px" data-at="10.87">£100–£300</div>
    <div class="cond" style="top:600px" data-at="10.87">for every business that goes live</div>
    <div class="cond dim" style="top:660px" data-at="10.87">set by what it takes in <span class="mk" data-mark="15.53" style="color:#111114">its first 30 days</span></div>` },
 
@@ -319,9 +319,10 @@ window.setTime = function (t) {
   const module = (id, x, tiers, yOf, fmt) => {
     const fig = document.getElementById(id + 'fig'); if (!fig) return;
     const tierAt = tt => tiers(stateAt[id](tt));
-    const now = tierAt(t); let tc = t; while (tc > t - 0.6 && tierAt(tc - 0.02).v === now.v) tc -= 0.02;
-    const prev = tierAt(tc - 0.02), k = outC(clamp((t - tc) / 0.35)), v = tc <= t - 0.6 ? now.v : prev.v + (now.v - prev.v) * k;
-    fig.textContent = fmt(v, now); document.getElementById(id + 'cond').textContent = now.c;
+    const now = tierAt(t);
+    /* no count-up: a figure between two tiers ("37%" beside "111+") is a figure without its condition, a QA fail. The figure
+       steps on the frame the state crosses the threshold; the knob, the fill and the line carry the motion. */
+    fig.textContent = fmt(now.v, now); document.getElementById(id + 'cond').textContent = now.c;
     const cnt = document.getElementById(id + 'count'); if (cnt) cnt.textContent = now.n;
     const X = x(stateAt[id](t)) * 1300;
     document.getElementById(id + 'knob').style.left = (310 + X) + 'px'; document.getElementById(id + 'fill').style.width = X + 'px';
