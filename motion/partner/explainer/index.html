@@ -111,6 +111,24 @@ svg.climb .dt{fill:#FFCF24;stroke:#111114;stroke-width:5}
 .net{display:grid;grid-template-columns:repeat(8,1fr);gap:14px}
 .net i{height:46px;border-radius:12px;background:rgba(17,17,20,.07);transition:none}
 .badge{display:inline-flex;align-items:center;gap:14px;height:66px;padding:0 28px;border-radius:16px;background:var(--yel);font:700 28px/1 P}
+/* the capsule: slides up, a fill runs across as the business is set up, and on "live" the dot turns green with two ripples and
+   the label flips up. The money moment: £100 lands, the bar runs to its first mark; on "three hundred" it runs on past £200 to
+   £300, the "–£300" opens beside the £100 and the bar flashes with sparks. Only real tier values are ever on screen. */
+.cap{position:relative;display:inline-flex;align-items:center;gap:16px;height:72px;padding:0 30px;border-radius:18px;overflow:visible;
+  background:rgba(255,255,255,.62);box-shadow:0 18px 40px -22px rgba(17,17,20,.28),inset 0 0 0 1px rgba(255,255,255,.95),inset 0 1.5px 0 #fff;font:600 28px/1 P}
+.capfill{position:absolute;left:0;top:0;bottom:0;border-radius:18px;background:linear-gradient(90deg,rgba(255,207,36,.28),rgba(255,207,36,.10));width:0}
+.cap .dot{position:relative;margin:0;width:16px;height:16px;z-index:1}
+.capw{position:relative;display:inline-block;height:34px;overflow:hidden;z-index:1;min-width:330px;text-align:left}
+.capt{position:absolute;left:0;top:0;white-space:nowrap;line-height:34px}
+.ring{position:absolute;left:38px;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;border:3px solid var(--live);opacity:0;pointer-events:none}
+.fig .grow{display:inline-block;overflow:hidden;vertical-align:top;white-space:nowrap}
+.fig .hitfx{position:absolute;left:50%;width:900px;margin-left:-450px;top:-20px;bottom:-20px;border-radius:30px}
+.mbar{position:absolute;height:14px;border-radius:7px;background:rgba(17,17,20,.08)}
+.mbar > i#mfill{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:linear-gradient(90deg,#FFE27A,#FFCF24)}
+.mbar > b{position:absolute;left:0;top:-14px;bottom:-14px;border-radius:20px;background:radial-gradient(closest-side,rgba(255,207,36,.55),rgba(255,207,36,0));opacity:0}
+.mt{position:absolute;top:-8px;width:3px;height:30px;margin-left:-1.5px;background:rgba(17,17,20,.25);border-radius:2px}
+.ml{position:absolute;top:34px;transform:translateX(-50%);font:600 24px/1 P;color:var(--mute);white-space:nowrap}
+.spark{position:absolute;left:900px;top:7px;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#FFCF24;opacity:0}
 .prod{position:absolute;mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(closest-side,#000 72%,transparent 100%);mask-image:radial-gradient(closest-side,#000 72%,transparent 100%)}
 </style></head>
 <body>
@@ -134,130 +152,133 @@ const money = v => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: 2, 
    arrives (the word that says it); data-count counts a figure up from that moment; data-mark draws the yellow
    marker; data-rule lights a card's yellow edge. Scenes overlap their neighbours by the crossfade. */
 const SC = [
- { t: [0, 6.45], light: [1760, 170], ox: '50%', html: `
+ { t: [0, 6.51], light: [1760, 170], ox: '50%', html: `
    <div class="kick" style="left:150px;top:150px" data-at="0.60"><b></b>Think of one</div>
-   <div class="h" style="left:150px;top:200px;width:1620px"><span class="ln"><span data-at="1.18">A café.</span> <span data-at="2.46">A takeaway.</span></span><span class="ln" data-at="3.18">The shop at the end of your road.</span></div>
-   <div class="g" style="left:150px;top:440px;width:500px;height:420px;padding:0" data-at="1.18"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/cafe.webp" style="object-position:50% 88%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Café</div></div>
-   <div class="g" style="left:710px;top:440px;width:500px;height:420px;padding:0" data-at="2.46"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/takeaway.webp" style="object-position:50% 80%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaway</div></div>
-   <div class="g" style="left:1270px;top:440px;width:500px;height:420px;padding:0" data-at="3.36"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/shop.webp" style="object-position:50% 92%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Shop</div></div>
-   <div class="sub" style="left:150px;top:915px;color:#111114" data-at="4.89">They all take <span class="mk" data-mark="5.49">card payments.</span></div>` },
+   <div class="h" style="left:150px;top:200px;width:1620px"><span class="ln"><span data-at="1.06">A café.</span> <span data-at="2.29">A takeaway.</span></span><span class="ln" data-at="2.95">The restaurant round the corner.</span></div>
+   <div class="g" style="left:150px;top:440px;width:500px;height:420px;padding:0" data-at="1.06"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/tile-cafe.webp" style="object-position:50% 50%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Café</div></div>
+   <div class="g" style="left:710px;top:440px;width:500px;height:420px;padding:0" data-at="2.29"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/tile-takeaway.webp" style="object-position:50% 62%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Takeaway</div></div>
+   <div class="g" style="left:1270px;top:440px;width:500px;height:420px;padding:0" data-at="3.13"><div class="ph" style="left:0;top:0;width:500px;height:330px"><img src="assets/tile-restaurant.webp" style="object-position:50% 52%" data-push></div><div class="mid" style="position:absolute;left:36px;bottom:24px">Restaurant</div></div>
+   <div class="sub" style="left:150px;top:915px;color:#111114" data-at="4.46">They all take <span class="mk" data-mark="5.51">card payments.</span></div>` },
 
- { t: [6.45, 16.55], light: [960, 120], ox: '50%', html: `
-   <div class="center" style="top:170px;font:600 46px/1.2 P;letter-spacing:-.02em" data-at="6.60">Introduce one to NeroPay.</div>
-   <div class="center" style="top:260px" data-at="8.83"><span class="chip g" style="position:relative;display:inline-flex"><span class="dot" id="golive" style="background:#C9C9CF;margin-right:0"></span><span id="golivet">When they go live</span></span></div>
-   <div class="fig" style="top:390px" data-at="10.87">£100–£300</div>
-   <div class="cond" style="top:600px" data-at="10.87">for every business that goes live</div>
-   <div class="cond dim" style="top:660px" data-at="10.87">set by what it takes in <span class="mk" data-mark="15.53" style="color:#111114">its first 30 days</span></div>` },
+ { t: [6.51, 16.12], light: [960, 120], ox: '50%', html: `
+   <div class="center" style="top:170px;font:600 46px/1.2 P;letter-spacing:-.02em" data-at="6.66">Introduce one to NeroPay.</div>
+   <div class="center" style="top:250px" data-at="8.69"><span class="cap" id="cap" data-live="9.22"><i class="capfill" id="capfill"></i><span class="dot" id="golive"></span><span class="capw"><span class="capt" id="capt1">Onboarding</span><span class="capt" id="capt2">Live · taking payments</span></span><i class="ring" id="ring1"></i><i class="ring" id="ring2"></i></span></div>
+   <div class="fig" id="mfig" style="top:370px" data-at="10.50" data-t100="10.50" data-t300="11.82"><span id="m100">£100</span><span id="m300" class="grow"><span>–£300</span></span><i class="hitfx" id="mflash"></i></div>
+   <div class="mbar" style="left:510px;top:590px;width:900px" data-at="10.50"><i id="mfill"></i><b id="mglow"></b>
+     ${[[1/3,'£100'],[2/3,'£200'],[1,'£300']].map((k, i) => `<span class="mt" style="left:${Math.round(k[0] * 900)}px" id="mt${i}"></span><span class="ml" style="left:${Math.round(k[0] * 900)}px" id="ml${i}">${k[1]}</span>`).join('')}
+     ${Array.from({ length: 10 }, (_, i) => `<i class="spark" data-a="${i * 36}"></i>`).join('')}</div>
+   <div class="cond" style="top:676px" data-at="10.50">for every business that goes live</div>
+   <div class="cond dim" style="top:730px" data-at="10.50">set by what it takes in <span class="mk" data-mark="15.06" style="color:#111114">its first 30 days</span></div>` },
 
- { t: [16.55, 21.55], light: [1800, 900], ox: '50%', html: `
-   <div class="plate" style="left:965px;top:120px;width:1000px;height:1000px" data-at="16.79"><img src="assets/plate-neropay.webp"></div>
-   <div class="kick" style="left:150px;top:330px" data-at="16.79"><b></b>NeroPay</div>
-   <div class="h xl" style="left:150px;top:380px;width:900px" data-at="17.20"><span class="ln"><span class="mk" data-mark="17.73">Partner</span></span><span class="ln">Programme.</span></div>
-   <div class="sub" style="left:150px;top:640px" data-at="18.87">How it works. <span class="mk" data-mark="20.50" style="color:#111114">Conditions included.</span></div>` },
+ { t: [16.12, 19.47], light: [1800, 900], ox: '50%', html: `
+   <div class="plate" style="left:965px;top:120px;width:1000px;height:1000px" data-at="16.36"><img src="assets/plate-neropay.webp"></div>
+   <div class="kick" style="left:150px;top:330px" data-at="16.36"><b></b>NeroPay</div>
+   <div class="h xl" style="left:150px;top:380px;width:900px" data-at="16.70"><span class="ln"><span class="mk" data-mark="17.24">Partner</span></span><span class="ln">Programme.</span></div>
+   <div class="sub" style="left:150px;top:640px;color:#111114" data-at="18.23"><span class="mk" data-mark="18.46">How it works.</span></div>` },
 
- { t: [21.55, 26.10], light: [200, 950], ox: '50%', html: `
-   <div class="h" style="left:150px;top:360px;width:720px"><span class="ln" data-at="22.91">A card terminal.</span><span class="ln" data-at="24.43"><span class="mk" data-mark="24.78">Free EPOS software.</span></span></div>
-   <div class="g" style="left:940px;top:170px;width:390px;height:740px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="23.22"><img class="prod" src="assets/plate-neropay.webp" style="left:-150px;top:10px;width:690px"><div class="lab">Card terminal</div><div class="mid">NeroPay</div></div>
-   <div class="g" style="left:1380px;top:170px;width:390px;height:740px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="24.43"><img class="prod" src="assets/till.webp" style="left:5px;top:120px;width:380px"><div class="lab">EPOS software</div><div class="mid">Free</div></div>` },
+ { t: [19.47, 23.25], light: [200, 950], ox: '50%', html: `
+   <div class="h" style="left:150px;top:360px;width:720px"><span class="ln" data-at="20.35">A card terminal.</span><span class="ln" data-at="21.73"><span class="mk" data-mark="22.10">Free POS software.</span></span></div>
+   <div class="g" style="left:940px;top:170px;width:390px;height:740px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="20.72"><img class="prod" src="assets/plate-neropay.webp" style="left:-150px;top:10px;width:690px"><div class="lab">Card terminal</div><div class="mid">NeroPay</div></div>
+   <div class="g" style="left:1380px;top:170px;width:390px;height:740px;padding:44px;display:flex;flex-direction:column;justify-content:flex-end" data-at="21.73"><img class="prod" src="assets/till.webp" style="left:5px;top:120px;width:380px"><div class="lab">POS software</div><div class="mid">Free</div></div>` },
 
- { t: [26.10, 37.30], light: [960, 1000], ox: '50%', html: `
-   <div class="kick" style="left:150px;top:170px" data-at="26.27"><b></b>When a business joins through you</div>
-   ${[['28.78','We','onboard'],['29.67','We','set up'],['30.58','We','support'],['31.30','You','introduce']].map((c, i) => `
+ { t: [23.25, 34.13], light: [960, 1000], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:170px" data-at="23.42"><b></b>When a business joins through you</div>
+   ${[['25.96','We','onboard'],['26.87','We','set up'],['27.74','We','support'],['28.43','You','introduce']].map((c, i) => `
    <div class="g" style="left:${150 + i * 415}px;top:260px;width:380px;height:420px;padding:48px;display:flex;flex-direction:column;justify-content:flex-end;${i === 3 ? 'background:linear-gradient(160deg,rgba(255,224,110,.72),rgba(255,207,36,.42));' : ''}" data-at="${c[0]}" ${i === 3 ? 'data-hit' : ''}>
      <div class="lab" style="color:${i === 3 ? '#111114' : 'var(--mute)'}">${c[1]}</div><div class="big" style="margin-top:14px">${c[2]}</div></div>`).join('')}
-   <div class="sub" style="left:150px;top:780px;color:#111114" data-at="32.70">You never handle their money.</div>
-   <div class="sub" style="left:150px;top:840px;color:#111114" data-at="34.48">You never touch the technical side.</div>` },
+   <div class="sub" style="left:150px;top:780px;color:#111114" data-at="29.96">You never handle their money.</div>
+   <div class="sub" style="left:150px;top:840px;color:#111114" data-at="31.52">You never touch the technical side.</div>` },
 
- { t: [37.30, 51.45], light: [1800, 280], ox: '50%', html: `
-   <div class="h" style="left:150px;top:280px;width:700px" data-at="37.84"><span class="ln">Partners already</span><span class="ln">know <span class="mk" data-mark="39.12">business owners.</span></span></div>
-   <div class="sub" style="left:150px;top:600px;color:#111114" data-at="48.74"><span class="mk" data-mark="48.74">Free to join.</span></div>
-   <div class="sub" style="left:150px;top:660px" data-at="49.86">No minimum to keep your account.</div>
-   ${[['40.25','EPOS installers','','',''],['41.82','Wholesalers','42.64','Reps in shops every week'],['44.52','Accountants','',''],['45.73','Your high street','46.37','Every business on it']].map((r, i) => `
+ { t: [34.13, 47.84], light: [1800, 280], ox: '50%', html: `
+   <div class="h" style="left:150px;top:280px;width:700px" data-at="34.62"><span class="ln">Partners already</span><span class="ln">know <span class="mk" data-mark="36.03">business owners.</span></span></div>
+   <div class="sub" style="left:150px;top:600px;color:#111114" data-at="45.07"><span class="mk" data-mark="45.07">Free to join.</span></div>
+   <div class="sub" style="left:150px;top:660px" data-at="46.37">No minimum to keep your account.</div>
+   ${[['37.03','POS installers','','',''],['38.40','Wholesalers','42.64','Reps in shops every week'],['41.08','Accountants','',''],['42.06','Your high street','46.37','Every business on it']].map((r, i) => `
    <div class="g" style="left:960px;top:${190 + i * 180}px;width:810px;height:150px;padding:0 50px" data-at="${r[0]}" data-hit>
      <div class="row" style="height:150px"><div class="mid">${r[1]}</div>${r[3] ? `<div class="lab" data-at="${r[2]}">${r[3]}</div>` : ''}</div></div>`).join('')}` },
 
- { t: [51.45, 68.20], light: [960, 140], ox: '50%', html: `
-   <div class="center" style="top:118px" data-at="51.71"><span class="kick" style="position:static;display:inline-flex"><b></b>First, the bonus</span></div>
-   <div class="center" style="top:160px;font:600 40px/1.2 P;letter-spacing:-.02em" data-at="53.09">Every business that goes live earns one.</div>
-   <div class="fig" id="bfig" style="top:262px" data-at="56.48">£100</div>
-   <div class="cond" id="bcond" style="top:458px" data-at="56.48">£0–£20,000 in their first 30 days</div>
-   <div class="cond dim" style="top:510px" data-at="56.48">per merchant that goes live</div>
-   <svg class="climb" id="bsvg" style="left:310px;top:580px" width="1300" height="190" data-at="56.48"><path class="ar"/><path class="ln"/><circle class="dt" r="13"/></svg>
-   <div class="track" style="left:310px;top:800px;width:1300px" data-at="56.48"><i id="bfill"></i></div>
-   ${[[0,'£0'],[0.4,'£20,000'],[0.8,'£40,000+']].map(k => `<div class="tick" style="left:${310 + k[0] * 1300 - 1}px;top:790px" data-at="56.48"></div><div class="tl" style="left:${310 + k[0] * 1300}px;top:830px" data-at="56.48">${k[1]}</div>`).join('')}
-   <div class="knob" id="bknob" style="left:310px;top:803px" data-at="56.48"></div>
-   <div class="center" style="top:880px;font:500 24px/1 P;color:var(--mute)" data-at="56.48">What the business takes in its first 30 days</div>
-   <div class="center" style="top:944px;font:600 34px/1.2 P" data-at="65.84">Every merchant. <span class="mk" data-mark="66.77">No minimum number.</span></div>` },
+ { t: [47.84, 65.56], light: [960, 140], ox: '50%', html: `
+   <div class="center" style="top:118px" data-at="48.10"><span class="kick" style="position:static;display:inline-flex"><b></b>First, the bonus</span></div>
+   <div class="center" style="top:160px;font:600 40px/1.2 P;letter-spacing:-.02em" data-at="49.71">Every business that goes live earns one.</div>
+   <div class="fig" id="bfig" style="top:262px" data-at="53.24">£100</div>
+   <div class="cond" id="bcond" style="top:458px" data-at="53.24">£0–£20,000 in their first 30 days</div>
+   <div class="cond dim" style="top:510px" data-at="53.24">per merchant that goes live</div>
+   <svg class="climb" id="bsvg" style="left:310px;top:580px" width="1300" height="190" data-at="53.24"><path class="ar"/><path class="ln"/><circle class="dt" r="13"/></svg>
+   <div class="track" style="left:310px;top:800px;width:1300px" data-at="53.24"><i id="bfill"></i></div>
+   ${[[0,'£0'],[0.4,'£20,000'],[0.8,'£40,000+']].map(k => `<div class="tick" style="left:${310 + k[0] * 1300 - 1}px;top:790px" data-at="53.24"></div><div class="tl" style="left:${310 + k[0] * 1300}px;top:830px" data-at="53.24">${k[1]}</div>`).join('')}
+   <div class="knob" id="bknob" style="left:310px;top:803px" data-at="53.24"></div>
+   <div class="center" style="top:880px;font:500 24px/1 P;color:var(--mute)" data-at="53.24">What the business takes in its first 30 days</div>
+   <div class="center" style="top:944px;font:600 34px/1.2 P" data-at="63.37">Every merchant. <span class="mk" data-mark="64.27">No minimum number.</span></div>` },
 
- { t: [68.20, 74.95], light: [1780, 980], ox: '50%', html: `
-   <div class="h" style="left:150px;top:380px;width:700px" data-at="68.50"><span class="ln">Introduce</span><span class="ln"><span class="mk" data-mark="69.16">three.</span></span></div>
-   <div class="g" style="left:900px;top:150px;width:870px;height:780px;padding:48px 56px" data-at="68.50">
+ { t: [65.56, 72.39], light: [1780, 980], ox: '50%', html: `
+   <div class="h" style="left:150px;top:380px;width:700px" data-at="65.86"><span class="ln">Introduce</span><span class="ln"><span class="mk" data-mark="66.35">three.</span></span></div>
+   <div class="g" style="left:900px;top:150px;width:870px;height:780px;padding:48px 56px" data-at="65.86">
      <div class="row lab" style="padding-bottom:20px"><span>Your referrals</span><span>Bonus, set by its first 30 days</span></div>
-     ${[['69.16','The Copper Kettle'],['69.77','Marlow Street Deli'],['70.09','Blue Anchor Fish Bar']].map(r => `
+     ${[['66.35','The Copper Kettle'],['67.11','Marlow Street Deli'],['67.45','Blue Anchor Fish Bar']].map(r => `
      <div class="hair"></div><div class="row" style="height:104px" data-at="${r[0]}"><span class="mid" style="font-size:30px">${r[1]}</span><span class="lab" style="color:#111114"><span class="dot"></span>Live · £100–£300</span></div>`).join('')}
      <div class="hair"></div>
-     <div class="big" style="margin-top:64px;font-size:84px" data-at="70.37" data-hit>3 × £100–£300</div>
-     <div class="lab" style="margin-top:20px;font-size:26px" data-at="70.37">each <span class="mk" data-mark="73.67" style="color:#111114">depending on that business</span></div></div>` },
+     <div class="big" style="margin-top:64px;font-size:84px" data-at="67.73" data-hit>3 × £100–£300</div>
+     <div class="lab" style="margin-top:20px;font-size:26px" data-at="67.73">each <span class="mk" data-mark="70.60" style="color:#111114">depending on that business</span></div></div>` },
 
- { t: [74.95, 92.45], light: [140, 200], ox: '50%', html: `
-   <div class="kick" style="left:150px;top:300px" data-at="75.34"><b></b>The second part</div>
-   <div class="h" style="left:150px;top:350px;width:700px" data-at="76.25"><span class="ln">Revenue share.</span><span class="ln"><span class="mk" data-mark="77.78">Condition first.</span></span></div>
-   <div class="g" style="left:900px;top:110px;width:870px;height:860px;padding:48px 56px" data-at="78.97">
+ { t: [72.39, 90.16], light: [140, 200], ox: '50%', html: `
+   <div class="kick" style="left:150px;top:300px" data-at="72.70"><b></b>The second part</div>
+   <div class="h" style="left:150px;top:350px;width:700px" data-at="73.55"><span class="ln">Revenue share.</span><span class="ln"><span class="mk" data-mark="75.02">Condition first.</span></span></div>
+   <div class="g" style="left:900px;top:110px;width:870px;height:860px;padding:48px 56px" data-at="76.29">
      <div class="lab">In any calendar month</div>
-     <div class="cal" style="margin-top:22px"><b data-at="80.87" style="background:var(--yel)">1</b><b data-at="81.28" style="background:var(--yel)">2</b><b data-at="81.71" style="background:var(--yel)">3</b></div>
-     <div class="lab" style="margin-top:18px;color:#111114" data-at="81.71">new active merchants</div>
-     <div style="margin-top:30px" data-at="83.63" data-hit><span class="badge">Active Partner</span></div>
-     <div class="mid" style="margin-top:40px;font-size:30px;line-height:1.35" data-at="85.22">A share of what your merchants' card payments earn NeroPay.</div>
-     <div class="net" style="margin-top:36px" data-at="85.22">${Array.from({ length: 16 }, (_, i) => `<i data-lit="${[3, 9, 12].includes(i) ? '89.53' : '90.41'}" data-new="${[3, 9, 12].includes(i) ? 1 : 0}"></i>`).join('')}</div>
-     <div class="lab" style="margin-top:22px;color:#111114" data-at="90.41"><span class="mk" data-mark="90.79">Every active merchant in your network</span></div></div>` },
+     <div class="cal" style="margin-top:22px"><b data-at="78.23" style="background:var(--yel)">1</b><b data-at="78.68" style="background:var(--yel)">2</b><b data-at="79.28" style="background:var(--yel)">3</b></div>
+     <div class="lab" style="margin-top:18px;color:#111114" data-at="79.28">new active merchants</div>
+     <div style="margin-top:30px" data-at="81.18" data-hit><span class="badge">Active Partner</span></div>
+     <div class="mid" style="margin-top:40px;font-size:30px;line-height:1.35" data-at="82.72">A share of what your merchants' card payments earn NeroPay.</div>
+     <div class="net" style="margin-top:36px" data-at="82.72">${Array.from({ length: 16 }, (_, i) => `<i data-lit="${[3, 9, 12].includes(i) ? '89.53' : '90.41'}" data-new="${[3, 9, 12].includes(i) ? 1 : 0}"></i>`).join('')}</div>
+     <div class="lab" style="margin-top:22px;color:#111114" data-at="88.02"><span class="mk" data-mark="88.40">Every active merchant in your network</span></div></div>` },
 
- { t: [92.45, 104.95], light: [960, 140], ox: '50%', html: `
-   <div class="center" style="top:118px" data-at="92.75"><span class="kick" style="position:static;display:inline-flex"><b></b>Revenue share rate</span></div>
-   <div class="center" style="top:160px;font:600 40px/1.2 P;letter-spacing:-.02em" data-at="92.75">Set by new active merchants each month</div>
-   <div class="fig" id="rfig" style="top:262px" data-at="92.75">0%</div>
-   <div class="cond" id="rcond" style="top:458px" data-at="92.75">Under 3 this month: no revenue share</div>
-   <div class="cond dim" id="rcount" style="top:510px" data-at="92.75">0 new active merchants this month</div>
-   <svg class="climb" id="rsvg" style="left:310px;top:580px" width="1300" height="190" data-at="92.75"><path class="ar"/><path class="ln"/><circle class="dt" r="13"/></svg>
-   <div class="track" style="left:310px;top:800px;width:1300px" data-at="92.75"><i id="rfill"></i></div>
-   ${[[1,'3'],[2,'21'],[3,'36'],[4,'61'],[5,'111+']].map(k => `<div class="tick" style="left:${310 + k[0] / 5 * 1300 - 1}px;top:790px" data-at="92.75"></div><div class="tl" style="left:${310 + k[0] / 5 * 1300}px;top:830px" data-at="92.75">${k[1]}</div>`).join('')}
-   <div class="knob" id="rknob" style="left:310px;top:803px" data-at="92.75"></div>
-   <div class="center" style="top:880px;font:500 24px/1 P;color:var(--mute)" data-at="92.75">New active merchants introduced in the month</div>
-   <div class="center" style="top:944px;font:600 34px/1.2 P" data-at="101.61">Most partners start at 20%: <span class="mk" data-mark="103.86">three a month.</span></div>` },
+ { t: [90.16, 102.97], light: [960, 140], ox: '50%', html: `
+   <div class="center" style="top:118px" data-at="90.46"><span class="kick" style="position:static;display:inline-flex"><b></b>Revenue share rate</span></div>
+   <div class="center" style="top:160px;font:600 40px/1.2 P;letter-spacing:-.02em" data-at="90.46">Set by new active merchants each month</div>
+   <div class="fig" id="rfig" style="top:262px" data-at="90.46">0%</div>
+   <div class="cond" id="rcond" style="top:458px" data-at="90.46">Under 3 this month: no revenue share</div>
+   <div class="cond dim" id="rcount" style="top:510px" data-at="90.46">0 new active merchants this month</div>
+   <svg class="climb" id="rsvg" style="left:310px;top:580px" width="1300" height="190" data-at="90.46"><path class="ar"/><path class="ln"/><circle class="dt" r="13"/></svg>
+   <div class="track" style="left:310px;top:800px;width:1300px" data-at="90.46"><i id="rfill"></i></div>
+   ${[[1,'3'],[2,'21'],[3,'36'],[4,'61'],[5,'111+']].map(k => `<div class="tick" style="left:${310 + k[0] / 5 * 1300 - 1}px;top:790px" data-at="90.46"></div><div class="tl" style="left:${310 + k[0] / 5 * 1300}px;top:830px" data-at="90.46">${k[1]}</div>`).join('')}
+   <div class="knob" id="rknob" style="left:310px;top:803px" data-at="90.46"></div>
+   <div class="center" style="top:880px;font:500 24px/1 P;color:var(--mute)" data-at="90.46">New active merchants introduced in the month</div>
+   <div class="center" style="top:944px;font:600 34px/1.2 P" data-at="99.96">Most partners start at 20%: <span class="mk" data-mark="101.80">three a month.</span></div>` },
 
- { t: [104.95, 110.30], light: [1800, 900], ox: '50%', html: `
-   <div class="h" style="left:150px;top:390px;width:700px" data-at="105.03"><span class="ln">Under three</span><span class="ln">in a month?</span></div>
-   <div class="g" style="left:900px;top:200px;width:870px;height:300px;padding:56px" data-at="106.31"><div class="lab">Revenue share that month</div><div class="big" style="margin-top:26px;color:var(--mute)">None</div></div>
-   <div class="g" style="left:900px;top:540px;width:870px;height:300px;padding:56px" data-at="108.13" data-hit><i class="rule" data-rule="108.48"></i><div class="lab">Your bonuses</div><div class="big" style="margin-top:26px">Paid <span class="mk" data-mark="109.42">either way.</span></div></div>` },
+ { t: [102.97, 108.49], light: [1800, 900], ox: '50%', html: `
+   <div class="h" style="left:150px;top:390px;width:700px" data-at="103.05"><span class="ln">Under three</span><span class="ln">in a month?</span></div>
+   <div class="g" style="left:900px;top:200px;width:870px;height:300px;padding:56px" data-at="104.46"><div class="lab">Revenue share that month</div><div class="big" style="margin-top:26px;color:var(--mute)">None</div></div>
+   <div class="g" style="left:900px;top:540px;width:870px;height:300px;padding:56px" data-at="106.21" data-hit><i class="rule" data-rule="106.48"></i><div class="lab">Your bonuses</div><div class="big" style="margin-top:26px">Paid <span class="mk" data-mark="107.59">either way.</span></div></div>` },
 
- { t: [110.30, 122.00], light: [140, 950], ox: '50%', html: `
-   <div class="h" style="left:150px;top:390px;width:700px" data-at="110.42"><span class="ln">A month might</span><span class="ln">look like this.</span></div>
-   <div class="g" style="left:900px;top:120px;width:870px;height:840px;padding:48px 56px" data-at="110.64">
+ { t: [108.49, 120.43], light: [140, 950], ox: '50%', html: `
+   <div class="h" style="left:150px;top:390px;width:700px" data-at="108.61"><span class="ln">A month might</span><span class="ln">look like this.</span></div>
+   <div class="g" style="left:900px;top:120px;width:870px;height:840px;padding:48px 56px" data-at="108.81">
      <div class="row" style="height:60px;position:relative">
-       <span class="mid" data-at="110.64" data-out="120.09">October</span><span class="mid" style="position:absolute;left:0" data-at="120.09">November</span>
-       <span class="lab" style="color:#111114" data-at="113.05" data-out="120.09">3 of 3 · Active Partner</span><span class="lab" style="position:absolute;right:0;color:#111114" data-at="120.99">0 of 3</span></div>
-     ${[['112.39','The Copper Kettle'],['112.70','Marlow Street Deli'],['113.05','Blue Anchor Fish Bar']].map(r => `
+       <span class="mid" data-at="108.81" data-out="118.71">October</span><span class="mid" style="position:absolute;left:0" data-at="118.71">November</span>
+       <span class="lab" style="color:#111114" data-at="111.05" data-out="118.71">3 of 3 · Active Partner</span><span class="lab" style="position:absolute;right:0;color:#111114" data-at="119.44">0 of 3</span></div>
+     ${[['110.47','The Copper Kettle'],['110.70','Marlow Street Deli'],['111.05','Blue Anchor Fish Bar']].map(r => `
      <div class="hair"></div><div class="row" style="height:92px" data-at="${r[0]}"><span class="mid" style="font-size:28px">${r[1]}</span><span class="lab" style="color:#111114"><span class="dot"></span>Went live</span></div>`).join('')}
-     <div class="hair"></div><div class="row" style="height:92px" data-at="114.27" data-out="120.09"><span class="mid" style="font-size:28px">Bonus × 3</span><span class="lab" style="color:#111114">£100–£300 each, by their first 30 days</span></div>
-     <div class="hair"></div><div class="row" style="height:92px;margin:0 -56px;padding:0 56px" data-at="116.58" data-out="120.09" data-hit><span class="mid" style="font-size:28px">Partner Revenue Share</span><span class="lab" style="color:#111114" data-at="117.84">20% · whole network</span></div>
-     <div class="lab" style="margin-top:40px" data-at="120.99">Last month's merchants stay in your network.</div></div>` },
+     <div class="hair"></div><div class="row" style="height:92px" data-at="112.39" data-out="118.71"><span class="mid" style="font-size:28px">Bonus × 3</span><span class="lab" style="color:#111114">£100–£300 each, by their first 30 days</span></div>
+     <div class="hair"></div><div class="row" style="height:92px;margin:0 -56px;padding:0 56px" data-at="115.08" data-out="118.71" data-hit><span class="mid" style="font-size:28px">Partner Revenue Share</span><span class="lab" style="color:#111114" data-at="116.42">20% · whole network</span></div>
+     <div class="lab" style="margin-top:40px" data-at="119.44">Last month's merchants stay in your network.</div></div>` },
 
- { t: [122.00, 130.05], light: [960, 1000], ox: '50%', html: `
-   <div class="g" style="left:150px;top:110px;width:1620px;height:860px;padding:48px 60px" data-at="122.35">
+ { t: [120.43, 128.26], light: [960, 1000], ox: '50%', html: `
+   <div class="g" style="left:150px;top:110px;width:1620px;height:860px;padding:48px 60px" data-at="120.76">
      <div class="row"><span class="mid">Partner dashboard</span><span class="lab">Referrals</span></div>
-     <div class="row lab" style="margin-top:34px;padding-bottom:18px"><span style="width:620px">Business</span><span style="width:360px" data-at="125.03">Status</span><span style="width:360px;text-align:right" data-at="126.29">Payout</span></div>
+     <div class="row lab" style="margin-top:34px;padding-bottom:18px"><span style="width:620px">Business</span><span style="width:360px" data-at="123.22">Status</span><span style="width:360px;text-align:right" data-at="124.66">Payout</span></div>
      ${[['The Copper Kettle','Live','Bonus paid'],['Marlow Street Deli','Live','Bonus paid'],['Blue Anchor Fish Bar','Live','Pending'],['Halcyon Coffee','Pending','—'],['Saffron Lane Tandoori','Onboarding','—'],['The Old Mill Bakery','Live','Bonus paid']].map((r, i) => `
-     <div class="hair"></div><div class="row" style="height:96px" data-at="${(123.47 + i * 0.1).toFixed(2)}"><span class="mid" style="width:620px;font-size:28px">${r[0]}</span>
-       <span class="lab" style="width:360px;color:#111114" data-at="125.03" ${r[1] === 'Live' ? 'data-hit data-hat="127.01"' : r[1] === 'Pending' ? 'data-hit data-hat="128.00"' : ''}>${r[1] === 'Live' ? '<span class="dot"></span>' : '<span class="dot" style="background:#C9C9CF"></span>'}${r[1]}</span>
-       <span class="lab" style="width:360px;text-align:right;color:#111114" data-at="126.29" ${r[2] === 'Bonus paid' ? 'data-hit data-hat="129.14"' : ''}>${r[2]}</span></div>`).join('')}
+     <div class="hair"></div><div class="row" style="height:96px" data-at="${(121.88 + i * 0.1).toFixed(2)}"><span class="mid" style="width:620px;font-size:28px">${r[0]}</span>
+       <span class="lab" style="width:360px;color:#111114" data-at="123.22" ${r[1] === 'Live' ? 'data-hit data-hat="125.36"' : r[1] === 'Pending' ? 'data-hit data-hat="126.29"' : ''}>${r[1] === 'Live' ? '<span class="dot"></span>' : '<span class="dot" style="background:#C9C9CF"></span>'}${r[1]}</span>
+       <span class="lab" style="width:360px;text-align:right;color:#111114" data-at="124.66" ${r[2] === 'Bonus paid' ? 'data-hit data-hat="127.33"' : ''}>${r[2]}</span></div>`).join('')}
    </div>` },
 
- { t: [130.05, 134.30], light: [1800, 900], ox: '50%', html: `
+ { t: [128.26, 131.68], light: [1800, 900], ox: '50%', html: `
    <div class="plate" style="left:965px;top:120px;width:1000px;height:1000px"><img src="assets/plate-neropay.webp"></div>
-   <div class="h" style="left:150px;top:300px;width:760px" data-at="130.21"><span class="ln" data-at="130.85">Which business</span><span class="ln"><span class="mk" data-mark="131.44">came to mind first?</span></span></div>
-   <div style="position:absolute;left:150px;top:820px;width:780px;font:500 20px/1.45 P;color:var(--mute)" data-at="130.21">Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Full terms at neropay.app/partners.</div>` }
+   <div class="h" style="left:150px;top:300px;width:760px" data-at="128.42"><span class="ln" data-at="128.91">Which business</span><span class="ln"><span class="mk" data-mark="129.48">came to mind first?</span></span></div>
+   <div style="position:absolute;left:150px;top:820px;width:780px;font:500 20px/1.45 P;color:var(--mute)" data-at="128.42">Bonus paid per verified active merchant, £100–£300 based on their total processing volume in their first 30 days. Revenue share requires a minimum of three new active merchants in the same calendar month; the rate depends on how many are introduced that month. Full terms at neropay.app/partners.</div>` }
 ];
-window.OUTRO_AT = 133.90;   /* the locked outro, neropartner lockup: the wordmark is whole as she says "NeroPay Partners" (134.27) and its line slides out on "full details" (135.87) */
-window.DURATION = 142.20;   /* the outro holds its last frame 2.5 s longer, as the NeroConnect explainer */
+window.OUTRO_AT = 131.30;   /* the locked outro, neropartner lockup: the wordmark is whole as she says "NeroPay Partners" (131.65) and its line slides out on "full details" (133.27) */
+window.DURATION = 139.60;   /* the outro holds its last frame 2.5 s longer, as the NeroConnect explainer */
 
 const film = document.getElementById('film'), L = document.getElementById('light');
 const P1 = document.getElementById('p1'), P2 = document.getElementById('p2');
@@ -308,9 +329,30 @@ window.setTime = function (t) {
       const k = outC(clamp((t - at) / 0.9)); c.textContent = c.dataset.int ? String(Math.round(v * k)) : money(v * k); }
   }
   /* ---- the partner scenes */
-  /* "when they go live": the status dot turns green on "live" */
-  const gl = document.getElementById('golive');
-  if (gl) { const on = t > 9.30; gl.style.background = on ? 'var(--live)' : '#C9C9CF'; document.getElementById('golivet').textContent = on ? 'Live · taking payments' : 'Onboarding'; }
+  /* the capsule */
+  const cap = document.getElementById('cap');
+  if (cap) { const at = +cap.closest('[data-at]').dataset.at, live = +cap.dataset.live, k = io(clamp((t - at - 0.1) / Math.max(0.3, live - at - 0.1)));
+    document.getElementById('capfill').style.width = Math.round(k * cap.offsetWidth) + 'px';
+    const f = outC(clamp((t - live) / 0.35));
+    document.getElementById('golive').style.background = t > live ? 'var(--live)' : '#C9C9CF';
+    document.getElementById('capt1').style.transform = `translateY(${Math.round(-34 * f)}px)`; document.getElementById('capt1').style.opacity = 1 - f;
+    document.getElementById('capt2').style.transform = `translateY(${Math.round(34 * (1 - f))}px)`; document.getElementById('capt2').style.opacity = f;
+    document.getElementById('capfill').style.background = t > live ? `linear-gradient(90deg,rgba(47,191,113,${(0.22 * (1 - clamp((t - live - 0.4) / 1.2))).toFixed(3)}),rgba(47,191,113,0))` : '';
+    [0, 0.35].forEach((d, i) => { const r = document.getElementById('ring' + (i + 1)), q = clamp((t - live - d) / 0.9);
+      r.style.opacity = q > 0 && q < 1 ? (1 - q).toFixed(3) : 0; r.style.transform = `scale(${(1 + 3.2 * outC(q)).toFixed(3)})`; }); }
+  /* the money moment */
+  const mf = document.getElementById('mfig');
+  if (mf) { const t1 = +mf.dataset.t100, t3 = +mf.dataset.t300;
+    const g = mf.querySelector('.grow'), w = g.firstElementChild.offsetWidth, o = outC(clamp((t - t3) / 0.45));
+    g.style.width = Math.round(w * o) + 'px';
+    const fill = t < t1 ? 0 : t < t3 ? io(clamp((t - t1) / 0.55)) / 3 : 1 / 3 + (2 / 3) * io(clamp((t - t3) / 0.75));
+    document.getElementById('mfill').style.width = Math.round(fill * 900) + 'px';
+    [1 / 3, 2 / 3, 1].forEach((m, i) => { const on = fill >= m - 0.002; document.getElementById('ml' + i).style.color = on ? '#111114' : '';
+      document.getElementById('mt' + i).style.background = on ? '#111114' : ''; });
+    const hit = t - (t3 + 0.75), gl = hit < 0 ? 0 : hit < 0.15 ? hit / 0.15 : Math.max(0, 1 - (hit - 0.15) / 0.9);
+    document.getElementById('mglow').style.opacity = gl.toFixed(3); document.getElementById('mflash').style.opacity = (0.8 * gl).toFixed(3);
+    document.querySelectorAll('.spark').forEach(sp => { const q = clamp(hit / 0.8), a = +sp.dataset.a * Math.PI / 180, r = 90 * outC(q);
+      sp.style.opacity = hit > 0 && q < 1 ? (1 - q).toFixed(3) : 0; sp.style.transform = `translate(${(Math.cos(a) * r).toFixed(1)}px,${(Math.sin(a) * r).toFixed(1)}px) scale(${(1 - 0.6 * q).toFixed(2)})`; }); }
   /* the network: the new three light first, then every active merchant */
   document.querySelectorAll('[data-lit]').forEach(n => { const k = clamp((t - +n.dataset.lit) / 0.3);
     n.style.background = k <= 0 ? 'rgba(17,17,20,.07)' : +n.dataset.new ? `rgba(255,207,36,${(0.07 + 0.93 * k).toFixed(3)})` : `rgba(255,207,36,${(0.07 + 0.38 * k).toFixed(3)})`; });
@@ -339,9 +381,9 @@ window.setTime = function (t) {
     if (tt >= t1) v = v1; else if (tt > t0) { v = v0 + (v1 - v0) * io((tt - t0) / (t1 - t0)); break; } else break; } return v; };
   /* the Bonus Dial: the business's first-30-day volume travels; the bonus steps on each threshold as she names it */
   const stateAt = {
-    b: tt => seg(tt, [[58.6, 0], [59.7, 19800], [61.85, 19800], [62.25, 23000], [63.2, 23000], [64.5, 39800], [64.75, 39800], [65.15, 46000]]),
+    b: tt => seg(tt, [[55.45, 0], [56.47, 19800], [58.64, 19800], [58.96, 23000], [59.85, 23000], [61.38, 39800], [61.56, 39800], [62.03, 46000]]),
     /* the Rate Climb: new active merchants this month, 0 -> 3 -> 21 -> 36 -> 61 -> 111, every threshold passed, none skipped */
-    r: tt => seg(tt, [[93.1, 0], [93.5, 3], [95.1, 3], [95.45, 21], [95.9, 21], [96.25, 36], [96.7, 36], [97.05, 61], [97.5, 61], [97.85, 111]]) };
+    r: tt => seg(tt, [[90.91, 0], [91.31, 3], [93.08, 3], [93.41, 21], [93.83, 21], [94.19, 36], [94.64, 36], [94.99, 61], [95.30, 61], [95.95, 111]]) };
   module('b', v => Math.min(v, 50000) / 50000,
     v => v >= 40000 ? { v: 300, c: '£40,000+ in their first 30 days' } : v >= 20000 ? { v: 200, c: '£20,000–£39,999 in their first 30 days' } : { v: 100, c: '£0–£20,000 in their first 30 days' },
     x => { const v = x * 50000; return v >= 40000 ? 20 : v >= 20000 ? 85 : 150; },

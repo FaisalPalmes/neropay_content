@@ -56,13 +56,12 @@ const srv = http.createServer((q, r) => { const f = path.join(REPO, decodeURICom
   cues.push({ sfx: 'impact-bass-1', t: +(OUTRO_AT + 0.92).toFixed(3), gain: 0.2, why: 'the sting: the letters meet' });
   cues.push({ sfx: 'sparkle', t: +(OUTRO_AT + 2.05).toFixed(3), gain: 0.07, why: 'the line slides out under the tile' });
   cues.sort((a, b) => a.t - b.t);
-  const mix = { duration: DURATION, head: 0.6, vo: 'data/vo.mp3', target: -14, tp: -3.0,
-    vo_filter: 'acompressor=threshold=-24dB:ratio=2.5:attack=5:release=120:makeup=1,alimiter=limit=0.30:attack=1:release=60:level=false',   /* the v3.3 take is more dynamic (crest 20.7 dB): a compressor and a peak limiter on the voice */
-    /* the bed, per Faisal on v3.5 (24 Sep): too loud and uneven. The track fades itself out from 95 s, and v3.5 looped it at
-       103.35 s, so its own fade played mid-film and then it came back at full level; the ducking pumped between sentences.
-       Now: looped at bar 39 (93.74 s, before its fade), one steady level with no ducking, faded only at the very end.
-       25 Sep: Faisal on v3.6, "way too loud … 20% of the current": gain 0.18 -> 0.036, the voice untouched. */
-    bed: { file: 'video/library/bgm/partner-upbeat-118.mp3', t: 0, gain: 0.036, loop_at: +(28 * 4 * 60 / 117.84).toFixed(3), fade: 3.0 }, cues };   /* the PP01 bed, as low as the NeroConnect v3.6.1 music; looped on bar 28, before its own fade at ~58 s */
+  /* Faisal on v1 (25 Sep): "more dynamic range, it's too flat". The flatness was the chain: a peak limiter on the voice at
+     -10.5 dBFS and then ~11.6 dB of limiting to reach -14 LUFS. Now a gentle compressor and no voice limiter, mastered to
+     -16 LUFS with peaks to -1 dBTP (a normal web level), so the mix keeps her rises and falls. */
+  const mix = { duration: DURATION, head: 0.6, vo: 'data/vo.mp3', target: -16, tp: -1.0,
+    vo_filter: 'acompressor=threshold=-26dB:ratio=1.7:attack=12:release=160:makeup=1',
+    bed: { file: 'video/library/bgm/partner-upbeat-118.mp3', t: 0, gain: 0.0072, loop_at: +(28 * 4 * 60 / 117.84).toFixed(3), fade: 3.0 }, cues };   /* the PP01 bed, as low as the NeroConnect v3.6.1 music; looped on bar 28, before its own fade at ~58 s */
   fs.mkdirSync(path.join(HERE, 'data'), { recursive: true });
   fs.writeFileSync(path.join(HERE, 'data/mix.json'), JSON.stringify(mix, null, 1));
   if (arg('--from') !== null || arg('--to') !== null) { execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', path.join(FR, 'f_%05d.jpg'),
