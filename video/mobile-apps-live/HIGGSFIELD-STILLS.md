@@ -1247,6 +1247,26 @@ The result: her table stands alone in the middle of the frame with open paving a
 Avoid: any change to the table, the tablecloth, the objects on the table, the phone, the screen, the green, her hands, her forearms, her nails, her jewellery or her jumper; her knees pressed together; her legs straight under the table; her legs covering the phone or the table; extra legs or feet; moving or resizing the table; a planter on the right; a whole table on the left; new people; new objects; flowers on the table other than the vase; a different angle or light.
 ```
 
+**C2 edit, second pass (25 Sep 2026).** The first pass put the planter right across the top of the frame, in front of
+her. In C1 the space in front of her table is the open gap in the planters; the planter sits beside her on her right,
+starting level with her table. From her view that is the top-right corner only. This pass also repeats the legs, which
+the first pass left pressed together.
+
+**C2 edit, second pass (attach the edited C2)**
+```
+Edit the attached photograph. Keep the round table with its sage-green linen cloth, everything on it, the phone and its green screen, both of her hands and her forearms in their jumper sleeves exactly as they are, in exactly the same place and size in the frame. Change only these things:
+
+1. In front of her, towards the road, is clear: remove the dark grey planter box with the ivy and the white hydrangeas from the top edge of the frame everywhere except the top-right corner. Across the top-left and top-centre of the frame, beyond the far edge of the table, show open grey clay brick paving in the same running bond, with a few fallen yellow leaves and the same warm low sunlight and long soft shadows as the rest of the paving. Nothing stands in front of her table.
+
+2. The planter stays only in the top-right corner: the end of the long dark grey planter box, spilling with trailing ivy and a cluster of white hydrangeas, cut off by the top edge and the right edge of the frame, beginning about half a metre to the right of her table and running away out of the frame to the right. It is the planter beside her, on her right-hand side, as seen in the wide shot of the café.
+
+3. Her legs, sitting naturally as she does in the wide shot of the café: her upper body still faces the table, but her legs are angled out to her right, relaxed and slightly crossed, her right knee resting over her left, both knees pointing towards the lower right corner of the frame, out beside the table rather than tucked under it. From above we see her thighs in light-wash straight-leg jeans running diagonally from the bottom of the frame towards the lower right, her knees just past the right-hand edge of the tablecloth, the denim creasing naturally at the knee and hip, not pressed together side by side under the table. The woven wicker arms of her chair still show at the bottom of the frame, turned slightly with her.
+
+Keep everything else exactly as it is: the wicker chair cut off by the left edge of the frame, the paving and leaves on the right and left, the camera, the height, the lens, the framing, the light, the colours and the film grain.
+
+Avoid: a planter or plants across the top of the frame, anything in front of her table, a planter on the left, any change to the table, the tablecloth, the objects on the table, the phone, the screen, the green, her hands, her forearms, her nails, her jewellery or her jumper; her knees pressed together; her legs straight under the table; her legs covering the phone or the table; extra legs or feet; moving or resizing the table; new people; new objects; a different angle or light.
+```
+
 **C3. Same POV, the food just served (an edit of your chosen C2: attach it and use an image-edit model)**
 ```
 Edit the attached photograph. Add only these things, as if they have just been served and not yet touched:
