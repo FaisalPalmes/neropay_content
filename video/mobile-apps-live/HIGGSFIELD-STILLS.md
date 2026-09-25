@@ -759,3 +759,128 @@ Use the P1 still prompt as written in §5b.
 ```
 The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Very slow, smooth push-in straight down towards the phone, with no rotation and no shake. The phone lies still on the suede and nothing in the scene moves; the light stays steady. No people, no hands.
 ```
+
+## 10. Café and Athlete: the stills (25 Sep 2026)
+
+Two sequences Faisal chose on 25 Sep 2026. **Café** replaces 9.1 as the opener. It is an FPV drone dive over the
+rooftops that lands overhead on a phone on a terrace table; she taps, the app opens, and the camera pushes into the
+app's hero photo, which becomes the live café. **Athlete** replaces 9.4 and 9.5 as the Join section. He walks up to
+his car's boot, books an evening boxing session over the shoulder, smirks, then opens the boot. Stills first; the
+motion prompts follow once the frames are chosen. Settings as §2: GPT Image 2.5, 16:9, 2k, four per prompt.
+
+**Order of generation.**
+- Café: C2 (the landing) first, then C1 with C2 attached so the terrace below matches, then C3.
+- Athlete: A0 (character sheet), then AL (the empty location), then A1, B and C, each with A0 and AL attached. Add the
+  chosen A1 as a third reference for B and C so the light matches.
+
+**Continuity for Athlete.** Shot A is one clip, and the edit cuts away at his pause and returns to the same take, so
+the two A halves match by construction. B and C carry the same fixed description: the car, the street, the sun behind
+him and low, his outfit, the bag. Casting: Faisal asked for a dark-skinned British athlete for this sequence (25 Sep
+2026), which changes his 24 Sep note in §1 for this shot only.
+
+### Café
+
+**C2. The landing, overhead on a terrace table (generate first; this is the end frame of the dive)**
+```
+Overhead photograph, looking like a real frame shot on film, not a render. The camera points straight down from about 1.2 metres above a small round white marble bistro table on a café terrace on a city pavement, late on a sunny autumn afternoon. The table fills most of the frame; around its edge we see the woven rattan arms of two café chairs, a strip of grey stone paving slabs and, along the upper edge, the scalloped edge of a sage-green canvas awning.
+
+On the table, a smartphone lies flat and face up, left of centre, square to the frame edges, filling about 45% of the frame height. A young woman's right hand comes in from the lower right, her index finger extended and hovering just above the middle of the screen, about to tap; her hand stays below and to the right of the phone and covers no corner. Her left hand rests around a flat white with leaf latte art in a speckled cream ceramic cup at the right of the table. A glossy almond croissant sits on a small mustard-yellow plate at the upper right, with a few flakes of pastry on the marble and a folded linen napkin beside it. All four corners of the screen are clearly visible, with the thin black bezel showing all the way round.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+Her hands: slim, elegant young hands with light skin and a warm undertone, hyper-real texture with fine knuckle creases and a little natural pinkness at the fingertips. Her nails are a fresh gel manicure, short almond shape, glossy cherry red, neat cuticles. A fine gold chain bracelet on her left wrist, the cuff of a cream knit jumper. She is the only person at the table; no face and no head are in the frame.
+
+Light: low warm late-afternoon sun from the upper right falls across the right half of the table, lighting the cup, the croissant and her hand, with long soft shadows towards the lower left. The left half of the table, where the phone lies, is entirely in the soft shade of the awning; the shadow edge runs across the table well clear of the phone, so no sun edge or shadow line crosses the screen. Photographed on a 35mm lens at f/5.6, everything on the table sharp. Natural colour, warm but true, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: faces, a second person at the table, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, neon or glowing green screen, glare, reflections or shadows on the screen, a sun edge across the phone, the hand covering a corner of the phone, green objects near the phone, chipped or unpainted nails, logos, Apple logo, brand names, readable text, writing on the awning, watermarks, extra fingers, deformed hands.
+```
+
+**C1. The top of the dive, over the rooftops (attach your chosen C2 as image 1)**
+```
+Use the attached image (image 1) only for the look of the café terrace far below: the sage-green awning, the white marble tables, the rattan chairs and the late autumn sun. Everything else comes from this prompt.
+
+Aerial photograph from an FPV drone, looking like a real frame from a drone camera, not a render. The drone flies about 40 metres above the rooftops of a city-centre district of converted red-brick Victorian warehouses in the north of England, late on a sunny autumn afternoon, looking forward and down at about 45 degrees. In the foreground and middle distance: pitched slate roofs, flat roofs with skylights, old brick chimney stacks, rusted fire escapes, rooftop vents, and one small roof terrace with a few potted trees. Through the centre of the frame a narrow street runs away from the camera between the buildings like a canyon, and at the bottom of it, small but clear, a café terrace spills onto the pavement: a sage-green canvas awning, about a dozen small white marble tables with rattan chairs, a few people sitting at them, people walking past.
+
+Light: the low golden sun from the upper right rakes across the rooftops, lighting the brick warm orange and the sloping roofs gold, with long shadows falling into the street; the street is partly in shade, with one warm band of sun across the café terrace. A few soft clouds and a pale blue sky at the top edge, faint haze in the distance. No recognisable landmarks, no famous buildings, no towers you could name.
+
+Photographed on an 18mm lens at f/5.6, sharp across the frame, a very slight natural lens distortion at the edges. Natural colour, warm but true, gentle contrast, a little atmospheric haze, fine grain. Photoreal, hyper-realistic.
+
+Avoid: recognisable landmarks, famous buildings, readable signs, shop names, logos, text, writing on the awning, number plates, fisheye distortion, tilt-shift miniature look, toy-town look, CGI, render, video-game look, HDR, oversaturated colour, orange-and-teal grade, oversharpening, warped or bending buildings, watermarks.
+```
+
+**C3. Inside the café (the app's hero photo, then the live shot it becomes)**
+```
+Warm, natural interior photograph of an independent café, looking like a real frame shot on film, not a render. The camera is at counter height, about 60 cm back from the end of a long pastry counter, looking along it into the café, late on a sunny autumn afternoon. In the foreground, sharp: the glass pastry display with rows of glossy almond croissants, pains au chocolat, cinnamon knots and lemon tarts on white ceramic trays, with small price tags too soft to read. The counter front is laid in glossy sage-green zellige tiles; the top is pale oak. Beyond it, soft but readable: a chrome espresso machine with white cups stacked on top, brass pendant lights with warm bulbs, a wall of open oak shelves with jars of coffee beans and trailing plants, and big front windows onto the street with the underside of a sage-green awning outside. Two or three customers in their mid to late twenties sit at small white marble tables by the window, softly out of focus, one of them laughing. No one stands behind the counter.
+
+Light: low golden sun pours through the front windows in warm shafts, catching the steam from a cup and lighting the pastries and the tiles; the rest of the room is in soft, warm shade. Photographed on a 35mm lens at f/2.8, the pastries in the foreground sharp, the room soft with gentle depth. Natural colour, warm but true, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched, like a high-end lifestyle photograph for the café's own app.
+
+Avoid: staff, anyone behind the counter, a card terminal, logos, brand names, readable text, readable price tags, a chalkboard menu with words, signage, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic-looking food, watermarks.
+```
+
+### Athlete
+
+The geography, fixed for every shot:
+- He walks along the pavement towards the back of his car.
+- The car is parked at the kerb with its tailgate towards him.
+- The sun is low, behind him and over his left shoulder.
+
+**A0. His character sheet (generate first)**
+```
+Professional character reference sheet on a plain light-grey studio background, a photograph, not an illustration. One man shown five ways in a clean row with even spacing: a front-facing head-and-shoulders portrait, a three-quarter head-and-shoulders portrait, a left-profile head-and-shoulders portrait, and two full-length views of him standing, from the front and from the back, in the same outfit. Every view is the same person with an identical face, hair, skin tone, build and clothes.
+
+Him: a 25-year-old British man of Black Caribbean heritage, dark brown skin with a warm undertone, a boxer's athletic build: lean, broad shoulders, a strong neck, defined forearms. Handsome in a natural, believable way, the kind of good-looking real person who does well on social media, not a retouched model. A fresh skin fade with a sharp line-up, short textured curls on top, and a neat short beard with a crisp line-up along the cheeks. Dark brown eyes, groomed brows. Hyper-realistic skin: visible pores, a natural sheen on the forehead and cheekbones, subtle variation in tone, fine texture, individual lashes and beard hairs, like an unretouched high-end campaign portrait.
+
+Outfit: a fitted black zip-up technical training jacket, zipped halfway over a plain heather-grey T-shirt, dark charcoal tapered joggers, clean white leather low-top trainers, and a plain black analogue watch on his left wrist. A black canvas duffel gym bag on his left shoulder, with a pair of mustard-yellow boxing hand wraps tucked into its side pocket. No logos anywhere.
+
+Soft, even studio light from the front. A neutral expression in the portraits, with a hint of a smile in the three-quarter view. Photographed on an 85mm lens at f/8, everything sharp. Natural colour, true skin tones. Photoreal, hyper-realistic.
+
+Avoid: a different face between views, illustration, drawing, CGI, render, plastic skin, airbrushed skin, beauty filter, older-looking, wrinkles, logos on the clothes, bag or trainers, brand names, text, labels, watermarks, extra fingers, deformed hands.
+```
+
+**AL. The street and his car, nobody in it (generate second)**
+```
+Photograph of a quiet residential street in a northern English city late on a sunny autumn afternoon, looking like a real frame shot on film, not a render. The camera stands on the wide grey pavement at chest height, looking along it. Just ahead on the right, a modern dark graphite-grey five-door hatchback is parked at the kerb, facing away from the camera, so we see its tailgate and rear window at a slight three-quarter angle. The car is clean with a satin-grey finish, dark tinted rear glass and slim LED tail lights, and it has no badges, no model names and no logos anywhere. The number plate cannot be seen: a low hedge and the angle hide it. Along the left of the pavement, a row of modern red-brick townhouses with dark window frames and black front doors, small front gardens behind low brick walls and neat hedges, and a young tree with orange autumn leaves, a few leaves lying on the pavement. The street is empty of people.
+
+Light: the sun is low behind the camera and to the left, raking along the pavement and warming the brick, the hedges and the car's rear in golden late-afternoon light, with long soft shadows stretching away from the camera. Photographed on a 35mm lens at f/4, the car sharp, the far end of the street soft. Natural colour, warm but true, gentle contrast, real film grain. Photoreal, hyper-realistic.
+
+Avoid: people, car badges, a car maker's logo, a number plate, readable text, house numbers, street signs, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, watermarks.
+```
+
+**A1. Walking to the boot (image 1: A0; image 2: AL)**
+```
+Use the man in image 1 (his character sheet) for his face, hair, skin tone, build, clothes and bag, exactly as they are there. Use image 2 for the car, the street and the light, exactly as they are there. Everything else comes from this prompt.
+
+Candid photograph, a frame from a moving shot in a real commercial, looking like it was shot on film, not a render. A medium shot, from the top of his head to his hips, of the man from image 1 walking along the pavement of the street from image 2 late on a sunny autumn afternoon, towards the back of his dark graphite-grey hatchback, which is parked at the kerb just ahead of him. The camera travels alongside him at chest height, slightly ahead, so we see him from a three-quarter front angle, walking from frame left towards frame right; the tailgate and rear window of the car fill the right edge of the frame, softly out of focus. His black canvas duffel gym bag hangs from his left shoulder, the mustard-yellow hand wraps showing in its side pocket. He holds his smartphone in his right hand at chest height, the back of the phone towards the camera, and looks down at it mid-stride, relaxed and focused. Behind him, soft: the red-brick townhouses, the hedges and the young tree with orange leaves.
+
+Light: the sun is low behind him, over his left shoulder, rimming his head, shoulders and the edge of the bag with warm gold light; his face is in soft, warm open shade with light bouncing up from the pavement. Photographed on a 50mm lens at f/2.8, him sharp, the background softly out of focus. Natural colour, true dark skin tones with a healthy sheen, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: a different man from image 1, a different car from image 2, a second person, logos on the clothes, bag or car, car badges, a number plate, brand names, readable text, the phone screen facing the camera, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, beauty filter, extra fingers, deformed hands.
+```
+
+**B. Over the shoulder, booking (image 1: A0; image 2: AL; image 3: your chosen A1)**
+```
+Use image 1 (his character sheet) for his skin tone, hand, jacket, hair and bag strap, exactly as they are there. Use images 2 and 3 for the car, the street and the light, exactly as they are there. Everything else comes from this prompt.
+
+Candid over-the-shoulder photograph, a frame from a real commercial, looking like it was shot on film, not a render. The man stands still on the pavement just behind the tailgate of his dark graphite-grey hatchback, facing the car, looking down at the smartphone in his right hand. The camera is just behind and above his right shoulder, about 30 cm away, looking down past the shoulder onto the phone at about 30 degrees. In the upper left, softly out of focus: the back of his right shoulder in the black training jacket, the side of his neck and the edge of his fresh skin fade. His face is not in the frame. The strap of the black duffel bag crosses his left shoulder.
+
+How he holds it: one-handed, the phone upright in his right hand, held close in front of his chest with his elbow tucked against his side, which keeps it steady. The phone rests across his palm and the base of his fingers, his four fingers wrapped around the left edge with their tips just showing, his little finger under the back near the bottom, and his thumb lifted just above the lower half of the screen, about to tap. The phone is the true size of a 6.1-inch phone in a grown man's hand, in the centre of the frame, filling about 45% of the frame height, the screen tilted up towards his eyes and seen by the camera at a slight angle, within about 30 degrees of facing the lens. All four corners of the screen are clearly visible, with the thin black bezel showing all the way round; no finger covers a corner or lies along an edge.
+
+The screen shows a solid, flat, matte broadcast chroma-key green (#00B140) from edge to edge, at the brightness of a real phone screen, not glowing or neon, evenly lit, with no interface, no icons, no text, no notch, no punch-hole camera, no glare, no reflections and no shadows across it. The phone: a modern unbranded smartphone, about 6.1 inches, a dark graphite aluminium frame, flat glass front, thin even black bezels, softly rounded corners, no logo anywhere.
+
+His hand: dark brown skin with a warm undertone and lighter palms, real texture, visible knuckle creases, short clean nails, the black cuff of the training jacket at his wrist. Beyond the phone, softly out of focus: the tailgate and dark rear window of the graphite hatchback, holding only a soft warm reflection of the sky, and a strip of grey pavement.
+
+Light: the sun is low behind him, over his left shoulder, lighting the back of his shoulder and neck gold. The phone is in the soft shade of his own body, so the screen is evenly lit, with no sun or shadow edge across it. Photographed on a 50mm lens at f/2.8, the phone and thumb sharp, the car soft. Natural colour, true skin tones, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: his face, a second person, a reflection of a person in the car's glass, car badges, a number plate, logos, Apple logo, brand names, readable text, AI-generated look, CGI, render, HDR, oversaturated colour, oversharpening, plastic skin, neon or glowing green screen, glare, reflections or shadows on the screen, sunlight on the screen, fingers covering the screen corners, an oversized hand, fingers pinching the phone, extra fingers, deformed hands.
+```
+
+**C. His face, from the phone (image 1: A0; image 2: your chosen A1)**
+```
+Use the man in image 1 (his character sheet) for his face, hair, beard, skin tone and jacket, exactly as they are there. Use image 2 for the street and the light. Everything else comes from this prompt.
+
+Candid close-up photograph, a frame from a real commercial, looking like it was shot on film, not a render. A close-up of the man's face and shoulders seen from where his phone is: the camera is at the height of his chest, about 35 cm in front of him, looking up at his face at a gentle angle of about 15 degrees. His eyes are lowered to the phone just below the lens, focused, and the corner of his mouth is just beginning to lift into a small, satisfied smirk; he is not posing and not looking into the lens. His face sits slightly left of centre, from the top of his head to the zip of his black training jacket, with the bag strap across his left shoulder. Behind him, soft and out of focus: the upper floors of the red-brick townhouses, the orange leaves of the young tree and a warm, pale-gold late-afternoon sky.
+
+Light: the low sun is behind him over his left shoulder, drawing a warm gold rim along the edge of his head, ear, beard and shoulder. His face is in soft, warm open shade, with a faint cool-white glow from the phone screen on his cheekbones, nose, lips and under his eyes, and small real catchlights from the screen in his eyes. Hyper-realistic skin: visible pores, a natural sheen on the forehead and cheekbones, fine texture, individual lashes and beard hairs. Photographed on a 50mm lens at f/2, his eyes sharp, the background a smooth blur. Natural colour, true dark skin tones, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: a different man from image 1, looking straight into the lens, a posed smile, a big grin, showing teeth, a steep low angle up the nostrils, a double chin, wide-angle distortion, the phone in frame, a second person, logos, brand names, readable text, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, airbrushed skin, beauty filter.
+```
