@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Build the draft "neroconnect" lockup from the supplied wordmark's own letters. PREVIEW, not a kit asset.
 
-    python3 brand/sting/connect-mark.py   ->  brand/sting/neroconnect-light.png (+ prints the letter runs)
+    python3 brand/sting/connect-mark.py            ->  brand/sting/neroconnect-light.png (+ prints the letter runs)
+    python3 brand/sting/connect-mark.py partner    ->  brand/sting/neropartner-light.png (25 Sep 2026, the partner explainer:
+                                                        p and a are the artwork's own yellow letters, r n e recoloured, t built)
 
 Nothing is typeset. "nero" is the supplied artwork untouched. In "connect", o, n and e are the artwork's own
 letters recoloured the way "pay" is drawn (yellow fill inside a 4px ink contour). The artwork has no c and no t, so:
@@ -40,13 +42,19 @@ def yellow(m):                                       # fill inside a 4px contour
     rgb = ink * (1 - f[..., None]) + yel * f[..., None]
     return np.dstack([rgb, m * 255])
 def dark(x0, x1): s = src[:, x0:x1 + 1].copy(); return np.vstack([np.zeros((ASC, s.shape[1], 4), np.float32), s])
+import sys
+WORD = sys.argv[1] if len(sys.argv) > 1 else 'connect'
+def art(x0, x1): s_ = src[:, x0:x1 + 1].copy(); return np.vstack([np.zeros((ASC, s_.shape[1], 4), np.float32), s_])
+r = glyph(365, 475)
+LET = {'c': lambda: yellow(pad(c)), 'o': lambda: yellow(pad(o)), 'n': lambda: yellow(pad(n)), 'e': lambda: yellow(pad(e)),
+       't': lambda: yellow(t), 'r': lambda: yellow(pad(r)),
+       'p': lambda: art(656, 827), 'a': lambda: art(835, 1005)}      # the artwork's own yellow p and a, untouched
 GAP = 9
-parts = [dark(10, 181), dark(191, 357), dark(365, 475), dark(479, 647)]
-parts += [yellow(pad(c)), yellow(pad(o)), yellow(pad(n)), yellow(pad(n)), yellow(pad(e)), yellow(pad(c)), yellow(t)]
+parts = [dark(10, 181), dark(191, 357), dark(365, 475), dark(479, 647)] + [LET[ch]() for ch in WORD]
 H = parts[0].shape[0]; W = sum(p.shape[1] for p in parts) + GAP * (len(parts) - 1) + 20
 out = np.zeros((H, W, 4), np.float32); x = 10; runs = []
 for p in parts:
     out[:, x:x + p.shape[1]] = np.where(p[..., 3:] > out[:, x:x + p.shape[1], 3:], p, out[:, x:x + p.shape[1]])
     runs.append([x, x + p.shape[1]]); x += p.shape[1] + GAP
-Image.fromarray(np.clip(out, 0, 255).astype(np.uint8)).save(HERE / 'neroconnect-light.png')
+Image.fromarray(np.clip(out, 0, 255).astype(np.uint8)).save(HERE / f'nero{WORD}-light.png')
 print(W, H, runs)

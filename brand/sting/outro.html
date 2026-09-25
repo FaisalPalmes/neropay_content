@@ -59,7 +59,10 @@ const MARKS = {
   neropay:     { src: '../logos/neropay-light-1200.png', w: 1200, h: 219, cy: 109.5,
                  runs: [[9,181],[191,358],[365,476],[478,648],[655,828],[834,1006],[1013,1191]] },
   neroconnect: { src: 'neroconnect-light.png', w: 1845, h: 255, cy: 145.5,
-                 runs: [[10,182],[191,358],[367,478],[487,656],[665,820],[829,998],[1007,1179],[1188,1360],[1369,1536],[1545,1700],[1709,1835]] } };
+                 runs: [[10,182],[191,358],[367,478],[487,656],[665,820],[829,998],[1007,1179],[1188,1360],[1369,1536],[1545,1700],[1709,1835]] },
+  /* ?mark=neropartner: the partner explainer's lockup (25 Sep 2026), same build; p and a are the artwork's own */
+  neropartner: { src: 'neropartner-light.png', w: 1759, h: 255, cy: 145.5,
+                 runs: [[10,182],[191,358],[367,478],[487,656],[665,837],[846,1017],[1026,1137],[1146,1272],[1281,1453],[1462,1629],[1638,1749]] } };
 const M = MARKS[Q.get('mark')] || MARKS.neropay, RUNS = M.runs;
 const CX = W / 2, CY = H / 2, K = Math.min(800 / 1200, (W - 120) / M.w), WMW = M.w * K, WMH = M.h * K, S = 360;
 const WX = CX - WMW / 2, WY = CY - M.cy * K;
