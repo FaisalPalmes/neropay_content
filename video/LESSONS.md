@@ -417,6 +417,21 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    monotone cubic, so speed only reaches zero where the direction actually reverses. Screen changes, taps and
    lifts stay as tweens on top of it.
 
+## Mobile Apps live action, pilot (25 Sep 2026) — Faisal's note
+
+1. **"So jittery and wiggly … the outline is blurred out."** The screen was re-found on every frame from a thresholded
+   green mask (whole pixels, morphology), then smoothed with a 5-frame average. That sat about 4.5px off the true edge
+   on average (38px on the frames where glare fooled it) and lagged the phone, so the screen swam on the glass. The
+   blurred matte, a 1.5% overscan and a 1912→1920 rescale softened the edge on top. I had checked stills, never
+   motion. Rule: fit each screen edge to sub-pixel crossings (`tools/track_screen.py`), smooth only lightly
+   (Savitzky-Golay 5), cut the screen as its measured rounded rectangle drawn at 3x, keep the plate's size, and before
+   sending **measure the rendered edge against the plate's edge on every frame** and state the number. v2: median
+   0.35px, 95% within 1px, zero green pixels left.
+2. **The video model paints onto the green.** Kling added a notch that fades in over the first second, a fake status
+   bar, a home bar and moving glare, even with the screen-lock prompt. Rule: never let the green key decide what sits in
+   front of the screen; only skin does. Draw the notch into the app so it is locked and clean, and trim the frames
+   where the model is still changing the phone.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on
