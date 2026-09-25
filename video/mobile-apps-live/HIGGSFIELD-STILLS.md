@@ -924,6 +924,89 @@ Light: bright late-morning daylight pours in through the front windows, clean an
 Avoid: a styled showroom, everything neatly arranged inside the frame, staff, anyone behind the counter, a card terminal, a till, logos, brand names, readable text, readable price cards, printed bags, a chalkboard menu with words, signage, writing on the windows, golden hour, sunset, orange light, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic-looking food, watermarks.
 ```
 
+### Café v3: the static opener (25 Sep 2026; replaces C1a, C1b and C3)
+
+Faisal scrapped the FPV dive. The café sequence is now three shots:
+
+| # | Shot | Edit | What happens |
+|---|---|---|---|
+| W1 | Wide, front-on from across the street, static | 0–2.5 s | She has just arrived: bag, sunglasses and water on the table, no food. She uses her phone. At about 2.5 s a passer-by crosses right in front of the lens and the frame goes dark. |
+| E2 | Her POV of the empty table (an edit of the chosen C2) | 2.5–5.5 s | Cut on the dark frame. Tap 1: the Sage & Co icon on her home screen. The app opens on "Welcome back, your usual". Tap 2: "Order to table", then the confirmation. |
+| E3 | Same POV, food on the table (an edit of the chosen C2) | 5.5–7 s | A hard cut on the confirmation sound: same framing, the food is there, the screen says "Enjoy". She lifts her finger and picks up her fork. |
+
+- **"Your usual"** gets the order done in two taps. It is also the loyalty point a café owner cares about.
+- **The food appears on a jump cut** between two identical frames, never generated in Kling.
+- **The shopfront's fascia sign is left blank** in the still. "Sage & Co" is added in post, so the café and the app
+  read as one business without AI lettering.
+
+**W1. The wide, front-on from across the street (new still)**
+```
+Candid street photograph of a café terrace, looking like a real frame from a film camera on a tripod, not a render. Framing, like a real photograph: nothing needs to be fully in the frame; the shopfront, the awning, the tables, the chairs and the people are cut by the frame edges and hide parts of each other, as in a real, unposed shot.
+
+The camera: on the far pavement across a narrow street, at standing eye level (about 1.6 metres), pointing straight at the café, square to its shopfront, level, not tilted. Static, locked-off on a tripod. A 35mm lens at f/4.
+
+Composition by the rule of thirds: the woman sits at the lower-left third of the frame; her head and the phone in her hands sit on the intersection one third in from the left edge and two thirds down from the top. The café's shopfront and awning fill the upper two thirds of the frame. The street runs along the bottom sixth.
+
+The café, left to right across the frame: a single-storey shopfront of sage-green painted timber with slim mouldings. Along the top, a plain sage-green timber fascia sign board runs the full width of the shopfront, completely blank, with no lettering, logo or picture on it. Below it, three tall windows with thin timber glazing bars, and on the right a glazed sage-green door with a brass handle. Through the glass, softly: warm brass pendant lights, a pale oak counter with a glass pastry cabinet, shelves of jars and plants, and a couple of people inside. Below the fascia, a sage-green canvas awning projects about 3 metres out over the pavement, ending in a scalloped hem above the front row of tables. The awning sits below the fascia and does not hide it. Above the shopfront, the lower edge of red-brick upper floors with a tall sash window, cut by the top of the frame.
+
+The terrace, between the shopfront and the kerb: two rows of small round white Carrara marble bistro tables on black cast-iron bases, with bamboo-framed rattan bistro chairs woven in cream and dark green. The front row sits about one paving slab back from the granite kerb. Paving of pale grey sandstone slabs.
+
+Her table: the front-row table at the left third of the frame. She sits behind it in a rattan chair with her back to the café's window, facing the street and the camera.
+
+Her: a woman in her mid-twenties, slim and fit, attractive and photogenic in a natural, believable way, not a retouched model. Light skin with a warm undertone, fresh natural makeup, soft brows. Long, glossy chestnut-brown hair, freshly blow-dried, falling over her shoulders. Hyper-realistic skin: visible pores, fine peach fuzz, subtle variation in tone. She wears an oversized chunky cream cable-knit jumper with the sleeves pushed up to her forearms, light-wash straight-leg jeans and clean white leather trainers. Her nails are a fresh gel manicure, medium-length almond shape, glossy light pink with fine gold line-art. A fine gold chain bracelet on her left wrist, a thin gold ring on her right hand. She has just sat down: relaxed, her forearms resting on the table, holding her phone in her left hand low over the table, her right index finger reaching for its screen, the back of the phone towards the camera. She looks down at it with a small, easy smile.
+
+On her table, and nothing else: her compact tan leather crossbody bag with a gold clasp at the table's right side (her left), its thin strap hanging over the edge; a pair of folded tortoiseshell sunglasses beside it; a clear glass water carafe and a half-full clear tumbler towards the front of the table. No food, no plates, no other drinks.
+
+Around her, from the camera's point of view: a large round terracotta planter of lavender to the left of her chair (her right), and in front of it a black cast-iron lamp post at the kerb edge, rising out of the top of the frame. The empty neighbouring marble table is to the right of hers (her left), with a rattan chair tucked under it. In the back row and further right, softly: two or three other customers in their mid to late twenties at their tables, one couple talking over coffee.
+
+The street: along the bottom of the frame, the granite kerb on the café's side, the worn double yellow line beside it, a cast-iron drain grate with a few fallen leaves in the gutter, and a strip of empty dark asphalt road. No cars in front of the café.
+
+Light: late morning on a bright, clear, sunny autumn day, the sun high and slightly behind the café, only slightly warm, not golden hour. The shopfront and the terrace under the awning are in clean, bright open shade, with a soft rim of sunlight on her hair; the awning's scalloped hem throws its shadow onto the paving just in front of the front row of tables; the kerb and the road are in full sun. Natural colour, true whites, clean and fresh, gentle contrast, real film grain. Photoreal, hyper-realistic, unretouched.
+
+Avoid: any lettering, logo or picture on the fascia sign, readable text anywhere, writing on the awning or windows, shop names, logos, food on her table, other drinks on her table, her hand on her face, looking into the camera, her in the centre of the frame, a tilted or angled camera, a wide city view, a car in front of the café, readable number plates, everything neatly arranged inside the frame, golden hour, sunset, orange light, AI-generated look, CGI, render, HDR, oversaturated colour, orange-and-teal grade, oversharpening, plastic skin, beauty filter, older-looking people, chipped or unpainted nails, watermarks, extra fingers, deformed hands.
+```
+
+**E2. Her POV, the empty table (an edit of the chosen C2: attach it and use an image-edit model)**
+```
+Edit the attached photograph. Make only these changes:
+1. Remove the plate of food and the fork and knife on it completely. Where the plate was, show clean bare white Carrara marble with its natural grey veining, continuing the veins around it, with no crumbs, stains or shadow left behind.
+2. Remove the glass of iced matcha and its straw completely, showing bare marble where it stood.
+3. Lift her right index finger off the screen so that it hovers about one centimetre above the upper half of the screen, relaxed, about to tap, with its shadow soft on the screen's black bezel only. The rest of her right hand stays where it is, below the phone.
+
+Keep everything else exactly as it is, pixel for pixel where possible: the camera angle and framing, the phone and its flat chroma-key green screen with all four corners and the black bezel visible, her left hand and how it holds the phone, her nails, bracelet and ring, the cream jumper sleeves, her jeans, the rattan armrests, the tan bag and its strap, the tortoiseshell sunglasses, the water carafe and the tumbler, the neighbouring table, the planter, the black post, the paving, the kerb, the double yellow line, the drain grate, the awning's hem and the light.
+
+Avoid: any change to the phone, the screen or the green, anything on the screen, a new object, a napkin, a menu, crumbs, a ring of liquid, changes to her hands or nails, changes to the light, a different angle.
+```
+
+**E3. Same POV, the food just served (an edit of the chosen C2: attach it and use an image-edit model)**
+```
+Edit the attached photograph. Make only these changes, so the brunch looks as if it has just been served and not yet touched:
+1. Both slices of toasted sourdough whole, with no corner cut off and no bite taken.
+2. The poached egg whole and unbroken, soft and glossy, with no yolk running out; the whipped ricotta and the roasted cherry tomatoes on the vine neat on top, with a light drizzle of olive oil, cracked black pepper and flaky salt.
+3. No crumbs on the plate or on the marble.
+4. The fork and the knife with brushed-brass handles lying clean, side by side, on the right-hand rim of the plate, unused.
+5. The iced matcha glass full, the ice cubes clear, the straw straight.
+
+Keep everything else exactly as it is, pixel for pixel where possible: the camera angle and framing, the phone and its flat chroma-key green screen with all four corners and the black bezel visible, both of her hands and her pressing finger, her nails, bracelet and ring, the cream jumper sleeves, her jeans, the rattan armrests, the tan bag, the sunglasses, the carafe and tumbler, the plate's position, the neighbouring table, the planter, the black post, the paving, the kerb, the road, the awning's hem and the light.
+
+Avoid: any change to the phone, the screen or the green, anything on the screen, moving the plate, extra food, a napkin, changes to her hands or nails, changes to the light, a different angle.
+```
+
+**W1 motion (5 s; 2–3 takes)**
+```
+Static, locked-off camera on a tripod; the camera does not move at all. She sits at her table using her phone: her right index finger taps the screen once, she scrolls with it, glances up at the street for a moment, then looks back down at the phone with a small smile. Behind her, the other customers talk and move naturally, and a leaf drifts along the pavement. At about two and a half seconds, a man in a dark navy wool coat walks quickly across the frame from right to left, very close to the lens, within half a metre of it, so that for about half a second his out-of-focus dark coat fills the whole frame and it goes almost completely dark. He passes out of frame on the left, and the café terrace is seen again, unchanged. Only that one person passes the camera. Natural, unhurried, realistic movement; the hands keep five fingers throughout.
+```
+
+**E2 motion (5 s; 2–3 takes)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level, its base resting on the table; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right hand moves. At about one second her index finger taps the upper half of the screen once, a clear, deliberate press and lift, then hovers. At about three seconds it taps the lower middle of the screen once, a clear, deliberate press and lift, then hovers just above the screen for the rest of the clip. The finger never covers a corner of the screen or lies along its edge. Nothing else on the table moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+**E3 motion (5 s; one take)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. At about half a second her right index finger lifts off the screen, and her right hand moves away to the right, below the phone, and picks up the brass-handled fork from the rim of the plate, holding it naturally. A faint wisp of steam rises from the poached egg; the ice in the matcha glints. Nothing else moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
 ### Athlete
 
 The geography, fixed for every shot:
