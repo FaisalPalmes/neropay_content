@@ -117,6 +117,10 @@ black bezel, on every frame.
   - No sun edge or shadow edge crosses the screen.
   - Nothing green is near the phone.
 - **Generate 2–3 takes of every screen clip.** The local session tracks them and keeps the steadiest.
+- **Props go where a person would really use them** (Faisal, 26 Sep 2026, for all future work). Food and drink sit
+  directly in front of the person and within reach, even under the phone or beside the hands, never off to the side
+  of the table to keep clear of the phone. The phone stays on top, so its bezel is still clear for the tracker.
+  Nothing is placed for the camera's convenience at the cost of how people actually sit, eat and hold things.
 
 ## 4. The cast
 
@@ -1331,6 +1335,25 @@ Edit image 1. Add only these two things, as if they have just been served and no
 Keep exactly as they are, pixel for pixel: the camera, the framing, the table and its tablecloth texture and folds, the carafe, the vase of flowers, the tumbler, the tan bag and its strap, the phone and its flat chroma-key green screen with all four corners and the black bezel visible, both of her hands and her pressing finger, her nails, bracelet and ring, the cream jumper sleeves, her jeans, her chair, the chair at the left edge, the planter, the paving, the leaves, the light and the shadows.
 
 Avoid: the plate touching, overlapping or covering the phone, anything on the screen, any change to the phone, the screen or the green, moving or resizing any existing object, cut or eaten food, a broken yolk, crumbs, a napkin, extra dishes, cutlery elsewhere, changes to her hands or nails, changes to the light, a different angle.
+```
+
+**C3 v2, 26 Sep 2026.** The first C3 put the plate off to her right, where nobody eats; Faisal had already asked for
+the plate close to her. The standing rule is now in §3: food and drink sit where the person would eat them, directly
+in front of them and within reach, even under the phone or beside the hands. The phone stays on top, so its bezel is
+still clear for the tracker. Her hands stay exactly where they are, at the same place and height, so the cut from C2
+to C3 is seamless.
+
+**C3 edit v2 (image 1: the final C2)**
+```
+Edit image 1. Add only her brunch and her drink, set down by the waiter right in front of her, as if they have just been served and not yet touched. Keep her hands, the phone and everything else exactly where they are.
+
+1. The plate goes directly in front of her, in the middle of her side of the table, where she would eat: a round speckled oatmeal stoneware plate about 26 cm across, centred on her, its near rim just beyond her wrists and between her two forearms, so that the phone and her hands are held just above the plate and overlap it. The phone stays on top of the plate: the plate passes underneath it, the whole phone with all four corners and its full black bezel stays visible, and no food rises over the phone's edge. On the plate: two whole slices of toasted sourdough topped with whipped ricotta, roasted cherry tomatoes on the vine and a whole, unbroken soft poached egg, finished with a light drizzle of olive oil, cracked black pepper and flaky salt; part of the toast and a few tomatoes show on each side of the phone and beyond its top edge. A clean fork and knife with brushed-brass handles lie side by side on the table just to the right of the plate, beside her right hand, handles towards her. The plate sits flat on the linen with a soft shadow, and the phone and her hands cast soft shadows onto the food.
+
+2. The drink goes within her reach, on her right, just beyond the plate and close to it: an iced matcha latte in a clear, straight-sided glass, a soft milky pale jade green over white milk, full, with clear ice cubes and a plain white paper straw, with its soft shadow on the linen.
+
+Keep exactly as they are, pixel for pixel: her hands and their exact position and height, her pressing finger, her nails, bracelet and ring, the phone and its flat chroma-key green screen, the cream jumper sleeves, her jeans, her chair, the camera, the framing, the table and its tablecloth texture and folds, the carafe, the vase of flowers, the tumbler, the tan bag and its strap, the chair at the left edge, the planter, the paving, the leaves, the light and the shadows.
+
+Avoid: the plate or food off to the side of the table, the plate at the far edge of the table, food or anything covering the phone or its screen, food rising over the phone's edge, any change to the phone, the screen or the green, moving her hands or changing their height, moving or resizing any existing object, cut or eaten food, a broken yolk, crumbs, a napkin, extra dishes, changes to her hands or nails, changes to the light, a different angle.
 ```
 
 **C2 motion, final (5 s; 2–3 takes; start frame: the final C2)**

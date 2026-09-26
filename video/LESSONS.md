@@ -456,6 +456,12 @@ delivery formats, the sandbox pipeline, what a finished cut looks like); this fi
    `full_chroma_int`, and unmix edge pixels. Subtract the local clean green in the skin's share, add the app in the
    rest, and snap that share to the luma edges with a guided filter (`comp_screen.py`).
 
+7. **"The food appeared on the side where it would not naturally be."** To keep the phone clear I put the plate off to
+   her right, although Faisal had already asked for it close to her. Rule, for all future work: props go where a
+   person would really use them. Food sits right in front of them and a drink within reach, even under the phone or
+   beside the hands. The phone stays on top, and its bezel is all the tracker needs. Never trade realism for the
+   compositing's convenience without asking.
+
 ## Standing rules for every edit
 
 - Build and `npx hyperframes check` locally against placeholders; render draft in the Higgsfield sandbox on
