@@ -1267,6 +1267,27 @@ Keep everything else exactly as it is: the wicker chair cut off by the left edge
 Avoid: a planter or plants across the top of the frame, anything in front of her table, a planter on the left, any change to the table, the tablecloth, the objects on the table, the phone, the screen, the green, her hands, her forearms, her nails, her jewellery or her jumper; her knees pressed together; her legs straight under the table; her legs covering the phone or the table; extra legs or feet; moving or resizing the table; new people; new objects; a different angle or light.
 ```
 
+**C2 texture pass, 26 Sep 2026.** Faisal approved the layout. What read as AI:
+- The leaves were all the same golden five-point star, spread evenly like a pattern.
+- The tablecloth had a soft, smeared texture.
+
+This pass changes only those two things.
+
+**C2 texture pass (image 1: the approved-layout C2)**
+```
+Edit image 1. Keep the layout exactly as it is: the camera, the framing, the table's position and size, the tablecloth's shape and folds, everything on the table, the phone and its green screen, her hands, her sleeves, her lap, her chair, the chair at the left edge, the planter in the top-right corner, the light and the shadows. Change only the surface texture of the paving, the fallen leaves and the tablecloth, so that they look like a real, sharp photograph.
+
+1. The fallen leaves: far fewer, and each one different. About fifteen to twenty leaves across the whole visible paving, not a pattern. Real London plane leaves in mixed sizes, from palm-sized to small, with broad, uneven lobes and long stalks, not neat five-point stars. Mixed colours and states: a few still yellow-green, some butter-yellow, some tan and brown, two or three dark brown and crumpled or curled at the edges, one torn, one lying face-down showing its paler underside. Some flat, some curled and casting small shadows. They lie where the wind would leave them: a few caught in the joints between the bricks, a small drift of three or four against the base of the planter and the leg of the chair, a few alone in the open, and the paving between them bare. None float, none repeat.
+
+2. The paving: real grey clay brick pavers in a running bond, sharp and in focus, each brick a slightly different grey with subtle warm and cool variation, worn and slightly rounded edges, a few chipped corners, fine surface grit and specks, faint dark weathering stains and a paler scuff where chairs are dragged. The joints are narrow and uneven, filled with dark sand, dust and a little moss in one or two places. The paving has the texture of a real, used high-street terrace, not a clean render.
+
+3. The tablecloth: the same muted, greyish sage-green linen, in exactly the same shape and folds, but sharp and real: a crisp, visible linen weave with slightly irregular slub threads, fine natural wrinkles and a few soft creases from being folded, a slightly heavier drape at the edges, and the sunlight showing the texture of the fabric clearly. No smeared, blurry or painted-looking areas; the fabric is as sharp as the objects standing on it.
+
+Photographed on a 35mm lens at f/5.6: the table, the paving and the leaves all equally sharp, fine natural film grain, true colour, no smoothing.
+
+Avoid: evenly scattered leaves, identical leaves, star-shaped leaves, a repeating pattern, too many leaves, glowing leaves, floating leaves, a clean or plastic-looking floor, perfectly uniform bricks, a blurry, smeared, soft or painted tablecloth, moving or resizing anything, changes to the phone, the screen or the green, changes to her hands, nails or clothes, new objects, a different angle or light.
+```
+
 **C3. Same POV, the food just served (an edit of your chosen C2: attach it and use an image-edit model)**
 ```
 Edit the attached photograph. Add only these things, as if they have just been served and not yet touched:
