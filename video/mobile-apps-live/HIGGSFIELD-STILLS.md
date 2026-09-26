@@ -1309,6 +1309,40 @@ The phone screen stays a solid, flat, matte chroma-key green for the entire clip
 The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. At about half a second her right hand moves away to the right, below the phone, and picks up the brass-handled fork from the rim of the plate, holding it naturally. A faint wisp of steam rises from the poached egg; the ice in the matcha glints. Nothing else moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
 ```
 
+**C2 final, 26 Sep 2026.** The texture pass is approved.
+
+The layout, from her view:
+- Carafe top-left, vase top-centre, tumbler top-right.
+- Bag on the left.
+- Phone in the centre, with bare cloth to its right.
+- One wicker chair at the left edge, the planter in the top-right corner.
+
+Her finger already touches the screen in the still, so the C2 clip opens with a lift. C3 puts the plate on the bare
+cloth to the right of the phone, clear of its edge, because the tracker needs the bezel on all four sides.
+
+**C3 edit (image 1: the final C2)**
+```
+Edit image 1. Add only these two things, as if they have just been served and not yet touched, and keep everything else exactly as it is:
+
+1. Her brunch, on the bare tablecloth to the right of the phone, in the right half of the table: a round speckled oatmeal stoneware plate about 26 cm across, its left rim about two centimetres clear of the phone's right edge, so that the whole phone and all of its black bezel stay visible and nothing touches or covers it. On the plate: two whole slices of toasted sourdough topped with whipped ricotta, roasted cherry tomatoes on the vine and a whole, unbroken soft poached egg, finished with a light drizzle of olive oil, cracked black pepper and flaky salt. A clean fork and knife with brushed-brass handles lie side by side on the plate's right-hand rim, handles towards her. The plate sits flat on the linen with a soft shadow and a slight dip in the cloth beneath it, and it catches the same warm light and dappled shade as the tablecloth around it.
+
+2. An iced matcha latte in a clear, straight-sided glass, a soft milky pale jade green over white milk, full, with clear ice cubes and a plain white paper straw, standing on the table beyond the plate, between the plate and the water tumbler, well in from the table's edge, with its soft shadow and a faint green reflection on the linen.
+
+Keep exactly as they are, pixel for pixel: the camera, the framing, the table and its tablecloth texture and folds, the carafe, the vase of flowers, the tumbler, the tan bag and its strap, the phone and its flat chroma-key green screen with all four corners and the black bezel visible, both of her hands and her pressing finger, her nails, bracelet and ring, the cream jumper sleeves, her jeans, her chair, the chair at the left edge, the planter, the paving, the leaves, the light and the shadows.
+
+Avoid: the plate touching, overlapping or covering the phone, anything on the screen, any change to the phone, the screen or the green, moving or resizing any existing object, cut or eaten food, a broken yolk, crumbs, a napkin, extra dishes, cutlery elsewhere, changes to her hands or nails, changes to the light, a different angle.
+```
+
+**C2 motion, final (5 s; 2–3 takes; start frame: the final C2)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level, its base resting on the tablecloth; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. Only her right hand moves. At the start her index finger lifts off the screen and hovers just above it. At about one second it taps the upper half of the screen once, a clear, deliberate press and lift, then hovers. At about three seconds it taps the lower middle of the screen once, a clear, deliberate press and lift, then hovers just above the screen for the rest of the clip. The finger never covers a corner of the screen or lies along its edge. The flowers in the vase and the ivy in the planter stir very slightly in the breeze, and the dappled light on the tablecloth shifts gently; nothing else on the table moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
+**C3 motion, final (5 s; one take; start frame: the C3 edit)**
+```
+The phone screen stays a solid, flat, matte chroma-key green for the entire clip; no interface, notch, status bar, icon, image, text, glare, sweep of light or reflection ever appears on it. Static camera with a very slight, slow drift in. Her left hand holds the phone steady and level; the phone does not wobble, rock, tilt or twist, and keeps its exact shape and size. At about half a second her right index finger lifts off the screen, and her right hand moves across to the plate on the right, below the phone and clear of it, and picks up the brass-handled fork from the rim of the plate, holding it naturally. A faint wisp of steam rises from the poached egg; the ice in the matcha glints; the dappled light on the tablecloth shifts gently. Nothing else moves. The hands keep five fingers throughout. Natural, unhurried, realistic movement.
+```
+
 ### Athlete
 
 The geography, fixed for every shot:
